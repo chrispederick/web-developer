@@ -1,0 +1,21 @@
+address, blockquote, h1, h2, h3, h4, h5, h6, p, pre { outline: 1px solid #f00 !important; }
+dd, dl, dt, ol, ul { outline: 1px solid #0f0 !important; }
+div, form, table { outline: 1px solid #00f !important; }
+
+address:before { content: "<address>" !important; }
+blockquote:before { content: "<blockquote>" !important; }
+div:before { content: "<div>" !important; }
+dl:before { content: "<dl>" !important; }
+form:before { content: "<form>" !important; }
+h1:before { content: "<h1>" !important; }
+h2:before { content: "<h2>" !important; }
+h3:before { content: "<h3>" !important; }
+h4:before { content: "<h4>" !important; }
+h5:before { content: "<h5>" !important; }
+h6:before { content: "<h6>" !important; }
+ol:before { content: "<ol>" !important; }
+p:before { content: "<p>" !important; }
+pre:before { content: "<pre>" !important; }
+table:before { content: "<table>" !important; }
+ul:before { content: "<ul>" !important; }
+    

@@ -1,0 +1,2 @@
+* { float: none !important; position: static !important; }
+table, tbody, td, tfoot, th, thead, tr { display: block !important; }

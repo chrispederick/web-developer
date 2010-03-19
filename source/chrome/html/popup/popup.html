@@ -1,0 +1,237 @@
+<!DOCTYPE html> 
+<html id="web-developer-popup" lang="en"> 
+ 
+<head> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+	<title>@name@ Popup</title> 
+	<link href="reset.css" rel="stylesheet"> 
+	<link href="popup.css" rel="stylesheet"> 
+</head> 
+ 
+<body> 
+
+<ul id="toolbar">
+	<li id="css-toolbar">CSS</li>
+	<li id="forms-toolbar">Forms</li>
+	<li id="images-toolbar">Images</li>
+	<li id="information-toolbar">Information</li>
+	<li id="miscellaneous-toolbar">Miscellaneous</li>
+	<li id="outline-toolbar">Outline</li>
+	<li id="resize-toolbar">Resize</li>
+	<li id="tools-toolbar">Tools</li>
+	<li id="options-toolbar">Options</li>
+</ul>
+
+<ul id="css-menu" class="menu">
+	<ul>
+		<li id="disable-all-styles">Disable All Styles</li>
+		<li id="disable-browser-default-styles">Disable Browser Default Styles</li>
+		<li id="disable-embedded-styles">Disable Embedded Styles</li>
+	</ul>
+
+	<ul>
+		<li id="disable-inline-styles">Disable Inline Styles</li>
+		<li id="disable-linked-style-sheets">Disable Linked Style Sheets</li>
+		<li id="disable-print-styles">Disable Print Styles</li>
+	</ul>
+
+	<ul>
+		<li id="display-handheld-styles">Display Handheld Styles</li>
+		<li id="display-print-styles">Display Print Styles</li>
+		<li id="view-css">View CSS</li>
+	</ul>
+</ul>
+
+<ul id="forms-menu" class="menu">
+	<ul>
+		<li id="clear-radio-buttons">Clear Radio Buttons</li>
+		<li id="convert-form-gets-to-posts">Convert Form GETs To POSTs</li>
+		<li id="convert-form-posts-to-gets">Convert Form POSTs To GETs</li>
+		<li id="convert-select-elements-to-text-inputs">Convert Select Elements To Text Inputs</li>
+	</ul>
+
+	<ul>
+		<li id="display-form-details">Display Form Details</li>
+		<li id="enable-auto-completion">Enable Auto Completion</li>
+		<li id="enable-form-fields">Enable Form Fields</li>
+		<li id="make-form-fields-writable">Make Form Fields Writable</li>
+	</ul>
+	
+	<ul>
+		<li id="populate-form-fields">Populate Form Fields</li>
+		<li id="remove-maximum-lengths">Remove Maximum Lengths</li>
+		<li id="show-passwords">Show Passwords</li>
+		<li id="view-form-information">View Form Information</li>
+	</ul>
+</ul>
+
+<ul id="images-menu" class="menu">
+	<ul>
+		<li id="display-alt-attributes">Display Alt Attributes</li>
+		<li id="display-image-dimensions">Display Image Dimensions</li>
+		<li id="display-image-paths">Display Image Paths</li>
+		<li id="find-broken-images">Find Broken Images</li>
+		<li id="hide-background-images">Hide Background Images</li>
+		<li id="hide-images">Hide Images</li>
+		<li id="make-images-full-size">Make Images Full Size</li>
+	</ul>
+	
+	<ul>
+		<li id="make-images-invisible">Make Images Invisible</li>
+		<li id="outline-all-images">Outline All Images</li>
+		<li id="outline-background-images">Outline Background Images</li>
+		<li id="outline-images-with-adjusted-dimensions">Outline Images With Adjusted Dimensions</li>
+		<li id="outline-images-with-empty-alt-attributes">Outline Images With Empty Alt Attributes</li>
+	</ul>
+	
+	<ul>
+		<li id="outline-images-with-oversized-dimensions">Outline Images With Oversized Dimensions</li>
+		<li id="outline-images-without-alt-attributes">Outline Images Without Alt Attributes</li>
+		<li id="outline-images-without-dimensions">Outline Images Without Dimensions</li>
+		<li id="replace-images-with-alt-attributes">Replace Images With Alt Attributes</li>
+		<li id="view-image-information">View Image Information</li>
+	</ul>
+</ul>
+
+<ul id="information-menu" class="menu">
+	<ul>
+		<li id="display-abbreviations">Display Abbreviations</li>
+		<li id="display-access-keys">Display Access Keys</li>
+		<li id="display-anchors">Display Anchors</li>
+		<li id="display-id-class-details">Display Id &amp; Class Details</li>
+		<li id="display-link-details">Display Link Details</li>
+	</ul>
+	
+	<ul>
+		<li id="display-object-information">Display Object Information</li>
+		<li id="display-stack-levels">Display Stack Levels</li>
+		<li id="display-tab-index">Display Tab Index</li>
+		<li id="display-title-attributes">Display Title Attributes</li>
+		<li id="display-topographic-information">Display Topographic Information</li>
+	</ul>
+	
+	<ul>
+		<li id="view-anchor-information">View Anchor Information</li>
+		<li id="view-javascript">View JavaScript</li>
+		<li id="view-link-information">View Link Information</li>
+		<li id="view-meta-tag-information">View Meta Tag Information</li>
+		<li id="view-response-headers">View Response Headers</li>
+	</ul>
+</ul>
+
+<ul id="miscellaneous-menu" class="menu">
+	<ul>
+		<li id="linearize-page">Linearize Page</li>
+	</ul>
+	
+	<ul>
+		<li id="make-frames-resizable">Make Frames Resizable</li>
+	</ul>
+	
+	<ul>
+		<li id="show-hidden-elements">Show Hidden Elements</li>
+	</ul>
+</ul>
+
+<ul id="outline-menu" class="menu">
+	<ul>
+		<li id="outline-block-level-elements">Outline Block Level Elements</li>
+		<li id="outline-deprecated-elements">Outline Deprecated Elements</li>
+		<li id="outline-external-links">Outline External Links</li>
+		<li id="outline-frames">Outline Frames</li>
+		<li id="outline-headings">Outline Headings</li>
+	</ul>
+	
+	<ul>
+		<li id="outline-non-secure-elements">Outline Non-Secure Elements</li>
+		<li id="outline-table-captions">Outline Table Captions</li>
+		<li id="outline-table-cells">Outline Table Cells</li>
+		<li id="outline-tables">Outline Tables</li>
+	</ul>
+	
+	<ul>
+		<li id="outline-floated-elements">Outline Floated Elements</li>
+		<li id="outline-absolute-positioned-elements">Outline Absolute Positioned Elements</li>
+		<li id="outline-fixed-positioned-elements">Outline Fixed Positioned Elements</li>
+		<li id="outline-relative-positioned-elements">Outline Relative Positioned Elements</li>
+	</ul>
+</ul>
+
+<ul id="resize-menu" class="menu">
+	<ul>
+		<li id="display-window-size">Display Window Size</li>
+		<li id="resize-window">Resize Window...</li>
+	</ul>
+	
+	<ul>
+		<li id="resize-800x600" class="custom-resize-window">800x600</li>
+		<li id="resize-1024x768" class="custom-resize-window">1024x768</li>
+	</ul>
+</ul>
+
+<ul id="tools-menu" class="menu">
+	<ul>
+		<li id="validate-css">Validate CSS</li>
+		<li id="validate-feed">Validate Feed</li>
+		<li id="validate-html">Validate HTML</li>
+		<li id="validate-links">Validate Links</li>
+	</ul>
+	
+	<ul>
+		<li id="validate-section-508">Validate Section 508</li>
+		<li id="validate-wcag">Validate WCAG</li>
+		<li id="validate-local-css">Validate Local CSS</li>
+		<li id="validate-local-html">Validate Local HTML</li>
+	</ul>
+	
+	<ul>
+		<li id="view-source">View Source</li>
+	</ul>
+</ul>
+
+<ul id="options-menu" class="menu">
+	<ul>
+		<li id="reset-page">Reset Page</li>
+	</ul>
+	
+	<ul>
+		<li id="help">Help</li>
+	</ul>
+	
+	<ul>
+		<li id="about">About</li>
+	</ul>
+</ul>
+
+<div id="notification">
+	<span class="icon"></span>
+</div>
+
+<div id="resize-window-dialog">
+	<label for="resize-window-width">Width (px)</label>
+	<input id="resize-window-width" placeholder="Enter the window width">
+
+	<label for="resize-window-height">Height (px)</label>
+	<input id="resize-window-height" placeholder="Enter the window height">
+
+	<div class="buttons">
+		<input id="resize-window-cancel" type="submit" value="Cancel">
+		<input id="resize-window-submit" type="submit" value="Resize">
+	</div>
+</div>
+
+<script src="javascript/jquery.js"></script> 
+<script src="javascript/popup.js"></script> 
+<script src="javascript/css.js"></script> 
+<script src="javascript/forms.js"></script> 
+<script src="javascript/images.js"></script> 
+<script src="javascript/information.js"></script> 
+<script src="javascript/miscellaneous.js"></script> 
+<script src="javascript/options.js"></script> 
+<script src="javascript/outline.js"></script> 
+<script src="javascript/resize.js"></script> 
+<script src="javascript/tools.js"></script> 
+
+</body>
+ 
+</html> 

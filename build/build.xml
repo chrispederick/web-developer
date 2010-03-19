@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+
+<project name="web-developer" default="build">
+	<!-- Custom tasks -->
+	<taskdef name="jslint" classname="com.googlecode.jslint4java.ant.JSLintTask" classpath="jslint4java.jar"/>
+           
+  <!-- Main targets -->
+  <target name="all" depends="build,package,test" description="Builds, packages and tests the extension"/>
+  <target name="build" depends="build.chrome" description="Builds the extension"/>
+  <target name="clean" depends="clean.chrome" description="Cleans up the build"/>
+	<target name="package" depends="package.chrome" description="Packages the extension"/>
+
+  <!-- Initialize the settings -->
+  <target name="initialize" description="Initializes the settings">
+    <tstamp>
+      <format property="build.date" pattern="MMMM d, yyyy"/>
+    </tstamp>
+  </target>
+
+  <!-- Initialize the settings for Chrome -->
+  <target name="initialize.chrome" depends="initialize" description="Initializes the settings for Chrome">
+    <filterset id="chrome.filters">
+      <filter token="build.date" value="${build.date}"/>
+      <filtersfile file="../configuration/common/configuration.properties"/>
+      <filtersfile file="../configuration/chrome/configuration.properties"/>
+    </filterset>
+	</target>  
+
+  <!-- Clean up the build for Chrome -->
+  <target name="clean.chrome" depends="initialize.chrome" description="Cleans up the build for Chrome">
+    <echo level="info" message="Cleaning up the build for Chrome"/>
+  	<delete dir="chrome"/>
+  	<delete file="web-developer-chrome.zip"/>
+  </target>
+
+  <!-- Build the extension for Chrome -->
+  <target name="build.chrome" depends="clean.chrome" description="Builds the extension for Chrome">
+    <echo level="info" message="Building the configuration"/>
+    <copy file="../configuration/chrome/manifest.json" tofile="chrome/manifest.json">
+      <filterset refid="chrome.filters"/>
+		</copy>
+		    
+    <echo level="info" message="Building the background page"/>
+    <copy file="../source/chrome/html/background/background.html" tofile="chrome/background/background.html">
+      <filterset refid="chrome.filters"/>
+    </copy>
+    <copy todir="chrome/background/javascript">
+      <fileset dir="../source/chrome/javascript/background"/>
+      <filterset refid="chrome.filters"/>
+    </copy>
+		    
+    <echo level="info" message="Building the content JavaScript"/>
+    <concat destfile="chrome/content/content.js">
+    	<fileset file="../source/common/javascript/common/common.js"/>
+    	<fileset file="../source/common/javascript/common/css.js"/>
+    	<fileset file="../source/common/javascript/content/content.js"/>
+    	<fileset file="../source/chrome/javascript/content/content.js"/>
+    </concat>
+
+    <echo level="info" message="Building the popup"/>
+    <copy file="../source/chrome/html/popup/popup.html" tofile="chrome/popup/popup.html">
+      <filterset refid="chrome.filters"/>
+    </copy>
+    <copy file="../source/common/javascript/jquery.js" tofile="chrome/popup/javascript/jquery.js"/>
+    <copy todir="chrome/popup/javascript">
+      <fileset dir="../source/chrome/javascript/popup"/>
+      <filterset refid="chrome.filters"/>
+    </copy>
+    <copy file="../source/common/style-sheets/reset.css" tofile="chrome/popup/reset.css"/>
+    <copy file="../source/chrome/style-sheets/popup/popup.css" tofile="chrome/popup/popup.css"/>
+    <copy file="../images/chrome/logos/icon.png" tofile="chrome/popup/images/icon.png"/>
+    <copy todir="chrome/popup/images/toolbar">
+      <fileset dir="../images/common/toolbar"/>
+    </copy>
+    <copy todir="chrome/popup/images">
+      <fileset dir="../images/chrome/popup"/>
+    </copy>
+		    
+    <echo level="info" message="Building the feature JavaScript"/>
+    <copy todir="chrome/features/javascript">
+      <fileset file="../source/common/javascript/features/css.js"/>
+      <fileset file="../source/common/javascript/features/information.js"/>
+      <fileset file="../source/common/javascript/features/outline.js"/>
+    </copy>
+    <concat destfile="chrome/features/javascript/forms.js">
+    	<fileset file="../source/common/javascript/features/forms.js"/>
+    	<fileset file="../source/chrome/javascript/features/forms.js"/>
+    </concat>
+    <concat destfile="chrome/features/javascript/images.js">
+    	<fileset file="../source/common/javascript/features/images.js"/>
+    	<fileset file="../source/chrome/javascript/features/images.js"/>
+    </concat>
+    <concat destfile="chrome/features/javascript/miscellaneous.js">
+    	<fileset file="../source/common/javascript/features/miscellaneous.js"/>
+    	<fileset file="../source/chrome/javascript/features/miscellaneous.js"/>
+    </concat>
+		    
+    <echo level="info" message="Building the feature style sheets"/>
+    <copy todir="chrome/features/style-sheets">
+      <fileset dir="../source/common/style-sheets/features"/>
+    </copy>
+    <copy file="../source/common/style-sheets/reset.css" tofile="chrome/features/style-sheets/css/disable-browser-default-styles.css"/>
+		    
+    <echo level="info" message="Building the feature images"/>
+    <copy file="../images/common/transparent.png" tofile="chrome/features/style-sheets/images/transparent.png"/>
+		    
+    <echo level="info" message="Building the generated pages"/>
+    <copy todir="chrome/generated">
+      <fileset dir="../source/common/html/generated"/>
+    	<fileset file="../source/common/style-sheets/reset.css"/>
+      <fileset dir="../source/common/style-sheets/generated"/>
+      <filterset refid="chrome.filters"/>
+    </copy>
+    <copy file="../source/common/javascript/jquery.js" tofile="chrome/generated/javascript/jquery.js"/>
+    <copy todir="chrome/generated/javascript">
+      <fileset dir="../source/common/javascript/generated"/>
+    </copy>
+    <copy file="../images/common/logos/favicon.ico" tofile="chrome/generated/images/favicon.ico"/>
+    <copy file="../images/common/logos/16.png" tofile="chrome/generated/images/logo.png"/>
+    <copy todir="chrome/generated/images">
+      <fileset dir="../images/common/generated"/>
+    </copy>
+		    
+    <echo level="info" message="Building the about page"/>
+    <copy file="../source/chrome/html/about/about.html" tofile="chrome/about/about.html">
+      <filterset refid="chrome.filters"/>
+    </copy>
+    <copy file="../source/common/style-sheets/reset.css" tofile="chrome/about/reset.css"/>
+    <copy file="../source/chrome/style-sheets/about/about.css" tofile="chrome/about/about.css"/>
+    <copy file="../images/common/logos/favicon.ico" tofile="chrome/about/images/favicon.ico"/>
+    <copy file="../images/common/logos/64.png" tofile="chrome/about/images/logo.png"/>
+		    
+    <echo level="info" message="Building the icons"/>
+    <copy file="../images/common/logos/16.png" tofile="chrome/icons/16.png"/>
+    <copy file="../images/common/logos/32.png" tofile="chrome/icons/32.png"/>
+    <copy file="../images/common/logos/48.png" tofile="chrome/icons/48.png"/>
+    <copy file="../images/common/logos/64.png" tofile="chrome/icons/64.png"/>
+    <copy file="../images/common/logos/128.png" tofile="chrome/icons/128.png"/>
+  </target>
+
+  <!-- Packages the extension for Chrome -->
+  <target name="package.chrome" depends="build.chrome" description="Packages the extension for Chrome">
+    <echo level="info" message="Packaging the extension"/>
+    <zip destfile="web-developer-chrome.zip">
+      <zipfileset dir="chrome"/>
+      <zipfileset file="license.txt"/>
+    </zip>
+  </target>
+
+  <!-- Test the extension -->
+  <target name="test" depends="initialize" description="Tests the extension">
+		<jslint options="indent=2,undef">
+    	<formatter type="plain"/>
+    	<predef>$$,chrome,createTableCell,CSSPrimitiveValue,document,formatURL,Image,initializeCommonElements,localStorage,Node,NodeFilter,output,setPageTitle,setWindowTitle,WebDeveloper,window,XMLHttpRequest</predef>
+    	<fileset dir="../source/chrome/javascript"/>
+    	<fileset dir="../source/common/javascript" excludes="jquery.js"/>
+  	</jslint>
+ 	</target>  
+</project>

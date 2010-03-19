@@ -1,0 +1,5 @@
+/* ! View image information styles */
+
+th { width: 100px; }
+tr:nth-child(even) td { background-color: #eee; }
+tr:nth-child(odd) td { background-color: #fff; }

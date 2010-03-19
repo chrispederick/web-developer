@@ -1,0 +1,10 @@
+{
+	"background_page": "background/background.html",
+  "browser_action":  { "default_icon": "popup/images/icon.png", "default_title": "@name@", "popup": "popup/popup.html" },
+	"content_scripts": [ { "all_frames": true, "js": ["content/content.js"], "matches": [ "http://*/*", "https://*/*" ] } ],
+  "description":     "@description@",
+  "icons":           { "16": "icons/16.png", "32": "icons/32.png", "48":  "icons/48.png", "64": "icons/64.png", "128": "icons/128.png" },
+  "name": 			     "@name@",
+  "permissions":     [ "tabs", "http://*/*", "https://*/*" ],
+  "version": 		     "@version@"
+}

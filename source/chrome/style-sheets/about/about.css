@@ -1,0 +1,44 @@
+/* ! Default styles */
+
+:focus { outline: 1px dotted #999; }
+a { border-bottom: 1px solid #000; color: #000; text-decoration: none; }
+a:active, a:focus, a:hover { border-bottom-color: #999; color: #999; }
+a abbr { border-bottom-style: none; }
+abbr { border-bottom: 1px dotted #000; cursor: help; }
+blockquote { margin-top: 20px; }
+body { background-color: #eee; color: #000; }
+body, input, textarea { font: 13px/1 "Helvetica Neue", Arial, Helvetica, sans-serif; }
+dd, dt, h3, h4, li, p { line-height: 20px; }
+dt, h1, h2, h3, h4 { font-family: "Gill Sans", Trebuchet, Calibri, sans-serif; font-weight: normal; letter-spacing: 1px; text-transform: uppercase; }
+h1 { font-size: 29px; line-height: 35px; margin-bottom: 5px; }
+h2 { font-size: 21px; line-height: 25px; margin-bottom: 15px; }
+h3 { font-size: 19px; line-height: 21px; margin: 20px 0 19px 0; }
+input[type=search], input[type=text], textarea { background-color: #fff; border: 1px inset #ccc; color: #000; cursor: text; padding: 5px; }
+input[type=submit] { cursor: pointer; }
+kbd { font: 13px/1 Consolas, "Lucida Console", Monaco, monospace; }
+label { left: -9999px; overflow: hidden; position: absolute; width: 1px; }
+li ol { list-style-type: lower-alpha; }
+li ol, li ul { margin-bottom: 0; margin-top: 0; }
+ol { list-style-type: decimal; }
+ol, ul { margin: 20px 0 20px 30px; }
+p + p { margin-top: 20px; }
+table { margin: 20px 0; }
+td { line-height: 15px; }
+td, th { padding: 10px; vertical-align: top; }
+th { font-family: "Gill Sans", Trebuchet, Calibri, sans-serif; font-weight: normal; text-align: left; text-transform: uppercase; }
+thead { background-color: #000; color: #fff; }
+tr { border-color: #eee; border-style: solid; border-width: 1px 0; }
+ul { list-style-type: square; }
+
+/* ! About styles */
+
+#about { background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd)); border: 1px solid #ccc; -webkit-border-radius: 10px; -webkit-box-shadow: 0 5px 25px #999; margin: 50px auto 0 auto; padding: 25px; text-shadow: 0 1px 0 #fff; width: 500px; }
+#header { border-bottom: 1px solid #fff; margin-bottom: 25px; padding-bottom: 25px; }
+#header:after { clear: both; content: ""; display: block; height: 0; overflow: hidden; visibility: hidden; }
+#header a, .split-module a { border-bottom-style: none; }
+#header a:active, #header a:focus, #header a:hover, .split-module a:active, .split-module a:focus, .split-module a:hover { border-bottom-style: solid; }
+#header h1 { line-height: 29px; }
+#header img { float: left; margin-right: 10px; }
+#header p { line-height: 1; }
+.split-module { float: left; width: 33%; }
+.url { clear: both; padding-top: 10px; }
