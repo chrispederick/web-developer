@@ -11,47 +11,32 @@ $(function()
 // Opens the about page
 WebDeveloper.Popup.Options.about = function()
 {
-	WebDeveloper.Popup.getSelectedTab(function(tab)
-	{
-		WebDeveloper.Popup.openTab(chrome.extension.getURL("about/about.html"), tab, function() 
-		{ 
-			window.close(); 
-		});
-	});	
+	WebDeveloper.Popup.openTab(chrome.extension.getURL("about/about.html"), $(this));
 };
 	
 // Opens the help
 WebDeveloper.Popup.Options.help = function()
 {
-	WebDeveloper.Popup.getSelectedTab(function(tab)
-	{
-		WebDeveloper.Popup.openTab("@url@help/", tab, function() 
-		{ 
-			window.close(); 
-		});
-	});	
+	WebDeveloper.Popup.openTab("@url@help/", $(this));
 };
 	
 // Opens the options
 WebDeveloper.Popup.Options.options = function()
 {
-	WebDeveloper.Popup.getSelectedTab(function(tab)
-	{
-		WebDeveloper.Popup.openTab(chrome.extension.getURL("options/options.html"), tab, function() 
-		{ 
-			window.close(); 
-		});
-	});	
+	WebDeveloper.Popup.openTab(chrome.extension.getURL("options/options.html"), $(this));
 };
 	
 // Resets the page
 WebDeveloper.Popup.Options.resetPage = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
 		WebDeveloper.Popup.addScriptToTab(tab, { code: "window.location.reload();" }, function() 
 		{ 
-			window.close(); 
+			WebDeveloper.Analytics.trackFeature(featureItem);
+			WebDeveloper.Popup.close();
 		});
 	});	
 };

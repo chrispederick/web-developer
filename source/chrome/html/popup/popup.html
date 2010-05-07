@@ -2,9 +2,8 @@
 <html id="web-developer-popup" lang="en"> 
  
 <head> 
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+	<meta charset="utf-8"> 
 	<title>@name@ Popup</title> 
-	<link href="reset.css" rel="stylesheet"> 
 	<link href="popup.css" rel="stylesheet"> 
 </head> 
  
@@ -27,17 +26,18 @@
 		<li id="disable-all-styles">Disable All Styles</li>
 		<li id="disable-browser-default-styles">Disable Browser Default Styles</li>
 		<li id="disable-embedded-styles">Disable Embedded Styles</li>
+		<li id="disable-inline-styles">Disable Inline Styles</li>
 	</ul>
 
 	<ul>
-		<li id="disable-inline-styles">Disable Inline Styles</li>
 		<li id="disable-linked-style-sheets">Disable Linked Style Sheets</li>
 		<li id="disable-print-styles">Disable Print Styles</li>
+		<li id="display-handheld-styles">Display Handheld Styles</li>
+		<li id="display-print-styles">Display Print Styles</li>
 	</ul>
 
 	<ul>
-		<li id="display-handheld-styles">Display Handheld Styles</li>
-		<li id="display-print-styles">Display Print Styles</li>
+		<li id="edit-css">Edit CSS</li>
 		<li id="view-css">View CSS</li>
 	</ul>
 </ul>
@@ -112,6 +112,7 @@
 	
 	<ul>
 		<li id="view-anchor-information">View Anchor Information</li>
+		<li id="view-document-outline">View Document Outline</li>
 		<li id="view-javascript">View JavaScript</li>
 		<li id="view-link-information">View Link Information</li>
 		<li id="view-meta-tag-information">View Meta Tag Information</li>
@@ -195,10 +196,11 @@
 	</ul>
 	
 	<ul>
-		<li id="help">Help</li>
+		<li id="options">Options</li>
 	</ul>
 	
 	<ul>
+		<li id="help">Help</li>
 		<li id="about">About</li>
 	</ul>
 </ul>
@@ -221,6 +223,8 @@
 </div>
 
 <script src="javascript/jquery.js"></script> 
+<script src="javascript/analytics.js"></script> 
+<script src="javascript/platform.js"></script> 
 <script src="javascript/popup.js"></script> 
 <script src="javascript/css.js"></script> 
 <script src="javascript/forms.js"></script> 

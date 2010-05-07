@@ -3,8 +3,8 @@ WebDeveloper.Miscellaneous = WebDeveloper.Miscellaneous || {};
 // Filter for the hidden node tree walker
 WebDeveloper.Miscellaneous.hiddenNodeFilter = function(node)
 {
-	// If the node is set
-	if(node)
+	// If the node is set and is not a Web Developer node
+	if(node && (!node.hasAttribute("id") || node.getAttribute("id").indexOf("web-developer") !== 0))
 	{
 		var computedStyle = node.ownerDocument.defaultView.getComputedStyle(node, null);
 

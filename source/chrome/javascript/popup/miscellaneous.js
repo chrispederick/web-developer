@@ -8,9 +8,9 @@ $(function()
 });
 
 // Adds a feature on a tab
-WebDeveloper.Popup.Miscellaneous.addFeatureOnTab = function(tab, scriptCode)
+WebDeveloper.Popup.Miscellaneous.addFeatureOnTab = function(featureItem, tab, scriptCode)
 {
-	WebDeveloper.Popup.addFeatureOnTab(tab, "features/javascript/miscellaneous.js", scriptCode);
+	WebDeveloper.Popup.addFeatureOnTab(featureItem, tab, "features/javascript/miscellaneous.js", scriptCode);
 };
 	
 // Linearizes a page
@@ -27,20 +27,23 @@ WebDeveloper.Popup.Miscellaneous.linearizePage = function()
 // Makes all frames resizable
 WebDeveloper.Popup.Miscellaneous.makeFramesResizable = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Miscellaneous.addFeatureOnTab(tab, "WebDeveloper.Miscellaneous.makeFramesResizable(document);");
+		WebDeveloper.Popup.Miscellaneous.addFeatureOnTab(featureItem, tab, "WebDeveloper.Miscellaneous.makeFramesResizable(document);");
 	});
 };
 	
 // Shows all hidden elements
 WebDeveloper.Popup.Miscellaneous.showHiddenElements = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Miscellaneous.addFeatureOnTab(tab, "WebDeveloper.Miscellaneous.showHiddenElements(document);");
-		
-		window.close();
+		WebDeveloper.Popup.Miscellaneous.addFeatureOnTab(featureItem, tab, "WebDeveloper.Miscellaneous.showHiddenElements(document);");
+		WebDeveloper.Popup.close();
 	});
 };
 

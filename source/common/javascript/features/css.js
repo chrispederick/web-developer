@@ -3,22 +3,8 @@ WebDeveloper.CSS = WebDeveloper.CSS || {};
 // Toggles all the styles in a document
 WebDeveloper.CSS.toggleAllStyles = function(disable, contentDocument)
 {
-	var styleSheet  = null;
-  var styleSheets = contentDocument.styleSheets;
-
-  // Loop through the style sheets
-  for(var i = 0, l = styleSheets.length; i < l; i++)
-  {
-    styleSheet = styleSheets[i];
-
-    // If this is a valid style sheet and is not an alternate style sheet or style sheets are being disabled
-    if(WebDeveloper.CSS.isValidStyleSheet(styleSheet) && (!WebDeveloper.CSS.isAlternateStyleSheet(styleSheet) || disable))
-    {
-			styleSheet.disabled = disable;
-		}
-
-    WebDeveloper.CSS.toggleElementInlineStyles(contentDocument.documentElement, disable);
-  }
+	WebDeveloper.CSS.toggleAllStyleSheets(disable, contentDocument);
+  WebDeveloper.CSS.toggleElementInlineStyles(contentDocument.documentElement, disable);
 };
 
 // Toggles the browser default styles in a document

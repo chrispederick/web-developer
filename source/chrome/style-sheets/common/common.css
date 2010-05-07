@@ -1,0 +1,6 @@
+/* ! Notification styles */
+
+#notification { background: -webkit-gradient(linear, left top, left bottom, from(#ffffca), to(#ffec96)); border: 1px solid #ffdb63; display: none; margin-top: 5px; padding: 5px 5px 5px 30px; position: relative; text-shadow: 0 1px 0 #fff; }
+#notification:after, #notification p:after { clear: both; content: ""; display: block; height: 0; overflow: hidden; visibility: hidden; }
+#notification p { line-height: 18px; }
+#notification .icon { background: url(images/notification.png) 0 0 no-repeat; display: block; height: 16px; left: 5px; position: absolute; top: 5px; width: 16px; }

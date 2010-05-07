@@ -2,9 +2,7 @@
 function initialize(data)
 {
 	var contentDocument    = null;
-	var css                = null;
 	var documents          = data.documents;
-	var embedded           = null;
 	var embeddedCounter    = 1;
 	var request            = null;
 	var styleSheets        = null;

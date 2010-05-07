@@ -1,0 +1,5 @@
+/* ! Options styles */
+
+#buttons, #notification { margin-top: 20px; }
+#header h1 { margin-bottom: 0; }
+#notification { max-width: 500px; }

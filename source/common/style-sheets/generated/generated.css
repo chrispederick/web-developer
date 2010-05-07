@@ -1,37 +1,12 @@
-/* ! Default styles */
-
-a { border-bottom: 1px solid #000; color: #000; text-decoration: none; }
-a:hover { border-bottom-color: #999; color: #999; }
-body { background-color: #fff; color: #000; font: 13px/1 sans-serif; }
-h1 { background: url(images/logo.png) 0 3px no-repeat; margin-bottom: 5px; padding-left: 25px; }
-h1, h2 { font-size: 20px; line-height: 25px; }
-h1, h2, h3, h4 { font-weight: normal; }
-h2, h3, h4 { margin-bottom: 10px; }
-h3 { font-size: 17px; line-height: 20px; }
-h4 { font-size: 15px; }
-li { line-height: 17px; }
-ol { margin-left: 40px; }
-ol li { list-style-type: decimal; }
-pre { font-family: monospace; }
-table { border: 1px solid #000; margin: 20px 0; width: 100%; }
-td { line-height: 15px; }
-td, th { padding: 10px; vertical-align: top; }
-th { background-color: #000; color: #fff; font-family: "Gill Sans", Trebuchet, Calibri, sans-serif; font-weight: normal; text-align: left; text-transform: uppercase; width: 100px; }
-tr:nth-child(odd) td { background-color: #eee; }
-
-/* ! Layout styles */
-
-#content { margin: 10px; }
-
 /* ! Navigation styles */
 
-#header { background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)); border-color: #ddd; border-style: solid; border-width: 0 1px 1px 1px; padding: 10px; text-shadow: 0 1px 0 #fff; }
-#header:after { clear: both; content: ""; display: block; height: 0; overflow: hidden; visibility: hidden; }
 #header div { display: none; }
 #header h2 { font-size: 11px; margin-bottom: 0; text-transform: uppercase; }
 #header li { line-height: 15px; margin-bottom: 5px; }
 
 #controls { border-left: 1px dotted #999; float: right; padding-left: 2%; width: 20%; }
+#controls li, #jump-to li { list-style-type: none; }
+#controls ul, #jump-to ul { margin: 0; }
 #jump-to { margin-right: 1%; width: 77%; }
 #jump-to, #jump-to li { float: left; }
 #jump-to li { margin-right: 3%; width: 47%; word-wrap: break-word; }
@@ -47,11 +22,11 @@ h1 span { margin-left: 10px; position: relative; top: -2px; }
 
 /* ! Document styles */
 
-h2 span { background: url(images/document.png) 0 4px no-repeat; display: block; float: left; height: 25px; width: 20px; }
+h2 span { background: url(images/document.png) 0 4px no-repeat; display: block; float: left; height: 20px; width: 20px; }
 
 /* ! Collapse styles */
 
-h3 span { background: url(images/collapse.png) 0 2px no-repeat; cursor: pointer; display: block; float: left; height: 25px; width: 20px; }
+h3 span { background: url(images/collapse.png) 0 2px no-repeat; cursor: pointer; display: block; float: left; height: 19px; width: 20px; }
 .collapsed span { background-image: url(images/expand.png); }
 
 #collapse-all { background-image: url(images/collapse.png); }

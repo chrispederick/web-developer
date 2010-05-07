@@ -3,7 +3,7 @@ WebDeveloper.Storage = {};
 // Clears the features on a tab
 WebDeveloper.Storage.clearTabFeatures = function(featureTabId)
 {
-	localStorage.removeItem(featureTabId);
+	window.localStorage.removeItem(featureTabId);
 		
 	WebDeveloper.Storage.updateBadgeText(featureTabId);
 };
@@ -11,7 +11,7 @@ WebDeveloper.Storage.clearTabFeatures = function(featureTabId)
 // Returns the list of features on a tab
 WebDeveloper.Storage.getFeaturesOnTab = function(tabId)
 {
-	var featuresOnTab = localStorage.getItem(tabId);
+	var featuresOnTab = window.localStorage.getItem(tabId);
 
 	// If there are features on the tab
 	if(featuresOnTab)
@@ -25,14 +25,14 @@ WebDeveloper.Storage.getFeaturesOnTab = function(tabId)
 // Returns the open menu
 WebDeveloper.Storage.getMenu = function()
 {
-	return localStorage.getItem("menu");
+	return window.localStorage.getItem("menu");
 };
 
 // Returns true if a feature is on a tab
 WebDeveloper.Storage.isFeatureOnTab = function(feature, tab)
 {
 	var tabId				  = tab.id;
-	var featuresOnTab = localStorage.getItem(tabId);
+	var featuresOnTab = window.localStorage.getItem(tabId);
 
 	// If there are features on the tab
 	if(featuresOnTab)
@@ -73,7 +73,7 @@ WebDeveloper.Storage.tabUpdated = function(tabId, properties)
 WebDeveloper.Storage.toggleFeatureOnTab = function(feature, tab)
 {
 	var featureTabId				 = tab.id;
-	var currentFeaturesOnTab = localStorage.getItem(featureTabId);
+	var currentFeaturesOnTab = window.localStorage.getItem(featureTabId);
 	var newFeaturesOnTab		 = null;
 	
 	// If there are features on the tab
@@ -110,7 +110,7 @@ WebDeveloper.Storage.toggleFeatureOnTab = function(feature, tab)
 		newFeaturesOnTab = feature + ",";
 	}
 
-	localStorage.setItem(featureTabId, newFeaturesOnTab);
+	window.localStorage.setItem(featureTabId, newFeaturesOnTab);
 
 	WebDeveloper.Storage.updateBadgeText(featureTabId);
 };
@@ -118,16 +118,16 @@ WebDeveloper.Storage.toggleFeatureOnTab = function(feature, tab)
 // Toggles a menu
 WebDeveloper.Storage.toggleMenu = function(menu)
 {
-	var currentMenu = localStorage.getItem("menu");
+	var currentMenu = window.localStorage.getItem("menu");
 	
 	// If the current menu is set and is the menu
 	if(currentMenu && currentMenu == menu)
 	{
-		 localStorage.removeItem("menu");
+		 window.localStorage.removeItem("menu");
 	}
 	else
 	{
-		 localStorage.setItem("menu", menu);
+		 window.localStorage.setItem("menu", menu);
 	}
 };
 

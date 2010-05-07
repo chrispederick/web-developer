@@ -1,0 +1,11 @@
+/* ! View document outline styles */
+
+h4 span { background: -webkit-gradient(linear, left top, left bottom, from(#ffffca), to(#ffec96)); border: 1px solid #ffdb63; font-size: 13px; margin-right: 5px; padding: 0 1px; }
+
+.level-1 { font-size: 21px; line-height: 25px; margin-left: 20px; }
+.level-2 { font-size: 19px; line-height: 23px; margin-left: 60px; }
+.level-3 { font-size: 17px; line-height: 21px; margin-left: 100px; }
+.level-4 { font-size: 15px; line-height: 19px; margin-left: 140px; }
+.level-5 { font-size: 13px; line-height: 17px; margin-left: 180px; }
+.level-6 { font-size: 13px; line-height: 17px; margin-left: 220px; }
+.missing-heading { color: #c00; }

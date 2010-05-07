@@ -445,12 +445,12 @@ WebDeveloper.Forms.populateFormFields = function(contentDocument)
       {
         inputElementName = inputElement.getAttribute("name");
 
-        // If the input element type is email or is text and the name contains email
-        if(inputElementType.toLowerCase() == "email" || (inputElementType == "text" && inputElementName.toLowerCase().indexOf("email") >= 0))
+        // If the input element type is set and is email or is text and the name contains email
+        if(inputElementType && (inputElementType.toLowerCase() == "email" || (inputElementType == "text" && inputElementName.toLowerCase().indexOf("email") >= 0)))
         {
           inputElement.value = "example@example.org";
         }
-        else if(inputElementType.toLowerCase() == "password")
+        else if(inputElementType && inputElementType.toLowerCase() == "password")
         {
           inputElement.value = "password";
         }
@@ -459,7 +459,7 @@ WebDeveloper.Forms.populateFormFields = function(contentDocument)
           inputElement.value = inputElementName;
         }
       }
-      else if(inputElementType.toLowerCase() == "checkbox" || inputElementType.toLowerCase() == "radio")
+      else if(inputElementType && (inputElementType.toLowerCase() == "checkbox" || inputElementType.toLowerCase() == "radio"))
       {
         inputElement.checked = true;
       }

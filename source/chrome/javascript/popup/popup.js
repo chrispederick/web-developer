@@ -1,7 +1,6 @@
 var WebDeveloper = WebDeveloper || {};
 
-WebDeveloper.Popup                             = WebDeveloper.Popup || {};
-WebDeveloper.Popup.initializeGeneratedTabDelay = 250;
+WebDeveloper.Popup = WebDeveloper.Popup || {};
 
 $(function() 
 { 
@@ -9,9 +8,12 @@ $(function()
 });
 	
 // Adds a feature on a tab
-WebDeveloper.Popup.addFeatureOnTab = function(tab, scriptFile, scriptCode)
+WebDeveloper.Popup.addFeatureOnTab = function(featureItem, tab, scriptFile, scriptCode)
 {
-	WebDeveloper.Popup.addScriptsToTab(tab, scriptFile, scriptCode, function() {});
+	WebDeveloper.Popup.addScriptsToTab(tab, scriptFile, scriptCode, function() 
+	{
+		WebDeveloper.Analytics.trackFeature(featureItem);
+	});
 };
 
 // Adds a script to the tab
@@ -39,6 +41,16 @@ WebDeveloper.Popup.clearNotification = function()
 	notification.hide();
 	notification.children().not(".icon").remove();
 };
+
+// Closes the popup
+WebDeveloper.Popup.close = function()
+{
+	// If the platform is not Windows
+	if(!WebDeveloper.Platform.isWindows())
+	{
+		window.close();
+	}
+};
 	
 // Returns the selected tab
 WebDeveloper.Popup.getSelectedTab = function(callback)
@@ -50,29 +62,6 @@ WebDeveloper.Popup.getSelectedTab = function(callback)
 WebDeveloper.Popup.getSelectedWindow = function(callback)
 {
 	chrome.windows.getCurrent(callback);
-};
-
-// Initializes a generated tab
-WebDeveloper.Popup.initializeGeneratedTab = function(url, response)
-{
-	var extensionTab = null;
-	var tabs         = chrome.extension.getExtensionTabs();
-	
-	// Loop through the tabs
-	for(var i = 0, l = tabs.length; i < l; i++) 
-	{
-		extensionTab = tabs[i];
-		
-		// If the tab has a matching URL and has not been initialized
-		if(extensionTab.location.href == url && !extensionTab.webDeveloperInitialized)
-		{
-			extensionTab.webDeveloperInitialized = true;
-		
-			extensionTab.initialize(response);
-			
-			window.close();
-		}
-	}
 };
 
 // Handles the popup loading
@@ -90,6 +79,8 @@ WebDeveloper.Popup.load = function()
 
 		toolbar.toggleClass("selected");
 		menu.toggle();
+		
+		WebDeveloper.Analytics.trackMenu(menu);
 	}
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
@@ -108,20 +99,15 @@ WebDeveloper.Popup.load = function()
 	});
 };
 
-// Opens a generated tab to the URL
-WebDeveloper.Popup.openGeneratedTab = function(url, tab, response)
-{
-	WebDeveloper.Popup.openTab(url, tab, function(openedTab)
-	{
-		// Initialize the tab on a delay to make sure the tab is open
-		window.setTimeout(function() { WebDeveloper.Popup.initializeGeneratedTab(url, response); }, WebDeveloper.Popup.initializeGeneratedTabDelay);
-	});
-};
-
 // Opens a tab to the URL
-WebDeveloper.Popup.openTab = function(tabURL, tab, callback)
+WebDeveloper.Popup.openTab = function(tabURL, featureItem)
 {
-	chrome.tabs.create({ index: tab.index + 1, url: tabURL }, callback);
+	WebDeveloper.Popup.getSelectedTab(function(tab)
+	{
+		chrome.tabs.create({ index: tab.index + 1, url: tabURL });
+		WebDeveloper.Analytics.trackFeature(featureItem);
+		WebDeveloper.Popup.close();
+	});	
 };
 	
 // Handles any popup requests	
@@ -131,9 +117,9 @@ WebDeveloper.Popup.request = function(request, sender, sendResponse)
 	if(request.type == "notification")
 	{
 		WebDeveloper.Popup.showSimpleNotification(request.notification);
-				 
-		 sendResponse({});
 	}
+
+	sendResponse({});
 };	
 	
 // Shows a complex notification	
@@ -172,6 +158,8 @@ WebDeveloper.Popup.toggleFeatureOnTab = function(featureItem, tab, scriptFile, s
 		chrome.extension.getBackgroundPage().WebDeveloper.Storage.toggleFeatureOnTab(feature, tab);
 		
 		featureItem.toggleClass("active");
+		
+		WebDeveloper.Analytics.trackToggleFeature(featureItem);
 	});
 };
 
@@ -190,6 +178,8 @@ WebDeveloper.Popup.toggleMenu = function()
 	menu.toggle();
 
 	chrome.extension.getBackgroundPage().WebDeveloper.Storage.toggleMenu(menu.attr("id"));
+		
+	WebDeveloper.Analytics.trackMenu(menu);
 };
 
 document.addEventListener("DOMContentLoaded", WebDeveloper.Popup.load, false);

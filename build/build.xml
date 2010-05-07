@@ -30,6 +30,7 @@
   <target name="clean.chrome" depends="initialize.chrome" description="Cleans up the build for Chrome">
     <echo level="info" message="Cleaning up the build for Chrome"/>
   	<delete dir="chrome"/>
+  	<delete dir="temp"/>
   	<delete file="web-developer-chrome.zip"/>
   </target>
 
@@ -45,6 +46,7 @@
       <filterset refid="chrome.filters"/>
     </copy>
     <copy todir="chrome/background/javascript">
+      <fileset dir="../source/common/javascript/analytics"/>
       <fileset dir="../source/chrome/javascript/background"/>
       <filterset refid="chrome.filters"/>
     </copy>
@@ -52,6 +54,7 @@
     <echo level="info" message="Building the content JavaScript"/>
     <concat destfile="chrome/content/content.js">
     	<fileset file="../source/common/javascript/common/common.js"/>
+    	<fileset file="../source/chrome/javascript/common/common.js"/>
     	<fileset file="../source/common/javascript/common/css.js"/>
     	<fileset file="../source/common/javascript/content/content.js"/>
     	<fileset file="../source/chrome/javascript/content/content.js"/>
@@ -62,12 +65,19 @@
       <filterset refid="chrome.filters"/>
     </copy>
     <copy file="../source/common/javascript/jquery.js" tofile="chrome/popup/javascript/jquery.js"/>
+    <copy file="../source/common/javascript/platform/platform.js" tofile="chrome/popup/javascript/platform.js"/>
     <copy todir="chrome/popup/javascript">
+      <fileset dir="../source/common/javascript/analytics"/>
       <fileset dir="../source/chrome/javascript/popup"/>
       <filterset refid="chrome.filters"/>
     </copy>
-    <copy file="../source/common/style-sheets/reset.css" tofile="chrome/popup/reset.css"/>
-    <copy file="../source/chrome/style-sheets/popup/popup.css" tofile="chrome/popup/popup.css"/>
+    <concat destfile="chrome/popup/popup.css">
+    	<fileset file="../source/common/style-sheets/common/reset.css"/>
+    	<fileset file="../source/common/style-sheets/common/common.css"/>
+    	<fileset file="../source/chrome/style-sheets/common/common.css"/>
+    	<fileset file="../source/chrome/style-sheets/popup/popup.css"/>
+    </concat>
+    <copy file="../images/chrome/common/notification.png" tofile="chrome/popup/images/notification.png"/>
     <copy file="../images/chrome/logos/icon.png" tofile="chrome/popup/images/icon.png"/>
     <copy todir="chrome/popup/images/toolbar">
       <fileset dir="../images/common/toolbar"/>
@@ -76,7 +86,7 @@
       <fileset dir="../images/chrome/popup"/>
     </copy>
 		    
-    <echo level="info" message="Building the feature JavaScript"/>
+    <echo level="info" message="Building the features"/>
     <copy todir="chrome/features/javascript">
       <fileset file="../source/common/javascript/features/css.js"/>
       <fileset file="../source/common/javascript/features/information.js"/>
@@ -94,21 +104,38 @@
     	<fileset file="../source/common/javascript/features/miscellaneous.js"/>
     	<fileset file="../source/chrome/javascript/features/miscellaneous.js"/>
     </concat>
-		    
-    <echo level="info" message="Building the feature style sheets"/>
     <copy todir="chrome/features/style-sheets">
       <fileset dir="../source/common/style-sheets/features"/>
     </copy>
-    <copy file="../source/common/style-sheets/reset.css" tofile="chrome/features/style-sheets/css/disable-browser-default-styles.css"/>
-		    
-    <echo level="info" message="Building the feature images"/>
+    <copy file="../source/common/style-sheets/common/reset.css" tofile="chrome/features/style-sheets/css/disable-browser-default-styles.css"/>
     <copy file="../images/common/transparent.png" tofile="chrome/features/style-sheets/images/transparent.png"/>
-		    
+
+    <echo level="info" message="Building the dashboard"/>
+    <concat destfile="temp/dashboard.js">
+    	<fileset file="../source/common/javascript/dashboard/dashboard.js"/>
+    	<fileset file="../source/chrome/javascript/dashboard/dashboard.js"/>
+    	<fileset file="../source/chrome/javascript/dashboard/edit-css.js"/>
+    </concat>
+    <copy file="temp/dashboard.js" tofile="chrome/dashboard/javascript/dashboard.js">
+      <filterset refid="chrome.filters"/>
+    </copy>
+    <copy file="../source/chrome/style-sheets/dashboard/dashboard.css" tofile="chrome/dashboard/style-sheets/dashboard.css"/>
+    <copy todir="chrome/dashboard/images">
+      <fileset dir="../images/common/dashboard"/>
+    </copy>
+
     <echo level="info" message="Building the generated pages"/>
+    <concat destfile="chrome/generated/generated.css">
+    	<fileset file="../source/common/style-sheets/common/reset.css"/>
+    	<fileset file="../source/common/style-sheets/common/common.css"/>
+    	<fileset file="../source/chrome/style-sheets/common/common.css"/>
+    	<fileset file="../source/common/style-sheets/generated/generated.css"/>
+    </concat>
     <copy todir="chrome/generated">
       <fileset dir="../source/common/html/generated"/>
-    	<fileset file="../source/common/style-sheets/reset.css"/>
-      <fileset dir="../source/common/style-sheets/generated"/>
+      <fileset dir="../source/common/style-sheets/generated">
+     		<exclude name="generated.css"/>
+      </fileset>
       <filterset refid="chrome.filters"/>
     </copy>
     <copy file="../source/common/javascript/jquery.js" tofile="chrome/generated/javascript/jquery.js"/>
@@ -121,12 +148,32 @@
       <fileset dir="../images/common/generated"/>
     </copy>
 		    
+    <echo level="info" message="Building the options page"/>
+    <copy file="../source/chrome/html/options/options.html" tofile="chrome/options/options.html">
+      <filterset refid="chrome.filters"/>
+    </copy>
+    <concat destfile="chrome/options/options.css">
+    	<fileset file="../source/common/style-sheets/common/reset.css"/>
+    	<fileset file="../source/common/style-sheets/common/common.css"/>
+    	<fileset file="../source/chrome/style-sheets/common/common.css"/>
+    	<fileset file="../source/chrome/style-sheets/options/options.css"/>
+    </concat>
+    <copy file="../source/common/javascript/jquery.js" tofile="chrome/options/javascript/jquery.js"/>
+    <copy file="../source/chrome/javascript/options/options.js" tofile="chrome/options/javascript/options.js"/>
+    <copy file="../images/chrome/common/notification.png" tofile="chrome/options/images/notification.png"/>
+    <copy file="../images/common/logos/favicon.ico" tofile="chrome/options/images/favicon.ico"/>
+    <copy file="../images/common/logos/16.png" tofile="chrome/options/images/logo.png"/>
+		    
     <echo level="info" message="Building the about page"/>
     <copy file="../source/chrome/html/about/about.html" tofile="chrome/about/about.html">
       <filterset refid="chrome.filters"/>
     </copy>
-    <copy file="../source/common/style-sheets/reset.css" tofile="chrome/about/reset.css"/>
-    <copy file="../source/chrome/style-sheets/about/about.css" tofile="chrome/about/about.css"/>
+    <concat destfile="chrome/about/about.css">
+    	<fileset file="../source/common/style-sheets/common/reset.css"/>
+    	<fileset file="../source/common/style-sheets/common/common.css"/>
+    	<fileset file="../source/chrome/style-sheets/common/common.css"/>
+    	<fileset file="../source/chrome/style-sheets/about/about.css"/>
+    </concat>
     <copy file="../images/common/logos/favicon.ico" tofile="chrome/about/images/favicon.ico"/>
     <copy file="../images/common/logos/64.png" tofile="chrome/about/images/logo.png"/>
 		    
@@ -151,7 +198,7 @@
   <target name="test" depends="initialize" description="Tests the extension">
 		<jslint options="indent=2,undef">
     	<formatter type="plain"/>
-    	<predef>$$,chrome,createTableCell,CSSPrimitiveValue,document,formatURL,Image,initializeCommonElements,localStorage,Node,NodeFilter,output,setPageTitle,setWindowTitle,WebDeveloper,window,XMLHttpRequest</predef>
+    	<predef>$$,chrome,createTableCell,CSSPrimitiveValue,document,formatURL,Image,initializeCommonElements,navigator,Node,NodeFilter,output,setPageTitle,setWindowTitle,WebDeveloper,window,XMLHttpRequest</predef>
     	<fileset dir="../source/chrome/javascript"/>
     	<fileset dir="../source/common/javascript" excludes="jquery.js"/>
   	</jslint>

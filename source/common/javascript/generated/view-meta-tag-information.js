@@ -1,17 +1,12 @@
 // Initializes the page with data
 function initialize(data)
 {
-	var container					 = null;
 	var contentDocument		 = null;
 	var documents					 = data.documents;
-	var form							 = null;
 	var metaTagDescription = null;
-	var formElement				 = null;
-	var formElements			 = null;
 	var metaTag						 = null;
 	var metaTags           = null;
 	var metaTagsLength     = null;
-	var list							 = null;
 	var row								 = null;
 	var table							 = null;
 	var url								 = null;
@@ -35,8 +30,8 @@ function initialize(data)
 		}
 
 		$("#content").append('<h2><span></span><a href="' + url + '">' + url + "</a></h2>");
-		$("#content").append('<h3 id="form-' + (i + 1) + '"><span></span>' + metaTagsLength + " " + metaTagDescription + "</h3>");
-		$("#jump-to ul").append('<li><a href="#form-' + (i + 1) + '">' + formatURL(url) + "</a></li>");	
+		$("#content").append('<h3 id="meta-tag-' + (i + 1) + '"><span></span>' + metaTagsLength + " " + metaTagDescription + "</h3>");
+		$("#jump-to ul").append('<li><a href="#meta-tag-' + (i + 1) + '">' + formatURL(url) + "</a></li>");	
 
 		// If there are meta tags
 		if(metaTagsLength > 0)

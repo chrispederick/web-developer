@@ -13,6 +13,7 @@ $(function()
 	$("#display-title-attributes").click(WebDeveloper.Popup.Information.displayTitleAttributes);
 	$("#display-topographic-information").click(WebDeveloper.Popup.Information.displayTopographicInformation);
 	$("#view-anchor-information").click(WebDeveloper.Popup.Information.viewAnchorInformation);
+	$("#view-document-outline").click(WebDeveloper.Popup.Information.viewDocumentOutline);
 	$("#view-link-information").click(WebDeveloper.Popup.Information.viewLinkInformation);
 	$("#view-meta-tag-information").click(WebDeveloper.Popup.Information.viewMetaTagInformation);
 	$("#view-javascript").click(WebDeveloper.Popup.Information.viewJavaScript);
@@ -159,11 +160,31 @@ WebDeveloper.Popup.Information.toggleFeatureOnTab = function(featureItem, tab, s
 // Displays the anchor information for a page
 WebDeveloper.Popup.Information.viewAnchorInformation = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
 	  chrome.tabs.sendRequest(tab.id, {type: "get-anchors"}, function(response) 
 	  {
-			WebDeveloper.Popup.openGeneratedTab(chrome.extension.getURL("generated/view-anchor-information.html"), tab, response);
+			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-anchor-information.html"), tab.index, response, featureItem);
+
+			WebDeveloper.Popup.close();
+	  });
+	});
+};
+
+// Displays the document outline
+WebDeveloper.Popup.Information.viewDocumentOutline = function()
+{
+	var featureItem = $(this);
+
+	WebDeveloper.Popup.getSelectedTab(function(tab)
+	{
+	  chrome.tabs.sendRequest(tab.id, {type: "get-document-outline"}, function(response) 
+	  {
+			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-document-outline.html"), tab.index, response, featureItem);
+
+			WebDeveloper.Popup.close();
 	  });
 	});
 };
@@ -171,11 +192,15 @@ WebDeveloper.Popup.Information.viewAnchorInformation = function()
 // Displays the JavaScript
 WebDeveloper.Popup.Information.viewJavaScript = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-	  chrome.tabs.sendRequest(tab.id, {type: "get-document-javascript"}, function(response) 
+	  chrome.tabs.sendRequest(tab.id, {type: "get-javascript"}, function(response) 
 	  {
-			WebDeveloper.Popup.openGeneratedTab(chrome.extension.getURL("generated/view-javascript.html"), tab, response);
+			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-javascript.html"), tab.index, response, featureItem);
+
+			WebDeveloper.Popup.close();
 	  });
 	});
 };
@@ -183,11 +208,15 @@ WebDeveloper.Popup.Information.viewJavaScript = function()
 // Displays the link information for a page
 WebDeveloper.Popup.Information.viewLinkInformation = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
 	  chrome.tabs.sendRequest(tab.id, {type: "get-links"}, function(response) 
 	  {
-			WebDeveloper.Popup.openGeneratedTab(chrome.extension.getURL("generated/view-link-information.html"), tab, response);
+			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-link-information.html"), tab.index, response, featureItem);
+
+			WebDeveloper.Popup.close();
 	  });
 	});
 };
@@ -195,11 +224,15 @@ WebDeveloper.Popup.Information.viewLinkInformation = function()
 // Displays the meta tag information for a page
 WebDeveloper.Popup.Information.viewMetaTagInformation = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
 	  chrome.tabs.sendRequest(tab.id, {type: "get-meta-tags"}, function(response) 
 	  {
-			WebDeveloper.Popup.openGeneratedTab(chrome.extension.getURL("generated/view-meta-tag-information.html"), tab, response);
+			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-meta-tag-information.html"), tab.index, response, featureItem);
+
+			WebDeveloper.Popup.close();
 	  });
 	});
 };
@@ -207,11 +240,15 @@ WebDeveloper.Popup.Information.viewMetaTagInformation = function()
 // Displays the response headers
 WebDeveloper.Popup.Information.viewResponseHeaders = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
 	  chrome.tabs.sendRequest(tab.id, {type: "get-document-details"}, function(response) 
 	  {
-			WebDeveloper.Popup.openGeneratedTab(chrome.extension.getURL("generated/view-response-headers.html"), tab, response);
+			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-response-headers.html"), tab.index, response, featureItem);
+
+			WebDeveloper.Popup.close();
 	  });
 	});
 };

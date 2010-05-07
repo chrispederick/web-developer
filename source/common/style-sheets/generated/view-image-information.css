@@ -1,5 +1,7 @@
 /* ! View image information styles */
 
 th { width: 100px; }
-tr:nth-child(even) td { background-color: #eee; }
-tr:nth-child(odd) td { background-color: #fff; }
+tr { border-style: none; }
+tr td { border-color: #ccc; border-style: solid; border-width: 1px 0; }
+tr:nth-child(even) td { background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)); text-shadow: 0 1px 0 #fff; }
+tr:nth-child(odd) td { background: none; text-shadow: none; }

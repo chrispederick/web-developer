@@ -5,7 +5,7 @@ WebDeveloper.Content.validateLocalCSS = function()
 {
 	var contentDocument = null;
 	var css							= "";
-	var documentCSS			= WebDeveloper.Content.getDocumentCSS();
+	var documentCSS			= WebDeveloper.Content.getCSS();
 	var documents				= documentCSS.documents;
 	var styleSheets			= [];
 
@@ -27,6 +27,12 @@ WebDeveloper.Content.validateLocalCSS = function()
 		var body	= WebDeveloper.Common.getDocumentBodyElement(document);
 		var form	= document.createElement("form");
 		var input = document.createElement("input");
+
+		// Loop through the style sheets
+		for(i = 0, l = response.length; i < l; i++)
+		{
+			css += response[i].content;
+		}
 		 
 		form.action	= "http://jigsaw.w3.org/css-validator/validator";
 		form.enctype = "multipart/form-data";
@@ -34,7 +40,7 @@ WebDeveloper.Content.validateLocalCSS = function()
 		form.target	= "_blank";
 		
 		input.name	= "text";
-		input.value = response.content + css;
+		input.value = css;
 		 
 		form.appendChild(input);
 
@@ -70,17 +76,17 @@ WebDeveloper.Content.request = function(request, sender, sendResponse)
 	{
 		sendResponse(WebDeveloper.Content.getBrokenImages());
 	}
-	else if(request.type == "get-document-css")
+	else if(request.type == "get-css")
 	{
-		sendResponse(WebDeveloper.Content.getDocumentCSS());
+		sendResponse(WebDeveloper.Content.getCSS());
 	}
 	else if(request.type == "get-document-details")
 	{
 		sendResponse(WebDeveloper.Content.getDocumentDetails());
 	}
-	else if(request.type == "get-document-javascript")
+	else if(request.type == "get-document-outline")
 	{
-		sendResponse(WebDeveloper.Content.getDocumentJavaScript());
+		sendResponse(WebDeveloper.Content.getDocumentOutline());
 	}
 	else if(request.type == "get-forms")
 	{
@@ -89,6 +95,10 @@ WebDeveloper.Content.request = function(request, sender, sendResponse)
 	else if(request.type == "get-images")
 	{
 		sendResponse(WebDeveloper.Content.getImages());
+	}
+	else if(request.type == "get-javascript")
+	{
+		sendResponse(WebDeveloper.Content.getJavaScript());
 	}
 	else if(request.type == "get-links")
 	{
@@ -110,9 +120,11 @@ WebDeveloper.Content.request = function(request, sender, sendResponse)
 	{
 		sendResponse(WebDeveloper.Content.validateLocalHTML());
 	}
-
-	// Unknown request	
-	sendResponse({});
+	else
+	{
+		// Unknown request	
+		sendResponse({});
+	}
 };
 
 chrome.extension.onRequest.addListener(WebDeveloper.Content.request);

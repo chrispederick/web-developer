@@ -5,7 +5,11 @@ WebDeveloper.Common = {};
 // Adds a class to an element
 WebDeveloper.Common.addClass = function(element, className)
 {
-	element.className = WebDeveloper.Common.trim(element.className + " " + className);
+	// If the element and class name are set and the element does not already have this class
+	if(element && className && !WebDeveloper.Common.hasClass(element, className))
+	{
+		element.className = WebDeveloper.Common.trim(element.className + " " + className);
+	}
 };
 
 // Returns the document body element
@@ -132,10 +136,83 @@ WebDeveloper.Common.getDocumentImages = function(contentDocument)
 	return uniqueImages;
 };
 
+// Returns the text from an element
+WebDeveloper.Common.getElementText = function(element)
+{
+  var elementText = "";
+
+  // If the element is set
+  if(element)
+  {
+    var childNode     = null;
+    var childNodes    = element.childNodes;
+    var childNodeType = null;
+
+    // Loop through the child nodes
+    for(var i = 0, l = childNodes.length; i < l; i++)
+    {
+      childNode     = childNodes[i];
+      childNodeType = childNode.nodeType;
+
+      // If the child node type is an element
+      if(childNodeType == Node.ELEMENT_NODE)
+      {
+        elementText += WebDeveloper.Common.getElementText(childNode);
+      }
+      else if(childNodeType == Node.TEXT_NODE)
+      {
+        elementText += childNode.nodeValue + " ";
+      }
+    }
+  }
+
+  return elementText;
+};
+
+// Returns true if an element has the specified class
+WebDeveloper.Common.hasClass = function(element, className)
+{
+	// If the element and class name are set
+	if(element && className)
+	{
+		var classes = element.className.split(" ");
+		
+		// Loop through the classes
+		for(var i = 0, l = classes.length; i < l; i++)
+		{
+			// If the classes match
+			if(className == classes[i])
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+};
+
 // Removes a class from an element
 WebDeveloper.Common.removeClass = function(element, className)
 {
-	element.className = WebDeveloper.Common.trim(WebDeveloper.Common.removeSubstring(element.className, className));
+	// If the element and class name are set
+	if(element && className)
+	{
+		var classes = element.className.split(" ");
+		
+		// Loop through the classes
+		for(var i = 0, l = classes.length; i < l; i++)
+		{
+			// If the classes match
+			if(className == classes[i])
+			{
+				classes.splice(i, 1);
+				
+				element.className = WebDeveloper.Common.trim(classes.join(" "));
+				
+				break;
+			}
+		}
+	}
 };
 
 // Removes all matching elements from a document
@@ -214,38 +291,6 @@ WebDeveloper.Common.sortImages = function(imageOne, imageTwo)
 	}
 
 	return 1;
-};
-
-// Toggles a style sheet in a document
-WebDeveloper.Common.toggleStyleSheet = function(url, id, contentDocument, insertFirst)
-{
-	var styleSheet = contentDocument.getElementById(id);
-	
-	// If the style sheet is already in the document
-	if(styleSheet)
-	{
-		WebDeveloper.Common.removeStyleSheet(id, contentDocument);
-	}
-	else
-	{
-		var headElement = WebDeveloper.Common.getDocumentHeadElement(contentDocument);
-		var firstChild	= headElement.firstChild;
-		var linkElement = contentDocument.createElement("link");
-
-		linkElement.setAttribute("href", chrome.extension.getURL(url));
-		linkElement.setAttribute("id", id);
-		linkElement.setAttribute("rel", "stylesheet");
-
-		// If there is a first child
-		if(insertFirst && firstChild)
-		{
-			 headElement.insertBefore(linkElement, firstChild);
-		}
-		else
-		{
-			 headElement.appendChild(linkElement);
-		}
-	}
 };
 
 // Trims a string

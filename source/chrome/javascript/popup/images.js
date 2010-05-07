@@ -22,9 +22,9 @@ $(function()
 });
 
 // Adds a feature on a tab
-WebDeveloper.Popup.Images.addFeatureOnTab = function(tab, scriptCode)
+WebDeveloper.Popup.Images.addFeatureOnTab = function(featureItem, tab, scriptCode)
 {
-	WebDeveloper.Popup.addFeatureOnTab(tab, "features/javascript/images.js", scriptCode);
+	WebDeveloper.Popup.addFeatureOnTab(featureItem, tab, "features/javascript/images.js", scriptCode);
 };
 	
 // Displays alt attributes for all images
@@ -72,11 +72,15 @@ WebDeveloper.Popup.Images.displayImagePaths = function()
 // Finds all the broken images on a page
 WebDeveloper.Popup.Images.findBrokenImages = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
 	  chrome.tabs.sendRequest(tab.id, {type: "get-broken-images"}, function(response) 
 	  {
-			WebDeveloper.Popup.openGeneratedTab(chrome.extension.getURL("generated/find-broken-images.html"), tab, response);
+			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/find-broken-images.html"), tab.index, response, featureItem);
+
+			WebDeveloper.Popup.close();
 	  });
 	});
 };
@@ -109,9 +113,11 @@ WebDeveloper.Popup.Images.hideImages = function()
 // Makes all images full size
 WebDeveloper.Popup.Images.makeImagesFullSize = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Images.addFeatureOnTab(tab, "WebDeveloper.Images.makeImagesFullSize(document);");
+		WebDeveloper.Popup.Images.addFeatureOnTab(featureItem, tab, "WebDeveloper.Images.makeImagesFullSize(document);");
 	});
 };
 	
@@ -238,11 +244,15 @@ WebDeveloper.Popup.Images.toggleFeatureOnTab = function(featureItem, tab, script
 // Displays all the images
 WebDeveloper.Popup.Images.viewImageInformation = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
 	  chrome.tabs.sendRequest(tab.id, {type: "get-images"}, function(response) 
 	  {
-			WebDeveloper.Popup.openGeneratedTab(chrome.extension.getURL("generated/view-image-information.html"), tab, response);
+			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-image-information.html"), tab.index, response, featureItem);
+
+			WebDeveloper.Popup.close();
 	  });
 	});
 };

@@ -17,35 +17,41 @@ $(function()
 });
 
 // Adds a feature on a tab
-WebDeveloper.Popup.Forms.addFeatureOnTab = function(tab, scriptCode)
+WebDeveloper.Popup.Forms.addFeatureOnTab = function(featureItem, tab, scriptCode)
 {
-	WebDeveloper.Popup.addFeatureOnTab(tab, "features/javascript/forms.js", scriptCode);
+	WebDeveloper.Popup.addFeatureOnTab(featureItem, tab, "features/javascript/forms.js", scriptCode);
 };
 	
 // Clears all radio buttons
 WebDeveloper.Popup.Forms.clearRadioButtons = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Forms.addFeatureOnTab(tab, "WebDeveloper.Forms.clearRadioButtons(document);");
+		WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.clearRadioButtons(document);");
 	});
 };
 	
 // Converts the methods of all forms
 WebDeveloper.Popup.Forms.convertFormMethods = function(method)
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Forms.addFeatureOnTab(tab, 'WebDeveloper.Forms.convertFormMethods("' + method + '", document);');
+		WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, 'WebDeveloper.Forms.convertFormMethods("' + method + '", document);');
 	});
 };
 	
 // Converts select elements to text inputs
 WebDeveloper.Popup.Forms.convertSelectElementsToTextInputs = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Forms.addFeatureOnTab(tab, "WebDeveloper.Forms.convertSelectElementsToTextInputs(document);");
+		WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.convertSelectElementsToTextInputs(document);");
 	});
 };
 	
@@ -66,56 +72,67 @@ WebDeveloper.Popup.Forms.displayFormDetails = function()
 // Enables auto completion on all elements
 WebDeveloper.Popup.Forms.enableAutoCompletion = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Forms.addFeatureOnTab(tab, "WebDeveloper.Forms.enableAutoCompletion(document);");
+		WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.enableAutoCompletion(document);");
 	});
 };
 	
 // Enables all form fields
 WebDeveloper.Popup.Forms.enableFormFields = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Forms.addFeatureOnTab(tab, "WebDeveloper.Forms.enableFormFields(document);");
+		WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.enableFormFields(document);");
 	});
 };
 	
 // Makes all form fields writable
 WebDeveloper.Popup.Forms.makeFormFieldsWritable = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Forms.addFeatureOnTab(tab, "WebDeveloper.Forms.makeFormFieldsWritable(document);");
+		WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.makeFormFieldsWritable(document);");
 	});
 };
 	
 // Populates all form fields
 WebDeveloper.Popup.Forms.populateFormFields = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Forms.addFeatureOnTab(tab, "WebDeveloper.Forms.populateFormFields(document);");
-		
-		window.close();
+		WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.populateFormFields(document);");
+		WebDeveloper.Popup.close();
 	});
 };
 	
 // Removes maximum lengths from all elements
 WebDeveloper.Popup.Forms.removeMaximumLengths = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Forms.addFeatureOnTab(tab, "WebDeveloper.Forms.removeMaximumLengths(document);");
+		WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.removeMaximumLengths(document);");
 	});
 };
 	
 // Shows all passwords
 WebDeveloper.Popup.Forms.showPasswords = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Forms.addFeatureOnTab(tab, "WebDeveloper.Forms.showPasswords(document);");
+		WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.showPasswords(document);");
 	});
 };
 
@@ -128,11 +145,15 @@ WebDeveloper.Popup.Forms.toggleFeatureOnTab = function(featureItem, tab, scriptC
 // Displays information about all forms
 WebDeveloper.Popup.Forms.viewFormInformation = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
 	  chrome.tabs.sendRequest(tab.id, {type: "get-forms"}, function(response) 
 	  {
-			WebDeveloper.Popup.openGeneratedTab(chrome.extension.getURL("generated/view-form-information.html"), tab, response);
+			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-form-information.html"), tab.index, response, featureItem);
+
+			WebDeveloper.Popup.close();
 	  });
 	});
 };

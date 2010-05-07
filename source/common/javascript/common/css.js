@@ -79,3 +79,22 @@ WebDeveloper.CSS.isValidStyleSheet = function(styleSheet)
 
   return false;
 };
+
+// Toggles all the style sheets in a document
+WebDeveloper.CSS.toggleAllStyleSheets = function(disable, contentDocument)
+{
+	var styleSheet  = null;
+  var styleSheets = contentDocument.styleSheets;
+
+  // Loop through the style sheets
+  for(var i = 0, l = styleSheets.length; i < l; i++)
+  {
+    styleSheet = styleSheets[i];
+
+    // If this is a valid style sheet and is not an alternate style sheet or style sheets are being disabled
+    if(WebDeveloper.CSS.isValidStyleSheet(styleSheet) && (!WebDeveloper.CSS.isAlternateStyleSheet(styleSheet) || disable))
+    {
+			styleSheet.disabled = disable;
+		}
+  }
+};

@@ -6,7 +6,7 @@ WebDeveloper.Content.getAnchors = function()
 	var anchor						 = null;
 	var anchors						 = {};
 	var contentDocument		 = null;
-	var contentDocuments	 = WebDeveloper.Content.getDocuments(document.defaultView);
+	var contentDocuments	 = WebDeveloper.Content.getDocuments(window);
 	var documentAllAnchors = null;
 	var documentAnchors		 = null;
 	var nonUniqueAnchors	 = null;
@@ -66,7 +66,7 @@ WebDeveloper.Content.getBrokenImages = function()
 {
 	var brokenImages			= {};
 	var contentDocument	  = null;
-	var contentDocuments	= WebDeveloper.Content.getDocuments(document.defaultView);
+	var contentDocuments	= WebDeveloper.Content.getDocuments(window);
 	var documentAllImages = null;
 	var documentImages		= null;
 	var image						  = null;
@@ -102,11 +102,11 @@ WebDeveloper.Content.getBrokenImages = function()
 	return brokenImages;
 };
 
-// Returns the CSS for the document
-WebDeveloper.Content.getDocumentCSS = function()
+// Returns all the CSS for the document
+WebDeveloper.Content.getCSS = function()
 {
 	var contentDocument	 = null;
-	var contentDocuments = WebDeveloper.Content.getDocuments(document.defaultView);
+	var contentDocuments = WebDeveloper.Content.getDocuments(window);
 	var css							 = {};
 	var documentCSS			 = null;
 	var embeddedStyles	 = null;
@@ -115,55 +115,61 @@ WebDeveloper.Content.getDocumentCSS = function()
 	
 	css.documents = [];
 	css.pageTitle = document.title;
-	css.pageURL	 = document.documentURI;
+	css.pageURL		= document.documentURI;
 
 	// Loop through the documents
 	for(var i = 0, l = contentDocuments.length; i < l; i++)
 	{
-		contentDocument = contentDocuments[i];
-		documentCSS			= {};
-		embeddedStyles	= "";
-		styleSheets			= contentDocument.querySelectorAll("style");
-	
-		documentCSS.url					= contentDocument.documentURI;
-		documentCSS.styleSheets = [];
-
-		 // Loop through the embedded style sheets
-		 for(var j = 0, m = styleSheets.length; j < m; j++)
-		 {
-			 styleSheet = styleSheets[j];
-	
-			 // If this is a valid style sheet
-			 if(WebDeveloper.CSS.isValidStyleSheet(styleSheet.sheet))
-			 {
-				 embeddedStyles += WebDeveloper.Common.trim(styleSheet.innerHTML) + "\n\n";
-			 }
-		 }
-
-		 styleSheets = contentDocument.styleSheets;
-	
-		 // Loop through the style sheets
-		 for(j = 0, m = styleSheets.length; j < m; j++)
-		 {
-			 styleSheet = styleSheets[j];
-	
-			 // If this is a valid style sheet and is not an inline style sheet
-			 if(WebDeveloper.CSS.isValidStyleSheet(styleSheet) && styleSheet.href && styleSheet.href != contentDocument.documentURI)
-			 {
-				documentCSS.styleSheets.push(styleSheet.href);
-			}
-		 }
-		
-		// If there are embedded styles
-		if(embeddedStyles)
-		{
-			documentCSS.embedded = embeddedStyles;
-		}
-		
-		css.documents.push(documentCSS);
+		css.documents.push(WebDeveloper.Content.getDocumentCSS(contentDocuments[i]));
 	}
 	
 	return css;
+};
+
+// Returns the CSS for the specified document
+WebDeveloper.Content.getDocumentCSS = function(contentDocument)
+{
+	var documentCSS		 = {};
+	var embeddedStyles = "";
+	var styleSheet		 = null;
+	var styleSheets		 = contentDocument.querySelectorAll("style");
+
+	documentCSS.url					= contentDocument.documentURI;
+	documentCSS.styleSheets = [];
+
+	// Loop through the embedded style sheets
+	for(var i = 0, l = styleSheets.length; i < l; i++)
+	{
+		styleSheet = styleSheets[i];
+		
+		// If this is a valid style sheet
+		if(WebDeveloper.CSS.isValidStyleSheet(styleSheet.sheet))
+		{
+			embeddedStyles += WebDeveloper.Common.trim(styleSheet.innerHTML) + "\n\n";
+		}
+	}
+	
+	styleSheets = contentDocument.styleSheets;
+	
+	// Loop through the style sheets
+	for(i = 0, l = styleSheets.length; i < l; i++)
+	{
+		styleSheet = styleSheets[i];
+		
+		// If this is a valid style sheet and is not an inline style sheet
+		if(WebDeveloper.CSS.isValidStyleSheet(styleSheet) && styleSheet.href && styleSheet.href != contentDocument.documentURI)
+		{
+			documentCSS.styleSheets.push(styleSheet.href);
+		}
+	}
+	
+	// If there are embedded styles
+	if(embeddedStyles)
+	{
+		documentCSS.embedded = embeddedStyles;
+	}
+		
+	return documentCSS;
 };
 
 // Returns the details for the document
@@ -177,58 +183,74 @@ WebDeveloper.Content.getDocumentDetails = function()
 	return documentDetails;
 };
 
-// Returns the JavaScript for the document
-WebDeveloper.Content.getDocumentJavaScript = function()
+// Returns the outline for a document
+WebDeveloper.Content.getDocumentOutline = function()
 {
-	var contentDocument		 = null;
-	var contentDocuments	 = WebDeveloper.Content.getDocuments(document.defaultView);
-	var documentJavaScript = null;
-	var embeddedJavaScript = null;
-	var javaScript				 = {};
-	var script						 = null;
-	var scripts						 = null;
+	var contentDocument		  = null;
+	var contentDocuments	  = WebDeveloper.Content.getDocuments(window);
+	var documentAllHeadings = null;
+	var documentHeading			= null;
+	var documentHeadings	  = null;
+	var documentOutline		  = null;
+	var heading						  = null;
+	var headingImages       = null;
+	var headingText				  = null;
+	var outline						  = {};
 	
-	javaScript.documents = [];
-	javaScript.pageTitle = document.title;
-	javaScript.pageURL	 = document.documentURI;
+	outline.documents = [];
+	outline.pageTitle = document.title;
+	outline.pageURL	  = document.documentURI;
 
 	// Loop through the documents
 	for(var i = 0, l = contentDocuments.length; i < l; i++)
 	{
-		contentDocument		 = contentDocuments[i];
-		documentJavaScript = {};
-		embeddedJavaScript = "";
-		scripts						 = contentDocument.querySelectorAll("script");
-	
-		documentJavaScript.url				= contentDocument.documentURI;
-		documentJavaScript.javaScript = [];
+		contentDocument					 = contentDocuments[i];
+		documentAllHeadings			 = contentDocument.querySelectorAll("h1, h2, h3, h4, h5, h6");
+		documentOutline					 = {};
+		documentOutline.headings = [];
+		documentOutline.url			 = contentDocument.documentURI;
 
-		// Loop through the scripts
-		for(var j = 0, m = scripts.length; j < m; j++)
+		// Loop through the headers
+		for(var j = 0, m = documentAllHeadings.length; j < m; j++)
 		{
-			script = scripts[j];
-	
-			// If this is a valid external script
-			if(script.src)
-			{
-				documentJavaScript.javaScript.push(script.src);
-			}
-			else
-			{
-				embeddedJavaScript += WebDeveloper.Common.trim(script.innerHTML) + "\n\n";
-			}
+			documentHeading			  = {};
+			heading								= documentAllHeadings[j];
+      headingText						= WebDeveloper.Common.trim(WebDeveloper.Common.getElementText(heading));
+			documentHeading.level = parseInt(heading.tagName.toLowerCase().substring(1), 10);
+		 
+      // If there is no heading text
+      if(!headingText)
+      {
+				headingImages = heading.querySelectorAll("img[alt]");
+ 
+				// Loop through the heading images
+				for(var k = 0, n = headingImages.length; k < n; k++)
+				{
+					headingText += headingImages[k].getAttribute("alt") + " ";
+				}
+           
+				headingText = WebDeveloper.Common.trim(headingText);
+           
+				// If there is heading text
+				if(headingText)
+				{
+					headingText = "[" + headingText + "]";
+				}
+				else
+				{
+					headingText = "[No heading text]";
+				}
+      }
+
+			documentHeading.text = headingText;
+			
+			documentOutline.headings.push(documentHeading);
 		}
-		
-		// If there is embedded JavaScript
-		if(embeddedJavaScript)
-		{
-			documentJavaScript.embedded = embeddedJavaScript;
-		}
-		
-		javaScript.documents.push(documentJavaScript);
+
+		outline.documents.push(documentOutline);
 	}
 	
-	return javaScript;
+	return outline;
 };
 
 // Returns all the documents under a frame
@@ -262,7 +284,7 @@ WebDeveloper.Content.getForms = function()
 {
 	var allForms						= null;
 	var contentDocument		  = null;
-	var contentDocuments		= WebDeveloper.Content.getDocuments(document.defaultView);
+	var contentDocuments		= WebDeveloper.Content.getDocuments(window);
 	var documentForm				= null;
 	var documentFormElement = null;
 	var documentForms			  = null;
@@ -383,7 +405,7 @@ WebDeveloper.Content.getImages = function()
 {
 	var allImages				 = null;
 	var contentDocument	 = null;
-	var contentDocuments = WebDeveloper.Content.getDocuments(document.defaultView);
+	var contentDocuments = WebDeveloper.Content.getDocuments(window);
 	var documentImage		 = null;
 	var documentImages	 = null;
 	var image						 = null;
@@ -427,11 +449,65 @@ WebDeveloper.Content.getImages = function()
 	return images;
 };
 
+// Returns any JavaScript for the document
+WebDeveloper.Content.getJavaScript = function()
+{
+	var contentDocument		 = null;
+	var contentDocuments	 = WebDeveloper.Content.getDocuments(window);
+	var documentJavaScript = null;
+	var embeddedJavaScript = null;
+	var javaScript				 = {};
+	var script						 = null;
+	var scripts						 = null;
+	
+	javaScript.documents = [];
+	javaScript.pageTitle = document.title;
+	javaScript.pageURL	 = document.documentURI;
+
+	// Loop through the documents
+	for(var i = 0, l = contentDocuments.length; i < l; i++)
+	{
+		contentDocument		 = contentDocuments[i];
+		documentJavaScript = {};
+		embeddedJavaScript = "";
+		scripts						 = contentDocument.querySelectorAll("script");
+	
+		documentJavaScript.url				= contentDocument.documentURI;
+		documentJavaScript.javaScript = [];
+
+		// Loop through the scripts
+		for(var j = 0, m = scripts.length; j < m; j++)
+		{
+			script = scripts[j];
+	
+			// If this is a valid external script
+			if(script.src)
+			{
+				documentJavaScript.javaScript.push(script.src);
+			}
+			else
+			{
+				embeddedJavaScript += WebDeveloper.Common.trim(script.innerHTML) + "\n\n";
+			}
+		}
+		
+		// If there is embedded JavaScript
+		if(embeddedJavaScript)
+		{
+			documentJavaScript.embedded = embeddedJavaScript;
+		}
+		
+		javaScript.documents.push(documentJavaScript);
+	}
+	
+	return javaScript;
+};
+
 // Returns any links in the document
 WebDeveloper.Content.getLinks = function()
 {
 	var contentDocument	 = null;
-	var contentDocuments = WebDeveloper.Content.getDocuments(document.defaultView);
+	var contentDocuments = WebDeveloper.Content.getDocuments(window);
 	var documentAllLinks = null;
 	var documentLinks		 = null;
 	var link						 = null;
@@ -484,7 +560,7 @@ WebDeveloper.Content.getLinks = function()
 WebDeveloper.Content.getMetaTags = function()
 {
 	var contentDocument		  = null;
-	var contentDocuments		= WebDeveloper.Content.getDocuments(document.defaultView);
+	var contentDocuments		= WebDeveloper.Content.getDocuments(window);
 	var documentAllMetaTags = null;
 	var documentMetaTag		  = null;
 	var documentMetaTags		= null;
@@ -507,18 +583,24 @@ WebDeveloper.Content.getMetaTags = function()
 		// Loop through the meta tags
 		for(var j = 0, m = documentAllMetaTags.length; j < m; j++)
 		{
-			documentMetaTag					= {};
-			metaTag									= documentAllMetaTags[j];
-			documentMetaTag.content = metaTag.getAttribute("content");
+			documentMetaTag	= {};
+			metaTag					= documentAllMetaTags[j];
 		 
 			// If the meta tag has a name attribute
 			if(metaTag.hasAttribute("name"))
 			{
-				documentMetaTag.name = metaTag.getAttribute("name");
+				documentMetaTag.content = metaTag.getAttribute("content");
+				documentMetaTag.name    = metaTag.getAttribute("name");
 			}
 			else if(metaTag.hasAttribute("http-equiv"))
 			{
-				documentMetaTag.name = metaTag.getAttribute("http-equiv");
+				documentMetaTag.content = metaTag.getAttribute("content");
+				documentMetaTag.name    = metaTag.getAttribute("http-equiv");
+			}
+			else if(metaTag.hasAttribute("charset"))
+			{
+				documentMetaTag.content = metaTag.getAttribute("charset");
+				documentMetaTag.name    = "charset";
 			}
 
 			documentMetaTags.metaTags.push(documentMetaTag);

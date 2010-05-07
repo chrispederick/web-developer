@@ -28,8 +28,8 @@ function initialize(data)
 		}
 	
 		$("#content").append('<h2><span></span><a href="' + url + '">' + url + "</a></h2>");
-		$("#jump-to ul").append('<li><a href="#image-' + (i + 1) + '">' + formatURL(url) + "</a></li>");
 		$("#content").append('<h3 id="image-' + (i + 1) + '"><span></span>' + imagesLength + " " + imageDescription + "</h3>");
+		$("#jump-to ul").append('<li><a href="#image-' + (i + 1) + '">' + formatURL(url) + "</a></li>");
 
 		// If there are broken images
 		if(imagesLength > 0)

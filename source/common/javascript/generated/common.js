@@ -63,7 +63,7 @@ function output(content, title, url, jumpTitle, jumpLink)
 // Sets the page title
 function setPageTitle(type, data)
 {
-	$("h1").html(type + " from " + data.pageTitle + '<span><a href="' + data.pageURL + '">' + data.pageURL + "</a></span>");
+	$("h1").html(type + " from " + data.pageTitle + ' <span><a href="' + data.pageURL + '">' + data.pageURL + "</a></span>");
 }
 
 // Sets the window title

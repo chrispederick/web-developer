@@ -22,13 +22,15 @@ WebDeveloper.Popup.Resize.cancelResizeWindow = function()
 // Resizes the window to a custom size
 WebDeveloper.Popup.Resize.customResizeWindow = function()
 {
-	var size = $(this).attr("id").replace(/resize-/, "").split("x");
+	var featureItem = $(this);
+	var size				= featureItem.attr("id").replace(/resize-/, "").split("x");
 
 	WebDeveloper.Popup.getSelectedWindow(function(selectedWindow)
 	{
 		chrome.windows.update(selectedWindow.id, {height: parseInt(size[1], 10), width: parseInt(size[0], 10)}, function()
 		{
-			window.close();
+			WebDeveloper.Analytics.trackFeature(featureItem);
+			WebDeveloper.Popup.close();
 		});
 	});
 };
@@ -36,6 +38,8 @@ WebDeveloper.Popup.Resize.customResizeWindow = function()
 // Displays the window size
 WebDeveloper.Popup.Resize.displayWindowSize = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
 		chrome.tabs.sendRequest(tab.id, {type: "get-window-size"}, function(response) 
@@ -44,6 +48,8 @@ WebDeveloper.Popup.Resize.displayWindowSize = function()
 			var windowSize	 = "<tr><th>Window</th><td>Width: " + response.outerWidth + "px</td><td>Height: " + response.outerHeight + "px</td></tr>";
 		 
 			WebDeveloper.Popup.showComplexNotification("<table>" + windowSize + viewportSize + "</table>");
+
+			WebDeveloper.Analytics.trackFeature(featureItem);
 		});
 	});
 };
@@ -51,6 +57,8 @@ WebDeveloper.Popup.Resize.displayWindowSize = function()
 // Resizes the window
 WebDeveloper.Popup.Resize.resizeWindow = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
 		chrome.tabs.sendRequest(tab.id, {type: "get-window-size"}, function(response) 
@@ -60,6 +68,8 @@ WebDeveloper.Popup.Resize.resizeWindow = function()
 
 			$("#toolbar, .menu, #notification").hide();
 			$("#resize-window-dialog").show();
+
+			WebDeveloper.Analytics.trackFeature(featureItem);
 		});
 	});
 };

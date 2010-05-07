@@ -10,6 +10,7 @@ $(function()
 	$("#disable-print-styles").click(WebDeveloper.Popup.CSS.disablePrintStyles);
 	$("#display-handheld-styles").click(WebDeveloper.Popup.CSS.displayHandheldStyles);
 	$("#display-print-styles").click(WebDeveloper.Popup.CSS.displayPrintStyles);
+	$("#edit-css").click(WebDeveloper.Popup.CSS.editCSS);
 	$("#view-css").click(WebDeveloper.Popup.CSS.viewCSS);
 });
 	
@@ -139,6 +140,21 @@ WebDeveloper.Popup.CSS.displayPrintStyles = function()
 		WebDeveloper.Popup.CSS.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.CSS.toggleMediaTypeStyles("print", ' + display + ', document);');
 	});
 };
+	
+// Edits the CSS of the page
+WebDeveloper.Popup.CSS.editCSS = function()
+{
+	var featureItem = $(this);
+
+	WebDeveloper.Popup.getSelectedTab(function(tab)
+	{
+		var feature = featureItem.attr("id");
+    var edit    = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+		
+		WebDeveloper.Popup.toggleFeatureOnTab(featureItem, tab, "dashboard/javascript/dashboard.js", "WebDeveloper.Dashboard.editCSS(" + edit + ", document);");
+		WebDeveloper.Popup.close();
+	});
+};
 
 // Toggles a feature on a tab
 WebDeveloper.Popup.CSS.toggleFeatureOnTab = function(featureItem, tab, scriptCode)
@@ -149,11 +165,15 @@ WebDeveloper.Popup.CSS.toggleFeatureOnTab = function(featureItem, tab, scriptCod
 // Displays the CSS
 WebDeveloper.Popup.CSS.viewCSS = function()
 {
+	var featureItem = $(this);
+
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-	  chrome.tabs.sendRequest(tab.id, {type: "get-document-css"}, function(response) 
+	  chrome.tabs.sendRequest(tab.id, {type: "get-css"}, function(response) 
 	  {
-			WebDeveloper.Popup.openGeneratedTab(chrome.extension.getURL("generated/view-css.html"), tab, response);
+			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-css.html"), tab.index, response, featureItem);
+
+			WebDeveloper.Popup.close();
 	  });
 	});
 };

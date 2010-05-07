@@ -28,8 +28,8 @@ function initialize(data)
 		}
 	
 		$("#content").append('<h2><span></span><a href="' + url + '">' + url + "</a></h2>");
-		$("#jump-to ul").append('<li><a href="#image-' + (i + 1) + '">' + formatURL(url) + "</a></li>");
-		$("#content").append('<h3 id="image-' + (i + 1) + '"><span></span>' + linksLength + " " + linkDescription + "</h3>");
+		$("#content").append('<h3 id="link-' + (i + 1) + '"><span></span>' + linksLength + " " + linkDescription + "</h3>");
+		$("#jump-to ul").append('<li><a href="#link-' + (i + 1) + '">' + formatURL(url) + "</a></li>");
 
 		// If there are links
 		if(linksLength > 0)
