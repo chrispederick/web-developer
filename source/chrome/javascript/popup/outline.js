@@ -24,10 +24,14 @@ WebDeveloper.Popup.Outline.outlineAbsolutePositionedElements = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("absolute", ' + outline + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("absolute", ' + outline + ", document);");
+		}
 	});
 };
 	
@@ -38,7 +42,11 @@ WebDeveloper.Popup.Outline.outlineBlockLevelElements = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineBlockLevelElements(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineBlockLevelElements(document);");
+		}
 	});
 };
 	
@@ -49,7 +57,11 @@ WebDeveloper.Popup.Outline.outlineDeprecatedElements = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineDeprecatedElements(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineDeprecatedElements(document);");
+		}
 	});
 };
 	
@@ -60,10 +72,14 @@ WebDeveloper.Popup.Outline.outlineExternalLinks = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineExternalLinks(" + outline + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineExternalLinks(" + outline + ", document);");
+		}
 	});
 };
 	
@@ -74,10 +90,14 @@ WebDeveloper.Popup.Outline.outlineFixedPositionedElements = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("fixed", ' + outline + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("fixed", ' + outline + ", document);");
+		}
 	});
 };
 	
@@ -88,10 +108,14 @@ WebDeveloper.Popup.Outline.outlineFloatedElements = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineFloatedElements(" + outline + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineFloatedElements(" + outline + ", document);");
+		}
 	});
 };
 	
@@ -102,7 +126,11 @@ WebDeveloper.Popup.Outline.outlineFrames = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineFrames(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineFrames(document);");
+		}
 	});
 };
 	
@@ -113,7 +141,11 @@ WebDeveloper.Popup.Outline.outlineHeadings = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineHeadings(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineHeadings(document);");
+		}
 	});
 };
 	
@@ -124,7 +156,11 @@ WebDeveloper.Popup.Outline.outlineNonSecureElements = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineNonSecureElements(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineNonSecureElements(document);");
+		}
 	});
 };
 	
@@ -135,10 +171,14 @@ WebDeveloper.Popup.Outline.outlineRelativePositionedElements = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("relative", ' + outline + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("relative", ' + outline + ", document);");
+		}
 	});
 };
 	
@@ -149,7 +189,11 @@ WebDeveloper.Popup.Outline.outlineTableCaptions = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTableCaptions(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTableCaptions(document);");
+		}
 	});
 };
 	
@@ -160,7 +204,11 @@ WebDeveloper.Popup.Outline.outlineTableCells = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTableCells(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTableCells(document);");
+		}
 	});
 };
 	
@@ -171,7 +219,11 @@ WebDeveloper.Popup.Outline.outlineTables = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTables(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTables(document);");
+		}
 	});
 };
 

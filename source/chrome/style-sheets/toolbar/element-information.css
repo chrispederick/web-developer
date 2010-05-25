@@ -1,0 +1,5 @@
+/* ! Element information styles */
+
+.web-developer-toolbar div { position: relative !important; }
+.web-developer-toolbar h1 { position: absolute !important; }
+.web-developer-toolbar p { font-family: monospace !important; font-size: 11px !important; height: 11px !important; margin: 0 10px 0 350px !important; overflow: hidden !important; position: relative !important; top: 2px !important; word-wrap: break-word !important; }

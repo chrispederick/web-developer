@@ -1,5 +1,43 @@
 WebDeveloper.CSS = WebDeveloper.CSS || {};
 
+// Reloads the CSS in a document
+WebDeveloper.CSS.reloadCSS = function(contentDocument)
+{
+	var ownerNode     = null;
+	var styleSheet    = null;
+  var styleSheets   = contentDocument.styleSheets;
+  var styleSheetURL = null;
+
+  // Loop through the style sheets
+  for(var i = 0, l = styleSheets.length; i < l; i++)
+  {
+    styleSheet = styleSheets[i];
+
+    // If this is a valid style sheet, the URL is set and it is not an inline style sheet
+    if(WebDeveloper.CSS.isValidStyleSheet(styleSheet) && styleSheet.href && styleSheet.href != contentDocument.documentURI)
+    {
+			ownerNode			= styleSheet.ownerNode;			
+			styleSheetURL = styleSheet.href.replace(/(&|\?)web-developer-reload=\d+/, "");
+			
+			// If the style sheet URL does not have query parameters
+			if(styleSheetURL.indexOf("?") == -1)
+			{
+				styleSheetURL += "?";
+			}
+			else
+			{
+				styleSheetURL += "&";
+			}
+
+			// If the owner node is set
+			if(ownerNode)
+			{
+				styleSheet.ownerNode.href = styleSheetURL + "web-developer-reload=" + new Date().getTime();
+			}
+		}
+  }
+};
+
 // Toggles all the styles in a document
 WebDeveloper.CSS.toggleAllStyles = function(disable, contentDocument)
 {

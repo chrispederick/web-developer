@@ -15,11 +15,10 @@
 </div>
 
 <div id="content">
-	<input type="checkbox" id="analytics">
-	<label for="analytics">
-		Send anonymous information about which features are being used in the extension
-		(<a href="@url@privacy/#analytics">Privacy policy</a>)
-	</label>
+	<input type="checkbox" id="analytics" disabled>
+	<label for="analytics">Send anonymous information about which features are being used in the extension</label>
+	<strong>Analytics are disabled as they were causing issues for some users</strong>
+	(<a href="@url@privacy/#analytics">Privacy policy</a>)
 	
 	<div id="notification">
 		<span class="icon"></span>
@@ -27,7 +26,7 @@
 	</div>
 	
 	<div id="buttons">
-		<input type="submit" value="Save" id="save">
+		<input type="submit" value="Save" id="save" disabled>
 		<input type="submit" value="Cancel" id="cancel">
 	</div>
 </div>

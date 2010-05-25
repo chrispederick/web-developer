@@ -64,11 +64,15 @@ WebDeveloper.Popup.Tools.validateLocalCSS = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-	  chrome.tabs.sendRequest(tab.id, {type: "validate-local-css"}, function(response) 
-	  {
-			WebDeveloper.Analytics.trackFeature(featureItem);
-			WebDeveloper.Popup.close();
-	  });
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+		  chrome.tabs.sendRequest(tab.id, {type: "validate-local-css"}, function(response) 
+		  {
+				WebDeveloper.Analytics.trackFeature(featureItem);
+				WebDeveloper.Popup.close();
+		  });
+		}
 	});
 };
 	
@@ -79,11 +83,15 @@ WebDeveloper.Popup.Tools.validateLocalHTML = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-	  chrome.tabs.sendRequest(tab.id, {type: "validate-local-html"}, function(response) 
-	  {
-			WebDeveloper.Analytics.trackFeature(featureItem);
-			WebDeveloper.Popup.close();
-	  });
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+		  chrome.tabs.sendRequest(tab.id, {type: "validate-local-html"}, function(response) 
+		  {
+				WebDeveloper.Analytics.trackFeature(featureItem);
+				WebDeveloper.Popup.close();
+		  });
+		}
 	});
 };
 	

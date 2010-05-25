@@ -110,7 +110,7 @@
     <copy file="../source/common/style-sheets/common/reset.css" tofile="chrome/features/style-sheets/css/disable-browser-default-styles.css"/>
     <copy file="../images/common/transparent.png" tofile="chrome/features/style-sheets/images/transparent.png"/>
 
-    <echo level="info" message="Building the dashboard"/>
+    <echo level="info" message="Building the dashboard features"/>
     <concat destfile="temp/dashboard.js">
     	<fileset file="../source/common/javascript/dashboard/dashboard.js"/>
     	<fileset file="../source/chrome/javascript/dashboard/dashboard.js"/>
@@ -123,6 +123,41 @@
     <copy todir="chrome/dashboard/images">
       <fileset dir="../images/common/dashboard"/>
     </copy>
+    <copy file="../images/common/logos/16.png" tofile="chrome/dashboard/images/logo.png"/>
+
+    <echo level="info" message="Building the toolbar features"/>
+    <copy file="../source/chrome/javascript/toolbar/color-picker.js" tofile="chrome/toolbar/javascript/color-picker.js">
+      <filterset refid="chrome.filters"/>
+    </copy>
+    <concat destfile="temp/element-information.js">
+    	<fileset file="../source/common/javascript/toolbar/element-information.js"/>
+    	<fileset file="../source/chrome/javascript/toolbar/element-information.js"/>
+    </concat>
+    <copy file="temp/element-information.js" tofile="chrome/toolbar/javascript/element-information.js">
+      <filterset refid="chrome.filters"/>
+    </copy>
+    <concat destfile="temp/ruler.js">
+    	<fileset file="../source/common/javascript/toolbar/ruler.js"/>
+    	<fileset file="../source/chrome/javascript/toolbar/ruler.js"/>
+    </concat>
+    <copy file="temp/ruler.js" tofile="chrome/toolbar/javascript/ruler.js">
+      <filterset refid="chrome.filters"/>
+    </copy>
+    <concat destfile="chrome/toolbar/color-picker.css">
+    	<fileset file="../source/chrome/style-sheets/toolbar/toolbar.css"/>
+    	<fileset file="../source/chrome/style-sheets/toolbar/color-picker.css"/>
+    </concat>
+    <concat destfile="chrome/toolbar/element-information.css">
+    	<fileset file="../source/chrome/style-sheets/toolbar/toolbar.css"/>
+    	<fileset file="../source/common/style-sheets/toolbar/element-information.css"/>
+    	<fileset file="../source/chrome/style-sheets/toolbar/element-information.css"/>
+    </concat>
+    <concat destfile="chrome/toolbar/ruler.css">
+    	<fileset file="../source/chrome/style-sheets/toolbar/toolbar.css"/>
+    	<fileset file="../source/common/style-sheets/toolbar/ruler.css"/>
+    	<fileset file="../source/chrome/style-sheets/toolbar/ruler.css"/>
+    </concat>
+    <copy file="../images/common/logos/16.png" tofile="chrome/toolbar/images/logo.png"/>
 
     <echo level="info" message="Building the generated pages"/>
     <concat destfile="chrome/generated/generated.css">

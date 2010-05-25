@@ -21,7 +21,7 @@ WebDeveloper.Options.cancel = function()
 WebDeveloper.Options.load = function()
 {
 	// If analytics are not disabled
-	if(!window.localStorage.getItem("disable-analytics"))
+	if(!window.localStorage.getItem("disable-analytics") && false)
 	{
 		$("#analytics").get(0).checked = true; 
 	}

@@ -5,6 +5,7 @@ WebDeveloper.Popup = WebDeveloper.Popup || {};
 $(function() 
 { 
 	$("#toolbar li").click(WebDeveloper.Popup.toggleMenu);
+	$("a").live("click", WebDeveloper.Popup.openURL);
 });
 	
 // Adds a feature on a tab
@@ -19,8 +20,6 @@ WebDeveloper.Popup.addFeatureOnTab = function(featureItem, tab, scriptFile, scri
 // Adds a script to the tab
 WebDeveloper.Popup.addScriptToTab = function(tab, script, callback)
 {
-	script.allFrames = true;
-
 	chrome.tabs.executeScript(tab.id, script, callback);
 };
 	
@@ -62,6 +61,34 @@ WebDeveloper.Popup.getSelectedTab = function(callback)
 WebDeveloper.Popup.getSelectedWindow = function(callback)
 {
 	chrome.windows.getCurrent(callback);
+};
+
+// Returns true if this is a valid tab
+WebDeveloper.Popup.isValidTab = function(tab)
+{
+	var url = tab.url;
+
+	// If this is a chrome URL
+	if(url.indexOf("chrome://") === 0)
+	{
+		WebDeveloper.Popup.showSimpleNotification('The @name@ extension does not work on internal browser pages.');	
+
+		return false;
+	}
+	else if(url.indexOf("file://") === 0)
+	{
+		WebDeveloper.Popup.showSimpleNotification('The @name@ extension does not work on local files. Please <a href="@url@faq/#local-files-gallery">read the FAQ</a> for more information.');	
+
+		return false;
+	}
+	else if(url.indexOf("https://chrome.google.com/extensions/") === 0)
+	{
+		WebDeveloper.Popup.showSimpleNotification('The @name@ extension does not work on the Chrome Extension Gallery. Please <a href="@url@faq/#local-files-gallery">read the FAQ</a> for more information.');	
+
+		return false;
+	}
+	
+	return true;
 };
 
 // Handles the popup loading
@@ -106,6 +133,18 @@ WebDeveloper.Popup.openTab = function(tabURL, featureItem)
 	{
 		chrome.tabs.create({ index: tab.index + 1, url: tabURL });
 		WebDeveloper.Analytics.trackFeature(featureItem);
+		WebDeveloper.Popup.close();
+	});	
+};
+
+// Opens a URL in the popup
+WebDeveloper.Popup.openURL = function()
+{
+	var href = $(this).attr("href");
+
+	WebDeveloper.Popup.getSelectedTab(function(tab)
+	{
+		chrome.tabs.create({ index: tab.index + 1, url: href });
 		WebDeveloper.Popup.close();
 	});	
 };

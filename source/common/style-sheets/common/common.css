@@ -5,17 +5,19 @@ a { border-bottom: 1px solid #000; color: #000; text-decoration: none; }
 a:focus, a:hover { border-bottom-color: #999; color: #999; }
 a abbr { border-bottom-style: none; }
 abbr { border-bottom: 1px dotted #000; cursor: help; }
-blockquote { margin-top: 20px; }
+blockquote { margin: 20px 0; padding: 10px; }
+blockquote, tr:nth-child(even) td { background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)); border-bottom: 1px solid #ccc; text-shadow: 0 1px 0 #fff; }
 body { background-color: #fff; color: #000; }
-body, input, textarea { font: 13px/1 "Helvetica Neue", Arial, Helvetica, sans-serif; font-weight: 300; }
+body, input, textarea { font: 13px/1 verdana, "bitstream vera sans", sans-serif; }
 dd, dt, h3, h4, li, p { line-height: 20px; }
-dt, h1, h2, h3, h4 { font-family: "Gill Sans", Trebuchet, Calibri, sans-serif; font-weight: normal; letter-spacing: 1px; text-transform: uppercase; }
+dt, h1, h2, h3, h4, th { font-family: "gill sans", verdana, "bitstream vera sans", sans-serif; font-weight: normal; letter-spacing: 1px; text-transform: uppercase; }
+em { font-style: italic; }
 h1 { font-size: 29px; line-height: 35px; margin-bottom: 5px; }
 h2 { font-size: 21px; line-height: 25px; margin-bottom: 15px; }
 h3 { font-size: 19px; line-height: 21px; margin: 20px 0 19px 0; }
-input[type=search], input[type=text], textarea { background-color: #fff; border: 1px inset #ccc; color: #000; cursor: text; padding: 5px; }
+input[type=email], input[type=search], input[type=text], input[type=url], input:not([type]), textarea { background-color: #fff; border: 1px inset #ccc; color: #000; cursor: text; padding: 5px; }
 input[type=submit] { cursor: pointer; }
-kbd, pre { font: 13px/1 Consolas, "Lucida Console", Monaco, monospace; }
+kbd, pre { font: 13px/1 consolas, "lucida console", monaco, monospace; }
 label { clear: both; float: left; margin-top: 5px; width: 175px; }
 li ol { list-style-type: lower-alpha; }
 li ol, li ul { margin-bottom: 0; margin-top: 0; }
@@ -25,17 +27,16 @@ p + p { margin-top: 20px; }
 table { margin: 20px 0; }
 td { line-height: 15px; }
 td, th { padding: 10px; vertical-align: top; }
-th { font-family: "Gill Sans", Trebuchet, Calibri, sans-serif; font-weight: normal; text-align: left; text-transform: uppercase; }
+th { text-align: left; }
 thead { background-color: #000; color: #fff; }
 tr { border-color: #eee; border-style: solid; border-width: 1px 0; }
 tr:nth-child(even) { border-bottom-color: #ccc; }
-tr:nth-child(even) td { background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)); border-bottom: 1px solid #ccc; text-shadow: 0 1px 0 #fff; }
 ul { list-style-type: square; }
 
 /* ! Override styles */
 
-body, input, textarea { font-weight: normal; }
-dt, h1, h2, h3, h4 { font-family: "Helvetica Neue", Arial, Helvetica, sans-serif; letter-spacing: normal; text-transform: none; }
+body, input, textarea { font-size: 11px; }
+dt, h1, h2, h3, h4 { letter-spacing: normal; text-transform: none; }
 h1 { font-size: 21px; line-height: 23px; margin-bottom: 17px; }
 h2 { font-size: 19px; line-height: 21px; margin-bottom: 19px; }
 h3 { font-size: 17px; line-height: 19px; margin: 0 0 21px 0; }

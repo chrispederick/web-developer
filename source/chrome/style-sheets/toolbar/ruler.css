@@ -1,0 +1,6 @@
+/* ! Ruler styles */
+
+.web-developer-toolbar label { float: right !important; margin-right: 10px !important; position: relative !important; top: 1px !important; }
+.web-developer-toolbar #web-developer-ruler-height { margin: -3px 40px 0 0 !important; } 
+.web-developer-toolbar #web-developer-ruler-height, .web-developer-toolbar #web-developer-ruler-width { float: right !important; padding: 2px !important; width: 50px !important; }
+.web-developer-toolbar #web-developer-ruler-width { margin: -3px 20px 0 0 !important; } 

@@ -7,12 +7,12 @@ $(function()
 	$("#convert-form-posts-to-gets").click(function() { WebDeveloper.Popup.Forms.convertFormMethods("get"); });
 	$("#convert-select-elements-to-text-inputs").click(WebDeveloper.Popup.Forms.convertSelectElementsToTextInputs);
 	$("#display-form-details").click(WebDeveloper.Popup.Forms.displayFormDetails);
+	$("#display-passwords").click(WebDeveloper.Popup.Forms.displayPasswords);
 	$("#enable-auto-completion").click(WebDeveloper.Popup.Forms.enableAutoCompletion);
 	$("#enable-form-fields").click(WebDeveloper.Popup.Forms.enableFormFields);
 	$("#make-form-fields-writable").click(WebDeveloper.Popup.Forms.makeFormFieldsWritable);
 	$("#populate-form-fields").click(WebDeveloper.Popup.Forms.populateFormFields);
 	$("#remove-maximum-lengths").click(WebDeveloper.Popup.Forms.removeMaximumLengths);
-	$("#show-passwords").click(WebDeveloper.Popup.Forms.showPasswords);
 	$("#view-form-information").click(WebDeveloper.Popup.Forms.viewFormInformation);
 });
 
@@ -29,7 +29,11 @@ WebDeveloper.Popup.Forms.clearRadioButtons = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.clearRadioButtons(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.clearRadioButtons(document);");
+		}
 	});
 };
 	
@@ -40,7 +44,11 @@ WebDeveloper.Popup.Forms.convertFormMethods = function(method)
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, 'WebDeveloper.Forms.convertFormMethods("' + method + '", document);');
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, 'WebDeveloper.Forms.convertFormMethods("' + method + '", document);');
+		}
 	});
 };
 	
@@ -51,7 +59,11 @@ WebDeveloper.Popup.Forms.convertSelectElementsToTextInputs = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.convertSelectElementsToTextInputs(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.convertSelectElementsToTextInputs(document);");
+		}
 	});
 };
 	
@@ -62,10 +74,29 @@ WebDeveloper.Popup.Forms.displayFormDetails = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Forms.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.displayFormDetails(" + display + ", document);");
+		}
+	});
+};
+	
+// Displays all passwords
+WebDeveloper.Popup.Forms.displayPasswords = function()
+{
+	var featureItem = $(this);
 
-		WebDeveloper.Popup.Forms.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.displayFormDetails(" + display + ", document);");
+	WebDeveloper.Popup.getSelectedTab(function(tab)
+	{
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.displayPasswords(document);");
+		}
 	});
 };
 	
@@ -76,7 +107,11 @@ WebDeveloper.Popup.Forms.enableAutoCompletion = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.enableAutoCompletion(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.enableAutoCompletion(document);");
+		}
 	});
 };
 	
@@ -87,7 +122,11 @@ WebDeveloper.Popup.Forms.enableFormFields = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.enableFormFields(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.enableFormFields(document);");
+		}
 	});
 };
 	
@@ -98,7 +137,11 @@ WebDeveloper.Popup.Forms.makeFormFieldsWritable = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.makeFormFieldsWritable(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.makeFormFieldsWritable(document);");
+		}
 	});
 };
 	
@@ -109,8 +152,12 @@ WebDeveloper.Popup.Forms.populateFormFields = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.populateFormFields(document);");
-		WebDeveloper.Popup.close();
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.populateFormFields(document);");
+			WebDeveloper.Popup.close();
+		}
 	});
 };
 	
@@ -121,18 +168,11 @@ WebDeveloper.Popup.Forms.removeMaximumLengths = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.removeMaximumLengths(document);");
-	});
-};
-	
-// Shows all passwords
-WebDeveloper.Popup.Forms.showPasswords = function()
-{
-	var featureItem = $(this);
-
-	WebDeveloper.Popup.getSelectedTab(function(tab)
-	{
-		WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.showPasswords(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.removeMaximumLengths(document);");
+		}
 	});
 };
 
@@ -149,11 +189,15 @@ WebDeveloper.Popup.Forms.viewFormInformation = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-	  chrome.tabs.sendRequest(tab.id, {type: "get-forms"}, function(response) 
-	  {
-			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-form-information.html"), tab.index, response, featureItem);
-
-			WebDeveloper.Popup.close();
-	  });
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+		  chrome.tabs.sendRequest(tab.id, {type: "get-forms"}, function(response) 
+		  {
+				chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-form-information.html"), tab.index, response, featureItem);
+	
+				WebDeveloper.Popup.close();
+		  });
+		}
 	});
 };

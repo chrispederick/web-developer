@@ -5,6 +5,7 @@ $(function()
 	$("#display-abbreviations").click(WebDeveloper.Popup.Information.displayAbbreviations);
 	$("#display-access-keys").click(WebDeveloper.Popup.Information.displayAccessKeys);
 	$("#display-anchors").click(WebDeveloper.Popup.Information.displayAnchors);
+	$("#display-element-information").click(WebDeveloper.Popup.Information.displayElementInformation);
 	$("#display-id-class-details").click(WebDeveloper.Popup.Information.displayIdClassDetails);
 	$("#display-link-details").click(WebDeveloper.Popup.Information.displayLinkDetails);
 	$("#display-object-information").click(WebDeveloper.Popup.Information.displayObjectInformation);
@@ -27,7 +28,11 @@ WebDeveloper.Popup.Information.displayAbbreviations = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayAbbreviations(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayAbbreviations(document);");
+		}
 	});
 };
 	
@@ -38,10 +43,14 @@ WebDeveloper.Popup.Information.displayAccessKeys = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayAccessKeys(" + display + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayAccessKeys(" + display + ", document);");
+		}
 	});
 };
 	
@@ -52,10 +61,33 @@ WebDeveloper.Popup.Information.displayAnchors = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayAnchors(" + display + ", document);");
+		}
+	});
+};
+	
+// Displays information about an element
+WebDeveloper.Popup.Information.displayElementInformation = function()
+{
+	var featureItem = $(this);
 
-		WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayAnchors(" + display + ", document);");
+	WebDeveloper.Popup.getSelectedTab(function(tab)
+	{
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+			
+			WebDeveloper.Popup.toggleFeatureOnTab(featureItem, tab, "toolbar/javascript/element-information.js", "WebDeveloper.ElementInformation.displayElementInformation(" + display + ", document);");
+			WebDeveloper.Popup.close();
+		}
 	});
 };
 	
@@ -66,10 +98,14 @@ WebDeveloper.Popup.Information.displayIdClassDetails = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayIdClassDetails(" + display + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayIdClassDetails(" + display + ", document);");
+		}
 	});
 };
 
@@ -80,7 +116,11 @@ WebDeveloper.Popup.Information.displayLinkDetails = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayLinkDetails(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayLinkDetails(document);");
+		}
 	});
 };
 	
@@ -91,10 +131,14 @@ WebDeveloper.Popup.Information.displayObjectInformation = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayObjectInformation(" + display + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayObjectInformation(" + display + ", document);");
+		}
 	});
 };
 	
@@ -105,10 +149,14 @@ WebDeveloper.Popup.Information.displayStackLevels = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayStackLevels(" + display + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayStackLevels(" + display + ", document);");
+		}
 	});
 };
 	
@@ -119,10 +167,14 @@ WebDeveloper.Popup.Information.displayTabIndex = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayTabIndex(" + display + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayTabIndex(" + display + ", document);");
+		}
 	});
 };
 	
@@ -133,10 +185,14 @@ WebDeveloper.Popup.Information.displayTitleAttributes = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayTitleAttributes(" + display + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayTitleAttributes(" + display + ", document);");
+		}
 	});
 };
 
@@ -147,7 +203,11 @@ WebDeveloper.Popup.Information.displayTopographicInformation = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayTopographicInformation(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayTopographicInformation(document);");
+		}
 	});
 };
 
@@ -164,12 +224,16 @@ WebDeveloper.Popup.Information.viewAnchorInformation = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-	  chrome.tabs.sendRequest(tab.id, {type: "get-anchors"}, function(response) 
-	  {
-			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-anchor-information.html"), tab.index, response, featureItem);
-
-			WebDeveloper.Popup.close();
-	  });
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+		  chrome.tabs.sendRequest(tab.id, {type: "get-anchors"}, function(response) 
+		  {
+				chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-anchor-information.html"), tab.index, response, featureItem);
+	
+				WebDeveloper.Popup.close();
+		  });
+		}
 	});
 };
 
@@ -180,12 +244,16 @@ WebDeveloper.Popup.Information.viewDocumentOutline = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-	  chrome.tabs.sendRequest(tab.id, {type: "get-document-outline"}, function(response) 
-	  {
-			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-document-outline.html"), tab.index, response, featureItem);
-
-			WebDeveloper.Popup.close();
-	  });
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+		  chrome.tabs.sendRequest(tab.id, {type: "get-document-outline"}, function(response) 
+		  {
+				chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-document-outline.html"), tab.index, response, featureItem);
+	
+				WebDeveloper.Popup.close();
+		  });
+		}
 	});
 };
 
@@ -196,12 +264,16 @@ WebDeveloper.Popup.Information.viewJavaScript = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-	  chrome.tabs.sendRequest(tab.id, {type: "get-javascript"}, function(response) 
-	  {
-			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-javascript.html"), tab.index, response, featureItem);
-
-			WebDeveloper.Popup.close();
-	  });
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+		  chrome.tabs.sendRequest(tab.id, {type: "get-javascript"}, function(response) 
+		  {
+				chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-javascript.html"), tab.index, response, featureItem);
+	
+				WebDeveloper.Popup.close();
+		  });
+		}
 	});
 };
 
@@ -212,12 +284,16 @@ WebDeveloper.Popup.Information.viewLinkInformation = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-	  chrome.tabs.sendRequest(tab.id, {type: "get-links"}, function(response) 
-	  {
-			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-link-information.html"), tab.index, response, featureItem);
-
-			WebDeveloper.Popup.close();
-	  });
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+		  chrome.tabs.sendRequest(tab.id, {type: "get-links"}, function(response) 
+		  {
+				chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-link-information.html"), tab.index, response, featureItem);
+	
+				WebDeveloper.Popup.close();
+		  });
+		}
 	});
 };
 
@@ -228,12 +304,16 @@ WebDeveloper.Popup.Information.viewMetaTagInformation = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-	  chrome.tabs.sendRequest(tab.id, {type: "get-meta-tags"}, function(response) 
-	  {
-			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-meta-tag-information.html"), tab.index, response, featureItem);
-
-			WebDeveloper.Popup.close();
-	  });
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+		  chrome.tabs.sendRequest(tab.id, {type: "get-meta-tags"}, function(response) 
+		  {
+				chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-meta-tag-information.html"), tab.index, response, featureItem);
+	
+				WebDeveloper.Popup.close();
+		  });
+		}
 	});
 };
 
@@ -244,11 +324,15 @@ WebDeveloper.Popup.Information.viewResponseHeaders = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-	  chrome.tabs.sendRequest(tab.id, {type: "get-document-details"}, function(response) 
-	  {
-			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-response-headers.html"), tab.index, response, featureItem);
-
-			WebDeveloper.Popup.close();
-	  });
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+		  chrome.tabs.sendRequest(tab.id, {type: "get-document-details"}, function(response) 
+		  {
+				chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-response-headers.html"), tab.index, response, featureItem);
+	
+				WebDeveloper.Popup.close();
+		  });
+		}
 	});
 };

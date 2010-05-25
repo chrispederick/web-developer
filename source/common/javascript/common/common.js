@@ -136,6 +136,64 @@ WebDeveloper.Common.getDocumentImages = function(contentDocument)
 	return uniqueImages;
 };
 
+// Get the position of an element
+WebDeveloper.Common.getElementPosition = function(element, xPosition)
+{
+  var position = 0;
+
+  // If the element is set
+  if(element)
+  {
+    var elementOffsetParent = element.offsetParent;
+
+    // If the element has an offset parent
+    if(elementOffsetParent)
+    {
+      // While there is an offset parent
+      while((elementOffsetParent = element.offsetParent) !== null)
+      {
+        // If getting the x position
+        if(xPosition)
+        {
+          position += element.offsetLeft;
+        }
+        else
+        {
+          position += element.offsetTop;
+        }
+
+        element = elementOffsetParent;
+      }
+    }
+    else
+    {
+      // If getting the x position
+      if(xPosition)
+      {
+        position = element.offsetLeft;
+      }
+      else
+      {
+        position = element.offsetTop;
+      }
+    }
+  }
+
+  return position;
+};
+
+// Get the x position of an element
+WebDeveloper.Common.getElementPositionX = function(element)
+{
+  return WebDeveloper.Common.getElementPosition(element, true);
+};
+
+// Get the y position of an element
+WebDeveloper.Common.getElementPositionY = function(element)
+{
+	return WebDeveloper.Common.getElementPosition(element, false);
+};
+
 // Returns the text from an element
 WebDeveloper.Common.getElementText = function(element)
 {
@@ -189,6 +247,32 @@ WebDeveloper.Common.hasClass = function(element, className)
 	}
 
 	return false;
+};
+
+// Returns true if the ancestor element is an ancestor of the element
+WebDeveloper.Common.isAncestor = function(element, ancestorElement)
+{
+  // If the element and ancestor element are set
+  if(element && ancestorElement)
+  {
+    var parentElement = null;
+
+    // Loop through the parent elements
+    while((parentElement = element.parentNode) !== null)
+    {
+      // If the parent element is the ancestor element
+      if(parentElement == ancestorElement)
+      {
+        return true;
+      }
+      else
+      {
+        element = parentElement;
+      }
+    }
+  }
+
+  return false;
 };
 
 // Removes a class from an element

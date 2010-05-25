@@ -42,15 +42,19 @@ WebDeveloper.Popup.Resize.displayWindowSize = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		chrome.tabs.sendRequest(tab.id, {type: "get-window-size"}, function(response) 
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
 		{
-			var viewportSize = "<tr><th>Viewport</th><td>Width: " + response.innerWidth + "px</td><td>Height: " + response.innerHeight + "px</td></tr>";
-			var windowSize	 = "<tr><th>Window</th><td>Width: " + response.outerWidth + "px</td><td>Height: " + response.outerHeight + "px</td></tr>";
-		 
-			WebDeveloper.Popup.showComplexNotification("<table>" + windowSize + viewportSize + "</table>");
-
-			WebDeveloper.Analytics.trackFeature(featureItem);
-		});
+			chrome.tabs.sendRequest(tab.id, {type: "get-window-size"}, function(response) 
+			{
+				var viewportSize = "<tr><th>Viewport</th><td>Width: " + response.innerWidth + "px</td><td>Height: " + response.innerHeight + "px</td></tr>";
+				var windowSize	 = "<tr><th>Window</th><td>Width: " + response.outerWidth + "px</td><td>Height: " + response.outerHeight + "px</td></tr>";
+			 
+				WebDeveloper.Popup.showComplexNotification("<table>" + windowSize + viewportSize + "</table>");
+	
+				WebDeveloper.Analytics.trackFeature(featureItem);
+			});
+		}
 	});
 };
 	
@@ -61,16 +65,20 @@ WebDeveloper.Popup.Resize.resizeWindow = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		chrome.tabs.sendRequest(tab.id, {type: "get-window-size"}, function(response) 
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
 		{
-			$("#resize-window-height").val(response.outerHeight);
-			$("#resize-window-width").val(response.outerWidth);
-
-			$("#toolbar, .menu, #notification").hide();
-			$("#resize-window-dialog").show();
-
-			WebDeveloper.Analytics.trackFeature(featureItem);
-		});
+			chrome.tabs.sendRequest(tab.id, {type: "get-window-size"}, function(response) 
+			{
+				$("#resize-window-height").val(response.outerHeight);
+				$("#resize-window-width").val(response.outerWidth);
+	
+				$("#toolbar, .menu, #notification").hide();
+				$("#resize-window-dialog").show();
+	
+				WebDeveloper.Analytics.trackFeature(featureItem);
+			});
+		}
 	});
 };
 

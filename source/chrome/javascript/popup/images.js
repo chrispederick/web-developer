@@ -34,10 +34,14 @@ WebDeveloper.Popup.Images.displayAltAttributes = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.displayAltAttributes(" + display + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.displayAltAttributes(" + display + ", document);");
+		}
 	});
 };
 	
@@ -48,10 +52,14 @@ WebDeveloper.Popup.Images.displayImageDimensions = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.displayImageDimensions(" + display + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.displayImageDimensions(" + display + ", document);");
+		}
 	});
 };
 	
@@ -62,10 +70,14 @@ WebDeveloper.Popup.Images.displayImagePaths = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.displayImagePaths(" + display + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.displayImagePaths(" + display + ", document);");
+		}
 	});
 };
 	
@@ -76,12 +88,16 @@ WebDeveloper.Popup.Images.findBrokenImages = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-	  chrome.tabs.sendRequest(tab.id, {type: "get-broken-images"}, function(response) 
-	  {
-			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/find-broken-images.html"), tab.index, response, featureItem);
-
-			WebDeveloper.Popup.close();
-	  });
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+		  chrome.tabs.sendRequest(tab.id, {type: "get-broken-images"}, function(response) 
+		  {
+				chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/find-broken-images.html"), tab.index, response, featureItem);
+	
+				WebDeveloper.Popup.close();
+		  });
+		}
 	});
 };
 	
@@ -92,7 +108,11 @@ WebDeveloper.Popup.Images.hideBackgroundImages = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.toggleBackgroundImages(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.toggleBackgroundImages(document);");
+		}
 	});
 };
 	
@@ -103,10 +123,14 @@ WebDeveloper.Popup.Images.hideImages = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var disable = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.toggleImages(" + disable + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var disable = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.toggleImages(" + disable + ", document);");
+		}
 	});
 };
 	
@@ -117,7 +141,11 @@ WebDeveloper.Popup.Images.makeImagesFullSize = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Images.addFeatureOnTab(featureItem, tab, "WebDeveloper.Images.makeImagesFullSize(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Images.addFeatureOnTab(featureItem, tab, "WebDeveloper.Images.makeImagesFullSize(document);");
+		}
 	});
 };
 	
@@ -128,10 +156,14 @@ WebDeveloper.Popup.Images.makeImagesInvisible = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature   = featureItem.attr("id");
-    var invisible = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.makeImagesInvisible(" + invisible + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature   = featureItem.attr("id");
+	    var invisible = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.makeImagesInvisible(" + invisible + ", document);");
+		}
 	});
 };
 	
@@ -142,7 +174,11 @@ WebDeveloper.Popup.Images.outlineAllImages = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineAllImages(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineAllImages(document);");
+		}
 	});
 };
 	
@@ -153,10 +189,14 @@ WebDeveloper.Popup.Images.outlineBackgroundImages = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineBackgroundImages(" + outline + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineBackgroundImages(" + outline + ", document);");
+		}
 	});
 };
 	
@@ -167,10 +207,14 @@ WebDeveloper.Popup.Images.outlineImagesWithAdjustedDimensions = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineImagesWithAdjustedDimensions(" + outline + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineImagesWithAdjustedDimensions(" + outline + ", document);");
+		}
 	});
 };
 	
@@ -181,7 +225,11 @@ WebDeveloper.Popup.Images.outlineImagesWithEmptyAltAttributes = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineImagesWithEmptyAltAttributes(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineImagesWithEmptyAltAttributes(document);");
+		}
 	});
 };
 	
@@ -192,10 +240,14 @@ WebDeveloper.Popup.Images.outlineImagesWithOversizedDimensions = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineImagesWithOversizedDimensions(" + outline + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineImagesWithOversizedDimensions(" + outline + ", document);");
+		}
 	});
 };
 	
@@ -206,7 +258,11 @@ WebDeveloper.Popup.Images.outlineImagesWithoutAltAttributes = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineImagesWithoutAltAttributes(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineImagesWithoutAltAttributes(document);");
+		}
 	});
 };
 	
@@ -217,7 +273,11 @@ WebDeveloper.Popup.Images.outlineImagesWithoutDimensions = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineImagesWithoutDimensions(document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineImagesWithoutDimensions(document);");
+		}
 	});
 };
 	
@@ -228,10 +288,14 @@ WebDeveloper.Popup.Images.replaceImagesWithAltAttributes = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		var feature = featureItem.attr("id");
-    var replace = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-		WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.replaceImagesWithAltAttributes(" + replace + ", document);");
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+			var feature = featureItem.attr("id");
+	    var replace = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+	
+			WebDeveloper.Popup.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.replaceImagesWithAltAttributes(" + replace + ", document);");
+		}
 	});
 };
 
@@ -248,11 +312,15 @@ WebDeveloper.Popup.Images.viewImageInformation = function()
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-	  chrome.tabs.sendRequest(tab.id, {type: "get-images"}, function(response) 
-	  {
-			chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-image-information.html"), tab.index, response, featureItem);
-
-			WebDeveloper.Popup.close();
-	  });
+		// If the tab is valid
+		if(WebDeveloper.Popup.isValidTab(tab))
+		{
+		  chrome.tabs.sendRequest(tab.id, {type: "get-images"}, function(response) 
+		  {
+				chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-image-information.html"), tab.index, response, featureItem);
+	
+				WebDeveloper.Popup.close();
+		  });
+		}
 	});
 };

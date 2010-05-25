@@ -1,5 +1,25 @@
 WebDeveloper.Miscellaneous = WebDeveloper.Miscellaneous || {};
 
+// Displays all hidden elements
+WebDeveloper.Miscellaneous.displayHiddenElements = function(contentDocument)
+{
+	var inputElements = contentDocument.querySelectorAll("input[type=hidden]");
+	var node					= null;
+	var treeWalker		= contentDocument.createTreeWalker(WebDeveloper.Common.getDocumentBodyElement(contentDocument), NodeFilter.SHOW_ELEMENT, WebDeveloper.Miscellaneous.hiddenNodeFilter, false);
+
+	// Loop through the input elements
+	for(var i = 0, l = inputElements.length; i < l; i++)
+	{
+		inputElements[i].removeAttribute("type");
+	}
+
+	// While the tree walker has more nodes
+	while((node = treeWalker.nextNode()) !== null)
+	{
+		node.style.display = "";
+	}
+};
+
 // Filter for the hidden node tree walker
 WebDeveloper.Miscellaneous.hiddenNodeFilter = function(node)
 {
@@ -64,24 +84,4 @@ WebDeveloper.Miscellaneous.makeFramesResizable = function(contentDocument)
 	}
 
 	WebDeveloper.Miscellaneous.showNotification(message);
-};
-
-// Shows all hidden elements
-WebDeveloper.Miscellaneous.showHiddenElements = function(contentDocument)
-{
-	var inputElements = contentDocument.querySelectorAll("input[type=hidden]");
-	var node					= null;
-	var treeWalker		= contentDocument.createTreeWalker(WebDeveloper.Common.getDocumentBodyElement(contentDocument), NodeFilter.SHOW_ELEMENT, WebDeveloper.Miscellaneous.hiddenNodeFilter, false);
-
-	// Loop through the input elements
-	for(var i = 0, l = inputElements.length; i < l; i++)
-	{
-		inputElements[i].removeAttribute("type");
-	}
-
-	// While the tree walker has more nodes
-	while((node = treeWalker.nextNode()) !== null)
-	{
-		node.style.display = "";
-	}
 };

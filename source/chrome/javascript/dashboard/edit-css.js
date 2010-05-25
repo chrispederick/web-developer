@@ -1,13 +1,13 @@
 WebDeveloper.Dashboard = WebDeveloper.Dashboard || {};
 
-WebDeveloper.Dashboard.editCSSUpdateFrequency = 1000;
+WebDeveloper.Dashboard.editCSSUpdateFrequency = 3000;
 
 // Adds an edit CSS tab
 WebDeveloper.Dashboard.addEditCSSTab = function(title, css, position, dashboardDocument)
 {
-	var panels   = dashboardDocument.querySelector("#web-developer-edit-css-panels");
+	var panels   = dashboardDocument.getElementById("web-developer-edit-css-panels");
 	var selected = "";
-	var tabs     = dashboardDocument.querySelector("#web-developer-edit-css-tabs");
+	var tabs     = dashboardDocument.getElementById("web-developer-edit-css-tabs");
 
 	// If this is the first tab
 	if(position == 1)
@@ -22,7 +22,7 @@ WebDeveloper.Dashboard.addEditCSSTab = function(title, css, position, dashboardD
 // Applies the edit CSS
 WebDeveloper.Dashboard.applyEditCSS = function(dashboardDocument, contentDocument)
 {
-	var editStyles = contentDocument.querySelector("#web-developer-edit-css-styles");
+	var editStyles = contentDocument.getElementById("web-developer-edit-css-styles");
 
 	// If the edit styles element exists
 	if(editStyles)
@@ -30,13 +30,21 @@ WebDeveloper.Dashboard.applyEditCSS = function(dashboardDocument, contentDocumen
 		var styles    = "";
 		var textAreas = dashboardDocument.querySelectorAll("#web-developer-edit-css-panel textarea");
 		
+	  WebDeveloper.Dashboard.stopEditCSSUpdate();
+
 		// Loop through the text areas
 		for(var i = 0, l = textAreas.length; i < l; i++)
 		{
 			styles += textAreas[i].value;
 		}
 		
-		contentDocument.querySelector("#web-developer-edit-css-styles").innerText = styles;
+		// If the styles have changed
+		if(editStyles.innerText != styles)
+		{
+			editStyles.innerText = styles;
+		}
+
+	  WebDeveloper.Dashboard.startEditCSSUpdate(dashboardDocument, contentDocument);
 	}
 };
 
@@ -52,7 +60,7 @@ WebDeveloper.Dashboard.editCSS = function(edit, contentDocument)
 		var dashboardDocument = WebDeveloper.Dashboard.openDashboardTab(title, contentDocument);
 		var tabId             = WebDeveloper.Dashboard.convertTitleToId(title);
 				
-		dashboardDocument.querySelector("#" + tabId + "-panel").innerHTML = '<ul id="web-developer-edit-css-tabs" class="tab-bar bottom-tabs"></ul><div id="web-developer-edit-css-panels"></div>';
+		dashboardDocument.getElementById(tabId + "-panel").innerHTML = '<ul id="web-developer-edit-css-tabs" class="tab-bar bottom-tabs"></ul><div id="web-developer-edit-css-panels"></div>';
 
 		chrome.extension.sendRequest({type: "get-content-from-urls", urls: documentCSS.styleSheets}, function(response) 
 		{
@@ -82,17 +90,28 @@ WebDeveloper.Dashboard.editCSS = function(edit, contentDocument)
 			styleSheet.setAttribute("id", "web-developer-edit-css-styles");
 			WebDeveloper.Common.getDocumentHeadElement(contentDocument).appendChild(styleSheet);
 			
-			WebDeveloper.Dashboard.applyEditCSS(dashboardDocument, contentDocument);
-			dashboardDocument.querySelector("#web-developer-edit-css-tabs").addEventListener("click", WebDeveloper.Dashboard.tabBarClicked, false);
+			dashboardDocument.getElementById("web-developer-edit-css-tabs").addEventListener("click", WebDeveloper.Dashboard.tabBarClicked, false);
 
-			window.WebDeveloper.editCSSInterval = window.setInterval(function() { WebDeveloper.Dashboard.applyEditCSS(dashboardDocument, contentDocument); }, WebDeveloper.Dashboard.editCSSUpdateFrequency);
+			WebDeveloper.Dashboard.applyEditCSS(dashboardDocument, contentDocument);
 		});
 	}
 	else
 	{			
-    window.clearInterval(window.WebDeveloper.editCSSInterval);
+    WebDeveloper.Dashboard.stopEditCSSUpdate();
     WebDeveloper.Common.removeMatchingElements("#web-developer-edit-css-styles", contentDocument);
 		WebDeveloper.CSS.toggleAllStyleSheets(false, contentDocument);
 		WebDeveloper.Dashboard.closeDashboardTab(title, contentDocument);
 	}
+};
+
+// Starts the CSS updating
+WebDeveloper.Dashboard.startEditCSSUpdate = function(dashboardDocument, contentDocument)
+{
+	window.WebDeveloper.editCSSInterval = window.setInterval(function() { WebDeveloper.Dashboard.applyEditCSS(dashboardDocument, contentDocument); }, WebDeveloper.Dashboard.editCSSUpdateFrequency);
+};
+
+// Stops the CSS updating
+WebDeveloper.Dashboard.stopEditCSSUpdate = function()
+{
+  window.clearInterval(window.WebDeveloper.editCSSInterval);
 };

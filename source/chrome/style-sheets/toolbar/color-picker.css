@@ -1,0 +1,6 @@
+/* ! Color picker styles */
+
+* { cursor: crosshair !important; }
+
+.web-developer-toolbar #web-developer-color-picker-color { background-color: #fff !important; border: 1px solid #000 !important; float: right !important; height: 20px !important; margin: -3px 40px 0 0 !important; width: 40px !important; }
+.web-developer-toolbar #web-developer-color-picker-hex { float: right !important; font-family: monospace !important; margin-right: 20px !important; position: relative !important; top: 1px !important; }

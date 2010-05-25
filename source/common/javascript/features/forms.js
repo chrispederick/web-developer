@@ -309,6 +309,34 @@ WebDeveloper.Forms.displayFormDetails = function(display, contentDocument)
   WebDeveloper.Common.toggleStyleSheet("features/style-sheets/forms/display-form-details.css", "web-developer-display-form-details", contentDocument, false);
 };
 
+// Displays all passwords
+WebDeveloper.Forms.displayPasswords = function(contentDocument)
+{
+  var displayedPasswords = 0;
+  var message            = null;
+  var passwords          = contentDocument.querySelectorAll("input[type=password]");
+
+  // Loop through the passwords
+  for(var i = 0, l = passwords.length; i < l; i++)
+  {
+    passwords[i].removeAttribute("type");
+
+    displayedPasswords++;
+  }
+
+  // If one password displayed
+  if(displayedPasswords == 1)
+  {
+		message = "1 password displayed";
+  }
+  else
+  {
+		message = displayedPasswords + " passwords displayed";
+  }
+
+	WebDeveloper.Forms.showNotification(message);
+};
+
 // Enables auto completion on all elements
 WebDeveloper.Forms.enableAutoCompletion = function(contentDocument)
 {
@@ -528,34 +556,6 @@ WebDeveloper.Forms.removeMaximumLengths = function(contentDocument)
   else
   {
 		message = "Maximum length removed from " + alteredElements + " elements";
-  }
-
-	WebDeveloper.Forms.showNotification(message);
-};
-
-// Shows all passwords
-WebDeveloper.Forms.showPasswords = function(contentDocument)
-{
-  var message        = null;
-  var passwords      = contentDocument.querySelectorAll("input[type=password]");
-  var shownPasswords = 0;
-
-  // Loop through the passwords
-  for(var i = 0, l = passwords.length; i < l; i++)
-  {
-    passwords[i].removeAttribute("type");
-
-    shownPasswords++;
-  }
-
-  // If one password shown
-  if(shownPasswords == 1)
-  {
-		message = "1 password shown";
-  }
-  else
-  {
-		message = shownPasswords + " passwords shown";
   }
 
 	WebDeveloper.Forms.showNotification(message);
