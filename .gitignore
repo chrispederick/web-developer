@@ -1,5 +1,5 @@
 .DS_Store
 
 build/chrome/
-build/temp/
+build/temp-chrome/
 build/web-developer-chrome.zip

@@ -107,16 +107,18 @@ WebDeveloper.CSS.toggleInlineStyles = function(disable, contentDocument)
 // Toggles all the linked style sheets in a document
 WebDeveloper.CSS.toggleLinkedStyleSheets = function(disable, contentDocument)
 {
-	var styleSheet  = null;
-  var styleSheets = contentDocument.styleSheets;
+	var styleSheet    = null;
+  var styleSheets   = contentDocument.styleSheets;
+  var styleSheetURL = null;
 
   // Loop through the style sheets
   for(var i = 0, l = styleSheets.length; i < l; i++)
   {
-    styleSheet = styleSheets[i];
+    styleSheet    = styleSheets[i];
+    styleSheetURL = styleSheet.href;
 
     // If this is a valid style sheet, is not an inline style sheet and is not an alternate style sheet or style sheets are being disabled
-    if(WebDeveloper.CSS.isValidStyleSheet(styleSheet) && styleSheet.href != contentDocument.documentURI && (!WebDeveloper.CSS.isAlternateStyleSheet(styleSheet) || disable))
+    if(WebDeveloper.CSS.isValidStyleSheet(styleSheet) && styleSheetURL && styleSheetURL != contentDocument.documentURI && (!WebDeveloper.CSS.isAlternateStyleSheet(styleSheet) || disable))
     {
 			styleSheet.disabled = disable;
 		}

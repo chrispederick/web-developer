@@ -30,7 +30,7 @@
   <target name="clean.chrome" depends="initialize.chrome" description="Cleans up the build for Chrome">
     <echo level="info" message="Cleaning up the build for Chrome"/>
   	<delete dir="chrome"/>
-  	<delete dir="temp"/>
+  	<delete dir="temp-chrome"/>
   	<delete file="web-developer-chrome.zip"/>
   </target>
 
@@ -111,12 +111,12 @@
     <copy file="../images/common/transparent.png" tofile="chrome/features/style-sheets/images/transparent.png"/>
 
     <echo level="info" message="Building the dashboard features"/>
-    <concat destfile="temp/dashboard.js">
+    <concat destfile="temp-chrome/dashboard.js">
     	<fileset file="../source/common/javascript/dashboard/dashboard.js"/>
     	<fileset file="../source/chrome/javascript/dashboard/dashboard.js"/>
     	<fileset file="../source/chrome/javascript/dashboard/edit-css.js"/>
     </concat>
-    <copy file="temp/dashboard.js" tofile="chrome/dashboard/javascript/dashboard.js">
+    <copy file="temp-chrome/dashboard.js" tofile="chrome/dashboard/javascript/dashboard.js">
       <filterset refid="chrome.filters"/>
     </copy>
     <copy file="../source/chrome/style-sheets/dashboard/dashboard.css" tofile="chrome/dashboard/style-sheets/dashboard.css"/>
@@ -129,18 +129,18 @@
     <copy file="../source/chrome/javascript/toolbar/color-picker.js" tofile="chrome/toolbar/javascript/color-picker.js">
       <filterset refid="chrome.filters"/>
     </copy>
-    <concat destfile="temp/element-information.js">
+    <concat destfile="temp-chrome/element-information.js">
     	<fileset file="../source/common/javascript/toolbar/element-information.js"/>
     	<fileset file="../source/chrome/javascript/toolbar/element-information.js"/>
     </concat>
-    <copy file="temp/element-information.js" tofile="chrome/toolbar/javascript/element-information.js">
+    <copy file="temp-chrome/element-information.js" tofile="chrome/toolbar/javascript/element-information.js">
       <filterset refid="chrome.filters"/>
     </copy>
-    <concat destfile="temp/ruler.js">
+    <concat destfile="temp-chrome/ruler.js">
     	<fileset file="../source/common/javascript/toolbar/ruler.js"/>
     	<fileset file="../source/chrome/javascript/toolbar/ruler.js"/>
     </concat>
-    <copy file="temp/ruler.js" tofile="chrome/toolbar/javascript/ruler.js">
+    <copy file="temp-chrome/ruler.js" tofile="chrome/toolbar/javascript/ruler.js">
       <filterset refid="chrome.filters"/>
     </copy>
     <concat destfile="chrome/toolbar/color-picker.css">
