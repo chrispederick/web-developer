@@ -1,6 +1,16 @@
 Web Developer Toolbar
 =====================
 
+Official Source Code Repository
+-------------------------------
+
+The source code for the Web Developer Toolbar can be found on github.
+
+	git clone git://github.com/chrispederick/web-developer.git
+
+Feel free to fork it and patch.
+
+
 Build Instructions
 ------------------
 
