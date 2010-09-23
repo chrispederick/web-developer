@@ -1,0 +1,32 @@
+Web Developer Toolbar
+=====================
+
+Build Instructions
+------------------
+
+Web Developer Toolbar is currently using the Ant Build system. Using
+debian-based distributions you'll have to install the following packages
+
+	openjdk-6-jdk java-6-jre ant
+
+You can use apt to do this
+
+	apt-get install openjdk-6-jdk java-6-jre ant
+
+You can build it by running in the build directory
+
+	ant -f build/build.xml
+
+This will generate two directories
+
+	* ./build/chrome       ( the assembled plugin )
+	* ./build/temp-chrome  ( build trash that can be discarded )
+
+From here you can proceed to set up the plugin locally. For instructions on how
+to do that reference the official Google tutorial: "Getting Started". Keep in
+mind that `manifest.json` has been generated for you and can be found in the
+newly generated `./build/chrome`.
+
+	Tutorial: Getting Started:
+	http://code.google.com/chrome/extensions/getstarted.html
+
