@@ -4,7 +4,7 @@
 	, "browser_action":  {
 		"default_icon":      "popup/images/icon.png"
 		, "default_title":   "@name@"
-		, "popup":           "popup/popup.html"
+		, "default_popup":   "popup/popup.html"
 	}
 
 	, "content_scripts": [{
