@@ -33,7 +33,7 @@ Help for the Web Developer extension can be found on its home page:
 
 To report a new issue or suggest a new feature please post in the forums:
 
-* Forums: [http://chrispederick.com/forums/](http://chrispederick.com/forums/)
+* Forums: [http://forums.chrispederick.com/](http://forums.chrispederick.com/)
 
 Developers
 ----------
