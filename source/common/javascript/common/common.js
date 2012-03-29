@@ -1,6 +1,6 @@
-var WebDeveloper = {};
+var WebDeveloper = WebDeveloper || {};
 
-WebDeveloper.Common = {};
+WebDeveloper.Common = WebDeveloper.Common || {};
 
 // Adds a class to an element
 WebDeveloper.Common.addClass = function(element, className)
@@ -10,6 +10,96 @@ WebDeveloper.Common.addClass = function(element, className)
 	{
 		element.className = WebDeveloper.Common.trim(element.className + " " + className);
 	}
+};
+
+// Adjusts the position of the given element
+WebDeveloper.Common.adjustElementPosition = function(element, xPosition, yPosition, offset)
+{
+	// If the element is set
+	if(element)
+	{
+		var contentWindow = WebDeveloper.Common.getContentWindow();
+		var innerHeight		= contentWindow.innerHeight;
+		var innerWidth		= contentWindow.innerWidth;
+		var offsetHeight	= element.offsetHeight;
+		var offsetWidth		= element.offsetWidth;
+		var offsetX				= contentWindow.pageXOffset;
+		var offsetY				= contentWindow.pageYOffset;
+
+		// If the x position is less than 0
+		if(xPosition < 0)
+		{
+			xPosition = 0;
+		}
+
+		// If the y position is less than 0
+		if(yPosition < 0)
+		{
+			yPosition = 0;
+		}
+
+		// If the element will fit at the x position
+		if((xPosition + offsetWidth + offset + 5) < (innerWidth + offsetX))
+		{
+			element.style.left = xPosition + offset + "px";
+		}
+		else
+		{
+			element.style.left = (innerWidth + offsetX - offsetWidth - offset) + "px";
+		}
+
+		// If the element will fit at the y position
+		if((yPosition + offsetHeight + offset + 5) < (innerHeight + offsetY))
+		{
+			element.style.top = yPosition + offset + "px";
+		}
+		else
+		{
+			element.style.top = (innerHeight + offsetY - offsetHeight - offset) + "px";
+		}
+	}
+};
+
+// Removes all child elements from an element
+WebDeveloper.Common.empty = function(element)
+{
+	// If the element is set
+	if(element)
+	{
+		var childElements = element.childNodes;
+
+		// Loop through the child elements
+		while(childElements.length)
+		{
+			element.removeChild(childElements[0]);
+		}
+	}
+};
+
+// Returns true if a string ends with another string
+WebDeveloper.Common.endsWith = function(string, endsWith)
+{
+	return new RegExp(endsWith + "$").test(string);
+};
+
+// Formats dimensions
+WebDeveloper.Common.formatDimensions = function(width, height)
+{
+	// If the width and height are set
+	if(width && height)
+	{
+		return WebDeveloper.Locales.getString("width") + " = " + width + "px " + WebDeveloper.Locales.getString("height") + " = " + height + "px";
+	}
+	else if(width)
+	{
+		return WebDeveloper.Locales.getString("width") + " = " + width + "px";
+	}
+	else if(height)
+	{
+		return WebDeveloper.Locales.getString("height") + " = " + height + "px";
+	}
+
+	return "";
 };
 
 // Returns the document body element
@@ -56,13 +146,13 @@ WebDeveloper.Common.getDocumentImages = function(contentDocument)
 	// If the content document is set
 	if(contentDocument)
 	{
-		var backgroundImage = null;
 		var computedStyle		= null;
 		var cssURI					= CSSPrimitiveValue.CSS_URI;
 		var documentURL			= contentDocument.documentURI;
 		var image						= null;
 		var images					= [];
 		var node						= null;
+		var styleImage			= null;
 		var treeWalker			= contentDocument.createTreeWalker(contentDocument, NodeFilter.SHOW_ELEMENT, null, false);
 
 		// While the tree walker has more nodes
@@ -98,13 +188,28 @@ WebDeveloper.Common.getDocumentImages = function(contentDocument)
 				// If the computed style is set
 				if(computedStyle)
 				{
-					backgroundImage = computedStyle.getPropertyCSSValue("background-image");
+					styleImage = WebDeveloper.Common.getCSSProperty(computedStyle.getPropertyCSSValue("background-image"));
 
 					// If this element has a background image and it is a URI
-					if(backgroundImage && backgroundImage.primitiveType == cssURI)
+					if(styleImage && styleImage.primitiveType == cssURI)
 					{
 						image			= new Image();
-						image.src = backgroundImage.getStringValue();
+						image.src = styleImage.getStringValue();
+
+						// If this is not a chrome image
+						if(image.src.indexOf("chrome://") !== 0)
+						{
+							images.push(image);
+						}
+					}
+
+					styleImage = computedStyle.getPropertyCSSValue("list-style-image");
+
+					// If this element has a background image and it is a URI
+					if(styleImage && styleImage.primitiveType == cssURI)
+					{
+						image			= new Image();
+						image.src = styleImage.getStringValue();
 
 						// If this is not a chrome image
 						if(image.src.indexOf("chrome://") !== 0)
@@ -139,53 +244,53 @@ WebDeveloper.Common.getDocumentImages = function(contentDocument)
 // Get the position of an element
 WebDeveloper.Common.getElementPosition = function(element, xPosition)
 {
-  var position = 0;
+	var position = 0;
 
-  // If the element is set
-  if(element)
-  {
-    var elementOffsetParent = element.offsetParent;
+	// If the element is set
+	if(element)
+	{
+		var elementOffsetParent = element.offsetParent;
 
-    // If the element has an offset parent
-    if(elementOffsetParent)
-    {
-      // While there is an offset parent
-      while((elementOffsetParent = element.offsetParent) !== null)
-      {
-        // If getting the x position
-        if(xPosition)
-        {
-          position += element.offsetLeft;
-        }
-        else
-        {
-          position += element.offsetTop;
-        }
+		// If the element has an offset parent
+		if(elementOffsetParent)
+		{
+			// While there is an offset parent
+			while((elementOffsetParent = element.offsetParent) !== null)
+			{
+				// If getting the x position
+				if(xPosition)
+				{
+					position += element.offsetLeft;
+				}
+				else
+				{
+					position += element.offsetTop;
+				}
 
-        element = elementOffsetParent;
-      }
-    }
-    else
-    {
-      // If getting the x position
-      if(xPosition)
-      {
-        position = element.offsetLeft;
-      }
-      else
-      {
-        position = element.offsetTop;
-      }
-    }
-  }
+				element = elementOffsetParent;
+			}
+		}
+		else
+		{
+			// If getting the x position
+			if(xPosition)
+			{
+				position = element.offsetLeft;
+			}
+			else
+			{
+				position = element.offsetTop;
+			}
+		}
+	}
 
-  return position;
+	return position;
 };
 
 // Get the x position of an element
 WebDeveloper.Common.getElementPositionX = function(element)
 {
-  return WebDeveloper.Common.getElementPosition(element, true);
+	return WebDeveloper.Common.getElementPosition(element, true);
 };
 
 // Get the y position of an element
@@ -197,34 +302,34 @@ WebDeveloper.Common.getElementPositionY = function(element)
 // Returns the text from an element
 WebDeveloper.Common.getElementText = function(element)
 {
-  var elementText = "";
+	var elementText = "";
 
-  // If the element is set
-  if(element)
-  {
-    var childNode     = null;
-    var childNodes    = element.childNodes;
-    var childNodeType = null;
+	// If the element is set
+	if(element)
+	{
+		var childNode			= null;
+		var childNodes		= element.childNodes;
+		var childNodeType = null;
 
-    // Loop through the child nodes
-    for(var i = 0, l = childNodes.length; i < l; i++)
-    {
-      childNode     = childNodes[i];
-      childNodeType = childNode.nodeType;
+		// Loop through the child nodes
+		for(var i = 0, l = childNodes.length; i < l; i++)
+		{
+			childNode		= childNodes[i];
+			childNodeType = childNode.nodeType;
 
-      // If the child node type is an element
-      if(childNodeType == Node.ELEMENT_NODE)
-      {
-        elementText += WebDeveloper.Common.getElementText(childNode);
-      }
-      else if(childNodeType == Node.TEXT_NODE)
-      {
-        elementText += childNode.nodeValue + " ";
-      }
-    }
-  }
+			// If the child node type is an element
+			if(childNodeType == Node.ELEMENT_NODE)
+			{
+				elementText += WebDeveloper.Common.getElementText(childNode);
+			}
+			else if(childNodeType == Node.TEXT_NODE)
+			{
+				elementText += childNode.nodeValue + " ";
+			}
+		}
+	}
 
-  return elementText;
+	return elementText;
 };
 
 // Returns true if an element has the specified class
@@ -234,7 +339,7 @@ WebDeveloper.Common.hasClass = function(element, className)
 	if(element && className)
 	{
 		var classes = element.className.split(" ");
-		
+
 		// Loop through the classes
 		for(var i = 0, l = classes.length; i < l; i++)
 		{
@@ -249,30 +354,95 @@ WebDeveloper.Common.hasClass = function(element, className)
 	return false;
 };
 
+// Returns true if the item is in the array
+WebDeveloper.Common.inArray = function(item, array)
+{
+	return WebDeveloper.Common.positionInArray(item, array) != -1;
+};
+
+// Inserts the given child after the element
+WebDeveloper.Common.insertAfter = function(child, after)
+{
+	// If the child and after are set
+	if(child && after)
+	{
+		var nextSibling = after.nextSibling;
+		var parent			= after.parentNode;
+
+		// If the element has a next sibling
+		if(nextSibling)
+		{
+			parent.insertBefore(child, nextSibling);
+		}
+		else
+		{
+			parent.appendChild(child);
+		}
+	}
+};
+
+// Inserts the given element as the first child of the element
+WebDeveloper.Common.insertAsFirstChild = function(element, child)
+{
+	// If the element and child are set
+	if(element && child)
+	{
+		// If the element has child nodes
+		if(element.hasChildNodes())
+		{
+			element.insertBefore(child, element.firstChild);
+		}
+		else
+		{
+			element.appendChild(child);
+		}
+	}
+};
+
 // Returns true if the ancestor element is an ancestor of the element
 WebDeveloper.Common.isAncestor = function(element, ancestorElement)
 {
-  // If the element and ancestor element are set
-  if(element && ancestorElement)
-  {
-    var parentElement = null;
+	// If the element and ancestor element are set
+	if(element && ancestorElement)
+	{
+		var parentElement = null;
 
-    // Loop through the parent elements
-    while((parentElement = element.parentNode) !== null)
-    {
-      // If the parent element is the ancestor element
-      if(parentElement == ancestorElement)
-      {
-        return true;
-      }
-      else
-      {
-        element = parentElement;
-      }
-    }
-  }
+		// Loop through the parent elements
+		while((parentElement = element.parentNode) !== null)
+		{
+			// If the parent element is the ancestor element
+			if(parentElement == ancestorElement)
+			{
+				return true;
+			}
+			else
+			{
+				element = parentElement;
+			}
+		}
+	}
 
-  return false;
+	return false;
+};
+
+// Returns the position if the item is in the array or -1 if it is not
+WebDeveloper.Common.positionInArray = function(item, array)
+{
+	// If the array is set
+	if(array)
+	{
+		// Loop through the array
+		for(var i = 0, l = array.length; i < l; i++)
+		{
+			// If the item is in the array
+			if(array[i] == item)
+			{
+				return i;
+			}
+		}
+	}
+
+	return -1;
 };
 
 // Removes a class from an element
@@ -282,7 +452,7 @@ WebDeveloper.Common.removeClass = function(element, className)
 	if(element && className)
 	{
 		var classes = element.className.split(" ");
-		
+
 		// Loop through the classes
 		for(var i = 0, l = classes.length; i < l; i++)
 		{
@@ -290,9 +460,9 @@ WebDeveloper.Common.removeClass = function(element, className)
 			if(className == classes[i])
 			{
 				classes.splice(i, 1);
-				
+
 				element.className = WebDeveloper.Common.trim(classes.join(" "));
-				
+
 				break;
 			}
 		}
@@ -304,7 +474,7 @@ WebDeveloper.Common.removeMatchingElements = function(selector, contentDocument)
 {
 	var matchingElement	 = null;
 	var matchingElements = contentDocument.querySelectorAll(selector);
-	
+
 	// Loop through the matching elements
 	for(var i = 0, l = matchingElements.length; i < l; i++)
 	{
@@ -322,7 +492,7 @@ WebDeveloper.Common.removeMatchingElements = function(selector, contentDocument)
 WebDeveloper.Common.removeStyleSheet = function(id, contentDocument)
 {
 	var styleSheet = contentDocument.getElementById(id);
-	
+
 	// If the style sheet is in the document
 	if(styleSheet)
 	{
@@ -332,6 +502,18 @@ WebDeveloper.Common.removeStyleSheet = function(id, contentDocument)
 			styleSheet.parentNode.removeChild(styleSheet);
 		}
 	}
+};
+
+// Removes the reload parameter from a URL
+WebDeveloper.Common.removeReloadParameterFromURL = function(url)
+{
+	// If the URL is set
+	if(url)
+	{
+		return url.replace(/(&|\?)web-developer-reload=\d+/, "");
+	}
+
+	return null;
 };
 
 // Removes a substring from a string
@@ -375,6 +557,38 @@ WebDeveloper.Common.sortImages = function(imageOne, imageTwo)
 	}
 
 	return 1;
+};
+
+// Toggles a style sheet in a document
+WebDeveloper.Common.toggleStyleSheet = function(url, id, contentDocument, insertFirst)
+{
+	var styleSheet = contentDocument.getElementById(id);
+
+	// If the style sheet is already in the document
+	if(styleSheet)
+	{
+		WebDeveloper.Common.removeStyleSheet(id, contentDocument);
+	}
+	else
+	{
+		var headElement = WebDeveloper.Common.getDocumentHeadElement(contentDocument);
+		var firstChild	= headElement.firstChild;
+		var linkElement = contentDocument.createElement("link");
+
+		linkElement.setAttribute("href", WebDeveloper.Common.getChromeURL(url));
+		linkElement.setAttribute("id", id);
+		linkElement.setAttribute("rel", "stylesheet");
+
+		// If there is a first child
+		if(insertFirst && firstChild)
+		{
+			headElement.insertBefore(linkElement, firstChild);
+		}
+		else
+		{
+			headElement.appendChild(linkElement);
+		}
+	}
 };
 
 // Trims a string

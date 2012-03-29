@@ -1,56 +1,81 @@
 <?xml version="1.0"?>
-
 <project name="web-developer" default="build">
 	<!-- Custom tasks -->
 	<taskdef name="jslint" classname="com.googlecode.jslint4java.ant.JSLintTask" classpath="jslint4java.jar"/>
-           
+	<taskdef resource="net/sf/antcontrib/antlib.xml" classpath="ant-contrib.jar"/>
+
   <!-- Main targets -->
   <target name="all" depends="build,package,test" description="Builds, packages and tests the extension"/>
-  <target name="build" depends="build.chrome" description="Builds the extension"/>
-  <target name="clean" depends="clean.chrome" description="Cleans up the build"/>
-	<target name="package" depends="package.chrome" description="Packages the extension"/>
+  <target name="build" depends="build.chrome,build.firefox" description="Builds the extension"/>
+	<target name="chrome" depends="build.chrome" description="Builds the extension for Chrome"/>
+  <target name="clean" depends="clean.chrome,clean.firefox" description="Cleans up the build"/>
+	<target name="firefox" depends="build.firefox" description="Builds the extension for Firefox"/>
+	<target name="package" depends="build.firefox,package.chrome" description="Packages the extension"/>
 
-  <!-- Initialize the settings -->
-  <target name="initialize" description="Initializes the settings">
-    <tstamp>
-      <format property="build.date" pattern="MMMM d, yyyy"/>
-    </tstamp>
+  <!-- Builds the extension for Chrome -->
+  <target name="build.chrome" depends="clean.chrome">
+    <echo level="info" message="Building the extension for Chrome"/>
+    <antcall target="build.chrome.configuration"/>
+    <antcall target="build.chrome.about.page"/>
+ 	  <antcall target="build.chrome.background.page"/>
+    <antcall target="build.chrome.content.javascript"/>
+    <antcall target="build.chrome.dashboard"/>
+    <antcall target="build.chrome.features"/>
+    <antcall target="build.chrome.generated.pages"/>
+    <antcall target="build.chrome.icons"/>
+    <antcall target="build.chrome.locales"/>
+    <antcall target="build.chrome.options"/>
+    <antcall target="build.chrome.popup"/>
+    <antcall target="build.chrome.toolbars"/>
   </target>
 
-  <!-- Initialize the settings for Chrome -->
-  <target name="initialize.chrome" depends="initialize" description="Initializes the settings for Chrome">
-    <filterset id="chrome.filters">
-      <filter token="build.date" value="${build.date}"/>
-      <filtersfile file="../configuration/common/configuration.properties"/>
-      <filtersfile file="../configuration/chrome/configuration.properties"/>
-    </filterset>
-	</target>  
-
-  <!-- Clean up the build for Chrome -->
-  <target name="clean.chrome" depends="initialize.chrome" description="Cleans up the build for Chrome">
-    <echo level="info" message="Cleaning up the build for Chrome"/>
-  	<delete dir="chrome"/>
-  	<delete dir="temp-chrome"/>
-  	<delete file="web-developer-chrome.zip"/>
-  </target>
-
-  <!-- Build the extension for Chrome -->
-  <target name="build.chrome" depends="clean.chrome" description="Builds the extension for Chrome">
-    <echo level="info" message="Building the configuration"/>
-    <copy file="../configuration/chrome/manifest.json" tofile="chrome/manifest.json">
+  <!-- Builds the about page for Chrome -->
+  <target name="build.chrome.about.page" depends="initialize.chrome">
+    <echo level="info" message="Building the about page"/>
+    <copy file="../source/common/html/about/about.html" tofile="chrome/about/about.html">
       <filterset refid="chrome.filters"/>
-		</copy>
-		    
+    </copy>
+    <concat destfile="chrome/about/javascript/about.js">
+    	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
+    	<fileset file="../source/common/javascript/generated/common.js"/>
+    	<fileset file="../source/common/javascript/about/about.js"/>
+    </concat>
+    <concat destfile="chrome/about/about.css">
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/about/about.css"/>
+    </concat>
+    <copy file="../images/common/logos/16.png" tofile="chrome/about/images/favicon.png"/>
+    <copy file="../images/common/logos/64.png" tofile="chrome/about/images/logo.png"/>
+	</target>
+
+  <!-- Builds the background page for Chrome -->
+  <target name="build.chrome.background.page" depends="initialize.chrome">
     <echo level="info" message="Building the background page"/>
     <copy file="../source/chrome/html/background/background.html" tofile="chrome/background/background.html">
       <filterset refid="chrome.filters"/>
     </copy>
-    <copy todir="chrome/background/javascript">
-      <fileset dir="../source/common/javascript/analytics"/>
-      <fileset dir="../source/chrome/javascript/background"/>
+    <concat destfile="chrome/background/javascript/background.temp">
+    	<fileset file="../source/chrome/javascript/background/background.js"/>
+    	<fileset file="../source/chrome/javascript/background/storage.js"/>
+      <fileset file="../source/chrome/javascript/locales/locales.js"/>
+    	<fileset file="../source/chrome/javascript/background/upgrade.js"/>
+    </concat>
+    <move file="chrome/background/javascript/background.temp" tofile="chrome/background/javascript/background.js">
       <filterset refid="chrome.filters"/>
-    </copy>
-		    
+    </move>
+	</target>
+
+  <!-- Builds the configuration for Chrome -->
+  <target name="build.chrome.configuration" depends="initialize.chrome">
+    <echo level="info" message="Building the configuration"/>
+    <copy file="../configuration/chrome/manifest.json" tofile="chrome/manifest.json">
+      <filterset refid="chrome.filters"/>
+		</copy>
+	</target>
+
+  <!-- Builds the content JavaScript for Chrome -->
+  <target name="build.chrome.content.javascript" depends="initialize.chrome">
     <echo level="info" message="Building the content JavaScript"/>
     <concat destfile="chrome/content/content.js">
     	<fileset file="../source/common/javascript/common/common.js"/>
@@ -59,50 +84,56 @@
     	<fileset file="../source/common/javascript/content/content.js"/>
     	<fileset file="../source/chrome/javascript/content/content.js"/>
     </concat>
+	</target>
 
-    <echo level="info" message="Building the popup"/>
-    <copy file="../source/chrome/html/popup/popup.html" tofile="chrome/popup/popup.html">
-      <filterset refid="chrome.filters"/>
-    </copy>
-    <copy file="../source/common/javascript/jquery.js" tofile="chrome/popup/javascript/jquery.js"/>
-    <copy file="../source/common/javascript/platform/platform.js" tofile="chrome/popup/javascript/platform.js"/>
-    <copy todir="chrome/popup/javascript">
-      <fileset dir="../source/common/javascript/analytics"/>
-      <fileset dir="../source/chrome/javascript/popup"/>
-      <filterset refid="chrome.filters"/>
-    </copy>
-    <concat destfile="chrome/popup/popup.css">
-    	<fileset file="../source/common/style-sheets/common/reset.css"/>
-    	<fileset file="../source/common/style-sheets/common/common.css"/>
-    	<fileset file="../source/chrome/style-sheets/common/common.css"/>
-    	<fileset file="../source/chrome/style-sheets/popup/popup.css"/>
+  <!-- Builds the dashboard for Chrome -->
+  <target name="build.chrome.dashboard" depends="initialize.chrome">
+    <echo level="info" message="Building the dashboard"/>
+    <concat destfile="chrome/dashboard/javascript/dashboard.temp">
+    	<fileset file="../source/common/javascript/dashboard/dashboard.js"/>
+    	<fileset file="../source/chrome/javascript/dashboard/dashboard.js"/>
+    	<fileset file="../source/chrome/javascript/dashboard/edit-css.js"/>
     </concat>
-    <copy file="../images/chrome/common/notification.png" tofile="chrome/popup/images/notification.png"/>
-    <copy file="../images/chrome/logos/icon.png" tofile="chrome/popup/images/icon.png"/>
-    <copy todir="chrome/popup/images/toolbar">
-      <fileset dir="../images/common/toolbar"/>
-    </copy>
-    <copy todir="chrome/popup/images">
-      <fileset dir="../images/chrome/popup"/>
-    </copy>
-		    
+    <move file="chrome/dashboard/javascript/dashboard.temp" tofile="chrome/dashboard/javascript/dashboard.js">
+      <filterset refid="chrome.filters"/>
+    </move>
+    <copy file="../source/chrome/style-sheets/dashboard/dashboard.css" tofile="chrome/dashboard/style-sheets/dashboard.css"/>
+    <copy file="../images/common/logos/16.png" tofile="chrome/dashboard/images/logo.png"/>
+	</target>
+
+  <!-- Builds the features for Chrome -->
+  <target name="build.chrome.features" depends="initialize.chrome">
     <echo level="info" message="Building the features"/>
-    <copy todir="chrome/features/javascript">
-      <fileset file="../source/common/javascript/features/css.js"/>
-      <fileset file="../source/common/javascript/features/information.js"/>
-      <fileset file="../source/common/javascript/features/outline.js"/>
-    </copy>
+    <concat destfile="chrome/features/javascript/css.js">
+    	<fileset file="../source/common/javascript/common/common.js"/>
+    	<fileset file="../source/chrome/javascript/features/common.js"/>
+    	<fileset file="../source/common/javascript/common/css.js"/>
+    	<fileset file="../source/common/javascript/features/css.js"/>
+    </concat>
     <concat destfile="chrome/features/javascript/forms.js">
+    	<fileset file="../source/common/javascript/common/common.js"/>
+    	<fileset file="../source/chrome/javascript/features/common.js"/>
     	<fileset file="../source/common/javascript/features/forms.js"/>
-    	<fileset file="../source/chrome/javascript/features/forms.js"/>
     </concat>
     <concat destfile="chrome/features/javascript/images.js">
+    	<fileset file="../source/common/javascript/common/common.js"/>
+    	<fileset file="../source/chrome/javascript/features/common.js"/>
     	<fileset file="../source/common/javascript/features/images.js"/>
-    	<fileset file="../source/chrome/javascript/features/images.js"/>
+    </concat>
+    <concat destfile="chrome/features/javascript/information.js">
+    	<fileset file="../source/common/javascript/common/common.js"/>
+    	<fileset file="../source/chrome/javascript/features/common.js"/>
+    	<fileset file="../source/common/javascript/features/information.js"/>
     </concat>
     <concat destfile="chrome/features/javascript/miscellaneous.js">
+    	<fileset file="../source/common/javascript/common/common.js"/>
+    	<fileset file="../source/chrome/javascript/features/common.js"/>
     	<fileset file="../source/common/javascript/features/miscellaneous.js"/>
-    	<fileset file="../source/chrome/javascript/features/miscellaneous.js"/>
+    </concat>
+    <concat destfile="chrome/features/javascript/outline.js">
+    	<fileset file="../source/common/javascript/common/common.js"/>
+    	<fileset file="../source/chrome/javascript/features/common.js"/>
+    	<fileset file="../source/common/javascript/features/outline.js"/>
     </concat>
     <copy todir="chrome/features/style-sheets">
       <fileset dir="../source/common/style-sheets/features"/>
@@ -110,39 +141,183 @@
     <copy file="../source/common/style-sheets/common/reset.css" tofile="chrome/features/style-sheets/css/disable-browser-default-styles.css"/>
     <copy file="../images/common/transparent.png" tofile="chrome/features/style-sheets/images/transparent.png"/>
 
-    <echo level="info" message="Building the dashboard features"/>
-    <concat destfile="temp-chrome/dashboard.js">
-    	<fileset file="../source/common/javascript/dashboard/dashboard.js"/>
-    	<fileset file="../source/chrome/javascript/dashboard/dashboard.js"/>
-    	<fileset file="../source/chrome/javascript/dashboard/edit-css.js"/>
-    </concat>
-    <copy file="temp-chrome/dashboard.js" tofile="chrome/dashboard/javascript/dashboard.js">
+    <echo level="info" message="Building the validation features"/>
+    <copy todir="chrome/validation">
+      <fileset dir="../source/chrome/html/validation"/>
       <filterset refid="chrome.filters"/>
     </copy>
-    <copy file="../source/chrome/style-sheets/dashboard/dashboard.css" tofile="chrome/dashboard/style-sheets/dashboard.css"/>
-    <copy todir="chrome/dashboard/images">
-      <fileset dir="../images/common/dashboard"/>
+    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="chrome/validation/javascript/common.js"/>
+    <copy todir="chrome/validation/javascript">
+      <fileset dir="../source/chrome/javascript/validation"/>
     </copy>
-    <copy file="../images/common/logos/16.png" tofile="chrome/dashboard/images/logo.png"/>
+    <concat destfile="chrome/validation/validation.css">
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/generated/common.css"/>
+    </concat>
+    <copy file="../images/common/logos/16.png" tofile="chrome/validation/images/favicon.png"/>
+	</target>
 
-    <echo level="info" message="Building the toolbar features"/>
+  <!-- Builds the generated pages for Chrome -->
+  <target name="build.chrome.generated.pages" depends="initialize.chrome">
+    <echo level="info" message="Building the generated pages"/>
+    <copy todir="chrome/generated">
+      <fileset dir="../source/common/html/generated"/>
+      <fileset dir="../source/common/style-sheets/generated">
+     		<exclude name="common.css"/>
+      </fileset>
+      <filterset refid="chrome.filters"/>
+    </copy>
+    <concat destfile="chrome/generated/javascript/common.js">
+    	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
+     	<fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
+	  	<fileset file="../source/common/javascript/common/bootstrap/collapse.js"/>
+    	<fileset file="../source/common/javascript/common/bootstrap/dropdown.js"/>
+    	<fileset file="../source/chrome/javascript/common/common.js"/>
+    	<fileset file="../source/common/javascript/generated/common.js"/>
+    </concat>
+    <copy file="../source/common/javascript/generated/beautify/beautify.js" tofile="chrome/generated/javascript/beautify/beautify.js"/>
+    <concat destfile="chrome/generated/javascript/syntax-highlight-css.js">
+    	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/css.js"/>
+    </concat>
+    <concat destfile="chrome/generated/javascript/syntax-highlight-javascript.js">
+    	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/javascript.js"/>
+    </concat>
+    <copy todir="chrome/generated/javascript">
+      <fileset dir="../source/common/javascript/generated">
+     		<exclude name="common.js"/>
+      </fileset>
+    </copy>
+    <concat destfile="chrome/generated/common.css">
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/generated/common.css"/>
+    </concat>
+    <concat destfile="chrome/generated/syntax-highlight.css">
+    	<fileset file="../source/common/style-sheets/common/codemirror/codemirror.css"/>
+    	<fileset file="../source/common/style-sheets/common/codemirror/theme.css"/>
+    </concat>
+    <copy file="../images/common/logos/16.png" tofile="chrome/generated/images/favicon.png"/>
+    <copy file="../images/common/logos/monochrome.png" tofile="chrome/generated/images/logo.png"/>
+    <copy todir="chrome/generated/images">
+      <fileset dir="../images/common/generated"/>
+    </copy>
+	</target>
+
+  <!-- Builds the icons for Chrome -->
+  <target name="build.chrome.icons" depends="initialize.chrome">
+    <echo level="info" message="Building the icons"/>
+    <copy file="../images/common/logos/16.png" tofile="chrome/icons/16.png"/>
+    <copy file="../images/common/logos/48.png" tofile="chrome/icons/48.png"/>
+    <copy file="../images/common/logos/128.png" tofile="chrome/icons/128.png"/>
+	</target>
+
+  <!-- Builds the locales for Chrome -->
+  <target name="build.chrome.locales" depends="initialize.chrome">
+    <echo level="info" message="Building the locales"/>
+    <copy todir="chrome/_locales">
+      <fileset dir="../source/chrome/locales"/>
+      <filterset refid="chrome.filters"/>
+    </copy>
+	</target>
+
+  <!-- Builds the options for Chrome -->
+  <target name="build.chrome.options" depends="initialize.chrome">
+    <echo level="info" message="Building the options"/>
+    <copy todir="chrome/options">
+    	<fileset file="../source/common/html/options/syntax-highlight.html"/>
+    	<fileset file="../source/chrome/html/options/options.html"/>
+      <filterset refid="chrome.filters"/>
+    </copy>
+    <concat destfile="chrome/options/javascript/options.js">
+      <fileset file="../source/common/javascript/common/jquery/jquery.js"/>
+      <fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
+      <fileset file="../source/common/javascript/common/bootstrap/modal.js"/>
+      <fileset file="../source/common/javascript/common/bootstrap/tab.js"/>
+      <fileset file="../source/common/javascript/common/bootstrap/transition.js"/>
+      <fileset file="../source/chrome/javascript/background/storage.js"/>
+      <fileset file="../source/chrome/javascript/locales/locales.js"/>
+      <fileset file="../source/chrome/javascript/options/options.js"/>
+      <fileset file="../source/chrome/javascript/options/tablednd.js"/>
+    </concat>
+    <concat destfile="chrome/options/javascript/syntax-highlight.js">
+    	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/css.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/htmlmixed.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/javascript.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/xml.js"/>
+    	<fileset file="../source/common/javascript/options/syntax-highlight.js"/>
+    </concat>
+    <concat destfile="chrome/options/options.css">
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/chrome/style-sheets/common/tabs.css"/>
+    	<fileset file="../source/chrome/style-sheets/options/options.css"/>
+    </concat>
+    <concat destfile="chrome/options/syntax-highlight.css">
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/common/codemirror/codemirror.css"/>
+    	<fileset file="../source/common/style-sheets/common/codemirror/theme.css"/>
+    	<fileset file="../source/common/style-sheets/options/syntax-highlight.css"/>
+    </concat>
+    <copy file="../images/common/logos/16.png" tofile="chrome/options/images/favicon.png"/>
+    <copy file="../images/common/logos/monochrome.png" tofile="chrome/options/images/logo.png"/>
+    <copy file="../images/chrome/options.png" tofile="chrome/options/images/options.png"/>
+	</target>
+
+  <!-- Builds the popup for Chrome -->
+  <target name="build.chrome.popup" depends="initialize.chrome">
+    <echo level="info" message="Building the popup"/>
+    <copy file="../source/chrome/html/popup/popup.html" tofile="chrome/popup/popup.html">
+      <filterset refid="chrome.filters"/>
+    </copy>
+    <concat destfile="chrome/popup/javascript/popup.js">
+      <fileset file="../source/common/javascript/common/jquery/jquery.js"/>
+      <fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
+      <fileset file="../source/common/javascript/common/bootstrap/tab.js"/>
+      <fileset file="../source/common/javascript/common/bootstrap/transition.js"/>
+      <fileset file="../source/common/javascript/locales/locales.js"/>
+      <fileset file="../source/common/javascript/platform/platform.js"/>
+      <fileset file="../source/chrome/javascript/locales/locales.js"/>
+      <fileset file="../source/chrome/javascript/popup/popup.js"/>
+      <fileset dir="../source/chrome/javascript/popup">
+     		<exclude name="popup.js"/>
+      </fileset>
+    </concat>
+    <concat destfile="chrome/popup/popup.css">
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
+    	<fileset file="../source/chrome/style-sheets/common/tabs.css"/>
+    	<fileset file="../source/chrome/style-sheets/popup/popup.css"/>
+    </concat>
+    <copy file="../images/common/toolbar.png" tofile="chrome/popup/images/toolbar.png"/>
+    <copy file="../images/chrome/feature.png" tofile="chrome/popup/images/feature.png"/>
+    <copy file="../images/chrome/icon.png" tofile="chrome/popup/images/icon.png"/>
+	</target>
+
+  <!-- Builds the toolbars for Chrome -->
+  <target name="build.chrome.toolbars" depends="initialize.chrome">
+    <echo level="info" message="Building the toolbars"/>
     <copy file="../source/chrome/javascript/toolbar/color-picker.js" tofile="chrome/toolbar/javascript/color-picker.js">
       <filterset refid="chrome.filters"/>
     </copy>
-    <concat destfile="temp-chrome/element-information.js">
+    <concat destfile="chrome/toolbar/javascript/element-information.temp">
     	<fileset file="../source/common/javascript/toolbar/element-information.js"/>
     	<fileset file="../source/chrome/javascript/toolbar/element-information.js"/>
     </concat>
-    <copy file="temp-chrome/element-information.js" tofile="chrome/toolbar/javascript/element-information.js">
+    <move file="chrome/toolbar/javascript/element-information.temp" tofile="chrome/toolbar/javascript/element-information.js">
       <filterset refid="chrome.filters"/>
-    </copy>
-    <concat destfile="temp-chrome/ruler.js">
+    </move>
+    <concat destfile="chrome/toolbar/javascript/ruler.temp">
     	<fileset file="../source/common/javascript/toolbar/ruler.js"/>
     	<fileset file="../source/chrome/javascript/toolbar/ruler.js"/>
     </concat>
-    <copy file="temp-chrome/ruler.js" tofile="chrome/toolbar/javascript/ruler.js">
+    <move file="chrome/toolbar/javascript/ruler.temp" tofile="chrome/toolbar/javascript/ruler.js">
       <filterset refid="chrome.filters"/>
-    </copy>
+    </move>
     <concat destfile="chrome/toolbar/color-picker.css">
     	<fileset file="../source/chrome/style-sheets/toolbar/toolbar.css"/>
     	<fileset file="../source/chrome/style-sheets/toolbar/color-picker.css"/>
@@ -158,71 +333,864 @@
     	<fileset file="../source/chrome/style-sheets/toolbar/ruler.css"/>
     </concat>
     <copy file="../images/common/logos/16.png" tofile="chrome/toolbar/images/logo.png"/>
+	</target>
 
-    <echo level="info" message="Building the generated pages"/>
-    <concat destfile="chrome/generated/generated.css">
-    	<fileset file="../source/common/style-sheets/common/reset.css"/>
-    	<fileset file="../source/common/style-sheets/common/common.css"/>
-    	<fileset file="../source/chrome/style-sheets/common/common.css"/>
-    	<fileset file="../source/common/style-sheets/generated/generated.css"/>
+  <!-- Builds the extension for Firefox -->
+  <target name="build.firefox" depends="clean.firefox">
+    <echo level="info" message="Building the extension for Firefox"/>
+    <antcall target="build.firefox.configuration"/>
+    <antcall target="build.firefox.about.page"/>
+    <antcall target="build.firefox.common.javascript"/>
+    <antcall target="build.firefox.dashboard"/>
+    <antcall target="build.firefox.dialogs"/>
+    <antcall target="build.firefox.features"/>
+    <antcall target="build.firefox.generated.pages"/>
+    <antcall target="build.firefox.icons"/>
+    <antcall target="build.firefox.locales"/>
+    <antcall target="build.firefox.options"/>
+    <antcall target="build.firefox.overlay"/>
+    <antcall target="build.firefox.skins"/>
+    <antcall target="build.firefox.toolbars"/>
+
+    <echo level="info" message="Building the XPI"/>
+    <zip destfile="web-developer-firefox.xpi" level="1">
+      <zipfileset dir="firefox"/>
+      <zipfileset file="license.txt"/>
+    </zip>
+  </target>
+
+  <!-- Builds the about page for Firefox -->
+  <target name="build.firefox.about.page" depends="initialize.firefox">
+    <echo level="info" message="Building the about page"/>
+    <copy file="../source/common/html/about/about.html" tofile="firefox/content/web-developer/about/about.html">
+      <filterset refid="firefox.filters"/>
+    </copy>
+    <concat destfile="firefox/content/web-developer/about/javascript/about.js">
+    	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
+    	<fileset file="../source/common/javascript/generated/common.js"/>
+    	<fileset file="../source/common/javascript/about/about.js"/>
     </concat>
-    <copy todir="chrome/generated">
-      <fileset dir="../source/common/html/generated"/>
-      <fileset dir="../source/common/style-sheets/generated">
-     		<exclude name="generated.css"/>
+    <concat destfile="firefox/content/web-developer/about/about.css">
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/about/about.css"/>
+    </concat>
+    <copy file="../images/common/logos/16.png" tofile="firefox/content/web-developer/about/images/favicon.png"/>
+    <copy file="../images/common/logos/64.png" tofile="firefox/content/web-developer/about/images/logo.png"/>
+	</target>
+
+  <!-- Builds the common JavaScript for Firefox -->
+  <target name="build.firefox.common.javascript" depends="initialize.firefox">
+    <echo level="info" message="Building the common JavaScript"/>
+    <concat destfile="firefox/content/web-developer/common/common.js">
+    	<fileset file="../source/common/javascript/common/common.js"/>
+    	<fileset file="../source/firefox/javascript/common/common.js"/>
+    </concat>
+    <copy file="../source/common/javascript/common/css.js" tofile="firefox/content/web-developer/common/css.js"/>
+    <concat destfile="firefox/content/web-developer/content/content.js">
+    	<fileset file="../source/common/javascript/content/content.js"/>
+    	<fileset file="../source/firefox/javascript/content/content.js"/>
+    </concat>
+    <copy file="../source/firefox/javascript/preferences/defaults.js" tofile="firefox/defaults/preferences/defaults.js"/>
+    <copy file="../source/firefox/javascript/preferences/preferences.js" tofile="firefox/content/web-developer/preferences/preferences.js"/>
+    <concat destfile="firefox/content/web-developer/storage/storage.js">
+    	<fileset file="../source/common/javascript/storage/storage.js"/>
+    	<fileset file="../source/firefox/javascript/storage/storage.js"/>
+    </concat>
+    <concat destfile="firefox/content/web-developer/toolbar/javascript/element-ancestors.js">
+    	<fileset file="../source/common/javascript/toolbar/element-ancestors.js"/>
+    	<fileset file="../source/firefox/javascript/toolbar/element-ancestors.js"/>
+    </concat>
+	</target>
+
+  <!-- Builds the configuration for Firefox -->
+  <target name="build.firefox.configuration" depends="initialize.firefox">
+    <echo level="info" message="Building the configuration"/>
+    <copy todir="firefox">
+      <fileset file="../configuration/firefox/chrome.manifest"/>
+      <fileset file="../configuration/firefox/install.rdf"/>
+      <filterset refid="firefox.filters"/>
+    </copy>
+	</target>
+
+  <!-- Builds the dashboard for Firefox -->
+  <target name="build.firefox.dashboard" depends="initialize.firefox">
+    <echo level="info" message="Building the dashboard"/>
+    <copy todir="firefox/content/web-developer/dashboard">
+      <fileset dir="../source/firefox/html/dashboard/"/>
+      <filterset refid="firefox.filters"/>
+    </copy>
+    <copy todir="firefox/content/web-developer/dashboard">
+      <fileset dir="../source/firefox/xul/dashboard"/>
+    </copy>
+    <concat destfile="firefox/content/web-developer/dashboard/javascript/dashboard.js">
+    	<fileset file="../source/common/javascript/dashboard/dashboard.js"/>
+    	<fileset file="../source/firefox/javascript/dashboard/dashboard.js"/>
+    </concat>
+    <copy todir="firefox/content/web-developer/dashboard/javascript">
+      <fileset dir="../source/firefox/javascript/dashboard">
+     		<exclude name="dashboard.js"/>
       </fileset>
-      <filterset refid="chrome.filters"/>
     </copy>
-    <copy file="../source/common/javascript/jquery.js" tofile="chrome/generated/javascript/jquery.js"/>
-    <copy todir="chrome/generated/javascript">
-      <fileset dir="../source/common/javascript/generated"/>
+    <copy todir="firefox/content/web-developer/dashboard/javascript/html">
+      <fileset dir="../source/firefox/javascript/dashboard/html">
+     		<exclude name="common.js"/>
+      </fileset>
     </copy>
-    <copy file="../images/common/logos/favicon.ico" tofile="chrome/generated/images/favicon.ico"/>
-    <copy file="../images/common/logos/16.png" tofile="chrome/generated/images/logo.png"/>
-    <copy todir="chrome/generated/images">
+    <concat destfile="firefox/content/web-developer/dashboard/javascript/html/common.js">
+    	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
+    	<fileset file="../source/common/javascript/generated/common.js"/>
+    	<fileset file="../source/firefox/javascript/dashboard/html/common.js"/>
+    </concat>
+  	<copy file="../source/common/javascript/toolbar/html/element-ancestors.js" tofile="firefox/content/web-developer/dashboard/javascript/html/element-ancestors.js"/>
+    <concat destfile="firefox/content/web-developer/dashboard/javascript/html/syntax-highlight-css.js">
+    	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/css.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/searchcursor.js"/>
+    </concat>
+    <concat destfile="firefox/content/web-developer/dashboard/javascript/html/syntax-highlight-html.js">
+    	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/css.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/htmlmixed.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/javascript.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/searchcursor.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/xml.js"/>
+    </concat>
+    <concat destfile="firefox/content/web-developer/dashboard/common.css">
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/common/codemirror/codemirror.css"/>
+    	<fileset file="../source/common/style-sheets/common/codemirror/theme.css"/>
+    	<fileset file="../source/firefox/style-sheets/dashboard/html/common.css"/>
+    </concat>
+    <copy file="../source/firefox/style-sheets/dashboard/dashboard.css" tofile="firefox/content/web-developer/dashboard/dashboard.css"/>
+    <copy file="../source/firefox/style-sheets/dashboard/html/display-element-information.css" tofile="firefox/content/web-developer/dashboard/display-element-information.css"/>
+    <concat destfile="firefox/content/web-developer/dashboard/display-style-information.css">
+    	<fileset file="../source/common/style-sheets/generated/common.css"/>
+    	<fileset file="../source/firefox/style-sheets/dashboard/html/display-style-information.css"/>
+    </concat>
+  	<copy file="../source/common/style-sheets/toolbar/html/element-ancestors.css" tofile="firefox/content/web-developer/dashboard/element-ancestors.css"/>
+    <copy file="../images/common/generated/collapse.png" tofile="firefox/content/web-developer/dashboard/images/collapse.png"/>
+    <copy file="../images/common/generated/expand.png" tofile="firefox/content/web-developer/dashboard/images/expand.png"/>
+	</target>
+
+  <!-- Builds the dialogs for Firefox -->
+  <target name="build.firefox.dialogs" depends="initialize.firefox">
+    <echo level="info" message="Building the dialogs"/>
+    <copy todir="firefox/content/web-developer/dialogs">
+      <fileset dir="../source/firefox/xul/dialogs"/>
+    </copy>
+    <copy todir="firefox/content/web-developer/dialogs/javascript">
+      <fileset dir="../source/firefox/javascript/dialogs">
+     		<exclude name="dialogs.js"/>
+      </fileset>
+    </copy>
+    <copy todir="firefox/content/web-developer/dialogs/style-sheets">
+      <fileset dir="../source/firefox/style-sheets/dialogs"/>
+    </copy>
+	</target>
+
+  <!-- Builds the features for Firefox -->
+  <target name="build.firefox.features" depends="initialize.firefox">
+    <echo level="info" message="Building the features"/>
+    <copy todir="firefox/content/web-developer/features/style-sheets">
+      <fileset dir="../source/common/style-sheets/features"/>
+    </copy>
+    <copy file="../source/common/style-sheets/common/reset.css" tofile="firefox/content/web-developer/features/style-sheets/css/disable-browser-default-styles.css"/>
+    <copy file="../images/common/transparent.png" tofile="firefox/content/web-developer/features/style-sheets/images/transparent.png"/>
+
+    <echo level="info" message="Building the validation features"/>
+    <copy todir="firefox/content/web-developer/validation">
+      <fileset dir="../source/firefox/html/validation"/>
+      <filterset refid="firefox.filters"/>
+    </copy>
+    <concat destfile="firefox/content/web-developer/validation/validation.css">
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/generated/common.css"/>
+    </concat>
+    <copy file="../images/common/logos/16.png" tofile="firefox/content/web-developer/validation/images/favicon.png"/>
+	</target>
+
+  <!-- Builds the generated pages for Firefox -->
+  <target name="build.firefox.generated.pages" depends="initialize.firefox">
+    <echo level="info" message="Building the generated pages"/>
+    <copy todir="firefox/content/web-developer/generated">
+      <fileset dir="../source/common/html/generated"/>
+      <fileset dir="../source/firefox/html/generated"/>
+      <fileset dir="../source/common/style-sheets/generated">
+     		<exclude name="common.css"/>
+      </fileset>
+      <fileset dir="../source/firefox/style-sheets/generated"/>
+      <filterset refid="firefox.filters"/>
+    </copy>
+    <concat destfile="firefox/content/web-developer/generated/javascript/common.js">
+    	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
+    	<fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
+    	<fileset file="../source/common/javascript/common/bootstrap/collapse.js"/>
+    	<fileset file="../source/common/javascript/common/bootstrap/dropdown.js"/>
+    	<fileset file="../source/firefox/javascript/common/common.js"/>
+    	<fileset file="../source/common/javascript/generated/common.js"/>
+    	<fileset file="../source/firefox/javascript/generated/common.js"/>
+    </concat>
+    <copy file="../source/common/javascript/generated/beautify/beautify.js" tofile="firefox/content/web-developer/generated/javascript/beautify/beautify.js"/>
+    <concat destfile="firefox/content/web-developer/generated/javascript/syntax-highlight-css.js">
+    	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/css.js"/>
+    </concat>
+    <concat destfile="firefox/content/web-developer/generated/javascript/syntax-highlight-javascript.js">
+    	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/javascript.js"/>
+    </concat>
+    <copy todir="firefox/content/web-developer/generated/javascript">
+      <fileset dir="../source/common/javascript/generated">
+     		<exclude name="common.js"/>
+      </fileset>
+    </copy>
+    <concat destfile="firefox/content/web-developer/generated/javascript/view-cookie-information.js">
+      <fileset file="../source/common/javascript/common/bootstrap/modal.js"/>
+      <fileset file="../source/common/javascript/common/bootstrap/transition.js"/>
+      <fileset file="../source/firefox/javascript/generated/view-cookie-information.js"/>
+    </concat>
+    <concat destfile="firefox/content/web-developer/generated/javascript/view-document-size.js">
+      <fileset file="../source/firefox/javascript/common/common.js"/>
+    	<fileset file="../source/firefox/javascript/generated/view-document-size.js"/>
+    </concat>
+    <concat destfile="firefox/content/web-developer/generated/common.css">
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/generated/common.css"/>
+    </concat>
+    <concat destfile="firefox/content/web-developer/generated/syntax-highlight.css">
+    	<fileset file="../source/common/style-sheets/common/codemirror/codemirror.css"/>
+    	<fileset file="../source/common/style-sheets/common/codemirror/theme.css"/>
+    </concat>
+    <copy file="../images/common/logos/16.png" tofile="firefox/content/web-developer/generated/images/favicon.png"/>
+    <copy file="../images/common/logos/monochrome.png" tofile="firefox/content/web-developer/generated/images/logo.png"/>
+    <copy todir="firefox/content/web-developer/generated/images">
       <fileset dir="../images/common/generated"/>
     </copy>
-		    
-    <echo level="info" message="Building the options page"/>
-    <copy file="../source/chrome/html/options/options.html" tofile="chrome/options/options.html">
-      <filterset refid="chrome.filters"/>
-    </copy>
-    <concat destfile="chrome/options/options.css">
-    	<fileset file="../source/common/style-sheets/common/reset.css"/>
-    	<fileset file="../source/common/style-sheets/common/common.css"/>
-    	<fileset file="../source/chrome/style-sheets/common/common.css"/>
-    	<fileset file="../source/chrome/style-sheets/options/options.css"/>
-    </concat>
-    <copy file="../source/common/javascript/jquery.js" tofile="chrome/options/javascript/jquery.js"/>
-    <copy file="../source/chrome/javascript/options/options.js" tofile="chrome/options/javascript/options.js"/>
-    <copy file="../images/chrome/common/notification.png" tofile="chrome/options/images/notification.png"/>
-    <copy file="../images/common/logos/favicon.ico" tofile="chrome/options/images/favicon.ico"/>
-    <copy file="../images/common/logos/16.png" tofile="chrome/options/images/logo.png"/>
-		    
-    <echo level="info" message="Building the about page"/>
-    <copy file="../source/chrome/html/about/about.html" tofile="chrome/about/about.html">
-      <filterset refid="chrome.filters"/>
-    </copy>
-    <concat destfile="chrome/about/about.css">
-    	<fileset file="../source/common/style-sheets/common/reset.css"/>
-    	<fileset file="../source/common/style-sheets/common/common.css"/>
-    	<fileset file="../source/chrome/style-sheets/common/common.css"/>
-    	<fileset file="../source/chrome/style-sheets/about/about.css"/>
-    </concat>
-    <copy file="../images/common/logos/favicon.ico" tofile="chrome/about/images/favicon.ico"/>
-    <copy file="../images/common/logos/64.png" tofile="chrome/about/images/logo.png"/>
-		    
+	</target>
+
+  <!-- Builds the icons for Firefox -->
+  <target name="build.firefox.icons" depends="initialize.firefox">
     <echo level="info" message="Building the icons"/>
-    <copy file="../images/common/logos/16.png" tofile="chrome/icons/16.png"/>
-    <copy file="../images/common/logos/32.png" tofile="chrome/icons/32.png"/>
-    <copy file="../images/common/logos/48.png" tofile="chrome/icons/48.png"/>
-    <copy file="../images/common/logos/64.png" tofile="chrome/icons/64.png"/>
-    <copy file="../images/common/logos/128.png" tofile="chrome/icons/128.png"/>
+    <copy file="../images/common/logos/48.png" tofile="firefox/content/web-developer/icons/48.png"/>
+    <copy file="../images/common/logos/64.png" tofile="firefox/content/web-developer/icons/64.png"/>
+	</target>
+
+  <!-- Builds the locales for Firefox -->
+  <target name="build.firefox.locales" depends="initialize.firefox">
+    <echo level="info" message="Building the locales"/>
+    <copy todir="firefox/locale">
+      <fileset dir="../source/firefox/locales"/>
+      <filterset refid="firefox.filters"/>
+    </copy>
+	</target>
+
+  <!-- Builds the options for Firefox -->
+  <target name="build.firefox.options" depends="initialize.firefox">
+    <echo level="info" message="Building the options"/>
+    <copy todir="firefox/content/web-developer/options">
+      <fileset dir="../source/firefox/xul/options"/>
+    </copy>
+    <copy file="../source/common/html/options/syntax-highlight.html" tofile="firefox/content/web-developer/options/html/syntax-highlight.html">
+      <filterset refid="firefox.filters"/>
+    </copy>
+    <copy file="../source/firefox/javascript/options/options.js" tofile="firefox/content/web-developer/options/javascript/options.js"/>
+    <copy todir="firefox/content/web-developer/options/dialogs/javascript">
+      <fileset dir="../source/firefox/javascript/options/dialogs"/>
+    </copy>
+    <concat destfile="firefox/content/web-developer/options/html/javascript/syntax-highlight.js">
+    	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/css.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/htmlmixed.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/javascript.js"/>
+    	<fileset file="../source/common/javascript/common/codemirror/xml.js"/>
+    	<fileset file="../source/common/javascript/options/syntax-highlight.js"/>
+    </concat>
+    <copy file="../source/firefox/style-sheets/options/options.css" tofile="firefox/content/web-developer/options/style-sheets/options.css"/>
+    <concat destfile="firefox/content/web-developer/options/html/syntax-highlight.css">
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/common/codemirror/codemirror.css"/>
+    	<fileset file="../source/common/style-sheets/common/codemirror/theme.css"/>
+    	<fileset file="../source/common/style-sheets/options/syntax-highlight.css"/>
+    </concat>
+	</target>
+
+  <!-- Builds the overlay for Firefox -->
+  <target name="build.firefox.overlay" depends="initialize.firefox">
+    <echo level="info" message="Building the overlay"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="cookies"/>
+    	<param name="menu.suffix" value="app-menu"/>
+  	</antcallback>
+		<property name="app.menu.cookies" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="css"/>
+    	<param name="menu.suffix" value="app-menu"/>
+  	</antcallback>
+		<property name="app.menu.css" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="disable"/>
+    	<param name="menu.suffix" value="app-menu"/>
+  	</antcallback>
+		<property name="app.menu.disable" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="forms"/>
+    	<param name="menu.suffix" value="app-menu"/>
+  	</antcallback>
+		<property name="app.menu.forms" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="images"/>
+    	<param name="menu.suffix" value="app-menu"/>
+  	</antcallback>
+		<property name="app.menu.images" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="information"/>
+    	<param name="menu.suffix" value="app-menu"/>
+  	</antcallback>
+		<property name="app.menu.information" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="miscellaneous"/>
+    	<param name="menu.suffix" value="app-menu"/>
+  	</antcallback>
+		<property name="app.menu.miscellaneous" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="options"/>
+    	<param name="menu.suffix" value="app-menu"/>
+  	</antcallback>
+		<property name="app.menu.options" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="outline"/>
+    	<param name="menu.suffix" value="app-menu"/>
+  	</antcallback>
+		<property name="app.menu.outline" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="resize"/>
+    	<param name="menu.suffix" value="app-menu"/>
+  	</antcallback>
+		<property name="app.menu.resize" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="tools"/>
+    	<param name="menu.suffix" value="app-menu"/>
+  	</antcallback>
+		<property name="app.menu.tools" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="view-source"/>
+    	<param name="menu.suffix" value="app-menu"/>
+  	</antcallback>
+		<property name="app.menu.view.source" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="cookies"/>
+    	<param name="menu.suffix" value="context"/>
+  	</antcallback>
+		<property name="context.cookies" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="css"/>
+    	<param name="menu.suffix" value="context"/>
+  	</antcallback>
+		<property name="context.css" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="disable"/>
+    	<param name="menu.suffix" value="context"/>
+  	</antcallback>
+		<property name="context.disable" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="forms"/>
+    	<param name="menu.suffix" value="context"/>
+  	</antcallback>
+		<property name="context.forms" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="images"/>
+    	<param name="menu.suffix" value="context"/>
+  	</antcallback>
+		<property name="context.images" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="information"/>
+    	<param name="menu.suffix" value="context"/>
+  	</antcallback>
+		<property name="context.information" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="miscellaneous"/>
+    	<param name="menu.suffix" value="context"/>
+  	</antcallback>
+		<property name="context.miscellaneous" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="options"/>
+    	<param name="menu.suffix" value="context"/>
+  	</antcallback>
+		<property name="context.options" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="outline"/>
+    	<param name="menu.suffix" value="context"/>
+  	</antcallback>
+		<property name="context.outline" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="resize"/>
+    	<param name="menu.suffix" value="context"/>
+  	</antcallback>
+		<property name="context.resize" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="tools"/>
+    	<param name="menu.suffix" value="context"/>
+  	</antcallback>
+		<property name="context.tools" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="view-source"/>
+    	<param name="menu.suffix" value="context"/>
+  	</antcallback>
+		<property name="context.view.source" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="cookies"/>
+    	<param name="menu.suffix" value="menu"/>
+  	</antcallback>
+		<property name="menu.cookies" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="css"/>
+    	<param name="menu.suffix" value="menu"/>
+  	</antcallback>
+		<property name="menu.css" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="disable"/>
+    	<param name="menu.suffix" value="menu"/>
+  	</antcallback>
+		<property name="menu.disable" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="forms"/>
+    	<param name="menu.suffix" value="menu"/>
+  	</antcallback>
+		<property name="menu.forms" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="images"/>
+    	<param name="menu.suffix" value="menu"/>
+  	</antcallback>
+		<property name="menu.images" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="information"/>
+    	<param name="menu.suffix" value="menu"/>
+  	</antcallback>
+		<property name="menu.information" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="miscellaneous"/>
+    	<param name="menu.suffix" value="menu"/>
+  	</antcallback>
+		<property name="menu.miscellaneous" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="options"/>
+    	<param name="menu.suffix" value="menu"/>
+  	</antcallback>
+		<property name="menu.options" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="outline"/>
+    	<param name="menu.suffix" value="menu"/>
+  	</antcallback>
+		<property name="menu.outline" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="resize"/>
+    	<param name="menu.suffix" value="menu"/>
+  	</antcallback>
+		<property name="menu.resize" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="tools"/>
+    	<param name="menu.suffix" value="menu"/>
+  	</antcallback>
+		<property name="menu.tools" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="view-source"/>
+    	<param name="menu.suffix" value="menu"/>
+  	</antcallback>
+		<property name="menu.view.source" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+
+		<antcallback target="build.firefox.overlay.menu" return="menu">
+			<param name="menu.name" value="cookies"/>
+			<param name="menu.suffix" value="seamonkey"/>
+		</antcallback>
+		<property name="seamonkey.cookies" value="${menu}"/>
+		<var name="menu" unset="true"/>
+		<antcallback target="build.firefox.overlay.menu" return="menu">
+			<param name="menu.name" value="css"/>
+			<param name="menu.suffix" value="seamonkey"/>
+		</antcallback>
+		<property name="seamonkey.css" value="${menu}"/>
+		<var name="menu" unset="true"/>
+		<antcallback target="build.firefox.overlay.menu" return="menu">
+			<param name="menu.name" value="disable"/>
+			<param name="menu.suffix" value="seamonkey"/>
+		</antcallback>
+		<property name="seamonkey.disable" value="${menu}"/>
+		<var name="menu" unset="true"/>
+		<antcallback target="build.firefox.overlay.menu" return="menu">
+			<param name="menu.name" value="forms"/>
+			<param name="seamonkey.suffix" value="seamonkey"/>
+		</antcallback>
+		<property name="seamonkey.forms" value="${menu}"/>
+		<var name="menu" unset="true"/>
+		<antcallback target="build.firefox.overlay.menu" return="menu">
+			<param name="menu.name" value="images"/>
+			<param name="menu.suffix" value="seamonkey"/>
+		</antcallback>
+		<property name="seamonkey.images" value="${menu}"/>
+		<var name="menu" unset="true"/>
+		<antcallback target="build.firefox.overlay.menu" return="menu">
+			<param name="menu.name" value="information"/>
+			<param name="menu.suffix" value="seamonkey"/>
+		</antcallback>
+		<property name="seamonkey.information" value="${menu}"/>
+		<var name="menu" unset="true"/>
+		<antcallback target="build.firefox.overlay.menu" return="menu">
+			<param name="menu.name" value="miscellaneous"/>
+			<param name="menu.suffix" value="seamonkey"/>
+		</antcallback>
+		<property name="seamonkey.miscellaneous" value="${menu}"/>
+		<var name="menu" unset="true"/>
+		<antcallback target="build.firefox.overlay.menu" return="menu">
+			<param name="menu.name" value="options"/>
+			<param name="menu.suffix" value="seamonkey"/>
+		</antcallback>
+		<property name="seamonkey.options" value="${menu}"/>
+		<var name="menu" unset="true"/>
+		<antcallback target="build.firefox.overlay.menu" return="menu">
+			<param name="menu.name" value="outline"/>
+			<param name="menu.suffix" value="seamonkey"/>
+		</antcallback>
+		<property name="seamonkey.outline" value="${menu}"/>
+		<var name="menu" unset="true"/>
+		<antcallback target="build.firefox.overlay.menu" return="menu">
+			<param name="menu.name" value="resize"/>
+			<param name="menu.suffix" value="seamonkey"/>
+		</antcallback>
+		<property name="seamonkey.resize" value="${menu}"/>
+		<var name="menu" unset="true"/>
+		<antcallback target="build.firefox.overlay.menu" return="menu">
+			<param name="menu.name" value="tools"/>
+			<param name="menu.suffix" value="seamonkey"/>
+		</antcallback>
+		<property name="seamonkey.tools" value="${menu}"/>
+		<var name="menu" unset="true"/>
+		<antcallback target="build.firefox.overlay.menu" return="menu">
+			<param name="menu.name" value="view-source"/>
+			<param name="menu.suffix" value="seamonkey"/>
+		</antcallback>
+		<property name="seamonkey.view.source" value="${menu}"/>
+		<var name="menu" unset="true"/>
+
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="cookies"/>
+    	<param name="menu.suffix" value="toolbar"/>
+  	</antcallback>
+		<property name="toolbar.cookies" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="css"/>
+    	<param name="menu.suffix" value="toolbar"/>
+  	</antcallback>
+		<property name="toolbar.css" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="disable"/>
+    	<param name="menu.suffix" value="toolbar"/>
+  	</antcallback>
+		<property name="toolbar.disable" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="forms"/>
+    	<param name="menu.suffix" value="toolbar"/>
+  	</antcallback>
+		<property name="toolbar.forms" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="images"/>
+    	<param name="menu.suffix" value="toolbar"/>
+  	</antcallback>
+		<property name="toolbar.images" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="information"/>
+    	<param name="menu.suffix" value="toolbar"/>
+  	</antcallback>
+		<property name="toolbar.information" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="miscellaneous"/>
+    	<param name="menu.suffix" value="toolbar"/>
+  	</antcallback>
+		<property name="toolbar.miscellaneous" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="options"/>
+    	<param name="menu.suffix" value="toolbar"/>
+  	</antcallback>
+		<property name="toolbar.options" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="outline"/>
+    	<param name="menu.suffix" value="toolbar"/>
+  	</antcallback>
+		<property name="toolbar.outline" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="resize"/>
+    	<param name="menu.suffix" value="toolbar"/>
+  	</antcallback>
+		<property name="toolbar.resize" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="tools"/>
+    	<param name="menu.suffix" value="toolbar"/>
+  	</antcallback>
+		<property name="toolbar.tools" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="view-source"/>
+    	<param name="menu.suffix" value="toolbar"/>
+  	</antcallback>
+		<property name="toolbar.view.source" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="cookies"/>
+    	<param name="menu.suffix" value="toolbar-buttton"/>
+  	</antcallback>
+		<property name="toolbar.button.cookies" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="css"/>
+    	<param name="menu.suffix" value="toolbar-buttton"/>
+  	</antcallback>
+		<property name="toolbar.button.css" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="disable"/>
+    	<param name="menu.suffix" value="toolbar-buttton"/>
+  	</antcallback>
+		<property name="toolbar.button.disable" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="forms"/>
+    	<param name="menu.suffix" value="toolbar-buttton"/>
+  	</antcallback>
+		<property name="toolbar.button.forms" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="images"/>
+    	<param name="menu.suffix" value="toolbar-buttton"/>
+  	</antcallback>
+		<property name="toolbar.button.images" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="information"/>
+    	<param name="menu.suffix" value="toolbar-buttton"/>
+  	</antcallback>
+		<property name="toolbar.button.information" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="miscellaneous"/>
+    	<param name="menu.suffix" value="toolbar-buttton"/>
+  	</antcallback>
+		<property name="toolbar.button.miscellaneous" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="options"/>
+    	<param name="menu.suffix" value="toolbar-buttton"/>
+  	</antcallback>
+		<property name="toolbar.button.options" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="outline"/>
+    	<param name="menu.suffix" value="toolbar-buttton"/>
+  	</antcallback>
+		<property name="toolbar.button.outline" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="resize"/>
+    	<param name="menu.suffix" value="toolbar-buttton"/>
+  	</antcallback>
+		<property name="toolbar.button.resize" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="tools"/>
+    	<param name="menu.suffix" value="toolbar-buttton"/>
+  	</antcallback>
+		<property name="toolbar.button.tools" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+  	<antcallback target="build.firefox.overlay.menu" return="menu">
+    	<param name="menu.name" value="view-source"/>
+    	<param name="menu.suffix" value="toolbar-buttton"/>
+  	</antcallback>
+		<property name="toolbar.button.view.source" value="${menu}"/>
+  	<var name="menu" unset="true"/>
+
+    <copy file="../source/firefox/xul/overlay/overlay.xul" tofile="firefox/content/web-developer/overlay/overlay.xul">
+		  <filterchain>
+		    <expandproperties/>
+		  </filterchain>
+    </copy>
+
+    <concat destfile="firefox/content/web-developer/locales/locales.js">
+    	<fileset file="../source/common/javascript/locales/locales.js"/>
+    	<fileset file="../source/firefox/javascript/locales/locales.js"/>
+    </concat>
+    <concat destfile="firefox/content/web-developer/overlay/javascript/overlay.temp">
+      <fileset dir="../source/common/javascript/features"/>
+    	<fileset dir="../source/common/javascript/toolbar">
+     		<exclude name="**/html/**"/>
+    	</fileset>
+      <fileset dir="../source/firefox/javascript/application"/>
+      <fileset dir="../source/firefox/javascript/features"/>
+    	<fileset file="../source/firefox/javascript/overlay/overlay.js"/>
+      <fileset dir="../source/firefox/javascript/overlay">
+     		<exclude name="overlay.js"/>
+      </fileset>
+    	<fileset dir="../source/firefox/javascript/toolbar"/>
+      <fileset dir="../source/firefox/javascript/upgrade"/>
+      <fileset dir="../source/firefox/javascript/validation"/>
+    </concat>
+    <move file="firefox/content/web-developer/overlay/javascript/overlay.temp" tofile="firefox/content/web-developer/overlay/javascript/overlay.js">
+      <filterset refid="firefox.filters"/>
+    </move>
+    <copy file="../source/firefox/style-sheets/overlay/overlay.css" tofile="firefox/content/web-developer/overlay/style-sheets/overlay.css"/>
+	</target>
+
+  <!-- Builds the overlay menu for Firefox -->
+  <target name="build.firefox.overlay.menu">
+  	<property name="suffix" value="${menu.suffix}"/>
+		<loadfile property="menu" srcFile="../source/firefox/xul/overlay/menus/${menu.name}.xul">
+		  <filterchain>
+		    <expandproperties/>
+		  </filterchain>
+		</loadfile>
+ 	</target>
+
+  <!-- Builds the skins for Firefox -->
+  <target name="build.firefox.skins" depends="initialize.firefox">
+    <echo level="info" message="Building the skins"/>
+    <copy file="../source/firefox/style-sheets/skin/common.css" tofile="firefox/skin/default/web-developer.css"/>
+    <concat destfile="firefox/skin/mac/web-developer.css">
+    	<fileset file="../source/firefox/style-sheets/skin/common.css"/>
+    	<fileset file="../source/firefox/style-sheets/skin/mac.css"/>
+    </concat>
+    <copy todir="firefox/skin">
+      <fileset dir="../images/firefox/skins"/>
+    </copy>
+    <copy file="../images/common/logos/16.png" tofile="firefox/skin/default/menu.png"/>
+    <copy file="../images/common/logos/monochrome.png" tofile="firefox/skin/mac/button.png"/>
+    <copy file="../images/common/logos/monochrome.png" tofile="firefox/skin/mac/menu.png"/>
+    <copy file="../images/firefox/skins/default/options.png" tofile="firefox/skin/mac/options.png"/>
+	</target>
+
+  <!-- Builds the toolbars for Firefox -->
+  <target name="build.firefox.toolbars" depends="initialize.firefox">
+    <echo level="info" message="Building the toolbars"/>
+    <copy file="../source/firefox/html/toolbar/element-ancestors.html" tofile="firefox/content/web-developer/toolbar/html/element-ancestors.html">
+    	<filterset refid="firefox.filters"/>
+    </copy>
+    <concat destfile="firefox/content/web-developer/toolbar/html/javascript/element-ancestors.js">
+    	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
+    	<fileset file="../source/common/javascript/generated/common.js"/>
+    	<fileset file="../source/common/javascript/toolbar/html/element-ancestors.js"/>
+    </concat>
+    <concat destfile="firefox/content/web-developer/toolbar/html/element-ancestors.css">
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/toolbar/html/element-ancestors.css"/>
+    </concat>
+    <copy todir="firefox/content/web-developer/toolbar">
+      <fileset dir="../source/common/style-sheets/toolbar"/>
+    </copy>
+    <copy file="../images/common/logos/16.png" tofile="firefox/content/web-developer/toolbar/images/logo.png"/>
+	</target>
+
+  <!-- Cleans up the build for Chrome -->
+  <target name="clean.chrome" depends="initialize.chrome">
+    <echo level="info" message="Cleaning up the build for Chrome"/>
+  	<delete dir="chrome"/>
+  	<delete file="web-developer-chrome.zip"/>
   </target>
+
+  <!-- Cleans up the build for Firefox -->
+  <target name="clean.firefox" depends="initialize.firefox">
+    <echo level="info" message="Cleaning up the build for Firefox"/>
+  	<delete dir="firefox"/>
+  	<delete dir="temp-firefox"/>
+  	<delete file="web-developer-firefox.xpi"/>
+  </target>
+
+  <!-- Converts spaces to tabs in the extension -->
+  <target name="convert.spaces.tabs">
+		<fixcrlf srcdir="../source/chrome/javascript" excludes="**/options/tablednd.js" tab="add" tablength="2"/>
+		<fixcrlf srcdir="../source/common/javascript" excludes="**/beautify/beautify.js,**/bootstrap/collapse.js,**/bootstrap/dropdown.js,**/bootstrap/modal.js,**/bootstrap/tab.js,**/bootstrap/transition.js,**/codemirror/codemirror.js,**/codemirror/css.js,**/codemirror/htmlmixed.js,**/codemirror/javascript.js,**/codemirror/searchcursor.js,**/jquery/icanhaz.js,**/jquery/jquery.js,**/codemirror/xml.js" tab="add" tablength="2"/>
+		<fixcrlf srcdir="../source/firefox/javascript" tab="add" tablength="2"/>
+ 	</target>
+
+  <!-- Initializes the settings -->
+  <target name="initialize">
+    <tstamp>
+      <format property="build.date" pattern="MMMM d, yyyy"/>
+    </tstamp>
+  </target>
+
+  <!-- Initializes the settings for Chrome -->
+  <target name="initialize.chrome" depends="initialize">
+    <filterset id="chrome.filters">
+      <filter token="build.date" value="${build.date}"/>
+      <filtersfile file="../configuration/common/configuration.properties"/>
+      <filtersfile file="../configuration/chrome/configuration.properties"/>
+    </filterset>
+	</target>
+
+  <!-- Initializes the settings for Firefox -->
+  <target name="initialize.firefox" depends="initialize">
+    <filterset id="firefox.filters">
+      <filter token="build.date" value="${build.date}"/>
+      <filtersfile file="../configuration/common/configuration.properties"/>
+      <filtersfile file="../configuration/firefox/configuration.properties"/>
+    </filterset>
+	</target>
 
   <!-- Packages the extension for Chrome -->
   <target name="package.chrome" depends="build.chrome" description="Packages the extension for Chrome">
-    <echo level="info" message="Packaging the extension"/>
+    <echo level="info" message="Packaging the extension for Chrome"/>
     <zip destfile="web-developer-chrome.zip">
       <zipfileset dir="chrome"/>
       <zipfileset file="license.txt"/>
@@ -230,12 +1198,13 @@
   </target>
 
   <!-- Test the extension -->
-  <target name="test" depends="initialize" description="Tests the extension">
-		<jslint options="indent=2,undef">
+  <target name="test" depends="convert.spaces.tabs">
+		<jslint haltOnFailure="false" options="browser,forin,indent=2,maxerr=100,undef">
     	<formatter type="plain"/>
-    	<predef>$$,chrome,createTableCell,CSSPrimitiveValue,document,formatURL,Image,initializeCommonElements,navigator,Node,NodeFilter,output,setPageTitle,setWindowTitle,WebDeveloper,window,XMLHttpRequest</predef>
-    	<fileset dir="../source/chrome/javascript"/>
-    	<fileset dir="../source/common/javascript" excludes="jquery.js"/>
+    	<predef>$$,BrowserPageInfo,BrowserReload,BrowserViewSourceOfDocument,chrome,CodeMirror,Components,CSSPrimitiveValue,getWebNavigation,HTMLDocument,ich,Image,inspectDOMDocument,js_beautify,Node,NodeFilter,pref,toJavaScriptConsole,WebDeveloper,WebDeveloperApplication,WebDeveloperValidateCSS,WebDeveloperValidateHTML,window</predef>
+    	<fileset dir="../source/chrome/javascript" excludes="**/options/tablednd.js"/>
+    	<fileset dir="../source/common/javascript" excludes="**/beautify/beautify.js,**/bootstrap/collapse.js,**/bootstrap/dropdown.js,**/bootstrap/modal.js,**/bootstrap/tab.js,**/bootstrap/transition.js,**/codemirror/codemirror.js,**/codemirror/css.js,**/codemirror/htmlmixed.js,**/codemirror/javascript.js,**/codemirror/searchcursor.js,**/jquery/icanhaz.js,**/jquery/jquery.js,**/codemirror/xml.js"/>
+    	<fileset dir="../source/firefox/javascript"/>
   	</jslint>
- 	</target>  
+ 	</target>
 </project>

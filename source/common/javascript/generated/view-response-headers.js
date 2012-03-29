@@ -1,18 +1,34 @@
-// Initializes the page with data
-function initialize(data)
-{
-	var pre             = $("<pre></pre>");
-	var request         = new XMLHttpRequest();
-	var responseHeaders = null;
+var WebDeveloper = WebDeveloper || {};
 
-	setPageTitle("Response Headers", data);
-	setWindowTitle("Response Headers", data);
-	
-  request.open("get", data.pageURL, false);
-  request.send(null);
-  
-  responseHeaders = request.getAllResponseHeaders();
-  
-	$("#content").append(pre);
-	pre.text(responseHeaders + "\n" + request.status + " " + request.statusText);
-}
+WebDeveloper.Generated = WebDeveloper.Generated || {};
+
+// Initializes the page with data
+WebDeveloper.Generated.initialize = function(data, locale)
+{
+	var content			= $("#content");
+	var documentURL	= data.pageURL;
+	var headers			= null;
+	var request			= null;
+
+	WebDeveloper.Generated.emptyContent();
+	WebDeveloper.Generated.localizeHeader(locale);
+	WebDeveloper.Generated.setPageTitle(locale.responseHeaders, data, locale);
+
+	// Try to get the response headers
+	try
+	{
+		request = new XMLHttpRequest();
+
+		request.open("get", documentURL, false);
+		request.send(null);
+
+		headers = request.getAllResponseHeaders();
+	}
+	catch(exception)
+	{
+		headers = locale.couldNotLoadResponseHeaders;
+	}
+
+	content.append('<h2><a href="' + documentURL + '">' + documentURL + "</a></h2>");
+	content.append("<pre>" + headers + "\n" + request.status + " " + request.statusText + "</pre>");
+};

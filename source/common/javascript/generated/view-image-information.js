@@ -1,74 +1,86 @@
-// Initializes the page with data
-function initialize(data)
-{
-	var container				 = null;
-	var contentDocument  = null;
-	var documents        = data.documents;
-	var image            = null;
-	var imageDescription = null;
-	var images           = null;
-	var imagesLength     = null;
-	var imageSrc         = null;
-	var list             = null;
-	var table            = null;
-	var url							 = null;
+var WebDeveloper = WebDeveloper || {};
 
-	setPageTitle("Images", data);
-	setWindowTitle("Images", data);
-	
+WebDeveloper.Generated = WebDeveloper.Generated || {};
+
+// Initializes the page with data
+WebDeveloper.Generated.initialize = function(data, locale)
+{
+	var container					 = null;
+	var content						 = $("#content");
+	var contentDocument		 = null;
+	var documents					 = data.documents;
+	var image							 = null;
+	var imageDescription	 = null;
+	var images						 = null;
+	var imagesCounter			 = 1;
+	var imagesDescription  = locale.images;
+	var imagesDropdown		 = $("#images-dropdown");
+	var imagesDropdownMenu = $(".dropdown-menu", imagesDropdown);
+	var imagesLength			 = null;
+	var imageSrc					 = null;
+	var list							 = null;
+	var table							 = null;
+	var tableBody					 = null;
+
+	WebDeveloper.Generated.emptyContent();
+	WebDeveloper.Generated.localizeHeader(locale);
+	WebDeveloper.Generated.setPageTitle(imagesDescription, data, locale);
+
+	$(".dropdown-toggle", imagesDropdown).prepend(imagesDescription);
+
 	// Loop through the documents
 	for(var i = 0, l = documents.length; i < l; i++)
 	{
 		contentDocument  = documents[i];
-		imageDescription = "images";
-		images           = contentDocument.images;
-		imagesLength     = images.length;
-		url              = contentDocument.url;
-		
+		imageDescription = imagesDescription.toLowerCase();
+		images					 = contentDocument.images;
+		imagesLength		 = images.length;
+
 		// If there is only one image
 		if(imagesLength == 1)
 		{
-			imageDescription = "image";
+			imageDescription = locale.image.toLowerCase();
 		}
 
-		$("#content").append('<h2><span></span><a href="' + url + '">' + url + "</a></h2>");
-		$("#content").append('<h3 id="image-' + (i + 1) + '"><span></span>' + imagesLength + " " + imageDescription + "</h3>");
-		$("#jump-to ul").append('<li><a href="#image-' + (i + 1) + '">' + formatURL(url) + "</a></li>");	
+		WebDeveloper.Generated.addDocument(contentDocument.url, i, imageDescription, imagesLength);
 
 		// If there are images
 		if(imagesLength > 0)
 		{
-			container = $("<div></div>");
-			
-			$("#content").append(container);
-		
+			container = WebDeveloper.Generated.generateDocumentContainer();
+
 			// Loop through the images
 			for(var j = 0; j < imagesLength; j++)
 			{
-				image    = images[j];
-				imageSrc = image.src;
-				table    = $("<table></table>");
-			
-				table.append('<tr><th>Src</th><td><a href="' + imageSrc + '">' + imageSrc + '</a></td></tr>');
-				table.append('<tr><th>Width</th><td>' + image.width + '</td></tr>');
-				table.append('<tr><th>Height</th><td>' + image.height + '</td></tr>');
-			
+				image			= images[j];
+				imageSrc	= image.src;
+				table			= $('<table class="table table-bordered table-striped"></table>');
+				tableBody = $("<tbody></tbody>");
+
+				table.append("<thead><tr><th>" + locale.property + "</th><th>" + locale.value + "</th></tr></thead>");
+				tableBody.append("<tr><td>" + locale.src + '</td><td><a href="' + imageSrc + '" target="_blank">' + imageSrc + "</a></td></tr>");
+				tableBody.append("<tr><td>" + locale.width + "</td><td>" + image.width + "</td></tr>");
+				tableBody.append("<tr><td>" + locale.height + "</td><td>" + image.height + "</td></tr>");
+
 				// If the image has an alt attribute
 				if(image.alt)
 				{
-					table.append('<tr><th>Alt</th><td>' + image.alt + '</td></tr>');
+					tableBody.append("<tr><td>" + locale.alt + "</td><td>" + image.alt + "</td></tr>");
 				}
-			
-				container.append('<img src="' + imageSrc + '">');
-				container.append(table);
-				container.append('<div class="separator"></div>');
+
+				table.append(tableBody);
+				container.append('<div id="image-' + imagesCounter + '" class="web-developer-image"><img src="' + imageSrc + '"></div>').append(table).append('<div class="web-developer-separator"></div>');
+				content.append(container);
+				imagesDropdownMenu.append('<li><a href="#image-' + imagesCounter + '">' + WebDeveloper.Generated.formatURL(imageSrc) + "</a></li>");
+
+				imagesCounter++;
 			}
 		}
 		else
 		{
-			$("#content").append('<div class="separator"></div>');
+			WebDeveloper.Generated.addSeparator();
 		}
 	}
-	
-	initializeCommonElements();
-}
+
+	WebDeveloper.Generated.initializeCommonElements();
+};

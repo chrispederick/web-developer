@@ -1,0 +1,7 @@
+/* ! Options styles */
+
+prefpane > groupbox { margin: 0; }
+prefpane .groupbox-body { -moz-appearance: none; padding-left: 0; padding-right: 0; }
+#web-developer-options { min-width: 45em; }
+#web-developer-options-tools-pane spacer { width: 2em; }
+#web-developer-syntax-highlight-browser { border: 1px solid #999; height: 150px !important; }

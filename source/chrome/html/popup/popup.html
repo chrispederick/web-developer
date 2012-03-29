@@ -1,245 +1,275 @@
-<!DOCTYPE html> 
-<html id="web-developer-popup" lang="en"> 
- 
-<head> 
-	<meta charset="utf-8"> 
-	<title>@name@ Popup</title> 
-	<link href="popup.css" rel="stylesheet"> 
-</head> 
- 
-<body> 
+<!DOCTYPE html>
+<html id="web-developer-popup" lang="en">
 
-<ul id="toolbar">
-	<li id="css-toolbar">CSS</li>
-	<li id="forms-toolbar">Forms</li>
-	<li id="images-toolbar">Images</li>
-	<li id="information-toolbar">Information</li>
-	<li id="miscellaneous-toolbar">Miscellaneous</li>
-	<li id="outline-toolbar">Outline</li>
-	<li id="resize-toolbar">Resize</li>
-	<li id="tools-toolbar">Tools</li>
-	<li id="options-toolbar">Options</li>
-</ul>
+<head>
+	<meta charset="utf-8">
+	<title>@name@</title>
+	<link href="popup.css" rel="stylesheet">
+</head>
 
-<ul id="css-menu" class="menu">
-	<ul>
-		<li id="disable-all-styles">Disable All Styles</li>
-		<li id="disable-browser-default-styles">Disable Browser Default Styles</li>
-		<li id="disable-embedded-styles">Disable Embedded Styles</li>
-		<li id="disable-inline-styles">Disable Inline Styles</li>
-	</ul>
+<body>
 
-	<ul>
-		<li id="disable-linked-style-sheets">Disable Linked Style Sheets</li>
-		<li id="disable-print-styles">Disable Print Styles</li>
-		<li id="display-handheld-styles">Display Handheld Styles</li>
-		<li id="display-print-styles">Display Print Styles</li>
-	</ul>
+<div class="tabbable">
+  <ul class="nav nav-tabs">
+		<li id="css-toolbar" class="active"><a href="#css-menu" data-toggle="tab"><span></span></a></li>
+		<li id="forms-toolbar"><a href="#forms-menu" data-toggle="tab"><span></span></a></li>
+		<li id="images-toolbar"><a href="#images-menu" data-toggle="tab"><span></span></a></li>
+		<li id="information-toolbar"><a href="#information-menu" data-toggle="tab"><span></span></a></li>
+		<li id="miscellaneous-toolbar"><a href="#miscellaneous-menu" data-toggle="tab"><span></span></a></li>
+		<li id="outline-toolbar"><a href="#outline-menu" data-toggle="tab"><span></span></a></li>
+		<li id="resize-toolbar"><a href="#resize-menu" data-toggle="tab"><span></span></a></li>
+		<li id="tools-toolbar"><a href="#tools-menu" data-toggle="tab"><span></span></a></li>
+		<li id="options-toolbar"><a href="#options-menu" data-toggle="tab"><span></span></a></li>
+  </ul>
 
-	<ul>
-		<li id="edit-css">Edit CSS</li>
-		<li id="reload-css">Reload CSS</li>
-		<li id="view-css">View CSS</li>
-	</ul>
-</ul>
+  <div class="tab-content">
+    <div id="css-menu" class="tab-pane active">
+			<ul class="unstyled">
+				<li><a href="#" id="disable-all-styles"><span></span>Disable All Styles</a></li>
+				<li><a href="#" id="disable-browser-default-styles"><span></span>Disable Browser Default Styles</a></li>
+				<li><a href="#" id="disable-embedded-styles"><span></span>Disable Embedded Styles</a></li>
+				<li><a href="#" id="disable-inline-styles"><span></span>Disable Inline Styles</a></li>
+			</ul>
 
-<ul id="forms-menu" class="menu">
-	<ul>
-		<li id="clear-radio-buttons">Clear Radio Buttons</li>
-		<li id="convert-form-gets-to-posts">Convert Form GETs To POSTs</li>
-		<li id="convert-form-posts-to-gets">Convert Form POSTs To GETs</li>
-		<li id="convert-select-elements-to-text-inputs">Convert Select Elements To Text Inputs</li>
-	</ul>
+			<ul class="unstyled">
+				<li><a href="#" id="disable-linked-style-sheets"><span></span>Disable Linked Style Sheets</a></li>
+				<li><a href="#" id="disable-print-styles"><span></span>Disable Print Styles</a></li>
+				<li><a href="#" id="display-handheld-styles"><span></span>Display Handheld Styles</a></li>
+				<li><a href="#" id="display-print-styles"><span></span>Display Print Styles</a></li>
+			</ul>
 
-	<ul>
-		<li id="display-form-details">Display Form Details</li>
-		<li id="display-passwords">Display Passwords</li>
-		<li id="enable-auto-completion">Enable Auto Completion</li>
-		<li id="enable-form-fields">Enable Form Fields</li>
-	</ul>
-	
-	<ul>
-		<li id="make-form-fields-writable">Make Form Fields Writable</li>
-		<li id="populate-form-fields">Populate Form Fields</li>
-		<li id="remove-maximum-lengths">Remove Maximum Lengths</li>
-		<li id="view-form-information">View Form Information</li>
-	</ul>
-</ul>
+			<ul class="unstyled">
+				<li><a href="#" id="edit-css"><span></span>Edit CSS</a></li>
+				<li><a href="#" id="reload-linked-style-sheets"><span></span>Reload Linked Style Sheets</a></li>
+				<li><a href="#" id="use-border-box-model"><span></span>Use Border Box Model</a></li>
+				<li><a href="#" id="view-css"><span></span>View CSS</a></li>
+			</ul>
+		</div>
 
-<ul id="images-menu" class="menu">
-	<ul>
-		<li id="display-alt-attributes">Display Alt Attributes</li>
-		<li id="display-image-dimensions">Display Image Dimensions</li>
-		<li id="display-image-paths">Display Image Paths</li>
-		<li id="find-broken-images">Find Broken Images</li>
-		<li id="hide-background-images">Hide Background Images</li>
-		<li id="hide-images">Hide Images</li>
-		<li id="make-images-full-size">Make Images Full Size</li>
-	</ul>
-	
-	<ul>
-		<li id="make-images-invisible">Make Images Invisible</li>
-		<li id="outline-all-images">Outline All Images</li>
-		<li id="outline-background-images">Outline Background Images</li>
-		<li id="outline-images-with-adjusted-dimensions">Outline Images With Adjusted Dimensions</li>
-		<li id="outline-images-with-empty-alt-attributes">Outline Images With Empty Alt Attributes</li>
-	</ul>
-	
-	<ul>
-		<li id="outline-images-with-oversized-dimensions">Outline Images With Oversized Dimensions</li>
-		<li id="outline-images-without-alt-attributes">Outline Images Without Alt Attributes</li>
-		<li id="outline-images-without-dimensions">Outline Images Without Dimensions</li>
-		<li id="replace-images-with-alt-attributes">Replace Images With Alt Attributes</li>
-		<li id="view-image-information">View Image Information</li>
-	</ul>
-</ul>
+    <div id="forms-menu" class="tab-pane">
+			<ul class="unstyled">
+				<li><a href="#" id="check-all-checkboxes"><span></span>Check All Checkboxes</a></li>
+				<li><a href="#" id="uncheck-all-checkboxes"><span></span>Uncheck All Checkboxes</a></li>
+				<li><a href="#" id="clear-form-fields"><span></span>Clear Form Fields</a></li>
+				<li><a href="#" id="clear-radio-buttons"><span></span>Clear Radio Buttons</a></li>
+				<li><a href="#" id="convert-form-gets-to-posts"><span></span>Convert Form GETs To POSTs</a></li>
+				<li><a href="#" id="convert-form-posts-to-gets"><span></span>Convert Form POSTs To GETs</a></li>
+			</ul>
 
-<ul id="information-menu" class="menu">
-	<ul>
-		<li id="display-abbreviations">Display Abbreviations</li>
-		<li id="display-access-keys">Display Access Keys</li>
-		<li id="display-anchors">Display Anchors</li>
-		<li id="display-element-information">Display Element Information</li>
-		<li id="display-id-class-details">Display Id &amp; Class Details</li>
-		<li id="display-link-details">Display Link Details</li>
-	</ul>
-	
-	<ul>
-		<li id="display-object-information">Display Object Information</li>
-		<li id="display-stack-levels">Display Stack Levels</li>
-		<li id="display-tab-index">Display Tab Index</li>
-		<li id="display-title-attributes">Display Title Attributes</li>
-		<li id="display-topographic-information">Display Topographic Information</li>
-	</ul>
-	
-	<ul>
-		<li id="view-anchor-information">View Anchor Information</li>
-		<li id="view-document-outline">View Document Outline</li>
-		<li id="view-javascript">View JavaScript</li>
-		<li id="view-link-information">View Link Information</li>
-		<li id="view-meta-tag-information">View Meta Tag Information</li>
-		<li id="view-response-headers">View Response Headers</li>
-	</ul>
-</ul>
+			<ul class="unstyled">
+				<li><a href="#" id="convert-select-elements-to-text-inputs"><span></span>Convert Select Elements To Text Inputs</a></li>
+				<li><a href="#" id="convert-text-inputs-to-textareas"><span></span>Convert Text Inputs To Textareas</a></li>
+				<li><a href="#" id="display-form-details"><span></span>Display Form Details</a></li>
+				<li><a href="#" id="display-passwords"><span></span>Display Passwords</a></li>
+				<li><a href="#" id="enable-auto-completion"><span></span>Enable Auto Completion</a></li>
+				<li><a href="#" id="enable-form-fields"><span></span>Enable Form Fields</a></li>
+			</ul>
 
-<ul id="miscellaneous-menu" class="menu">
-	<ul>
-		<li id="display-color-picker">Display Color Picker</li>
-		<li id="display-hidden-elements">Display Hidden Elements</li>
-	</ul>
-	
-	<ul>
-		<li id="display-ruler">Display Ruler</li>
-		<li id="linearize-page">Linearize Page</li>
-	</ul>
-	
-	<ul>
-		<li id="make-frames-resizable">Make Frames Resizable</li>
-	</ul>
-</ul>
+			<ul class="unstyled">
+				<li><a href="#" id="expand-select-elements"><span></span>Expand Select Elements</a></li>
+				<li><a href="#" id="make-form-fields-writable"><span></span>Make Form Fields Writable</a></li>
+				<li><a href="#" id="outline-form-fields-without-labels"><span></span>Outline Form Fields Without Labels</a></li>
+				<li><a href="#" id="populate-form-fields"><span></span>Populate Form Fields</a></li>
+				<li><a href="#" id="remove-maximum-lengths"><span></span>Remove Maximum Lengths</a></li>
+				<li><a href="#" id="view-form-information"><span></span>View Form Information</a></li>
+			</ul>
+		</div>
 
-<ul id="outline-menu" class="menu">
-	<ul>
-		<li id="outline-block-level-elements">Outline Block Level Elements</li>
-		<li id="outline-deprecated-elements">Outline Deprecated Elements</li>
-		<li id="outline-external-links">Outline External Links</li>
-		<li id="outline-frames">Outline Frames</li>
-		<li id="outline-headings">Outline Headings</li>
-	</ul>
-	
-	<ul>
-		<li id="outline-non-secure-elements">Outline Non-Secure Elements</li>
-		<li id="outline-table-captions">Outline Table Captions</li>
-		<li id="outline-table-cells">Outline Table Cells</li>
-		<li id="outline-tables">Outline Tables</li>
-	</ul>
-	
-	<ul>
-		<li id="outline-floated-elements">Outline Floated Elements</li>
-		<li id="outline-absolute-positioned-elements">Outline Absolute Positioned Elements</li>
-		<li id="outline-fixed-positioned-elements">Outline Fixed Positioned Elements</li>
-		<li id="outline-relative-positioned-elements">Outline Relative Positioned Elements</li>
-	</ul>
-</ul>
+    <div id="images-menu" class="tab-pane">
+			<ul class="unstyled">
+				<li><a href="#" id="display-alt-attributes"><span></span>Display Alt Attributes</a></li>
+				<li><a href="#" id="display-image-dimensions"><span></span>Display Image Dimensions</a></li>
+				<li><a href="#" id="display-image-paths"><span></span>Display Image Paths</a></li>
+				<li><a href="#" id="find-broken-images"><span></span>Find Broken Images</a></li>
+				<li><a href="#" id="hide-background-images"><span></span>Hide Background Images</a></li>
+				<li><a href="#" id="hide-images"><span></span>Hide Images</a></li>
+			</ul>
 
-<ul id="resize-menu" class="menu">
-	<ul>
-		<li id="display-window-size">Display Window Size</li>
-		<li id="resize-window">Resize Window...</li>
-	</ul>
-	
-	<ul>
-		<li id="resize-800x600" class="custom-resize-window">800x600</li>
-		<li id="resize-1024x768" class="custom-resize-window">1024x768</li>
-	</ul>
-</ul>
+			<ul class="unstyled">
+				<li><a href="#" id="make-images-full-size"><span></span>Make Images Full Size</a></li>
+				<li><a href="#" id="make-images-invisible"><span></span>Make Images Invisible</a></li>
+				<li><a href="#" id="outline-all-images"><span></span>Outline All Images</a></li>
+				<li><a href="#" id="outline-background-images"><span></span>Outline Background Images</a></li>
+				<li><a href="#" id="outline-images-with-adjusted-dimensions"><span></span>Outline Images With Adjusted Dimensions</a></li>
+				<li><a href="#" id="outline-images-with-empty-alt-attributes"><span></span>Outline Images With Empty Alt Attributes</a></li>
+			</ul>
 
-<ul id="tools-menu" class="menu">
-	<ul>
-		<li id="validate-css">Validate CSS</li>
-		<li id="validate-feed">Validate Feed</li>
-		<li id="validate-html">Validate HTML</li>
-		<li id="validate-links">Validate Links</li>
-	</ul>
-	
-	<ul>
-		<li id="validate-section-508">Validate Section 508</li>
-		<li id="validate-wcag">Validate WCAG</li>
-		<li id="validate-local-css">Validate Local CSS</li>
-		<li id="validate-local-html">Validate Local HTML</li>
-	</ul>
-	
-	<ul>
-		<li id="view-source">View Source</li>
-	</ul>
-</ul>
+			<ul class="unstyled">
+				<li><a href="#" id="outline-images-with-oversized-dimensions"><span></span>Outline Images With Oversized Dimensions</a></li>
+				<li><a href="#" id="outline-images-without-alt-attributes"><span></span>Outline Images Without Alt Attributes</a></li>
+				<li><a href="#" id="outline-images-without-dimensions"><span></span>Outline Images Without Dimensions</a></li>
+				<li><a href="#" id="reload-images"><span></span>Reload Images</a></li>
+				<li><a href="#" id="replace-images-with-alt-attributes"><span></span>Replace Images With Alt Attributes</a></li>
+				<li><a href="#" id="view-image-information"><span></span>View Image Information</a></li>
+			</ul>
+		</div>
 
-<ul id="options-menu" class="menu">
-	<ul>
-		<li id="reset-page">Reset Page</li>
-	</ul>
-	
-	<ul>
-		<li id="options">Options</li>
-	</ul>
-	
-	<ul>
-		<li id="help">Help</li>
-		<li id="about">About</li>
-	</ul>
-</ul>
+    <div id="information-menu" class="tab-pane">
+			<ul class="unstyled">
+				<li><a href="#" id="display-abbreviations"><span></span>Display Abbreviations</a></li>
+				<li><a href="#" id="display-access-keys"><span></span>Display Access Keys</a></li>
+				<li><a href="#" id="display-anchors"><span></span>Display Anchors</a></li>
+				<li><a href="#" id="display-aria-roles"><span></span>Display ARIA Roles</a></li>
+				<li><a href="#" id="display-div-dimensions"><span></span>Display Div Dimensions</a></li>
+				<li><a href="#" id="display-div-order"><span></span>Display Div Order</a></li>
+				<li><a href="#" id="display-element-information"><span></span>Display Element Information</a></li>
+				<li><a href="#" id="display-id-class-details"><span></span>Display Id &amp; Class Details</a></li>
+			</ul>
 
-<div id="notification">
-	<span class="icon"></span>
+			<ul class="unstyled">
+				<li><a href="#" id="display-link-details"><span></span>Display Link Details</a></li>
+				<li><a href="#" id="display-object-information"><span></span>Display Object Information</a></li>
+				<li><a href="#" id="display-stack-levels"><span></span>Display Stack Levels</a></li>
+				<li><a href="#" id="display-tab-index"><span></span>Display Tab Index</a></li>
+				<li><a href="#" id="display-table-depth"><span></span>Display Table Depth</a></li>
+				<li><a href="#" id="display-table-information"><span></span>Display Table Information</a></li>
+				<li><a href="#" id="display-title-attributes"><span></span>Display Title Attributes</a></li>
+				<li><a href="#" id="display-topographic-information"><span></span>Display Topographic Information</a></li>
+			</ul>
+
+			<ul class="unstyled">
+				<li><a href="#" id="find-duplicate-ids"><span></span>Find Duplicate Ids</a></li>
+				<li><a href="#" id="view-anchor-information"><span></span>View Anchor Information</a></li>
+				<li><a href="#" id="view-color-information"><span></span>View Color Information</a></li>
+				<li><a href="#" id="view-document-outline"><span></span>View Document Outline</a></li>
+				<li><a href="#" id="view-javascript"><span></span>View JavaScript</a></li>
+				<li><a href="#" id="view-link-information"><span></span>View Link Information</a></li>
+				<li><a href="#" id="view-meta-tag-information"><span></span>View Meta Tag Information</a></li>
+				<li><a href="#" id="view-response-headers"><span></span>View Response Headers</a></li>
+			</ul>
+		</div>
+
+    <div id="miscellaneous-menu" class="tab-pane">
+			<ul class="unstyled">
+				<li><a href="#" id="clear-history"><span></span>Clear History</a></li>
+				<li><a href="#" id="display-color-picker"><span></span>Display Color Picker</a></li>
+				<li><a href="#" id="display-hidden-elements"><span></span>Display Hidden Elements</a></li>
+			</ul>
+
+			<ul class="unstyled">
+				<li><a href="#" id="display-line-guides"><span></span>Display Line Guides</a></li>
+				<li><a href="#" id="display-ruler"><span></span>Display Ruler</a></li>
+				<li><a href="#" id="linearize-page"><span></span>Linearize Page</a></li>
+			</ul>
+
+			<ul class="unstyled">
+				<li><a href="#" id="make-frames-resizable"><span></span>Make Frames Resizable</a></li>
+				<li><a href="#" id="mark-all-links-unvisited"><span></span>Mark All Links Unvisited</a></li>
+				<li><a href="#" id="mark-all-links-visited"><span></span>Mark All Links Visited</a></li>
+			</ul>
+		</div>
+
+    <div id="outline-menu" class="tab-pane">
+			<ul class="unstyled">
+				<li><a href="#" id="outline-absolute-positioned-elements"><span></span>Outline Absolute Positioned Elements</a></li>
+				<li><a href="#" id="outline-block-level-elements"><span></span>Outline Block Level Elements</a></li>
+				<li><a href="#" id="outline-deprecated-elements"><span></span>Outline Deprecated Elements</a></li>
+				<li><a href="#" id="outline-external-links"><span></span>Outline External Links</a></li>
+				<li><a href="#" id="outline-fixed-positioned-elements"><span></span>Outline Fixed Positioned Elements</a></li>
+			</ul>
+
+			<ul class="unstyled">
+				<li><a href="#" id="outline-floated-elements"><span></span>Outline Floated Elements</a></li>
+				<li><a href="#" id="outline-frames"><span></span>Outline Frames</a></li>
+				<li><a href="#" id="outline-headings"><span></span>Outline Headings</a></li>
+				<li><a href="#" id="outline-non-secure-elements"><span></span>Outline Non-Secure Elements</a></li>
+			</ul>
+
+			<ul class="unstyled">
+				<li><a href="#" id="outline-relative-positioned-elements"><span></span>Outline Relative Positioned Elements</a></li>
+				<li><a href="#" id="outline-table-captions"><span></span>Outline Table Captions</a></li>
+				<li><a href="#" id="outline-table-cells"><span></span>Outline Table Cells</a></li>
+				<li><a href="#" id="outline-tables"><span></span>Outline Tables</a></li>
+			</ul>
+		</div>
+
+    <div id="resize-menu" class="tab-pane">
+			<ul class="unstyled">
+				<li><a href="#" id="display-window-size"><span></span>Display Window Size</a></li>
+				<li><a href="#" id="resize-window"><span></span>Resize Window...</a></li>
+			</ul>
+
+			<ul id="custom-resize-options" class="unstyled">
+				<li></li>
+			</ul>
+
+			<ul class="unstyled">
+				<li><a href="#" id="view-responsive-layouts"><span></span>View Responsive Layouts</a></li>
+			</ul>
+		</div>
+
+    <div id="tools-menu" class="tab-pane">
+			<ul id="custom-tools" class="unstyled">
+				<li></li>
+			</ul>
+
+			<ul class="unstyled">
+				<li><a href="#" id="validate-local-css"><span></span>Validate Local CSS</a></li>
+				<li><a href="#" id="validate-local-html"><span></span>Validate Local HTML</a></li>
+				<li><a href="#" id="view-source"><span></span>View Source</a></li>
+			</ul>
+		</div>
+
+    <div id="options-menu" class="tab-pane">
+			<ul class="unstyled">
+				<li><a href="#" id="reset-page"><span></span>Reset Page</a></li>
+			</ul>
+
+			<ul class="unstyled">
+				<li><a href="#" id="options"><span></span>Options</a></li>
+				<li><a href="@url@help/" id="help"><span></span>Help</a></li>
+				<li><a href="#" id="about"><span></span>About</a></li>
+			</ul>
+		</div>
+  </div>
 </div>
 
-<div id="resize-window-dialog">
-	<label for="resize-window-width">Width (px)</label>
-	<input id="resize-window-width" placeholder="Enter the window width">
-
-	<label for="resize-window-height">Height (px)</label>
-	<input id="resize-window-height" placeholder="Enter the window height">
-
-	<div class="buttons">
-		<input id="resize-window-cancel" type="submit" value="Cancel">
-		<input id="resize-window-submit" type="submit" value="Resize">
-	</div>
+<div id="confirmation" class="alert alert-warning fade in">
+  <span></span>
+  <button class="btn cancel">Cancel</button>
+  <button class="btn btn-warning"></button>
 </div>
 
-<script src="javascript/jquery.js"></script> 
-<script src="javascript/analytics.js"></script> 
-<script src="javascript/platform.js"></script> 
-<script src="javascript/popup.js"></script> 
-<script src="javascript/css.js"></script> 
-<script src="javascript/forms.js"></script> 
-<script src="javascript/images.js"></script> 
-<script src="javascript/information.js"></script> 
-<script src="javascript/miscellaneous.js"></script> 
-<script src="javascript/options.js"></script> 
-<script src="javascript/outline.js"></script> 
-<script src="javascript/resize.js"></script> 
-<script src="javascript/tools.js"></script> 
+<div id="notification" class="alert alert-success fade in">
+  <a class="close" data-dismiss="alert">&times;</a>
+  <span></span>
+</div>
+
+<form id="resize-window-dialog" class="form-horizontal">
+	<fieldset>
+		<legend>Resize Window</legend>
+
+		<div class="control-group">
+			<label for="resize-window-width" class="control-label">Width (px)</label>
+			<div class="controls">
+				<input id="resize-window-width" placeholder="Enter the window width">
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label for="resize-window-height" class="control-label">Height (px)</label>
+			<div class="controls">
+				<input id="resize-window-height" placeholder="Enter the window height">
+			</div>
+		</div>
+
+		<div class="form-actions">
+	    <button id="resize-window-cancel" class="btn">Cancel</button>
+	    <button id="resize-window-submit" class="btn btn-primary">Resize</button>
+	  </div>
+	</fieldset>
+</form>
+
+<script src="javascript/popup.js"></script>
+
+<script id="custom_resize_option" type="text/html">
+	<li><a href="#" data-height="{{height}}" data-width="{{width}}" class="custom-resize-window"><span></span>{{description}}</a></li>
+</script>
+
+<script id="custom_tool" type="text/html">
+	<li><a href="#" data-url="{{url}}" class="custom-tool"><span></span>{{description}}</a></li>
+</script>
 
 </body>
- 
-</html> 
+
+</html>

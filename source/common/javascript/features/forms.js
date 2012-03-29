@@ -1,562 +1,902 @@
+var WebDeveloper = WebDeveloper || {};
+
 WebDeveloper.Forms = WebDeveloper.Forms || {};
 
-// Clears all radio buttons
-WebDeveloper.Forms.clearRadioButtons = function(contentDocument)
+// Clears all form fields
+WebDeveloper.Forms.clearFormFields = function(documents)
 {
-  var clearedRadioButtons = 0;
-  var message             = null;
-  var radioButtons        = contentDocument.querySelectorAll("input[type=radio]");
+	var clearedForms = 0;
+	var elementType	 = null;
+	var formElement	 = null;
+	var formElements = null;
+	var forms				 = null;
 
-  // Loop through the radio buttons
-  for(var i = 0, l = radioButtons.length; i < l; i++)
-  {
-    radioButtons[i].checked = false;
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		forms = documents[i].forms;
 
-    clearedRadioButtons++;
-  }
-  
-  // If one radio button was cleared
-  if(clearedRadioButtons == 1)
-  {
-		message = "1 radio button cleared";
-  }
-  else
-  {
-		message = clearedRadioButtons + " radio buttons cleared";
-  }
+		// Loop through the forms
+		for(var j = 0, m = forms.length; j < m; j++)
+		{
+			formElements = forms[j].elements;
 
-	WebDeveloper.Forms.showNotification(message);
+			// Loop through the form elements
+			for(var k = 0, n = formElements.length; k < n; k++)
+			{
+				formElement	= formElements[k];
+				elementType	= formElement.tagName.toLowerCase();
+
+				// If this is an input element
+				if(elementType == "input")
+				{
+					// If the form element has a type attribute
+					if(formElement.hasAttribute("type"))
+					{
+						elementType = formElement.getAttribute("type");
+
+						// If the element type is checkbox or radio
+						if(elementType == "checkbox" || elementType == "radio")
+						{
+							formElement.checked = false;
+						}
+						else if(elementType != "hidden" && elementType != "reset" && elementType != "submit")
+						{
+							formElement.value = "";
+						}
+					}
+					else
+					{
+						formElement.value = "";
+					}
+				}
+				else if(elementType == "select")
+				{
+					formElement.selectedIndex = -1;
+				}
+				else if(elementType == "textarea")
+				{
+					formElement.value = "";
+				}
+			}
+
+			clearedForms++;
+		}
+	}
+
+	// If one form was cleared
+	if(clearedForms == 1)
+	{
+		WebDeveloper.Common.displayNotification("clearFormFieldsSingleResult");
+	}
+	else
+	{
+		WebDeveloper.Common.displayNotification("clearFormFieldsMultipleResult", [clearedForms]);
+	}
+};
+
+// Clears all radio buttons
+WebDeveloper.Forms.clearRadioButtons = function(documents)
+{
+	var clearedRadioButtons = 0;
+	var radioButtons				= null;
+
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		radioButtons = documents[i].querySelectorAll("input[type=radio]");
+
+		// Loop through the radio buttons
+		for(var j = 0, m = radioButtons.length; j < m; j++)
+		{
+			radioButtons[j].checked = false;
+
+			clearedRadioButtons++;
+		}
+	}
+
+	// If one radio button was cleared
+	if(clearedRadioButtons == 1)
+	{
+		WebDeveloper.Common.displayNotification("clearRadioButtonsSingleResult");
+	}
+	else
+	{
+		WebDeveloper.Common.displayNotification("clearRadioButtonsMultipleResult", [clearedRadioButtons]);
+	}
 };
 
 // Converts the methods of all forms
-WebDeveloper.Forms.convertFormMethods = function(method, contentDocument)
+WebDeveloper.Forms.convertFormMethods = function(method, documents)
 {
-  var convertedForms = 0;
-  var form           = null;
-	var forms          = contentDocument.forms;
-  var message        = null;
+	var convertedForms = 0;
+	var form					 = null;
+	var forms					 = null;
 
-  // Loop through all the forms
-  for(var i = 0, l = forms.length; i < l; i++)
-  {
-    form = forms[i];
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		forms = documents[i].forms;
 
-    // If this form is not already the right method
-    if((!form.hasAttribute("method") && method == "post") || (form.hasAttribute("method") && form.getAttribute("method").toLowerCase() != method))
-    {
-      form.setAttribute("method", method);
-      
-      convertedForms++;
-    }
-  }
+		// Loop through all the forms
+		for(var j = 0, m = forms.length; j < m; j++)
+		{
+			form = forms[j];
 
-  // If one form was converted
-  if(convertedForms == 1)
-  {
-		message = "1 form converted";
-  }
-  else
-  {
-		message = convertedForms + " forms converted";
-  }
+			// If this form is not already the right method
+			if((!form.hasAttribute("method") && method == "post") || (form.hasAttribute("method") && form.getAttribute("method").toLowerCase() != method))
+			{
+				form.setAttribute("method", method);
 
-	WebDeveloper.Forms.showNotification(message);
+				convertedForms++;
+			}
+		}
+	}
+
+	// If one form was converted
+	if(convertedForms == 1)
+	{
+		WebDeveloper.Common.displayNotification("convertFormMethodsSingleResult", [method]);
+	}
+	else
+	{
+		WebDeveloper.Common.displayNotification("convertFormMethodsMultipleResult", [convertedForms, method]);
+	}
 };
 
 // Converts select elements to text inputs
-WebDeveloper.Forms.convertSelectElementsToTextInputs = function(contentDocument)
+WebDeveloper.Forms.convertSelectElementsToTextInputs = function(documents)
 {
-  var convertedSelectElements = 0;
-  var message                 = null;
-  var inputElement            = null;
-  var parentNode              = null;
-  var selectElement           = null;
-  var selectElements          = contentDocument.querySelectorAll("select");
+	var contentDocument					= null;
+	var convertedSelectElements = 0;
+	var inputElement						= null;
+	var parentNode							= null;
+	var selectElement						= null;
+	var selectElements					= null;
 
-  // While there are select elements
-  while(selectElements.length > 0)
-  {
-    inputElement  = contentDocument.createElement("input");
-    selectElement = selectElements[0];
-    parentNode    = selectElement.parentNode;
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		contentDocument = documents[i];
+		selectElements	= contentDocument.getElementsByTagName("select");
 
-    inputElement.value = selectElement.value;
+		// While there are select elements
+		while(selectElements.length > 0)
+		{
+			inputElement	= contentDocument.createElement("input");
+			selectElement = selectElements[0];
+			parentNode		= selectElement.parentNode;
 
-    // If the select element has an id attribute
-    if(selectElement.hasAttribute("id"))
-    {
-      inputElement.setAttribute("id", selectElement.getAttribute("id"));
-    }
+			inputElement.value = selectElement.value;
 
-    // If the select element has a name attribute
-    if(selectElement.hasAttribute("name"))
-    {
-      inputElement.setAttribute("name", selectElement.getAttribute("name"));
-    }
+			// If the select element has an id attribute
+			if(selectElement.hasAttribute("id"))
+			{
+				inputElement.setAttribute("id", selectElement.getAttribute("id"));
+			}
 
-    parentNode.insertBefore(inputElement, selectElement);
-		parentNode.removeChild(selectElement);
+			// If the select element has a name attribute
+			if(selectElement.hasAttribute("name"))
+			{
+				inputElement.setAttribute("name", selectElement.getAttribute("name"));
+			}
 
-    convertedSelectElements++;
-  }
+			parentNode.insertBefore(inputElement, selectElement);
+			parentNode.removeChild(selectElement);
 
-  // If one select element was converted
-  if(convertedSelectElements == 1)
-  {
-		message = "1 select element converted";
-  }
-  else
-  {
-		message = convertedSelectElements + " select elements converted";
-  }
+			convertedSelectElements++;
+		}
+	}
 
-	WebDeveloper.Forms.showNotification(message);
+	// If one select element was converted
+	if(convertedSelectElements == 1)
+	{
+		WebDeveloper.Common.displayNotification("convertSelectElementsToTextInputsSingleResult");
+	}
+	else
+	{
+		WebDeveloper.Common.displayNotification("convertSelectElementsToTextInputsMultipleResult", [convertedSelectElements]);
+	}
+};
+
+// Converts text inputs to textareas
+WebDeveloper.Forms.convertTextInputsToTextareas = function(documents)
+{
+	var contentDocument			= null;
+	var convertedTextInputs = 0;
+	var elementType					= null;
+	var inputElement				= null;
+	var inputElements				= null;
+	var parentNode					= null;
+	var textareaElement			= null;
+
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		contentDocument = documents[i];
+
+		// Uses query selector all so that it is not a live node list
+		inputElements	= contentDocument.querySelectorAll("input");
+
+		// Loop through the input tags
+		for(var j = 0, m = inputElements.length; j < m; j++)
+		{
+			inputElement = inputElements[j];
+			elementType  = inputElement.getAttribute("type");
+
+			// If the form element does not have a type attribute or it is not a text input
+			if(!elementType || (elementType != "button" && elementType != "checkbox" && elementType != "file" && elementType != "hidden" && elementType != "image" && elementType != "radio" && elementType != "reset" && elementType != "submit"))
+			{
+				textareaElement	= contentDocument.createElement("textarea");
+				parentNode			= inputElement.parentNode;
+
+				textareaElement.value = inputElement.value;
+
+				// If the select element has an id attribute
+				if(inputElement.hasAttribute("id"))
+				{
+					textareaElement.setAttribute("id", inputElement.getAttribute("id"));
+				}
+
+				// If the select element has a name attribute
+				if(inputElement.hasAttribute("name"))
+				{
+					textareaElement.setAttribute("name", inputElement.getAttribute("name"));
+				}
+
+				parentNode.insertBefore(textareaElement, inputElement);
+				parentNode.removeChild(inputElement);
+
+				convertedTextInputs++;
+			}
+		}
+	}
+
+	// If one text input was converted
+	if(convertedTextInputs == 1)
+	{
+		WebDeveloper.Common.displayNotification("convertTextInputsToTextareasSingleResult");
+	}
+	else
+	{
+		WebDeveloper.Common.displayNotification("convertTextInputsToTextareasMultipleResult", [convertedTextInputs]);
+	}
 };
 
 // Displays the details about all forms
-WebDeveloper.Forms.displayFormDetails = function(display, contentDocument)
+WebDeveloper.Forms.displayFormDetails = function(display, documents)
 {
-  var inputElement  = null;
-  var inputElements = contentDocument.querySelectorAll("input");
-  var spanElement   = null;
-  var text          = null;
+	var contentDocument = null;
+	var inputElement		= null;
+	var inputElements		= null;
+	var spanElement			= null;
+	var text						= null;
 
-	WebDeveloper.Common.removeMatchingElements("span.web-developer-display-form-details", contentDocument);
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		contentDocument = documents[i];
+		inputElements		= contentDocument.getElementsByTagName("input");
 
-  // Loop through the input tags
-  for(var i = 0, l = inputElements.length; i < l; i++)
-  {
-    inputElement = inputElements[i];
+		WebDeveloper.Common.removeMatchingElements("span.web-developer-display-form-details", contentDocument);
 
-    // If the input element was un-hidden
-    if(inputElement.hasAttribute("web-developer-unhidden"))
-    {
-      inputElement.removeAttribute("web-developer-unhidden");
-      inputElement.setAttribute("type", "hidden");
-    }
+		// Loop through the input tags
+		for(var j = 0, m = inputElements.length; j < m; j++)
+		{
+			inputElement = inputElements[j];
 
-    // If displaying the form details
-    if(display)
-    {
-      spanElement = contentDocument.createElement("span");
-      text        = "<input";
+			// If the input element was un-hidden
+			if(inputElement.hasAttribute("web-developer-unhidden"))
+			{
+				inputElement.removeAttribute("web-developer-unhidden");
+				inputElement.setAttribute("type", "hidden");
+			}
 
-      // If the element is hidden
-      if(inputElement.hasAttribute("type") && inputElement.getAttribute("type").toLowerCase() == "hidden")
-      {
-        inputElement.setAttribute("web-developer-unhidden", true);
-        inputElement.removeAttribute("type");
-      }
+			// If displaying the form details
+			if(display)
+			{
+				spanElement = contentDocument.createElement("span");
+				text				= "<input";
 
-      // If the element has an autocomplete attribute
-      if(inputElement.hasAttribute("autocomplete"))
-      {
-        text += ' autocomplete="' + inputElement.getAttribute("autocomplete") + '"';
-      }
+				// If the element is hidden
+				if(inputElement.hasAttribute("type") && inputElement.getAttribute("type").toLowerCase() == "hidden")
+				{
+					inputElement.setAttribute("web-developer-unhidden", true);
+					inputElement.removeAttribute("type");
+				}
 
-      // If the element has an id attribute
-      if(inputElement.hasAttribute("id"))
-      {
-        text += ' id="' + inputElement.getAttribute("id") + '"';
-      }
+				// If the element has an autocomplete attribute
+				if(inputElement.hasAttribute("autocomplete"))
+				{
+					text += ' autocomplete="' + inputElement.getAttribute("autocomplete") + '"';
+				}
 
-      // If the element has a maxlength attribute
-      if(inputElement.hasAttribute("maxlength"))
-      {
-        text += ' maxlength="' + inputElement.getAttribute("maxlength") + '"';
-      }
+				// If the element has an id attribute
+				if(inputElement.hasAttribute("id"))
+				{
+					text += ' id="' + inputElement.getAttribute("id") + '"';
+				}
 
-      // If the element has an name attribute
-      if(inputElement.hasAttribute("name"))
-      {
-        text += ' name="' + inputElement.getAttribute("name") + '"';
-      }
+				// If the element has a maxlength attribute
+				if(inputElement.hasAttribute("maxlength"))
+				{
+					text += ' maxlength="' + inputElement.getAttribute("maxlength") + '"';
+				}
 
-      // If the element has a size attribute
-      if(inputElement.hasAttribute("size"))
-      {
-        text += ' size="' + inputElement.getAttribute("size") + '"';
-      }
+				// If the element has an name attribute
+				if(inputElement.hasAttribute("name"))
+				{
+					text += ' name="' + inputElement.getAttribute("name") + '"';
+				}
 
-      // If the element has a type attribute
-      if(inputElement.hasAttribute("type"))
-      {
-        text += ' type="' + inputElement.getAttribute("type") + '"';
+				// If the element has a size attribute
+				if(inputElement.hasAttribute("size"))
+				{
+					text += ' size="' + inputElement.getAttribute("size") + '"';
+				}
 
-	      // If the element is a checkbox or radio button
-	      if(inputElement.getAttribute("type").toLowerCase() == "checkbox" || inputElement.getAttribute("type").toLowerCase() == "radio")
-	      {
-	        text += ' value="' + inputElement.value + '"';
-	      }
-      }
+				// If the element has a type attribute
+				if(inputElement.hasAttribute("type"))
+				{
+					text += ' type="' + inputElement.getAttribute("type") + '"';
 
-      text += ">";
+					// If the element is a checkbox or radio button
+					if(inputElement.getAttribute("type").toLowerCase() == "checkbox" || inputElement.getAttribute("type").toLowerCase() == "radio")
+					{
+						text += ' value="' + inputElement.value + '"';
+					}
+				}
 
-      spanElement.setAttribute("class", "web-developer-display-form-details");
-      spanElement.appendChild(contentDocument.createTextNode(text));
-      inputElement.parentNode.insertBefore(spanElement, inputElement);
-    }
-  }
+				text += ">";
 
-  // If displaying the form details
-  if(display)
-  {
-	  var buttonElement    = null;
-	  var buttonElements   = contentDocument.querySelectorAll("button");
-	  var selectElement    = null;
-	  var selectElements   = contentDocument.querySelectorAll("select");
-	  var textAreaElement  = null;
-	  var textAreaElements = contentDocument.querySelectorAll("textarea");
+				spanElement.setAttribute("class", "web-developer-display-form-details");
+				spanElement.appendChild(contentDocument.createTextNode(text));
+				inputElement.parentNode.insertBefore(spanElement, inputElement);
+			}
+		}
 
-    // Loop through the button tags
-    for(i = 0, l = buttonElements.length; i < l; i++)
-    {
-      buttonElement = buttonElements[i];
-      spanElement   = contentDocument.createElement("span");
-      text          = "<button";
+		// If displaying the form details
+		if(display)
+		{
+			var buttonElement		 = null;
+			var buttonElements	 = contentDocument.getElementsByTagName("button");
+			var selectElement		 = null;
+			var selectElements	 = contentDocument.getElementsByTagName("select");
+			var textAreaElement  = null;
+			var textAreaElements = contentDocument.getElementsByTagName("textarea");
 
-      // If the element has an id attribute
-      if(buttonElement.hasAttribute("id"))
-      {
-        text += ' id="' + buttonElement.getAttribute("id") + '"';
-      }
+			// Loop through the button tags
+			for(j = 0, m = buttonElements.length; j < m; j++)
+			{
+				buttonElement = buttonElements[j];
+				spanElement	= contentDocument.createElement("span");
+				text					= "<button";
 
-      // If the element has an name attribute
-      if(buttonElement.hasAttribute("name"))
-      {
-        text += ' name="' + buttonElement.getAttribute("name") + '"';
-      }
+				// If the element has an id attribute
+				if(buttonElement.hasAttribute("id"))
+				{
+					text += ' id="' + buttonElement.getAttribute("id") + '"';
+				}
 
-      // If the element has a value
-      if(buttonElement.value)
-      {
-        text += ' value="' + buttonElement.value + '"';
-      }
+				// If the element has an name attribute
+				if(buttonElement.hasAttribute("name"))
+				{
+					text += ' name="' + buttonElement.getAttribute("name") + '"';
+				}
 
-      text += ">";
+				// If the element has a value
+				if(buttonElement.value)
+				{
+					text += ' value="' + buttonElement.value + '"';
+				}
 
-      spanElement.setAttribute("class", "web-developer-display-form-details");
-      spanElement.appendChild(contentDocument.createTextNode(text));
-      buttonElement.parentNode.insertBefore(spanElement, buttonElement);
-    }
+				text += ">";
 
-    // Loop through the select tags
-    for(i = 0, l = selectElements.length; i < l; i++)
-    {
-      selectElement = selectElements[i];
-      spanElement   = contentDocument.createElement("span");
-      text          = "<select";
+				spanElement.setAttribute("class", "web-developer-display-form-details");
+				spanElement.appendChild(contentDocument.createTextNode(text));
+				buttonElement.parentNode.insertBefore(spanElement, buttonElement);
+			}
 
-      // If the element has an id attribute
-      if(selectElement.hasAttribute("id"))
-      {
-        text += ' id="' + selectElement.getAttribute("id") + '"';
-      }
+			// Loop through the select tags
+			for(j = 0, m = selectElements.length; j < m; j++)
+			{
+				selectElement = selectElements[j];
+				spanElement	= contentDocument.createElement("span");
+				text					= "<select";
 
-      // If the element has an name attribute
-      if(selectElement.hasAttribute("name"))
-      {
-        text += ' name="' + selectElement.getAttribute("name") + '"';
-      }
+				// If the element has an id attribute
+				if(selectElement.hasAttribute("id"))
+				{
+					text += ' id="' + selectElement.getAttribute("id") + '"';
+				}
 
-      // If the element has a value
-      if(selectElement.value)
-      {
-        text += ' value="' + selectElement.value + '"';
-      }
+				// If the element has an name attribute
+				if(selectElement.hasAttribute("name"))
+				{
+					text += ' name="' + selectElement.getAttribute("name") + '"';
+				}
 
-      text += ">";
+				// If the element has a value
+				if(selectElement.value)
+				{
+					text += ' value="' + selectElement.value + '"';
+				}
 
-      spanElement.setAttribute("class", "web-developer-display-form-details");
-      spanElement.appendChild(contentDocument.createTextNode(text));
-      selectElement.parentNode.insertBefore(spanElement, selectElement);
-    }
+				text += ">";
 
-    // Loop through the textarea tags
-    for(i = 0, l = textAreaElements.length; i < l; i++)
-    {
-      textAreaElement = textAreaElements[i];
-      spanElement     = contentDocument.createElement("span");
-      text            = "<textarea";
+				spanElement.setAttribute("class", "web-developer-display-form-details");
+				spanElement.appendChild(contentDocument.createTextNode(text));
+				selectElement.parentNode.insertBefore(spanElement, selectElement);
+			}
 
-      // If the element has an id attribute
-      if(textAreaElement.hasAttribute("id"))
-      {
-        text += ' id="' + textAreaElement.getAttribute("id") + '"';
-      }
+			// Loop through the textarea tags
+			for(j = 0, m = textAreaElements.length; j < m; j++)
+			{
+				textAreaElement = textAreaElements[j];
+				spanElement			= contentDocument.createElement("span");
+				text						= "<textarea";
 
-      // If the element has a maxlength attribute
-      if(textAreaElement.hasAttribute("maxlength"))
-      {
-        text += ' maxlength="' + textAreaElement.getAttribute("maxlength") + '"';
-      }
+				// If the element has an id attribute
+				if(textAreaElement.hasAttribute("id"))
+				{
+					text += ' id="' + textAreaElement.getAttribute("id") + '"';
+				}
 
-      // If the element has an name attribute
-      if(textAreaElement.hasAttribute("name"))
-      {
-        text += ' name="' + textAreaElement.getAttribute("name") + '"';
-      }
+				// If the element has a maxlength attribute
+				if(textAreaElement.hasAttribute("maxlength"))
+				{
+					text += ' maxlength="' + textAreaElement.getAttribute("maxlength") + '"';
+				}
 
-      text += ">";
+				// If the element has an name attribute
+				if(textAreaElement.hasAttribute("name"))
+				{
+					text += ' name="' + textAreaElement.getAttribute("name") + '"';
+				}
 
-      spanElement.setAttribute("class", "web-developer-display-form-details");
-      spanElement.appendChild(contentDocument.createTextNode(text));
-      textAreaElement.parentNode.insertBefore(spanElement, textAreaElement);
-    }
-  }
+				text += ">";
 
-  WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-form-details-before", contentDocument, false);
-  WebDeveloper.Common.toggleStyleSheet("features/style-sheets/forms/display-form-details.css", "web-developer-display-form-details", contentDocument, false);
+				spanElement.setAttribute("class", "web-developer-display-form-details");
+				spanElement.appendChild(contentDocument.createTextNode(text));
+				textAreaElement.parentNode.insertBefore(spanElement, textAreaElement);
+			}
+		}
+
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-form-details-before", contentDocument, false);
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/forms/display-form-details.css", "web-developer-display-form-details", contentDocument, false);
+	}
 };
 
 // Displays all passwords
-WebDeveloper.Forms.displayPasswords = function(contentDocument)
+WebDeveloper.Forms.displayPasswords = function(documents)
 {
-  var displayedPasswords = 0;
-  var message            = null;
-  var passwords          = contentDocument.querySelectorAll("input[type=password]");
+	var displayedPasswords = 0;
+	var passwords					 = null;
 
-  // Loop through the passwords
-  for(var i = 0, l = passwords.length; i < l; i++)
-  {
-    passwords[i].removeAttribute("type");
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		passwords = documents[i].querySelectorAll("input[type=password]");
 
-    displayedPasswords++;
-  }
+		// Loop through the passwords
+		for(var j = 0, m = passwords.length; j < m; j++)
+		{
+			passwords[j].removeAttribute("type");
 
-  // If one password displayed
-  if(displayedPasswords == 1)
-  {
-		message = "1 password displayed";
-  }
-  else
-  {
-		message = displayedPasswords + " passwords displayed";
-  }
+			displayedPasswords++;
+		}
+	}
 
-	WebDeveloper.Forms.showNotification(message);
+	// If one password displayed
+	if(displayedPasswords == 1)
+	{
+		WebDeveloper.Common.displayNotification("displayPasswordsSingleResult");
+	}
+	else
+	{
+		WebDeveloper.Common.displayNotification("displayPasswordsMultipleResult", [displayedPasswords]);
+	}
 };
 
 // Enables auto completion on all elements
-WebDeveloper.Forms.enableAutoCompletion = function(contentDocument)
+WebDeveloper.Forms.enableAutoCompletion = function(documents)
 {
-  var autoCompleteElements = contentDocument.querySelectorAll("[autocomplete]");
-  var enabledElements      = 0;
-  var message              = null;
+	var autoCompleteElements = null;
+	var enabledElements			 = 0;
 
-  // Loop through the auto complete elements
-  for(var i = 0, l = autoCompleteElements.length; i < l; i++)
-  {
-    autoCompleteElements[i].removeAttribute("autocomplete");
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		autoCompleteElements = documents[i].querySelectorAll("[autocomplete]");
 
-    enabledElements++;
-  }
+		// Loop through the auto complete elements
+		for(var j = 0, m = autoCompleteElements.length; j < m; j++)
+		{
+			autoCompleteElements[j].removeAttribute("autocomplete");
 
-  // If one element was enabled
-  if(enabledElements == 1)
-  {
-		message = "1 element enabled";
-  }
-  else
-  {
-		message = enabledElements + " elements enabled";
-  }
+			enabledElements++;
+		}
+	}
 
-	WebDeveloper.Forms.showNotification(message);
+	// If one element was enabled
+	if(enabledElements == 1)
+	{
+		WebDeveloper.Common.displayNotification("enableAutoCompletionSingleResult");
+	}
+	else
+	{
+		WebDeveloper.Common.displayNotification("enableAutoCompletionMultipleResult", [enabledElements]);
+	}
 };
 
 // Enables the form elements
 WebDeveloper.Forms.enableFormElements = function(formElements)
 {
-  var enabledElements = 0;
-  var formElement     = null;
+	var enabledElements = 0;
+	var formElement			= null;
 
-  // Loop through the form elements
-  for(var i = 0, l = formElements.length; i < l; i++)
-  {
-    formElement = formElements[i];
+	// Loop through the form elements
+	for(var i = 0, l = formElements.length; i < l; i++)
+	{
+		formElement = formElements[i];
 
-    // If the form element is disabled
-    if(formElement.disabled)
-    {
-      formElement.disabled = false;
+		// If the form element is disabled
+		if(formElement.disabled)
+		{
+			formElement.disabled = false;
 
-	    enabledElements++;
-    }
-  }
-  
-  return enabledElements;
+			enabledElements++;
+		}
+	}
+
+	return enabledElements;
 };
 
 // Enables all form fields
-WebDeveloper.Forms.enableFormFields = function(contentDocument)
+WebDeveloper.Forms.enableFormFields = function(documents)
 {
-  var enabledFields = 0;
-  var forms         = contentDocument.forms;
-  var message       = null;
+	var contentDocument = null;
+	var enabledFields		= 0;
+	var forms						= null;
 
-  // Loop through the forms
-  for(var i = 0, l = forms.length; i < l; i++)
-  {
-    enabledFields += WebDeveloper.Forms.enableFormElements(forms[i].elements);
-  }
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		contentDocument = documents[i];
+		forms						= contentDocument.forms;
 
-  enabledFields += WebDeveloper.Forms.enableFormElements(contentDocument.querySelectorAll("input[type=image]"));
+		// Loop through the forms
+		for(var j = 0, m = forms.length; j < m; j++)
+		{
+			enabledFields += WebDeveloper.Forms.enableFormElements(forms[j].elements);
+		}
 
-  // If one field was enabled
-  if(enabledFields == 1)
-  {
-		message = "1 form field enabled";
-  }
-  else
-  {
-		message = enabledFields + " form fields enabled";
-  }
+		enabledFields += WebDeveloper.Forms.enableFormElements(contentDocument.querySelectorAll("input[type=image]"));
+	}
 
-	WebDeveloper.Forms.showNotification(message);
+	// If one field was enabled
+	if(enabledFields == 1)
+	{
+		WebDeveloper.Common.displayNotification("enableFormFieldsSingleResult");
+	}
+	else
+	{
+		WebDeveloper.Common.displayNotification("enableFormFieldsMultipleResult", [enabledFields]);
+	}
+};
+
+// Expands all select elements
+WebDeveloper.Forms.expandSelectElements = function(documents)
+{
+	var selectElement		 = null;
+	var selectElements	 = null;
+	var selectLength		 = null;
+	var selectSize			 = null;
+	var expandedElements = 0;
+
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		selectElements = documents[i].querySelectorAll("select");
+
+		// Loop through the select elements
+		for(var j = 0, m = selectElements.length; j < m; j++)
+		{
+			selectElement = selectElements[j];
+			selectLength	= selectElement.options.length;
+			selectSize		= selectElement.getAttribute("size");
+
+			// If the select size is not set and the select has more than one option or the select has more options than it's size
+			if((!selectSize && selectLength > 1) || (selectLength > selectSize))
+			{
+				selectElement.setAttribute("size", selectLength);
+
+				expandedElements++;
+			}
+		}
+	}
+
+	// If one element was expanded
+	if(expandedElements == 1)
+	{
+		WebDeveloper.Common.displayNotification("expandSelectElementsSingleResult");
+	}
+	else
+	{
+		WebDeveloper.Common.displayNotification("expandSelectElementsMultipleResult", [expandedElements]);
+	}
 };
 
 // Makes all form fields writable
-WebDeveloper.Forms.makeFormFieldsWritable = function(contentDocument)
+WebDeveloper.Forms.makeFormFieldsWritable = function(documents)
 {
-  var message          = null;
-  var readOnlyElements = contentDocument.querySelectorAll("[readonly]");
-  var writableElements = 0;
+	var readOnlyElements = null;
+	var writableElements = 0;
 
-  // Loop through the read only elements
-  for(var i = 0, l = readOnlyElements.length; i < l; i++)
-  {
-    readOnlyElements[i].removeAttribute("readonly");
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		readOnlyElements = documents[i].querySelectorAll("[readonly]");
 
-    writableElements++;
-  }
+		// Loop through the read only elements
+		for(var j = 0, m = readOnlyElements.length; j < m; j++)
+		{
+			readOnlyElements[j].removeAttribute("readonly");
 
-  // If one element was enabled
-  if(writableElements == 1)
-  {
-		message = "1 form field made writable";
-  }
-  else
-  {
-		message = writableElements + " form fields made writable";
-  }
+			writableElements++;
+		}
+	}
 
-	WebDeveloper.Forms.showNotification(message);
+	// If one element was enabled
+	if(writableElements == 1)
+	{
+		WebDeveloper.Common.displayNotification("makeFormFieldsWritableSingleResult");
+	}
+	else
+	{
+		WebDeveloper.Common.displayNotification("makeFormFieldsWritableMultipleResult", [writableElements]);
+	}
+};
+
+// Outlines all form fields without labels
+WebDeveloper.Forms.outlineFormFieldsWithoutLabels = function(outline, documents)
+{
+	var contentDocument					= null;
+	var formElement							= null;
+	var formElementId						= null;
+	var formElements						= null;
+	var formFieldsWithoutLabels = null;
+	var forms										= null;
+	var labelElement						= null;
+
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		contentDocument = documents[i];
+
+		// If outlining form fields without labels
+		if(outline)
+		{
+			forms = contentDocument.forms;
+
+			// Loop through the forms
+			for(var j = 0, m = forms.length; j < m; j++)
+			{
+				formElements = forms[j].elements;
+
+				// Loop through the form elements
+				for(var k = 0, n = formElements.length; k < n; k++)
+				{
+					formElement	 = formElements[k];
+					labelElement = formElement.parentNode;
+
+					// If the parent element is not a label
+					if(labelElement.tagName.toLowerCase() != "label")
+					{
+						formElementId	= formElement.getAttribute("id");
+
+						// If the form element has an id attribute
+						if(formElementId)
+						{
+							labelElement = contentDocument.querySelector("label[for=" + formElementId + "]");
+
+							// If no label element was found
+							if(!labelElement)
+							{
+								WebDeveloper.Common.addClass(formElement, "web-developer-outline-form-fields-without-labels");
+							}
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			formFieldsWithoutLabels = contentDocument.getElementsByClassName("web-developer-outline-form-fields-without-labels");
+
+			// While there are form fields without labels
+			while(formFieldsWithoutLabels.length > 0)
+			{
+				WebDeveloper.Common.removeClass(formFieldsWithoutLabels[0], "web-developer-outline-form-fields-without-labels");
+			}
+		}
+
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/forms/outline-form-fields-without-labels.css", "web-developer-outline-form-fields-without-labels", contentDocument, false);
+	}
 };
 
 // Populates all form fields
-WebDeveloper.Forms.populateFormFields = function(contentDocument)
+WebDeveloper.Forms.populateFormFields = function(documents, emailAddress)
 {
-  var inputElement     = null;
-  var inputElementName = null;
-  var inputElements    = contentDocument.querySelectorAll("input");
-  var inputElementType = null;
-  var option           = null;
-  var options          = null;
-  var selectElement    = null;
-  var selectElements   = contentDocument.querySelectorAll("select");
-  var textAreaElement  = null;
-  var textAreaElements = contentDocument.querySelectorAll("textarea");
+	var contentDocument					 = null;
+	var inputElement						 = null;
+	var inputElementMaxlength		 = null;
+	var inputElementName				 = null;
+	var inputElements						 = null;
+	var inputElementType				 = null;
+	var option									 = null;
+	var options									 = null;
+	var selectElement						 = null;
+	var selectElements					 = null;
+	var textAreaElement					 = null;
+	var textAreaElements				 = null;
+	var textAreaElementMaxlength = null;
 
-  // Loop through the input tags
-  for(var i = 0, l = inputElements.length; i < l; i++)
-  {
-    inputElement = inputElements[i];
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		contentDocument  = documents[i];
+		inputElements		 = contentDocument.getElementsByTagName("input");
+		selectElements	 = contentDocument.getElementsByTagName("select");
+		textAreaElements = contentDocument.getElementsByTagName("textarea");
 
-    // If the input element is not disabled
-    if(!inputElement.disabled)
-    {
-	    inputElementType = inputElement.getAttribute("type");
+		// Loop through the input tags
+		for(var j = 0, m = inputElements.length; j < m; j++)
+		{
+			inputElement = inputElements[j];
 
-      // If the input element value is not set and the type is not set or is email, password or text
-      if(!WebDeveloper.Common.trim(inputElement.value) && (!inputElementType || inputElementType.toLowerCase() == "email" || inputElementType.toLowerCase() == "password" || inputElementType.toLowerCase() == "search" || inputElementType.toLowerCase() == "text"))
-      {
-        inputElementName = inputElement.getAttribute("name");
+			// If the input element is not disabled
+			if(!inputElement.disabled)
+			{
+				inputElementType = inputElement.getAttribute("type");
 
-        // If the input element type is set and is email or is text and the name contains email
-        if(inputElementType && (inputElementType.toLowerCase() == "email" || (inputElementType == "text" && inputElementName.toLowerCase().indexOf("email") >= 0)))
-        {
-          inputElement.value = "example@example.org";
-        }
-        else if(inputElementType && inputElementType.toLowerCase() == "password")
-        {
-          inputElement.value = "password";
-        }
-        else
-        {
-          inputElement.value = inputElementName;
-        }
-      }
-      else if(inputElementType && (inputElementType.toLowerCase() == "checkbox" || inputElementType.toLowerCase() == "radio"))
-      {
-        inputElement.checked = true;
-      }
-    }
-  }
+				// If the input element value is not set and the type is not set or is email, password or text
+				if(!WebDeveloper.Common.trim(inputElement.value) && (!inputElementType || inputElementType.toLowerCase() == "email" || inputElementType.toLowerCase() == "password" || inputElementType.toLowerCase() == "search" || inputElementType.toLowerCase() == "text" || inputElementType.toLowerCase() == "url"))
+				{
+					inputElementName			= inputElement.getAttribute("name");
+					inputElementMaxlength = inputElement.getAttribute("maxlength");
 
-  // Loop through the select tags
-  for(i = 0, l = selectElements.length; i < l; i++)
-  {
-    selectElement = selectElements[i];
+					// If the input element type is set and is email or is text and the name contains email
+					if((inputElementType && inputElementType.toLowerCase() == "email") || ((!inputElementType || inputElementType == "text") && inputElementName && inputElementName.toLowerCase().indexOf("email") >= 0))
+					{
+						inputElement.value = emailAddress;
+					}
+					else if(inputElementType && inputElementType.toLowerCase() == "password")
+					{
+						inputElement.value = WebDeveloper.Locales.getString("password").toLowerCase();
+					}
+					else if(inputElementType && inputElementType.toLowerCase() == "url")
+					{
+						inputElement.value = "http://localhost/";
+					}
+					else if(inputElementName && inputElementName.toLowerCase().indexOf("zip") >= 0)
+					{
+						inputElement.value = "90210";
+					}
+					else if(inputElementName)
+					{
+						inputElement.value = inputElementName;
+					}
+					else
+					{
+						inputElement.value = "@name@";
+					}
 
-    // If the select element is not disabled and the value is not set
-    if(!selectElement.disabled && !WebDeveloper.Common.trim(selectElement.value))
-    {
-      options = selectElement.options;
+					// If the input element has a maxlength attribute
+					if(inputElementMaxlength && inputElement.value > inputElementMaxlength)
+					{
+						inputElement.value = inputElement.value.substr(0, inputElementMaxlength);
+					}
+				}
+				else if(inputElementType && (inputElementType.toLowerCase() == "checkbox" || inputElementType.toLowerCase() == "radio"))
+				{
+					inputElement.checked = true;
+				}
+			}
+		}
 
-      // Loop through the options
-      for(var j = 0, m = options.length; j < m; j++)
-      {
-        option = options.item(j);
+		// Loop through the select tags
+		for(j = 0, m = selectElements.length; j < m; j++)
+		{
+			selectElement = selectElements[j];
 
-        // If the option is set and the option text and option value are not empty
-        if(option && WebDeveloper.Common.trim(option.text) && WebDeveloper.Common.trim(option.value))
-        {
-          selectElement.selectedIndex = j;
+			// If the select element is not disabled and the value is not set
+			if(!selectElement.disabled && !WebDeveloper.Common.trim(selectElement.value))
+			{
+				options = selectElement.options;
 
-          break;
-        }
-      }
-    }
-  }
+				// Loop through the options
+				for(var k = 0, n = options.length; k < n; j++)
+				{
+					option = options.item(k);
 
-  // Loop through the text area tags
-  for(i = 0, l = textAreaElements.length; i < l; i++)
-  {
-    textAreaElement = textAreaElements[i];
+					// If the option is set and the option text and option value are not empty
+					if(option && WebDeveloper.Common.trim(option.text) && WebDeveloper.Common.trim(option.value))
+					{
+						selectElement.selectedIndex = k;
 
-    // If the text area element is not disabled and the value is not set
-    if(!textAreaElement.disabled && !WebDeveloper.Common.trim(textAreaElement.value))
-    {
-      textAreaElement.value = textAreaElement.getAttribute("name");
-    }
-  }
+						break;
+					}
+				}
+			}
+		}
+
+		// Loop through the text area tags
+		for(j = 0, m = textAreaElements.length; j < m; j++)
+		{
+			textAreaElement = textAreaElements[j];
+
+			// If the text area element is not disabled and the value is not set
+			if(!textAreaElement.disabled && !WebDeveloper.Common.trim(textAreaElement.value))
+			{
+				textAreaElementMaxlength = textAreaElement.getAttribute("maxlength");
+				textAreaElement.value		 = textAreaElement.getAttribute("name");
+
+				// If the text area element has a maxlength attribute
+				if(textAreaElementMaxlength && textAreaElement.value > textAreaElementMaxlength)
+				{
+					textAreaElement.value = textAreaElement.value.substr(0, textAreaElementMaxlength);
+				}
+			}
+		}
+	}
 };
 
 // Removes maximum lengths from all elements
-WebDeveloper.Forms.removeMaximumLengths = function(contentDocument)
+WebDeveloper.Forms.removeMaximumLengths = function(documents)
 {
-  var alteredElements       = 0;
-  var maximumLengthElements = contentDocument.querySelectorAll("[maxlength]");
-  var message               = null;
+	var alteredElements				= 0;
+	var maximumLengthElements = null;
 
-  // Loop through the maximum length elements
-  for(var i = 0, l = maximumLengthElements.length; i < l; i++)
-  {
-    maximumLengthElements[i].removeAttribute("maxlength");
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		maximumLengthElements = documents[i].querySelectorAll("[maxlength]");
 
-    alteredElements++;
-  }
+		// Loop through the maximum length elements
+		for(var j = 0, m = maximumLengthElements.length; j < m; j++)
+		{
+			maximumLengthElements[j].removeAttribute("maxlength");
 
-  // If one element was altered
-  if(alteredElements == 1)
-  {
-		message = "Maximum length removed from 1 element";
-  }
-  else
-  {
-		message = "Maximum length removed from " + alteredElements + " elements";
-  }
+			alteredElements++;
+		}
+	}
 
-	WebDeveloper.Forms.showNotification(message);
+	// If one element was altered
+	if(alteredElements == 1)
+	{
+		WebDeveloper.Common.displayNotification("removeMaximumLengthsSingleResult");
+	}
+	else
+	{
+		WebDeveloper.Common.displayNotification("removeMaximumLengthsMultipleResult", [alteredElements]);
+	}
+};
+
+// Toggles all checkboxes
+WebDeveloper.Forms.toggleCheckboxes = function(check, documents)
+{
+	var checkboxes = null;
+
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		checkboxes = documents[i].querySelectorAll("input[type=checkbox]");
+
+		// Loop through the checkboxes
+		for(var j = 0, m = checkboxes.length; j < m; j++)
+		{
+			checkboxes[j].checked = check;
+		}
+	}
 };

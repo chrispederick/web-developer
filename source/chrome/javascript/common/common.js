@@ -1,33 +1,50 @@
+var WebDeveloper = WebDeveloper || {};
+
 WebDeveloper.Common = WebDeveloper.Common || {};
 
-// Toggles a style sheet in a document
-WebDeveloper.Common.toggleStyleSheet = function(url, id, contentDocument, insertFirst)
+// Returns a chrome URL
+WebDeveloper.Common.getChromeURL = function(url)
 {
-	var styleSheet = contentDocument.getElementById(id);
-	
-	// If the style sheet is already in the document
-	if(styleSheet)
-	{
-		WebDeveloper.Common.removeStyleSheet(id, contentDocument);
-	}
-	else
-	{
-		var headElement = WebDeveloper.Common.getDocumentHeadElement(contentDocument);
-		var firstChild	= headElement.firstChild;
-		var linkElement = contentDocument.createElement("link");
+	return chrome.extension.getURL(url);
+};
 
-		linkElement.setAttribute("href", chrome.extension.getURL(url));
-		linkElement.setAttribute("id", id);
-		linkElement.setAttribute("rel", "stylesheet");
+// Returns the current content document
+WebDeveloper.Common.getContentDocument = function()
+{
+	return document;
+};
 
-		// If there is a first child
-		if(insertFirst && firstChild)
-		{
-			 headElement.insertBefore(linkElement, firstChild);
-		}
-		else
-		{
-			 headElement.appendChild(linkElement);
-		}
+// Gets the content from a URL
+WebDeveloper.Common.getContentFromURL = function(url, errorMessage)
+{
+	var content = null;
+
+	// Try to load the URL
+	try
+	{
+		var request = new XMLHttpRequest();
+
+		request.open("get", url, false);
+		request.send(null);
+
+		content = request.responseText;
 	}
+	catch(exception)
+	{
+		content = errorMessage;
+	}
+
+	return content;
+};
+
+// Returns the current content window
+WebDeveloper.Common.getContentWindow = function()
+{
+	return window;
+};
+
+// Returns a CSS property
+WebDeveloper.Common.getCSSProperty = function(property)
+{
+	return property;
 };

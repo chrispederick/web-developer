@@ -1,40 +1,284 @@
-<!DOCTYPE html> 
-<html id="web-developer-options" lang="en"> 
- 
-<head> 
-	<meta charset="utf-8"> 
-	<title>@name@ Options</title> 
+<!DOCTYPE html>
+<html id="web-developer-options" lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>@name@</title>
 	<link href="options.css" rel="stylesheet">
-	<link href="images/favicon.ico" rel="shortcut icon"> 
-</head> 
- 
-<body> 
+	<link href="images/favicon.png" rel="shortcut icon">
+</head>
 
-<div id="header">
-	<h1>@name@ Options</h1>
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <span class="brand">@name@</span>
+      <a href="#content" class="brand">@name@</a>
+    </div>
+  </div>
 </div>
 
-<div id="content">
-	<input type="checkbox" id="analytics" disabled>
-	<label for="analytics">Send anonymous information about which features are being used in the extension</label>
-	<strong>Analytics are disabled as they were causing issues for some users</strong>
-	(<a href="@url@privacy/#analytics">Privacy policy</a>)
-	
-	<div id="notification">
-		<span class="icon"></span>
-		<p>The options were saved successfully</p>
+<div id="content" class="container-fluid">
+	<div class="tabbable">
+	  <ul class="nav nav-tabs">
+			<li id="colors-tab" class="active"><a href="#colors-options" data-toggle="tab"><span></span></a></li>
+			<li id="resize-tab"><a href="#resize-options" data-toggle="tab"><span></span></a></li>
+			<li id="responsive-layouts-tab"><a href="#responsive-layouts-options" data-toggle="tab"><span></span></a></li>
+			<li id="tools-tab"><a href="#tools-options" data-toggle="tab"><span></span></a></li>
+			<li id="advanced-tab"><a href="#advanced-options" data-toggle="tab"><span></span></a></li>
+	  </ul>
+
+	  <div class="tab-content">
+	    <div id="colors-options" class="tab-pane active">
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label for="syntax_highlight_theme" class="control-label"></label>
+						<div class="controls">
+							<select id="syntax_highlight_theme">
+								<option value="dark"></option>
+								<option value="light"></option>
+								<option value="none"></option>
+							</select>
+						</div>
+					</div>
+				</form>
+
+				<p></p>
+				<iframe id="syntax-highlight-browser" src="syntax-highlight.html" width="600" height="150"></iframe>
+			</div>
+
+	    <div id="resize-options" class="tab-pane">
+	    	<div class="table-container">
+		    	<div class="row">
+		    		<div class="span10">
+				    	<table class="table table-bordered table-striped">
+				    		<thead>
+				    			<tr>
+				    				<th></th>
+				    				<th></th>
+				    				<th></th>
+				    				<th></th>
+				    				<th></th>
+				    			</tr>
+				    		</thead>
+				    		<tbody></tbody>
+				    	</table>
+				    </div>
+
+				    <div class="span2 muted"></div>
+				  </div>
+
+		    	<button class="btn btn-primary"></button>
+		    </div>
+
+		    <form class="form-horizontal">
+					<fieldset>
+						<legend></legend>
+
+						<div class="control-group">
+							<label for="resize-description" class="control-label"></label>
+							<div class="controls">
+								<input id="resize-description" class="span2">
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label for="resize-width" class="control-label"></label>
+							<div class="controls">
+								<input id="resize-width" class="span2">
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label for="resize-height" class="control-label"></label>
+							<div class="controls">
+								<input id="resize-height" class="span2">
+							</div>
+						</div>
+
+						<div class="form-actions">
+					    <button id="resize-cancel" class="btn"></button>
+					    <button id="resize-save" class="btn btn-primary"></button>
+					  </div>
+					</fieldset>
+		    </form>
+			</div>
+
+	    <div id="responsive-layouts-options" class="tab-pane">
+	    	<div class="table-container">
+		    	<div class="row">
+		    		<div class="span10">
+				    	<table class="table table-bordered table-striped">
+				    		<thead>
+				    			<tr>
+				    				<th></th>
+				    				<th></th>
+				    				<th></th>
+				    				<th></th>
+				    			</tr>
+				    		</thead>
+				    		<tbody></tbody>
+				    	</table>
+				    </div>
+
+				    <div class="span2 muted"></div>
+				  </div>
+
+		    	<button class="btn btn-primary"></button>
+		    </div>
+
+		    <form class="form-horizontal">
+					<fieldset>
+						<legend></legend>
+
+						<div class="control-group">
+							<label for="responsive-layout-description" class="control-label"></label>
+							<div class="controls">
+								<input id="responsive-layout-description" class="span2">
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label for="responsive-layout-width" class="control-label"></label>
+							<div class="controls">
+								<input id="responsive-layout-width" class="span2">
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label for="responsive-layout-height" class="control-label"></label>
+							<div class="controls">
+								<input id="responsive-layout-height" class="span2">
+							</div>
+						</div>
+
+						<div class="form-actions">
+					    <button id="responsive-layout-cancel" class="btn"></button>
+					    <button id="responsive-layout-save" class="btn btn-primary"></button>
+					  </div>
+					</fieldset>
+		    </form>
+			</div>
+
+	    <div id="tools-options" class="tab-pane">
+	    	<div class="table-container">
+		    	<div class="row">
+		    		<div class="span10">
+				    	<table class="table table-bordered table-striped">
+				    		<thead>
+				    			<tr>
+				    				<th></th>
+				    				<th></th>
+				    				<th></th>
+				    				<th></th>
+				    			</tr>
+				    		</thead>
+				    		<tbody></tbody>
+				    	</table>
+				    </div>
+
+				    <div class="span2 muted"></div>
+				  </div>
+
+		    	<button class="btn btn-primary"></button>
+		    </div>
+
+		    <form class="form-horizontal">
+					<fieldset>
+						<legend></legend>
+
+						<div class="control-group">
+							<label for="tool-description" class="control-label"></label>
+							<div class="controls">
+								<input id="tool-description" class="span6">
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label for="tool-url" class="control-label"></label>
+							<div class="controls">
+								<input id="tool-url" class="span6">
+							</div>
+						</div>
+
+						<div class="form-actions">
+					    <button id="tool-cancel" class="btn"></button>
+					    <button id="tool-save" class="btn btn-primary"></button>
+					  </div>
+					</fieldset>
+		    </form>
+			</div>
+
+	    <div id="advanced-options" class="tab-pane">
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label for="populate_email_address" class="control-label"></label>
+						<div class="controls">
+							<input id="populate_email_address">
+						</div>
+					</div>
+				</form>
+			</div>
+	  </div>
 	</div>
-	
-	<div id="buttons">
-		<input type="submit" value="Save" id="save" disabled>
-		<input type="submit" value="Cancel" id="cancel">
+
+	<div id="delete-dialog" class="modal fade in">
+	  <div class="modal-header">
+	    <a class="close" data-dismiss="modal">&times;</a>
+	    <h3></h3>
+	  </div>
+
+	  <div class="modal-body">
+	    <p></p>
+	  </div>
+
+	  <div class="modal-footer">
+	    <button class="btn" data-dismiss="modal"></button>
+	    <button class="btn btn-danger"></button>
+	  </div>
 	</div>
 </div>
- 
-<script src="javascript/jquery.js"></script> 
-<script src="javascript/options.js"></script> 
 
-</body> 
- 
-</html> 
- 
+<script src="javascript/options.js"></script>
+
+<script id="resize_option" type="text/html">
+	<tr>
+		<td>{{description}}</td>
+		<td>{{width}}</td>
+		<td>{{height}}</td>
+		<td>{{keyboard}}</td>
+		<td>
+			<button class="btn btn-primary"></button>
+			<button class="btn btn-danger"></button>
+		</td>
+	</tr>
+</script>
+
+<script id="responsive_layout" type="text/html">
+	<tr>
+		<td>{{description}}</td>
+		<td>{{width}}</td>
+		<td>{{height}}</td>
+		<td>
+			<button class="btn btn-primary"></button>
+			<button class="btn btn-danger"></button>
+		</td>
+	</tr>
+</script>
+
+<script id="tool" type="text/html">
+	<tr>
+		<td>{{description}}</td>
+		<td>{{url}}</td>
+		<td>{{keyboard}}</td>
+		<td>
+			<button class="btn btn-primary"></button>
+			<button class="btn btn-danger"></button>
+		</td>
+	</tr>
+</script>
+
+</body>
+
+</html>

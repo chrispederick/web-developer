@@ -1,0 +1,11 @@
+/* ! View document size styles */
+
+tbody > tr.odd { background-color: #f9f9f9; }
+td:first-child { max-width: 500px; padding-left: 35px; word-wrap: break-word; }
+td:nth-child(2), td:nth-child(3), th:nth-child(2), th:nth-child(3) { text-align: right; width: 150px; white-space: nowrap; }
+tr.web-developer-collapsed > td:first-child { background-image: url(images/expand.png); }
+.table { margin-top: 60px; width: auto; }
+.web-developer-section { cursor: pointer; }
+.web-developer-section > td:first-child, .web-developer-total > td { font-weight: bold; }
+.web-developer-section > td:first-child { background: url(images/collapse.png) no-repeat 2px 50%; }
+.web-developer-section > td:first-child, .web-developer-total > td:first-child { padding-left: 20px; }

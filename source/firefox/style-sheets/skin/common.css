@@ -1,0 +1,76 @@
+/* ! Web Developer menus */
+
+#web-developer-app-menu, #web-developer-context, #web-developer-menu, #web-developer-seamonkey { list-style-image: url(chrome://web-developer/skin/menu.png); }
+
+/* ! Web Developer button */
+
+#web-developer-button { list-style-image: url(chrome://web-developer/skin/button.png); }
+
+/* ! Toolbar buttons */
+
+#web-developer-cookies-toolbar, #web-developer-css-toolbar, #web-developer-disable-toolbar, #web-developer-forms-toolbar, #web-developer-images-toolbar, #web-developer-information-toolbar, #web-developer-miscellaneous-toolbar, #web-developer-options-toolbar, #web-developer-outline-toolbar, #web-developer-resize-toolbar, #web-developer-tools-toolbar, #web-developer-view-source-toolbar { list-style-image: url(chrome://web-developer/skin/toolbar.png); }
+#web-developer-disable-toolbar { -moz-image-region: rect(0, 16px, 16px, 0); }
+#web-developer-cookies-toolbar { -moz-image-region: rect(0, 32px, 16px, 16px); }
+#web-developer-css-toolbar { -moz-image-region: rect(0, 48px, 16px, 32px); }
+#web-developer-forms-toolbar { -moz-image-region: rect(0, 64px, 16px, 48px); }
+#web-developer-images-toolbar { -moz-image-region: rect(0, 80px, 16px, 64px); }
+#web-developer-information-toolbar { -moz-image-region: rect(0, 96px, 16px, 80px); }
+#web-developer-miscellaneous-toolbar { -moz-image-region: rect(0, 112px, 16px, 96px); }
+#web-developer-options-toolbar { -moz-image-region: rect(0, 192px, 16px, 176px); }
+#web-developer-outline-toolbar { -moz-image-region: rect(0, 128px, 16px, 112px); }
+#web-developer-resize-toolbar { -moz-image-region: rect(0, 144px, 16px, 128px); }
+#web-developer-tools-toolbar { -moz-image-region: rect(0, 160px, 16px, 144px); }
+#web-developer-view-source-toolbar { -moz-image-region: rect(0, 176px, 16px, 160px); }
+
+/* ! Statusbar buttons */
+
+#web-developer-css-statusbar, #web-developer-javascript-statusbar, #web-developer-render-mode-statusbar { list-style-image: url(chrome://web-developer/skin/statusbar.png); }
+#web-developer-css-statusbar { -moz-image-region: rect(0, 64px, 16px, 48px); }
+#web-developer-css-statusbar.error { -moz-image-region: rect(0, 48px, 16px, 32px); }
+#web-developer-css-statusbar.valid { -moz-image-region: rect(0, 16px, 16px, 0); }
+#web-developer-javascript-statusbar { -moz-image-region: rect(0, 64px, 16px, 48px); }
+#web-developer-javascript-statusbar.disabled { -moz-image-region: rect(0, 64px, 16px, 48px); }
+#web-developer-javascript-statusbar.error { -moz-image-region: rect(0, 48px, 16px, 32px); }
+#web-developer-javascript-statusbar.valid { -moz-image-region: rect(0, 16px, 16px, 0); }
+#web-developer-javascript-statusbar.warning { -moz-image-region: rect(0, 32px, 16px, 16px); }
+#web-developer-render-mode-statusbar { -moz-image-region: rect(0, 16px, 16px, 0); }
+#web-developer-render-mode-statusbar.quirks { -moz-image-region: rect(0, 48px, 16px, 32px); }
+
+/* ! Dashboard buttons */
+
+#web-developer-clear-dashboard, #web-developer-move-dashboard, #web-developer-open-dashboard, #web-developer-pin-dashboard, #web-developer-reset-dashboard, #web-developer-save-dashboard, #web-developer-search-dashboard { list-style-image: url(chrome://web-developer/skin/dashboard.png); }
+#web-developer-clear-dashboard { -moz-image-region: rect(0, 64px, 16px, 48px); }
+#web-developer-move-dashboard { -moz-image-region: rect(0, 16px, 16px, 0); }
+#web-developer-open-dashboard { -moz-image-region: rect(0, 32px, 16px, 16px); }
+#web-developer-pin-dashboard { -moz-image-region: rect(0, 96px, 16px, 80px); }
+#web-developer-reset-dashboard { -moz-image-region: rect(0, 80px, 16px, 64px); }
+#web-developer-save-dashboard { -moz-image-region: rect(0, 48px, 16px, 32px); }
+#web-developer-search-dashboard { -moz-image-region: rect(0, 112px, 16px, 96px); }
+
+/* ! Options styles */
+
+#web-developer-options radio { list-style-image: url(chrome://web-developer/skin/options.png); }
+#web-developer-options radio[pane="web-developer-options-advanced-pane"] { -moz-image-region: rect(0, 256px, 32px, 224px); }
+#web-developer-options radio[pane="web-developer-options-colors-pane"] { -moz-image-region: rect(0, 64px, 32px,32px); }
+#web-developer-options radio[pane="web-developer-options-general-pane"] { -moz-image-region: rect(0, 32px, 32px, 0); }
+#web-developer-options radio[pane="web-developer-options-keyboard-pane"] { -moz-image-region: rect(0, 224px, 32px, 192px); }
+#web-developer-options radio[pane="web-developer-options-resize-pane"] { -moz-image-region: rect(0, 96px, 32px, 64px); }
+#web-developer-options radio[pane="web-developer-options-responsive-layouts-pane"] { -moz-image-region: rect(0, 128px, 32px, 96px); }
+#web-developer-options radio[pane="web-developer-options-tools-pane"] { -moz-image-region: rect(0, 160px, 32px, 128px); }
+#web-developer-options radio[pane="web-developer-options-view-source-pane"] { -moz-image-region: rect(0, 192px, 32px, 160px); }
+
+/* ! Menu item icons */
+
+#web-developer-context menuitem.menuitem-iconic, #web-developer-menu menuitem.menuitem-iconic, #web-developer-seamonkey menuitem.menuitem-iconic, #web-developer-toolbar menuitem.menuitem-iconic, #web-developer-toolbar-button menuitem.menuitem-iconic { list-style-image: url(chrome://web-developer/skin/disabled.png); }
+
+/* ! Feature toolbar buttons */
+
+.web-developer-close { list-style-image: url(chrome://web-developer/skin/close.png); }
+.web-developer-name { background: url(chrome://web-developer/skin/button.png) 0 50% no-repeat; padding-left: 25px; }
+
+/* ! Page validation toolbar buttons */
+
+#web-developer-css-validation[class], #web-developer-html-validation[class] { list-style-image: url(chrome://web-developer/skin/validation.png); }
+#web-developer-css-validation.invalid, #web-developer-html-validation.invalid { -moz-image-region: rect(0, 48px, 16px, 32px); }
+#web-developer-css-validation.loading, #web-developer-html-validation.loading { -moz-image-region: rect(0, 16px, 16px, 0); }
+#web-developer-css-validation.valid, #web-developer-html-validation.valid { -moz-image-region: rect(0, 32px, 16px, 16px); }

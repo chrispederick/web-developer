@@ -1,8 +1,9 @@
-WebDeveloper.Dashboard = WebDeveloper.Dashboard || {};
+var WebDeveloper = WebDeveloper || {};
 
-WebDeveloper.Dashboard.defaultSize   = 250;
+WebDeveloper.Dashboard							 = WebDeveloper.Dashboard || {};
+WebDeveloper.Dashboard.defaultSize	 = 250;
 WebDeveloper.Dashboard.mainTabHeight = 32;
-WebDeveloper.Dashboard.minimumSize   = 130;
+WebDeveloper.Dashboard.minimumSize	 = 130;
 WebDeveloper.Dashboard.subTabHeight  = 56;
 
 WebDeveloper.Dashboard.css = "" +
@@ -29,8 +30,8 @@ WebDeveloper.Dashboard.css = "" +
 WebDeveloper.Dashboard.html = '<div id="web-developer-dashboard-resizer"></div><ul id="web-developer-dashboard-tabs" class="tab-bar"></ul><h1 id="web-developer-dashboard-header">@name@ Dashboard</h1><div id="web-developer-dashboard-panels"></div>';
 
 WebDeveloper.Dashboard.size = "" +
-"#web-developer-dashboard-panels div { height: %1; } " + 
-"#web-developer-dashboard-panels #web-developer-edit-css-panels { height: %2; } " + 
+"#web-developer-dashboard-panels div { height: %1; } " +
+"#web-developer-dashboard-panels #web-developer-edit-css-panels { height: %2; } " +
 "";
 
 // Closes a dashboard tab
@@ -56,14 +57,14 @@ WebDeveloper.Dashboard.closeDashboardTab = function(title, contentDocument)
 // Create the dashboard
 WebDeveloper.Dashboard.createDashboard = function(contentDocument)
 {
-	var dashboard         = contentDocument.createElement("iframe");
+	var dashboard				= contentDocument.createElement("iframe");
 	var dashboardDocument = null;
-	var resizer           = null;
+	var resizer					= null;
 
 	dashboard.setAttribute("id", "web-developer-dashboard");
 
 	WebDeveloper.Common.getDocumentBodyElement(contentDocument).appendChild(dashboard);
-  WebDeveloper.Common.toggleStyleSheet("dashboard/style-sheets/dashboard.css", "web-developer-dashboard-styles", contentDocument, false);
+	WebDeveloper.Common.toggleStyleSheet("dashboard/style-sheets/dashboard.css", "web-developer-dashboard-styles", contentDocument, false);
 
 	dashboardDocument = dashboard.contentDocument;
 
@@ -81,11 +82,11 @@ WebDeveloper.Dashboard.createDashboard = function(contentDocument)
 // Opens a dashboard tab
 WebDeveloper.Dashboard.openDashboardTab = function(title, contentDocument)
 {
-	var dashboard         = contentDocument.getElementById("web-developer-dashboard");
+	var dashboard				= contentDocument.getElementById("web-developer-dashboard");
 	var dashboardDocument = null;
-	var panels            = null;
-	var tabId             = WebDeveloper.Dashboard.convertTitleToId(title);
-	var tabs              = null;
+	var panels						= null;
+	var tabId						= WebDeveloper.Dashboard.convertTitleToId(title);
+	var tabs							= null;
 
 	// If the dashboard exists
 	if(dashboard)
@@ -96,13 +97,13 @@ WebDeveloper.Dashboard.openDashboardTab = function(title, contentDocument)
 	{
 		dashboard = WebDeveloper.Dashboard.createDashboard(contentDocument);
 	}
-	
+
 	dashboardDocument = dashboard.contentDocument;
-	panels            = dashboardDocument.getElementById("web-developer-dashboard-panels");
-	tabs              = dashboardDocument.getElementById("web-developer-dashboard-tabs");
+	panels						= dashboardDocument.getElementById("web-developer-dashboard-panels");
+	tabs							= dashboardDocument.getElementById("web-developer-dashboard-tabs");
 
 	panels.innerHTML = panels.innerHTML + '<div id ="' + tabId + '-panel" class="panel selected"></div>';
-	tabs.innerHTML   = tabs.innerHTML + '<li id ="' + tabId + '-tab" class="tab selected">' + title + '</li>';
+	tabs.innerHTML	 = tabs.innerHTML + '<li id ="' + tabId + '-tab" class="tab selected">' + title + '</li>';
 
 	return dashboardDocument;
 };
@@ -113,7 +114,7 @@ WebDeveloper.Dashboard.resizeDashboard = function(size, dashboard, dashboardDocu
 	// If the size is more than the minimum dashboard size
 	if(size > WebDeveloper.Dashboard.minimumSize)
 	{
-		dashboard.style.height                                                     = size + "px";
+		dashboard.style.height																										 = size + "px";
 		dashboardDocument.getElementById("web-developer-dashboard-size").innerText = WebDeveloper.Dashboard.size.replace("%1", size - WebDeveloper.Dashboard.mainTabHeight + "px").replace("%2", size - WebDeveloper.Dashboard.subTabHeight + "px");
 	}
 };
@@ -138,7 +139,7 @@ WebDeveloper.Dashboard.tabBarClicked = function(event)
 		var panel					= eventDocument.getElementById(eventTarget.getAttribute("id").replace("tab", "panel"));
 		var tabs					= eventTarget.parentElement;
 		var panels				= eventDocument.getElementById(tabs.getAttribute("id").replace("tabs", "panels"));
-		
+
 		WebDeveloper.Common.removeClass(tabs.querySelector(".selected"), "selected");
 		WebDeveloper.Common.removeClass(panels.querySelector(".selected"), "selected");
 

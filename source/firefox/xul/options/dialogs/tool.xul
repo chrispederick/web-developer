@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/"?>
+<?xml-stylesheet href="chrome://web-developer/skin/web-developer.css"?>
+<!DOCTYPE prefwindow SYSTEM "chrome://web-developer/locale/options/options.dtd">
+<prefwindow id="web-developer-tool-dialog" dlgbuttons="accept,cancel" ondialogaccept="WebDeveloper.Tool.accept()" onload="WebDeveloper.Tool.initialize()" type="child" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="chrome://web-developer/content/common/common.js"/>
+  <script src="chrome://web-developer/content/locales/locales.js"/>
+  <script src="chrome://web-developer/content/options/dialogs/javascript/dialogs.js"/>
+  <script src="chrome://web-developer/content/options/dialogs/javascript/tool.js"/>
+  <script src="chrome://web-developer/content/preferences/preferences.js"/>
+
+	<stringbundleset>
+	  <stringbundle id="web-developer-platform-keys" src="chrome://global-platform/locale/platformKeys.properties"/>
+	  <stringbundle id="web-developer-string-bundle" src="chrome://web-developer/locale/options/options.properties"/>
+	</stringbundleset>
+
+	<prefpane id="web-developer-tool-dialog-pane">
+  	<preferences id="web-developer-tool-preferences"/>
+  	
+  	<radiogroup id="web-developer-tool-radio-group"/>
+  		
+    <grid>
+      <columns>
+        <column/>
+        <column/>
+      </columns>
+      
+      <rows>
+        <row align="center">
+          <label control="web-developer-tool-description" value="&webdeveloper.description.label;"/>
+          <textbox id="web-developer-tool-description" flex="1" preference="webdeveloper.tool.description"/>
+        </row>
+
+        <row align="center">
+          <radio id="web-developer-tool-application-radio" group="web-developer-tool-radio-group" label="&webdeveloper.application.label;" selected="true" oncommand="WebDeveloper.Tool.changeType()"/>
+	        <hbox align="center">
+	          <textbox id="web-developer-tool-path" flex="1" preference="webdeveloper.tool.path"/>
+	          <button id="web-developer-tool-path-choose" label="&webdeveloper.choose;" oncommand="WebDeveloper.Tool.chooseApplication()"/>
+					</hbox>
+        </row>
+
+        <row align="center">
+          <radio id="web-developer-tool-url-radio" group="web-developer-tool-radio-group" label="&webdeveloper.url;" oncommand="WebDeveloper.Tool.changeType()"/>
+          <textbox id="web-developer-tool-url" disabled="true" flex="1" preference="webdeveloper.tool.url"/>
+        </row>
+
+				<row>
+					<separator/>
+				</row>
+
+        <row align="center">
+          <label control="web-developer-tool-key" value="&webdeveloper.keyboard.label;"/>
+	        <hbox align="center">
+	          <menulist id="web-developer-tool-modifiers" preference="webdeveloper.tool.modifiers">
+	          	<menupopup>
+	          		<menuitem id="web-developer-tool-alt-shift" value="alt shift"/>
+	          		<menuitem id="web-developer-tool-control-shift" value="control shift"/>
+	          		<menuitem id="web-developer-tool-meta-shift" value="meta shift"/>
+	          	</menupopup>
+	          </menulist>
+	          <textbox id="web-developer-tool-key" preference="webdeveloper.tool.key" size="1"/>
+					</hbox>
+        </row>
+      </rows>
+    </grid>
+		<separator/>
+	</prefpane>
+</prefwindow>

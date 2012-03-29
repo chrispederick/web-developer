@@ -1,4 +1,6 @@
-applet, basefont, center, dir, font, isindex, menu, s, strike, u { outline: 1px solid #f00 !important; }
+applet, basefont, center, dir, font, isindex, menu, s, strike, u { outline: 1px solid #b94a48 !important; }
+
+applet:before, basefont:before, center:before, dir:before, font:before, isindex:before, menu:before, s:before, strike:before, u:before { outline: 1px solid #b94a48 !important; }
 
 applet:before { content: "<applet>" !important; }
 basefont:before { content: "<basefont>" !important; }

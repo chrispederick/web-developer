@@ -2,5 +2,9 @@
 
 * { cursor: crosshair !important; }
 
-.web-developer-toolbar #web-developer-color-picker-color { background-color: #fff !important; border: 1px solid #000 !important; float: right !important; height: 20px !important; margin: -3px 40px 0 0 !important; width: 40px !important; }
-.web-developer-toolbar #web-developer-color-picker-hex { float: right !important; font-family: monospace !important; margin-right: 20px !important; position: relative !important; top: 1px !important; }
+.web-developer-toolbar, .web-developer-toolbar * { cursor: auto !important; }
+.web-developer-toolbar > #web-developer-color-picker-hover-color, .web-developer-toolbar > #web-developer-color-picker-selected-color { border: 1px solid #666 !important; height: 16px !important; width: 24px !important; }
+.web-developer-toolbar > #web-developer-color-picker-hover-color, .web-developer-toolbar > #web-developer-color-picker-hover-hex, .web-developer-toolbar > #web-developer-color-picker-selected-color, .web-developer-toolbar > #web-developer-color-picker-selected-hex, .web-developer-toolbar > .web-developer-label { float: right !important; }
+.web-developer-toolbar > #web-developer-color-picker-hover-hex, .web-developer-toolbar > #web-developer-color-picker-selected-hex { font-family: Menlo, Monaco, "Courier New", monospace !important; margin-left: 10px !important; }
+.web-developer-toolbar > #web-developer-color-picker-hover-hex, .web-developer-toolbar > #web-developer-color-picker-selected-hex, .web-developer-toolbar > .web-developer-label { line-height: 18px !important; text-shadow: 0 1px 1px #fff !important; }
+.web-developer-toolbar > .web-developer-label { margin: 0 10px 0 40px !important; }

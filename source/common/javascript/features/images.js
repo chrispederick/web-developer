@@ -1,425 +1,661 @@
-WebDeveloper.Images = WebDeveloper.Images || {};
+var WebDeveloper = WebDeveloper || {};
+
+WebDeveloper.Images													= WebDeveloper.Images || {};
+WebDeveloper.Images.imageDimensionsTimeout	= null;
+WebDeveloper.Images.imageDimensionsUpdating = false;
 
 // Displays alt attributes for all images
-WebDeveloper.Images.displayAltAttributes = function(display, contentDocument)
+WebDeveloper.Images.displayAltAttributes = function(display, documents)
 {
-	var altAttribute = null;
-	var image				 = null;
-	var images			 = contentDocument.querySelectorAll("img[alt]");
-	var spanElement	 = null;
-	var text				 = null;
+	var contentDocument = null;
+	var image						= null;
+	var images					= null;
+	var spanElement			= null;
+	var text						= null;
 
-	WebDeveloper.Common.removeMatchingElements("span.web-developer-display-alt-attributes", contentDocument);
-
-	// If displaying the alt attributes
-	if(display)
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
 	{
-		// Loop through the images
-		for(var i = 0, l = images.length; i < l; i++)
+		contentDocument = documents[i];
+
+		WebDeveloper.Common.removeMatchingElements("span.web-developer-display-alt-attributes", contentDocument);
+
+		// If displaying the alt attributes
+		if(display)
 		{
-			image				= images[i];
-			spanElement = contentDocument.createElement("span");
-			text				= 'alt="' + image.getAttribute("alt") + '"';
+			images = contentDocument.querySelectorAll("img[alt], input[type=image][alt]");
 
-			spanElement.setAttribute("class", "web-developer-display-alt-attributes");
-			spanElement.appendChild(contentDocument.createTextNode(text));
-			image.parentNode.insertBefore(spanElement, image);
-		}
-	}
-
-	WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-alt-attributes", contentDocument, false);
-};
-
-// Displays the dimensions for all images
-WebDeveloper.Images.displayImageDimensions = function(display, contentDocument)
-{
-	var height			= null;
-	var image				= null;
-	var images			= contentDocument.images;
-	var spanElement = null;
-	var text				= null;
-	var width				= null;
-
-	WebDeveloper.Common.removeMatchingElements("span.web-developer-display-image-dimensions", contentDocument);
-
-	// If displaying the alt attributes
-	if(display)
-	{
-		// Loop through the images
-		for(var i = 0, l = images.length; i < l; i++)
-		{
-			image	 = images[i];
-			height = image.height;
-			text	 = null;
-			width	 = image.width;
-
-			// If the width and height are set
-			if(width && height)
+			// Loop through the images
+			for(var j = 0, m = images.length; j < m; j++)
 			{
-				text = "Width = " + width + "px Height = " + height + "px";
-			}
-			else if(width)
-			{
-				text = "Width = " + width + "px";
-			}
-			else if(height)
-			{
-				text = "Height = " + height + "px";
-			}
-
-			// If the text is set
-			if(text)
-			{
+				image				= images[i];
 				spanElement = contentDocument.createElement("span");
+				text				= 'alt="' + image.getAttribute("alt") + '"';
 
-				spanElement.setAttribute("class", "web-developer-display-image-dimensions");
+				spanElement.setAttribute("class", "web-developer-display-alt-attributes");
 				spanElement.appendChild(contentDocument.createTextNode(text));
 				image.parentNode.insertBefore(spanElement, image);
 			}
 		}
+
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-alt-attributes", contentDocument, false);
+	}
+};
+
+// Displays the dimensions for all images
+WebDeveloper.Images.displayImageDimensions = function(display, documents)
+{
+	var contentDocument = null;
+
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		contentDocument = documents[i];
+
+		// If displaying the image dimensions
+		if(display)
+		{
+			WebDeveloper.Images.updateImageDimensions(contentDocument);
+		}
+		else
+		{
+			WebDeveloper.Common.removeMatchingElements("span.web-developer-display-image-dimensions", contentDocument);
+		}
+
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-image-dimensions-before", contentDocument, false);
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/display-image-dimensions.css", "web-developer-display-image-dimensions", contentDocument, false);
 	}
 
-	WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-image-dimensions", contentDocument, false);
+	// If displaying the image dimensions
+	if(display)
+	{
+		window.addEventListener("resize", WebDeveloper.Information.resizeImageDimensions, false);
+	}
+	else
+	{
+		window.removeEventListener("resize", WebDeveloper.Information.resizeImageDimensions, false);
+	}
 };
 
 // Displays the paths for all images
-WebDeveloper.Images.displayImagePaths = function(display, contentDocument)
+WebDeveloper.Images.displayImagePaths = function(display, documents)
 {
-	WebDeveloper.Common.removeMatchingElements("span.web-developer-display-image-paths", contentDocument);
+	var contentDocument = null;
+	var image						= null;
+	var images					= null;
+	var imageSrc				= null;
+	var linkElement			= null;
+	var spanElement			= null;
+	var text						= null;
 
-	// If displaying the alt attributes
-	if(display)
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
 	{
-		var image				= null;
-		var images			= contentDocument.images;
-		var imageSrc		= null;
-		var linkElement	= null;
-		var spanElement = null;
-		var text				= null;
-	
-		// Loop through the images
-		for(var i = 0, l = images.length; i < l; i++)
+		contentDocument = documents[i];
+
+		WebDeveloper.Common.removeMatchingElements("span.web-developer-display-image-paths", contentDocument);
+
+		// If displaying the alt attributes
+		if(display)
 		{
-			image				= images[i];
-			imageSrc		= image.src;
-			linkElement	= contentDocument.createElement("a");
-			spanElement = contentDocument.createElement("span");
+			images = contentDocument.images;
 
-			linkElement.setAttribute("href", imageSrc);
-			linkElement.appendChild(contentDocument.createTextNode('src="' + imageSrc + '"'));
+			// Loop through the images
+			for(var j = 0, m = images.length; j < m; j++)
+			{
+				image				= images[j];
+				imageSrc		= image.src;
+				linkElement	= contentDocument.createElement("a");
+				spanElement = contentDocument.createElement("span");
 
-			spanElement.setAttribute("class", "web-developer-display-image-paths");
-			spanElement.appendChild(linkElement);
-			image.parentNode.insertBefore(spanElement, image);
+				linkElement.setAttribute("href", imageSrc);
+				linkElement.appendChild(contentDocument.createTextNode('src="' + imageSrc + '"'));
+
+				spanElement.setAttribute("class", "web-developer-display-image-paths");
+				spanElement.appendChild(linkElement);
+				image.parentNode.insertBefore(spanElement, image);
+			}
 		}
-	}
 
-	WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-image-paths", contentDocument, false);
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-image-paths", contentDocument, false);
+	}
+};
+
+// Hides the background images on a page
+WebDeveloper.Images.hideBackgroundImages = function(documents)
+{
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/hide-background-images.css", "web-developer-hide-background-images", documents[i], false);
+	}
+};
+
+// Hides all the images
+WebDeveloper.Images.hideImages = function(hide, documents)
+{
+	var contentDocument = null;
+	var inputElement		= null;
+	var inputElements		= null;
+
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		contentDocument = documents[i];
+		inputElements		= contentDocument.getElementsByTagName("input");
+
+		// Loop through all the input tags
+		for(var j = 0, m = inputElements.length; j < m; j++)
+		{
+			inputElement = inputElements[j];
+
+			// If hiding images and the input element is of type image
+			if(hide && inputElement.hasAttribute("type") && inputElement.getAttribute("type").toLowerCase() == "image")
+			{
+				inputElement.setAttribute("web-developer-hide-images", true);
+				inputElement.setAttribute("type", "submit");
+			}
+			else if(inputElement.hasAttribute("web-developer-hide-images"))
+			{
+				inputElement.removeAttribute("web-developer-hide-images");
+				inputElement.setAttribute("type", "image");
+			}
+		}
+
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/hide-images.css", "web-developer-hide-images", contentDocument, false);
+	}
 };
 
 // Makes all images full size
-WebDeveloper.Images.makeImagesFullSize = function(contentDocument)
+WebDeveloper.Images.makeImagesFullSize = function(documents)
 {
 	var alteredImages = 0;
 	var image					= null;
-	var images				= contentDocument.images;
-	var message				= null;
+	var images				= null;
 	var naturalHeight = null;
 	var naturalWidth	= null;
 
-	// Loop through the images
-	for(var i = 0, l = images.length; i < l; i++)
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
 	{
-		image					= images[i];
-		naturalHeight = image.naturalHeight;
-		naturalWidth	= image.naturalWidth;
+		images = documents[i].images;
 
-		// If the height or width is not the full size
-		if((naturalHeight && image.height != naturalHeight) || (naturalWidth && image.width != naturalWidth))
+		// Loop through the images
+		for(var j = 0, m = images.length; j < m; j++)
 		{
-			image.height = image.naturalHeight;
-			image.width	= image.naturalWidth;
+			image					= images[j];
+			naturalHeight = image.naturalHeight;
+			naturalWidth	= image.naturalWidth;
 
-			 alteredImages++;
+			// If the height or width is not the full size
+			if((naturalHeight && image.height != naturalHeight) || (naturalWidth && image.width != naturalWidth))
+			{
+				image.height = image.naturalHeight;
+				image.width	= image.naturalWidth;
+
+				alteredImages++;
+			}
 		}
 	}
 
 	// If one image was made full size
 	if(alteredImages == 1)
 	{
-		message = "1 image made full size";
+		WebDeveloper.Common.displayNotification("makeImagesFullSizeSingleResult");
 	}
 	else
 	{
-		message = alteredImages + " images made full size";
+		WebDeveloper.Common.displayNotification("makeImagesFullSizeMultipleResult", [alteredImages]);
 	}
-
-	WebDeveloper.Images.showNotification(message);
 };
 
 // Makes all images invisible
-WebDeveloper.Images.makeImagesInvisible = function(invisible, contentDocument)
+WebDeveloper.Images.makeImagesInvisible = function(invisible, documents)
 {
-	var image				= null;
-	var imageInput	= null;
-	var imageInputs = contentDocument.querySelectorAll("input[type=image], input[web-developer-make-images-invisible]");
-	var images			= contentDocument.images;
+	var contentDocument = null;
+	var image						= null;
+	var imageInput			= null;
+	var imageInputs			= null;
+	var images					= null;
 
-	// Loop through the image input tags
-	for(var i = 0, l = imageInputs.length; i < l; i++)
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
 	{
-		imageInput = imageInputs[i];
+		contentDocument = documents[i];
+		imageInputs			= contentDocument.querySelectorAll("input[type=image], input[web-developer-make-images-invisible]");
+		images					= contentDocument.images;
 
-		// If making images invisible
-		if(invisible)
+		// Loop through the image input tags
+		for(var j = 0, m = imageInputs.length; j < m; j++)
 		{
-			imageInput.setAttribute("web-developer-make-images-invisible", true);
-			imageInput.setAttribute("type", "submit");
-		}
-		else if(imageInput.hasAttribute("web-developer-make-images-invisible"))
-		{
-			imageInput.removeAttribute("web-developer-make-images-invisible");
-			imageInput.setAttribute("type", "image");
-		}
-	}
+			imageInput = imageInputs[j];
 
-	// Loop through the images
-	for(i = 0, l = images.length; i < l; i++)
-	{
-		image = images[i];
-
-		// If making images invisible
-		if(invisible)
-		{
-			// If the image width is not set and the image is not broken
-			if(!image.hasAttribute("width") && image.naturalWidth)
+			// If making images invisible
+			if(invisible)
 			{
-				image.setAttribute("width", image.naturalWidth);
+				imageInput.setAttribute("web-developer-make-images-invisible", true);
+				imageInput.setAttribute("type", "submit");
 			}
-
-			// If the image height is not set and the image is not broken
-			if(!image.hasAttribute("height") && image.naturalHeight)
+			else if(imageInput.hasAttribute("web-developer-make-images-invisible"))
 			{
-				image.setAttribute("height", image.naturalHeight);
+				imageInput.removeAttribute("web-developer-make-images-invisible");
+				imageInput.setAttribute("type", "image");
 			}
-
-			image.setAttribute("web-developer-make-images-invisible", image.getAttribute("src"));
-			image.setAttribute("src", chrome.extension.getURL("style-sheets/images/transparent.png"));
 		}
-		else
+
+		// Loop through the images
+		for(j = 0, m = images.length; j < m; j++)
 		{
-			image.setAttribute("src", image.getAttribute("web-developer-make-images-invisible"));
-			image.removeAttribute("web-developer-make-images-invisible");
-		}
-	}
+			image = images[j];
 
-	WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/make-images-invisible.css", "web-developer-make-images-invisible", contentDocument, false);
+			// If making images invisible
+			if(invisible)
+			{
+				// If the image width is not set and the image is not broken
+				if(!image.hasAttribute("width") && image.naturalWidth)
+				{
+					image.setAttribute("width", image.naturalWidth);
+				}
+
+				// If the image height is not set and the image is not broken
+				if(!image.hasAttribute("height") && image.naturalHeight)
+				{
+					image.setAttribute("height", image.naturalHeight);
+				}
+
+				image.setAttribute("web-developer-make-images-invisible", image.getAttribute("src"));
+				image.setAttribute("src", WebDeveloper.Common.getChromeURL("features/style-sheets/images/transparent.png"));
+			}
+			else
+			{
+				image.setAttribute("src", image.getAttribute("web-developer-make-images-invisible"));
+				image.removeAttribute("web-developer-make-images-invisible");
+			}
+		}
+
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/make-images-invisible.css", "web-developer-make-images-invisible", contentDocument, false);
+	}
 };
 
 // Outlines all images
-WebDeveloper.Images.outlineAllImages = function(contentDocument)
+WebDeveloper.Images.outlineAllImages = function(documents)
 {
-	WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-all-images.css", "web-developer-outline-all-images", contentDocument, false);
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-all-images.css", "web-developer-outline-all-images", documents[i], false);
+	}
 };
 
 // Outlines all background images
-WebDeveloper.Images.outlineBackgroundImages = function(outline, contentDocument)
+WebDeveloper.Images.outlineBackgroundImages = function(outline, documents)
 {
-	// If outlining background images
-	if(outline)
-	{
-		 var backgroundImage = null;
-		 var cssURI					 = CSSPrimitiveValue.CSS_URI;
-		 var node						 = null;
-		 var treeWalker			 = contentDocument.createTreeWalker(WebDeveloper.Common.getDocumentBodyElement(contentDocument), NodeFilter.SHOW_ELEMENT, null, false);
+	var backgroundImage  = null;
+	var backgroundImages = null;
+	var contentDocument  = null;
+	var cssURI					 = CSSPrimitiveValue.CSS_URI;
+	var node						 = null;
+	var treeWalker			 = null;
 
-		 // While the tree walker has more nodes
-		 while((node = treeWalker.nextNode()) !== null)
-		 {
-			 backgroundImage = node.ownerDocument.defaultView.getComputedStyle(node, null).getPropertyCSSValue("background-image");
-	
-			 // If this element has a background image and it is a URL
-			 if(backgroundImage && backgroundImage.primitiveType == cssURI)
-			 {
-				WebDeveloper.Common.addClass(node, "web-developer-outline-background-images");
-			 }
-		 }
-	}
-	else
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
 	{
-		 var backgroundImages = contentDocument.querySelectorAll(".web-developer-outline-background-images");
-	
-		 // Loop through the background images
-		 for(var i = 0, l = backgroundImages.length; i < l; i++)
-		 {
-			WebDeveloper.Common.removeClass(backgroundImages[i], "web-developer-outline-background-images");
-		 }
-	}
+		contentDocument = documents[i];
 
-	WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-background-images.css", "web-developer-outline-background-images", contentDocument, false);
+		// If outlining background images
+		if(outline)
+		{
+			treeWalker = contentDocument.createTreeWalker(WebDeveloper.Common.getDocumentBodyElement(contentDocument), NodeFilter.SHOW_ELEMENT, null, false);
+
+			// While the tree walker has more nodes
+			while((node = treeWalker.nextNode()) !== null)
+			{
+				backgroundImage = WebDeveloper.Common.getCSSProperty(node.ownerDocument.defaultView.getComputedStyle(node, null).getPropertyCSSValue("background-image"));
+
+				// If this element has a background image and it is a URL
+				if(backgroundImage && backgroundImage.primitiveType == cssURI)
+				{
+					WebDeveloper.Common.addClass(node, "web-developer-outline-background-images");
+				}
+			}
+		}
+		else
+		{
+			backgroundImages = contentDocument.getElementsByClassName("web-developer-outline-background-images");
+
+			// While there are background images
+			while(backgroundImages.length > 0)
+			{
+				WebDeveloper.Common.removeClass(backgroundImages[0], "web-developer-outline-background-images");
+			}
+		}
+
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-background-images.css", "web-developer-outline-background-images", contentDocument, false);
+	}
 };
 
 // Outlines all images with adjusted dimensions
-WebDeveloper.Images.outlineImagesWithAdjustedDimensions = function(outline, contentDocument)
+WebDeveloper.Images.outlineImagesWithAdjustedDimensions = function(outline, documents)
 {
-	var i = 0;
-	var l = 0;
+	var contentDocument							 = null;
+	var image												 = null;
+	var images											 = null;
+	var imagesWithAdjustedDimensions = null;
+	var j														 = 0;
+	var m														 = 0;
+	var naturalHeight								 = null;
+	var naturalWidth								 = null;
 
-	// If outlining images with adjusted dimensions
-	if(outline)
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
 	{
-		var image				  = null;
-		var images				= contentDocument.images;
-		var naturalHeight = null;
-		var naturalWidth	= null;
-	
-		// Loop through the images
-		for(i = 0, l = images.length; i < l; i++)
+		contentDocument = documents[i];
+
+		// If outlining images with adjusted dimensions
+		if(outline)
 		{
-			image				  = images[i];
-			naturalHeight = image.naturalHeight;
-			naturalWidth	= image.naturalWidth;
-	
-			// If the height or width has been adjusted
-			if((naturalHeight && image.height != naturalHeight) || (naturalWidth && image.width != naturalWidth))
+			images = contentDocument.images;
+
+			// Loop through the images
+			for(j = 0, m = images.length; j < m; j++)
 			{
-				WebDeveloper.Common.addClass(image, "web-developer-outline-images-with-adjusted-dimensions");
+				image					= images[j];
+				naturalHeight = image.naturalHeight;
+				naturalWidth	= image.naturalWidth;
+
+				// If the height or width has been adjusted
+				if((naturalHeight && image.height != naturalHeight) || (naturalWidth && image.width != naturalWidth))
+				{
+					WebDeveloper.Common.addClass(image, "web-developer-outline-images-with-adjusted-dimensions");
+				}
 			}
 		}
-	}
-	else
-	{
-		var imagesWithAdjustedDimensions = contentDocument.querySelectorAll(".web-developer-outline-images-with-adjusted-dimensions");
-	
-		// Loop through the images with adjusted dimensions
-		for(i = 0, l = imagesWithAdjustedDimensions.length; i < l; i++)
+		else
 		{
-			WebDeveloper.Common.removeClass(imagesWithAdjustedDimensions[i], "web-developer-outline-images-with-adjusted-dimensions");
-		}
-	}
+			imagesWithAdjustedDimensions = contentDocument.getElementsByClassName("web-developer-outline-images-with-adjusted-dimensions");
 
-	WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-images-with-adjusted-dimensions.css", "web-developer-outline-images-with-adjusted-dimensions", contentDocument, false);
+			// While there are images with adjusted dimensions
+			while(imagesWithAdjustedDimensions.length > 0)
+			{
+				WebDeveloper.Common.removeClass(imagesWithAdjustedDimensions[0], "web-developer-outline-images-with-adjusted-dimensions");
+			}
+		}
+
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-images-with-adjusted-dimensions.css", "web-developer-outline-images-with-adjusted-dimensions", contentDocument, false);
+	}
 };
 
 // Outlines all images with empty alt attributes
-WebDeveloper.Images.outlineImagesWithEmptyAltAttributes = function(contentDocument)
+WebDeveloper.Images.outlineImagesWithEmptyAltAttributes = function(documents)
 {
-	WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-images-with-empty-alt-attributes.css", "web-developer-outline-images-with-empty-alt-attributes", contentDocument, false);
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-images-with-empty-alt-attributes.css", "web-developer-outline-images-with-empty-alt-attributes", documents[i], false);
+	}
 };
 
 // Outlines all images with oversized dimensions
-WebDeveloper.Images.outlineImagesWithOversizedDimensions = function(outline, contentDocument)
+WebDeveloper.Images.outlineImagesWithOversizedDimensions = function(outline, documents)
 {
-	var i = 0;
-	var l = 0;
+	var contentDocument								= null;
+	var image													= null;
+	var images												= null;
+	var imagesWithOversizedDimensions = null;
+	var naturalHeight									= null;
+	var naturalWidth									= null;
 
-	// If outlining images with oversized dimensions
-	if(outline)
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
 	{
-		var image				  = null;
-		var images				= contentDocument.images;
-		var naturalHeight = null;
-		var naturalWidth	= null;
-	
-		// Loop through the images
-		for(i = 0, l = images.length; i < l; i++)
+		contentDocument = documents[i];
+
+		// If outlining images with oversized dimensions
+		if(outline)
 		{
-			image				  = images[i];
-			naturalHeight = image.naturalHeight;
-			naturalWidth	= image.naturalWidth;
-	
-			// If the height or width has been oversized
-			if((naturalHeight && image.height > naturalHeight) || (naturalWidth && image.width > naturalWidth))
+			images = contentDocument.images;
+
+			// Loop through the images
+			for(var j = 0, m = images.length; j < m; j++)
 			{
-				WebDeveloper.Common.addClass(image, "web-developer-outline-images-with-oversized-dimensions");
+				image					= images[j];
+				naturalHeight = image.naturalHeight;
+				naturalWidth	= image.naturalWidth;
+
+				// If the height or width has been oversized
+				if((naturalHeight && image.height > naturalHeight) || (naturalWidth && image.width > naturalWidth))
+				{
+					WebDeveloper.Common.addClass(image, "web-developer-outline-images-with-oversized-dimensions");
+				}
 			}
+		}
+		else
+		{
+			imagesWithOversizedDimensions = contentDocument.getElementsByClassName("web-developer-outline-images-with-oversized-dimensions");
+
+			// While there are images with oversized dimensions
+			while(imagesWithOversizedDimensions.length > 0)
+			{
+				WebDeveloper.Common.removeClass(imagesWithOversizedDimensions[0], "web-developer-outline-images-with-oversized-dimensions");
+			}
+		}
+
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-images-with-oversized-dimensions.css", "web-developer-outline-images-with-oversized-dimensions", contentDocument, false);
+	}
+};
+
+// Outlines all images without alt attributes
+WebDeveloper.Images.outlineImagesWithoutAltAttributes = function(documents)
+{
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-images-without-alt-attributes.css", "web-developer-outline-images-without-alt-attributes", documents[i], false);
+	}
+};
+
+// Outlines all images without dimensions
+WebDeveloper.Images.outlineImagesWithoutDimensions = function(documents)
+{
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-images-without-dimensions.css", "web-developer-outline-images-without-dimensions", documents[i], false);
+	}
+};
+
+// Reloads the images in a document
+WebDeveloper.Images.reloadImages = function(documents)
+{
+	var computedStyle		= null;
+	var contentDocument = null;
+	var cssURI					= CSSPrimitiveValue.CSS_URI;
+	var imageURL				= null;
+	var ownerNode				= null;
+	var node						= null;
+	var styleImage			= null;
+	var styleSheet			= null;
+	var styleSheets			= null;
+	var styleSheetURL		= null;
+	var treeWalker			= null;
+
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		contentDocument = documents[i];
+		treeWalker			= contentDocument.createTreeWalker(contentDocument, NodeFilter.SHOW_ELEMENT, null, false);
+
+		// While the tree walker has more nodes
+		while((node = treeWalker.nextNode()) !== null)
+		{
+			// If this is an image element
+			if(node.tagName.toLowerCase() == "img" || (node.tagName.toLowerCase() == "input" && node.src && node.type && node.type.toLowerCase() == "image"))
+			{
+				imageURL = node.src;
+
+				// If this is not a chrome image
+				if(imageURL.indexOf("chrome://") !== 0)
+				{
+					node.src = WebDeveloper.Images.updateReloadImageURL(imageURL);
+				}
+			}
+			else if(node.tagName.toLowerCase() == "link" && node.href && node.href.indexOf("chrome://") !== 0 && node.rel && node.rel.indexOf("icon") != -1)
+			{
+				node.href = WebDeveloper.Images.updateReloadImageURL(node.href);
+			}
+			else
+			{
+				computedStyle = node.ownerDocument.defaultView.getComputedStyle(node, null);
+
+				// If the computed style is set
+				if(computedStyle)
+				{
+					styleImage = WebDeveloper.Common.getCSSProperty(computedStyle.getPropertyCSSValue("background-image"));
+
+					// If this element has a background image and it is a URI
+					if(styleImage && styleImage.primitiveType == cssURI)
+					{
+						imageURL = styleImage.getStringValue();
+
+						// If this is not a chrome image
+						if(imageURL.indexOf("chrome://") !== 0)
+						{
+							node.style.backgroundImage = WebDeveloper.Images.updateReloadImageURL(imageURL);
+						}
+					}
+
+					styleImage = computedStyle.getPropertyCSSValue("list-style-image");
+
+					// If this element has a background image and it is a URI
+					if(styleImage && styleImage.primitiveType == cssURI)
+					{
+						imageURL = styleImage.getStringValue();
+
+						// If this is not a chrome image
+						if(imageURL.indexOf("chrome://") !== 0)
+						{
+							node.style.listStyleImage = WebDeveloper.Images.updateReloadImageURL(imageURL);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	WebDeveloper.Common.displayNotification("reloadImagesResult");
+};
+
+// Replaces all images with alt attributes
+WebDeveloper.Images.replaceImagesWithAltAttributes = function(replace, documents)
+{
+	var contentDocument = null;
+	var image						= null;
+	var images					= null;
+	var spanElement			= null;
+	var text						= null;
+
+	// Loop through the documents
+	for(var i = 0, l = documents.length; i < l; i++)
+	{
+		contentDocument = documents[i];
+
+		WebDeveloper.Common.removeMatchingElements("span.web-developer-replace-images-with-alt-attributes", contentDocument);
+
+		// If replacing the images
+		if(replace)
+		{
+			images = contentDocument.images;
+
+			// Loop through the images
+			for(var j = 0, m = images.length; j < m; j++)
+			{
+				image				= images[j];
+				spanElement = contentDocument.createElement("span");
+				text				= image.getAttribute("alt");
+
+				spanElement.setAttribute("class", "web-developer-replace-images-with-alt-attributes");
+				spanElement.appendChild(contentDocument.createTextNode(text));
+				image.parentNode.insertBefore(spanElement, image);
+			}
+		}
+
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-replace-images-with-alt-attributes-before", contentDocument, false);
+		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/hide-images.css", "web-developer-replace-images-with-alt-attributes", contentDocument, false);
+	}
+};
+
+// Resizes the dimensions for all images
+WebDeveloper.Images.resizeImageDimensions = function()
+{
+	// If there is a timeout set
+	if(WebDeveloper.Images.imageDimensionsTimeout)
+	{
+		window.clearTimeout(WebDeveloper.Images.imageDimensionsTimeout);
+
+		WebDeveloper.Images.imageDimensionsTimeout = null;
+	}
+
+	// If the image dimensions are not already updating
+	if(!WebDeveloper.Images.imageDimensionsUpdating)
+	{
+		var documents = WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow());
+
+		// Loop through the documents
+		for(var i = 0, l = documents.length; i < l; i++)
+		{
+			WebDeveloper.Images.updateImageDimensions(documents[i]);
 		}
 	}
 	else
 	{
-		var imagesWithOversizedDimensions = contentDocument.querySelectorAll(".web-developer-outline-images-with-oversized-dimensions");
-	
-		// Loop through the images with oversized dimensions
-		for(i = 0, l = imagesWithOversizedDimensions.length; i < l; i++)
-		{
-			WebDeveloper.Common.removeClass(imagesWithOversizedDimensions[i], "web-developer-outline-images-with-oversized-dimensions");
-		}
+		WebDeveloper.Images.imageDimensionsTimeout = window.setTimeout(WebDeveloper.Images.resizeImageDimensions, 0);
 	}
-
-	WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-images-with-oversized-dimensions.css", "web-developer-outline-images-with-oversized-dimensions", contentDocument, false);
 };
 
-// Outlines all images without alt attributes
-WebDeveloper.Images.outlineImagesWithoutAltAttributes = function(contentDocument)
-{
-	WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-images-without-alt-attributes.css", "web-developer-outline-images-without-alt-attributes", contentDocument, false);
-};
-
-// Outlines all images without dimensions
-WebDeveloper.Images.outlineImagesWithoutDimensions = function(contentDocument)
-{
-	WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-images-without-dimensions.css", "web-developer-outline-images-without-dimensions", contentDocument, false);
-};
-
-// Replaces all images with alt attributes
-WebDeveloper.Images.replaceImagesWithAltAttributes = function(replace, contentDocument)
+// Updates the dimensions for all images
+WebDeveloper.Images.updateImageDimensions = function(contentDocument)
 {
 	var image				= null;
 	var images			= contentDocument.images;
-	var spanElement = null;
+	var spanElement	= null;
 	var text				= null;
 
-	WebDeveloper.Common.removeMatchingElements("span.web-developer-replace-images-with-alt-attributes", contentDocument);
+	WebDeveloper.Images.imageDimensionsUpdating = true;
 
-	// If replacing the images
-	if(replace)
+	// Loop through the images
+	for(var i = 0, l = images.length; i < l; i++)
 	{
-		// Loop through the images
-		for(var i = 0, l = images.length; i < l; i++)
-		{
-			image				= images[i];
-			spanElement = contentDocument.createElement("span");
-			text				= image.getAttribute("alt");
+		image	= images[i];
+		text	= WebDeveloper.Common.formatDimensions(image.width, image.height);
 
-			spanElement.setAttribute("class", "web-developer-replace-images-with-alt-attributes");
+		// If the text is set
+		if(text)
+		{
+			spanElement = contentDocument.createElement("span");
+
+			spanElement.setAttribute("class", "web-developer-display-image-dimensions");
 			spanElement.appendChild(contentDocument.createTextNode(text));
 			image.parentNode.insertBefore(spanElement, image);
 		}
 	}
 
-	WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-replace-images-with-alt-attributes-before", contentDocument, false);
-	WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/hide-images.css", "web-developer-replace-images-with-alt-attributes", contentDocument, false);
+	WebDeveloper.Images.imageDimensionsUpdating = false;
 };
 
-// Toggles the background images in a document
-WebDeveloper.Images.toggleBackgroundImages = function(contentDocument)
+// Updates a reload image URL
+WebDeveloper.Images.updateReloadImageURL = function(imageURL)
 {
-	WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/hide-background-images.css", "web-developer-hide-background-images", contentDocument, false);
-};
+	var newImageURL = WebDeveloper.Common.removeReloadParameterFromURL(imageURL);
 
-// Hides/shows all the images
-WebDeveloper.Images.toggleImages = function(hide, contentDocument)
-{
-	var inputElement	= null;
-	var inputElements = contentDocument.querySelectorAll("input");
-
-	// Loop through all the input tags
-	for(var i = 0, l = inputElements.length; i < l; i++)
+	// If the image URL does not have query parameters
+	if(newImageURL.indexOf("?") == -1)
 	{
-		inputElement = inputElements[i];
-
-		// If hiding images and the input element is of type image
-		if(hide && inputElement.hasAttribute("type") && inputElement.getAttribute("type").toLowerCase() == "image")
-		{
-			inputElement.setAttribute("web-developer-hide-images", true);
-			inputElement.setAttribute("type", "submit");
-		}
-		else if(inputElement.hasAttribute("web-developer-hide-images"))
-		{
-			inputElement.removeAttribute("web-developer-hide-images");
-			inputElement.setAttribute("type", "image");
-		}
+		newImageURL += "?";
+	}
+	else
+	{
+		newImageURL += "&";
 	}
 
-	WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/hide-images.css", "web-developer-hide-images", contentDocument, false);
+	return newImageURL + "web-developer-reload=" + new Date().getTime();
 };

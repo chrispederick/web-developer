@@ -1,104 +1,108 @@
-// Initializes the page with data
-function initialize(data)
-{
-	var container       = null;
-	var contentDocument = null;
-	var documents       = data.documents;
-	var form            = null;
-	var formDescription = null;
-	var formElement     = null;
-	var formElements    = null;
-	var forms           = null;
-	var formsLength     = null;
-	var list            = null;
-	var row             = null;
-	var table           = null;
-	var url							= null;
+var WebDeveloper = WebDeveloper || {};
 
-	setPageTitle("Forms", data);
-	setWindowTitle("Forms", data);
-	
+WebDeveloper.Generated = WebDeveloper.Generated || {};
+
+// Formats the form description
+WebDeveloper.Generated.formatFormDescription = function(form)
+{
+	// If the form id is set
+	if(form.id)
+	{
+		return form.id;
+	}
+	else if(form.name)
+	{
+		return form.name;
+	}
+
+	return form.action;
+};
+
+// Initializes the page with data
+WebDeveloper.Generated.initialize = function(data, locale)
+{
+	var container					= null;
+	var content						= $("#content");
+	var contentDocument		= null;
+	var documents					= data.documents;
+	var form							= null;
+	var formDescription		= null;
+	var forms							= null;
+	var formsCounter			= 1;
+	var formsDescription	= locale.forms;
+	var formsDropdown			= $("#forms-dropdown");
+	var formsDropdownMenu	= $(".dropdown-menu", formsDropdown);
+	var formsLength				= null;
+	var list							= null;
+	var table							= null;
+	var tableBody					= null;
+
+	WebDeveloper.Generated.emptyContent();
+	WebDeveloper.Generated.localizeHeader(locale);
+	WebDeveloper.Generated.setPageTitle(formsDescription, data, locale);
+
+	$(".dropdown-toggle", formsDropdown).prepend(formsDescription);
+
 	// Loop through the documents
 	for(var i = 0, l = documents.length; i < l; i++)
 	{
 		contentDocument = documents[i];
-		formDescription = "forms";
-		forms           = contentDocument.forms;
-		formsLength     = forms.length;
-		url             = contentDocument.url;
-	
+		formDescription = formsDescription.toLowerCase();
+		forms						= contentDocument.forms;
+		formsLength			= forms.length;
+
 		// If there is only one form
 		if(formsLength == 1)
 		{
-			formDescription = "form";
+			formDescription = locale.form.toLowerCase();
 		}
 
-		$("#content").append('<h2><span></span><a href="' + url + '">' + url + "</a></h2>");
-		$("#content").append('<h3 id="form-' + (i + 1) + '"><span></span>' + formsLength + " " + formDescription + "</h3>");
-		$("#jump-to ul").append('<li><a href="#form-' + (i + 1) + '">' + formatURL(url) + "</a></li>");	
+		WebDeveloper.Generated.addDocument(contentDocument.url, i, formDescription, formsLength);
 
 		// If there are forms
 		if(formsLength > 0)
 		{
-			container = $("<div></div>");
-
-			$("#content").append(container);
+			container = WebDeveloper.Generated.generateDocumentContainer();
 
 			// Loop through the forms
 			for(var j = 0; j < formsLength; j++)
 			{
-				form         = forms[j];
-				formElements = form.elements;
-				row          = $("<tr></tr>");
-				table        = $("<table></table>");
+				form			= forms[j];
+				table			= $('<table class="table table-bordered table-striped"></table>');
+				tableBody	= $("<tbody></tbody>");
 
-				table.append("<tr><th>Id</th><th>Name</th><th>Method</th><th>Action</th></tr>");
-				
-				row.append(createTableCell(form.id));
-				row.append(createTableCell(form.name));
-				row.append(createTableCell(form.method));
-				row.append(createTableCell(form.action));
-				
-				table.append(row);
-
-				container.append("<h4>Form</h4>");
+				table.append("<thead><tr><th>" + locale.id + "</th><th>" + locale.name + "</th><th>" + locale.method + "</th><th>" + locale.action + "</th></tr></thead>");
+				tableBody.append(ich.form(form));
+				table.append(tableBody);
+				container.append('<h4 id="form-' + formsCounter + '" class="web-developer-form">' + locale.form + "</h4>");
 				container.append(table);
 
 				// If there are form elements
-				if(formElements.length > 0)
+				if(form.elements.length > 0)
 				{
-					table = $("<table></table>");
-					
-					table.append("<tr><th>Id</th><th>Name</th><th>Type</th><th>Value</th><th>Size</th><th>Maximum length</th></tr>");
+					table			= $('<table class="table table-bordered table-striped"></table>');
+					tableBody = $("<tbody></tbody>");
 
-					// Loop through the form elements
-					for(var k = 0, n = formElements.length; k < n; k++)
-					{
-						formElement = formElements[k];
-						row         = $("<tr></tr>");
-
-						row.append(createTableCell(formElement.id));
-						row.append(createTableCell(formElement.name));
-						row.append(createTableCell(formElement.type));
-						row.append(createTableCell(formElement.value));
-						row.append(createTableCell(formElement.size));
-						row.append(createTableCell(formElement.maximumLength));
-
-						table.append(row);
-					}
-
-					container.append("<h4>Elements</h4>");
+					table.append("<thead><tr><th>" + locale.id + "</th><th>" + locale.name + "</th><th>" + locale.type + "</th><th>" + locale.value + "</th><th>" + locale.label + "</th><th>" + locale.size + "</th><th>" + locale.maximumLength + "</th></tr></thead>");
+					tableBody.append(ich.form_elements(form));
+					container.append("<h4>" + locale.elements + "</h4>");
+					table.append(tableBody);
 					container.append(table);
 				}
-				
-				container.append('<div class="separator"></div>');
+
+				container.append('<div class="web-developer-separator"></div>');
+				formsDropdownMenu.append('<li><a href="#form-' + formsCounter + '">' + WebDeveloper.Generated.formatFormDescription(form) + "</a></li>");
+
+				formsCounter++;
 			}
+
+			content.append(container);
 		}
 		else
 		{
-			$("#content").append('<div class="separator"></div>');
+			WebDeveloper.Generated.addSeparator();
 		}
 	}
-	
-	initializeCommonElements();
-}
+
+	WebDeveloper.Generated.initializeCommonElements();
+};

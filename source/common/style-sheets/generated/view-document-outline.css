@@ -1,11 +1,14 @@
 /* ! View document outline styles */
 
-h4 span { background: -webkit-gradient(linear, left top, left bottom, from(#ffffca), to(#ffec96)); border: 1px solid #ffdb63; font-size: 13px; margin-right: 5px; padding: 0 1px; }
-
-.level-1 { font-size: 21px; line-height: 25px; margin-left: 20px; }
-.level-2 { font-size: 19px; line-height: 23px; margin-left: 60px; }
-.level-3 { font-size: 17px; line-height: 21px; margin-left: 100px; }
-.level-4 { font-size: 15px; line-height: 19px; margin-left: 140px; }
-.level-5 { font-size: 13px; line-height: 17px; margin-left: 180px; }
-.level-6 { font-size: 13px; line-height: 17px; margin-left: 220px; }
-.missing-heading { color: #c00; }
+h1 > .label { top: -6px; }
+h2 > .label { top: -4px; }
+h3 > .label { top: -2px; }
+h4, h5, h6 { line-height: 22px; }
+.label { background-image: none; cursor: auto; display: inline; font-size: 12px; font-weight: normal; margin-right: 5px; position: relative; top: -1px; }
+.web-developer-document > h1 { margin-bottom: 0; }
+.web-developer-document > h2 { margin-left: 40px; padding-top: 0; }
+.web-developer-document > h3 { margin-left: 80px; }
+.web-developer-document > h4 { margin-left: 120px; }
+.web-developer-document > h5 { margin-left: 160px; }
+.web-developer-document > h6 { color: inherit; margin-left: 200px; text-transform: none; }
+.web-developer-missing-heading { color: #999; }

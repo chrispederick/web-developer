@@ -1,7 +1,5 @@
 /* ! View image information styles */
 
-th { width: 100px; }
-tr { border-style: none; }
-tr td { border-color: #ccc; border-style: solid; border-width: 1px 0; }
-tr:nth-child(even) td { background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)); text-shadow: 0 1px 0 #fff; }
-tr:nth-child(odd) td { background: none; text-shadow: none; }
+img { border: 1px solid #ddd; border-radius: 4px; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); margin-bottom: 20px; padding: 4px; }
+.web-developer-image { margin-top: -50px; padding-top: 50px; }
+.web-developer-separator { margin: 25px; }

@@ -1,4 +1,6 @@
-WebDeveloper.Dashboard = {};
+var WebDeveloper = WebDeveloper || {};
+
+WebDeveloper.Dashboard = WebDeveloper.Dashboard || {};
 
 // Converts a title to an id
 WebDeveloper.Dashboard.convertTitleToId = function(title)
@@ -12,9 +14,16 @@ WebDeveloper.Dashboard.formatURL = function(url)
 	// If the URL is set
 	if(url)
 	{
-		var lastSlashIndex = url.lastIndexOf("/");
-		
-		return url.substring(lastSlashIndex + 1);
+		var lastSlashIndex	 = url.lastIndexOf("/");
+		var queryStringIndex = url.indexOf("?", lastSlashIndex);
+
+		// If there is no query string
+		if(queryStringIndex == -1)
+		{
+			return url.substring(lastSlashIndex + 1);
+		}
+
+		return url.substring(lastSlashIndex + 1, queryStringIndex);
 	}
 
 	return url;

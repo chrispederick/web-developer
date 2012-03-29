@@ -1,5 +1,6 @@
 .DS_Store
 
 build/chrome/
-build/temp-chrome/
+build/firefox/
 build/web-developer-chrome.zip
+build/web-developer-firefox.xpi

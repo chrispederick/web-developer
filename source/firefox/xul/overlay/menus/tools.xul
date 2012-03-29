@@ -1,0 +1,12 @@
+<menupopup onpopupshowing="WebDeveloper.Overlay.Tools.updateToolsMenu(this, '${suffix}')">
+  <menuseparator id="web-developer-tools-separator1-${suffix}"/>
+  <menuitem id="web-developer-edit-tools-${suffix}" command="web-developer-edit-tools-command"/>
+  <menuseparator id="web-developer-tools-separator2-${suffix}"/>
+  <menuitem id="web-developer-display-page-validation-${suffix}" command="web-developer-display-page-validation-command" type="checkbox"/>
+  <menuseparator id="web-developer-tools-separator3-${suffix}"/>
+  <menuitem id="web-developer-dom-inspector-${suffix}" command="web-developer-dom-inspector-command" type="checkbox"/>
+  <menuitem id="web-developer-error-console-${suffix}" command="web-developer-error-console-command" type="checkbox"/>
+  <menuseparator id="web-developer-tools-separator4-${suffix}"/>
+  <menuitem id="web-developer-validate-local-css-${suffix}" command="web-developer-validate-local-css-command"/>
+  <menuitem id="web-developer-validate-local-html-${suffix}" command="web-developer-validate-local-html-command"/>
+</menupopup>

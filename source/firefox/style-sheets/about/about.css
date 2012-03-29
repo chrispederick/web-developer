@@ -1,0 +1,11 @@
+/* ! About styles */
+
+column { margin-right: 10px; width: 130px; }
+#web-developer-about-details { background-color: #fff; color: #000; font-size: 12px; padding: 10px; }
+#web-developer-about-details > vbox { background: url("chrome://web-developer/content/icons/64.png") no-repeat 0 0; min-height: 75px; }
+#web-developer-about-dialog { margin: 0; padding: 0; width: 450px; }
+.description, .name { margin-left: 70px; }
+.name { font-size: 24px; }
+.title { font-size: 16px; }
+.url { color: #00f; cursor: pointer; margin-top: 10px; text-decoration: underline; }
+.url:focus, .url:hover { color: #f00; }

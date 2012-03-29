@@ -1,129 +1,98 @@
-WebDeveloper.Popup.Tools = {};
+var WebDeveloper = WebDeveloper || {};
 
-$(function() 
-{ 
-	$("#validate-css").click(WebDeveloper.Popup.Tools.validateCSS);
-	$("#validate-feed").click(WebDeveloper.Popup.Tools.validateFeed);
-	$("#validate-html").click(WebDeveloper.Popup.Tools.validateHTML);
-	$("#validate-links").click(WebDeveloper.Popup.Tools.validateLinks);
-	$("#validate-local-css").click(WebDeveloper.Popup.Tools.validateLocalCSS);
-	$("#validate-local-html").click(WebDeveloper.Popup.Tools.validateLocalHTML);
-	$("#validate-section-508").click(WebDeveloper.Popup.Tools.validateSection508);
-	$("#validate-wcag").click(WebDeveloper.Popup.Tools.validateWCAG);
-	$("#view-source").click(WebDeveloper.Popup.Tools.viewSource);
+WebDeveloper.Popup			 = WebDeveloper.Popup || {};
+WebDeveloper.Popup.Tools = WebDeveloper.Popup.Tools || {};
+
+$(function()
+{
+	$("#validate-local-css").on("click", WebDeveloper.Popup.Tools.validateLocalCSS);
+	$("#validate-local-html").on("click", WebDeveloper.Popup.Tools.validateLocalHTML);
+	$("#view-source").on("click", WebDeveloper.Popup.Tools.viewSource);
+
+	WebDeveloper.Popup.Tools.setupCustomTools();
 });
-	
-// Validates the CSS of the page
-WebDeveloper.Popup.Tools.validateCSS = function()
+
+// Opens a custom tool
+WebDeveloper.Popup.Tools.customTool = function()
 {
 	var featureItem = $(this);
 
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.openTab("http://jigsaw.w3.org/css-validator/validator?profile=css3&warning=2&uri=" + tab.url, featureItem);
-	});
-};
-	
-// Validates the feeds of the page
-WebDeveloper.Popup.Tools.validateFeed = function()
-{
-	var featureItem = $(this);
+		WebDeveloper.Popup.openTab(featureItem.data("url") + tab.url);
 
-	WebDeveloper.Popup.getSelectedTab(function(tab)
-	{
-		WebDeveloper.Popup.openTab("http://validator.w3.org/feed/check.cgi?url=" + tab.url, featureItem);
+		WebDeveloper.Popup.close();
 	});
 };
-	
-// Validates the HTML of the page
-WebDeveloper.Popup.Tools.validateHTML = function()
-{
-	var featureItem = $(this);
 
-	WebDeveloper.Popup.getSelectedTab(function(tab)
-	{
-		WebDeveloper.Popup.openTab("http://validator.w3.org/check?verbose=1&uri=" + tab.url, featureItem);
-	});
-};
-	
-// Validates the links of the page
-WebDeveloper.Popup.Tools.validateLinks = function()
+// Sets up the custom tools
+WebDeveloper.Popup.Tools.setupCustomTools = function()
 {
-	var featureItem = $(this);
+	var customTools	= $("#custom-tools").empty();
+	var description	= null;
+	var storage			= chrome.extension.getBackgroundPage().WebDeveloper.Storage;
+	var tool				= null;
+	var url					= 0;
 
-	WebDeveloper.Popup.getSelectedTab(function(tab)
+	// Loop through the tools
+	for(var i = 1, l = storage.getItem("tool_count"); i <= l; i++)
 	{
-		WebDeveloper.Popup.openTab("http://validator.w3.org/checklink?summary=on&uri=" + tab.url, featureItem);
-	});
+		description = storage.getItem("tool_" + i + "_description");
+		url					= storage.getItem("tool_" + i + "_url");
+
+		// If the description and url are set
+		if(description && url)
+		{
+			tool = {};
+
+			tool.description = description;
+			tool.url				 = url;
+
+			customTools.append(ich.custom_tool(tool));
+		}
+	}
+
+	$(".custom-tool").on("click", WebDeveloper.Popup.Tools.customTool);
 };
-	
+
 // Validates the CSS of the local page
 WebDeveloper.Popup.Tools.validateLocalCSS = function()
 {
-	var featureItem = $(this);
-
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
 		// If the tab is valid
 		if(WebDeveloper.Popup.isValidTab(tab))
 		{
-		  chrome.tabs.sendRequest(tab.id, {type: "validate-local-css"}, function(response) 
-		  {
-				WebDeveloper.Analytics.trackFeature(featureItem);
+			chrome.tabs.sendRequest(tab.id, {type: "get-css"}, function(data)
+			{
+				chrome.extension.getBackgroundPage().WebDeveloper.Background.validateLocalCSS(chrome.extension.getURL("validation/css.html"), tab.index, data);
+
 				WebDeveloper.Popup.close();
-		  });
+			});
 		}
 	});
 };
-	
+
 // Validates the HTML of the local page
 WebDeveloper.Popup.Tools.validateLocalHTML = function()
 {
-	var featureItem = $(this);
-
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
 		// If the tab is valid
 		if(WebDeveloper.Popup.isValidTab(tab))
 		{
-		  chrome.tabs.sendRequest(tab.id, {type: "validate-local-html"}, function(response) 
-		  {
-				WebDeveloper.Analytics.trackFeature(featureItem);
-				WebDeveloper.Popup.close();
-		  });
+			chrome.extension.getBackgroundPage().WebDeveloper.Background.validateLocalHTML(chrome.extension.getURL("validation/html.html"), tab.index, tab.url);
+
+			WebDeveloper.Popup.close();
 		}
 	});
 };
-	
-// Validates the page against the Section 508 accessibility guidelines
-WebDeveloper.Popup.Tools.validateSection508 = function()
-{
-	var featureItem = $(this);
 
-	WebDeveloper.Popup.getSelectedTab(function(tab)
-	{
-		WebDeveloper.Popup.openTab("http://cynthiasays.com/mynewtester/cynthia.exe?rptmode=2&runcr=1&url1=" + tab.url, featureItem);
-	});
-};
-	
-// Validates the page against the WCAG accessibility guidelines
-WebDeveloper.Popup.Tools.validateWCAG = function()
-{
-	var featureItem = $(this);
-
-	WebDeveloper.Popup.getSelectedTab(function(tab)
-	{
-		WebDeveloper.Popup.openTab("http://cynthiasays.com/mynewtester/cynthia.exe?rptmode=-1&runcr=1&url1=" + tab.url, featureItem);
-	});
-};
-	
 // Displays the source of the page
 WebDeveloper.Popup.Tools.viewSource = function()
 {
-	var featureItem = $(this);
-
 	WebDeveloper.Popup.getSelectedTab(function(tab)
 	{
-		WebDeveloper.Popup.openTab("view-source:" + tab.url, featureItem);
+		WebDeveloper.Popup.openTab("view-source:" + tab.url);
 	});
 };

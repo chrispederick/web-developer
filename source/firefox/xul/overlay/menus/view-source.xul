@@ -1,0 +1,11 @@
+<menupopup onpopupshowing="WebDeveloper.Overlay.ViewSource.updateViewSourceMenu(this, '${suffix}')">
+  <menu id="web-developer-view-frame-source-${suffix}" accesskey="&webdeveloper.view.frame.source.key;" label="&webdeveloper.view.frame.source.label;">
+    <menupopup onpopupshowing="WebDeveloper.Overlay.ViewSource.updateViewFrameSourceMenu(this)"/>
+  </menu>
+  <menuitem id="web-developer-view-generated-source-${suffix}" command="web-developer-view-generated-source-command"/>
+  <menuseparator id="web-developer-view-source-separator1-${suffix}"/>
+  <menuitem id="web-developer-view-source-view-source-${suffix}" command="web-developer-view-source-view-source-command"/>
+  <menuseparator id="web-developer-view-source-separator2-${suffix}"/>
+  <menuseparator id="web-developer-view-source-separator3-${suffix}"/>
+  <menuitem id="web-developer-edit-view-source-with-applications-${suffix}" command="web-developer-edit-view-source-with-applications-command"/>
+</menupopup>

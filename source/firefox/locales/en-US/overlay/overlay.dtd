@@ -1,0 +1,471 @@
+<!-- Common -->
+<!ENTITY webdeveloper.name "Web Developer">
+<!ENTITY webdeveloper.expanded.name "Web Developer Extension">
+
+<!-- Toolbar -->
+<!ENTITY webdeveloper.context.key "e">
+<!ENTITY webdeveloper.key "W">
+<!ENTITY webdeveloper.toolbar.name "Web Developer Toolbar">
+
+<!-- Menus -->
+<!ENTITY webdeveloper.disable.label "Disable">
+<!ENTITY webdeveloper.disable.key "D">
+<!ENTITY webdeveloper.cookies.label "Cookies">
+<!ENTITY webdeveloper.cookies.key "C">
+<!ENTITY webdeveloper.css.label "CSS">
+<!ENTITY webdeveloper.css.key "S">
+<!ENTITY webdeveloper.forms.label "Forms">
+<!ENTITY webdeveloper.forms.key "F">
+<!ENTITY webdeveloper.images.label "Images">
+<!ENTITY webdeveloper.images.key "I">
+<!ENTITY webdeveloper.information.label "Information">
+<!ENTITY webdeveloper.information.key "n">
+<!ENTITY webdeveloper.miscellaneous.label "Miscellaneous">
+<!ENTITY webdeveloper.miscellaneous.key "M">
+<!ENTITY webdeveloper.outline.label "Outline">
+<!ENTITY webdeveloper.outline.key "O">
+<!ENTITY webdeveloper.resize.label "Resize">
+<!ENTITY webdeveloper.resize.key "R">
+<!ENTITY webdeveloper.tools.label "Tools">
+<!ENTITY webdeveloper.tools.key "T">
+<!ENTITY webdeveloper.view.source.label "View Source">
+<!ENTITY webdeveloper.view.source.key "V">
+<!ENTITY webdeveloper.options.label "Options">
+<!ENTITY webdeveloper.options.key "p">
+
+<!-- Disable Features -->
+<!ENTITY webdeveloper.disable.cache.label "Disable Cache">
+<!ENTITY webdeveloper.disable.cache.key "D">
+<!ENTITY webdeveloper.disable.dns.cache.label "Disable DNS Cache">
+<!ENTITY webdeveloper.disable.dns.cache.key "C">
+<!ENTITY webdeveloper.disable.java.label "Disable Java">
+<!ENTITY webdeveloper.disable.java.key "J">
+<!ENTITY webdeveloper.disable.javascript.label "Disable JavaScript">
+<!ENTITY webdeveloper.disable.javascript.key "S">
+<!ENTITY webdeveloper.disable.meta.redirects.label "Disable Meta Redirects">
+<!ENTITY webdeveloper.disable.meta.redirects.key "R">
+<!ENTITY webdeveloper.disable.minimum.font.size.label "Disable Minimum Font Size">
+<!ENTITY webdeveloper.disable.minimum.font.size.key "F">
+<!ENTITY webdeveloper.disable.page.colors.label "Disable Page Colors">
+<!ENTITY webdeveloper.disable.page.colors.key "P">
+<!ENTITY webdeveloper.disable.popup.blocker.label "Disable Popup Blocker">
+<!ENTITY webdeveloper.disable.popup.blocker.key "B">
+<!ENTITY webdeveloper.disable.proxy.label "Disable Proxy">
+<!ENTITY webdeveloper.disable.proxy.key "i">
+<!ENTITY webdeveloper.disable.referrers.label "Disable Referrers">
+<!ENTITY webdeveloper.disable.referrers.key "e">
+
+<!-- Disable Cache Features -->
+<!ENTITY webdeveloper.disable.entire.cache.label "Disable Entire Cache">
+<!ENTITY webdeveloper.disable.entire.cache.key "D">
+<!ENTITY webdeveloper.check.for.newer.version.of.page.label "Check For Newer Version Of Page">
+<!ENTITY webdeveloper.check.for.newer.version.of.page.key "C">
+
+<!-- Check For Newer Version Of Page Features -->
+<!ENTITY webdeveloper.check.for.newer.version.of.page.when.page.is.out.of.date.label "Check For Newer Version Of Page When Page Is Out Of Date">
+<!ENTITY webdeveloper.check.for.newer.version.of.page.when.page.is.out.of.date.key "C">
+<!ENTITY webdeveloper.check.for.newer.version.of.page.every.time.label "Check For Newer Version Of Page Every Time">
+<!ENTITY webdeveloper.check.for.newer.version.of.page.every.time.key "F">
+<!ENTITY webdeveloper.check.for.newer.version.of.page.once.per.session.label "Check For Newer Version Of Page Once Per Session">
+<!ENTITY webdeveloper.check.for.newer.version.of.page.once.per.session.key "N">
+<!ENTITY webdeveloper.never.check.for.newer.version.of.page.label "Never Check For Newer Version Of Page">
+<!ENTITY webdeveloper.never.check.for.newer.version.of.page.key "V">
+
+<!-- Disable JavaScript Features -->
+<!ENTITY webdeveloper.disable.all.javascript.label "Disable All JavaScript">
+<!ENTITY webdeveloper.disable.all.javascript.key "D">
+<!ENTITY webdeveloper.disable.strict.javascript.warnings.label "Disable Strict JavaScript Warnings">
+<!ENTITY webdeveloper.disable.strict.javascript.warnings.key "S">
+
+<!-- Disable Proxy Features -->
+<!ENTITY webdeveloper.use.no.proxy.label "Use No Proxy">
+<!ENTITY webdeveloper.use.no.proxy.key "U">
+<!ENTITY webdeveloper.use.auto.detect.proxy.label "Use Auto-detect Proxy">
+<!ENTITY webdeveloper.use.auto.detect.proxy.key "A">
+<!ENTITY webdeveloper.use.configuration.url.proxy.label "Use Configuration URL Proxy">
+<!ENTITY webdeveloper.use.configuration.url.proxy.key "C">
+<!ENTITY webdeveloper.use.manual.proxy.label "Use Manual Proxy">
+<!ENTITY webdeveloper.use.manual.proxy.key "M">
+<!ENTITY webdeveloper.use.system.proxy.label "Use System Proxy">
+<!ENTITY webdeveloper.use.system.proxy.key "S">
+
+<!-- Cookies Features -->
+<!ENTITY webdeveloper.disable.cookies.label "Disable Cookies">
+<!ENTITY webdeveloper.disable.cookies.key "D">
+<!ENTITY webdeveloper.add.cookie.label "Add Cookie...">
+<!ENTITY webdeveloper.add.cookie.key "A">
+<!ENTITY webdeveloper.clear.session.cookies.label "Clear Session Cookies">
+<!ENTITY webdeveloper.clear.session.cookies.key "C">
+<!ENTITY webdeveloper.delete.domain.cookies.label "Delete Domain Cookies">
+<!ENTITY webdeveloper.delete.domain.cookies.key "e">
+<!ENTITY webdeveloper.delete.path.cookies.label "Delete Path Cookies">
+<!ENTITY webdeveloper.delete.path.cookies.key "P">
+<!ENTITY webdeveloper.view.cookie.information.label "View Cookie Information">
+<!ENTITY webdeveloper.view.cookie.information.key "V">
+
+<!-- Disable Cookies Features -->
+<!ENTITY webdeveloper.disable.all.cookies.label "Disable All Cookies">
+<!ENTITY webdeveloper.disable.all.cookies.key "D">
+<!ENTITY webdeveloper.disable.third.party.cookies.label "Disable Third-Party Cookies">
+<!ENTITY webdeveloper.disable.third.party.cookies.key "T">
+
+<!-- CSS Features -->
+<!ENTITY webdeveloper.disable.styles.label "Disable Styles">
+<!ENTITY webdeveloper.disable.styles.key "D">
+<!ENTITY webdeveloper.add.user.style.sheet.label "Add User Style Sheet...">
+<!ENTITY webdeveloper.add.user.style.sheet.key "A">
+<!ENTITY webdeveloper.display.style.information.label "Display Style Information">
+<!ENTITY webdeveloper.display.style.information.key "S">
+<!ENTITY webdeveloper.display.styles.media.type.label "Display Styles By Media Type">
+<!ENTITY webdeveloper.display.styles.media.type.key "B">
+<!ENTITY webdeveloper.edit.css.label "Edit CSS">
+<!ENTITY webdeveloper.edit.css.key "E">
+<!ENTITY webdeveloper.reload.linked.style.sheets.label "Reload Linked Style Sheets">
+<!ENTITY webdeveloper.reload.linked.style.sheets.key "R">
+<!ENTITY webdeveloper.use.border.box.model.label "Use Border Box Model">
+<!ENTITY webdeveloper.use.border.box.model.key "U">
+<!ENTITY webdeveloper.view.css.label "View CSS">
+<!ENTITY webdeveloper.view.css.key "V">
+
+<!-- Disable Styles Features -->
+<!ENTITY webdeveloper.disable.all.styles.label "Disable All Styles">
+<!ENTITY webdeveloper.disable.all.styles.key "D">
+<!ENTITY webdeveloper.disable.browser.default.styles.label "Disable Browser Default Styles">
+<!ENTITY webdeveloper.disable.browser.default.styles.key "B">
+<!ENTITY webdeveloper.disable.embedded.styles.label "Disable Embedded Styles">
+<!ENTITY webdeveloper.disable.embedded.styles.key "E">
+<!ENTITY webdeveloper.disable.inline.styles.label "Disable Inline Styles">
+<!ENTITY webdeveloper.disable.inline.styles.key "I">
+<!ENTITY webdeveloper.disable.linked.style.sheets.label "Disable Linked Style Sheets">
+<!ENTITY webdeveloper.disable.linked.style.sheets.key "L">
+<!ENTITY webdeveloper.disable.print.styles.label "Disable Print Styles">
+<!ENTITY webdeveloper.disable.print.styles.key "P">
+<!ENTITY webdeveloper.disable.individual.style.sheet.label "Disable Individual Style Sheet">
+<!ENTITY webdeveloper.disable.individual.style.sheet.key "S">
+
+<!-- Display CSS By Media Type Features -->
+<!ENTITY webdeveloper.display.handheld.styles.label "Display Handheld Styles">
+<!ENTITY webdeveloper.display.handheld.styles.key "D">
+<!ENTITY webdeveloper.display.print.styles.label "Display Print Styles">
+<!ENTITY webdeveloper.display.print.styles.key "P">
+
+<!-- Forms Features -->
+<!ENTITY webdeveloper.clear.form.fields.label "Clear Form Fields">
+<!ENTITY webdeveloper.clear.form.fields.key "C">
+<!ENTITY webdeveloper.clear.radio.buttons.label "Clear Radio Buttons">
+<!ENTITY webdeveloper.clear.radio.buttons.key "R">
+<!ENTITY webdeveloper.convert.form.methods.label "Convert Form Methods">
+<!ENTITY webdeveloper.convert.form.methods.key "F">
+<!ENTITY webdeveloper.convert.select.elements.text.inputs.label "Convert Select Elements To Text Inputs">
+<!ENTITY webdeveloper.convert.select.elements.text.inputs.key "S">
+<!ENTITY webdeveloper.convert.text.inputs.textareas.label "Convert Text Inputs To Textareas">
+<!ENTITY webdeveloper.convert.text.inputs.textareas.key "T">
+<!ENTITY webdeveloper.display.form.details.label "Display Form Details">
+<!ENTITY webdeveloper.display.form.details.key "D">
+<!ENTITY webdeveloper.display.passwords.label "Display Passwords">
+<!ENTITY webdeveloper.display.passwords.key "P">
+<!ENTITY webdeveloper.enable.auto.completion.label "Enable Auto Completion">
+<!ENTITY webdeveloper.enable.auto.completion.key "E">
+<!ENTITY webdeveloper.enable.form.fields.label "Enable Form Fields">
+<!ENTITY webdeveloper.enable.form.fields.key "n">
+<!ENTITY webdeveloper.expand.select.elements.label "Expand Select Elements">
+<!ENTITY webdeveloper.expand.select.elements.key "x">
+<!ENTITY webdeveloper.make.form.fields.writable.label "Make Form Fields Writable">
+<!ENTITY webdeveloper.make.form.fields.writable.key "M">
+<!ENTITY webdeveloper.outline.form.fields.without.labels.label "Outline Form Fields Without Labels">
+<!ENTITY webdeveloper.outline.form.fields.without.labels.key "O">
+<!ENTITY webdeveloper.populate.form.fields.label "Populate Form Fields">
+<!ENTITY webdeveloper.populate.form.fields.key "i">
+<!ENTITY webdeveloper.remove.maximum.lengths.label "Remove Maximum Lengths">
+<!ENTITY webdeveloper.remove.maximum.lengths.key "L">
+<!ENTITY webdeveloper.toggle.checkboxes.label "Toggle Checkboxes">
+<!ENTITY webdeveloper.toggle.checkboxes.key "h">
+<!ENTITY webdeveloper.view.form.information.label "View Form Information">
+<!ENTITY webdeveloper.view.form.information.key "V">
+
+<!-- Convert Form Methods Features -->
+<!ENTITY webdeveloper.convert.gets.posts.label "Convert GETs To POSTs">
+<!ENTITY webdeveloper.convert.gets.posts.key "C">
+<!ENTITY webdeveloper.convert.posts.gets.label "Convert POSTs To GETs">
+<!ENTITY webdeveloper.convert.posts.gets.key "P">
+
+<!-- Toggle Checkboxes Features -->
+<!ENTITY webdeveloper.check.all.checkboxes.label "Check All Checkboxes">
+<!ENTITY webdeveloper.check.all.checkboxes.key "C">
+<!ENTITY webdeveloper.uncheck.all.checkboxes.label "Uncheck All Checkboxes">
+<!ENTITY webdeveloper.uncheck.all.checkboxes.key "U">
+
+<!-- Images Features -->
+<!ENTITY webdeveloper.disable.images.label "Disable Images">
+<!ENTITY webdeveloper.disable.images.key "D">
+<!ENTITY webdeveloper.display.alt.attributes.label "Display Alt Attributes">
+<!ENTITY webdeveloper.display.alt.attributes.key "A">
+<!ENTITY webdeveloper.display.image.dimensions.label "Display Image Dimensions">
+<!ENTITY webdeveloper.display.image.dimensions.key "I">
+<!ENTITY webdeveloper.display.image.file.sizes.label "Display Image File Sizes">
+<!ENTITY webdeveloper.display.image.file.sizes.key "F">
+<!ENTITY webdeveloper.display.image.paths.label "Display Image Paths">
+<!ENTITY webdeveloper.display.image.paths.key "P">
+<!ENTITY webdeveloper.find.broken.images.label "Find Broken Images">
+<!ENTITY webdeveloper.find.broken.images.key "B">
+<!ENTITY webdeveloper.hide.background.images.label "Hide Background Images">
+<!ENTITY webdeveloper.hide.background.images.key "H">
+<!ENTITY webdeveloper.hide.images.label "Hide Images">
+<!ENTITY webdeveloper.hide.images.key "m">
+<!ENTITY webdeveloper.make.images.full.size.label "Make Images Full Size">
+<!ENTITY webdeveloper.make.images.full.size.key "S">
+<!ENTITY webdeveloper.make.images.invisible.label "Make Images Invisible">
+<!ENTITY webdeveloper.make.images.invisible.key "n">
+<!ENTITY webdeveloper.outline.images.label "Outline Images">
+<!ENTITY webdeveloper.outline.images.key "O">
+<!ENTITY webdeveloper.reload.images.label "Reload Images">
+<!ENTITY webdeveloper.reload.images.key "R">
+<!ENTITY webdeveloper.replace.images.with.alt.attributes.label "Replace Images With Alt Attributes">
+<!ENTITY webdeveloper.replace.images.with.alt.attributes.key "e">
+<!ENTITY webdeveloper.view.image.information.label "View Image Information">
+<!ENTITY webdeveloper.view.image.information.key "V">
+
+<!-- Disable Images Features -->
+<!ENTITY webdeveloper.disable.all.images.label "Disable All Images">
+<!ENTITY webdeveloper.disable.all.images.key "D">
+<!ENTITY webdeveloper.disable.external.site.images.label "Disable External Site Images">
+<!ENTITY webdeveloper.disable.external.site.images.key "E">
+<!ENTITY webdeveloper.disable.image.animations.label "Disable Image Animations">
+<!ENTITY webdeveloper.disable.image.animations.key "I">
+
+<!-- Outline Images Features -->
+<!ENTITY webdeveloper.outline.all.images.label "Outline All Images">
+<!ENTITY webdeveloper.outline.all.images.key "O">
+<!ENTITY webdeveloper.outline.background.images.label "Outline Background Images">
+<!ENTITY webdeveloper.outline.background.images.key "B">
+<!ENTITY webdeveloper.outline.images.with.adjusted.dimensions.label "Outline Images With Adjusted Dimensions">
+<!ENTITY webdeveloper.outline.images.with.adjusted.dimensions.key "I">
+<!ENTITY webdeveloper.outline.images.with.empty.alt.label "Outline Images With Empty Alt Attributes">
+<!ENTITY webdeveloper.outline.images.with.empty.alt.key "W">
+<!ENTITY webdeveloper.outline.images.with.oversized.dimensions.label "Outline Images With Oversized Dimensions">
+<!ENTITY webdeveloper.outline.images.with.oversized.dimensions.key "D">
+<!ENTITY webdeveloper.outline.images.without.alt.attributes.label "Outline Images Without Alt Attributes">
+<!ENTITY webdeveloper.outline.images.without.alt.attributes.key "A">
+<!ENTITY webdeveloper.outline.images.without.dimensions.label "Outline Images Without Dimensions">
+<!ENTITY webdeveloper.outline.images.without.dimensions.key "u">
+
+<!-- Information Features -->
+<!ENTITY webdeveloper.display.abbreviations.label "Display Abbreviations">
+<!ENTITY webdeveloper.display.abbreviations.key "D">
+<!ENTITY webdeveloper.display.access.keys.label "Display Access Keys">
+<!ENTITY webdeveloper.display.access.keys.key "A">
+<!ENTITY webdeveloper.display.anchors.label "Display Anchors">
+<!ENTITY webdeveloper.display.anchors.key "i">
+<!ENTITY webdeveloper.display.aria.roles.label "Display ARIA Roles">
+<!ENTITY webdeveloper.display.aria.roles.key "R">
+<!ENTITY webdeveloper.display.div.dimensions.label "Display Div Dimensions">
+<!ENTITY webdeveloper.display.div.dimensions.key "s">
+<!ENTITY webdeveloper.display.div.order.label "Display Div Order">
+<!ENTITY webdeveloper.display.div.order.key "O">
+<!ENTITY webdeveloper.display.element.information.label "Display Element Information">
+<!ENTITY webdeveloper.display.element.information.key "E">
+<!ENTITY webdeveloper.display.id.class.details.label "Display Id &amp; Class Details">
+<!ENTITY webdeveloper.display.id.class.details.key "C">
+<!ENTITY webdeveloper.display.link.details.label "Display Link Details">
+<!ENTITY webdeveloper.display.link.details.key "L">
+<!ENTITY webdeveloper.display.object.information.label "Display Object Information">
+<!ENTITY webdeveloper.display.object.information.key "n">
+<!ENTITY webdeveloper.display.stack.levels.label "Display Stack Levels">
+<!ENTITY webdeveloper.display.stack.levels.key "t">
+<!ENTITY webdeveloper.display.tab.index.label "Display Tab Index">
+<!ENTITY webdeveloper.display.tab.index.key "x">
+<!ENTITY webdeveloper.display.table.depth.label "Display Table Depth">
+<!ENTITY webdeveloper.display.table.depth.key "b">
+<!ENTITY webdeveloper.display.table.information.label "Display Table Information">
+<!ENTITY webdeveloper.display.table.information.key "f">
+<!ENTITY webdeveloper.display.title.attributes.label "Display Title Attributes">
+<!ENTITY webdeveloper.display.title.attributes.key "y">
+<!ENTITY webdeveloper.display.topographic.information.label "Display Topographic Information">
+<!ENTITY webdeveloper.display.topographic.information.key "g">
+<!ENTITY webdeveloper.find.duplicate.ids.label "Find Duplicate Ids">
+<!ENTITY webdeveloper.find.duplicate.ids.key "u">
+<!ENTITY webdeveloper.view.anchor.information.label "View Anchor Information">
+<!ENTITY webdeveloper.view.anchor.information.key "V">
+<!ENTITY webdeveloper.view.color.information.label "View Color Information">
+<!ENTITY webdeveloper.view.color.information.key "w">
+<!ENTITY webdeveloper.view.document.outline.label "View Document Outline">
+<!ENTITY webdeveloper.view.document.outline.key "m">
+<!ENTITY webdeveloper.view.document.size.label "View Document Size">
+<!ENTITY webdeveloper.view.document.size.key "z">
+<!ENTITY webdeveloper.view.javascript.label "View JavaScript">
+<!ENTITY webdeveloper.view.javascript.key "J">
+<!ENTITY webdeveloper.view.link.information.label "View Link Information">
+<!ENTITY webdeveloper.view.link.information.key "k">
+<!ENTITY webdeveloper.view.meta.tag.information.label "View Meta Tag Information">
+<!ENTITY webdeveloper.view.meta.tag.information.key "n">
+<!ENTITY webdeveloper.view.page.information.label "View Page Information">
+<!ENTITY webdeveloper.view.page.information.key "P">
+<!ENTITY webdeveloper.view.response.headers.label "View Response Headers">
+<!ENTITY webdeveloper.view.response.headers.key "H">
+
+<!-- Miscellaneous Features -->
+<!ENTITY webdeveloper.clear.private.data.label "Clear Private Data">
+<!ENTITY webdeveloper.clear.private.data.key "C">
+<!ENTITY webdeveloper.display.hidden.elements.label "Display Hidden Elements">
+<!ENTITY webdeveloper.display.hidden.elements.key "D">
+<!ENTITY webdeveloper.display.line.guides.label "Display Line Guides">
+<!ENTITY webdeveloper.display.line.guides.key "L">
+<!ENTITY webdeveloper.display.page.magnifier.label "Display Page Magnifier">
+<!ENTITY webdeveloper.display.page.magnifier.key "P">
+<!ENTITY webdeveloper.display.ruler.label "Display Ruler">
+<!ENTITY webdeveloper.display.ruler.key "R">
+<!ENTITY webdeveloper.edit.html.label "Edit HTML">
+<!ENTITY webdeveloper.edit.html.key "E">
+<!ENTITY webdeveloper.linearize.page.label "Linearize Page">
+<!ENTITY webdeveloper.linearize.page.key "i">
+<!ENTITY webdeveloper.make.frames.resizable.label "Make Frames Resizable">
+<!ENTITY webdeveloper.make.frames.resizable.key "M">
+<!ENTITY webdeveloper.toggle.visited.links.label "Toggle Visited Links">
+<!ENTITY webdeveloper.toggle.visited.links.key "T">
+
+<!-- Clear Private Data Features -->
+<!ENTITY webdeveloper.clear.cache.label "Clear Cache">
+<!ENTITY webdeveloper.clear.cache.key "C">
+<!ENTITY webdeveloper.clear.history.label "Clear History">
+<!ENTITY webdeveloper.clear.history.key "H">
+<!ENTITY webdeveloper.clear.http.authentication.label "Clear HTTP Authentication">
+<!ENTITY webdeveloper.clear.http.authentication.key "A">
+<!ENTITY webdeveloper.clear.all.private.data.label "Clear All Private Data...">
+<!ENTITY webdeveloper.clear.all.private.data.key "P">
+
+<!-- Toggle Visited Links Features -->
+<!ENTITY webdeveloper.mark.all.links.unvisited.label "Mark All Links Unvisited">
+<!ENTITY webdeveloper.mark.all.links.unvisited.key "M">
+<!ENTITY webdeveloper.mark.all.links.visited.label "Mark All Links Visited">
+<!ENTITY webdeveloper.mark.all.links.visited.key "A">
+
+<!-- Outline Features -->
+<!ENTITY webdeveloper.outline.block.level.elements.label "Outline Block Level Elements">
+<!ENTITY webdeveloper.outline.block.level.elements.key "O">
+<!ENTITY webdeveloper.outline.custom.elements.label "Outline Custom Elements...">
+<!ENTITY webdeveloper.outline.custom.elements.key "C">
+<!ENTITY webdeveloper.outline.deprecated.elements.label "Outline Deprecated Elements">
+<!ENTITY webdeveloper.outline.deprecated.elements.key "D">
+<!ENTITY webdeveloper.outline.external.links.label "Outline External Links">
+<!ENTITY webdeveloper.outline.external.links.key "E">
+<!ENTITY webdeveloper.outline.floated.elements.label "Outline Floated Elements">
+<!ENTITY webdeveloper.outline.floated.elements.key "F">
+<!ENTITY webdeveloper.outline.frames.label "Outline Frames">
+<!ENTITY webdeveloper.outline.frames.key "u">
+<!ENTITY webdeveloper.outline.headings.label "Outline Headings">
+<!ENTITY webdeveloper.outline.headings.key "H">
+<!ENTITY webdeveloper.outline.non.secure.elements.label "Outline Non-Secure Elements">
+<!ENTITY webdeveloper.outline.non.secure.elements.key "N">
+<!ENTITY webdeveloper.outline.positioned.elements.label "Outline Positioned Elements">
+<!ENTITY webdeveloper.outline.positioned.elements.key "P">
+<!ENTITY webdeveloper.outline.tables.label "Outline Tables">
+<!ENTITY webdeveloper.outline.tables.key "T">
+
+<!-- Outline Tables Features -->
+<!ENTITY webdeveloper.outline.table.captions.label "Outline Table Captions">
+<!ENTITY webdeveloper.outline.table.captions.key "O">
+<!ENTITY webdeveloper.outline.table.cells.label "Outline Table Cells">
+<!ENTITY webdeveloper.outline.table.cells.key "T">
+<!ENTITY webdeveloper.outline.all.tables.label "Outline Tables">
+<!ENTITY webdeveloper.outline.all.tables.key "a">
+
+<!-- Outline Positioned Elements Features -->
+<!ENTITY webdeveloper.outline.absolute.positioned.elements.label "Outline Absolute Positioned Elements">
+<!ENTITY webdeveloper.outline.absolute.positioned.elements.key "O">
+<!ENTITY webdeveloper.outline.fixed.positioned.elements.label "Outline Fixed Positioned Elements">
+<!ENTITY webdeveloper.outline.fixed.positioned.elements.key "F">
+<!ENTITY webdeveloper.outline.relative.positioned.elements.label "Outline Relative Positioned Elements">
+<!ENTITY webdeveloper.outline.relative.positioned.elements.key "R">
+
+<!-- Resize Features -->
+<!ENTITY webdeveloper.display.window.size.label "Display Window Size">
+<!ENTITY webdeveloper.display.window.size.key "D">
+<!ENTITY webdeveloper.display.window.size.title.label "Display Window Size In Title">
+<!ENTITY webdeveloper.display.window.size.title.key "W">
+<!ENTITY webdeveloper.resize.window.label "Resize Window...">
+<!ENTITY webdeveloper.resize.window.key "R">
+<!ENTITY webdeveloper.edit.resize.dimensions.label "Edit Resize Dimensions...">
+<!ENTITY webdeveloper.edit.resize.dimensions.key "E">
+<!ENTITY webdeveloper.view.responsive.layouts.label "View Responsive Layouts">
+<!ENTITY webdeveloper.view.responsive.layouts.key "V">
+
+<!-- Tools Features -->
+<!ENTITY webdeveloper.edit.tools.label "Edit Tools...">
+<!ENTITY webdeveloper.edit.tools.key "E">
+<!ENTITY webdeveloper.display.page.validation.label "Display Page Validation">
+<!ENTITY webdeveloper.display.page.validation.key "D">
+<!ENTITY webdeveloper.dom.inspector.label "DOM Inspector">
+<!ENTITY webdeveloper.dom.inspector.key "I">
+<!ENTITY webdeveloper.error.console.label "Error Console">
+<!ENTITY webdeveloper.error.console.key "C">
+<!ENTITY webdeveloper.validate.local.css.label "Validate Local CSS">
+<!ENTITY webdeveloper.validate.local.css.key "V">
+<!ENTITY webdeveloper.validate.local.html.label "Validate Local HTML">
+<!ENTITY webdeveloper.validate.local.html.key "L">
+
+<!-- View Source Features -->
+<!ENTITY webdeveloper.view.frame.source.label "View Frame Source">
+<!ENTITY webdeveloper.view.frame.source.key "V">
+<!ENTITY webdeveloper.view.generated.source.label "View Generated Source">
+<!ENTITY webdeveloper.view.generated.source.key "G">
+<!ENTITY webdeveloper.edit.view.source.with.applications.label "Edit View Source With Applications...">
+<!ENTITY webdeveloper.edit.view.source.with.applications.key "E">
+
+<!-- Options Features -->
+<!ENTITY webdeveloper.pin.features.label "Pin Features">
+<!ENTITY webdeveloper.pin.features.key "P">
+<!ENTITY webdeveloper.active.features.label "Active Features">
+<!ENTITY webdeveloper.active.features.key "A">
+<!ENTITY webdeveloper.options.menu.label "Options...">
+<!ENTITY webdeveloper.options.menu.key "O">
+<!ENTITY webdeveloper.help.label "Help...">
+<!ENTITY webdeveloper.help.key "H">
+<!ENTITY webdeveloper.about.label "About...">
+<!ENTITY webdeveloper.about.key "b">
+
+<!-- Active Features -->
+<!ENTITY webdeveloper.reset.page.label "Reset Page">
+<!ENTITY webdeveloper.reset.page.key "R">
+
+<!-- Status Features -->
+<!ENTITY webdeveloper.no.css.errors "No CSS Errors">
+<!ENTITY webdeveloper.no.javascript.errors "No JavaScript Errors">
+<!ENTITY webdeveloper.render.mode "Render Mode">
+
+<!-- Dashboard -->
+<!ENTITY webdeveloper.move.dashboard "Move Dashboard">
+<!ENTITY webdeveloper.bottom "Bottom">
+<!ENTITY webdeveloper.left "Left">
+<!ENTITY webdeveloper.right "Right">
+<!ENTITY webdeveloper.top "Top">
+<!ENTITY webdeveloper.close.dashboard.tab "Close Dashboard Tab">
+
+<!-- Toolbars -->
+<!ENTITY webdeveloper.close.toolbar "Close Toolbar">
+
+<!-- Line Guides Toolbar -->
+<!ENTITY webdeveloper.add.horizontal.line.guide "Add Horizontal Line Guide">
+<!ENTITY webdeveloper.add.vertical.line.guide "Add Vertical Line Guide">
+<!ENTITY webdeveloper.color "Color:">
+<!ENTITY webdeveloper.line.guides "Line Guides">
+
+<!-- Page Magnifier Toolbar -->
+<!ENTITY webdeveloper.magnification.level "Magnification Level:">
+<!ENTITY webdeveloper.page.magnifier "Page Magnifier">
+
+<!-- Page Validation Toolbar -->
+<!ENTITY webdeveloper.accessibility "Accessibility:">
+<!ENTITY webdeveloper.css.validation "CSS:">
+<!ENTITY webdeveloper.html.validation "HTML:">
+<!ENTITY webdeveloper.page.validation "Page Validation">
+<!ENTITY webdeveloper.validate.accessibility "Validate Accessibility">
+<!ENTITY webdeveloper.validate.css "Validate CSS">
+<!ENTITY webdeveloper.validate.html "Validate HTML">
+
+<!-- Ruler Toolbar -->
+<!ENTITY webdeveloper.end.position "End Position:">
+<!ENTITY webdeveloper.height.pixels "Height (pixels):">
+<!ENTITY webdeveloper.ruler "Ruler">
+<!ENTITY webdeveloper.start.position "Start Position:">
+<!ENTITY webdeveloper.width.pixels "Width (pixels):">
+

@@ -1,4 +1,4 @@
-form { outline: 1px solid #f00 !important; }
+form { outline: 1px solid #b94a48 !important; }
 
 form[action]:before { content: "<form action=\"" attr(action) "\">" !important; }
 form[action][autocomplete]:before { content: "<form action=\"" attr(action) "\" autocomplete=\"" attr(autocomplete) "\">" !important; }

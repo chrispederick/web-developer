@@ -1,50 +1,40 @@
 /* ! Default styles */
 
-::selection { background-color: transparent; }
-body { overflow: hidden; width: 745px; }
-li { list-style-type: none; }
-ul { margin: 0; }
+*::selection { background-color: transparent; }
+body { overflow: hidden; width: 800px; }
 
 /* ! Toolbar styles */
 
-#toolbar { background-color: #eee; border-radius: 5px; -webkit-border-radius: 5px; list-style-type: none; text-shadow: 0 1px 0 #fff; }
-#toolbar:after { clear: both; content: ""; display: block; height: 0; overflow: hidden; visibility: hidden; }
-#toolbar li { background-position: 5px 5px; background-repeat: no-repeat; cursor: pointer; display: block; float: left; line-height: 16px; padding: 5px 15px 5px 25px; }
-#toolbar li:hover { background-color: #ccc; }
-#toolbar li:hover, #toolbar .selected { border-top-left-radius: 5px; border-top-right-radius: 5px; -webkit-border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; }
-#toolbar .selected, #toolbar .selected:hover { background-color: #ddd; font-weight: bold; }
+.nav-tabs { margin-bottom: 9px; }
+.nav-tabs > li > a > span { background-image: url(images/toolbar.png); }
 
-#css-toolbar { background-image: url(images/toolbar/css.png); width: 20px; }
-#forms-toolbar { background-image: url(images/toolbar/forms.png); width: 35px; }
-#images-toolbar { background-image: url(images/toolbar/images.png); width: 40px; }
-#information-toolbar { background-image: url(images/toolbar/information.png); width: 65px; }
-#miscellaneous-toolbar { background-image: url(images/toolbar/miscellaneous.png); width: 80px; }
-#options-toolbar { background-image: url(images/toolbar/options.png); width: 40px; }
-#outline-toolbar { background-image: url(images/toolbar/outline.png); width: 40px; }
-#resize-toolbar { background-image: url(images/toolbar/resize.png); width: 35px; }
-#tools-toolbar { background-image: url(images/toolbar/tools.png); width: 30px; }
+#css-toolbar > a > span { background-position: -32px 0; }
+#forms-toolbar > a > span { background-position: -48px 0; }
+#images-toolbar > a > span { background-position: -64px 0; }
+#information-toolbar > a > span { background-position: -80px 0; }
+#miscellaneous-toolbar > a > span { background-position: -96px 0; }
+#options-toolbar > a > span { background-position: -176px 0; }
+#outline-toolbar > a > span { background-position: -112px 0; }
+#resize-toolbar > a > span { background-position: -128px 0; }
+#tools-toolbar > a > span { background-position: -144px 0; }
 
 /* ! Menu styles */
 
-.menu { background: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#eee)); border-radius: 5px; -webkit-border-radius: 5px; display: none; padding: 5px; text-shadow: 0 1px 0 #fff; }
-.menu:after { clear: both; content: ""; display: block; height: 0; overflow: hidden; visibility: hidden; }
-.menu li { cursor: pointer; line-height: 16px; margin: 5px 0; padding-left: 20px; }
-.menu li:hover { text-decoration: underline; }
-.menu ul { float: left; margin-right: 10px; width: 235px; }
-.menu ul:last-child { margin-right: 0; }
-.menu .active { background: url(images/active.png) 0 0 no-repeat; font-weight: bold; }
-.menu .active:hover { background-image: url(images/deactivate.png); }
+.tab-pane > ul, .tab-pane > ul > li > a, .tab-pane > ul > li > a > span { display: inline-block; }
+.tab-pane > ul { margin-right: 25px; vertical-align: top; }
+.tab-pane > ul > li > a { line-height: 20px; }
+.tab-pane > ul > li > a > span { height: 16px; margin-right: 4px; position: relative; top: 2px; width: 16px; }
+.tab-pane > ul > li > .active > span { background: url(images/feature.png) 0 0 no-repeat; }
+.tab-pane > ul > li > .active:hover > span { background-position: 0 -16px; }
 
-#css-menu { border-top-left-radius: 0; -webkit-border-top-left-radius: 0; }
-#options-menu { border-top-right-radius: 0; -webkit-border-top-right-radius: 0; }
+/* ! Confirmation and otification styles */
 
-/* ! Notification styles */
+#confirmation, #notification { display: none; margin: 5px; }
+#confirmation > span { margin-right: 10px; }
+#confirmation > .cancel { margin-right: 5px; }
 
-#notification td, #notification th { padding: 0 25px 3px 0; }
+/* ! Resize window styles */
 
-/* ! Resize window dialog styles */
-
-#resize-window-dialog { background: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#eee)); border-radius: 5px; -webkit-border-radius: 5px; display: none; float: left; padding: 5px; text-shadow: 0 1px 0 #fff; }
-#resize-window-dialog label { clear: both; display: block; float: left; line-height: 30px; width: 100px; }
-#resize-window-dialog .buttons { clear: both; padding-top: 5px; text-align: right; width: 325px; }
-#resize-window-height, #resize-window-width { background-color: #fff; border: 1px inset #ccc; color: #000; cursor: text; float: left; margin-left: 10px; padding: 5px; width: 200px; }
+#resize-window-cancel { margin-right: 5px; }
+#resize-window-dialog { display: none; margin: 5px; }
+#resize-window-dialog .form-actions { margin-bottom: 0; }

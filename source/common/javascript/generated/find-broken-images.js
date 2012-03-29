@@ -1,54 +1,47 @@
-// Initializes the page with data
-function initialize(data)
-{
-	var contentDocument  = null;
-	var documents        = data.documents;
-	var imageDescription = null;
-	var images           = null;
-	var imagesLength     = null;
-	var list             = null;
-	var url              = null;
+var WebDeveloper = WebDeveloper || {};
 
-	setPageTitle("Broken Images", data);
-	setWindowTitle("Broken Images", data);
-	
+WebDeveloper.Generated = WebDeveloper.Generated || {};
+
+// Initializes the page with data
+WebDeveloper.Generated.initialize = function(data, locale)
+{
+	var brokenImages		 = locale.brokenImages;
+	var contentDocument  = null;
+	var documents				 = data.documents;
+	var imageDescription = null;
+	var imagesLength		 = null;
+	var list						 = null;
+
+	WebDeveloper.Generated.emptyContent();
+	WebDeveloper.Generated.localizeHeader(locale);
+	WebDeveloper.Generated.setPageTitle(brokenImages, data, locale);
+
 	// Loop through the documents
 	for(var i = 0, l = documents.length; i < l; i++)
 	{
 		contentDocument  = documents[i];
-		imageDescription = "broken images";
-		images           = contentDocument.images;
-		imagesLength     = images.length;
-		url              = contentDocument.url;
-		
+		imageDescription = brokenImages.toLowerCase();
+		imagesLength		 = contentDocument.images.length;
+
 		// If there is only one image
 		if(imagesLength == 1)
 		{
-			imageDescription = "broken image";
+			imageDescription = locale.brokenImage;
 		}
-	
-		$("#content").append('<h2><span></span><a href="' + url + '">' + url + "</a></h2>");
-		$("#content").append('<h3 id="image-' + (i + 1) + '"><span></span>' + imagesLength + " " + imageDescription + "</h3>");
-		$("#jump-to ul").append('<li><a href="#image-' + (i + 1) + '">' + formatURL(url) + "</a></li>");
+
+		WebDeveloper.Generated.addDocument(contentDocument.url, i, imageDescription, imagesLength);
 
 		// If there are broken images
 		if(imagesLength > 0)
 		{
 			list = $("<ol></ol>");
 
+			list.append(ich.broken_images(contentDocument));
 			$("#content").append(list);
-
-			// Loop through the images
-			for(var j = 0; j < imagesLength; j++)
-			{
-				url = images[j];
-			
-				list.append('<li><a href="' + url + '">' + url + "</a></li>");
-			}
 		}
-		
-		$("#content").append('<div class="separator"></div>');
+
+		WebDeveloper.Generated.addSeparator();
 	}
-	
-	initializeCommonElements();
-}
+
+	WebDeveloper.Generated.initializeCommonElements();
+};

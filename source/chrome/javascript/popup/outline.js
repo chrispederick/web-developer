@@ -1,22 +1,25 @@
-WebDeveloper.Popup.Outline = {};
+var WebDeveloper = WebDeveloper || {};
 
-$(function() 
-{ 
-	$("#outline-absolute-positioned-elements").click(WebDeveloper.Popup.Outline.outlineAbsolutePositionedElements);
-	$("#outline-block-level-elements").click(WebDeveloper.Popup.Outline.outlineBlockLevelElements);
-	$("#outline-deprecated-elements").click(WebDeveloper.Popup.Outline.outlineDeprecatedElements);
-	$("#outline-external-links").click(WebDeveloper.Popup.Outline.outlineExternalLinks);
-	$("#outline-fixed-positioned-elements").click(WebDeveloper.Popup.Outline.outlineFixedPositionedElements);
-	$("#outline-floated-elements").click(WebDeveloper.Popup.Outline.outlineFloatedElements);
-	$("#outline-frames").click(WebDeveloper.Popup.Outline.outlineFrames);
-	$("#outline-headings").click(WebDeveloper.Popup.Outline.outlineHeadings);
-	$("#outline-non-secure-elements").click(WebDeveloper.Popup.Outline.outlineNonSecureElements);
-	$("#outline-relative-positioned-elements").click(WebDeveloper.Popup.Outline.outlineRelativePositionedElements);
-	$("#outline-table-captions").click(WebDeveloper.Popup.Outline.outlineTableCaptions);
-	$("#outline-table-cells").click(WebDeveloper.Popup.Outline.outlineTableCells);
-	$("#outline-tables").click(WebDeveloper.Popup.Outline.outlineTables);
+WebDeveloper.Popup				 = WebDeveloper.Popup || {};
+WebDeveloper.Popup.Outline = WebDeveloper.Popup.Outline || {};
+
+$(function()
+{
+	$("#outline-absolute-positioned-elements").on("click", WebDeveloper.Popup.Outline.outlineAbsolutePositionedElements);
+	$("#outline-block-level-elements").on("click", WebDeveloper.Popup.Outline.outlineBlockLevelElements);
+	$("#outline-deprecated-elements").on("click", WebDeveloper.Popup.Outline.outlineDeprecatedElements);
+	$("#outline-external-links").on("click", WebDeveloper.Popup.Outline.outlineExternalLinks);
+	$("#outline-fixed-positioned-elements").on("click", WebDeveloper.Popup.Outline.outlineFixedPositionedElements);
+	$("#outline-floated-elements").on("click", WebDeveloper.Popup.Outline.outlineFloatedElements);
+	$("#outline-frames").on("click", WebDeveloper.Popup.Outline.outlineFrames);
+	$("#outline-headings").on("click", WebDeveloper.Popup.Outline.outlineHeadings);
+	$("#outline-non-secure-elements").on("click", WebDeveloper.Popup.Outline.outlineNonSecureElements);
+	$("#outline-relative-positioned-elements").on("click", WebDeveloper.Popup.Outline.outlineRelativePositionedElements);
+	$("#outline-table-captions").on("click", WebDeveloper.Popup.Outline.outlineTableCaptions);
+	$("#outline-table-cells").on("click", WebDeveloper.Popup.Outline.outlineTableCells);
+	$("#outline-tables").on("click", WebDeveloper.Popup.Outline.outlineTables);
 });
-	
+
 // Outlines all absolute positioned elements
 WebDeveloper.Popup.Outline.outlineAbsolutePositionedElements = function()
 {
@@ -28,13 +31,13 @@ WebDeveloper.Popup.Outline.outlineAbsolutePositionedElements = function()
 		if(WebDeveloper.Popup.isValidTab(tab))
 		{
 			var feature = featureItem.attr("id");
-	    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-	
-			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("absolute", ' + outline + ", document);");
+			var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("absolute", ' + outline + ", [document]);");
 		}
 	});
 };
-	
+
 // Outlines all block level elements
 WebDeveloper.Popup.Outline.outlineBlockLevelElements = function()
 {
@@ -45,11 +48,11 @@ WebDeveloper.Popup.Outline.outlineBlockLevelElements = function()
 		// If the tab is valid
 		if(WebDeveloper.Popup.isValidTab(tab))
 		{
-			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineBlockLevelElements(document);");
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineBlockLevelElements([document]);");
 		}
 	});
 };
-	
+
 // Outlines all deprecated elements
 WebDeveloper.Popup.Outline.outlineDeprecatedElements = function()
 {
@@ -60,11 +63,11 @@ WebDeveloper.Popup.Outline.outlineDeprecatedElements = function()
 		// If the tab is valid
 		if(WebDeveloper.Popup.isValidTab(tab))
 		{
-			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineDeprecatedElements(document);");
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineDeprecatedElements([document]);");
 		}
 	});
 };
-	
+
 // Outlines all external links
 WebDeveloper.Popup.Outline.outlineExternalLinks = function()
 {
@@ -76,13 +79,13 @@ WebDeveloper.Popup.Outline.outlineExternalLinks = function()
 		if(WebDeveloper.Popup.isValidTab(tab))
 		{
 			var feature = featureItem.attr("id");
-	    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-	
-			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineExternalLinks(" + outline + ", document);");
+			var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineExternalLinks(" + outline + ", [document]);");
 		}
 	});
 };
-	
+
 // Outlines all fixed positioned elements
 WebDeveloper.Popup.Outline.outlineFixedPositionedElements = function()
 {
@@ -94,13 +97,13 @@ WebDeveloper.Popup.Outline.outlineFixedPositionedElements = function()
 		if(WebDeveloper.Popup.isValidTab(tab))
 		{
 			var feature = featureItem.attr("id");
-	    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-	
-			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("fixed", ' + outline + ", document);");
+			var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("fixed", ' + outline + ", [document]);");
 		}
 	});
 };
-	
+
 // Outlines all floated elements
 WebDeveloper.Popup.Outline.outlineFloatedElements = function()
 {
@@ -112,13 +115,13 @@ WebDeveloper.Popup.Outline.outlineFloatedElements = function()
 		if(WebDeveloper.Popup.isValidTab(tab))
 		{
 			var feature = featureItem.attr("id");
-	    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-	
-			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineFloatedElements(" + outline + ", document);");
+			var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineFloatedElements(" + outline + ", [document]);");
 		}
 	});
 };
-	
+
 // Outlines all frames
 WebDeveloper.Popup.Outline.outlineFrames = function()
 {
@@ -129,11 +132,11 @@ WebDeveloper.Popup.Outline.outlineFrames = function()
 		// If the tab is valid
 		if(WebDeveloper.Popup.isValidTab(tab))
 		{
-			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineFrames(document);");
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineFrames([document]);");
 		}
 	});
 };
-	
+
 // Outlines all headings
 WebDeveloper.Popup.Outline.outlineHeadings = function()
 {
@@ -144,11 +147,11 @@ WebDeveloper.Popup.Outline.outlineHeadings = function()
 		// If the tab is valid
 		if(WebDeveloper.Popup.isValidTab(tab))
 		{
-			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineHeadings(document);");
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineHeadings([document]);");
 		}
 	});
 };
-	
+
 // Outlines all non-secure elements
 WebDeveloper.Popup.Outline.outlineNonSecureElements = function()
 {
@@ -159,11 +162,11 @@ WebDeveloper.Popup.Outline.outlineNonSecureElements = function()
 		// If the tab is valid
 		if(WebDeveloper.Popup.isValidTab(tab))
 		{
-			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineNonSecureElements(document);");
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineNonSecureElements([document]);");
 		}
 	});
 };
-	
+
 // Outlines all relative positioned elements
 WebDeveloper.Popup.Outline.outlineRelativePositionedElements = function()
 {
@@ -175,13 +178,13 @@ WebDeveloper.Popup.Outline.outlineRelativePositionedElements = function()
 		if(WebDeveloper.Popup.isValidTab(tab))
 		{
 			var feature = featureItem.attr("id");
-	    var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-	
-			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("relative", ' + outline + ", document);");
+			var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("relative", ' + outline + ", [document]);");
 		}
 	});
 };
-	
+
 // Outlines all table captions
 WebDeveloper.Popup.Outline.outlineTableCaptions = function()
 {
@@ -192,11 +195,11 @@ WebDeveloper.Popup.Outline.outlineTableCaptions = function()
 		// If the tab is valid
 		if(WebDeveloper.Popup.isValidTab(tab))
 		{
-			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTableCaptions(document);");
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTableCaptions([document]);");
 		}
 	});
 };
-	
+
 // Outlines all table cells
 WebDeveloper.Popup.Outline.outlineTableCells = function()
 {
@@ -207,11 +210,11 @@ WebDeveloper.Popup.Outline.outlineTableCells = function()
 		// If the tab is valid
 		if(WebDeveloper.Popup.isValidTab(tab))
 		{
-			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTableCells(document);");
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTableCells([document]);");
 		}
 	});
 };
-	
+
 // Outlines all tables
 WebDeveloper.Popup.Outline.outlineTables = function()
 {
@@ -222,7 +225,7 @@ WebDeveloper.Popup.Outline.outlineTables = function()
 		// If the tab is valid
 		if(WebDeveloper.Popup.isValidTab(tab))
 		{
-			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTables(document);");
+			WebDeveloper.Popup.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTables([document]);");
 		}
 	});
 };

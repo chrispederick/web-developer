@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/"?>
+<?xml-stylesheet href="chrome://web-developer/content/options/style-sheets/options.css"?>
+<?xml-stylesheet href="chrome://web-developer/skin/web-developer.css"?>
+<!DOCTYPE prefwindow SYSTEM "chrome://web-developer/locale/options/options.dtd">
+<prefwindow id="web-developer-options" onload="WebDeveloper.Options.initialize()" onunload="WebDeveloper.Options.uninitialize()" title="&webdeveloper.options.title;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="chrome://web-developer/content/common/common.js"/>
+  <script src="chrome://web-developer/content/locales/locales.js"/>
+  <script src="chrome://web-developer/content/options/javascript/options.js"/>
+  <script src="chrome://web-developer/content/preferences/preferences.js"/>
+
+	<stringbundleset>
+	  <stringbundle id="web-developer-platform-keys" src="chrome://global-platform/locale/platformKeys.properties"/>
+	  <stringbundle id="web-developer-string-bundle" src="chrome://web-developer/locale/options/options.properties"/>
+	</stringbundleset>
+
+	<prefpane id="web-developer-options-general-pane" label="&webdeveloper.general;" src="chrome://web-developer/content/options/panes/general.xul"/>
+	<prefpane id="web-developer-options-colors-pane" label="&webdeveloper.colors;" onpaneload="WebDeveloper.Options.initializeColorsPane()" src="chrome://web-developer/content/options/panes/colors.xul"/>
+	<prefpane id="web-developer-options-resize-pane" label="&webdeveloper.resize;" onpaneload="WebDeveloper.Options.initializeResizePane()" src="chrome://web-developer/content/options/panes/resize.xul"/>
+	<prefpane id="web-developer-options-responsive-layouts-pane" label="&webdeveloper.responsive;" onpaneload="WebDeveloper.Options.initializeResponsiveLayoutsPane()" src="chrome://web-developer/content/options/panes/responsive-layouts.xul"/>
+	<prefpane id="web-developer-options-tools-pane" label="&webdeveloper.tools;" onpaneload="WebDeveloper.Options.initializeToolsPane()" src="chrome://web-developer/content/options/panes/tools.xul"/>
+	<prefpane id="web-developer-options-view-source-pane" label="&webdeveloper.view.source;" onpaneload="WebDeveloper.Options.initializeViewSourcePane()" src="chrome://web-developer/content/options/panes/view-source.xul"/>
+	<prefpane id="web-developer-options-keyboard-pane" label="&webdeveloper.keyboard;" onpaneload="WebDeveloper.Options.initializeKeyboardPane()" src="chrome://web-developer/content/options/panes/keyboard.xul"/>
+	<prefpane id="web-developer-options-advanced-pane" label="&webdeveloper.advanced;" src="chrome://web-developer/content/options/panes/advanced.xul"/>
+</prefwindow>

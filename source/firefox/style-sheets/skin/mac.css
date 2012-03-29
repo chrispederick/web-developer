@@ -1,0 +1,22 @@
+/* ! Mac styles */
+
+/* ! Toolbar styles */
+
+.web-developer-name { padding-left: 20px; }
+
+/* ! Dashboard styles */
+
+#web-developer-dashboard-tab-panels { padding-top: 1.5em; }
+
+/* ! Edit CSS styles */
+
+#web-developer-edit-css-tab-box { margin-top: 0.5em; }
+#web-developer-edit-css-tab-panels { padding-top: 1em; }
+
+/* ! Options styles */
+
+prefpane .groupbox-title { border-bottom: 1px solid #ccc; }
+
+/* ! Outline custom elements styles */
+
+#web-developer-outline-custom-elements-dialog .groupbox-title { border-bottom: 1px solid #ccc; }

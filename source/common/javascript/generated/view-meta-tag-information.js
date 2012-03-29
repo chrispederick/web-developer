@@ -1,61 +1,51 @@
-// Initializes the page with data
-function initialize(data)
-{
-	var contentDocument		 = null;
-	var documents					 = data.documents;
-	var metaTagDescription = null;
-	var metaTag						 = null;
-	var metaTags           = null;
-	var metaTagsLength     = null;
-	var row								 = null;
-	var table							 = null;
-	var url								 = null;
+var WebDeveloper = WebDeveloper || {};
 
-	setPageTitle("Meta Tags", data);
-	setWindowTitle("Meta Tags", data);
-	
+WebDeveloper.Generated = WebDeveloper.Generated || {};
+
+// Initializes the page with data
+WebDeveloper.Generated.initialize = function(data, locale)
+{
+	var contentDocument			= null;
+	var documents						= data.documents;
+	var metaTagDescription	= null;
+	var metaTagsDescription = locale.metaTags;
+	var metaTagsLength			= null;
+	var table								= null;
+	var tableBody						= null;
+
+	WebDeveloper.Generated.emptyContent();
+	WebDeveloper.Generated.localizeHeader(locale);
+	WebDeveloper.Generated.setPageTitle(metaTagsDescription, data, locale);
+
 	// Loop through the documents
 	for(var i = 0, l = documents.length; i < l; i++)
 	{
-		contentDocument    = documents[i];
-		metaTagDescription = "meta tags";
-		metaTags           = contentDocument.metaTags;
-		metaTagsLength     = metaTags.length;
-		url                = contentDocument.url;
-	
+		contentDocument		 = documents[i];
+		metaTagDescription = metaTagsDescription.toLowerCase();
+		metaTagsLength		 = contentDocument.metaTags.length;
+
 		// If there is only one meta tag
 		if(metaTagsLength == 1)
 		{
-			metaTagDescription = "meta tag";
+			metaTagDescription = locale.metaTag;
 		}
 
-		$("#content").append('<h2><span></span><a href="' + url + '">' + url + "</a></h2>");
-		$("#content").append('<h3 id="meta-tag-' + (i + 1) + '"><span></span>' + metaTagsLength + " " + metaTagDescription + "</h3>");
-		$("#jump-to ul").append('<li><a href="#meta-tag-' + (i + 1) + '">' + formatURL(url) + "</a></li>");	
+		WebDeveloper.Generated.addDocument(contentDocument.url, i, metaTagDescription, metaTagsLength);
 
 		// If there are meta tags
 		if(metaTagsLength > 0)
 		{
-			table = $("<table></table>");
+			table			= $('<table class="table table-bordered table-striped"></table>');
+			tableBody = $("<tbody></tbody>");
 
+			table.append("<thead><tr><th>" + locale.name + "</th><th>" + locale.content + "</th></tr></thead>");
+			tableBody.append(ich.meta_tags(contentDocument));
+			table.append(tableBody);
 			$("#content").append(table);
-			table.append("<tr><th>Name</th><th>Content</th></tr>");
-				
-			// Loop through the meta tags
-			for(var j = 0; j < metaTagsLength; j++)
-			{
-				metaTag = metaTags[j];
-				row     = $("<tr></tr>");
-
-				row.append(createTableCell(metaTag.name));
-				row.append(createTableCell(metaTag.content));
-				
-				table.append(row);
-			}
 		}
 
-		$("#content").append('<div class="separator"></div>');
+		WebDeveloper.Generated.addSeparator();
 	}
-	
-	initializeCommonElements();
-}
+
+	WebDeveloper.Generated.initializeCommonElements();
+};

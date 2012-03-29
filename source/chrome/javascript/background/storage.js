@@ -1,10 +1,12 @@
-WebDeveloper.Storage = {};
+var WebDeveloper = WebDeveloper || {};
+
+WebDeveloper.Storage = WebDeveloper.Storage || {};
 
 // Clears the features on a tab
 WebDeveloper.Storage.clearTabFeatures = function(featureTabId)
 {
 	window.localStorage.removeItem(featureTabId);
-		
+
 	WebDeveloper.Storage.updateBadgeText(featureTabId);
 };
 
@@ -22,23 +24,23 @@ WebDeveloper.Storage.getFeaturesOnTab = function(tabId)
 	return null;
 };
 
-// Returns the open menu
-WebDeveloper.Storage.getMenu = function()
+// Returns an item
+WebDeveloper.Storage.getItem = function(item)
 {
-	return window.localStorage.getItem("menu");
+	return window.localStorage.getItem(item);
 };
 
 // Returns true if a feature is on a tab
 WebDeveloper.Storage.isFeatureOnTab = function(feature, tab)
 {
-	var tabId				  = tab.id;
+	var tabId					= tab.id;
 	var featuresOnTab = window.localStorage.getItem(tabId);
 
 	// If there are features on the tab
 	if(featuresOnTab)
 	{
 		var featuresOnTabArray = featuresOnTab.split(",");
-		
+
 		// Loop through the features on the tab
 		for(var i = 0, l = featuresOnTabArray.length; i < l; i++)
 		{
@@ -53,6 +55,28 @@ WebDeveloper.Storage.isFeatureOnTab = function(feature, tab)
 	return false;
 };
 
+// Removes an item
+WebDeveloper.Storage.removeItem = function(item)
+{
+	window.localStorage.removeItem(item);
+};
+
+// Sets an item
+WebDeveloper.Storage.setItem = function(item, value)
+{
+	window.localStorage.setItem(item, value);
+};
+
+// Sets an item if it is not already set
+WebDeveloper.Storage.setItemIfNotSet = function(item, value)
+{
+	// If the item is not already set
+	if(!WebDeveloper.Storage.getItem(item))
+	{
+		window.localStorage.setItem(item, value);
+	}
+};
+
 // Handles a tab selection changing
 WebDeveloper.Storage.tabSelectionChanged = function(tabId, selectInfo)
 {
@@ -63,9 +87,9 @@ WebDeveloper.Storage.tabSelectionChanged = function(tabId, selectInfo)
 WebDeveloper.Storage.tabUpdated = function(tabId, properties)
 {
 	// If there are no properties or the status is loading
-	if(!properties || properties.status == "loading") 
-	{ 
-		WebDeveloper.Storage.clearTabFeatures(tabId); 
+	if(!properties || properties.status == "loading")
+	{
+		WebDeveloper.Storage.clearTabFeatures(tabId);
 	}
 };
 
@@ -75,14 +99,14 @@ WebDeveloper.Storage.toggleFeatureOnTab = function(feature, tab)
 	var featureTabId				 = tab.id;
 	var currentFeaturesOnTab = window.localStorage.getItem(featureTabId);
 	var newFeaturesOnTab		 = null;
-	
+
 	// If there are features on the tab
 	if(currentFeaturesOnTab)
 	{
 		var featureOnTab = false;
-		
+
 		newFeaturesOnTab = currentFeaturesOnTab.split(",");
-		
+
 		// Loop through the features on the tab
 		for(var i = 0, l = newFeaturesOnTab.length; i < l; i++)
 		{
@@ -90,11 +114,11 @@ WebDeveloper.Storage.toggleFeatureOnTab = function(feature, tab)
 			if(newFeaturesOnTab[i] == feature)
 			{
 				featureOnTab = true;
-				
+
 				newFeaturesOnTab.splice(i, 1);
 			}
 		}
-		
+
 		// If the feature is on the tab
 		if(featureOnTab)
 		{
@@ -115,22 +139,6 @@ WebDeveloper.Storage.toggleFeatureOnTab = function(feature, tab)
 	WebDeveloper.Storage.updateBadgeText(featureTabId);
 };
 
-// Toggles a menu
-WebDeveloper.Storage.toggleMenu = function(menu)
-{
-	var currentMenu = window.localStorage.getItem("menu");
-	
-	// If the current menu is set and is the menu
-	if(currentMenu && currentMenu == menu)
-	{
-		 window.localStorage.removeItem("menu");
-	}
-	else
-	{
-		 window.localStorage.setItem("menu", menu);
-	}
-};
-
 // Updates the badge text for a tab
 WebDeveloper.Storage.updateBadgeText = function(featureTabId)
 {
@@ -143,7 +151,7 @@ WebDeveloper.Storage.updateBadgeText = function(featureTabId)
 	{
 		var featureCount			 = featuresOnTab.length - 1;
 		var featureDescription = "features";
-	
+
 		// If there is only one feature count
 		if(featureCount == 1)
 		{
@@ -154,12 +162,12 @@ WebDeveloper.Storage.updateBadgeText = function(featureTabId)
 		badgeTooltip += "\n" + badgeText + " active " + featureDescription + " on this tab";
 	}
 
-	chrome.browserAction.setBadgeText({ text: badgeText, tabId: featureTabId });
-	chrome.browserAction.setTitle({ title: badgeTooltip, tabId: featureTabId });
+	chrome.browserAction.setBadgeText({ "text": badgeText, "tabId": featureTabId });
+	chrome.browserAction.setTitle({ "title": badgeTooltip, "tabId": featureTabId });
 };
 
 chrome.tabs.onRemoved.addListener(WebDeveloper.Storage.tabUpdated);
 chrome.tabs.onSelectionChanged.addListener(WebDeveloper.Storage.tabSelectionChanged);
 chrome.tabs.onUpdated.addListener(WebDeveloper.Storage.tabUpdated);
 
-chrome.browserAction.setBadgeBackgroundColor({ color: [0, 200, 0, 255] });
+chrome.browserAction.setBadgeBackgroundColor({ "color": [0, 200, 0, 255] });

@@ -1,0 +1,8 @@
+<!-- Outline Custom Elements -->
+<!ENTITY webdeveloper.element.1 "Element 1">
+<!ENTITY webdeveloper.element.2 "Element 2">
+<!ENTITY webdeveloper.element.3 "Element 3">
+<!ENTITY webdeveloper.element.4 "Element 4">
+<!ENTITY webdeveloper.element.5 "Element 5">
+<!ENTITY webdeveloper.outline.custom.elements "Outline Custom Elements">
+<!ENTITY webdeveloper.outline.custom.elements.description "Enter the elements to outline (e.g. div) and the colors to use">

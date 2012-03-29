@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE overlay SYSTEM "chrome://web-developer/locale/options/options.dtd">
+<overlay id="web-developer-options-colors-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<prefpane id="web-developer-options-colors-pane" label="&webdeveloper.colors;">
+  	<preferences>
+  		<preference id="webdeveloper.syntax.highlight.theme" name="extensions.webdeveloper.syntax.highlight.theme" type="string"/>
+  	</preferences>
+
+    <hbox align="center">
+      <label control="web-developer-syntax-highlight-theme" value="&webdeveloper.theme;"/>
+      <menulist id="web-developer-syntax-highlight-theme" preference="webdeveloper.syntax.highlight.theme" oncommand="WebDeveloper.Options.updateSyntaxHighlightTheme()">
+        <menupopup>
+          <menuitem value="dark" label="&webdeveloper.dark;"/>
+          <menuitem value="light" label="&webdeveloper.light;"/>
+          <menuitem value="none" label="&webdeveloper.none;"/>
+        </menupopup>
+      </menulist>
+    </hbox>
+    <separator/>
+
+    <description value="&webdeveloper.preview;"/>
+		<browser id="web-developer-syntax-highlight-browser" disablehistory="true" enablehistory="false" flex="1" src="chrome://web-developer/content/options/html/syntax-highlight.html"/>
+		<separator/>
+  </prefpane>
+</overlay>

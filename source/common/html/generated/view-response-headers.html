@@ -1,26 +1,33 @@
-<!DOCTYPE html> 
-<html id="web-developer-view-response-headers" lang="en"> 
- 
-<head> 
-	<meta charset="utf-8"> 
-	<title>@name@ View Response Headers</title> 
-	<link href="generated.css" rel="stylesheet"> 
-	<link href="images/favicon.ico" rel="shortcut icon"> 
-</head> 
- 
-<body> 
+<!DOCTYPE html>
+<html id="web-developer-view-response-headers" lang="en">
 
-<div id="header">
-	<h1>@name@ View Response Headers</h1>
+<head>
+	<meta charset="utf-8">
+	<title>@name@</title>
+	<link href="common.css" rel="stylesheet">
+	<link href="images/favicon.png" rel="shortcut icon">
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <span class="brand">@name@</span>
+      <a href="#content" class="brand">@name@</a>
+		</div>
+  </div>
 </div>
 
-<div id="content"></div>
+<div id="content" class="container-fluid">
+	<div class="active progress progress-info progress-striped">
+  	<div class="bar"></div>
+	</div>
+</div>
 
-<script src="javascript/jquery.js"></script> 
-<script src="javascript/common.js"></script> 
-<script src="javascript/view-response-headers.js"></script> 
+<script src="javascript/common.js"></script>
+<script src="javascript/view-response-headers.js"></script>
 
 </body>
- 
-</html> 
- 
+
+</html>

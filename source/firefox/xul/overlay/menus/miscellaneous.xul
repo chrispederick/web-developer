@@ -1,0 +1,27 @@
+<menupopup onpopupshowing="WebDeveloper.Overlay.Miscellaneous.updateMiscellaneousMenu('${suffix}')">
+  <menu id="web-developer-clear-private-data-${suffix}" accesskey="&webdeveloper.clear.private.data.key;" label="&webdeveloper.clear.private.data.label;">
+    <menupopup>
+      <menuitem id="web-developer-clear-cache-${suffix}" command="web-developer-clear-cache-command"/>
+      <menuitem id="web-developer-clear-history-${suffix}" command="web-developer-clear-history-command"/>
+      <menuitem id="web-developer-clear-http-authentication-${suffix}" command="web-developer-clear-http-authentication-command"/>
+      <menuseparator id="web-developer-clear-private-data-separator1-${suffix}"/>
+      <menuitem id="web-developer-clear-all-private-data-${suffix}" command="web-developer-clear-all-private-data-command"/>
+    </menupopup>
+  </menu>
+  <menuseparator id="web-developer-miscellaneous-separator1-${suffix}"/>
+  <menuitem id="web-developer-display-hidden-elements-${suffix}" command="web-developer-display-hidden-elements-command"/>
+  <menuitem id="web-developer-display-line-guides-${suffix}" command="web-developer-display-line-guides-command" type="checkbox"/>
+  <menuitem id="web-developer-display-page-magnifier-${suffix}" command="web-developer-display-page-magnifier-command" type="checkbox"/>
+  <menuitem id="web-developer-display-ruler-${suffix}" command="web-developer-display-ruler-command" type="checkbox"/>
+  <menuseparator id="web-developer-miscellaneous-separator2-${suffix}"/>
+  <menuitem id="web-developer-edit-html-${suffix}" command="web-developer-edit-html-command" type="checkbox"/>
+  <menuitem id="web-developer-linearize-page-${suffix}" command="web-developer-linearize-page-command" type="checkbox"/>
+  <menuitem id="web-developer-make-frames-resizable-${suffix}" command="web-developer-make-frames-resizable-command"/>
+  <menuseparator id="web-developer-miscellaneous-separator3-${suffix}"/>
+  <menu id="web-developer-toggle-visited-links-${suffix}" accesskey="&webdeveloper.toggle.visited.links.key;" label="&webdeveloper.toggle.visited.links.label;">
+    <menupopup>
+      <menuitem id="web-developer-mark-all-links-unvisited-${suffix}" command="web-developer-mark-all-links-unvisited-command"/>
+      <menuitem id="web-developer-mark-all-links-visited-${suffix}" command="web-developer-mark-all-links-visited-command"/>
+    </menupopup>
+  </menu>
+</menupopup>

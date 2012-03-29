@@ -1,39 +1,54 @@
-<!DOCTYPE html> 
-<html id="web-developer-view-anchor-information" lang="en"> 
- 
-<head> 
-	<meta charset="utf-8"> 
-	<title>@name@ View Anchor Information</title> 
-	<link href="generated.css" rel="stylesheet"> 
-	<link href="images/favicon.ico" rel="shortcut icon"> 
-</head> 
- 
-<body> 
+<!DOCTYPE html>
+<html id="web-developer-view-anchor-information" lang="en">
 
-<div id="header">
-	<h1>@name@ View Anchor Information</h1>
+<head>
+	<meta charset="utf-8">
+	<title>@name@</title>
+	<link href="common.css" rel="stylesheet">
+	<link href="images/favicon.png" rel="shortcut icon">
+</head>
 
-	<div id="jump-to">
-		<h2>Jump To</h2>
-		<ul></ul>
-	</div>
+<body>
 
-	<div id="controls">
-		<h2>Controls</h2>
-		<ul>
-			<li id="collapse-all">Collapse all</li>
-			<li id="expand-all">Expand all</li>
-		</ul>
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <span class="brand">@name@</span>
+    	<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a href="#content" class="brand">@name@</a>
+
+      <div class="nav-collapse">
+	      <ul class="nav">
+					<li id="documents-dropdown" class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+	          <ul class="dropdown-menu"></ul>
+	        </li>
+	      	<li class="divider-vertical"></li>
+	        <li><a href="#" id="web-developer-collapse-all"></a></li>
+	        <li><a href="#" id="web-developer-expand-all"></a></li>
+	      </ul>
+	    </div>
+    </div>
+  </div>
+</div>
+
+<div id="content" class="container-fluid">
+	<div class="active progress progress-info progress-striped">
+  	<div class="bar"></div>
 	</div>
 </div>
 
-<div id="content"></div>
+<script src="javascript/common.js"></script>
+<script src="javascript/view-anchor-information.js"></script>
 
-<script src="javascript/jquery.js"></script> 
-<script src="javascript/common.js"></script> 
-<script src="javascript/view-anchor-information.js"></script> 
+<script id="anchor" type="text/html">
+	<li><a href="{{url}}#{{anchor}}" target="_blank">#{{anchor}}</a></li>
+</script>
 
 </body>
- 
-</html> 
- 
+
+</html>

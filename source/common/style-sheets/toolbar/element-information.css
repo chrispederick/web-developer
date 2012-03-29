@@ -1,15 +1,12 @@
-/* ! Element information styles */
-
-* { cursor: crosshair !important; }
+/* ! Reset styles */
 
 #web-developer-element-information, #web-developer-element-information *
 {
-	background-image: none !important;
-	-webkit-box-shadow: none !important;
+	background: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
 	clear: none !important;
-  color: #000 !important;
-  font-family: verdana, "bitstream vera sans", sans-serif !important;
-	font-size: 13px !important;
+	float: none !important;
 	font-style: normal !important;
 	font-variant: normal !important;
 	font-weight: normal !important;
@@ -17,19 +14,31 @@
 	letter-spacing: 0 !important;
 	line-height: 1 !important;
 	margin: 0 !important;
+	opacity: 1 !important;
 	padding: 0 !important;
+	position: static !important;
 	text-align: left !important;
 	text-decoration: none !important;
+	text-shadow: none !important;
 	text-transform: none !important;
   width: auto !important;
 }
 
-#web-developer-element-information { background-color: #fff !important; box-shadow: 0 0 20px #000 !important; -webkit-box-shadow: 0 0 20px #000 !important; left: 20px !important; max-width: 500px !important; min-width: 250px !important; position: fixed !important; top: 20px !important; z-index: 2147483647 !important; }
-#web-developer-element-information h1::selection { background-color: transparent !important; }
-#web-developer-element-information h2 { background-color: #000 !important; color: #fff !important; padding: 5px !important; }
-#web-developer-element-information p { font-family: monospace !important; }
-#web-developer-element-information #web-developer-element-information-header { background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)) !important; border-color: #ddd !important; border-style: solid !important; border-width: 0 1px 1px 1px !important; cursor: move !important; padding: 5px !important; }
-#web-developer-element-information #web-developer-element-information-header h1 { background: url(images/logo.png) no-repeat top right !important; font-family: monospace !important; font-size: 15px !important; text-shadow: 0 1px 0 #fff !important; word-wrap: break-word !important; }
-#web-developer-element-information h1.description { font-family: verdana, "bitstream vera sans", sans-serif !important; }
-#web-developer-element-information .none { font-family: verdana, "bitstream vera sans", sans-serif !important; }
-#web-developer-element-information .section { overflow: hidden !important; padding: 5px !important; word-wrap: break-word !important; }
+/* ! Element information styles */
+
+* { cursor: crosshair !important; }
+*::selection { background-color: transparent !important; }
+*::-moz-selection { background-color: transparent !important; }
+
+#web-developer-element-information { background-color: #fff !important; border: 1px solid #999 !important; box-shadow: rgba(0, 0, 0, 0.5) 0 0 5px !important; left: 20px; max-width: 500px !important; min-width: 250px !important; position: fixed !important; top: 20px; z-index: 2147483647 !important; }
+#web-developer-element-information, #web-developer-element-information * { color: #000 !important; font-size: 12px !important; }
+#web-developer-element-information, #web-developer-element-information *, #web-developer-element-information .none { font-family: "helvetica neue", helvetica, arial, sans-serif !important; }
+#web-developer-element-information h2 { margin-bottom: 5px !important; text-transform: uppercase !important; }
+#web-developer-element-information p { line-height: 14px !important; }
+#web-developer-element-information p, #web-developer-element-information-header h1 { font-family: consolas, "lucida console", monaco, monospace !important; }
+#web-developer-element-information .section { border-bottom: 1px solid #ccc !important; overflow: hidden !important; padding: 10px 5px !important; }
+#web-developer-element-information .section, #web-developer-element-information-header h1 { word-wrap: break-word !important; }
+#web-developer-element-information .section:last-child { border-bottom: none !important; }
+#web-developer-element-information-header { background-color: #eee !important; border-bottom: 1px solid #999 !important; padding: 5px !important; text-shadow: #fff 0 1px 0; }
+#web-developer-element-information-header, #web-developer-element-information-header h1 { cursor: move !important; }
+#web-developer-element-information-header h1 { background: url(images/logo.png) no-repeat top right !important; font-size: 14px !important; line-height: 16px !important; }

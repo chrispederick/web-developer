@@ -1,3 +1,30 @@
-*:before, [class^=web-developer] { background: -webkit-gradient(linear, left top, left bottom, from(#ffffca), to(#ffec96)) !important; border: 1px solid #ffdb63 !important; margin: 1px !important; padding: 1px !important; z-index: 2147483647 !important; }
-*:before, [class^=web-developer], [class^=web-developer] a { color: #000 !important; display: inline !important; font-family: sans-serif !important; font-size: 11px !important; font-style: normal !important; font-variant: normal !important; font-weight: normal !important; letter-spacing: 0 !important; line-height: 11px !important; opacity: 1 !important; text-align: left !important; text-decoration: none !important; text-shadow: none !important; text-transform: none !important; }
-[class^=web-developer] a { background: transparent !important; border-style: none !important; margin: 0 !important; padding: 0 !important; }
+/* ! Reset styles */
+
+*:before, [class^=web-developer], [class^=web-developer] *
+{
+	background: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+	clear: none !important;
+	float: none !important;
+	font-style: normal !important;
+	font-variant: normal !important;
+	font-weight: normal !important;
+  height: auto !important;
+	letter-spacing: 0 !important;
+	line-height: 1 !important;
+	margin: 0 !important;
+	opacity: 1 !important;
+	padding: 0 !important;
+	position: static !important;
+	text-align: left !important;
+	text-decoration: none !important;
+	text-shadow: none !important;
+	text-transform: none !important;
+  width: auto !important;
+}
+
+/* ! Before styles */
+
+*:before, [class^=web-developer] { background: #b94a48 !important; border-radius: 3px !important; box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3) !important; margin: 1px !important; padding: 1px !important; z-index: 2147483647 !important; }
+*:before, [class^=web-developer], [class^=web-developer] * { color: #fff !important; display: inline !important; font-family: Monaco, Andale Mono, Courier New, monospace !important; font-size: 12px !important; line-height: 14px !important; }

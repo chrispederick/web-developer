@@ -1,89 +1,198 @@
-var animationSpeed = 100;
+var WebDeveloper = WebDeveloper || {};
+
+WebDeveloper.Generated									= WebDeveloper.Generated || {};
+WebDeveloper.Generated.animationSpeed		= 200;
+WebDeveloper.Generated.maximumURLLength = 100;
+
+// Adds a document
+WebDeveloper.Generated.addDocument = function(documentURL, documentCount, itemDescription, itemCount)
+{
+	$("#content").append('<h2 id="document-' + (documentCount + 1) + '"><a href="' + documentURL + '">' + documentURL + "</a></h2>");
+	$(".dropdown-menu", $("#documents-dropdown")).append('<li><a href="#document-' + (documentCount + 1) + '">' + WebDeveloper.Generated.formatURL(documentURL) + "</a></li>");
+
+	// If the item description are set
+	if(itemDescription)
+	{
+		var description = "<h3>";
+
+		// If there are items
+		if(itemCount !== 0)
+		{
+			description += "<span></span>";
+		}
+
+		description += itemCount + " " + itemDescription + "</h3>";
+
+		$("#content").append(description);
+	}
+};
+
+// Adds a separator
+WebDeveloper.Generated.addSeparator = function()
+{
+	$("#content").append('<div class="web-developer-separator"></div>');
+};
 
 // Collapses all the output
-function collapseAllOutput()
+WebDeveloper.Generated.collapseAllOutput = function(event)
 {
-	$("h3").addClass("collapsed").next().slideUp(animationSpeed);
-}
+	$("h3").addClass("web-developer-collapsed").next().slideUp(WebDeveloper.Generated.animationSpeed);
 
-// Creates a table cell from data
-function createTableCell(data)
-{				
-	// If the data is set
-	if(data)
-	{
-		return "<td>" + data + "</td>";
-	}
+	event.preventDefault();
+};
 
-	return "<td></td>";
-}
+// Empties the content
+WebDeveloper.Generated.emptyContent = function()
+{
+	$(".progress", $("#content")).remove();
+};
 
 // Expands all the output
-function expandAllOutput()
+WebDeveloper.Generated.expandAllOutput = function(event)
 {
-	$("h3").removeClass("collapsed").next().slideDown(animationSpeed);
-}
+	$("h3").removeClass("web-developer-collapsed").next().slideDown(WebDeveloper.Generated.animationSpeed);
+
+	// If the event is set
+	if(event)
+	{
+		event.preventDefault();
+	}
+};
 
 // Formats a URL
-function formatURL(url)
+WebDeveloper.Generated.formatURL = function(url)
 {
 	// If the URL is set
-	if(url)
+	if(url && url.length > WebDeveloper.Generated.maximumURLLength)
 	{
-		var protocolIndex = url.indexOf("://");
-		
-		return url.substring(protocolIndex + 3);
+		var halfLength = WebDeveloper.Generated.maximumURLLength / 2;
+
+		return url.substring(0, halfLength) + "..." + url.substr(-halfLength);
 	}
 
 	return url;
-}
+};
+
+// Generates a document container
+WebDeveloper.Generated.generateDocumentContainer = function()
+{
+	return $('<div class="web-developer-document"></div>');
+};
+
+// Initializes the common page elements
+WebDeveloper.Generated.initializeCommonElements = function()
+{
+	$("span", $("h3")).on("click", WebDeveloper.Generated.toggleOutput);
+	$("#web-developer-collapse-all").on("click", WebDeveloper.Generated.collapseAllOutput);
+	$("#web-developer-expand-all").on("click", WebDeveloper.Generated.expandAllOutput);
+
+	// If there is a nav bar
+	if($(".navbar").length)
+	{
+		$(".dropdown-toggle").dropdown();
+	}
+};
+
+// Initializes the syntax highlight functionality
+WebDeveloper.Generated.initializeSyntaxHighlight = function(color)
+{
+	// If there is a color
+	if(color != "none")
+	{
+		// Loop through the syntax highlight elements
+		$('.web-developer-syntax-highlight').each(function()
+		{
+			var pre = $(this);
+
+			window.setTimeout(function()
+			{
+				CodeMirror(function(element)
+				{
+					pre.after(element);
+					pre.remove();
+				},
+				{
+					lineNumbers: pre.data("line-numbers"),
+					mode: pre.data("type"),
+					readOnly: "nocursor",
+					tabSize: 2,
+					theme: color,
+					value: pre.html()
+				});
+			}, 0);
+		});
+	}
+};
+
+// Initializes the page with JSON data
+WebDeveloper.Generated.initializeWithJSON = function(event)
+{
+	var eventTarget = event.target;
+
+	WebDeveloper.Generated.initialize(JSON.parse(eventTarget.getAttribute("data-web-developer")), JSON.parse(eventTarget.getAttribute("data-web-developer-locale")));
+
+	eventTarget.removeAttribute("data-web-developer");
+	eventTarget.removeAttribute("data-web-developer-locale");
+
+	window.removeEventListener("web-developer-generated-event", WebDeveloper.Generated.initializeWithJSON, false);
+};
+
+// Localizes the header
+WebDeveloper.Generated.localizeHeader = function(locale)
+{
+	$("#web-developer-collapse-all").text(locale.collapseAll);
+	$("#web-developer-expand-all").text(locale.expandAll);
+	$(".dropdown-toggle", $("#documents-dropdown")).prepend(locale.documents);
+	$("span.brand").text(locale.webDeveloper);
+};
 
 // Outputs content
-function output(content, title, url, jumpTitle, jumpLink)
+WebDeveloper.Generated.output = function(content, title, url, anchor, type, outputOriginal)
 {
-	var pre = $("<pre></pre>");
+	var contentElement = $("#content");
+	var pre						 = $('<pre class="web-developer-syntax-highlight" data-line-numbers="true" data-type="' + type + '"></pre>');
 
 	// If the URL is set
 	if(url)
 	{
-		$("#content").append('<h3 id="' + jumpLink + '"><span></span><a href="' + url + '">' + title + "</a></h3>");
+		var formattedURL = WebDeveloper.Generated.formatURL(url);
+
+		contentElement.append('<h3 id="' + anchor + '"><span></span><a href="' + url + '">' + formattedURL + "</a></h3>");
+		$(".dropdown-menu", $("#files-dropdown")).append('<li><a href="#' + anchor + '">' + formattedURL + "</a></li>");
 	}
 	else
 	{
-		$("#content").append('<h3 id="' + jumpLink + '"><span></span>' + title + "</h3>");
+		contentElement.append('<h3 id="' + anchor + '"><span></span>' + title + "</h3>");
+		$(".dropdown-menu", $("#files-dropdown")).append('<li><a href="#' + anchor + '">' + title + "</a></li>");
 	}
-	
-	$("#content").append(pre);
+
 	pre.text(content);
-	$("#content").append('<div class="separator"></div>');
-	
-	$("#jump-to ul").append('<li><a href="#' + jumpLink + '">' + jumpTitle + "</a></li>");
-}
+	contentElement.append(pre);
+
+	// If the original should be output
+	if(outputOriginal)
+	{
+		pre = $('<pre class="web-developer-original"></pre>');
+
+		pre.text(content);
+		contentElement.append(pre);
+	}
+
+	WebDeveloper.Generated.addSeparator();
+};
 
 // Sets the page title
-function setPageTitle(type, data)
+WebDeveloper.Generated.setPageTitle = function(type, data, locale)
 {
-	$("h1").html(type + " from " + data.pageTitle + ' <span><a href="' + data.pageURL + '">' + data.pageURL + "</a></span>");
-}
+	document.title = type + " " + locale.from.toLowerCase() + " " + WebDeveloper.Generated.formatURL(data.pageURL);
 
-// Sets the window title
-function setWindowTitle(type, data)
-{
-	document.title = type + " from " + data.pageTitle + " - " + data.pageURL;
-}
+	$("a.brand", $(".navbar")).html(type);
+};
 
 // Toggles the collapsed state of an output
-function toggleOutput()
+WebDeveloper.Generated.toggleOutput = function()
 {
-	$(this).parent().toggleClass("collapsed").next().slideToggle(animationSpeed);
-}
+	$(this).parent().toggleClass("web-developer-collapsed").next().slideToggle(WebDeveloper.Generated.animationSpeed);
+};
 
-// Initializes the common page elements
-function initializeCommonElements()
-{
-	$("#header div").show();
-	
-	$("h3 span").click(toggleOutput);
-	$("#collapse-all").click(collapseAllOutput);
-	$("#expand-all").click(expandAllOutput);
-}
+window.addEventListener("web-developer-generated-event", WebDeveloper.Generated.initializeWithJSON, false);

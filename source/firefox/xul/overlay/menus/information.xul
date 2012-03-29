@@ -1,0 +1,29 @@
+<menupopup onpopupshowing="WebDeveloper.Overlay.Information.updateInformationMenu()">
+  <menuitem id="web-developer-display-abbreviations-${suffix}" command="web-developer-display-abbreviations-command" type="checkbox"/>
+  <menuitem id="web-developer-display-access-keys-${suffix}" command="web-developer-display-access-keys-command" type="checkbox"/>
+  <menuitem id="web-developer-display-anchors-${suffix}" command="web-developer-display-anchors-command" type="checkbox"/>
+  <menuitem id="web-developer-display-aria-roles-${suffix}" command="web-developer-display-aria-roles-command" type="checkbox"/>
+  <menuitem id="web-developer-display-div-dimensions-${suffix}" command="web-developer-display-div-dimensions-command" type="checkbox"/>
+  <menuitem id="web-developer-display-div-order-${suffix}" command="web-developer-display-div-order-command" type="checkbox"/>
+  <menuitem id="web-developer-display-element-information-${suffix}" command="web-developer-display-element-information-command" type="checkbox"/>
+  <menuitem id="web-developer-display-id-class-details-${suffix}" command="web-developer-display-id-class-details-command" type="checkbox"/>
+  <menuitem id="web-developer-display-link-details-${suffix}" command="web-developer-display-link-details-command" type="checkbox"/>
+  <menuitem id="web-developer-display-object-information-${suffix}" command="web-developer-display-object-information-command" type="checkbox"/>
+  <menuitem id="web-developer-display-stack-levels-${suffix}" command="web-developer-display-stack-levels-command" type="checkbox"/>
+  <menuitem id="web-developer-display-tab-index-${suffix}" command="web-developer-display-tab-index-command" type="checkbox"/>
+  <menuitem id="web-developer-display-table-depth-${suffix}" command="web-developer-display-table-depth-command" type="checkbox"/>
+  <menuitem id="web-developer-display-table-information-${suffix}" command="web-developer-display-table-information-command" type="checkbox"/>
+  <menuitem id="web-developer-display-title-attributes-${suffix}" command="web-developer-display-title-attributes-command" type="checkbox"/>
+  <menuitem id="web-developer-display-topographic-information-${suffix}" command="web-developer-display-topographic-information-command" type="checkbox"/>
+  <menuseparator id="web-developer-information-separator1-${suffix}"/>
+  <menuitem id="web-developer-find-duplicate-ids-${suffix}" command="web-developer-find-duplicate-ids-command"/>
+  <menuitem id="web-developer-view-anchor-information-${suffix}" command="web-developer-view-anchor-information-command"/>
+  <menuitem id="web-developer-view-color-information-${suffix}" command="web-developer-view-color-information-command"/>
+  <menuitem id="web-developer-view-document-outline-${suffix}" command="web-developer-view-document-outline-command"/>
+  <menuitem id="web-developer-view-document-size-${suffix}" command="web-developer-view-document-size-command"/>
+  <menuitem id="web-developer-view-javascript-${suffix}" command="web-developer-view-javascript-command"/>
+  <menuitem id="web-developer-view-link-information-${suffix}" command="web-developer-view-link-information-command"/>
+  <menuitem id="web-developer-view-meta-tag-information-${suffix}" command="web-developer-view-meta-tag-information-command"/>
+  <menuitem id="web-developer-view-page-information-${suffix}" command="web-developer-view-page-information-command"/>
+  <menuitem id="web-developer-view-response-headers-${suffix}" command="web-developer-view-response-headers-command"/>
+</menupopup>

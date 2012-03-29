@@ -1,28 +1,64 @@
-WebDeveloper.Content = {};
+var WebDeveloper = WebDeveloper || {};
+
+WebDeveloper.Content = WebDeveloper.Content || {};
+
+// Adds the color of the specified property to the list
+WebDeveloper.Content.addColor = function(node, property, colors)
+{
+	// If the node, property and colors are set
+	if(node && property && colors)
+	{
+		var color = node.ownerDocument.defaultView.getComputedStyle(node, null).getPropertyCSSValue(property);
+
+		// If the color is set and it is a color
+		if(color && color.primitiveType == CSSPrimitiveValue.CSS_RGBCOLOR)
+		{
+			var cssNumber = CSSPrimitiveValue.CSS_NUMBER;
+
+			color = color.getRGBColorValue();
+
+			colors.push("#" + WebDeveloper.Content.formatColor(color.red.getFloatValue(cssNumber)) + WebDeveloper.Content.formatColor(color.green.getFloatValue(cssNumber)) + WebDeveloper.Content.formatColor(color.blue.getFloatValue(cssNumber)));
+		}
+	}
+};
+
+// Formats a CSS color
+WebDeveloper.Content.formatColor = function(color)
+{
+	var formattedColor = color.toString(16);
+
+	// If the formatted color is less than 2 characters long
+	if(formattedColor.length < 2)
+	{
+		return "0" + formattedColor;
+	}
+
+	return formattedColor;
+};
 
 // Returns any anchors in the document
 WebDeveloper.Content.getAnchors = function()
 {
 	var anchor						 = null;
 	var anchors						 = {};
-	var contentDocument		 = null;
-	var contentDocuments	 = WebDeveloper.Content.getDocuments(window);
+	var contentDocument		 = WebDeveloper.Common.getContentDocument();
+	var contentDocuments	 = WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
 	var documentAllAnchors = null;
 	var documentAnchors		 = null;
 	var nonUniqueAnchors	 = null;
-	
+
 	anchors.documents = [];
-	anchors.pageTitle = document.title;
-	anchors.pageURL	  = document.documentURI;
+	anchors.pageTitle = contentDocument.title;
+	anchors.pageURL		= contentDocument.documentURI;
 
 	// Loop through the documents
 	for(var i = 0, l = contentDocuments.length; i < l; i++)
 	{
-		contentDocument				  = contentDocuments[i];
+		contentDocument					= contentDocuments[i];
 		documentAllAnchors			= contentDocument.querySelectorAll("[id]");
 		documentAnchors					= {};
 		documentAnchors.anchors = [];
-		documentAnchors.url		  = contentDocument.documentURI;
+		documentAnchors.url			= contentDocument.documentURI;
 		nonUniqueAnchors				= [];
 
 		// Loop through the id anchors
@@ -57,7 +93,7 @@ WebDeveloper.Content.getAnchors = function()
 
 		anchors.documents.push(documentAnchors);
 	}
-	
+
 	return anchors;
 };
 
@@ -65,24 +101,24 @@ WebDeveloper.Content.getAnchors = function()
 WebDeveloper.Content.getBrokenImages = function()
 {
 	var brokenImages			= {};
-	var contentDocument	  = null;
-	var contentDocuments	= WebDeveloper.Content.getDocuments(window);
+	var contentDocument		= WebDeveloper.Common.getContentDocument();
+	var contentDocuments	= WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
 	var documentAllImages = null;
 	var documentImages		= null;
-	var image						  = null;
-	
+	var image							= null;
+
 	brokenImages.documents = [];
-	brokenImages.pageTitle = document.title;
-	brokenImages.pageURL	 = document.documentURI;
+	brokenImages.pageTitle = contentDocument.title;
+	brokenImages.pageURL	 = contentDocument.documentURI;
 
 	// Loop through the documents
 	for(var i = 0, l = contentDocuments.length; i < l; i++)
 	{
-		contentDocument			  = contentDocuments[i];
+		contentDocument				= contentDocuments[i];
 		documentAllImages			= WebDeveloper.Common.getDocumentImages(contentDocument);
 		documentImages				= {};
 		documentImages.images = [];
-		documentImages.url	  = contentDocument.documentURI;
+		documentImages.url		= contentDocument.documentURI;
 
 		// Loop through the images
 		for(var j = 0, m = documentAllImages.length; j < m; j++)
@@ -98,33 +134,83 @@ WebDeveloper.Content.getBrokenImages = function()
 
 		brokenImages.documents.push(documentImages);
 	}
-	
+
 	return brokenImages;
+};
+
+// Returns all the colors used on the page
+WebDeveloper.Content.getColors = function()
+{
+	var colors					 = {};
+	var contentDocument	 = WebDeveloper.Common.getContentDocument();
+	var contentDocuments = WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
+	var documentColors	 = null;
+
+	colors.documents = [];
+	colors.pageTitle = contentDocument.title;
+	colors.pageURL	 = contentDocument.documentURI;
+
+	// Loop through the documents
+	for(var i = 0, l = contentDocuments.length; i < l; i++)
+	{
+		contentDocument				= contentDocuments[i];
+		documentColors				= {};
+		documentColors.colors = WebDeveloper.Content.getDocumentColors(contentDocument);
+		documentColors.url		= contentDocument.documentURI;
+
+		colors.documents.push(documentColors);
+	}
+
+	return colors;
 };
 
 // Returns all the CSS for the document
 WebDeveloper.Content.getCSS = function()
 {
-	var contentDocument	 = null;
-	var contentDocuments = WebDeveloper.Content.getDocuments(window);
+	var contentDocument	 = WebDeveloper.Common.getContentDocument();
+	var contentDocuments = WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
 	var css							 = {};
 	var documentCSS			 = null;
 	var embeddedStyles	 = null;
 	var styleSheet			 = null;
 	var styleSheets			 = null;
-	
+
 	css.documents = [];
-	css.pageTitle = document.title;
-	css.pageURL		= document.documentURI;
+	css.pageTitle = contentDocument.title;
+	css.pageURL		= contentDocument.documentURI;
 
 	// Loop through the documents
 	for(var i = 0, l = contentDocuments.length; i < l; i++)
 	{
 		css.documents.push(WebDeveloper.Content.getDocumentCSS(contentDocuments[i]));
 	}
-	
+
 	return css;
 };
+
+// Returns all the colors used in the document
+WebDeveloper.Content.getDocumentColors = function(contentDocument)
+{
+	var colors		 = [];
+	var node			 = null;
+	var treeWalker = contentDocument.createTreeWalker(WebDeveloper.Common.getDocumentBodyElement(contentDocument), NodeFilter.SHOW_ELEMENT, null, false);
+
+	// While the tree walker has more nodes
+	while((node = treeWalker.nextNode()) !== null)
+	{
+		WebDeveloper.Content.addColor(node, "background-color", colors);
+		WebDeveloper.Content.addColor(node, "border-bottom-color", colors);
+		WebDeveloper.Content.addColor(node, "border-left-color", colors);
+		WebDeveloper.Content.addColor(node, "border-right-color", colors);
+		WebDeveloper.Content.addColor(node, "border-top-color", colors);
+		WebDeveloper.Content.addColor(node, "color", colors);
+	}
+
+	colors = WebDeveloper.Content.tidyColors(colors);
+
+	return colors;
+};
+
 
 // Returns the CSS for the specified document
 WebDeveloper.Content.getDocumentCSS = function(contentDocument)
@@ -132,7 +218,8 @@ WebDeveloper.Content.getDocumentCSS = function(contentDocument)
 	var documentCSS		 = {};
 	var embeddedStyles = "";
 	var styleSheet		 = null;
-	var styleSheets		 = contentDocument.querySelectorAll("style");
+	var styleSheets		 = contentDocument.getElementsByTagName("style");
+	var styleSheetURL	 = null;
 
 	documentCSS.url					= contentDocument.documentURI;
 	documentCSS.styleSheets = [];
@@ -141,65 +228,67 @@ WebDeveloper.Content.getDocumentCSS = function(contentDocument)
 	for(var i = 0, l = styleSheets.length; i < l; i++)
 	{
 		styleSheet = styleSheets[i];
-		
+
 		// If this is a valid style sheet
 		if(WebDeveloper.CSS.isValidStyleSheet(styleSheet.sheet))
 		{
 			embeddedStyles += WebDeveloper.Common.trim(styleSheet.innerHTML) + "\n\n";
 		}
 	}
-	
+
 	styleSheets = contentDocument.styleSheets;
-	
+
 	// Loop through the style sheets
 	for(i = 0, l = styleSheets.length; i < l; i++)
 	{
-		styleSheet = styleSheets[i];
-		
+		styleSheet		= styleSheets[i];
+		styleSheetURL = styleSheet.href;
+
 		// If this is a valid style sheet and is not an inline style sheet
-		if(WebDeveloper.CSS.isValidStyleSheet(styleSheet) && styleSheet.href && styleSheet.href != contentDocument.documentURI)
+		if(WebDeveloper.CSS.isValidStyleSheet(styleSheet) && styleSheetURL && styleSheetURL != contentDocument.documentURI && !styleSheet.disabled)
 		{
-			documentCSS.styleSheets.push(styleSheet.href);
+			documentCSS.styleSheets.push(WebDeveloper.Common.removeReloadParameterFromURL(styleSheetURL));
 		}
 	}
-	
+
 	// If there are embedded styles
 	if(embeddedStyles)
 	{
 		documentCSS.embedded = embeddedStyles;
 	}
-		
+
 	return documentCSS;
 };
 
 // Returns the details for the document
 WebDeveloper.Content.getDocumentDetails = function()
 {
+	var contentDocument	= WebDeveloper.Common.getContentDocument();
 	var documentDetails = {};
-	
-	documentDetails.pageTitle = document.title;
-	documentDetails.pageURL		= document.documentURI;
-	
+
+	documentDetails.pageTitle = contentDocument.title;
+	documentDetails.pageURL		= contentDocument.documentURI;
+
 	return documentDetails;
 };
 
 // Returns the outline for a document
 WebDeveloper.Content.getDocumentOutline = function()
 {
-	var contentDocument		  = null;
-	var contentDocuments	  = WebDeveloper.Content.getDocuments(window);
+	var contentDocument			= WebDeveloper.Common.getContentDocument();
+	var contentDocuments		= WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
 	var documentAllHeadings = null;
 	var documentHeading			= null;
-	var documentHeadings	  = null;
-	var documentOutline		  = null;
-	var heading						  = null;
-	var headingImages       = null;
-	var headingText				  = null;
-	var outline						  = {};
-	
+	var documentHeadings		= null;
+	var documentOutline			= null;
+	var heading							= null;
+	var headingImages				= null;
+	var headingText					= null;
+	var outline							= {};
+
 	outline.documents = [];
-	outline.pageTitle = document.title;
-	outline.pageURL	  = document.documentURI;
+	outline.pageTitle = contentDocument.title;
+	outline.pageURL		= contentDocument.documentURI;
 
 	// Loop through the documents
 	for(var i = 0, l = contentDocuments.length; i < l; i++)
@@ -213,43 +302,43 @@ WebDeveloper.Content.getDocumentOutline = function()
 		// Loop through the headers
 		for(var j = 0, m = documentAllHeadings.length; j < m; j++)
 		{
-			documentHeading			  = {};
+			documentHeading				= {};
 			heading								= documentAllHeadings[j];
-      headingText						= WebDeveloper.Common.trim(WebDeveloper.Common.getElementText(heading));
+			headingText						= WebDeveloper.Common.trim(WebDeveloper.Common.getElementText(heading));
 			documentHeading.level = parseInt(heading.tagName.toLowerCase().substring(1), 10);
-		 
-      // If there is no heading text
-      if(!headingText)
-      {
+
+			// If there is no heading text
+			if(!headingText)
+			{
 				headingImages = heading.querySelectorAll("img[alt]");
- 
+
 				// Loop through the heading images
 				for(var k = 0, n = headingImages.length; k < n; k++)
 				{
 					headingText += headingImages[k].getAttribute("alt") + " ";
 				}
-           
+
 				headingText = WebDeveloper.Common.trim(headingText);
-           
+
 				// If there is heading text
 				if(headingText)
 				{
-					headingText = "[" + headingText + "]";
+					headingText = "(" + headingText + ")";
 				}
 				else
 				{
-					headingText = "[No heading text]";
+					headingText = WebDeveloper.Locales.getString("noHeadingText");
 				}
-      }
+			}
 
 			documentHeading.text = headingText;
-			
+
 			documentOutline.headings.push(documentHeading);
 		}
 
 		outline.documents.push(documentOutline);
 	}
-	
+
 	return outline;
 };
 
@@ -262,7 +351,7 @@ WebDeveloper.Content.getDocuments = function(frame)
 	if(frame)
 	{
 		var frames = frame.frames;
- 
+
 		// If the frame document exists
 		if(frame.document)
 		{
@@ -279,37 +368,90 @@ WebDeveloper.Content.getDocuments = function(frame)
 	return documents;
 };
 
-// Returns any forms in the document
-WebDeveloper.Content.getForms = function()
+// Returns any duplicate ids in the document
+WebDeveloper.Content.getDuplicateIds = function()
 {
-	var allForms						= null;
-	var contentDocument		  = null;
-	var contentDocuments		= WebDeveloper.Content.getDocuments(window);
-	var documentForm				= null;
-	var documentFormElement = null;
-	var documentForms			  = null;
-	var elementType				  = null;
-	var form								= null;
-	var formElement				  = null;
-	var formElements				= null;
-	var forms							  = {};
-	
-	forms.documents = [];
-	forms.pageTitle = document.title;
-	forms.pageURL	  = document.documentURI;
+	var contentDocument			 = WebDeveloper.Common.getContentDocument();
+	var contentDocuments		 = WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
+	var documentAllIds			 = null;
+	var documentDuplicateIds = null;
+	var duplicateIds				 = {};
+	var id									 = null;
+	var nonDuplicateIds		 = null;
+
+	duplicateIds.documents = [];
+	duplicateIds.pageTitle = contentDocument.title;
+	duplicateIds.pageURL	 = contentDocument.documentURI;
 
 	// Loop through the documents
 	for(var i = 0, l = contentDocuments.length; i < l; i++)
 	{
-		contentDocument		  = contentDocuments[i];
+		contentDocument					 = contentDocuments[i];
+		documentAllIds					 = contentDocument.querySelectorAll("[id]");
+		documentDuplicateIds		 = {};
+		documentDuplicateIds.ids = [];
+		documentDuplicateIds.url = contentDocument.documentURI;
+		nonDuplicateIds					 = [];
+
+		// Loop through the ids
+		for(var j = 0, m = documentAllIds.length; j < m; j++)
+		{
+			nonDuplicateIds.push(documentAllIds[j].getAttribute("id"));
+		}
+
+		nonDuplicateIds.sort();
+
+		// Loop through the ids
+		for(j = 0, m = nonDuplicateIds.length; j < m; j++)
+		{
+			id = nonDuplicateIds[j];
+
+			// If this is the same as the previous id and it is not already in the duplicate ids array
+			if(id == nonDuplicateIds[j - 1] && !WebDeveloper.Common.inArray(id, documentDuplicateIds.ids))
+			{
+				documentDuplicateIds.ids.push(id);
+			}
+		}
+
+		duplicateIds.documents.push(documentDuplicateIds);
+	}
+
+	return duplicateIds;
+};
+
+// Returns any forms in the document
+WebDeveloper.Content.getForms = function()
+{
+	var allForms						= null;
+	var contentDocument			= WebDeveloper.Common.getContentDocument();
+	var contentDocuments		= WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
+	var documentForm				= null;
+	var documentFormElement = null;
+	var documentForms				= null;
+	var elementType					= null;
+	var form								= null;
+	var formElement					= null;
+	var formElementId				= null;
+	var formElements				= null;
+	var forms								= {};
+	var labelElement				= null;
+
+	forms.documents = [];
+	forms.pageTitle = contentDocument.title;
+	forms.pageURL		= contentDocument.documentURI;
+
+	// Loop through the documents
+	for(var i = 0, l = contentDocuments.length; i < l; i++)
+	{
+		contentDocument			= contentDocuments[i];
 		allForms						= contentDocument.forms;
 		documentForms				= {};
 		documentForms.forms = [];
-		documentForms.url	  = contentDocument.documentURI;
+		documentForms.url		= contentDocument.documentURI;
 
-		 // Loop through the forms
-		 for(var j = 0, m = allForms.length; j < m; j++)
-		 {
+		// Loop through the forms
+		for(var j = 0, m = allForms.length; j < m; j++)
+		{
 			documentForm					= {};
 			documentForm.elements = [];
 			form									= allForms[j];
@@ -345,27 +487,47 @@ WebDeveloper.Content.getForms = function()
 				documentFormElement = {};
 				formElement					= formElements[k];
 				elementType					= formElement.tagName.toLowerCase();
+				formElementId				= formElement.getAttribute("id");
+				labelElement				= formElement.parentNode;
 
 				// If this is an input element
 				if(elementType == "input")
 				{
 					documentFormElement.value = formElement.value;
-					
+
 					// If the form element has a type attribute
 					if(formElement.hasAttribute("type"))
 					{
-						 elementType = formElement.getAttribute("type");
+						elementType = formElement.getAttribute("type");
 					}
 				}
-				else if(elementType == "textarea")
+				else if(elementType == "select" || elementType == "textarea")
 				{
 					documentFormElement.value = formElement.value;
 				}
 
-				// If the form element has an id attribute
-				if(formElement.hasAttribute("id"))
+				// If the parent element is a label
+				if(labelElement.tagName.toLowerCase() == "label")
 				{
-					documentFormElement.id = formElement.getAttribute("id");
+					documentFormElement.label = WebDeveloper.Common.trim(labelElement.textContent);
+				}
+
+				// If the form element has an id attribute
+				if(formElementId)
+				{
+					documentFormElement.id = formElementId;
+
+					// If the label is not already set
+					if(!documentFormElement.label)
+					{
+						labelElement = contentDocument.querySelector("label[for=" + formElementId + "]");
+
+						// If a label element was found
+						if(labelElement)
+						{
+							documentFormElement.label = WebDeveloper.Common.trim(labelElement.textContent);
+						}
+					}
 				}
 
 				// If the form element has a maxlength attribute
@@ -385,9 +547,9 @@ WebDeveloper.Content.getForms = function()
 				{
 					documentFormElement.size = formElement.getAttribute("size");
 				}
-				
+
 				documentFormElement.type = elementType;
-				
+
 				documentForm.elements.push(documentFormElement);
 			}
 
@@ -396,7 +558,7 @@ WebDeveloper.Content.getForms = function()
 
 		forms.documents.push(documentForms);
 	}
-	
+
 	return forms;
 };
 
@@ -404,22 +566,22 @@ WebDeveloper.Content.getForms = function()
 WebDeveloper.Content.getImages = function()
 {
 	var allImages				 = null;
-	var contentDocument	 = null;
-	var contentDocuments = WebDeveloper.Content.getDocuments(window);
+	var contentDocument	 = WebDeveloper.Common.getContentDocument();
+	var contentDocuments = WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
 	var documentImage		 = null;
 	var documentImages	 = null;
 	var image						 = null;
 	var images					 = {};
-	
+
 	images.documents = [];
-	images.pageTitle = document.title;
-	images.pageURL	 = document.documentURI;
+	images.pageTitle = contentDocument.title;
+	images.pageURL	 = contentDocument.documentURI;
 
 	// Loop through the documents
 	for(var i = 0, l = contentDocuments.length; i < l; i++)
 	{
-		contentDocument			  = contentDocuments[i];
-		allImages						  = WebDeveloper.Common.getDocumentImages(contentDocument);
+		contentDocument				= contentDocuments[i];
+		allImages							= WebDeveloper.Common.getDocumentImages(contentDocument);
 		documentImages				= {};
 		documentImages.images = [];
 		documentImages.url		= contentDocument.documentURI;
@@ -445,24 +607,24 @@ WebDeveloper.Content.getImages = function()
 
 		images.documents.push(documentImages);
 	}
-	
+
 	return images;
 };
 
 // Returns any JavaScript for the document
 WebDeveloper.Content.getJavaScript = function()
 {
-	var contentDocument		 = null;
-	var contentDocuments	 = WebDeveloper.Content.getDocuments(window);
+	var contentDocument		 = WebDeveloper.Common.getContentDocument();
+	var contentDocuments	 = WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
 	var documentJavaScript = null;
 	var embeddedJavaScript = null;
 	var javaScript				 = {};
 	var script						 = null;
 	var scripts						 = null;
-	
+
 	javaScript.documents = [];
-	javaScript.pageTitle = document.title;
-	javaScript.pageURL	 = document.documentURI;
+	javaScript.pageTitle = contentDocument.title;
+	javaScript.pageURL	 = contentDocument.documentURI;
 
 	// Loop through the documents
 	for(var i = 0, l = contentDocuments.length; i < l; i++)
@@ -470,8 +632,8 @@ WebDeveloper.Content.getJavaScript = function()
 		contentDocument		 = contentDocuments[i];
 		documentJavaScript = {};
 		embeddedJavaScript = "";
-		scripts						 = contentDocument.querySelectorAll("script");
-	
+		scripts						 = contentDocument.getElementsByTagName("script");
+
 		documentJavaScript.url				= contentDocument.documentURI;
 		documentJavaScript.javaScript = [];
 
@@ -479,7 +641,7 @@ WebDeveloper.Content.getJavaScript = function()
 		for(var j = 0, m = scripts.length; j < m; j++)
 		{
 			script = scripts[j];
-	
+
 			// If this is a valid external script
 			if(script.src)
 			{
@@ -490,42 +652,42 @@ WebDeveloper.Content.getJavaScript = function()
 				embeddedJavaScript += WebDeveloper.Common.trim(script.innerHTML) + "\n\n";
 			}
 		}
-		
+
 		// If there is embedded JavaScript
 		if(embeddedJavaScript)
 		{
 			documentJavaScript.embedded = embeddedJavaScript;
 		}
-		
+
 		javaScript.documents.push(documentJavaScript);
 	}
-	
+
 	return javaScript;
 };
 
 // Returns any links in the document
 WebDeveloper.Content.getLinks = function()
 {
-	var contentDocument	 = null;
-	var contentDocuments = WebDeveloper.Content.getDocuments(window);
+	var contentDocument	 = WebDeveloper.Common.getContentDocument();
+	var contentDocuments = WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
 	var documentAllLinks = null;
 	var documentLinks		 = null;
 	var link						 = null;
 	var links						 = {};
 	var nonUniqueLinks	 = null;
-	
+
 	links.documents = [];
-	links.pageTitle = document.title;
-	links.pageURL	  = document.documentURI;
+	links.pageTitle = contentDocument.title;
+	links.pageURL		= contentDocument.documentURI;
 
 	// Loop through the documents
 	for(var i = 0, l = contentDocuments.length; i < l; i++)
 	{
-		contentDocument		  = contentDocuments[i];
+		contentDocument			= contentDocuments[i];
 		documentAllLinks		= contentDocument.links;
 		documentLinks				= {};
 		documentLinks.links = [];
-		documentLinks.url	  = contentDocument.documentURI;
+		documentLinks.url		= contentDocument.documentURI;
 		nonUniqueLinks			= [];
 
 		// Loop through the links
@@ -552,30 +714,30 @@ WebDeveloper.Content.getLinks = function()
 
 		links.documents.push(documentLinks);
 	}
-	
+
 	return links;
 };
 
 // Returns any meta tags in the document
 WebDeveloper.Content.getMetaTags = function()
 {
-	var contentDocument		  = null;
-	var contentDocuments		= WebDeveloper.Content.getDocuments(window);
+	var contentDocument			= WebDeveloper.Common.getContentDocument();
+	var contentDocuments		= WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
 	var documentAllMetaTags = null;
-	var documentMetaTag		  = null;
+	var documentMetaTag			= null;
 	var documentMetaTags		= null;
-	var metaTag						  = null;
+	var metaTag							= null;
 	var metaTags						= {};
-	
+
 	metaTags.documents = [];
-	metaTags.pageTitle = document.title;
-	metaTags.pageURL	 = document.documentURI;
+	metaTags.pageTitle = contentDocument.title;
+	metaTags.pageURL	 = contentDocument.documentURI;
 
 	// Loop through the documents
 	for(var i = 0, l = contentDocuments.length; i < l; i++)
 	{
-		contentDocument					  = contentDocuments[i];
-		documentAllMetaTags				= contentDocument.querySelectorAll("meta");
+		contentDocument						= contentDocuments[i];
+		documentAllMetaTags				= contentDocument.getElementsByTagName("meta");
 		documentMetaTags					= {};
 		documentMetaTags.metaTags = [];
 		documentMetaTags.url			= contentDocument.documentURI;
@@ -585,22 +747,27 @@ WebDeveloper.Content.getMetaTags = function()
 		{
 			documentMetaTag	= {};
 			metaTag					= documentAllMetaTags[j];
-		 
+
 			// If the meta tag has a name attribute
 			if(metaTag.hasAttribute("name"))
 			{
 				documentMetaTag.content = metaTag.getAttribute("content");
-				documentMetaTag.name    = metaTag.getAttribute("name");
-			}
-			else if(metaTag.hasAttribute("http-equiv"))
-			{
-				documentMetaTag.content = metaTag.getAttribute("content");
-				documentMetaTag.name    = metaTag.getAttribute("http-equiv");
+				documentMetaTag.name		= metaTag.getAttribute("name");
 			}
 			else if(metaTag.hasAttribute("charset"))
 			{
 				documentMetaTag.content = metaTag.getAttribute("charset");
-				documentMetaTag.name    = "charset";
+				documentMetaTag.name		= "charset";
+			}
+			else if(metaTag.hasAttribute("http-equiv"))
+			{
+				documentMetaTag.content = metaTag.getAttribute("content");
+				documentMetaTag.name		= metaTag.getAttribute("http-equiv");
+			}
+			else if(metaTag.hasAttribute("property"))
+			{
+				documentMetaTag.content = metaTag.getAttribute("content");
+				documentMetaTag.name		= metaTag.getAttribute("property");
 			}
 
 			documentMetaTags.metaTags.push(documentMetaTag);
@@ -608,7 +775,7 @@ WebDeveloper.Content.getMetaTags = function()
 
 		metaTags.documents.push(documentMetaTags);
 	}
-	
+
 	return metaTags;
 };
 
@@ -625,36 +792,27 @@ WebDeveloper.Content.getWindowSize = function()
 	return size;
 };
 
-// Validates the HTML of the local page
-WebDeveloper.Content.validateLocalHTML = function()
+// Tidies a list of colors by removing duplicates and sorting
+WebDeveloper.Content.tidyColors = function(colors)
 {
-	var body		= WebDeveloper.Common.getDocumentBodyElement(document);
-	var form		= document.createElement("form");
-	var input		= document.createElement("input");
-	var request = new XMLHttpRequest();
-	
-	request.open("get", document.documentURI, false);
-	request.send(null);
+	var color			 = null;
+	var tidiedColors = [];
 
-	form.action	 = "http://validator.w3.org/check";
-	form.enctype = "multipart/form-data";
-	form.method	 = "post";
-	form.target	 = "_blank";
-	
-	input.name	= "fragment";
-	input.value = request.responseText;
-	
-	form.appendChild(input);
+	colors.sort();
 
-	input			  = document.createElement("input");		
-	input.name	= "verbose";
-	input.value = "1";
-	
-	form.appendChild(input);
-	
-	body.appendChild(form);
-	form.submit();
-	body.removeChild(form);	
+	// Loop through the colors
+	for(var i = 0, l = colors.length; i < l; i++)
+	{
+		color = colors[i];
 
-	return {};
+		// If this is not the last color and the color is the same as the next color
+		if(i + 1 < l && color == colors[i + 1])
+		{
+			continue;
+		}
+
+		tidiedColors.push(color);
+	}
+
+	return tidiedColors;
 };

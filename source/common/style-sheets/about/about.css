@@ -1,0 +1,7 @@
+/* ! About styles */
+
+h1 { background: url(images/logo.png) no-repeat 0 0; min-height: 64px; padding-left: 75px; }
+h2, .hero-unit > .url { font-size: 14px; line-height: 18px; }
+img { vertical-align: top; }
+.hero-unit { box-shadow: rgba(0, 0, 0, 0.3) 0 3px 7px; margin: 50px auto; width: 575px; }
+.row { margin-bottom: 20px; margin-top: 25px; }

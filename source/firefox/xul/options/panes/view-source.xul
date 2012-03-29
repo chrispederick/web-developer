@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE overlay SYSTEM "chrome://web-developer/locale/options/options.dtd">
+<overlay id="web-developer-options-view-source-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<prefpane id="web-developer-options-view-source-pane" label="&webdeveloper.view.source;">
+  	<preferences>
+  		<preference id="webdeveloper.view.source.tab" name="extensions.webdeveloper.view.source.tab" type="bool"/>
+  	</preferences>
+
+    <checkbox align="top" label="&webdeveloper.view.source.tab;" preference="webdeveloper.view.source.tab"/>
+    <separator/>
+
+    <groupbox>
+	    <caption label="&webdeveloper.view.source.with;"/>
+	    <description value="&webdeveloper.keyboard.shortcuts.restart;"/>
+	    <separator/>
+	    <hbox align="top">
+	      <listbox id="web-developer-view-source-with-options" flex="1" onselect="WebDeveloper.Options.selectViewSourceWithOption()">
+	        <listhead>
+	          <listheader label="&webdeveloper.description;"/>
+	          <listheader label="&webdeveloper.application;"/>
+	          <listheader label="&webdeveloper.keyboard;"/>
+	        </listhead>
+	        
+	        <listcols>
+	          <listcol/>
+	          <listcol flex="1"/>
+	          <listcol/>
+	        </listcols>
+	      </listbox>
+	      
+	      <vbox>
+	        <button id="web-developer-move-up-view-source-with-option" disabled="true" label="&webdeveloper.move.up;" oncommand="WebDeveloper.Options.moveUpViewSourceWithOption()"/>
+	        <button id="web-developer-move-down-view-source-with-option" disabled="true" label="&webdeveloper.move.down;" oncommand="WebDeveloper.Options.moveDownViewSourceWithOption()"/>
+	      </vbox>
+	    </hbox>
+	    
+	    <hbox>
+	      <button label="&webdeveloper.add;" oncommand="WebDeveloper.Options.addViewSourceWithOption()"/>
+	      <button id="web-developer-edit-view-source-with-option" disabled="true" label="&webdeveloper.edit;" oncommand="WebDeveloper.Options.editViewSourceWithOption()"/>
+	      <button id="web-developer-delete-view-source-with-option" disabled="true" label="&webdeveloper.delete;" oncommand="WebDeveloper.Options.deleteViewSourceWithOption()"/>
+	    </hbox>
+		</groupbox>
+  </prefpane>
+</overlay>
