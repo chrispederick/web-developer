@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Web Developer by chrispederick</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Web Developer</h1>
+        <p>A browser extension that adds various web developer tools to a browser.</p>
+        <p class="view"><a href="https://github.com/chrispederick/web-developer">View the Project on GitHub <small>chrispederick/web-developer</small></a></p>
+        <ul>
+          <li><a href="https://github.com/chrispederick/web-developer/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/chrispederick/web-developer/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/chrispederick/web-developer">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Web Developer</h1>
+
+<p>The Web Developer extension adds various web developer tools to a browser.
+The extension is available for Chrome and Firefox, and will run on any platform that these browsers support including Windows, OS X and Linux.</p>
+
+<p>The extension can be installed from its home page:</p>
+
+<ul>
+<li>Home page: <a href="http://chrispederick.com/work/web-developer/">http://chrispederick.com/work/web-developer/</a>
+</li>
+</ul><p>Or directly from the Chrome and Firefox extension repositories:</p>
+
+<ul>
+<li>Chrome: <a href="https://chrome.google.com/webstore/detail/bfbameneiokkgbdmiekhjnmfkcnldhhm">https://chrome.google.com/webstore/detail/bfbameneiokkgbdmiekhjnmfkcnldhhm</a>
+</li>
+<li>Firefox: <a href="https://addons.mozilla.org/en-US/firefox/addon/web-developer/">https://addons.mozilla.org/en-US/firefox/addon/web-developer/</a>
+</li>
+</ul><h2>Announcements</h2>
+
+<p>For announcements about the Web Developer extension including news about beta releases and previews of upcoming versions follow:</p>
+
+<ul>
+<li>Blog: <a href="http://blog.chrispederick.com/">http://blog.chrispederick.com/</a>
+</li>
+<li>Twitter: <a href="http://twitter.com/chrispederick/">http://twitter.com/chrispederick/</a>
+</li>
+<li>Dribbble: <a href="http://dribbble.com/chrispederick/projects/9762-Web-Developer">http://dribbble.com/chrispederick/projects/9762-Web-Developer</a>
+</li>
+</ul><h2>Help</h2>
+
+<p>Help for the Web Developer extension can be found on its home page:</p>
+
+<ul>
+<li>Help: <a href="http://chrispederick.com/work/web-developer/help/">http://chrispederick.com/work/web-developer/help/</a>
+</li>
+<li>Known issues: <a href="http://chrispederick.com/work/web-developer/issues/">http://chrispederick.com/work/web-developer/issues/</a>
+</li>
+<li>To-do list: <a href="http://chrispederick.com/work/web-developer/to-do/">http://chrispederick.com/work/web-developer/to-do/</a>
+</li>
+</ul><p>To report a new issue or suggest a new feature please post in the forums:</p>
+
+<ul>
+<li>Forums: <a href="http://forums.chrispederick.com/">http://forums.chrispederick.com/</a>
+</li>
+</ul><h2>Developers</h2>
+
+<h3>Technologies</h3>
+
+<p>The Web Developer extension is written in JavaScript, HTML and CSS.
+The XML user interface language
+<a href="https://developer.mozilla.org/en/XUL">XUL</a>
+is also used in the Firefox version.</p>
+
+<h3>Extension documentation</h3>
+
+<p>For information about how to write browser extensions check out the Chrome and Firefox documentation:</p>
+
+<ul>
+<li>Chrome: <a href="http://code.google.com/chrome/extensions/docs.html">http://code.google.com/chrome/extensions/docs.html</a>
+</li>
+<li>Firefox: <a href="https://developer.mozilla.org/en-US/addons">https://developer.mozilla.org/en-US/addons</a>
+</li>
+</ul><h3>Localization</h3>
+
+<p>The extension is fully localized with languages other than English (US) provided by the community.
+For information about how to write localized browser extensions check out the Chrome and Firefox documentation:</p>
+
+<ul>
+<li>Chrome: <a href="http://code.google.com/chrome/extensions/i18n.html">http://code.google.com/chrome/extensions/i18n.html</a>
+</li>
+<li>Firefox: <a href="https://developer.mozilla.org/en/Localizing_an_extension">https://developer.mozilla.org/en/Localizing_an_extension</a>
+</li>
+</ul><h3>Build process</h3>
+
+<p>The extension uses the <a href="http://ant.apache.org/">Ant build system</a>.</p>
+
+<p>Once Ant is installed the extension is built by running the following in the <code>build</code> directory:</p>
+
+<pre><code>ant all
+</code></pre>
+
+<p>To build the extension for Chrome or Firefox only run <code>ant chrome</code> or <code>ant firefox</code> in the <code>build</code> directory.</p>
+
+<p>When the extension is built it creates a <code>chrome</code> and a <code>firefox</code> directory as well as packaged versions of the extensions <code>web-developer-chrome.zip</code> and <code>web-developer-firefox.xpi</code> in the <code>build</code> directory.</p>
+
+<p>The extension can be installed in Chrome by loading the unpacked extension in <code>build/chrome</code> as described in the <a href="http://code.google.com/chrome/extensions/getstarted.html#load-ext">Chrome documentation</a>.
+The extension can be installed in Firefox by installing <code>web-developer-firefox.xpi</code> like a regular extension.</p>
+
+<h3>Included libraries</h3>
+
+<p>The following libraries are used by and included in the extension as-is:</p>
+
+<ul>
+<li>Bootstrap from Twitter: <a href="http://twitter.github.com/bootstrap/">http://twitter.github.com/bootstrap/</a>
+</li>
+<li>CodeMirror: <a href="http://codemirror.net/">http://codemirror.net/</a>
+</li>
+<li>Eric Meyer's Reset CSS: <a href="http://meyerweb.com/eric/tools/css/reset/">http://meyerweb.com/eric/tools/css/reset/</a>
+</li>
+<li>ICanHaz: <a href="http://icanhazjs.com/">http://icanhazjs.com/</a>
+</li>
+<li>jQuery: <a href="http://jquery.com/">http://jquery.com/</a>
+</li>
+<li>JS Beautifier: <a href="https://github.com/einars/js-beautify">https://github.com/einars/js-beautify</a>
+</li>
+<li>Table Drag and Drop jQuery Plugin: <a href="http://www.isocra.com/2008/02/table-drag-and-drop-jquery-plugin/">http://www.isocra.com/2008/02/table-drag-and-drop-jquery-plugin/</a>
+</li>
+</ul><p>They should not be altered apart from to update to their latest versions for maintenance reasons.</p>
+
+<h3>Icons</h3>
+
+<p>The icons used in the extension are:</p>
+
+<ul>
+<li>Helveticons: <a href="http://helveticons.ch/">http://helveticons.ch/</a>
+</li>
+<li>Icon Drawer classic set: <a href="http://icondrawer.com/">http://icondrawer.com/</a>
+</li>
+</ul><p>Any new icons used in the extension should come from these existing icon sets for consistency.</p>
+
+<h2>Author</h2>
+
+<h3>Chris Pederick</h3>
+
+<ul>
+<li><a href="http://chrispederick.com/">http://chrispederick.com/</a></li>
+<li><a href="http://twitter.com/chrispederick/">http://twitter.com/chrispederick/</a></li>
+</ul><h2>License</h2>
+
+<p>All files are distributed for free under the terms of the
+<a href="http://www.gnu.org/licenses/gpl.txt">GNU General Public License</a>.
+This does not apply to the included libraries or icons mentioned in the Developer section which have their own individual licenses.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/chrispederick">chrispederick</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+  </body>
+</html>
