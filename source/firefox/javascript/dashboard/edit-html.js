@@ -1,7 +1,7 @@
 var WebDeveloper = WebDeveloper || {};
 
 WebDeveloper.EditHTML									= WebDeveloper.EditHTML || {};
-WebDeveloper.EditHTML.intervalId			= null;
+WebDeveloper.EditHTML.interval				= null;
 WebDeveloper.EditHTML.oldHTML					= null;
 WebDeveloper.EditHTML.selectedTab			= 0;
 WebDeveloper.EditHTML.updateFrequency = 250;
@@ -80,7 +80,7 @@ WebDeveloper.EditHTML.pageLoad = function(event)
 		// If the page is generated
 		if(originalTarget.documentURI == "about:blank")
 		{
-			window.clearInterval(WebDeveloper.EditHTML.intervalId);
+			WebDeveloper.EditHTML.stopUpdate();
 			window.setTimeout(WebDeveloper.EditHTML.retrieveHTML, 1000);
 			window.setTimeout(WebDeveloper.EditHTML.update, 1000);
 		}
@@ -165,6 +165,18 @@ WebDeveloper.EditHTML.search = function(event)
 	}
 };
 
+// Stops the HTML updating
+WebDeveloper.EditHTML.stopUpdate = function()
+{
+	// If the interval id is set
+	if(WebDeveloper.EditHTML.interval)
+	{
+		window.clearInterval(WebDeveloper.EditHTML.intervalId);
+
+		WebDeveloper.EditHTML.interval = null;
+	}
+};
+
 // Handles a browser tab being selected
 WebDeveloper.EditHTML.tabSelect = function(event)
 {
@@ -190,7 +202,7 @@ WebDeveloper.EditHTML.uninitialize = function()
 	{
 		var tabBrowser = WebDeveloper.Common.getTabBrowser();
 
-		window.clearInterval(WebDeveloper.EditHTML.intervalId);
+		WebDeveloper.EditHTML.stopUpdate();
 
 		// If the tab browser is set
 		if(tabBrowser)
@@ -220,6 +232,6 @@ WebDeveloper.EditHTML.update = function()
 	// If the update frequency is greater than 0
 	if(WebDeveloper.EditHTML.updateFrequency > 0)
 	{
-		WebDeveloper.EditHTML.intervalId = window.setInterval(WebDeveloper.EditHTML.apply, WebDeveloper.EditHTML.updateFrequency);
+		WebDeveloper.EditHTML.interval = window.setInterval(WebDeveloper.EditHTML.apply, WebDeveloper.EditHTML.updateFrequency);
 	}
 };

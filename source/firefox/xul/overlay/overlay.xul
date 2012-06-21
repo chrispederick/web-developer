@@ -45,9 +45,9 @@
     <command id="web-developer-disable-all-cookies-command" class="web-developer-feature-command" accesskey="&webdeveloper.disable.all.cookies.key;" label="&webdeveloper.disable.all.cookies.label;" oncommand="WebDeveloper.Overlay.Cookies.toggleCookies(this)"/>
     <command id="web-developer-disable-third-party-cookies-command" class="web-developer-feature-command" accesskey="&webdeveloper.disable.third.party.cookies.key;" label="&webdeveloper.disable.third.party.cookies.label;" oncommand="WebDeveloper.Overlay.Cookies.toggleThirdPartyCookies(this)"/>
     <command id="web-developer-add-cookie-command" class="web-developer-feature-command" accesskey="&webdeveloper.add.cookie.key;" label="&webdeveloper.add.cookie.label;" oncommand="WebDeveloper.Overlay.Cookies.addCookie()"/>
-    <command id="web-developer-clear-session-cookies-command" class="web-developer-feature-command" accesskey="&webdeveloper.clear.session.cookies.key;" label="&webdeveloper.clear.session.cookies.label;" oncommand="WebDeveloper.Overlay.Cookies.clearSessionCookies()"/>
     <command id="web-developer-delete-domain-cookies-command" class="web-developer-feature-command" accesskey="&webdeveloper.delete.domain.cookies.key;" label="&webdeveloper.delete.domain.cookies.label;" oncommand="WebDeveloper.Overlay.Cookies.deleteDomainCookies()"/>
     <command id="web-developer-delete-path-cookies-command" class="web-developer-feature-command" accesskey="&webdeveloper.delete.path.cookies.key;" label="&webdeveloper.delete.path.cookies.label;" oncommand="WebDeveloper.Overlay.Cookies.deletePathCookies()"/>
+    <command id="web-developer-delete-session-cookies-command" class="web-developer-feature-command" accesskey="&webdeveloper.delete.session.cookies.key;" label="&webdeveloper.delete.session.cookies.label;" oncommand="WebDeveloper.Overlay.Cookies.deleteSessionCookies()"/>
     <command id="web-developer-view-cookie-information-command" class="web-developer-feature-command" accesskey="&webdeveloper.view.cookie.information.key;" label="&webdeveloper.view.cookie.information.label;" oncommand="WebDeveloper.Overlay.Cookies.viewCookieInformation()"/>
 
     <command id="web-developer-disable-all-styles-command" class="web-developer-feature-command" accesskey="&webdeveloper.disable.all.styles.key;" label="&webdeveloper.disable.all.styles.label;" oncommand="WebDeveloper.Overlay.CSS.disableAllStyles(this)"/>
@@ -186,7 +186,7 @@
     <command id="web-developer-help-command" accesskey="&webdeveloper.help.key;" label="&webdeveloper.help.label;" oncommand="WebDeveloper.Overlay.Options.help()"/>
     <command id="web-developer-about-command" accesskey="&webdeveloper.about.key;" label="&webdeveloper.about.label;" oncommand="WebDeveloper.Overlay.Options.about()"/>
 
-    <command id="web-developer-toolbar-command" oncommand="WebDeveloper.Overlay.toggleToolbar()"/>
+    <command id="web-developer-toolbar-command" class="web-developer-feature-command" label="&webdeveloper.toolbar.name;" oncommand="WebDeveloper.Overlay.toggleToolbar()"/>
 	</commandset>
 
   <menupopup id="view_toolbars_popup">
@@ -472,6 +472,17 @@
         <spacer/>
         <button label="&webdeveloper.add.horizontal.line.guide;" oncommand="WebDeveloper.LineGuides.addHorizontalLineGuide()"/>
         <button label="&webdeveloper.add.vertical.line.guide;" oncommand="WebDeveloper.LineGuides.addVerticalLineGuide()"/>
+        <hbox id="web-developer-line-guides-information" align="center" hidden="true">
+	        <spacer/>
+	        <description value="&webdeveloper.position.label;"/>
+	        <description id="web-developer-line-guide-position"/>
+	        <spacer class="web-developer-small"/>
+	        <description value="&webdeveloper.previous.position.label;"/>
+	        <description id="web-developer-previous-line-guide-position"/>
+	        <spacer class="web-developer-small"/>
+	        <description value="&webdeveloper.next.position.label;"/>
+	        <description id="web-developer-next-line-guide-position"/>
+        </hbox>
       </hbox>
       <toolbarspring/>
       <hbox align="center">
@@ -512,25 +523,25 @@
         <description class="web-developer-name" value="&webdeveloper.name;"/>
         <description value="&webdeveloper.ruler;"/>
         <spacer/>
-        <label control="web-developer-ruler-width" value="&webdeveloper.width.pixels;"/>
+        <label control="web-developer-ruler-width" value="&webdeveloper.width;"/>
         <textbox id="web-developer-ruler-width" size="5" onchange="WebDeveloper.Ruler.updateWidth(this)"/>
-        <label control="web-developer-ruler-height" value="&webdeveloper.height.pixels;"/>
+        <label control="web-developer-ruler-height" value="&webdeveloper.height;"/>
         <textbox id="web-developer-ruler-height" size="5" onchange="WebDeveloper.Ruler.updateHeight(this)"/>
         <spacer/>
         <description value="&webdeveloper.start.position;"/>
         <spacer class="web-developer-small"/>
-        <description value="X = "/>
+        <description value="&webdeveloper.x.equals;"/>
         <description id="web-developer-ruler-start-x"/>
         <spacer class="web-developer-small"/>
-        <description value="Y = "/>
+        <description value="&webdeveloper.y.equals;"/>
         <description id="web-developer-ruler-start-y"/>
         <spacer/>
         <description value="&webdeveloper.end.position;"/>
         <spacer class="web-developer-small"/>
-        <description value="X = "/>
+        <description value="&webdeveloper.x.equals;"/>
         <description id="web-developer-ruler-end-x"/>
         <spacer class="web-developer-small"/>
-        <description value="Y = "/>
+        <description value="&webdeveloper.y.equals;"/>
         <description id="web-developer-ruler-end-y"/>
         <spacer/>
         <label control="web-developer-ruler-color" value="&webdeveloper.color;"/>

@@ -1,13 +1,11 @@
-/* ! Generated styles */
+/* Generated styles */
 
 h2 { padding-top: 50px; }
 h2, h3, pre, .dropdown-menu { word-wrap: break-word; }
 h2 + .web-developer-separator { margin-top: 70px; }
-h3 > span { background: url(images/collapse.png) 0 2px no-repeat; cursor: pointer; display: inline-block; height: 16px; margin-right: 4px; width: 16px; }
-h3.web-developer-collapsed span { background-image: url(images/expand.png); background-position: 0 1px; }
+h3 > i { cursor: pointer; margin-right: 5px; }
 h3[id] { margin-top: -40px; padding-top: 40px; }
 h4 { margin-bottom: 5px; }
-[class^="icon-"], [class*=" icon-"] { background-image: none; }
 .CodeMirror { border: 1px solid rgba(0, 0, 0, 0.15); border-radius: 3px; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); margin-bottom: 30px; }
 .dropdown-menu { min-width: 360px; max-width: 480px; }
 .dropdown-menu a { white-space: normal; }
@@ -17,3 +15,9 @@ h4 { margin-bottom: 5px; }
 .web-developer-document { margin-top: 10px; }
 .web-developer-separator { border-top: 1px solid #ddd; margin: 15px; }
 .web-developer-separator:last-child { margin-bottom: 0px; }
+
+@media (max-width: 979px)
+{
+	h2 { padding-top: 0; }
+	.navbar span.brand { padding-left: 20px; }
+}

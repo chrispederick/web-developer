@@ -18,7 +18,7 @@ WebDeveloper.Generated.addDocument = function(documentURL, documentCount, itemDe
 		// If there are items
 		if(itemCount !== 0)
 		{
-			description += "<span></span>";
+			description += '<i class="icon-caret-down"></i>';
 		}
 
 		description += itemCount + " " + itemDescription + "</h3>";
@@ -36,7 +36,14 @@ WebDeveloper.Generated.addSeparator = function()
 // Collapses all the output
 WebDeveloper.Generated.collapseAllOutput = function(event)
 {
-	$("h3").addClass("web-developer-collapsed").next().slideUp(WebDeveloper.Generated.animationSpeed);
+	// Loop through the output headers
+	$("h3").each(function()
+	{
+		var header = $(this);
+
+		$("i", header).removeClass("icon-caret-down").addClass("icon-caret-right");
+		header.next().slideUp(WebDeveloper.Generated.animationSpeed);
+	});
 
 	event.preventDefault();
 };
@@ -50,7 +57,14 @@ WebDeveloper.Generated.emptyContent = function()
 // Expands all the output
 WebDeveloper.Generated.expandAllOutput = function(event)
 {
-	$("h3").removeClass("web-developer-collapsed").next().slideDown(WebDeveloper.Generated.animationSpeed);
+	// Loop through the output headers
+	$("h3").each(function()
+	{
+		var header = $(this);
+
+		$("i", header).removeClass("icon-caret-right").addClass("icon-caret-down");
+		header.next().slideDown(WebDeveloper.Generated.animationSpeed);
+	});
 
 	// If the event is set
 	if(event)
@@ -82,7 +96,7 @@ WebDeveloper.Generated.generateDocumentContainer = function()
 // Initializes the common page elements
 WebDeveloper.Generated.initializeCommonElements = function()
 {
-	$("span", $("h3")).on("click", WebDeveloper.Generated.toggleOutput);
+	$("i", $("h3")).on("click", WebDeveloper.Generated.toggleOutput);
 	$("#web-developer-collapse-all").on("click", WebDeveloper.Generated.collapseAllOutput);
 	$("#web-developer-expand-all").on("click", WebDeveloper.Generated.expandAllOutput);
 
@@ -157,12 +171,12 @@ WebDeveloper.Generated.output = function(content, title, url, anchor, type, outp
 	{
 		var formattedURL = WebDeveloper.Generated.formatURL(url);
 
-		contentElement.append('<h3 id="' + anchor + '"><span></span><a href="' + url + '">' + formattedURL + "</a></h3>");
+		contentElement.append('<h3 id="' + anchor + '"><i class="icon-caret-down"></i><a href="' + url + '">' + formattedURL + "</a></h3>");
 		$(".dropdown-menu", $("#files-dropdown")).append('<li><a href="#' + anchor + '">' + formattedURL + "</a></li>");
 	}
 	else
 	{
-		contentElement.append('<h3 id="' + anchor + '"><span></span>' + title + "</h3>");
+		contentElement.append('<h3 id="' + anchor + '"><i class="icon-caret-down"></i>' + title + "</h3>");
 		$(".dropdown-menu", $("#files-dropdown")).append('<li><a href="#' + anchor + '">' + title + "</a></li>");
 	}
 
@@ -192,7 +206,7 @@ WebDeveloper.Generated.setPageTitle = function(type, data, locale)
 // Toggles the collapsed state of an output
 WebDeveloper.Generated.toggleOutput = function()
 {
-	$(this).parent().toggleClass("web-developer-collapsed").next().slideToggle(WebDeveloper.Generated.animationSpeed);
+	$(this).toggleClass("icon-caret-down").toggleClass("icon-caret-right").parent().next().slideToggle(WebDeveloper.Generated.animationSpeed);
 };
 
 window.addEventListener("web-developer-generated-event", WebDeveloper.Generated.initializeWithJSON, false);

@@ -1,4 +1,4 @@
-/* ! Dashboard styles */
+/* Dashboard styles */
 
 #web-developer-dashboard-spacer { width: 1em; }
 #web-developer-dashboard-splitter { border-color: #999; border-style: solid; border-width: 0; }
@@ -12,18 +12,26 @@
 #web-developer-dashboard-tabs > .tabs-left, #web-developer-dashboard-tabs > .tabs-right { -moz-box-flex: 0; }
 #web-developer-dashboard-tabs > .tabs-right { display: none; }
 
-/* ! Feature toolbar styles */
+/* Feature toolbar styles */
 
 .web-developer-toolbar description { margin: 0; }
 .web-developer-toolbar spacer { width: 2em; }
 .web-developer-toolbar .web-developer-name { margin: 0 5px; }
 .web-developer-toolbar .web-developer-small { width: 1em; }
 
-/* ! Element ancestors styles */
+/* Element ancestors styles */
 
 #web-developer-element-ancestors-browser { border: 1px solid #999; -webkit-border-radius: 3px; border-radius: 3px; height: 28px; }
 
-/* ! Page magnifier styles */
+/* Line guide styles */
+
+#web-developer-line-guide-position, #web-developer-next-line-guide-position, #web-developer-previous-line-guide-position { margin-left: 5px; }
+
+/* Page magnifier styles */
 
 #web-developer-page-magnifier { display: block; }
 #web-developer-page-magnifier-container { border: 1px solid #999; cursor: crosshair; position: fixed; }
+
+/* Ruler styles */
+
+#web-developer-ruler-end-x, #web-developer-ruler-end-y, #web-developer-ruler-start-x, #web-developer-ruler-start-y { margin-left: 5px; }

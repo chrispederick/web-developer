@@ -69,37 +69,46 @@
 				    <div class="span2 muted"></div>
 				  </div>
 
-		    	<button class="btn btn-primary"></button>
+		    	<button class="btn btn-primary"><i class="icon-plus"></i> </button>
 		    </div>
 
-		    <form class="form-horizontal">
+		    <form id="resize-form" class="form-horizontal">
 					<fieldset>
 						<legend></legend>
 
 						<div class="control-group">
 							<label for="resize-description" class="control-label"></label>
 							<div class="controls">
-								<input id="resize-description" class="span2">
+								<div class="input-prepend">
+									<span class="add-on"><i class="icon-pencil"></i></span><input id="resize-description" type="text" class="span3">
+								</div>
+								<span class="help-inline"></span>
 							</div>
 						</div>
 
 						<div class="control-group">
 							<label for="resize-width" class="control-label"></label>
 							<div class="controls">
-								<input id="resize-width" class="span2">
+								<div class="input-prepend">
+									<span class="add-on"><i class="icon-resize-horizontal"></i></span><input id="resize-width" type="text" class="span3">
+								</div>
+								<span class="help-inline"></span>
 							</div>
 						</div>
 
 						<div class="control-group">
 							<label for="resize-height" class="control-label"></label>
 							<div class="controls">
-								<input id="resize-height" class="span2">
+								<div class="input-prepend">
+									<span class="add-on"><i class="icon-resize-vertical"></i></span><input id="resize-height" type="text" class="span3">
+								</div>
+								<span class="help-inline"></span>
 							</div>
 						</div>
 
 						<div class="form-actions">
 					    <button id="resize-cancel" class="btn"></button>
-					    <button id="resize-save" class="btn btn-primary"></button>
+					    <button id="resize-submit" class="btn btn-primary"><i class="icon-ok"></i> <span></span></button>
 					  </div>
 					</fieldset>
 		    </form>
@@ -125,37 +134,46 @@
 				    <div class="span2 muted"></div>
 				  </div>
 
-		    	<button class="btn btn-primary"></button>
+		    	<button class="btn btn-primary"><i class="icon-plus"></i> </button>
 		    </div>
 
-		    <form class="form-horizontal">
+		    <form id="responsive-layout-form" class="form-horizontal">
 					<fieldset>
 						<legend></legend>
 
 						<div class="control-group">
 							<label for="responsive-layout-description" class="control-label"></label>
 							<div class="controls">
-								<input id="responsive-layout-description" class="span2">
+								<div class="input-prepend">
+									<span class="add-on"><i class="icon-pencil"></i></span><input id="responsive-layout-description" type="text" class="span3">
+								</div>
+								<span class="help-inline"></span>
 							</div>
 						</div>
 
 						<div class="control-group">
 							<label for="responsive-layout-width" class="control-label"></label>
 							<div class="controls">
-								<input id="responsive-layout-width" class="span2">
+								<div class="input-prepend">
+									<span class="add-on"><i class="icon-resize-horizontal"></i></span><input id="responsive-layout-width" type="text" class="span3">
+								</div>
+								<span class="help-inline"></span>
 							</div>
 						</div>
 
 						<div class="control-group">
 							<label for="responsive-layout-height" class="control-label"></label>
 							<div class="controls">
-								<input id="responsive-layout-height" class="span2">
+								<div class="input-prepend">
+									<span class="add-on"><i class="icon-resize-vertical"></i></span><input id="responsive-layout-height" type="text" class="span3">
+								</div>
+								<span class="help-inline"></span>
 							</div>
 						</div>
 
 						<div class="form-actions">
 					    <button id="responsive-layout-cancel" class="btn"></button>
-					    <button id="responsive-layout-save" class="btn btn-primary"></button>
+					    <button id="responsive-layout-submit" class="btn btn-primary"><i class="icon-ok"></i> <span></span></button>
 					  </div>
 					</fieldset>
 		    </form>
@@ -181,30 +199,36 @@
 				    <div class="span2 muted"></div>
 				  </div>
 
-		    	<button class="btn btn-primary"></button>
+		    	<button class="btn btn-primary"><i class="icon-plus"></i> </button>
 		    </div>
 
-		    <form class="form-horizontal">
+		    <form id="tool-form" class="form-horizontal">
 					<fieldset>
 						<legend></legend>
 
 						<div class="control-group">
 							<label for="tool-description" class="control-label"></label>
 							<div class="controls">
-								<input id="tool-description" class="span6">
+								<div class="input-prepend">
+									<span class="add-on"><i class="icon-pencil"></i></span><input id="tool-description" type="text" class="span6">
+								</div>
+								<span class="help-inline"></span>
 							</div>
 						</div>
 
 						<div class="control-group">
 							<label for="tool-url" class="control-label"></label>
 							<div class="controls">
-								<input id="tool-url" class="span6">
+								<div class="input-prepend">
+									<span class="add-on"><i class="icon-link"></i></span><input id="tool-url" type="url" class="span6">
+								</div>
+								<span class="help-inline"></span>
 							</div>
 						</div>
 
 						<div class="form-actions">
 					    <button id="tool-cancel" class="btn"></button>
-					    <button id="tool-save" class="btn btn-primary"></button>
+					    <button id="tool-submit" class="btn btn-primary"><i class="icon-ok"></i> <span></span></button>
 					  </div>
 					</fieldset>
 		    </form>
@@ -215,7 +239,9 @@
 					<div class="control-group">
 						<label for="populate_email_address" class="control-label"></label>
 						<div class="controls">
-							<input id="populate_email_address">
+							<div class="input-prepend">
+                <span class="add-on"><i class="icon-envelope"></i></span><input id="populate_email_address" type="email">
+              </div>
 						</div>
 					</div>
 				</form>
@@ -235,34 +261,34 @@
 
 	  <div class="modal-footer">
 	    <button class="btn" data-dismiss="modal"></button>
-	    <button class="btn btn-danger"></button>
+	    <button class="btn btn-danger"><i class="icon-trash"></i> </button>
 	  </div>
 	</div>
 </div>
 
 <script src="javascript/options.js"></script>
 
-<script id="resize_option" type="text/html">
+<script id="resizeOption" type="text/html">
 	<tr>
 		<td>{{description}}</td>
 		<td>{{width}}</td>
 		<td>{{height}}</td>
 		<td>{{keyboard}}</td>
 		<td>
-			<button class="btn btn-primary"></button>
-			<button class="btn btn-danger"></button>
+			<button class="btn btn-primary"><i class="icon-pencil"></i> <span></span></button>
+			<button class="btn btn-danger"><i class="icon-trash"></i> <span></span></button>
 		</td>
 	</tr>
 </script>
 
-<script id="responsive_layout" type="text/html">
+<script id="responsiveLayout" type="text/html">
 	<tr>
 		<td>{{description}}</td>
 		<td>{{width}}</td>
 		<td>{{height}}</td>
 		<td>
-			<button class="btn btn-primary"></button>
-			<button class="btn btn-danger"></button>
+			<button class="btn btn-primary"><i class="icon-pencil"></i> <span></span></button>
+			<button class="btn btn-danger"><i class="icon-trash"></i> <span></span></button>
 		</td>
 	</tr>
 </script>
@@ -273,8 +299,8 @@
 		<td>{{url}}</td>
 		<td>{{keyboard}}</td>
 		<td>
-			<button class="btn btn-primary"></button>
-			<button class="btn btn-danger"></button>
+			<button class="btn btn-primary"><i class="icon-pencil"></i> <span></span></button>
+			<button class="btn btn-danger"><i class="icon-trash"></i> <span></span></button>
 		</td>
 	</tr>
 </script>

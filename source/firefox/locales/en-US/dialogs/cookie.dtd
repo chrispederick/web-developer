@@ -1,4 +1,5 @@
 <!-- Cookie -->
+<!ENTITY webdeveloper.add.cookie "Add Cookie">
 <!ENTITY webdeveloper.expires.label "Expires:">
 <!ENTITY webdeveloper.host.label "Host:">
 <!ENTITY webdeveloper.name.label "Name:">

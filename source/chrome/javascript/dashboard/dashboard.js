@@ -1,149 +1,146 @@
 var WebDeveloper = WebDeveloper || {};
 
-WebDeveloper.Dashboard							 = WebDeveloper.Dashboard || {};
-WebDeveloper.Dashboard.defaultSize	 = 250;
-WebDeveloper.Dashboard.mainTabHeight = 32;
-WebDeveloper.Dashboard.minimumSize	 = 130;
-WebDeveloper.Dashboard.subTabHeight  = 56;
-
-WebDeveloper.Dashboard.css = "" +
-'body { background-color: #eee; color: #000; font: 13px/1 verdana, "bitstream vera sans", sans-serif; margin: 0; } ' +
-"#web-developer-dashboard-header { background: url(" + chrome.extension.getURL("dashboard/images/logo.png") + ") no-repeat center right !important; float: right !important; font-size: 15px !important; font-weight: normal !important; margin: 2px 5px 0 0 !important; padding-right: 25px !important; text-shadow: 0 1px 0 #fff; } " +
-"#web-developer-dashboard-panels { clear: both; } " +
-"#web-developer-dashboard-resizer { background: -webkit-gradient(linear, left top, left bottom, from(#bbb), to(#ccc)); cursor: n-resize; height: 3px; } " +
-"#web-developer-dashboard-tabs { float: left; } " +
-"#web-developer-edit-css-panels textarea { border-color: #aaa; border-style: solid; border-width: 1px 0 0 0; font-family: monospace; font-size: 13px; height: 100%; outline: none; padding: 2px 5px; width: 100%; } " +
-"#web-developer-edit-css-tabs { padding-top: 0; } " +
-".panel { display: none; } " +
-".panel.selected { display: block; } " +
-".tab { background: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#eee)); border-color: #aaa; border-style: solid; border-width: 0 1px 1px 1px; -webkit-border-bottom-left-radius: 5px; -webkit-border-bottom-right-radius: 5px; cursor: pointer; display: inline-block; line-height: 18px; margin-right: -1px; max-width: 200px; overflow: hidden; padding: 2px 10px; position: relative; text-shadow: 0 1px 0 #fff; top: -1px; white-space: nowrap; } " +
-".tab::selection { background-color: transparent; } " +
-".tab span { background: url(" + chrome.extension.getURL("dashboard/images/close.png") + ") no-repeat 0 0; cursor: pointer; display: none; height: 16px; margin-left: 10px; vertical-align: top; width: 16px; } " +
-".tab.selected { background: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#ddd)); cursor: default; font-weight: bold; position: static; } " +
-".tab.selected span { display: inline-block; } " +
-".tab-bar { background-color: #eee; list-style-type: none; margin: 0; padding: 0 5px 5px 5px; } " +
-".tab-bar.bottom-tabs { padding: 5px 5px 0 5px; } " +
-".tab-bar.bottom-tabs .tab { border-width: 1px 1px 0 1px; -webkit-border-bottom-left-radius: 0; -webkit-border-bottom-right-radius: 0; -webkit-border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; top: 0; } " +
-".tab-bar.bottom-tabs .tab.selected { padding-bottom: 3px; position: relative; top: 1px; } " +
-"";
-
-WebDeveloper.Dashboard.html = '<div id="web-developer-dashboard-resizer"></div><ul id="web-developer-dashboard-tabs" class="tab-bar"></ul><h1 id="web-developer-dashboard-header">@name@ Dashboard</h1><div id="web-developer-dashboard-panels"></div>';
-
-WebDeveloper.Dashboard.size = "" +
-"#web-developer-dashboard-panels div { height: %1; } " +
-"#web-developer-dashboard-panels #web-developer-edit-css-panels { height: %2; } " +
-"";
+WebDeveloper.Dashboard				= WebDeveloper.Dashboard || {};
+WebDeveloper.Dashboard.resize	= false;
 
 // Closes a dashboard tab
-WebDeveloper.Dashboard.closeDashboardTab = function(title, contentDocument)
+WebDeveloper.Dashboard.closeDashboardTab = function(tabId, contentDocument)
 {
-	var dashboard = contentDocument.getElementById("web-developer-dashboard");
+	var dashboardDocument = WebDeveloper.Dashboard.getDashboard(contentDocument).contentDocument;
 
-	// If the dashboard is set
-	if(dashboard)
+	WebDeveloper.Common.removeMatchingElements("#" + tabId + "-panel, #" + tabId + "-tab", dashboardDocument);
+
+	// If the last tab on the dashboard was closed
+	if(dashboardDocument.querySelectorAll("#web-developer-dashboard-tabs > li").length === 0)
 	{
-		var tabId = WebDeveloper.Dashboard.convertTitleToId(title);
-
-		WebDeveloper.Common.removeMatchingElements("#" + tabId + "-panel, #" + tabId + "-tab", dashboard.contentDocument);
-
-		// If the last tab on the dashboard was closed
-		if(dashboard.contentDocument.querySelectorAll("#web-developer-dashboard-tabs li").length === 0)
-		{
-			dashboard.style.display = "none";
-		}
+		WebDeveloper.Dashboard.removeDashboard(contentDocument);
 	}
 };
 
 // Create the dashboard
-WebDeveloper.Dashboard.createDashboard = function(contentDocument)
+WebDeveloper.Dashboard.createDashboard = function(contentDocument, dashboardHTML)
 {
-	var dashboard				= contentDocument.createElement("iframe");
+	var dashboard					= contentDocument.createElement("iframe");
 	var dashboardDocument = null;
-	var resizer					= null;
+	var resizer						= null;
 
 	dashboard.setAttribute("id", "web-developer-dashboard");
 
 	WebDeveloper.Common.getDocumentBodyElement(contentDocument).appendChild(dashboard);
+
+	dashboardDocument														= dashboard.contentDocument;
+	window.WebDeveloperEvents										= window.WebDeveloperEvents || {};
+	window.WebDeveloperEvents.Dashboard					= window.WebDeveloperEvents.Dashboard || {};
+	window.WebDeveloperEvents.Dashboard.mouseUp	= WebDeveloper.Dashboard.mouseUp;
+
 	WebDeveloper.Common.toggleStyleSheet("dashboard/style-sheets/dashboard.css", "web-developer-dashboard-styles", contentDocument, false);
+	WebDeveloper.Common.toggleStyleSheet("dashboard/style-sheets/common.css", "web-developer-dashboard-styles", dashboardDocument, false);
 
-	dashboardDocument = dashboard.contentDocument;
+	WebDeveloper.Common.getDocumentBodyElement(dashboardDocument).innerHTML = dashboardHTML;
 
-	dashboardDocument.write('<html id="web-developer-dashboard-iframe" lang="en"><head><meta charset="utf-8"><title>@name@ Dashboard</title><style>' + WebDeveloper.Dashboard.css + '</style><style id="web-developer-dashboard-size"></style></head><body>' + WebDeveloper.Dashboard.html + "</body></html>");
-	WebDeveloper.Dashboard.resizeDashboard(WebDeveloper.Dashboard.defaultSize, dashboard, dashboardDocument);
+	WebDeveloper.Common.includeJavaScript("dashboard/javascript/html/dashboard.js", dashboardDocument);
 
-	resizer = dashboardDocument.getElementById("web-developer-dashboard-resizer");
+	dashboardDocument.querySelector(".brand img").setAttribute("src", WebDeveloper.Common.getChromeURL("dashboard/images/logo.png"));
 
-	resizer.addEventListener("mousedown", function() { dashboardDocument.addEventListener("mousemove", WebDeveloper.Dashboard.resizerMouseMove); }, false);
-	resizer.addEventListener("mouseup", function() { dashboardDocument.removeEventListener("mousemove", WebDeveloper.Dashboard.resizerMouseMove); }, false);
+	resizer	= dashboardDocument.getElementById("web-developer-dashboard-resizer");
 
-	return dashboard;
+	contentDocument.addEventListener("mouseup", window.WebDeveloperEvents.Dashboard.mouseUp, false);
+	dashboardDocument.addEventListener("mousemove", WebDeveloper.Dashboard.mouseMove, false);
+	dashboardDocument.addEventListener("mouseup", WebDeveloper.Dashboard.mouseUp, false);
+	resizer.addEventListener("mousedown", WebDeveloper.Dashboard.resizerMouseDown, false);
+
+	// Get the dashboard templates
+	chrome.extension.sendRequest({ "item": "dashboard_height", "type": "get-storage-item" }, function(response)
+	{
+		// If the dashboard height value was returned
+		if(response.value)
+		{
+			dashboard.style.setProperty("height", response.value, "important");
+		}
+	});
+};
+
+// Returns the dashboard
+WebDeveloper.Dashboard.getDashboard = function(contentDocument)
+{
+	return contentDocument.getElementById("web-developer-dashboard");
+};
+
+// Handles the mouse move event
+WebDeveloper.Dashboard.mouseMove = function()
+{
+	// If resizing the dashboard
+	if(WebDeveloper.Dashboard.resize)
+	{
+		var dashboard = WebDeveloper.Dashboard.getDashboard(WebDeveloper.Common.getContentDocument());
+		var height		= (dashboard.offsetHeight - event.pageY) + "px";
+
+		dashboard.style.setProperty("height", height, "important");
+
+		WebDeveloper.EditCSS.resize(dashboard);
+		WebDeveloper.ElementInformation.resize(dashboard);
+
+		// Get the dashboard templates
+		chrome.extension.sendRequest({ "item": "dashboard_height", "type": "set-storage-item", "value": height }, function(response)
+		{
+			// Ignore
+		});
+	}
+};
+
+// Handles the mouse up event
+WebDeveloper.Dashboard.mouseUp = function()
+{
+	WebDeveloper.Dashboard.resize = false;
 };
 
 // Opens a dashboard tab
-WebDeveloper.Dashboard.openDashboardTab = function(title, contentDocument)
+WebDeveloper.Dashboard.openDashboardTab = function(tabId, title, contentDocument, templates)
 {
-	var dashboard				= contentDocument.getElementById("web-developer-dashboard");
+	var dashboard					= WebDeveloper.Dashboard.getDashboard(contentDocument);
 	var dashboardDocument = null;
 	var panels						= null;
-	var tabId						= WebDeveloper.Dashboard.convertTitleToId(title);
 	var tabs							= null;
 
-	// If the dashboard exists
-	if(dashboard)
+	// If the dashboard does not already exist
+	if(!dashboard)
 	{
-		dashboard.style.display = "block";
-	}
-	else
-	{
-		dashboard = WebDeveloper.Dashboard.createDashboard(contentDocument);
+		WebDeveloper.Dashboard.createDashboard(contentDocument, templates.dashboard);
+
+		dashboard = WebDeveloper.Dashboard.getDashboard(contentDocument);
 	}
 
 	dashboardDocument = dashboard.contentDocument;
-	panels						= dashboardDocument.getElementById("web-developer-dashboard-panels");
-	tabs							= dashboardDocument.getElementById("web-developer-dashboard-tabs");
 
-	panels.innerHTML = panels.innerHTML + '<div id ="' + tabId + '-panel" class="panel selected"></div>';
-	tabs.innerHTML	 = tabs.innerHTML + '<li id ="' + tabId + '-tab" class="tab selected">' + title + '</li>';
+	panels = dashboardDocument.getElementById("web-developer-dashboard-panels");
+	tabs	 = dashboardDocument.getElementById("web-developer-dashboard-tabs");
 
-	return dashboardDocument;
+	WebDeveloper.Common.removeClass(panels.querySelector(".active"), "active");
+	WebDeveloper.Common.removeClass(tabs.querySelector(".active"), "active");
+
+	WebDeveloper.Common.appendHTML(templates.panel, panels, dashboardDocument);
+	WebDeveloper.Common.appendHTML(templates.tab, tabs, dashboardDocument);
+
+	return dashboardDocument.getElementById(tabId + "-panel");
 };
 
-// Resizes the dashboard
-WebDeveloper.Dashboard.resizeDashboard = function(size, dashboard, dashboardDocument)
+// Removes the dashboard
+WebDeveloper.Dashboard.removeDashboard = function(contentDocument)
 {
-	// If the size is more than the minimum dashboard size
-	if(size > WebDeveloper.Dashboard.minimumSize)
+	WebDeveloper.Common.removeMatchingElements("#web-developer-dashboard", contentDocument);
+	WebDeveloper.Common.toggleStyleSheet("dashboard/style-sheets/dashboard.css", "web-developer-dashboard-styles", contentDocument, false);
+
+	contentDocument.removeEventListener("mouseup", window.WebDeveloperEvents.Dashboard.mouseUp, false);
+
+	window.WebDeveloperEvents.Dashboard = null;
+};
+
+// Handles the resizer mouse down event
+WebDeveloper.Dashboard.resizerMouseDown = function(event)
+{
+	// If the click was not a right click
+	if(event.button != 2)
 	{
-		dashboard.style.height																										 = size + "px";
-		dashboardDocument.getElementById("web-developer-dashboard-size").innerText = WebDeveloper.Dashboard.size.replace("%1", size - WebDeveloper.Dashboard.mainTabHeight + "px").replace("%2", size - WebDeveloper.Dashboard.subTabHeight + "px");
-	}
-};
-
-// Handles the dashboard resizer being moved
-WebDeveloper.Dashboard.resizerMouseMove = function(event)
-{
-	var dashboard = window.document.getElementById("web-developer-dashboard");
-
-	WebDeveloper.Dashboard.resizeDashboard(dashboard.offsetHeight - event.pageY, dashboard, event.target.ownerDocument);
-};
-
-// Handles a tab bar being clicked
-WebDeveloper.Dashboard.tabBarClicked = function(event)
-{
-	var eventTarget = event.target;
-
-	// If a tab was clicked
-	if(WebDeveloper.Common.hasClass(eventTarget, "tab"))
-	{
-		var eventDocument = eventTarget.ownerDocument;
-		var panel					= eventDocument.getElementById(eventTarget.getAttribute("id").replace("tab", "panel"));
-		var tabs					= eventTarget.parentElement;
-		var panels				= eventDocument.getElementById(tabs.getAttribute("id").replace("tabs", "panels"));
-
-		WebDeveloper.Common.removeClass(tabs.querySelector(".selected"), "selected");
-		WebDeveloper.Common.removeClass(panels.querySelector(".selected"), "selected");
-
-		WebDeveloper.Common.addClass(eventTarget, "selected");
-		WebDeveloper.Common.addClass(panel, "selected");
+		WebDeveloper.Dashboard.resize = true;
 	}
 };

@@ -9,120 +9,61 @@ WebDeveloper.Overlay.Cookies.addCookie = function()
 	window.openDialog("chrome://web-developer/content/dialogs/cookie.xul", "web-developer-cookie-dialog", "centerscreen,chrome,modal", "add");
 };
 
-// Clears all session cookies
-WebDeveloper.Overlay.Cookies.clearSessionCookies = function()
-{
-	// If the clearing is confirmed
-	if(WebDeveloper.Overlay.displayConfirmation(WebDeveloper.Locales.getString("clearSessionCookies"), WebDeveloper.Locales.getString("clearSessionCookiesConfirmation"), WebDeveloper.Locales.getString("clear")))
-	{
-		WebDeveloper.Cookies.clearSessionCookies();
-	}
-};
-
 // Deletes all the cookies for the current domain
 WebDeveloper.Overlay.Cookies.deleteDomainCookies = function()
 {
-	var cookies				= [];
-	var cookiesLength = null;
-	var documents			= WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow());
-	var message				= null;
+	var allCookies		= WebDeveloper.Cookies.getAllCookies();
+	var documents			= WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
+	var domainCookies	= [];
 
 	// Loop through the documents
 	for(var i = 0, l = documents.length; i < l; i++)
 	{
-		cookies = cookies.concat(WebDeveloper.Cookies.getHostCookies(documents[i].location.hostname, "/", false));
-	}
-
-	cookiesLength = cookies.length;
-
-	// If one cookie was found
-	if(cookiesLength == 1)
-	{
-		message = WebDeveloper.Locales.getString("deleteDomainCookiesSingleConfirmation");
-	}
-	else
-	{
-		message = WebDeveloper.Locales.getFormattedString("deleteDomainCookiesMultipleConfirmation", [cookiesLength]);
-	}
-
-	// If the deletion is confirmed
-	if(cookiesLength === 0 || WebDeveloper.Overlay.displayConfirmation(WebDeveloper.Locales.getString("deleteDomainCookies"), message, WebDeveloper.Locales.getString("delete")))
-	{
-		var cookie				= null;
-		var cookieManager = Components.classes["@mozilla.org/cookiemanager;1"].getService(Components.interfaces.nsICookieManager);
-
-		// Loop through all the cookies
-		for(i = 0 ; i < cookiesLength; i++)
+		// Try to get the host
+		try
 		{
-			cookie = cookies[i];
-
-			cookieManager.remove(cookie.host, cookie.name, cookie.path, false);
+			domainCookies	= domainCookies.concat(WebDeveloper.Content.filterCookies(allCookies, documents[i].location.hostname, "/", false));
 		}
-
-		// If one cookie was found
-		if(cookiesLength == 1)
+		catch(exception)
 		{
-			WebDeveloper.Common.displayNotification("deleteDomainCookiesSingleResult");
-		}
-		else
-		{
-			WebDeveloper.Common.displayNotification("deleteDomainCookiesMultipleResult", [cookiesLength]);
+			// Ignore
 		}
 	}
+
+	WebDeveloper.Cookies.deleteDomainCookies(domainCookies);
 };
 
 // Deletes all the cookies for the current path
 WebDeveloper.Overlay.Cookies.deletePathCookies = function()
 {
-	var cookies				= [];
-	var cookiesLength = null;
-	var documents			= WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow());
-	var message				= null;
-	var pageDocument	= null;
+	var allCookies			= WebDeveloper.Cookies.getAllCookies();
+	var contentDocument = null;
+	var documents				= WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
+	var pathCookies			= [];
 
 	// Loop through the documents
 	for(var i = 0, l = documents.length; i < l; i++)
 	{
-		pageDocument = documents[i];
-		cookies			 = cookies.concat(WebDeveloper.Cookies.getHostCookies(pageDocument.location.hostname, pageDocument.location.pathname, false));
-	}
+		contentDocument = documents[i];
 
-	cookiesLength = cookies.length;
-
-	// If one cookie was found
-	if(cookiesLength == 1)
-	{
-		message = WebDeveloper.Locales.getString("deletePathCookiesSingleConfirmation");
-	}
-	else
-	{
-		message = WebDeveloper.Locales.getFormattedString("deletePathCookiesMultipleConfirmation", [cookiesLength]);
-	}
-
-	// If the deletion is confirmed
-	if(cookiesLength === 0 || WebDeveloper.Overlay.displayConfirmation(WebDeveloper.Locales.getString("deletePathCookies"), message, WebDeveloper.Locales.getString("delete")))
-	{
-		var cookie				= null;
-		var cookieManager = Components.classes["@mozilla.org/cookiemanager;1"].getService(Components.interfaces.nsICookieManager);
-
-		// Loop through all the cookies
-		for(i = 0; i < cookiesLength; i++)
+		// Try to get the host and path
+		try
 		{
-			cookie = cookies[i];
-
-			cookieManager.remove(cookie.host, cookie.name, cookie.path, false);
+			pathCookies	= pathCookies.concat(WebDeveloper.Content.filterCookies(allCookies, contentDocument.location.hostname, contentDocument.location.pathname, false));
 		}
-
-		// If one cookie was found
-		if(cookiesLength == 1)
+		catch(exception)
 		{
-			WebDeveloper.Common.displayNotification("deletePathCookiesSingleResult");
-		}
-		else
-		{
-			WebDeveloper.Common.displayNotification("deletePathCookiesMultipleResult", [cookiesLength]);
+			// Ignore
 		}
 	}
+
+	WebDeveloper.Cookies.deleteDomainCookies(pathCookies);
+};
+
+// Deletes all session cookies
+WebDeveloper.Overlay.Cookies.deleteSessionCookies = function()
+{
+	WebDeveloper.Cookies.deleteSessionCookies(WebDeveloper.Cookies.getAllCookies());
 };
 
 // Toggles cookies
@@ -179,29 +120,5 @@ WebDeveloper.Overlay.Cookies.updateDisableCookiesMenu = function()
 // Displays all the cookies for the page
 WebDeveloper.Overlay.Cookies.viewCookieInformation = function()
 {
-	var locale = WebDeveloper.Locales.setupGeneratedLocale();
-
-	locale.atEndOfSession						= WebDeveloper.Locales.getString("atEndOfSession");
-	locale.cancel										= WebDeveloper.Locales.getString("cancel");
-	locale.cookie										= WebDeveloper.Locales.getString("cookie");
-	locale.cookieDeleted						= WebDeveloper.Locales.getString("cookieDeleted");
-	locale.cookieEdited							= WebDeveloper.Locales.getString("cookieEdited");
-	locale.cookieInformation				= WebDeveloper.Locales.getString("cookieInformation");
-	locale.cookies									= WebDeveloper.Locales.getString("cookies");
-	locale.deleteCookie							= WebDeveloper.Locales.getString("deleteCookie");
-	locale.deleteCookieConfirmation = WebDeveloper.Locales.getString("deleteCookieConfirmation");
-	locale.deleteLabel							= WebDeveloper.Locales.getString("delete");
-	locale.editCookie								= WebDeveloper.Locales.getString("editCookie");
-	locale.expires									= WebDeveloper.Locales.getString("expires");
-	locale.host											= WebDeveloper.Locales.getString("host");
-	locale.httpOnly									= WebDeveloper.Locales.getString("httpOnly");
-	locale.name											= WebDeveloper.Locales.getString("name");
-	locale.no												= WebDeveloper.Locales.getString("no");
-	locale.path											= WebDeveloper.Locales.getString("path");
-	locale.property									= WebDeveloper.Locales.getString("property");
-	locale.secure										= WebDeveloper.Locales.getString("secure");
-	locale.value										= WebDeveloper.Locales.getString("value");
-	locale.yes											= WebDeveloper.Locales.getString("yes");
-
-	WebDeveloper.Overlay.openGeneratedTab(WebDeveloper.Common.getChromeURL("generated/view-cookie-information.html"), WebDeveloper.Cookies.getCookies(), locale);
+	WebDeveloper.Overlay.openGeneratedTab(WebDeveloper.Common.getChromeURL("generated/view-cookie-information.html"), WebDeveloper.Content.getCookies(WebDeveloper.Cookies.getAllCookies()), WebDeveloper.Overlay.Cookies.getViewCookieInformationLocale());
 };

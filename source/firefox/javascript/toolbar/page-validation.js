@@ -286,6 +286,16 @@ WebDeveloper.PageValidation.updateValidationDetails = function(validationRequest
 
 					validationButton.setAttribute("class", "valid");
 				}
+				else if(validationStatus == "Abort")
+				{
+					validationButton.label = "";
+
+					// If the validation button has a class
+					if(validationButton.hasAttribute("class"))
+					{
+						validationButton.removeAttribute("class");
+					}
+				}
 				else
 				{
 					validationButton.label = WebDeveloper.Locales.getString("invalid") + ": " + validationRequest.getResponseHeader("X-W3C-Validator-Errors") + " " + WebDeveloper.Locales.getString("errors").toLowerCase();

@@ -25,41 +25,6 @@ WebDeveloper.Common.configureElement = function(element, attribute, value)
 	}
 };
 
-// Returns true if the array contains the element
-WebDeveloper.Common.contains = function(array, element)
-{
-	// If the array and element are set
-	if(array && element)
-	{
-		try
-		{
-			// If the element does not exist in the array
-			if(array.indexOf(element) == -1)
-			{
-				return false;
-			}
-			else
-			{
-				return true;
-			}
-		}
-		catch(exception)
-		{
-			// Loop through the array
-			for(var i = 0, l = array.length; i < l; i++)
-			{
-				// If the element is found
-				if(array[i] == element)
-				{
-					return true;
-				}
-			}
-		}
-	}
-
-	return false;
-};
-
 // Converts a value to a boolean
 WebDeveloper.Common.convertToBoolean = function(value)
 {
@@ -269,32 +234,6 @@ WebDeveloper.Common.getCSSProperty = function(property)
 	return null;
 };
 
-// Gets all the documents from the current page
-WebDeveloper.Common.getDocuments = function(frame)
-{
-	var documents = [];
-
-	// If the frame is set
-	if(frame)
-	{
-		var frames = frame.frames;
-
-		// If the frame document exists
-		if(frame.document)
-		{
-			documents.push(frame.document);
-		}
-
-		// Loop through the frames
-		for(var i = 0, l = frames.length; i < l; i++)
-		{
-			documents = documents.concat(WebDeveloper.Common.getDocuments(frames[i]));
-		}
-	}
-
-	return documents;
-};
-
 // Returns the id for a feature
 WebDeveloper.Common.getFeatureId = function(id)
 {
@@ -418,6 +357,12 @@ WebDeveloper.Common.isMac = function()
 // Logs a message
 WebDeveloper.Common.log = function(message)
 {
+	// If the message is not set
+	if(!message)
+	{
+		message = "null";
+	}
+
 	Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService).logStringMessage(message);
 };
 
@@ -444,99 +389,12 @@ WebDeveloper.Common.pageHasFrames = function()
 	return false;
 };
 
-// Sets up the options
-WebDeveloper.Common.setupOptions = function()
+// Removes the given attribute from an element
+WebDeveloper.Common.removeElementAttribute = function(element, attribute)
 {
-	var element										= null;
-	var hideContextMenuPreference = WebDeveloper.Preferences.getExtensionBooleanPreference("context.hide");
-	var hideMenuPreference				= WebDeveloper.Preferences.getExtensionBooleanPreference("menu.hide");
-	var mainWindowDocument				= WebDeveloper.Common.getMainWindow().document;
-	var toolbar										= mainWindowDocument.getElementById("web-developer-toolbar");
-
-	// If the toolbar exists
-	if(toolbar)
-	{
-		// If the toolbar is visible
-		if(toolbar.visible)
-		{
-			var toolbarButtons		= toolbar.getElementsByTagName("toolbarbutton");
-			var toolbarPreference = WebDeveloper.Preferences.getExtensionStringPreference("toolbar.icons");
-
-			toolbar.setAttribute("mode", toolbarPreference);
-
-			// If the toolbar preference is set to icons
-			if(toolbarPreference == "icons")
-			{
-				toolbarPreference = "pictures";
-			}
-
-			toolbar.setAttribute("buttonstyle", toolbarPreference);
-
-			// Loop through the toolbar buttons
-			for(var i = 0, l = toolbarButtons.length; i < l; i++)
-			{
-				toolbarButtons[i].setAttribute("buttonstyle", toolbarPreference);
-			}
-
-			// If the toolbar preference is not set to text
-			if(toolbarPreference != "text")
-			{
-				element = mainWindowDocument.getElementById("web-developer-javascript-statusbar");
-
-				// If the element exists
-				if(element)
-				{
-					element.removeAttribute("label");
-				}
-
-				element = mainWindowDocument.getElementById("web-developer-render-mode-statusbar");
-
-				// If the element exists
-				if(element)
-				{
-					element.removeAttribute("label");
-				}
-			}
-		}
-	}
-
-	element = mainWindowDocument.getElementById("web-developer-app-menu");
-
 	// If the element exists
 	if(element)
 	{
-		element.setAttribute("hidden", hideMenuPreference);
-	}
-
-	element = mainWindowDocument.getElementById("web-developer-context");
-
-	// If the element exists
-	if(element)
-	{
-		element.setAttribute("hidden", hideContextMenuPreference);
-	}
-
-	element = mainWindowDocument.getElementById("web-developer-context-separator1");
-
-	// If the element exists
-	if(element)
-	{
-		element.setAttribute("hidden", hideContextMenuPreference);
-	}
-
-	element = mainWindowDocument.getElementById("web-developer-menu");
-
-	// If the element exists
-	if(element)
-	{
-		element.setAttribute("hidden", hideMenuPreference);
-	}
-
-	element = mainWindowDocument.getElementById("web-developer-seamonkey");
-
-	// If the element exists
-	if(element)
-	{
-		element.setAttribute("hidden", hideMenuPreference);
+		element.removeAttribute(attribute);
 	}
 };

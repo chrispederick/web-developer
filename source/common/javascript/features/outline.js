@@ -60,7 +60,7 @@ WebDeveloper.Outline.outlineExternalLinks = function(outline, documents)
 		}
 		else
 		{
-			WebDeveloper.Common.removeStyleSheet("web-developer-outline-external-links", contentDocument);
+			WebDeveloper.Common.removeMatchingElements("#web-developer-outline-external-links", contentDocument);
 		}
 	}
 };

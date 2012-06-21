@@ -60,6 +60,59 @@ WebDeveloper.Common.adjustElementPosition = function(element, xPosition, yPositi
 	}
 };
 
+// Adjusts the position of the given element
+WebDeveloper.Common.appendHTML = function(html, element, contentDocument)
+{
+	// If the HTML, element and content document are set
+	if(html && element && contentDocument)
+	{
+		var htmlElement = contentDocument.createElement("div");
+
+		htmlElement.innerHTML = html;
+
+		// While there children of the HTML element
+		while(htmlElement.firstChild)
+		{
+			element.appendChild(htmlElement.firstChild);
+		}
+	}
+};
+
+// Returns true if the array contains the element
+WebDeveloper.Common.contains = function(array, element)
+{
+	// If the array and element are set
+	if(array && element)
+	{
+		try
+		{
+			// If the element does not exist in the array
+			if(array.indexOf(element) == -1)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		catch(exception)
+		{
+			// Loop through the array
+			for(var i = 0, l = array.length; i < l; i++)
+			{
+				// If the element is found
+				if(array[i] == element)
+				{
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+};
+
 // Removes all child elements from an element
 WebDeveloper.Common.empty = function(element)
 {
@@ -360,6 +413,16 @@ WebDeveloper.Common.inArray = function(item, array)
 	return WebDeveloper.Common.positionInArray(item, array) != -1;
 };
 
+// Includes JavaScript in a document
+WebDeveloper.Common.includeJavaScript = function(url, contentDocument)
+{
+	var scriptElement = contentDocument.createElement("script");
+
+	scriptElement.setAttribute("src", WebDeveloper.Common.getChromeURL(url));
+
+	WebDeveloper.Common.getDocumentBodyElement(contentDocument).appendChild(scriptElement);
+};
+
 // Inserts the given child after the element
 WebDeveloper.Common.insertAfter = function(child, after)
 {
@@ -488,22 +551,6 @@ WebDeveloper.Common.removeMatchingElements = function(selector, contentDocument)
 	}
 };
 
-// Removes a style sheet from a document
-WebDeveloper.Common.removeStyleSheet = function(id, contentDocument)
-{
-	var styleSheet = contentDocument.getElementById(id);
-
-	// If the style sheet is in the document
-	if(styleSheet)
-	{
-		// If the style sheet has a parent node
-		if(styleSheet.parentNode)
-		{
-			styleSheet.parentNode.removeChild(styleSheet);
-		}
-	}
-};
-
 // Removes the reload parameter from a URL
 WebDeveloper.Common.removeReloadParameterFromURL = function(url)
 {
@@ -567,7 +614,7 @@ WebDeveloper.Common.toggleStyleSheet = function(url, id, contentDocument, insert
 	// If the style sheet is already in the document
 	if(styleSheet)
 	{
-		WebDeveloper.Common.removeStyleSheet(id, contentDocument);
+		WebDeveloper.Common.removeMatchingElements("#" + id, contentDocument);
 	}
 	else
 	{

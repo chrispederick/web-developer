@@ -94,12 +94,12 @@
 <!ENTITY webdeveloper.disable.cookies.key "D">
 <!ENTITY webdeveloper.add.cookie.label "Add Cookie...">
 <!ENTITY webdeveloper.add.cookie.key "A">
-<!ENTITY webdeveloper.clear.session.cookies.label "Clear Session Cookies">
-<!ENTITY webdeveloper.clear.session.cookies.key "C">
 <!ENTITY webdeveloper.delete.domain.cookies.label "Delete Domain Cookies">
 <!ENTITY webdeveloper.delete.domain.cookies.key "e">
 <!ENTITY webdeveloper.delete.path.cookies.label "Delete Path Cookies">
 <!ENTITY webdeveloper.delete.path.cookies.key "P">
+<!ENTITY webdeveloper.delete.session.cookies.label "Delete Session Cookies">
+<!ENTITY webdeveloper.delete.session.cookies.key "S">
 <!ENTITY webdeveloper.view.cookie.information.label "View Cookie Information">
 <!ENTITY webdeveloper.view.cookie.information.key "V">
 
@@ -448,6 +448,9 @@
 <!ENTITY webdeveloper.add.vertical.line.guide "Add Vertical Line Guide">
 <!ENTITY webdeveloper.color "Color:">
 <!ENTITY webdeveloper.line.guides "Line Guides">
+<!ENTITY webdeveloper.next.position.label "Next Position =">
+<!ENTITY webdeveloper.position.label "Position =">
+<!ENTITY webdeveloper.previous.position.label "Previous Position =">
 
 <!-- Page Magnifier Toolbar -->
 <!ENTITY webdeveloper.magnification.level "Magnification Level:">
@@ -464,8 +467,9 @@
 
 <!-- Ruler Toolbar -->
 <!ENTITY webdeveloper.end.position "End Position:">
-<!ENTITY webdeveloper.height.pixels "Height (pixels):">
+<!ENTITY webdeveloper.height "Height:">
 <!ENTITY webdeveloper.ruler "Ruler">
 <!ENTITY webdeveloper.start.position "Start Position:">
-<!ENTITY webdeveloper.width.pixels "Width (pixels):">
-
+<!ENTITY webdeveloper.width "Width:">
+<!ENTITY webdeveloper.x.equals "X =">
+<!ENTITY webdeveloper.y.equals "Y =">

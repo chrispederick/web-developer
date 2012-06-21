@@ -2,6 +2,27 @@ var WebDeveloper = WebDeveloper || {};
 
 WebDeveloper.Dashboard = WebDeveloper.Dashboard || {};
 
+// Closes all tabs in the dashboard and the dashboard itself
+WebDeveloper.Dashboard.closeDashboard = function()
+{
+	var tabElements	= null;
+	var tabPanels		= document.getElementById("web-developer-dashboard-tab-panels");
+	var tabs				= document.getElementById("web-developer-dashboard-tabs");
+
+	tabElements = tabs.getElementsByTagName("tab");
+
+	// Loop through the tab elements
+	while(tabElements.length)
+	{
+		tabs.removeChild(tabElements[0]);
+	}
+
+	WebDeveloper.Common.empty(tabPanels);
+
+	document.getElementById("web-developer-dashboard").hidden					 = true;
+	document.getElementById("web-developer-dashboard-splitter").hidden = true;
+};
+
 // Closes the given tab in the dashboard
 WebDeveloper.Dashboard.closeDashboardTab = function(title)
 {
@@ -18,15 +39,15 @@ WebDeveloper.Dashboard.closeDashboardTab = function(title)
 	// If the title is set
 	if(title)
 	{
-		tabElements = tabs.childNodes;
+		tabElements = tabs.getElementsByTagName("tab");
 
 		// Loop through the tabs
 		for(i = 0, l = tabElements.length; i < l; i++)
 		{
 			tab = tabElements.item(i);
 
-			// If this is a tab and the tab has a matching label attribute
-			if(tab.nodeName == "tab" && tab.hasAttribute("label") && tab.getAttribute("label") == title)
+			// If the tab has a matching label attribute
+			if(tab.hasAttribute("label") && tab.getAttribute("label") == title)
 			{
 				selectedTab			 = tab;
 				selectedTabPanel = tabPanels.childNodes[i];
@@ -39,12 +60,11 @@ WebDeveloper.Dashboard.closeDashboardTab = function(title)
 	// If a selected tab panel is set, but not a selected tab
 	if(selectedTabPanel && !selectedTab)
 	{
-		var counter								= 0;
 		var selectedTabPanelIndex = 0;
 		var tabPanel							= null;
 		var tabPanelElements			= tabPanels.childNodes;
 
-		tabElements = tabs.childNodes;
+		tabElements = tabs.getElementsByTagName("tab");
 
 		// Loop through the tab panels
 		for(i = 0, l = tabPanelElements.length; i < l; i++)
@@ -60,21 +80,7 @@ WebDeveloper.Dashboard.closeDashboardTab = function(title)
 			selectedTabPanelIndex++;
 		}
 
-		// Loop through the tabs
-		for(i = 0, l = tabElements.length; i < l; i++)
-		{
-			tab = tabElements.item(i);
-
-			// If this is a tab and the tab has a matching label attribute
-			if(tab.nodeName == "tab" && counter == selectedTabPanelIndex)
-			{
-				selectedTab = tab;
-
-				break;
-			}
-
-			counter++;
-		}
+		selectedTab = tabElements.item(selectedTabPanelIndex);
 	}
 
 	// If a selected tab and tab panel are set
@@ -100,15 +106,15 @@ WebDeveloper.Dashboard.closeDashboardTab = function(title)
 WebDeveloper.Dashboard.isOpenInDashboard = function(title)
 {
 	var tab  = null;
-	var tabs = document.getElementById("web-developer-dashboard-tabs").childNodes;
+	var tabs = document.getElementById("web-developer-dashboard-tabs").getElementsByTagName("tab");
 
 	// Loop through the tabs
 	for(var i = 0, l = tabs.length; i < l; i++)
 	{
 		tab = tabs.item(i);
 
-		// If this is a tab and it has a matching label attribute
-		if(tab.nodeName == "tab" && tab.hasAttribute("label") && tab.getAttribute("label") == title)
+		// If the tab has a matching label attribute
+		if(tab.hasAttribute("label") && tab.getAttribute("label") == title)
 		{
 			return true;
 		}
@@ -157,13 +163,13 @@ WebDeveloper.Dashboard.openInDashboard = function(title, url)
 
 		WebDeveloper.Dashboard.positionDashboard();
 
-		// If the dashboard height is less than 100
+		// If the dashboard height is less than 200
 		if(dashboard.height < 200)
 		{
 			dashboard.height = 200;
 		}
 
-		// If the dashboard width is less than 100
+		// If the dashboard width is less than 200
 		if(dashboard.width < 200)
 		{
 			dashboard.width = 200;

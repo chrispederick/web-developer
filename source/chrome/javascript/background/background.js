@@ -53,7 +53,7 @@ WebDeveloper.Background.getColor = function(x, y, eventType)
 
 			color = WebDeveloper.Background.convertRGBToHex(context.getImageData(x, y, 1, 1).data);
 
-			chrome.tabs.executeScript(null, { "code": 'document.getElementById("web-developer-color-picker-' + eventType + '-color").setAttribute("style", "background-color: ' + color + ' !important"); document.getElementById("web-developer-color-picker-' + eventType + '-hex").innerHTML = "' + color + '";' });
+			chrome.tabs.executeScript(null, { "code": "WebDeveloper.ColorPicker.setColor('" + color + "', '" + eventType + "')" });
 		};
 	});
 
@@ -92,6 +92,24 @@ WebDeveloper.Background.getContentFromURLs = function(urls)
 	}
 
 	return contentFromURLs;
+};
+
+// Returns the edit CSS dashboard HTML template
+WebDeveloper.Background.getEditCSSDashboardTemplates = function(parameters)
+{
+	return { "dashboard": ich.dashboard(parameters, true), "editCSS": ich.editCSSPanel(parameters, true), "panel": ich.dashboardPanel(parameters, true), "tab": ich.dashboardTab(parameters, true) };
+};
+
+// Returns the edit CSS tab HTML template
+WebDeveloper.Background.getEditCSSTabTemplates = function(parameters)
+{
+	return { "panel": ich.editCSSTabPanel(parameters, true), "tab": ich.editCSSTab(parameters, true) };
+};
+
+// Returns the element information dashboard HTML template
+WebDeveloper.Background.getElementInformationDashboardTemplates = function(parameters)
+{
+	return { "dashboard": ich.dashboard(parameters, true), "elementInformation": ich.elementInformationPanel(parameters, true), "panel": ich.dashboardPanel(parameters, true), "tab": ich.dashboardTab(parameters, true) };
 };
 
 // Gets the styles from CSS
@@ -200,6 +218,29 @@ WebDeveloper.Background.request = function(request, sender, sendResponse)
 	else if(request.type == "get-content-from-urls")
 	{
 		sendResponse(WebDeveloper.Background.getContentFromURLs(request.urls));
+	}
+	else if(request.type == "get-edit-css-dashboard-templates")
+	{
+		sendResponse(WebDeveloper.Background.getEditCSSDashboardTemplates({ "dashboardTitle": request.dashboardTitle, "tabId": request.tabId, "title": request.title }));
+	}
+	else if(request.type == "get-edit-css-tab-templates")
+	{
+		sendResponse(WebDeveloper.Background.getEditCSSTabTemplates({ "active": request.active, "css": request.css, "position": request.position, "title": request.title }));
+	}
+	else if(request.type == "get-element-information-dashboard-templates")
+	{
+		sendResponse(WebDeveloper.Background.getElementInformationDashboardTemplates({ "dashboardTitle": request.dashboardTitle, "selectAnElementDisplayInformation": request.selectAnElementDisplayInformation, "tabId": request.tabId, "title": request.title }));
+	}
+	else if(request.type == "get-storage-item")
+	{
+		sendResponse({ "value": WebDeveloper.Storage.getItem(request.item) });
+	}
+	else if(request.type == "set-storage-item")
+	{
+		WebDeveloper.Storage.setItem(request.item, request.value);
+
+		// No response required
+		sendResponse({});
 	}
 	else
 	{

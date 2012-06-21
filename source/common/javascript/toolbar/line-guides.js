@@ -1,11 +1,9 @@
 var WebDeveloper = WebDeveloper || {};
 
-WebDeveloper.LineGuides												 = WebDeveloper.LineGuides || {};
-WebDeveloper.LineGuides.hideInformationDelay	 = 0;
-WebDeveloper.LineGuides.hideInformationTimeout = null;
-WebDeveloper.LineGuides.padding								 = 5;
-WebDeveloper.LineGuides.selectedlineGuide			 = null;
-WebDeveloper.LineGuides.spacing								 = 95;
+WebDeveloper.LineGuides										= WebDeveloper.LineGuides || {};
+WebDeveloper.LineGuides.padding						= 2;
+WebDeveloper.LineGuides.selectedlineGuide	= null;
+WebDeveloper.LineGuides.spacing						= 98;
 
 // Adds a horizontal line guide
 WebDeveloper.LineGuides.addHorizontalLineGuide = function()
@@ -18,14 +16,13 @@ WebDeveloper.LineGuides.addHorizontalLineGuide = function()
 	var lineGuidePositions = WebDeveloper.LineGuides.getHorizontalLineGuidePositions(contentDocument);
 	var spacing						 = contentWindow.pageYOffset + WebDeveloper.LineGuides.spacing;
 
-	lineGuideColor.style.backgroundColor = WebDeveloper.Preferences.getExtensionStringPreference("line.guides.color");
+	lineGuideColor.style.backgroundColor = WebDeveloper.LineGuides.getColor();
 	lineGuide.style.top									 = 0;
 
 	lineGuide.addEventListener("mousedown", WebDeveloper.LineGuides.mouseDown, false);
 	lineGuide.addEventListener("mouseout", WebDeveloper.LineGuides.mouseOut, false);
 	lineGuide.addEventListener("mouseover", WebDeveloper.LineGuides.mouseOver, false);
 	lineGuide.addEventListener("mouseup", WebDeveloper.LineGuides.mouseUp, false);
-	lineGuideColor.addEventListener("mouseover", WebDeveloper.LineGuides.clearHideInformationTimeout, false);
 
 	lineGuide.setAttribute("class", "web-developer-line-guide web-developer-horizontal-line-guide");
 	lineGuide.appendChild(lineGuideColor);
@@ -61,7 +58,7 @@ WebDeveloper.LineGuides.addVerticalLineGuide = function()
 	var lineGuidePositions = WebDeveloper.LineGuides.getVerticalLineGuidePositions(contentDocument);
 	var spacing						 = contentWindow.pageXOffset + WebDeveloper.LineGuides.spacing;
 
-	lineGuideColor.style.backgroundColor = WebDeveloper.Preferences.getExtensionStringPreference("line.guides.color");
+	lineGuideColor.style.backgroundColor = WebDeveloper.LineGuides.getColor();
 	lineGuide.style.left								 = 0;
 
 	lineGuide.addEventListener("mousedown", WebDeveloper.LineGuides.mouseDown, false);
@@ -92,45 +89,27 @@ WebDeveloper.LineGuides.addVerticalLineGuide = function()
 	WebDeveloper.Common.getDocumentBodyElement(contentDocument).appendChild(lineGuide);
 };
 
-// Clears the hide information timeout
-WebDeveloper.LineGuides.clearHideInformationTimeout = function()
-{
-	// If the hide information timeout is set
-	if(WebDeveloper.LineGuides.hideInformationTimeout)
-	{
-		window.clearTimeout(WebDeveloper.LineGuides.hideInformationTimeout);
-
-		WebDeveloper.LineGuides.hideInformationTimeout = null;
-	}
-};
-
 // Creates the line guides
 WebDeveloper.LineGuides.createLineGuides = function(contentDocument)
 {
-	var divElement = contentDocument.createElement("div");
-
 	WebDeveloper.LineGuides.addHorizontalLineGuide();
 	WebDeveloper.LineGuides.addVerticalLineGuide();
-
-	divElement.setAttribute("id", "web-developer-line-guide-information");
-	WebDeveloper.Common.getDocumentBodyElement(contentDocument).appendChild(divElement);
-
-	contentDocument.addEventListener("mousemove", WebDeveloper.LineGuides.mouseMove, false);
-	contentDocument.addEventListener("resize", WebDeveloper.LineGuides.resize, false);
 };
 
 // Displays line guides
-WebDeveloper.LineGuides.displayLineGuides = function(display, contentDocument)
+WebDeveloper.LineGuides.displayLineGuides = function(display, contentDocument, toolbarHTML)
 {
 	// If displaying line guides
 	if(display)
 	{
 		WebDeveloper.LineGuides.createLineGuides(contentDocument);
-		WebDeveloper.LineGuides.createToolbar(contentDocument);
+		WebDeveloper.LineGuides.createEvents(contentDocument);
+		WebDeveloper.LineGuides.createToolbar(contentDocument, toolbarHTML);
 	}
 	else
 	{
 		WebDeveloper.LineGuides.removeLineGuides(contentDocument);
+		WebDeveloper.LineGuides.removeEvents(contentDocument);
 		WebDeveloper.LineGuides.removeToolbar(contentDocument);
 	}
 
@@ -153,8 +132,7 @@ WebDeveloper.LineGuides.getLineGuidePosition = function(contentDocument, directi
 	// Loop through the line guide positions
 	for(var i = 0, l = lineGuidePositions.length; i < l; i++)
 	{
-		otherLineGuidePosition = lineGuidePositions[i];
-		otherLineGuidePosition = otherLineGuidePosition.substring(0, otherLineGuidePosition.length - 2);
+		otherLineGuidePosition = parseInt(lineGuidePositions[i].replace(/px/gi, ""), 10) + WebDeveloper.LineGuides.padding;
 
 		// If looking for the next line guide position, the other line guide position is greater than the line guide position and the other line guide position is greater than the saved position
 		if(next && otherLineGuidePosition > lineGuidePosition && otherLineGuidePosition > position)
@@ -231,7 +209,7 @@ WebDeveloper.LineGuides.mouseMove = function(event)
 			WebDeveloper.LineGuides.selectedlineGuide.style.left = event.pageX + "px";
 		}
 
-		WebDeveloper.LineGuides.updateLineGuideInformation(WebDeveloper.LineGuides.selectedlineGuide, event);
+		WebDeveloper.LineGuides.updateLineGuideInformation(WebDeveloper.LineGuides.selectedlineGuide);
 	}
 };
 
@@ -248,13 +226,7 @@ WebDeveloper.LineGuides.mouseOut = function(event)
 		// If the owner document is set
 		if(ownerDocument)
 		{
-			var lineGuideInformation = ownerDocument.getElementById("web-developer-line-guide-information");
-
-			// If the line guide information is found
-			if(lineGuideInformation)
-			{
-				WebDeveloper.LineGuides.hideInformationTimeout = window.setTimeout(function() { lineGuideInformation.style.display = "none"; }, WebDeveloper.LineGuides.hideInformationDelay);
-			}
+			WebDeveloper.LineGuides.hideInformation();
 		}
 	}
 };
@@ -272,21 +244,13 @@ WebDeveloper.LineGuides.mouseOver = function(event)
 		// If the owner document is set
 		if(ownerDocument)
 		{
-			var lineGuideInformation = ownerDocument.getElementById("web-developer-line-guide-information");
-
-			// If the line guide information is found
-			if(lineGuideInformation)
+			// If this is not a line guide
+			if(!WebDeveloper.Common.hasClass(lineGuide, "web-developer-line-guide"))
 			{
-				WebDeveloper.LineGuides.clearHideInformationTimeout();
-
-				// If this is not a line guide
-				if(!WebDeveloper.Common.hasClass(lineGuide, "web-developer-line-guide"))
-				{
-					lineGuide = lineGuide.parentNode;
-				}
-
-				WebDeveloper.LineGuides.updateLineGuideInformation(lineGuide, event);
+				lineGuide = lineGuide.parentNode;
 			}
+
+			WebDeveloper.LineGuides.updateLineGuideInformation(lineGuide);
 		}
 	}
 };
@@ -301,9 +265,6 @@ WebDeveloper.LineGuides.mouseUp = function(event)
 WebDeveloper.LineGuides.removeLineGuides = function(contentDocument)
 {
 	WebDeveloper.Common.removeMatchingElements("#web-developer-line-guide-information, .web-developer-line-guide", contentDocument);
-
-	contentDocument.removeEventListener("mousemove", WebDeveloper.LineGuides.moveLineGuide, false);
-	window.removeEventListener("resize", WebDeveloper.LineGuides.resizeLineGuides, false);
 };
 
 // Handles the resize event on the window
@@ -357,65 +318,37 @@ WebDeveloper.LineGuides.sizeLineGuide = function(lineGuide, contentDocument, con
 };
 
 // Updates the line guide information
-WebDeveloper.LineGuides.updateLineGuideInformation = function(lineGuide, event)
+WebDeveloper.LineGuides.updateLineGuideInformation = function(lineGuide)
 {
-	var ownerDocument = lineGuide.ownerDocument;
+	var nextPosition		 = null;
+	var ownerDocument		 = lineGuide.ownerDocument;
+	var position				 = null;
+	var previousPosition = null;
 
 	// If the owner document is set
 	if(ownerDocument)
 	{
-		var lineGuideInformation = ownerDocument.getElementById("web-developer-line-guide-information");
-
-		// If the line guide information is found
-		if(lineGuideInformation)
+		// If this is not a line guide
+		if(!WebDeveloper.Common.hasClass(lineGuide, "web-developer-line-guide"))
 		{
-			var headerElement			 = ownerDocument.createElement("h1");
-			var lineGuidePositions = null;
-			var nextPosition			 = null;
-			var pElement					 = ownerDocument.createElement("p");
-			var position					 = 0;
-			var previousPosition	 = null;
-			var xPosition					 = event.pageX;
-			var yPosition					 = event.pageY;
-
-			WebDeveloper.LineGuides.clearHideInformationTimeout();
-
-			// If this is not a line guide
-			if(!WebDeveloper.Common.hasClass(lineGuide, "web-developer-line-guide"))
-			{
-				lineGuide = lineGuide.parentNode;
-			}
-
-			// If this is a horizontal line guide
-			if(WebDeveloper.Common.hasClass(lineGuide, "web-developer-horizontal-line-guide"))
-			{
-				position				 = WebDeveloper.Common.getElementPositionY(lineGuide);
-				nextPosition		 = WebDeveloper.LineGuides.getLineGuidePosition(ownerDocument, "horizontal", position, true);
-				previousPosition = WebDeveloper.LineGuides.getLineGuidePosition(ownerDocument, "horizontal", position, false);
-			}
-			else
-			{
-				position				 = WebDeveloper.Common.getElementPositionX(lineGuide);
-				nextPosition		 = WebDeveloper.LineGuides.getLineGuidePosition(ownerDocument, "vertical", position, true);
-				previousPosition = WebDeveloper.LineGuides.getLineGuidePosition(ownerDocument, "vertical", position, false);
-			}
-
-			WebDeveloper.Common.empty(lineGuideInformation);
-
-			headerElement.appendChild(ownerDocument.createTextNode(WebDeveloper.Locales.getString("position") + " = " + (position + WebDeveloper.LineGuides.padding)));
-			lineGuideInformation.appendChild(headerElement);
-
-			pElement.appendChild(ownerDocument.createTextNode(WebDeveloper.Locales.getString("previousLineGuide") + " = " + previousPosition));
-			lineGuideInformation.appendChild(pElement);
-
-			pElement = ownerDocument.createElement("p");
-			pElement.appendChild(ownerDocument.createTextNode(WebDeveloper.Locales.getString("nextLineGuide") + " = " + nextPosition));
-			lineGuideInformation.appendChild(pElement);
-
-			WebDeveloper.Common.adjustElementPosition(lineGuideInformation, xPosition, yPosition, 10);
-
-			// Show the line guide information
-			lineGuideInformation.style.display = "block";
+			lineGuide = lineGuide.parentNode;
 		}
+
+		// If this is a horizontal line guide
+		if(WebDeveloper.Common.hasClass(lineGuide, "web-developer-horizontal-line-guide"))
+		{
+			position				 = WebDeveloper.Common.getElementPositionY(lineGuide) + WebDeveloper.LineGuides.padding;
+			nextPosition		 = WebDeveloper.LineGuides.getLineGuidePosition(ownerDocument, "horizontal", position, true);
+			previousPosition = WebDeveloper.LineGuides.getLineGuidePosition(ownerDocument, "horizontal", position, false);
+		}
+		else
+		{
+			position				 = WebDeveloper.Common.getElementPositionX(lineGuide) + WebDeveloper.LineGuides.padding;
+			nextPosition		 = WebDeveloper.LineGuides.getLineGuidePosition(ownerDocument, "vertical", position, true);
+			previousPosition = WebDeveloper.LineGuides.getLineGuidePosition(ownerDocument, "vertical", position, false);
+		}
+
+		WebDeveloper.LineGuides.updateInformation(position, previousPosition, nextPosition);
 	}
 };
+

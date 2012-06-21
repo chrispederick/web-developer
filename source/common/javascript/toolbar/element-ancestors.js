@@ -81,7 +81,7 @@ WebDeveloper.ElementAncestors.getElementDescription = function(element, active)
 		}
 		else
 		{
-			description += '><a href="#"></a><span class="divider">&gt;</span></li>';
+			description += '><a href="#" class="web-developer-ancestor"></a><span class="divider">&gt;</span></li>';
 		}
 	}
 

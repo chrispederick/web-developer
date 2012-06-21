@@ -32,7 +32,7 @@ WebDeveloper.OutlineCustomElements.initialize = function()
 WebDeveloper.OutlineCustomElements.outline = function()
 {
 	var contentDocument		= null;
-	var documents					= WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow());
+	var documents					= WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
 	var outlineColor				= null;
 	var outlineElement			= null;
 	var outlineElements		= null;

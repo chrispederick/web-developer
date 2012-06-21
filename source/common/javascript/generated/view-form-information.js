@@ -84,7 +84,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
 					tableBody = $("<tbody></tbody>");
 
 					table.append("<thead><tr><th>" + locale.id + "</th><th>" + locale.name + "</th><th>" + locale.type + "</th><th>" + locale.value + "</th><th>" + locale.label + "</th><th>" + locale.size + "</th><th>" + locale.maximumLength + "</th></tr></thead>");
-					tableBody.append(ich.form_elements(form));
+					tableBody.append(ich.formElements(form));
 					container.append("<h4>" + locale.elements + "</h4>");
 					table.append(tableBody);
 					container.append(table);

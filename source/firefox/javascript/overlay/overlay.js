@@ -1,7 +1,14 @@
 var WebDeveloper = WebDeveloper || {};
 
-WebDeveloper.Overlay								 = WebDeveloper.Overlay || {};
-WebDeveloper.Overlay.featureSuffixes = ["app-menu", "context", "menu", "toolbar", "toolbar-button"];
+WebDeveloper.Overlay									= WebDeveloper.Overlay || {};
+WebDeveloper.Overlay.featureSuffixes	= ["app-menu", "context", "menu", "toolbar", "toolbar-button"];
+WebDeveloper.Overlay.preferenceBranch = null;
+
+// Closes the confirmation
+WebDeveloper.Overlay.closeConfirmation = function()
+{
+	// Ignore
+};
 
 // Configures an element for a feature
 WebDeveloper.Overlay.configureFeatureElement = function(id, attribute)
@@ -10,10 +17,14 @@ WebDeveloper.Overlay.configureFeatureElement = function(id, attribute)
 };
 
 // Displays a confirmation dialog
-WebDeveloper.Overlay.displayConfirmation = function(title, message, buttonText)
+WebDeveloper.Overlay.displayConfirmation = function(title, message, buttonText, buttonIcon, callback)
 {
-	// If the hide confirmation dialogs preference is not set to true
-	if(!WebDeveloper.Preferences.getExtensionBooleanPreference("confirmation.dialogs.hide"))
+	// If the hide confirmation dialogs preference is set
+	if(WebDeveloper.Preferences.getExtensionBooleanPreference("confirmation.dialogs.hide"))
+	{
+		callback();
+	}
+	else
 	{
 		var checkBox			= {value: false};
 		var promptService = Components.interfaces.nsIPromptService;
@@ -28,13 +39,9 @@ WebDeveloper.Overlay.displayConfirmation = function(title, message, buttonText)
 		// If the question was confirmed
 		if(result === 0)
 		{
-			return true;
+			callback();
 		}
-
-		return false;
 	}
-
-	return true;
 };
 
 // Initializes the extension
@@ -51,9 +58,11 @@ WebDeveloper.Overlay.initialize = function(event)
 			var consoleService = Components.classes["@mozilla.org/consoleservice;1"].getService().QueryInterface(Components.interfaces.nsIConsoleService);
 			var tabContainer	 = tabBrowser.tabContainer;
 
+			WebDeveloper.Overlay.preferenceBranch = WebDeveloper.Preferences.getExtensionBranch().QueryInterface(Components.interfaces.nsIPrefBranch2);
+
 			WebDeveloper.Upgrade.upgrade();
-			WebDeveloper.Common.setupOptions();
 			WebDeveloper.Overlay.setupKeyboardShortcuts();
+			WebDeveloper.Overlay.updateChrome();
 
 			tabBrowser.addEventListener("load", WebDeveloper.Overlay.pageLoad, true);
 			tabBrowser.addEventListener("unload", WebDeveloper.Overlay.pageUnload, true);
@@ -68,6 +77,12 @@ WebDeveloper.Overlay.initialize = function(event)
 			if(consoleService)
 			{
 				consoleService.registerListener(WebDeveloper.Overlay.ErrorConsoleListener);
+			}
+
+			// If the preference branch is set
+			if(WebDeveloper.Overlay.preferenceBranch)
+			{
+				WebDeveloper.Overlay.preferenceBranch.addObserver("", WebDeveloper.Overlay.PreferenceObserver, false);
 			}
 
 			window.removeEventListener("load", WebDeveloper.Overlay.initialize, false);
@@ -178,6 +193,8 @@ WebDeveloper.Overlay.pageLoad = function(event)
 		else
 		{
 			WebDeveloper.Storage.deleteFeatures(tab);
+			WebDeveloper.Dashboard.closeDashboard();
+			WebDeveloper.ElementAncestors.removeToolbar();
 		}
 
 		// If the selected browser is the one that loaded
@@ -516,7 +533,7 @@ WebDeveloper.Overlay.setupViewSourceWithKeyboardShortcuts = function(keySet)
 WebDeveloper.Overlay.tabSelect = function(event)
 {
 	// If a feature that uses the element information toolbar is active
-	if(WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("displayElementInformation")) || WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("displayStyleInformation")))
+	if(WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("elementInformation")) || WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("styleInformation")))
 	{
 		document.getElementById("web-developer-element-information-toolbar").hidden = false;
 	}
@@ -598,6 +615,12 @@ WebDeveloper.Overlay.uninitialize = function(event)
 				consoleService.unregisterListener(WebDeveloper.Overlay.ErrorConsoleListener);
 			}
 
+			// If the preference branch is set
+			if(WebDeveloper.Overlay.preferenceBranch)
+			{
+				WebDeveloper.Overlay.preferenceBranch.removeObserver("", WebDeveloper.Overlay.PreferenceObserver);
+			}
+
 			window.removeEventListener("close", WebDeveloper.Overlay.uninitialize, false);
 		}
 	}
@@ -605,6 +628,52 @@ WebDeveloper.Overlay.uninitialize = function(event)
 	{
 		// Ignore
 	}
+};
+
+// Updates the chrome
+WebDeveloper.Overlay.updateChrome = function()
+{
+	var hideContextMenuPreference = WebDeveloper.Preferences.getExtensionBooleanPreference("context.hide");
+	var hideMenuPreference				= WebDeveloper.Preferences.getExtensionBooleanPreference("menu.hide");
+	var toolbar										= document.getElementById("web-developer-toolbar");
+
+	// If the toolbar exists
+	if(toolbar)
+	{
+		var toolbarButtons			 = toolbar.getElementsByTagName("toolbarbutton");
+		var toolbarButtonsLength = toolbarButtons.length;
+		var toolbarPreference		 = WebDeveloper.Preferences.getExtensionStringPreference("toolbar.icons");
+
+		toolbar.setAttribute("mode", toolbarPreference);
+
+		// If the toolbar preference is set to icons
+		if(toolbarPreference == "icons")
+		{
+			toolbarPreference = "pictures";
+		}
+
+		toolbar.setAttribute("buttonstyle", toolbarPreference);
+
+		// Loop through the toolbar buttons
+		for(var i = 0; i < toolbarButtonsLength; i++)
+		{
+			toolbarButtons[i].setAttribute("buttonstyle", toolbarPreference);
+		}
+
+		// If the toolbar preference is not set to text
+		if(toolbarPreference != "text")
+		{
+			WebDeveloper.Common.removeElementAttribute(document.getElementById("web-developer-css-statusbar"), "label");
+			WebDeveloper.Common.removeElementAttribute(document.getElementById("web-developer-javascript-statusbar"), "label");
+			WebDeveloper.Common.removeElementAttribute(document.getElementById("web-developer-render-mode-statusbar"), "label");
+		}
+	}
+
+	WebDeveloper.Common.configureElement(document.getElementById("web-developer-app-menu"), "hidden", hideMenuPreference);
+	WebDeveloper.Common.configureElement(document.getElementById("web-developer-context"), "hidden", hideContextMenuPreference);
+	WebDeveloper.Common.configureElement(document.getElementById("web-developer-context-separator1"), "hidden", hideContextMenuPreference);
+	WebDeveloper.Common.configureElement(document.getElementById("web-developer-menu"), "hidden", hideMenuPreference);
+	WebDeveloper.Common.configureElement(document.getElementById("web-developer-seamonkey"), "hidden", hideMenuPreference);
 };
 
 // Updates the CSS status button
@@ -791,6 +860,24 @@ WebDeveloper.Overlay.ErrorConsoleListener =
 		}
 
 		return false;
+	}
+};
+
+// Preference observer
+WebDeveloper.Overlay.PreferenceObserver =
+{
+	// Observes changes in the console
+	observe: function(subject, topic, data)
+	{
+		// If a preference was changed
+		if(topic == "nsPref:changed")
+		{
+			// If the toolbar icons preference was changed
+			if(data == "toolbar.icons")
+			{
+				WebDeveloper.Overlay.updateChrome();
+			}
+		}
 	}
 };
 

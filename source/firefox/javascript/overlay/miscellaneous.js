@@ -25,7 +25,7 @@ WebDeveloper.Overlay.Miscellaneous.clearAllPrivateData = function()
 WebDeveloper.Overlay.Miscellaneous.clearCache = function()
 {
 	// If the clearing is confirmed
-	if(WebDeveloper.Overlay.displayConfirmation(WebDeveloper.Locales.getString("clearCache"), WebDeveloper.Locales.getString("clearCacheConfirmation"), WebDeveloper.Locales.getString("clear")))
+	WebDeveloper.Overlay.displayConfirmation(WebDeveloper.Locales.getString("clearCache"), WebDeveloper.Locales.getString("clearCacheConfirmation"), WebDeveloper.Locales.getString("clear"), null, function()
 	{
 		var cacheInterface = Components.interfaces.nsICache;
 		var cacheService	 = Components.classes["@mozilla.org/network/cache-service;1"].getService(Components.interfaces.nsICacheService);
@@ -40,39 +40,39 @@ WebDeveloper.Overlay.Miscellaneous.clearCache = function()
 		{
 			// Ignore
 		}
-	}
+	});
 };
 
 // Clears the history
 WebDeveloper.Overlay.Miscellaneous.clearHistory = function()
 {
 	// If the clearing is confirmed
-	if(WebDeveloper.Overlay.displayConfirmation(WebDeveloper.Locales.getString("clearHistory"), WebDeveloper.Locales.getString("clearHistoryConfirmation"), WebDeveloper.Locales.getString("clear")))
+	WebDeveloper.Overlay.displayConfirmation(WebDeveloper.Locales.getString("clearHistory"), WebDeveloper.Locales.getString("clearHistoryConfirmation"), WebDeveloper.Locales.getString("clear"), null, function()
 	{
 		WebDeveloper.Overlay.Miscellaneous.removeAllFromHistory();
 
 		WebDeveloper.Common.displayNotification("clearHistoryResult");
-	}
+	});
 };
 
 // Clears the HTTP authentication
 WebDeveloper.Overlay.Miscellaneous.clearHTTPAuthentication = function()
 {
 	// If the clearing is confirmed
-	if(WebDeveloper.Overlay.displayConfirmation(WebDeveloper.Locales.getString("clearHTTPAuthentication"), WebDeveloper.Locales.getString("clearHTTPAuthenticationConfirmation"), WebDeveloper.Locales.getString("clear")))
+	WebDeveloper.Overlay.displayConfirmation(WebDeveloper.Locales.getString("clearHTTPAuthentication"), WebDeveloper.Locales.getString("clearHTTPAuthenticationConfirmation"), WebDeveloper.Locales.getString("clear"), null, function()
 	{
 		var authenticationManager = Components.classes["@mozilla.org/network/http-auth-manager;1"].getService(Components.interfaces.nsIHttpAuthManager);
 
 		authenticationManager.clearAll();
 
 		WebDeveloper.Common.displayNotification("clearHTTPAuthenticationResult");
-	}
+	});
 };
 
 // Displays all hidden elements
 WebDeveloper.Overlay.Miscellaneous.displayHiddenElements = function()
 {
-	WebDeveloper.Miscellaneous.displayHiddenElements(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Miscellaneous.displayHiddenElements(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 };
 
 // Displays line guides
@@ -149,14 +149,14 @@ WebDeveloper.Overlay.Miscellaneous.editHTML = function()
 // Linearizes the page
 WebDeveloper.Overlay.Miscellaneous.linearizePage = function(element)
 {
-	WebDeveloper.Miscellaneous.linearizePage(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Miscellaneous.linearizePage(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(WebDeveloper.Common.getFeatureId(element.getAttribute("id")));
 };
 
 // Makes all frames resizable
 WebDeveloper.Overlay.Miscellaneous.makeFramesResizable = function()
 {
-	WebDeveloper.Miscellaneous.makeFramesResizable(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Miscellaneous.makeFramesResizable(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 };
 
 // Removes an href from the history

@@ -725,12 +725,6 @@ WebDeveloper.Options.selectViewSourceWithOption = function()
 	document.getElementById("web-developer-move-up-view-source-with-option").disabled		= !selectedItem || !selectedIndex;
 };
 
-// Uninitializes the options dialog
-WebDeveloper.Options.uninitialize = function()
-{
-	WebDeveloper.Common.setupOptions();
-};
-
 // Updates the keyboard preferences
 WebDeveloper.Options.updateKeyboardPreferences = function()
 {

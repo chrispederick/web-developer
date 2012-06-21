@@ -5,18 +5,30 @@ WebDeveloper.Generated = WebDeveloper.Generated || {};
 // Adds a section to the document size
 WebDeveloper.Generated.addSection = function(elements, descriptionSingular, descriptionPlural, tableBody, bytesLocale, kilobytesLocale)
 {
-	var description							= descriptionPlural;
 	var element									= null;
 	var elementsLength					= elements.length;
 	var fileSize								= null;
 	var filesLength							= 0;
-	var sectionHeader						= $('<tr class="web-developer-section"><td></td><td></td><td></td></tr>');
+	var sectionHeader						= null;
 	var sectionSize							= 0;
 	var sectionUncompressedSize = 0;
 	var size										= null;
-	var tableRow								= null;
+	var sizeInformation					= {};
 	var uncompressedSize				= null;
-	var url											= null;
+
+	sizeInformation.description = elementsLength + " ";
+
+	// If there is only one element
+	if(elementsLength == 1)
+	{
+		sizeInformation.description += descriptionSingular;
+	}
+	else
+	{
+		sizeInformation.description += descriptionPlural;
+	}
+
+	sectionHeader = ich.documentSizeHeader(sizeInformation);
 
 	tableBody.append(sectionHeader);
 
@@ -26,20 +38,20 @@ WebDeveloper.Generated.addSection = function(elements, descriptionSingular, desc
 		element					 = elements[i];
 		fileSize				 = element.size;
 		size						 = fileSize.size;
-		tableRow				 = $('<tr><td></td><td></td><td></td></tr>');
+		sizeInformation  = {};
 		uncompressedSize = fileSize.uncompressedSize;
-		url							 = element.url;
 
 		sectionSize += size;
+
 		filesLength++;
 
-		$("td:eq(0)", tableRow).html('<a href="' + url + '" target="_blank">' + url + "</a>");
-		$("td:eq(1)", tableRow).html(WebDeveloper.Common.formatFileSize(size, bytesLocale, kilobytesLocale));
+		sizeInformation.size = WebDeveloper.Common.formatFileSize(size, bytesLocale, kilobytesLocale);
+		sizeInformation.url  = element.url;
 
 		// If the uncompressed size is set
 		if(uncompressedSize)
 		{
-			$("td:eq(2)", tableRow).html(WebDeveloper.Common.formatFileSize(uncompressedSize, bytesLocale, kilobytesLocale));
+			sizeInformation.uncompressedSize = WebDeveloper.Common.formatFileSize(uncompressedSize, bytesLocale, kilobytesLocale);
 
 			sectionUncompressedSize += uncompressedSize;
 		}
@@ -51,19 +63,11 @@ WebDeveloper.Generated.addSection = function(elements, descriptionSingular, desc
 		// If this is an odd row
 		if(i % 2 === 0)
 		{
-			tableRow.addClass("odd");
+			sizeInformation.stripe = ' class="odd"';
 		}
 
-		tableBody.append(tableRow);
+		tableBody.append(ich.documentSizeElement(sizeInformation));
 	}
-
-	// If there is only one element
-	if(elementsLength == 1)
-	{
-		description = descriptionSingular;
-	}
-
-	$("td:eq(0)", sectionHeader).html(elementsLength + " " + description);
 
 	// If the size is set
 	if(sectionSize > 0)
@@ -83,8 +87,10 @@ WebDeveloper.Generated.addSection = function(elements, descriptionSingular, desc
 // Collapses all sections
 WebDeveloper.Generated.collapseAllSections = function(event)
 {
-	$(".web-developer-section").addClass("web-developer-collapsed");
-	$("tr:not(.web-developer-section, .web-developer-total)", $("tbody")).slideUp(WebDeveloper.Generated.animationSpeed);
+	var tableBody = $("tbody");
+
+	$("i", tableBody).removeClass("icon-caret-down").addClass("icon-caret-right");
+	$("tr:not(#web-developer-total, .web-developer-section)", tableBody).slideUp(WebDeveloper.Generated.animationSpeed);
 
 	event.preventDefault();
 };
@@ -92,8 +98,10 @@ WebDeveloper.Generated.collapseAllSections = function(event)
 // Expands all sections
 WebDeveloper.Generated.expandAllSections = function(event)
 {
-	$(".web-developer-section").removeClass("web-developer-collapsed");
-	$("tr:not(.web-developer-section, .web-developer-total)", $("tbody")).slideDown(WebDeveloper.Generated.animationSpeed);
+	var tableBody = $("tbody");
+
+	$("i", tableBody).removeClass("icon-caret-right").addClass("icon-caret-down");
+	$("tr:not(#web-developer-total, .web-developer-section)", tableBody).slideDown(WebDeveloper.Generated.animationSpeed);
 
 	event.preventDefault();
 };
@@ -101,21 +109,22 @@ WebDeveloper.Generated.expandAllSections = function(event)
 // Toggles a section
 WebDeveloper.Generated.toggleSection = function()
 {
-	$(this).toggleClass("web-developer-collapsed").nextUntil(".web-developer-section, .web-developer-total").slideToggle(WebDeveloper.Generated.animationSpeed);
+	var sectionHeader = $(this);
+
+	$("i", sectionHeader).toggleClass("icon-caret-down").toggleClass("icon-caret-right");
+	sectionHeader.nextUntil("#web-developer-total, .web-developer-section").slideToggle(WebDeveloper.Generated.animationSpeed);
 };
 
 // Initializes the page with data and locale
 WebDeveloper.Generated.initialize = function(data, locale)
 {
 	var bytesLocale						= locale.bytes;
-	var description						= locale.files;
 	var documentSize					= locale.documentSize;
 	var filesLength						= 0;
 	var kilobytesLocale				= locale.kilobytes;
 	var sectionResults				= null;
-	var table									= $('<table class="table"></table>');
-	var tableBody							= $("<tbody></tbody>");
-	var tableRow							= $('<tr class="web-developer-total"><td></td><td></td><td></td></tr>');
+	var tableBody							= null;
+	var total									= {};
 	var totalSize							= 0;
 	var totalUncompressedSize = 0;
 
@@ -123,8 +132,9 @@ WebDeveloper.Generated.initialize = function(data, locale)
 	WebDeveloper.Generated.localizeHeader(locale);
 	WebDeveloper.Generated.setPageTitle(documentSize, data, locale);
 
-	table.append("<thead><tr><th></th><th>" + locale.size + "</th><th>" + locale.uncompressedSize + "</th></tr></thead>");
+	$("#content").append(ich.documentSizeTable(locale));
 
+	tableBody			 = $("tbody");
 	sectionResults = WebDeveloper.Generated.addSection(data.documents, locale.document, locale.documents, tableBody, bytesLocale, kilobytesLocale);
 
 	filesLength						+= sectionResults.files;
@@ -155,33 +165,35 @@ WebDeveloper.Generated.initialize = function(data, locale)
 	totalSize							+= sectionResults.size;
 	totalUncompressedSize += sectionResults.uncompressedSize;
 
+	total.description = filesLength + " ";
+
 	// If there is only one file
 	if(filesLength == 1)
 	{
-		description = locale.file;
+		total.description += locale.file;
 	}
-
-	$("td:eq(0)", tableRow).html(filesLength + " " + description);
+	else
+	{
+		total.description += locale.files;
+	}
 
 	// If the size is set
 	if(totalSize > 0)
 	{
-		$("td:eq(1)", tableRow).html(WebDeveloper.Common.formatFileSize(totalSize, bytesLocale, kilobytesLocale));
+		total.size = WebDeveloper.Common.formatFileSize(totalSize, bytesLocale, kilobytesLocale);
 	}
 
 	// If the uncompressed size is set
 	if(totalUncompressedSize > 0)
 	{
-		$("td:eq(2)", tableRow).html(WebDeveloper.Common.formatFileSize(totalUncompressedSize, bytesLocale, kilobytesLocale));
+		total.uncompressedSize = WebDeveloper.Common.formatFileSize(totalUncompressedSize, bytesLocale, kilobytesLocale);
 	}
 
-	tableBody.append(tableRow);
-	table.append(tableBody);
-	$("#content").append(table);
+	tableBody.append(ich.documentSizeTotal(total));
 
-	$("tr:not(.web-developer-section, .web-developer-total)", $("tbody")).hide();
+	$("tr:not(#web-developer-total, .web-developer-section)", tableBody).hide();
 
-	$(".web-developer-section").addClass("web-developer-collapsed").click(WebDeveloper.Generated.toggleSection);
+	$(".web-developer-section").click(WebDeveloper.Generated.toggleSection);
 	$("#web-developer-collapse-all").click(WebDeveloper.Generated.collapseAllSections);
 	$("#web-developer-expand-all").click(WebDeveloper.Generated.expandAllSections);
 };

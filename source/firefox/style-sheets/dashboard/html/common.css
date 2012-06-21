@@ -1,11 +1,4 @@
-/* ! Dashboard HTML styles */
+/* Dashboard HTML styles */
 
-html { overflow: auto; }
-#web-developer-content { background-color: #f5f5f5; border-style: none; color: #333; font-family: Menlo, Monaco, "Courier New", monospace; font-size: 12px; margin: 0; padding: 0; word-wrap: normal; width: 100%; }
-#web-developer-ancestors { margin-top: 10px; }
-#web-developer-ancestors:after, #web-developer-ancestors:before { clear: both; content: ""; display: block; height: 0; overflow: hidden; visibility: hidden; }
-#web-developer-copy-ancestor-path { float: right; margin-top: 5px; }
-#web-developer-information { color: #bfbfbf; font-size: 30px; line-height: 36px; margin-top: 20px; }
-.breadcrumb { -webkit-border-radius: 3px; border-radius: 3px; border-style: solid; position: relative; top: 2px; }
-.container-fluid { padding: 0 20px; }
-.web-developer-middle-ancestor a { cursor: text; text-decoration: none; }
+html.vertical body { padding: 0; }
+html.vertical #web-developer-copy-ancestor-path { float: none; margin: 0 0 5px 0; }

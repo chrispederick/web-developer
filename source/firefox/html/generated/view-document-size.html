@@ -41,6 +41,22 @@
 <script src="javascript/common.js"></script>
 <script src="javascript/view-document-size.js"></script>
 
+<script id="documentSizeElement" type="text/html">
+	<tr{{{stripe}}}><td><a href="{{url}}" target="_blank">{{url}}</a></td><td>{{size}}</td><td>{{uncompressedSize}}</td></tr>
+</script>
+
+<script id="documentSizeHeader" type="text/html">
+	<tr class="web-developer-section"><td><i class="icon-caret-right"></i>{{description}}</td><td></td><td></td></tr>
+</script>
+
+<script id="documentSizeTable" type="text/html">
+	<table class="table"><thead><tr><th></th><th>{{size}}</th><th>{{uncompressedSize}}</th></tr></thead><tbody></tbody></table>
+</script>
+
+<script id="documentSizeTotal" type="text/html">
+	<tr id="web-developer-total"><td>{{description}}</td><td>{{size}}</td><td>{{uncompressedSize}}</td></tr>
+</script>
+
 </body>
 
 </html>

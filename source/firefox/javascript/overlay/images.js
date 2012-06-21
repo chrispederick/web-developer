@@ -53,7 +53,7 @@ WebDeveloper.Overlay.Images.displayAltAttributes = function(element)
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.Images.displayAltAttributes(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Images.displayAltAttributes(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
@@ -62,7 +62,7 @@ WebDeveloper.Overlay.Images.displayImageDimensions = function(element)
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.Images.displayImageDimensions(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Images.displayImageDimensions(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
@@ -71,7 +71,7 @@ WebDeveloper.Overlay.Images.displayImageFileSizes = function(element)
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.Images.displayImageFileSizes(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Images.displayImageFileSizes(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
@@ -80,7 +80,7 @@ WebDeveloper.Overlay.Images.displayImagePaths = function(element)
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.Images.displayImagePaths(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Images.displayImagePaths(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
@@ -98,7 +98,7 @@ WebDeveloper.Overlay.Images.findBrokenImages = function()
 // Hides the background images in a document
 WebDeveloper.Overlay.Images.hideBackgroundImages = function(element)
 {
-	WebDeveloper.Images.hideBackgroundImages(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Images.hideBackgroundImages(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(WebDeveloper.Common.getFeatureId(element.getAttribute("id")));
 };
 
@@ -107,14 +107,14 @@ WebDeveloper.Overlay.Images.hideImages = function(element)
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.Images.hideImages(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Images.hideImages(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
 // Makes all images full size
 WebDeveloper.Overlay.Images.makeImagesFullSize = function()
 {
-	WebDeveloper.Images.makeImagesFullSize(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Images.makeImagesFullSize(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 };
 
 // Makes all images invisible
@@ -122,14 +122,14 @@ WebDeveloper.Overlay.Images.makeImagesInvisible = function(element)
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.Images.makeImagesInvisible(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Images.makeImagesInvisible(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
 // Outlines all images
 WebDeveloper.Overlay.Images.outlineAllImages = function(element)
 {
-	WebDeveloper.Images.outlineAllImages(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Images.outlineAllImages(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(WebDeveloper.Common.getFeatureId(element.getAttribute("id")));
 };
 
@@ -138,7 +138,7 @@ WebDeveloper.Overlay.Images.outlineBackgroundImages = function(element)
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.Images.outlineBackgroundImages(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Images.outlineBackgroundImages(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
@@ -147,14 +147,14 @@ WebDeveloper.Overlay.Images.outlineImagesWithAdjustedDimensions = function(eleme
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.Images.outlineImagesWithAdjustedDimensions(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Images.outlineImagesWithAdjustedDimensions(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
 // Outlines all images with empty alt attributes
 WebDeveloper.Overlay.Images.outlineImagesWithEmptyAltAttributes = function(element)
 {
-	WebDeveloper.Images.outlineImagesWithEmptyAltAttributes(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Images.outlineImagesWithEmptyAltAttributes(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(WebDeveloper.Common.getFeatureId(element.getAttribute("id")));
 };
 
@@ -163,28 +163,28 @@ WebDeveloper.Overlay.Images.outlineImagesWithOversizedDimensions = function(elem
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.Images.outlineImagesWithOversizedDimensions(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Images.outlineImagesWithOversizedDimensions(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
 // Outlines all images without alt attributes
 WebDeveloper.Overlay.Images.outlineImagesWithoutAltAttributes = function(element)
 {
-	WebDeveloper.Images.outlineImagesWithoutAltAttributes(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Images.outlineImagesWithoutAltAttributes(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(WebDeveloper.Common.getFeatureId(element.getAttribute("id")));
 };
 
 // Outlines all images without dimensions
 WebDeveloper.Overlay.Images.outlineImagesWithoutDimensions = function(element)
 {
-	WebDeveloper.Images.outlineImagesWithEmptyAltAttributes(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Images.outlineImagesWithEmptyAltAttributes(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(WebDeveloper.Common.getFeatureId(element.getAttribute("id")));
 };
 
 // Reloads images
 WebDeveloper.Overlay.Images.reloadImages = function()
 {
-	WebDeveloper.Images.reloadImages(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Images.reloadImages(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 };
 
 // Replaces all images with alt attributes
@@ -192,7 +192,7 @@ WebDeveloper.Overlay.Images.replaceImagesWithAltAttributes = function(element)
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.Images.replaceImagesWithAltAttributes(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Images.replaceImagesWithAltAttributes(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
@@ -271,16 +271,5 @@ WebDeveloper.Overlay.Images.updateOutlineImagesMenu = function()
 // Displays all the images
 WebDeveloper.Overlay.Images.viewImageInformation = function()
 {
-	var locale = WebDeveloper.Locales.setupGeneratedLocale();
-
-	locale.alt			= WebDeveloper.Locales.getString("alt");
-	locale.height		= WebDeveloper.Locales.getString("height");
-	locale.image		= WebDeveloper.Locales.getString("image");
-	locale.images		= WebDeveloper.Locales.getString("images");
-	locale.property = WebDeveloper.Locales.getString("property");
-	locale.src			= WebDeveloper.Locales.getString("src");
-	locale.value		= WebDeveloper.Locales.getString("value");
-	locale.width		= WebDeveloper.Locales.getString("width");
-
-	WebDeveloper.Overlay.openGeneratedTab(WebDeveloper.Common.getChromeURL("generated/view-image-information.html"), WebDeveloper.Content.getImages(), locale);
+	WebDeveloper.Overlay.openGeneratedTab(WebDeveloper.Common.getChromeURL("generated/view-image-information.html"), WebDeveloper.Content.getImages(), WebDeveloper.Overlay.Images.getViewImageInformationLocale());
 };

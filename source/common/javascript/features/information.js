@@ -736,7 +736,7 @@ WebDeveloper.Information.resizeDivDimensions = function()
 	// If the div dimensions are not already updating
 	if(!WebDeveloper.Information.divDimensionsUpdating)
 	{
-		var documents = WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow());
+		var documents = WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
 
 		// Loop through the documents
 		for(var i = 0, l = documents.length; i < l; i++)

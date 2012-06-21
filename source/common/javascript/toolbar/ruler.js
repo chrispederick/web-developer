@@ -50,25 +50,20 @@ WebDeveloper.Ruler.createRuler = function(contentDocument)
 	WebDeveloper.Ruler.container.appendChild(WebDeveloper.Ruler.ruler);
 
 	WebDeveloper.Ruler.ruler.style.height = (WebDeveloper.Ruler.endY - WebDeveloper.Ruler.startY) + "px";
-	WebDeveloper.Ruler.ruler.style.left	= WebDeveloper.Ruler.startX + "px";
+	WebDeveloper.Ruler.ruler.style.left		= WebDeveloper.Ruler.startX + "px";
 	WebDeveloper.Ruler.ruler.style.top		= WebDeveloper.Ruler.startY + "px";
 	WebDeveloper.Ruler.ruler.style.width	= (WebDeveloper.Ruler.endX - WebDeveloper.Ruler.startX) + "px";
-
-	contentDocument.addEventListener("mousedown", WebDeveloper.Ruler.mouseDown, true);
-	contentDocument.addEventListener("mousemove", WebDeveloper.Ruler.mouseMove, false);
-	contentDocument.addEventListener("mouseup", WebDeveloper.Ruler.mouseUp, true);
-	contentDocument.addEventListener("resize", WebDeveloper.Ruler.resizeDocument, false);
 
 	// Run this on a delay because the styles must be all setup
 	window.setTimeout(function()
 	{
 		WebDeveloper.Ruler.resizeBackgrounds();
-		WebDeveloper.Ruler.updateInformation(contentDocument);
+		WebDeveloper.Ruler.updateInformation();
 	}, 100);
 };
 
 // Displays the ruler
-WebDeveloper.Ruler.displayRuler = function(display, contentDocument)
+WebDeveloper.Ruler.displayRuler = function(display, contentDocument, toolbarHTML)
 {
 	// Run first so that the size calculations are accurate on setup
 	WebDeveloper.Common.toggleStyleSheet("toolbar/ruler.css", "web-developer-ruler-styles", contentDocument, false);
@@ -78,11 +73,13 @@ WebDeveloper.Ruler.displayRuler = function(display, contentDocument)
 	{
 		WebDeveloper.Ruler.initialize();
 		WebDeveloper.Ruler.createRuler(contentDocument);
-		WebDeveloper.Ruler.createToolbar(contentDocument);
+		WebDeveloper.Ruler.createEvents(contentDocument);
+		WebDeveloper.Ruler.createToolbar(contentDocument, toolbarHTML);
 	}
 	else
 	{
 		WebDeveloper.Ruler.removeRuler(contentDocument);
+		WebDeveloper.Ruler.removeEvents(contentDocument);
 		WebDeveloper.Ruler.removeToolbar(contentDocument);
 	}
 };
@@ -171,7 +168,7 @@ WebDeveloper.Ruler.mouseDown = function(event)
 						WebDeveloper.Ruler.startX = xPosition;
 						WebDeveloper.Ruler.startY = yPosition;
 
-						WebDeveloper.Ruler.updateInformation(ownerDocument);
+						WebDeveloper.Ruler.updateInformation();
 					}
 
 					event.stopPropagation();
@@ -256,7 +253,7 @@ WebDeveloper.Ruler.mouseMove = function(event)
 				}
 
 				WebDeveloper.Ruler.resizeBackgrounds();
-				WebDeveloper.Ruler.updateInformation(ownerDocument);
+				WebDeveloper.Ruler.updateInformation();
 			}
 		}
 	}
@@ -265,52 +262,63 @@ WebDeveloper.Ruler.mouseMove = function(event)
 // Handles the mouse up event
 WebDeveloper.Ruler.mouseUp = function(event)
 {
-	var eventTarget = event.target;
-
-	// If the event target is set
-	if(eventTarget)
+	// If the click was not a right click
+	if(event.button != 2)
 	{
-		var ownerDocument = eventTarget.ownerDocument;
+		var eventTarget = event.target;
 
-		// If the event target has an owner document
-		if(ownerDocument)
+		// If the event target is set
+		if(eventTarget)
 		{
-			// If not moving the ruler
-			if(!WebDeveloper.Ruler.move)
+			var ownerDocument = eventTarget.ownerDocument;
+
+			// If the event target has an owner document
+			if(ownerDocument)
 			{
-				var xPosition = event.pageX;
-				var yPosition = event.pageY;
+				var tagName = eventTarget.tagName;
+				var toolbar = ownerDocument.getElementById("web-developer-ruler-toolbar");
 
-				// If the X position is greater than the start X position
-				if(xPosition > WebDeveloper.Ruler.startX)
+				// If the event target is not the toolbar, the toolbar is not an ancestor of the event target and the event target is not a scrollbar
+				if(eventTarget != toolbar && !WebDeveloper.Common.isAncestor(eventTarget, toolbar) && tagName && tagName.toLowerCase() != "scrollbar")
 				{
-					WebDeveloper.Ruler.endX = xPosition;
-				}
-				else
-				{
-					WebDeveloper.Ruler.endX		= WebDeveloper.Ruler.startX;
-					WebDeveloper.Ruler.startX = xPosition;
-				}
+					// If not moving the ruler
+					if(!WebDeveloper.Ruler.move)
+					{
+						var xPosition = event.pageX;
+						var yPosition = event.pageY;
 
-				// If the Y position is greater than the start Y position
-				if(yPosition > WebDeveloper.Ruler.startY)
-				{
-					WebDeveloper.Ruler.endY = yPosition;
-				}
-				else
-				{
-					WebDeveloper.Ruler.endY		= WebDeveloper.Ruler.startY;
-					WebDeveloper.Ruler.startY = yPosition;
+						// If the X position is greater than the start X position
+						if(xPosition > WebDeveloper.Ruler.startX)
+						{
+							WebDeveloper.Ruler.endX = xPosition;
+						}
+						else
+						{
+							WebDeveloper.Ruler.endX		= WebDeveloper.Ruler.startX;
+							WebDeveloper.Ruler.startX = xPosition;
+						}
+
+						// If the Y position is greater than the start Y position
+						if(yPosition > WebDeveloper.Ruler.startY)
+						{
+							WebDeveloper.Ruler.endY = yPosition;
+						}
+						else
+						{
+							WebDeveloper.Ruler.endY		= WebDeveloper.Ruler.startY;
+							WebDeveloper.Ruler.startY = yPosition;
+						}
+					}
+
+					WebDeveloper.Ruler.drag		= false;
+					WebDeveloper.Ruler.move		= false;
+					WebDeveloper.Ruler.moveX	= 0;
+					WebDeveloper.Ruler.moveY	= 0;
+					WebDeveloper.Ruler.resize = false;
+
+					WebDeveloper.Ruler.updateInformation();
 				}
 			}
-
-			WebDeveloper.Ruler.drag		= false;
-			WebDeveloper.Ruler.move		= false;
-			WebDeveloper.Ruler.moveX	= 0;
-			WebDeveloper.Ruler.moveY	= 0;
-			WebDeveloper.Ruler.resize = false;
-
-			WebDeveloper.Ruler.updateInformation(ownerDocument);
 		}
 	}
 };
@@ -318,11 +326,6 @@ WebDeveloper.Ruler.mouseUp = function(event)
 // Removes the ruler
 WebDeveloper.Ruler.removeRuler = function(contentDocument)
 {
-	contentDocument.removeEventListener("mousedown", WebDeveloper.Ruler.mouseDown, true);
-	contentDocument.removeEventListener("mousemove", WebDeveloper.Ruler.mouseMove, false);
-	contentDocument.removeEventListener("mouseup", WebDeveloper.Ruler.mouseUp, true);
-	contentDocument.removeEventListener("resize", WebDeveloper.Ruler.resizeDocument, false);
-
 	WebDeveloper.Common.removeMatchingElements("#web-developer-ruler-container", contentDocument);
 };
 

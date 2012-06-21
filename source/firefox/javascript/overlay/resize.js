@@ -150,7 +150,6 @@ WebDeveloper.Overlay.Resize.viewResponsiveLayouts = function()
 	var description = null;
 	var height			= null;
 	var layout			= null;
-	var locale			= WebDeveloper.Locales.setupGeneratedLocale();
 	var width				= null;
 
 	data.layouts = [];
@@ -175,9 +174,5 @@ WebDeveloper.Overlay.Resize.viewResponsiveLayouts = function()
 		}
 	}
 
-	locale.layouts					 = WebDeveloper.Locales.getString("layouts");
-	locale.reloadLayouts		 = WebDeveloper.Locales.getString("reloadLayouts");
-	locale.responsiveLayouts = WebDeveloper.Locales.getString("responsiveLayouts");
-
-	WebDeveloper.Overlay.openGeneratedTab(WebDeveloper.Common.getChromeURL("generated/view-responsive-layouts.html"), data, locale);
+	WebDeveloper.Overlay.openGeneratedTab(WebDeveloper.Common.getChromeURL("generated/view-responsive-layouts.html"), data, WebDeveloper.Overlay.Resize.getViewResponsiveLayoutsLocale());
 };

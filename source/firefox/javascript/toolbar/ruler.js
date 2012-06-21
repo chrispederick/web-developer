@@ -8,6 +8,15 @@ WebDeveloper.Ruler.convertHexColorToRGB = function(hexColor, opacity)
 	return "rgba(" + parseInt(hexColor.substring(1, 3), 16) + "," + parseInt(hexColor.substring(3, 5), 16) + "," + parseInt(hexColor.substring(5, 7), 16) + "," + opacity + ")";
 };
 
+// Creates the ruler events
+WebDeveloper.Ruler.createEvents = function(contentDocument)
+{
+	contentDocument.addEventListener("mousedown", WebDeveloper.Ruler.mouseDown, true);
+	contentDocument.addEventListener("mousemove", WebDeveloper.Ruler.mouseMove, false);
+	contentDocument.addEventListener("mouseup", WebDeveloper.Ruler.mouseUp, true);
+	contentDocument.addEventListener("resize", WebDeveloper.Ruler.resizeDocument, false);
+};
+
 // Creates the ruler toolbar
 WebDeveloper.Ruler.createToolbar = function(contentDocument)
 {
@@ -15,6 +24,15 @@ WebDeveloper.Ruler.createToolbar = function(contentDocument)
 
 	WebDeveloper.Common.configureElement(document.getElementById("web-developer-ruler-toolbar"), "hidden", false);
 	WebDeveloper.Ruler.updateColor();
+};
+
+// Removes the ruler events
+WebDeveloper.Ruler.removeEvents = function(contentDocument)
+{
+	contentDocument.removeEventListener("mousedown", WebDeveloper.Ruler.mouseDown, true);
+	contentDocument.removeEventListener("mousemove", WebDeveloper.Ruler.mouseMove, false);
+	contentDocument.removeEventListener("mouseup", WebDeveloper.Ruler.mouseUp, true);
+	contentDocument.removeEventListener("resize", WebDeveloper.Ruler.resizeDocument, false);
 };
 
 // Removes the ruler toolbar
@@ -66,6 +84,7 @@ WebDeveloper.Ruler.updateHeight = function(element)
 		WebDeveloper.Ruler.ruler.style.height	= (height - 2) + "px";
 		WebDeveloper.Ruler.endY								= WebDeveloper.Ruler.startY + height;
 
+		WebDeveloper.Ruler.resizeBackgrounds();
 		WebDeveloper.Ruler.updateInformation(contentDocument);
 	}
 };
@@ -123,6 +142,7 @@ WebDeveloper.Ruler.updateWidth = function(element)
 		WebDeveloper.Ruler.ruler.style.width = (width - 2) + "px";
 		WebDeveloper.Ruler.endX							 = WebDeveloper.Ruler.startX + width;
 
+		WebDeveloper.Ruler.resizeBackgrounds();
 		WebDeveloper.Ruler.updateInformation(contentDocument);
 	}
 };

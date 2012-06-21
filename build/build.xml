@@ -25,7 +25,7 @@
     <antcall target="build.chrome.icons"/>
     <antcall target="build.chrome.locales"/>
     <antcall target="build.chrome.options"/>
-    <antcall target="build.chrome.popup"/>
+    <antcall target="build.chrome.overlay"/>
     <antcall target="build.chrome.toolbars"/>
   </target>
 
@@ -43,6 +43,7 @@
     <concat destfile="chrome/about/about.css">
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/common/common.css"/>
     	<fileset file="../source/common/style-sheets/about/about.css"/>
     </concat>
     <copy file="../images/common/logos/16.png" tofile="chrome/about/images/favicon.png"/>
@@ -56,10 +57,13 @@
       <filterset refid="chrome.filters"/>
     </copy>
     <concat destfile="chrome/background/javascript/background.temp">
+      <fileset file="../source/common/javascript/common/jquery/jquery.js"/>
+      <fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
     	<fileset file="../source/chrome/javascript/background/background.js"/>
-    	<fileset file="../source/chrome/javascript/background/storage.js"/>
       <fileset file="../source/chrome/javascript/locales/locales.js"/>
-    	<fileset file="../source/chrome/javascript/background/upgrade.js"/>
+    	<fileset file="../source/chrome/javascript/storage/storage.js"/>
+    	<fileset file="../source/common/javascript/upgrade/upgrade.js"/>
+    	<fileset file="../source/chrome/javascript/upgrade/upgrade.js"/>
     </concat>
     <move file="chrome/background/javascript/background.temp" tofile="chrome/background/javascript/background.js">
       <filterset refid="chrome.filters"/>
@@ -89,16 +93,34 @@
   <!-- Builds the dashboard for Chrome -->
   <target name="build.chrome.dashboard" depends="initialize.chrome">
     <echo level="info" message="Building the dashboard"/>
-    <concat destfile="chrome/dashboard/javascript/dashboard.temp">
-    	<fileset file="../source/common/javascript/dashboard/dashboard.js"/>
-    	<fileset file="../source/chrome/javascript/dashboard/dashboard.js"/>
-    	<fileset file="../source/chrome/javascript/dashboard/edit-css.js"/>
+    <concat destfile="chrome/dashboard/javascript/html/dashboard.js">
+      <fileset file="../source/common/javascript/common/jquery/jquery.js"/>
+      <fileset file="../source/common/javascript/common/bootstrap/tab.js"/>
+    	<fileset file="../source/common/javascript/toolbar/html/element-ancestors.js"/>
+    	<fileset file="../source/chrome/javascript/dashboard/common.js"/>
     </concat>
-    <move file="chrome/dashboard/javascript/dashboard.temp" tofile="chrome/dashboard/javascript/dashboard.js">
-      <filterset refid="chrome.filters"/>
-    </move>
+    <concat destfile="chrome/dashboard/javascript/dashboard.js">
+    	<fileset file="../source/common/javascript/common/common.js"/>
+    	<fileset file="../source/chrome/javascript/common/common.js"/>
+    	<fileset file="../source/common/javascript/dashboard/dashboard.js"/>
+	   	<fileset file="../source/chrome/javascript/dashboard/dashboard.js"/>
+    	<fileset file="../source/common/javascript/dashboard/element-information.js"/>
+    	<fileset file="../source/chrome/javascript/dashboard/element-information.js"/>
+    	<fileset file="../source/common/javascript/dashboard/edit-css.js"/>
+    	<fileset file="../source/chrome/javascript/dashboard/edit-css.js"/>
+    	<fileset file="../source/common/javascript/toolbar/element-ancestors.js"/>
+    	<fileset file="../source/chrome/javascript/toolbar/element-ancestors.js"/>
+    </concat>
     <copy file="../source/chrome/style-sheets/dashboard/dashboard.css" tofile="chrome/dashboard/style-sheets/dashboard.css"/>
-    <copy file="../images/common/logos/16.png" tofile="chrome/dashboard/images/logo.png"/>
+    <concat destfile="chrome/dashboard/style-sheets/common.css">
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/common/common.css"/>
+    	<fileset file="../source/common/style-sheets/dashboard/common.css"/>
+    	<fileset file="../source/common/style-sheets/dashboard/element-information.css"/>
+    	<fileset file="../source/chrome/style-sheets/dashboard/common.css"/>
+    </concat>
+    <copy file="../images/common/logos/monochrome.png" tofile="chrome/dashboard/images/logo.png"/>
 	</target>
 
   <!-- Builds the features for Chrome -->
@@ -153,6 +175,7 @@
     <concat destfile="chrome/validation/validation.css">
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/common/common.css"/>
     	<fileset file="../source/common/style-sheets/generated/common.css"/>
     </concat>
     <copy file="../images/common/logos/16.png" tofile="chrome/validation/images/favicon.png"/>
@@ -185,14 +208,25 @@
     	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
     	<fileset file="../source/common/javascript/common/codemirror/javascript.js"/>
     </concat>
+    <concat destfile="chrome/generated/javascript/view-cookie-information.js">
+      <fileset file="../source/common/javascript/common/bootstrap/modal.js"/>
+      <fileset file="../source/common/javascript/common/bootstrap/tooltip.js"/>
+      <fileset file="../source/common/javascript/common/bootstrap/popover.js"/>
+      <fileset file="../source/common/javascript/common/bootstrap/transition.js"/>
+    	<fileset file="../source/common/javascript/generated/view-cookie-information.js"/>
+    	<fileset file="../source/chrome/javascript/features/cookies.js"/>
+    </concat>
     <copy todir="chrome/generated/javascript">
       <fileset dir="../source/common/javascript/generated">
      		<exclude name="common.js"/>
+     		<exclude name="view-cookie-information.js"/>
       </fileset>
     </copy>
     <concat destfile="chrome/generated/common.css">
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/font-awesome.css"/>
+    	<fileset file="../source/common/style-sheets/common/common.css"/>
     	<fileset file="../source/common/style-sheets/generated/common.css"/>
     </concat>
     <concat destfile="chrome/generated/syntax-highlight.css">
@@ -201,8 +235,8 @@
     </concat>
     <copy file="../images/common/logos/16.png" tofile="chrome/generated/images/favicon.png"/>
     <copy file="../images/common/logos/monochrome.png" tofile="chrome/generated/images/logo.png"/>
-    <copy todir="chrome/generated/images">
-      <fileset dir="../images/common/generated"/>
+    <copy todir="chrome/generated/fonts">
+      <fileset dir="../source/common/fonts"/>
     </copy>
 	</target>
 
@@ -237,10 +271,11 @@
       <fileset file="../source/common/javascript/common/bootstrap/modal.js"/>
       <fileset file="../source/common/javascript/common/bootstrap/tab.js"/>
       <fileset file="../source/common/javascript/common/bootstrap/transition.js"/>
-      <fileset file="../source/chrome/javascript/background/storage.js"/>
+    	<fileset file="../source/common/javascript/common/common.js"/>
       <fileset file="../source/chrome/javascript/locales/locales.js"/>
       <fileset file="../source/chrome/javascript/options/options.js"/>
       <fileset file="../source/chrome/javascript/options/tablednd.js"/>
+      <fileset file="../source/chrome/javascript/storage/storage.js"/>
     </concat>
     <concat destfile="chrome/options/javascript/syntax-highlight.js">
     	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
@@ -254,7 +289,8 @@
     <concat destfile="chrome/options/options.css">
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
-    	<fileset file="../source/chrome/style-sheets/common/tabs.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/font-awesome.css"/>
+    	<fileset file="../source/common/style-sheets/common/common.css"/>
     	<fileset file="../source/chrome/style-sheets/options/options.css"/>
     </concat>
     <concat destfile="chrome/options/syntax-highlight.css">
@@ -267,72 +303,106 @@
     <copy file="../images/common/logos/16.png" tofile="chrome/options/images/favicon.png"/>
     <copy file="../images/common/logos/monochrome.png" tofile="chrome/options/images/logo.png"/>
     <copy file="../images/chrome/options.png" tofile="chrome/options/images/options.png"/>
+    <copy todir="chrome/options/fonts">
+      <fileset dir="../source/common/fonts"/>
+    </copy>
 	</target>
 
-  <!-- Builds the popup for Chrome -->
-  <target name="build.chrome.popup" depends="initialize.chrome">
-    <echo level="info" message="Building the popup"/>
-    <copy file="../source/chrome/html/popup/popup.html" tofile="chrome/popup/popup.html">
+  <!-- Builds the overlay for Chrome -->
+  <target name="build.chrome.overlay" depends="initialize.chrome">
+    <echo level="info" message="Building the overlay"/>
+    <copy file="../source/chrome/html/overlay/overlay.html" tofile="chrome/overlay/overlay.html">
       <filterset refid="chrome.filters"/>
     </copy>
-    <concat destfile="chrome/popup/javascript/popup.js">
+    <concat destfile="chrome/overlay/javascript/overlay.temp">
       <fileset file="../source/common/javascript/common/jquery/jquery.js"/>
       <fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
       <fileset file="../source/common/javascript/common/bootstrap/tab.js"/>
       <fileset file="../source/common/javascript/common/bootstrap/transition.js"/>
+      <fileset file="../source/common/javascript/common/common.js"/>
+      <fileset file="../source/common/javascript/features/cookies.js"/>
       <fileset file="../source/common/javascript/locales/locales.js"/>
+      <fileset dir="../source/common/javascript/overlay"/>
       <fileset file="../source/common/javascript/platform/platform.js"/>
+      <fileset file="../source/chrome/javascript/features/cookies.js"/>
       <fileset file="../source/chrome/javascript/locales/locales.js"/>
-      <fileset file="../source/chrome/javascript/popup/popup.js"/>
-      <fileset dir="../source/chrome/javascript/popup">
-     		<exclude name="popup.js"/>
+      <fileset file="../source/chrome/javascript/overlay/overlay.js"/>
+      <fileset dir="../source/chrome/javascript/overlay">
+     		<exclude name="overlay.js"/>
       </fileset>
     </concat>
-    <concat destfile="chrome/popup/popup.css">
+    <move file="chrome/overlay/javascript/overlay.temp" tofile="chrome/overlay/javascript/overlay.js">
+      <filterset refid="chrome.filters"/>
+    </move>
+    <concat destfile="chrome/overlay/overlay.css">
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
-    	<fileset file="../source/chrome/style-sheets/common/tabs.css"/>
-    	<fileset file="../source/chrome/style-sheets/popup/popup.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/font-awesome.css"/>
+    	<fileset file="../source/common/style-sheets/common/common.css"/>
+    	<fileset file="../source/chrome/style-sheets/overlay/overlay.css"/>
     </concat>
-    <copy file="../images/common/toolbar.png" tofile="chrome/popup/images/toolbar.png"/>
-    <copy file="../images/chrome/feature.png" tofile="chrome/popup/images/feature.png"/>
-    <copy file="../images/chrome/icon.png" tofile="chrome/popup/images/icon.png"/>
+    <copy file="../images/common/toolbar.png" tofile="chrome/overlay/images/toolbar.png"/>
+    <copy file="../images/chrome/feature.png" tofile="chrome/overlay/images/feature.png"/>
+    <copy file="../images/chrome/icon.png" tofile="chrome/overlay/images/icon.png"/>
+    <copy todir="chrome/overlay/fonts">
+      <fileset dir="../source/common/fonts"/>
+    </copy>
 	</target>
 
   <!-- Builds the toolbars for Chrome -->
   <target name="build.chrome.toolbars" depends="initialize.chrome">
     <echo level="info" message="Building the toolbars"/>
-    <copy file="../source/chrome/javascript/toolbar/color-picker.js" tofile="chrome/toolbar/javascript/color-picker.js">
+   	<copy file="../source/chrome/javascript/toolbar/color-picker.js" tofile="chrome/toolbar/javascript/color-picker.js">
       <filterset refid="chrome.filters"/>
     </copy>
-    <concat destfile="chrome/toolbar/javascript/element-information.temp">
-    	<fileset file="../source/common/javascript/toolbar/element-information.js"/>
-    	<fileset file="../source/chrome/javascript/toolbar/element-information.js"/>
+    <concat destfile="chrome/toolbar/javascript/line-guides.js">
+    	<fileset file="../source/common/javascript/toolbar/line-guides.js"/>
+    	<fileset file="../source/chrome/javascript/toolbar/line-guides.js"/>
     </concat>
-    <move file="chrome/toolbar/javascript/element-information.temp" tofile="chrome/toolbar/javascript/element-information.js">
-      <filterset refid="chrome.filters"/>
-    </move>
-    <concat destfile="chrome/toolbar/javascript/ruler.temp">
+    <concat destfile="chrome/toolbar/javascript/ruler.js">
     	<fileset file="../source/common/javascript/toolbar/ruler.js"/>
     	<fileset file="../source/chrome/javascript/toolbar/ruler.js"/>
     </concat>
-    <move file="chrome/toolbar/javascript/ruler.temp" tofile="chrome/toolbar/javascript/ruler.js">
-      <filterset refid="chrome.filters"/>
-    </move>
     <concat destfile="chrome/toolbar/color-picker.css">
     	<fileset file="../source/chrome/style-sheets/toolbar/toolbar.css"/>
     	<fileset file="../source/chrome/style-sheets/toolbar/color-picker.css"/>
     </concat>
+    <concat destfile="chrome/toolbar/color-picker-toolbar.css">
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/common/common.css"/>
+    	<fileset file="../source/chrome/style-sheets/toolbar/common.css"/>
+    	<fileset file="../source/chrome/style-sheets/toolbar/color-picker-toolbar.css"/>
+    </concat>
+    <copy file="../source/common/style-sheets/toolbar/element-ancestors.css" tofile="chrome/toolbar/element-ancestors.css"/>
     <concat destfile="chrome/toolbar/element-information.css">
     	<fileset file="../source/chrome/style-sheets/toolbar/toolbar.css"/>
     	<fileset file="../source/common/style-sheets/toolbar/element-information.css"/>
     	<fileset file="../source/chrome/style-sheets/toolbar/element-information.css"/>
     </concat>
+    <concat destfile="chrome/toolbar/line-guides.css">
+    	<fileset file="../source/chrome/style-sheets/toolbar/toolbar.css"/>
+    	<fileset file="../source/common/style-sheets/toolbar/line-guides.css"/>
+    </concat>
+    <concat destfile="chrome/toolbar/line-guides-toolbar.css">
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/common/common.css"/>
+    	<fileset file="../source/chrome/style-sheets/toolbar/common.css"/>
+    	<fileset file="../source/chrome/style-sheets/toolbar/line-guides.css"/>
+    </concat>
     <concat destfile="chrome/toolbar/ruler.css">
     	<fileset file="../source/chrome/style-sheets/toolbar/toolbar.css"/>
     	<fileset file="../source/common/style-sheets/toolbar/ruler.css"/>
+    </concat>
+    <concat destfile="chrome/toolbar/ruler-toolbar.css">
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/common/common.css"/>
+    	<fileset file="../source/chrome/style-sheets/toolbar/common.css"/>
     	<fileset file="../source/chrome/style-sheets/toolbar/ruler.css"/>
     </concat>
-    <copy file="../images/common/logos/16.png" tofile="chrome/toolbar/images/logo.png"/>
+    <copy file="../images/common/logos/monochrome.png" tofile="chrome/toolbar/images/logo.png"/>
 	</target>
 
   <!-- Builds the extension for Firefox -->
@@ -373,6 +443,7 @@
     <concat destfile="firefox/content/web-developer/about/about.css">
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/common/common.css"/>
     	<fileset file="../source/common/style-sheets/about/about.css"/>
     </concat>
     <copy file="../images/common/logos/16.png" tofile="firefox/content/web-developer/about/images/favicon.png"/>
@@ -417,7 +488,7 @@
   <target name="build.firefox.dashboard" depends="initialize.firefox">
     <echo level="info" message="Building the dashboard"/>
     <copy todir="firefox/content/web-developer/dashboard">
-      <fileset dir="../source/firefox/html/dashboard/"/>
+      <fileset dir="../source/firefox/html/dashboard"/>
       <filterset refid="firefox.filters"/>
     </copy>
     <copy todir="firefox/content/web-developer/dashboard">
@@ -427,11 +498,16 @@
     	<fileset file="../source/common/javascript/dashboard/dashboard.js"/>
     	<fileset file="../source/firefox/javascript/dashboard/dashboard.js"/>
     </concat>
-    <copy todir="firefox/content/web-developer/dashboard/javascript">
-      <fileset dir="../source/firefox/javascript/dashboard">
-     		<exclude name="dashboard.js"/>
-      </fileset>
-    </copy>
+    <concat destfile="firefox/content/web-developer/dashboard/javascript/element-information.js">
+    	<fileset file="../source/common/javascript/dashboard/element-information.js"/>
+    	<fileset file="../source/firefox/javascript/dashboard/element-information.js"/>
+    </concat>
+    <copy file="../source/firefox/javascript/dashboard/style-information.js" tofile="firefox/content/web-developer/dashboard/javascript/style-information.js"/>
+    <copy file="../source/firefox/javascript/dashboard/edit-html.js" tofile="firefox/content/web-developer/dashboard/javascript/edit-html.js"/>
+    <concat destfile="firefox/content/web-developer/dashboard/javascript/edit-css.js">
+    	<fileset file="../source/common/javascript/dashboard/edit-css.js"/>
+    	<fileset file="../source/firefox/javascript/dashboard/edit-css.js"/>
+    </concat>
     <copy todir="firefox/content/web-developer/dashboard/javascript/html">
       <fileset dir="../source/firefox/javascript/dashboard/html">
      		<exclude name="common.js"/>
@@ -461,17 +537,19 @@
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
     	<fileset file="../source/common/style-sheets/common/codemirror/codemirror.css"/>
     	<fileset file="../source/common/style-sheets/common/codemirror/theme.css"/>
+    	<fileset file="../source/common/style-sheets/common/common.css"/>
+    	<fileset file="../source/common/style-sheets/dashboard/common.css"/>
     	<fileset file="../source/firefox/style-sheets/dashboard/html/common.css"/>
     </concat>
     <copy file="../source/firefox/style-sheets/dashboard/dashboard.css" tofile="firefox/content/web-developer/dashboard/dashboard.css"/>
-    <copy file="../source/firefox/style-sheets/dashboard/html/display-element-information.css" tofile="firefox/content/web-developer/dashboard/display-element-information.css"/>
-    <concat destfile="firefox/content/web-developer/dashboard/display-style-information.css">
-    	<fileset file="../source/common/style-sheets/generated/common.css"/>
-    	<fileset file="../source/firefox/style-sheets/dashboard/html/display-style-information.css"/>
+    <concat destfile="firefox/content/web-developer/dashboard/element-information.css">
+    	<fileset file="../source/common/style-sheets/dashboard/element-information.css"/>
+    	<fileset file="../source/firefox/style-sheets/dashboard/html/element-information.css"/>
     </concat>
-  	<copy file="../source/common/style-sheets/toolbar/html/element-ancestors.css" tofile="firefox/content/web-developer/dashboard/element-ancestors.css"/>
-    <copy file="../images/common/generated/collapse.png" tofile="firefox/content/web-developer/dashboard/images/collapse.png"/>
-    <copy file="../images/common/generated/expand.png" tofile="firefox/content/web-developer/dashboard/images/expand.png"/>
+    <concat destfile="firefox/content/web-developer/dashboard/style-information.css">
+    	<fileset file="../source/common/style-sheets/generated/common.css"/>
+    	<fileset file="../source/firefox/style-sheets/dashboard/html/style-information.css"/>
+    </concat>
 	</target>
 
   <!-- Builds the dialogs for Firefox -->
@@ -507,6 +585,7 @@
     <concat destfile="firefox/content/web-developer/validation/validation.css">
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/common/common.css"/>
     	<fileset file="../source/common/style-sheets/generated/common.css"/>
     </concat>
     <copy file="../images/common/logos/16.png" tofile="firefox/content/web-developer/validation/images/favicon.png"/>
@@ -542,23 +621,28 @@
     	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
     	<fileset file="../source/common/javascript/common/codemirror/javascript.js"/>
     </concat>
+    <concat destfile="firefox/content/web-developer/generated/javascript/view-cookie-information.js">
+      <fileset file="../source/common/javascript/common/bootstrap/modal.js"/>
+      <fileset file="../source/common/javascript/common/bootstrap/tooltip.js"/>
+      <fileset file="../source/common/javascript/common/bootstrap/popover.js"/>
+      <fileset file="../source/common/javascript/common/bootstrap/transition.js"/>
+    	<fileset file="../source/common/javascript/generated/view-cookie-information.js"/>
+    	<fileset file="../source/firefox/javascript/features/cookies.js"/>
+    </concat>
+    <concat destfile="firefox/content/web-developer/generated/javascript/view-document-size.js">
+    	<fileset file="../source/firefox/javascript/generated/view-document-size.js"/>
+    </concat>
     <copy todir="firefox/content/web-developer/generated/javascript">
       <fileset dir="../source/common/javascript/generated">
      		<exclude name="common.js"/>
+     		<exclude name="view-cookie-information.js"/>
       </fileset>
     </copy>
-    <concat destfile="firefox/content/web-developer/generated/javascript/view-cookie-information.js">
-      <fileset file="../source/common/javascript/common/bootstrap/modal.js"/>
-      <fileset file="../source/common/javascript/common/bootstrap/transition.js"/>
-      <fileset file="../source/firefox/javascript/generated/view-cookie-information.js"/>
-    </concat>
-    <concat destfile="firefox/content/web-developer/generated/javascript/view-document-size.js">
-      <fileset file="../source/firefox/javascript/common/common.js"/>
-    	<fileset file="../source/firefox/javascript/generated/view-document-size.js"/>
-    </concat>
     <concat destfile="firefox/content/web-developer/generated/common.css">
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/font-awesome.css"/>
+    	<fileset file="../source/common/style-sheets/common/common.css"/>
     	<fileset file="../source/common/style-sheets/generated/common.css"/>
     </concat>
     <concat destfile="firefox/content/web-developer/generated/syntax-highlight.css">
@@ -567,8 +651,8 @@
     </concat>
     <copy file="../images/common/logos/16.png" tofile="firefox/content/web-developer/generated/images/favicon.png"/>
     <copy file="../images/common/logos/monochrome.png" tofile="firefox/content/web-developer/generated/images/logo.png"/>
-    <copy todir="firefox/content/web-developer/generated/images">
-      <fileset dir="../images/common/generated"/>
+    <copy todir="firefox/content/web-developer/generated/fonts">
+      <fileset dir="../source/common/fonts"/>
     </copy>
 	</target>
 
@@ -1073,15 +1157,14 @@
     </concat>
     <concat destfile="firefox/content/web-developer/overlay/javascript/overlay.temp">
       <fileset dir="../source/common/javascript/features"/>
+      <fileset dir="../source/common/javascript/overlay"/>
     	<fileset dir="../source/common/javascript/toolbar">
      		<exclude name="**/html/**"/>
     	</fileset>
+      <fileset dir="../source/common/javascript/upgrade"/>
       <fileset dir="../source/firefox/javascript/application"/>
       <fileset dir="../source/firefox/javascript/features"/>
-    	<fileset file="../source/firefox/javascript/overlay/overlay.js"/>
-      <fileset dir="../source/firefox/javascript/overlay">
-     		<exclude name="overlay.js"/>
-      </fileset>
+      <fileset dir="../source/firefox/javascript/overlay"/>
     	<fileset dir="../source/firefox/javascript/toolbar"/>
       <fileset dir="../source/firefox/javascript/upgrade"/>
       <fileset dir="../source/firefox/javascript/validation"/>
@@ -1116,6 +1199,7 @@
     <copy file="../images/common/logos/16.png" tofile="firefox/skin/default/menu.png"/>
     <copy file="../images/common/logos/monochrome.png" tofile="firefox/skin/mac/button.png"/>
     <copy file="../images/common/logos/monochrome.png" tofile="firefox/skin/mac/menu.png"/>
+    <copy file="../images/common/toolbar.png" tofile="firefox/skin/default/toolbar.png"/>
     <copy file="../images/firefox/skins/default/options.png" tofile="firefox/skin/mac/options.png"/>
 	</target>
 
@@ -1133,6 +1217,7 @@
     <concat destfile="firefox/content/web-developer/toolbar/html/element-ancestors.css">
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/common/common.css"/>
     	<fileset file="../source/common/style-sheets/toolbar/html/element-ancestors.css"/>
     </concat>
     <copy todir="firefox/content/web-developer/toolbar">
@@ -1158,6 +1243,7 @@
 
   <!-- Converts spaces to tabs in the extension -->
   <target name="convert.spaces.tabs">
+    <echo level="info" message="Converting spaces to tabs"/>
 		<fixcrlf srcdir="../source/chrome/javascript" excludes="**/options/tablednd.js" tab="add" tablength="2"/>
 		<fixcrlf srcdir="../source/common/javascript" excludes="**/beautify/beautify.js,**/bootstrap/collapse.js,**/bootstrap/dropdown.js,**/bootstrap/modal.js,**/bootstrap/tab.js,**/bootstrap/transition.js,**/codemirror/codemirror.js,**/codemirror/css.js,**/codemirror/htmlmixed.js,**/codemirror/javascript.js,**/codemirror/searchcursor.js,**/jquery/icanhaz.js,**/jquery/jquery.js,**/codemirror/xml.js" tab="add" tablength="2"/>
 		<fixcrlf srcdir="../source/firefox/javascript" tab="add" tablength="2"/>
@@ -1188,6 +1274,47 @@
     </filterset>
 	</target>
 
+  <!-- Merges in Bootstrap -->
+  <target name="merge.bootstrap">
+    <echo level="info" message="Merging Bootstrap into the source"/>
+		<copy file="../merge/twitter-bootstrap/js/bootstrap-collapse.js" tofile="../source/common/javascript/common/bootstrap/collapse.js"/>
+		<copy file="../merge/twitter-bootstrap/js/bootstrap-dropdown.js" tofile="../source/common/javascript/common/bootstrap/dropdown.js"/>
+		<copy file="../merge/twitter-bootstrap/js/bootstrap-modal.js" tofile="../source/common/javascript/common/bootstrap/modal.js"/>
+		<copy file="../merge/twitter-bootstrap/js/bootstrap-popover.js" tofile="../source/common/javascript/common/bootstrap/popover.js"/>
+		<copy file="../merge/twitter-bootstrap/js/bootstrap-tab.js" tofile="../source/common/javascript/common/bootstrap/tab.js"/>
+		<copy file="../merge/twitter-bootstrap/js/bootstrap-tooltip.js" tofile="../source/common/javascript/common/bootstrap/tooltip.js"/>
+		<copy file="../merge/twitter-bootstrap/js/bootstrap-transition.js" tofile="../source/common/javascript/common/bootstrap/transition.js"/>
+		<copy todir="../source/common/style-sheets/common/bootstrap">
+    	<fileset file="../merge/bootstrap/css/bootstrap.css"/>
+    	<fileset file="../merge/bootstrap/css/bootstrap-responsive.css"/>
+    </copy>
+  </target>
+
+  <!-- Merges in CodeMirror -->
+  <target name="merge.codemirror">
+    <echo level="info" message="Merging CodeMirror into the source"/>
+		<copy todir="../source/common/javascript/common/codemirror">
+    	<fileset file="../merge/codemirror/lib/codemirror.js"/>
+    	<fileset file="../merge/codemirror/lib/util/searchcursor.js"/>
+    	<fileset file="../merge/codemirror/mode/css/css.js"/>
+    	<fileset file="../merge/codemirror/mode/htmlmixed/htmlmixed.js"/>
+    	<fileset file="../merge/codemirror/mode/javascript/javascript.js"/>
+    	<fileset file="../merge/codemirror/mode/xml/xml.js"/>
+    </copy>
+		<copy file="../merge/codemirror/lib/codemirror.css" tofile="../source/common/style-sheets/common/codemirror/codemirror.css"/>
+  </target>
+
+  <!-- Merges in Font Awesome -->
+  <target name="merge.fontawesome">
+    <echo level="info" message="Merging Font Awesome into the source"/>
+		<copy file="../merge/fontawesome/css/font-awesome.css" tofile="../source/common/style-sheets/common/bootstrap/font-awesome.css"/>
+		<replace file="../source/common/style-sheets/common/bootstrap/font-awesome.css" token="/stylesheets/fonts/../font/fontawesome-webfont" value="fonts/fontawesome-webfont"/>
+		<replace file="../source/common/style-sheets/common/bootstrap/font-awesome.css" token="../font/fontawesome-webfont" value="fonts/fontawesome-webfont"/>
+    <copy todir="../source/common/fonts">
+      <fileset dir="../merge/fontawesome/font"/>
+    </copy>
+  </target>
+
   <!-- Packages the extension for Chrome -->
   <target name="package.chrome" depends="build.chrome" description="Packages the extension for Chrome">
     <echo level="info" message="Packaging the extension for Chrome"/>
@@ -1199,11 +1326,12 @@
 
   <!-- Test the extension -->
   <target name="test" depends="convert.spaces.tabs">
+    <echo level="info" message="Running JSLint"/>
 		<jslint haltOnFailure="false" options="browser,forin,indent=2,maxerr=100,undef">
     	<formatter type="plain"/>
     	<predef>$$,BrowserPageInfo,BrowserReload,BrowserViewSourceOfDocument,chrome,CodeMirror,Components,CSSPrimitiveValue,getWebNavigation,HTMLDocument,ich,Image,inspectDOMDocument,js_beautify,Node,NodeFilter,pref,toJavaScriptConsole,WebDeveloper,WebDeveloperApplication,WebDeveloperValidateCSS,WebDeveloperValidateHTML,window</predef>
     	<fileset dir="../source/chrome/javascript" excludes="**/options/tablednd.js"/>
-    	<fileset dir="../source/common/javascript" excludes="**/beautify/beautify.js,**/bootstrap/collapse.js,**/bootstrap/dropdown.js,**/bootstrap/modal.js,**/bootstrap/tab.js,**/bootstrap/transition.js,**/codemirror/codemirror.js,**/codemirror/css.js,**/codemirror/htmlmixed.js,**/codemirror/javascript.js,**/codemirror/searchcursor.js,**/jquery/icanhaz.js,**/jquery/jquery.js,**/codemirror/xml.js"/>
+    	<fileset dir="../source/common/javascript" excludes="**/beautify/beautify.js,**/bootstrap/collapse.js,**/bootstrap/dropdown.js,**/bootstrap/modal.js,**/bootstrap/popover.js,**/bootstrap/tab.js,**/bootstrap/tooltip.js,**/bootstrap/transition.js,**/codemirror/codemirror.js,**/codemirror/css.js,**/codemirror/htmlmixed.js,**/codemirror/javascript.js,**/codemirror/searchcursor.js,**/jquery/icanhaz.js,**/jquery/jquery.js,**/codemirror/xml.js"/>
     	<fileset dir="../source/firefox/javascript"/>
   	</jslint>
  	</target>

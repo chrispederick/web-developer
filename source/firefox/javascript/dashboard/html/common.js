@@ -8,6 +8,16 @@ WebDeveloper.Dashboard.editorElement = null;
 WebDeveloper.Dashboard.lastPosition	 = null;
 WebDeveloper.Dashboard.lastQuery		 = null;
 
+// Adjusts the breadcrumb
+WebDeveloper.Dashboard.adjustBreadcrumb = function()
+{
+	// If the dashboard is not vertical
+	if(!$("html").hasClass("vertical"))
+	{
+		$(".breadcrumb").css("margin-right", ($("#web-developer-copy-ancestor-path").outerWidth() + 10) + "px");
+	}
+};
+
 // Returns the ancestor path
 WebDeveloper.Dashboard.getAncestorPath = function()
 {
@@ -51,15 +61,21 @@ WebDeveloper.Dashboard.getAncestorPath = function()
 // Returns the content
 WebDeveloper.Dashboard.getContent = function()
 {
-	// If the editor element is set
-	if(WebDeveloper.Dashboard.editorElement)
+	// If the editor is set
+	if(WebDeveloper.Dashboard.editor)
 	{
-		return WebDeveloper.Dashboard.editor.getValue();
+		// If the editor element is set
+		if(WebDeveloper.Dashboard.editorElement)
+		{
+			return WebDeveloper.Dashboard.editor.getValue();
+		}
+		else
+		{
+			return WebDeveloper.Dashboard.editor.val();
+		}
 	}
-	else
-	{
-		return WebDeveloper.Dashboard.editor.val();
-	}
+
+	return null;
 };
 
 // Initializes the editor
@@ -156,5 +172,15 @@ WebDeveloper.Dashboard.setContent = function(content)
 	else
 	{
 		WebDeveloper.Dashboard.editor.val(content);
+	}
+};
+
+// Sets the position
+WebDeveloper.Dashboard.setPosition = function(position)
+{
+	// If the position is left or right
+	if(position == "left" || position == "right")
+	{
+		$("html").addClass("vertical");
 	}
 };

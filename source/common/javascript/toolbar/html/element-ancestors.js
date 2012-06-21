@@ -33,6 +33,9 @@ WebDeveloper.Generated.populateAncestors = function(ancestors)
 // Resizes the ancestors
 WebDeveloper.Generated.resizeAncestors = function(reset)
 {
+	var currentHeight	 = 0;
+	var previousHeight = 0;
+
 	// If resetting or the ancestor container and ancestors are not set
 	if(reset || (!WebDeveloper.Generated.ancestorContainer && !WebDeveloper.Generated.ancestors))
 	{
@@ -74,10 +77,16 @@ WebDeveloper.Generated.resizeAncestors = function(reset)
 		WebDeveloper.Generated.toggleMiddleAncestor(false);
 	}
 
+	currentHeight = WebDeveloper.Generated.ancestorContainer.height();
+
 	// While the ancestors are wrapping
-	while(WebDeveloper.Generated.ancestorContainer.height() > WebDeveloper.Generated.ancestorSingleLineHeight)
+	while(currentHeight > WebDeveloper.Generated.ancestorSingleLineHeight && currentHeight != previousHeight)
 	{
+		previousHeight = WebDeveloper.Generated.ancestorContainer.height();
+
 		WebDeveloper.Generated.hideAncestors();
+
+		currentHeight = WebDeveloper.Generated.ancestorContainer.height();
 	}
 };
 

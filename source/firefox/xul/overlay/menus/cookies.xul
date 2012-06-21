@@ -9,9 +9,9 @@
   <menuseparator id="web-developer-cookies-separator1-${suffix}"/>
   <menuitem id="web-developer-add-cookie-${suffix}" command="web-developer-add-cookie-command"/>
   <menuseparator id="web-developer-cookies-separator2-${suffix}"/>
-  <menuitem id="web-developer-clear-session-cookies-${suffix}" command="web-developer-clear-session-cookies-command"/>
   <menuitem id="web-developer-delete-domain-cookies-${suffix}" command="web-developer-delete-domain-cookies-command"/>
   <menuitem id="web-developer-delete-path-cookies-${suffix}" command="web-developer-delete-path-cookies-command"/>
+  <menuitem id="web-developer-delete-session-cookies-${suffix}" command="web-developer-delete-session-cookies-command"/>
   <menuseparator id="web-developer-cookies-separator3-${suffix}"/>
   <menuitem id="web-developer-view-cookie-information-${suffix}" command="web-developer-view-cookie-information-command"/>
 </menupopup>

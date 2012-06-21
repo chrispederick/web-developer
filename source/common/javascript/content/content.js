@@ -22,6 +22,53 @@ WebDeveloper.Content.addColor = function(node, property, colors)
 	}
 };
 
+// Filters cookies based on the parameters
+WebDeveloper.Content.filterCookies = function(allCookies, host, path, sort)
+{
+	var filteredCookies = [];
+
+	// If the cookies and host are set
+	if(allCookies && host)
+	{
+		var cookie		 = null;
+		var cookieHost = null;
+		var cookiePath = null;
+
+		// Loop through the cookies
+		for(var i = 0, l = allCookies.length; i < l; i++)
+		{
+			cookie = allCookies[i];
+
+			cookieHost = cookie.host;
+			cookiePath = cookie.path;
+
+			// If there is a host and path for this cookie
+			if(cookieHost && cookiePath)
+			{
+				// If the cookie host starts with '.'
+				if(cookieHost.charAt(0) == ".")
+				{
+					cookieHost = cookieHost.substring(1);
+				}
+
+				// If the host and cookie host and path and cookie path match
+				if((host == cookieHost || WebDeveloper.Common.endsWith("." + cookieHost, host)) && (path == cookiePath || cookiePath.indexOf(path) === 0))
+				{
+					filteredCookies.push(cookie);
+				}
+			}
+		}
+
+		// If sorting cookies
+		if(sort)
+		{
+			filteredCookies.sort(WebDeveloper.Content.sortCookies);
+		}
+	}
+
+	return filteredCookies;
+};
+
 // Formats a CSS color
 WebDeveloper.Content.formatColor = function(color)
 {
@@ -162,6 +209,47 @@ WebDeveloper.Content.getColors = function()
 	}
 
 	return colors;
+};
+
+// Returns all the cookies for the document
+WebDeveloper.Content.getCookies = function(allCookies)
+{
+	var contentDocument	 = WebDeveloper.Common.getContentDocument();
+	var contentDocuments = WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
+	var cookies					 = {};
+	var documentCookies	 = null;
+	var filteredCookies	 = null;
+	var host						 = null;
+
+	cookies.documents = [];
+	cookies.pageTitle = contentDocument.title;
+	cookies.pageURL		= contentDocument.documentURI;
+
+	// Loop through the documents
+	for(var i = 0, l = contentDocuments.length; i < l; i++)
+	{
+		contentDocument					= contentDocuments[i];
+		documentCookies					= {};
+		documentCookies.cookies = [];
+		documentCookies.url			= contentDocument.documentURI;
+		host										= null;
+
+		// Try to get the host
+		try
+		{
+			host = contentDocument.location.hostname;
+		}
+		catch(exception)
+		{
+			// Ignore
+		}
+
+		documentCookies.cookies = WebDeveloper.Content.filterCookies(allCookies, host, "/", true);
+
+		cookies.documents.push(documentCookies);
+	}
+
+	return cookies;
 };
 
 // Returns all the CSS for the document
@@ -790,6 +878,31 @@ WebDeveloper.Content.getWindowSize = function()
 	size.outerWidth	 = window.outerWidth;
 
 	return size;
+};
+
+// Sorts two cookies
+WebDeveloper.Content.sortCookies = function(cookieOne, cookieTwo)
+{
+	// If cookie one and cookie two are set
+	if(cookieOne && cookieTwo)
+	{
+		var cookieOneHost = cookieOne.host;
+		var cookieOneName = cookieOne.name;
+		var cookieTwoHost = cookieTwo.host;
+		var cookieTwoName = cookieTwo.name;
+
+		// If the cookies are equal
+		if(cookieOneHost == cookieTwoHost && cookieOneName == cookieTwoName)
+		{
+			return 0;
+		}
+		else if(cookieOneHost < cookieTwoHost || (cookieOneHost == cookieTwoHost && cookieOneName < cookieTwoName))
+		{
+			return -1;
+		}
+	}
+
+	return 1;
 };
 
 // Tidies a list of colors by removing duplicates and sorting

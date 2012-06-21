@@ -1,6 +1,6 @@
-/* ! Ruler styles */
+/* Ruler styles */
 
-.web-developer-toolbar label { float: right !important; margin-right: 10px !important; position: relative !important; top: 1px !important; }
-.web-developer-toolbar #web-developer-ruler-height { margin: -3px 40px 0 0 !important; } 
-.web-developer-toolbar #web-developer-ruler-height, .web-developer-toolbar #web-developer-ruler-width { float: right !important; padding: 2px !important; width: 50px !important; }
-.web-developer-toolbar #web-developer-ruler-width { margin: -3px 20px 0 0 !important; } 
+#web-developer-ruler-end-x, #web-developer-ruler-start-x { margin: 0 10px 0 5px; }
+#web-developer-ruler-end-y { margin-left: 5px; }
+#web-developer-ruler-height, #web-developer-ruler-width { border-color: #999; margin: 0 20px 0 0; width: 60px; }
+#web-developer-ruler-start-y { margin: 0 20px 0 5px; }

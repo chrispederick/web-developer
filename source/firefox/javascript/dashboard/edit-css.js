@@ -1,9 +1,7 @@
 var WebDeveloper = WebDeveloper || {};
 
 WebDeveloper.EditCSS								 = WebDeveloper.EditCSS || {};
-WebDeveloper.EditCSS.intervalId			 = null;
 WebDeveloper.EditCSS.selectedBrowser = null;
-WebDeveloper.EditCSS.updateFrequency = 250;
 
 // Adds a tab
 WebDeveloper.EditCSS.addTab = function(title, styles, stylesURL, tabs, tabPanels, color)
@@ -51,44 +49,12 @@ WebDeveloper.EditCSS.addTab = function(title, styles, stylesURL, tabs, tabPanels
 // Applies the CSS
 WebDeveloper.EditCSS.apply = function()
 {
-	var browser					= null;
-	var browsers				= document.getElementById("web-developer-edit-css-tab-panels").getElementsByTagName("browser");
-	var contentDocument = WebDeveloper.Common.getContentDocument();
-	var headElement			= WebDeveloper.Common.getDocumentHeadElement(contentDocument);
-	var styleElement		= null;
-	var styles					= null;
-	var stylesUpdated		= false;
-
-	// Loop through the browsers
-	for(var i = 0, l = browsers.length; i < l; i++)
-	{
-		styleElement = contentDocument.getElementById("web-developer-edit-css-styles-" + i);
-		browser			 = browsers[i];
-		styles			 = browser.contentDocument.defaultView.WebDeveloper.Dashboard.getContent();
-
-		// If the style element does not exist
-		if(!styleElement)
-		{
-			styleElement = contentDocument.createElement("style");
-
-			styleElement.setAttribute("id", "web-developer-edit-css-styles-" + i);
-			styleElement.setAttribute("class", "web-developer-edit-css-styles");
-			styleElement.setAttribute("xml:base", browser.getAttribute("web-developer-base"));
-			headElement.appendChild(styleElement);
-		}
-
-		// If the styles have changed
-		if(styleElement.innerHTML != styles)
-		{
-			styleElement.innerHTML = styles;
-			stylesUpdated					 = true;
-		}
-	}
+	var stylesUpdated = WebDeveloper.EditCSS.applyCSS();
 
 	// If the styles were updated
 	if(stylesUpdated)
 	{
-		var body = WebDeveloper.Common.getDocumentBodyElement(contentDocument);
+		var body = WebDeveloper.Common.getDocumentBodyElement(WebDeveloper.Common.getContentDocument());
 
 		// Hiding and showing the body forces a repaint in Firefox - needed for initial :first-letter changes
 		body.style.display = "none";
@@ -129,6 +95,18 @@ WebDeveloper.EditCSS.getSelectedTab = function()
 	}
 
 	return selectedTab;
+};
+
+// Returns the styles containers
+WebDeveloper.EditCSS.getStylesContainers = function()
+{
+	return document.getElementById("web-developer-edit-css-tab-panels").getElementsByTagName("browser");
+};
+
+// Returns the styles in a container
+WebDeveloper.EditCSS.getStylesFromContainer = function(stylesContainer)
+{
+	return stylesContainer.contentDocument.defaultView.WebDeveloper.Dashboard.getContent();
 };
 
 // Initializes the edit CSS dashboard
@@ -238,13 +216,6 @@ WebDeveloper.EditCSS.reset = function()
 	WebDeveloper.EditCSS.update(contentDocument);
 };
 
-// Resets a document
-WebDeveloper.EditCSS.resetDocument = function(contentDocument)
-{
-	WebDeveloper.Common.removeMatchingElements(".web-developer-edit-css-styles", contentDocument);
-	WebDeveloper.CSS.toggleAllStyleSheets(false, contentDocument);
-};
-
 // Retrieves the CSS for the document
 WebDeveloper.EditCSS.retrieveCSS = function(contentDocument, theme)
 {
@@ -284,7 +255,7 @@ WebDeveloper.EditCSS.retrieveCSS = function(contentDocument, theme)
 // Saves the CSS
 WebDeveloper.EditCSS.save = function()
 {
-	var css				 = WebDeveloper.EditCSS.getSelectedBrowser().getContent();
+	var css				 = WebDeveloper.EditCSS.getSelectedBrowser().WebDeveloper.Dashboard.getContent();
 	var filePicker = Components.classes["@mozilla.org/filepicker;1"].createInstance(Components.interfaces.nsIFilePicker);
 	var result		 = null;
 
@@ -327,16 +298,6 @@ WebDeveloper.EditCSS.search = function(event)
 		{
 			WebDeveloper.EditCSS.getSelectedBrowser().WebDeveloper.Dashboard.search(query);
 		}
-	}
-};
-
-// Stops the CSS updating
-WebDeveloper.EditCSS.stopUpdate = function()
-{
-	// If the interval id is set
-	if(WebDeveloper.EditCSS.intervalId)
-	{
-		window.clearInterval(WebDeveloper.EditCSS.intervalId);
 	}
 };
 
@@ -400,16 +361,6 @@ WebDeveloper.EditCSS.uninitialize = function()
 	catch(exception)
 	{
 		// Ignore
-	}
-};
-
-// Updates the CSS
-WebDeveloper.EditCSS.update = function(contentDocument)
-{
-	// If the update frequency is greater than 0
-	if(WebDeveloper.EditCSS.updateFrequency > 0)
-	{
-		WebDeveloper.EditCSS.intervalId = window.setInterval(WebDeveloper.EditCSS.apply, WebDeveloper.EditCSS.updateFrequency);
 	}
 };
 

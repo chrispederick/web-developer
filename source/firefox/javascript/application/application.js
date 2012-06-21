@@ -51,7 +51,7 @@ WebDeveloperApplication.prototype.getExecutable = function()
 	if(WebDeveloper.Common.isMac() && WebDeveloper.Common.endsWith(this.applicationPath, ".app"))
 	{
 		executable.initWithPath("/usr/bin/open");
-	} 
+	}
 	else
 	{
 		executable.initWithPath(this.applicationPath);
@@ -89,7 +89,7 @@ WebDeveloperApplication.prototype.launchWithFile = function()
 	if(WebDeveloper.Common.isMac() && WebDeveloper.Common.endsWith(this.applicationPath, ".app"))
 	{
 		processArguments = ["-a", this.applicationPath, this.file.path];
-	} 
+	}
 
 	process.run(false, processArguments, processArguments.length);
 };
@@ -148,13 +148,13 @@ WebDeveloperApplication.prototype.launchWithURL = function(url)
 		if(WebDeveloper.Common.isMac() && WebDeveloper.Common.endsWith(this.applicationPath, ".app"))
 		{
 			processArguments = ["-a", this.applicationPath, url];
-		} 
+		}
 
 		process.run(false, processArguments, processArguments.length);
 	}
 	else
 	{
-		WebDeveloper.Common.displayError(WebDeveloper.Locales.getString("openApplication"), WebDeveloper.Locales.getFormattedString("launchApplicationFailed", [this.applicationPath]));			
+		WebDeveloper.Common.displayError(WebDeveloper.Locales.getString("openApplication"), WebDeveloper.Locales.getFormattedString("launchApplicationFailed", [this.applicationPath]));
 	}
 };
 

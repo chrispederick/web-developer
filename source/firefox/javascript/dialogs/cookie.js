@@ -47,19 +47,7 @@ WebDeveloper.Cookie.accept = function()
 	// If there are errors
 	if(errors)
 	{
-		var title = null;
-
-		// If the first argument equals add
-		if(window.arguments[0] == "add")
-		{
-			title = WebDeveloper.Locales.getString("addCookieError");
-		}
-		else
-		{
-			title = WebDeveloper.Locales.getString("editCookieError");
-		}
-
-		WebDeveloper.Common.displayError(title, WebDeveloper.Common.trim(errors));
+		WebDeveloper.Common.displayError(WebDeveloper.Locales.getString("addCookieError"), WebDeveloper.Common.trim(errors));
 
 		return false;
 	}
@@ -93,25 +81,6 @@ WebDeveloper.Cookie.accept = function()
 			scheme	= "https://";
 		}
 
-		// If the first argument equals edit
-		if(window.arguments[0] == "edit")
-		{
-			Components.classes["@mozilla.org/cookiemanager;1"].getService(Components.interfaces.nsICookieManager).remove(window.arguments[3], window.arguments[1], window.arguments[4], false);
-
-			window.arguments[7].edited = true;
-			window.arguments[7].host	 = host;
-			window.arguments[7].name	 = name;
-			window.arguments[7].path	 = path;
-			window.arguments[7].secure = secure;
-			window.arguments[7].value  = value;
-
-			// If this is not a session cookie
-			if(!session)
-			{
-				window.arguments[7].expires = expiresDate.toUTCString();
-			}
-		}
-
 		uri = Components.classes["@mozilla.org/network/io-service;1"].getService(Components.interfaces.nsIIOService).newURI(scheme + host + path, null, null);
 
 		// If the cookie preference is not allowing all cookies
@@ -132,62 +101,19 @@ WebDeveloper.Cookie.accept = function()
 	return true;
 };
 
-// Handles the cookie dialog being cancelled
-WebDeveloper.Cookie.cancel = function()
-{
-	// If the first argument equals edit
-	if(window.arguments[0] == "edit")
-	{
-		window.arguments[7].edited = false;
-	}
-
-	return true;
-};
-
 // Initializes the cookie dialog
 WebDeveloper.Cookie.initialize = function()
 {
-	// If the first argument equals add
-	if(window.arguments[0] == "add")
-	{
-		var date = new Date();
-		var url  = Components.classes["@mozilla.org/network/standard-url;1"].createInstance(Components.interfaces.nsIURL);
+	var date = new Date();
+	var url  = Components.classes["@mozilla.org/network/standard-url;1"].createInstance(Components.interfaces.nsIURL);
 
-		document.title = WebDeveloper.Locales.getString("addCookie");
-		url.spec			 = WebDeveloper.Common.getContentDocument().documentURI;
+	url.spec = WebDeveloper.Common.getContentDocument().documentURI;
 
-		date.setDate(date.getDate() + 1);
+	date.setDate(date.getDate() + 1);
 
-		document.getElementById("web-developer-expires").value = date.toUTCString();
-		document.getElementById("web-developer-host").value		 = url.host;
-		document.getElementById("web-developer-path").value		 = url.path;
-	}
-	else
-	{
-		document.title = WebDeveloper.Locales.getString("editCookie");
-
-		document.getElementById("web-developer-name").value  = window.arguments[1];
-		document.getElementById("web-developer-value").value = window.arguments[2];
-		document.getElementById("web-developer-host").value  = window.arguments[3];
-		document.getElementById("web-developer-path").value  = window.arguments[4];
-
-		// If the cookie is a session cookie
-		if(window.arguments[5])
-		{
-			document.getElementById("web-developer-expires").value = window.arguments[5];
-		}
-		else
-		{
-			document.getElementById("web-developer-expires").disabled				= true;
-			document.getElementById("web-developer-session-cookie").checked = true;
-		}
-
-		// If the cookie is secure
-		if(window.arguments[6] == "true")
-		{
-			document.getElementById("web-developer-secure-cookie").checked = true;
-		}
-	}
+	document.getElementById("web-developer-expires").value = date.toUTCString();
+	document.getElementById("web-developer-host").value		 = url.host;
+	document.getElementById("web-developer-path").value		 = url.path;
 };
 
 // Updates the expiry status
@@ -210,5 +136,4 @@ WebDeveloper.Cookie.updateExpiryStatus = function()
 		expires.disabled = false;
 		expires.value		 = date.toUTCString();
 	}
-
 };

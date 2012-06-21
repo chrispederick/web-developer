@@ -8,7 +8,7 @@ WebDeveloper.Overlay.CSS.userStyleSheet = null;
 WebDeveloper.Overlay.CSS.addUserStyleSheet = function(element)
 {
 	var addStyleSheet = !WebDeveloper.Common.convertToBoolean(element.getAttribute("checked"));
-	var documents			= WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow());
+	var documents			= WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
 	var i							= 0;
 	var l							= 0;
 
@@ -44,19 +44,19 @@ WebDeveloper.Overlay.CSS.addUserStyleSheet = function(element)
 	// If adding a style sheet and the style sheet is not empty
 	if(addStyleSheet && WebDeveloper.Overlay.CSS.userStyleSheet)
 	{
-		var pageDocument = null;
-		var styleElement = null;
+		var contentDocument = null;
+		var styleElement		= null;
 
 		// Loop through the documents
 		for(i = 0, l = documents.length; i < l; i++)
 		{
-			pageDocument = documents[i];
-			styleElement = pageDocument.createElement("style");
+			contentDocument = documents[i];
+			styleElement		= contentDocument.createElement("style");
 
 			styleElement.setAttribute("id", "web-developer-add-user-style-sheet");
-			styleElement.appendChild(pageDocument.createTextNode(WebDeveloper.Overlay.CSS.userStyleSheet));
+			styleElement.appendChild(contentDocument.createTextNode(WebDeveloper.Overlay.CSS.userStyleSheet));
 
-			WebDeveloper.Common.getDocumentHeadElement(pageDocument).appendChild(styleElement);
+			WebDeveloper.Common.getDocumentHeadElement(contentDocument).appendChild(styleElement);
 		}
 
 		// If the feature is not active
@@ -72,7 +72,7 @@ WebDeveloper.Overlay.CSS.addUserStyleSheet = function(element)
 		// Loop through the documents
 		for(i = 0, l = documents.length; i < l; i++)
 		{
-			WebDeveloper.Common.removeStyleSheet("web-developer-add-user-style-sheet", documents[i]);
+			WebDeveloper.Common.removeMatchingElements("#web-developer-add-user-style-sheet", documents[i]);
 		}
 
 		// If the feature is active
@@ -88,14 +88,14 @@ WebDeveloper.Overlay.CSS.disableAllStyles = function(element)
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.CSS.toggleAllStyles(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.CSS.toggleAllStyles(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
 // Disables the browser default styles
 WebDeveloper.Overlay.CSS.disableBrowserDefaultStyles = function(element)
 {
-	WebDeveloper.CSS.toggleBrowserDefaultStyles(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.CSS.toggleBrowserDefaultStyles(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(WebDeveloper.Common.getFeatureId(element.getAttribute("id")));
 };
 
@@ -104,7 +104,7 @@ WebDeveloper.Overlay.CSS.disableEmbeddedStyles = function(element)
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.CSS.toggleEmbeddedStyles(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.CSS.toggleEmbeddedStyles(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
@@ -134,7 +134,7 @@ WebDeveloper.Overlay.CSS.disableInlineStyles = function(element)
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.CSS.toggleInlineStyles(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.CSS.toggleInlineStyles(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
@@ -143,7 +143,7 @@ WebDeveloper.Overlay.CSS.disableLinkedStyleSheets = function(element)
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.CSS.toggleLinkedStyleSheets(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.CSS.toggleLinkedStyleSheets(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
@@ -152,7 +152,7 @@ WebDeveloper.Overlay.CSS.disablePrintStyles = function(element)
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.CSS.togglePrintStyles(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.CSS.togglePrintStyles(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
@@ -165,11 +165,11 @@ WebDeveloper.Overlay.CSS.displayHandheldStyles = function(element)
 	// If displaying handheld styles and print styles are being displayed
 	if(display && WebDeveloper.Storage.isFeatureActive("display-print-styles"))
 	{
-		WebDeveloper.CSS.toggleMediaTypeStyles("print", false, WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+		WebDeveloper.CSS.toggleMediaTypeStyles("print", false, WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 		WebDeveloper.Storage.toggleFeature("display-print-styles");
 	}
 
-	WebDeveloper.CSS.toggleMediaTypeStyles("handheld", display, WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.CSS.toggleMediaTypeStyles("handheld", display, WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 };
 
 // Displays print styles
@@ -181,30 +181,30 @@ WebDeveloper.Overlay.CSS.displayPrintStyles = function(element)
 	// If displaying print styles and handheld styles are being displayed
 	if(display && WebDeveloper.Storage.isFeatureActive("display-handheld-styles"))
 	{
-		WebDeveloper.CSS.toggleMediaTypeStyles("handheld", false, WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+		WebDeveloper.CSS.toggleMediaTypeStyles("handheld", false, WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 		WebDeveloper.Storage.toggleFeature("display-handheld-styles");
 	}
 
-	WebDeveloper.CSS.toggleMediaTypeStyles("print", display, WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.CSS.toggleMediaTypeStyles("print", display, WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 };
 
 // Displays style information for an element
 WebDeveloper.Overlay.CSS.displayStyleInformation = function()
 {
-	var displayStyleInformation = WebDeveloper.Locales.getString("displayStyleInformation");
+	var styleInformation = WebDeveloper.Locales.getString("styleInformation");
 
-	// If display style information is open in the dashboard
-	if(WebDeveloper.Dashboard.isOpenInDashboard(displayStyleInformation))
+	// If style information is open in the dashboard
+	if(WebDeveloper.Dashboard.isOpenInDashboard(styleInformation))
 	{
-		WebDeveloper.Dashboard.closeDashboardTab(displayStyleInformation);
+		WebDeveloper.Dashboard.closeDashboardTab(styleInformation);
 	}
 	else if(WebDeveloper.Overlay.isDOMInspectorAvailable())
 	{
-		WebDeveloper.Dashboard.openInDashboard(displayStyleInformation, "chrome://web-developer/content/dashboard/display-style-information.xul");
+		WebDeveloper.Dashboard.openInDashboard(styleInformation, "chrome://web-developer/content/dashboard/style-information.xul");
 	}
 	else
 	{
-		WebDeveloper.Common.displayURLMessage(WebDeveloper.Locales.getString("domInspectorRequired"), "@url@documentation/faq/#dom-inspector");
+		WebDeveloper.Common.displayURLMessage(WebDeveloper.Locales.getString("domInspectorRequired"), "@url@faq/#dom-inspector");
 	}
 };
 
@@ -231,7 +231,7 @@ WebDeveloper.Overlay.CSS.editCSS = function()
 // Reloads linked style sheets
 WebDeveloper.Overlay.CSS.reloadLinkedStyleSheets = function()
 {
-	WebDeveloper.CSS.reloadLinkedStyleSheets(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.CSS.reloadLinkedStyleSheets(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 };
 
 // Updates the CSS menu
@@ -239,7 +239,7 @@ WebDeveloper.Overlay.CSS.updateCSSMenu = function(suffix)
 {
 	var command											= document.getElementById("web-developer-edit-css-command");
 	var disableAllStyles						= WebDeveloper.Storage.isFeatureActive("disable-all-styles");
-	var displayStyleInformationOpen = WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("displayStyleInformation"));
+	var displayStyleInformationOpen = WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("styleInformation"));
 	var editCSSOpen									= WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("editCSS"));
 	var menu												= document.getElementById("web-developer-edit-css-" + suffix);
 
@@ -367,20 +367,16 @@ WebDeveloper.Overlay.CSS.updateDisplayStylesMediaTypeMenu = function()
 // Uses the border box model
 WebDeveloper.Overlay.CSS.useBorderBoxModel = function(element)
 {
-	WebDeveloper.CSS.useBorderBoxModel(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.CSS.useBorderBoxModel(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(WebDeveloper.Common.getFeatureId(element.getAttribute("id")));
 };
 
 // Displays the CSS
 WebDeveloper.Overlay.CSS.viewCSS = function()
 {
-	var data	 = WebDeveloper.Content.getCSS();
-	var locale = WebDeveloper.Locales.setupGeneratedLocale();
+	var data = WebDeveloper.Content.getCSS();
 
-	data.theme						 = WebDeveloper.Preferences.getExtensionStringPreference("syntax.highlight.theme");
-	locale.couldNotLoadCSS = WebDeveloper.Locales.getString("couldNotLoadCSS");
-	locale.css						 = WebDeveloper.Locales.getString("css");
-	locale.embeddedCSSFrom = WebDeveloper.Locales.getString("embeddedCSSFrom");
+	data.theme = WebDeveloper.Preferences.getExtensionStringPreference("syntax.highlight.theme");
 
-	WebDeveloper.Overlay.openGeneratedTab(WebDeveloper.Common.getChromeURL("generated/view-css.html"), data, locale);
+	WebDeveloper.Overlay.openGeneratedTab(WebDeveloper.Common.getChromeURL("generated/view-css.html"), data, WebDeveloper.Overlay.CSS.getViewCSSLocale());
 };

@@ -14,22 +14,22 @@ WebDeveloper.Overlay.ViewSource.clearViewGeneratedSourceSelection = function(sel
 // Updates the view frame source menu
 WebDeveloper.Overlay.ViewSource.updateViewFrameSourceMenu = function(menu)
 {
-	var documents	 = WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow());
-	var menuItem		 = null;
-	var pageDocument = null;
+	var contentDocument = null;
+	var documents				= WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
+	var menuItem				= null;
 
 	WebDeveloper.Overlay.removeGeneratedMenuItems(menu);
 
 	// Loop through the documents
 	for(var i = 1, l = documents.length; i < l; i++)
 	{
-		menuItem							= document.createElement("menuitem");
-		pageDocument					= documents[i];
-		menuItem.pageDocument = pageDocument;
+		menuItem								 = document.createElement("menuitem");
+		contentDocument					 = documents[i];
+		menuItem.contentDocument = contentDocument;
 
 		menuItem.setAttribute("class", "web-developer-generated-menu");
-		menuItem.setAttribute("label", pageDocument.documentURI);
-		menuItem.setAttribute("oncommand", "WebDeveloper.Overlay.ViewSource.viewSource(this.pageDocument)");
+		menuItem.setAttribute("label", contentDocument.documentURI);
+		menuItem.setAttribute("oncommand", "WebDeveloper.Overlay.ViewSource.viewSource(this.contentDocument)");
 		menu.appendChild(menuItem);
 	}
 };
@@ -51,7 +51,7 @@ WebDeveloper.Overlay.ViewSource.updateViewSourceMenu = function(menu, suffix)
 {
 	var description							= null;
 	var descriptionPreference		= null;
-	var frameCount							= WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()).length;
+	var frameCount							= WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()).length;
 	var key											= null;
 	var menuItem								= document.createElement("menuitem");
 	var modifiers								= null;

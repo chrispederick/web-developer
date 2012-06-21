@@ -39,7 +39,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
 			tableBody = $("<tbody></tbody>");
 
 			table.append("<thead><tr><th>" + locale.name + "</th><th>" + locale.content + "</th></tr></thead>");
-			tableBody.append(ich.meta_tags(contentDocument));
+			tableBody.append(ich.metaTags(contentDocument));
 			table.append(tableBody);
 			$("#content").append(table);
 		}

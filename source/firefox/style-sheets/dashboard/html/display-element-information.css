@@ -1,8 +1,0 @@
-/* ! Display element information styles */
-
-html { padding-bottom: 10px; }
-.CodeMirror { border: 1px solid rgba(0, 0, 0, 0.15); border-radius: 3px; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); }
-.web-developer-css .CodeMirror-lines > div > div > pre:first-child, .web-developer-css .CodeMirror-lines > div > div > pre:last-child { display: none; }
-.web-developer-css .CodeMirror-scroll > div { height: auto !important; }
-.web-developer-section { display: inline-block; margin: 10px 2% 0 0; vertical-align: top; width: 49%; }
-.web-developer-section:nth-child(even) { margin-right: 0; }

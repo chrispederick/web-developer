@@ -6,16 +6,7 @@ WebDeveloper.Overlay.Options = WebDeveloper.Overlay.Options || {};
 // Displays the about dialog
 WebDeveloper.Overlay.Options.about = function()
 {
-	var locale = {};
-
-	locale.about								= WebDeveloper.Locales.getString("about");
-	locale.author								= WebDeveloper.Locales.getString("author");
-	locale.buildDate						= WebDeveloper.Locales.getString("buildDate");
-	locale.extensionDescription = WebDeveloper.Locales.getString("extensionDescription");
-	locale.extensionName				= WebDeveloper.Locales.getString("extensionName");
-	locale.version							= WebDeveloper.Locales.getString("version");
-
-	WebDeveloper.Overlay.openGeneratedTab(WebDeveloper.Common.getChromeURL("about/about.html"), null, locale);
+	WebDeveloper.Overlay.openGeneratedTab(WebDeveloper.Common.getChromeURL("about/about.html"), null, WebDeveloper.Overlay.Options.getAboutLocale());
 };
 
 // Opens the help
@@ -41,7 +32,7 @@ WebDeveloper.Overlay.Options.options = function(openPane)
 // Resets the page
 WebDeveloper.Overlay.Options.resetPage = function()
 {
-	var tabFeature = WebDeveloper.Locales.getString("displayElementInformation");
+	var tabFeature = WebDeveloper.Locales.getString("elementInformation");
 
 	WebDeveloper.Overlay.toggleFeatures(WebDeveloper.Common.getTabBrowser().selectedTab, true);
 
@@ -51,7 +42,7 @@ WebDeveloper.Overlay.Options.resetPage = function()
 		WebDeveloper.Dashboard.closeDashboardTab(tabFeature);
 	}
 
-	tabFeature = WebDeveloper.Locales.getString("displayStyleInformation");
+	tabFeature = WebDeveloper.Locales.getString("styleInformation");
 
 	// If the display style information feature is active
 	if(WebDeveloper.Dashboard.isOpenInDashboard(tabFeature))
@@ -116,8 +107,8 @@ WebDeveloper.Overlay.Options.updateActiveFeaturesMenu = function(menu)
 			}
 		}
 
-		// If the display element information feature is active
-		if(WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("displayElementInformation")))
+		// If the element information feature is active
+		if(WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("elementInformation")))
 		{
 			commandId = "web-developer-display-element-information-command";
 			menuItem	= document.createElement("menuitem");
@@ -130,8 +121,8 @@ WebDeveloper.Overlay.Options.updateActiveFeaturesMenu = function(menu)
 			menu.insertBefore(menuItem, separator);
 		}
 
-		// If the display style information feature is active
-		if(WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("displayStyleInformation")))
+		// If the style information feature is active
+		if(WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("styleInformation")))
 		{
 			commandId = "web-developer-display-style-information-command";
 			menuItem	= document.createElement("menuitem");
@@ -182,13 +173,13 @@ WebDeveloper.Overlay.Options.updateOptionsMenu = function(suffix)
 	// If there are no active features
 	if(!activeFeatures)
 	{
-		activeFeatures = WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("displayElementInformation"));
+		activeFeatures = WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("elementInformation"));
 	}
 
 	// If there are no active features
 	if(!activeFeatures)
 	{
-		activeFeatures = WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("displayStyleInformation"));
+		activeFeatures = WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("styleInformation"));
 	}
 
 	// If there are no active features

@@ -1,4 +1,4 @@
-/* ! Reset styles */
+/* Reset styles */
 
 #web-developer-element-information, #web-developer-element-information *
 {
@@ -24,7 +24,7 @@
   width: auto !important;
 }
 
-/* ! Element information styles */
+/* Element information styles */
 
 * { cursor: crosshair !important; }
 *::selection { background-color: transparent !important; }
@@ -32,10 +32,10 @@
 
 #web-developer-element-information { background-color: #fff !important; border: 1px solid #999 !important; box-shadow: rgba(0, 0, 0, 0.5) 0 0 5px !important; left: 20px; max-width: 500px !important; min-width: 250px !important; position: fixed !important; top: 20px; z-index: 2147483647 !important; }
 #web-developer-element-information, #web-developer-element-information * { color: #000 !important; font-size: 12px !important; }
-#web-developer-element-information, #web-developer-element-information *, #web-developer-element-information .none { font-family: "helvetica neue", helvetica, arial, sans-serif !important; }
+#web-developer-element-information, #web-developer-element-information *, #web-developer-element-information .none { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important; }
 #web-developer-element-information h2 { margin-bottom: 5px !important; text-transform: uppercase !important; }
 #web-developer-element-information p { line-height: 14px !important; }
-#web-developer-element-information p, #web-developer-element-information-header h1 { font-family: consolas, "lucida console", monaco, monospace !important; }
+#web-developer-element-information p, #web-developer-element-information-header h1 { font-family: Menlo, Monaco, Consolas, "Courier New", monospace !important; }
 #web-developer-element-information .section { border-bottom: 1px solid #ccc !important; overflow: hidden !important; padding: 10px 5px !important; }
 #web-developer-element-information .section, #web-developer-element-information-header h1 { word-wrap: break-word !important; }
 #web-developer-element-information .section:last-child { border-bottom: none !important; }

@@ -598,7 +598,7 @@ WebDeveloper.Images.resizeImageDimensions = function()
 	// If the image dimensions are not already updating
 	if(!WebDeveloper.Images.imageDimensionsUpdating)
 	{
-		var documents = WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow());
+		var documents = WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
 
 		// Loop through the documents
 		for(var i = 0, l = documents.length; i < l; i++)

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html id="web-developer-view-cookie-information" lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>@name@</title>
+	<link href="common.css" rel="stylesheet">
+	<link href="view-cookie-information.css" rel="stylesheet">
+	<link href="images/favicon.png" rel="shortcut icon">
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <span class="brand">@name@</span>
+    	<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a href="#content" class="brand">@name@</a>
+
+      <div class="nav-collapse">
+	      <ul class="nav">
+					<li id="documents-dropdown" class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+	          <ul class="dropdown-menu"></ul>
+	        </li>
+					<li id="cookies-dropdown" class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+	          <ul class="dropdown-menu"></ul>
+	        </li>
+	      	<li class="divider-vertical"></li>
+	        <li><a href="#" id="web-developer-collapse-all"></a></li>
+	        <li><a href="#" id="web-developer-expand-all"></a></li>
+	      </ul>
+	    </div>
+    </div>
+  </div>
+</div>
+
+<div id="content" class="container-fluid">
+	<div class="active progress progress-info progress-striped">
+  	<div class="bar"></div>
+	</div>
+
+	<div id="delete-dialog" class="modal fade in">
+	  <div class="modal-header">
+	    <a class="close" data-dismiss="modal">&times;</a>
+	    <h3></h3>
+	  </div>
+
+	  <div class="modal-body">
+	    <p></p>
+	  </div>
+
+	  <div class="modal-footer">
+	    <button class="btn" data-dismiss="modal"></button>
+	    <button class="btn btn-danger"><i class="icon-trash"></i> </button>
+	  </div>
+	</div>
+
+	<div id="edit-dialog" class="modal fade in">
+	  <div class="modal-header">
+	    <a class="close" data-dismiss="modal">&times;</a>
+	    <h3></h3>
+	  </div>
+
+	  <div class="modal-body">
+	    <form class="form-horizontal">
+				<fieldset>
+					<div class="control-group">
+						<label for="cookie-name" class="control-label"></label>
+						<div class="controls">
+							<div class="input-prepend">
+								<span class="add-on"><i class="icon-pencil"></i></span><input id="cookie-name" type="text" class="span3">
+							</div>
+							<span class="help-inline"></span>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label for="cookie-value" class="control-label"></label>
+						<div class="controls">
+							<div class="input-prepend">
+								<span class="add-on"><i class="icon-pencil"></i></span><input id="cookie-value" type="text" class="span3">
+							</div>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label for="cookie-host" class="control-label"></label>
+						<div class="controls">
+							<div class="input-prepend">
+								<span class="add-on"><i class="icon-globe"></i></span><input id="cookie-host" type="text" class="span3">
+							</div>
+							<span class="help-inline"></span>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label for="cookie-path" class="control-label"></label>
+						<div class="controls">
+							<div class="input-prepend">
+								<span class="add-on"><i class="icon-road"></i></span><input id="cookie-path" type="text" class="span3">
+							</div>
+							<span class="help-inline"></span>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label for="cookie-expires" class="control-label"></label>
+						<div class="controls">
+							<div class="input-prepend">
+								<span class="add-on"><i class="icon-calendar"></i></span><input id="cookie-expires" type="text" class="span3">
+							</div>
+							<span class="help-inline"></span>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<div class="controls">
+							<label class="checkbox">
+	              <input type="checkbox" id="cookie-session">
+	            </label>
+	          </div>
+					</div>
+
+					<div class="control-group">
+						<div class="controls">
+							<label class="checkbox">
+	              <input type="checkbox" id="cookie-secure">
+	            </label>
+	          </div>
+					</div>
+				</fieldset>
+	    </form>
+	  </div>
+
+	  <div class="modal-footer">
+	    <button class="btn" data-dismiss="modal"></button>
+	    <button class="btn btn-primary"><i class="icon-ok"></i> </button>
+	  </div>
+	</div>
+</div>
+
+<script src="javascript/common.js"></script>
+<script src="javascript/view-cookie-information.js"></script>
+
+</body>
+
+</html>

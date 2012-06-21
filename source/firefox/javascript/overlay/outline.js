@@ -6,7 +6,7 @@ WebDeveloper.Overlay.Outline = WebDeveloper.Overlay.Outline || {};
 // Outlines all block level elements
 WebDeveloper.Overlay.Outline.outlineBlockLevelElements = function(element)
 {
-	WebDeveloper.Outline.outlineBlockLevelElements(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Outline.outlineBlockLevelElements(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(WebDeveloper.Common.getFeatureId(element.getAttribute("id")));
 };
 
@@ -21,7 +21,7 @@ WebDeveloper.Overlay.Outline.outlineCustomElements = function(element)
 	if(WebDeveloper.Storage.isFeatureActive(featureId))
 	{
 		var contentDocument = null;
-		var documents				= WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow());
+		var documents				= WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
 
 		// Loop through the documents
 		for(var i = 0, l = documents.length; i < l; i++)
@@ -43,7 +43,7 @@ WebDeveloper.Overlay.Outline.outlineCustomElements = function(element)
 // Outlines all deprecated elements
 WebDeveloper.Overlay.Outline.outlineDeprecatedElements = function(element)
 {
-	WebDeveloper.Outline.outlineDeprecatedElements(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Outline.outlineDeprecatedElements(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(WebDeveloper.Common.getFeatureId(element.getAttribute("id")));
 };
 
@@ -52,7 +52,7 @@ WebDeveloper.Overlay.Outline.outlineExternalLinks = function(element)
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.Outline.outlineExternalLinks(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Outline.outlineExternalLinks(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
@@ -61,28 +61,28 @@ WebDeveloper.Overlay.Outline.outlineFloatedElements = function(element)
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.Outline.outlineFloatedElements(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Outline.outlineFloatedElements(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
 // Outlines all frames
 WebDeveloper.Overlay.Outline.outlineFrames = function(element)
 {
-	WebDeveloper.Outline.outlineFrames(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Outline.outlineFrames(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(WebDeveloper.Common.getFeatureId(element.getAttribute("id")));
 };
 
 // Outlines all headings
 WebDeveloper.Overlay.Outline.outlineHeadings = function(element)
 {
-	WebDeveloper.Outline.outlineHeadings(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Outline.outlineHeadings(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(WebDeveloper.Common.getFeatureId(element.getAttribute("id")));
 };
 
 // Outlines all non-secure elements
 WebDeveloper.Overlay.Outline.outlineNonSecureElements = function(element)
 {
-	WebDeveloper.Outline.outlineNonSecureElements(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Outline.outlineNonSecureElements(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(WebDeveloper.Common.getFeatureId(element.getAttribute("id")));
 };
 
@@ -91,28 +91,28 @@ WebDeveloper.Overlay.Outline.outlinePositionedElements = function(positionType, 
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.Outline.outlinePositionedElements(positionType, !WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Outline.outlinePositionedElements(positionType, !WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
 // Outlines all tables
 WebDeveloper.Overlay.Outline.outlineTables = function(element)
 {
-	WebDeveloper.Outline.outlineTables(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Outline.outlineTables(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(WebDeveloper.Common.getFeatureId(element.getAttribute("id")));
 };
 
 // Outlines all table captions
 WebDeveloper.Overlay.Outline.outlineTableCaptions = function(element)
 {
-	WebDeveloper.Outline.outlineTableCaptions(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Outline.outlineTableCaptions(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(WebDeveloper.Common.getFeatureId(element.getAttribute("id")));
 };
 
 // Outlines all table cells
 WebDeveloper.Overlay.Outline.outlineTableCells = function(element)
 {
-	WebDeveloper.Outline.outlineTableCells(WebDeveloper.Common.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Outline.outlineTableCells(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 	WebDeveloper.Storage.toggleFeature(WebDeveloper.Common.getFeatureId(element.getAttribute("id")));
 };
 
