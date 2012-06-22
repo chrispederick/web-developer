@@ -74,6 +74,47 @@ WebDeveloper.CSS.formatStyleValue = function(styleValue)
 	return styleValue;
 };
 
+// Returns an array of style sheets imported in the given style sheet
+WebDeveloper.CSS.getImportedStyleSheets = function(styleSheet)
+{
+ var styleSheets = [];
+
+	// If the style sheet is set
+	if(styleSheet)
+	{
+		var cssRules = styleSheet.cssRules;
+
+		// If there are CSS rules
+		if(cssRules)
+		{
+			var cssRule						 = null;
+			var importedStyleSheet = null;
+
+			// Loop through the style sheet rules
+			for(var i = 0, l = cssRules.length; i < l; i++)
+			{
+				cssRule = cssRules[i];
+
+				// If this is an import rule
+				if(cssRule.type == 3)
+				{
+					importedStyleSheet = cssRule.styleSheet;
+
+					// If this style sheet is valid
+					if(WebDeveloper.CSS.isValidStyleSheet(importedStyleSheet))
+					{
+						styleSheets.push(importedStyleSheet.href);
+
+						styleSheets = styleSheets.concat(WebDeveloper.CSS.getImportedStyleSheets(importedStyleSheet));
+					}
+				}
+			}
+		}
+	}
+
+	return styleSheets;
+};
+
 // Returns true if this is an alternate style sheet
 WebDeveloper.CSS.isAlternateStyleSheet = function(styleSheet)
 {

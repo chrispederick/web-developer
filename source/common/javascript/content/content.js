@@ -321,6 +321,8 @@ WebDeveloper.Content.getDocumentCSS = function(contentDocument)
 		if(WebDeveloper.CSS.isValidStyleSheet(styleSheet.sheet))
 		{
 			embeddedStyles += WebDeveloper.Common.trim(styleSheet.innerHTML) + "\n\n";
+
+			documentCSS.styleSheets = documentCSS.styleSheets.concat(WebDeveloper.CSS.getImportedStyleSheets(styleSheet.sheet));
 		}
 	}
 
@@ -336,6 +338,8 @@ WebDeveloper.Content.getDocumentCSS = function(contentDocument)
 		if(WebDeveloper.CSS.isValidStyleSheet(styleSheet) && styleSheetURL && styleSheetURL != contentDocument.documentURI && !styleSheet.disabled)
 		{
 			documentCSS.styleSheets.push(WebDeveloper.Common.removeReloadParameterFromURL(styleSheetURL));
+
+			documentCSS.styleSheets = documentCSS.styleSheets.concat(WebDeveloper.CSS.getImportedStyleSheets(styleSheet));
 		}
 	}
 

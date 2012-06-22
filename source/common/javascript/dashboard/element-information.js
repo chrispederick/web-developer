@@ -251,7 +251,7 @@ WebDeveloper.ElementInformation.generateLayoutInformation = function(element)
 {
 	var elementInformation = "height: " + element.offsetHeight + "px;\nwidth: " + element.offsetWidth + "px;";
 
-	return '<div class="web-developer-section web-developer-css"><h3>' + WebDeveloper.ElementInformation.getLocaleString("layout") + '</h3><pre class="web-developer-syntax-highlight" data-line-numbers="false" data-type="css">{\n' + elementInformation + "\n}</pre></div>";
+	return '<div class="web-developer-section web-developer-css"><h3>' + WebDeveloper.ElementInformation.getLocaleString("layout") + '</h3><pre class="web-developer-syntax-highlight" data-line-numbers="false" data-type="css">' + elementInformation + "</pre></div>";
 };
 
 // Generates position information for an element
@@ -269,7 +269,7 @@ WebDeveloper.ElementInformation.generatePositionInformation = function(element, 
 		elementInformation = WebDeveloper.Common.trim(elementInformation);
 	}
 
-	return '<div class="web-developer-section web-developer-css"><h3>' + WebDeveloper.ElementInformation.getLocaleString("position") + '</h3><pre class="web-developer-syntax-highlight" data-line-numbers="false" data-type="css">{\n' + elementInformation + "\n}</pre></div>";
+	return '<div class="web-developer-section web-developer-css"><h3>' + WebDeveloper.ElementInformation.getLocaleString("position") + '</h3><pre class="web-developer-syntax-highlight" data-line-numbers="false" data-type="css">' + elementInformation + "</pre></div>";
 };
 
 // Generates text information for an element
@@ -287,7 +287,7 @@ WebDeveloper.ElementInformation.generateTextInformation = function(element, cont
 		elementInformation = WebDeveloper.Common.trim(elementInformation);
 	}
 
-	return '<div class="web-developer-section web-developer-css"><h3>' + WebDeveloper.ElementInformation.getLocaleString("text") + '</h3><pre class="web-developer-syntax-highlight" data-line-numbers="false" data-type="css">{\n' + elementInformation + "\n}</pre></div>";
+	return '<div class="web-developer-section web-developer-css"><h3>' + WebDeveloper.ElementInformation.getLocaleString("text") + '</h3><pre class="web-developer-syntax-highlight" data-line-numbers="false" data-type="css">' + elementInformation + "</pre></div>";
 };
 
 // Returns the element description

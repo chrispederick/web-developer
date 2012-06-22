@@ -128,7 +128,7 @@ WebDeveloper.Generated.initializeSyntaxHighlight = function(color)
 				{
 					lineNumbers: pre.data("line-numbers"),
 					mode: pre.data("type"),
-					readOnly: "nocursor",
+					readOnly: true,
 					tabSize: 2,
 					theme: color,
 					value: pre.html()
