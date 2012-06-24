@@ -9,6 +9,25 @@ WebDeveloper.Overlay.Options.about = function()
 	WebDeveloper.Overlay.openGeneratedTab(WebDeveloper.Common.getChromeURL("about/about.html"), null, WebDeveloper.Overlay.Options.getAboutLocale());
 };
 
+WebDeveloper.Overlay.Options.generateCommandMenu = function(commandId)
+{
+	var command  = document.getElementById(commandId);
+	var menuItem = null;
+
+	// If the command is set
+	if(command)
+	{
+		menuItem = document.createElement("menuitem");
+
+		menuItem.setAttribute("class", "web-developer-generated-menu");
+		menuItem.setAttribute("label", command.getAttribute("label"));
+		menuItem.setAttribute("command", commandId);
+		menuItem.setAttribute("type", "checkbox");
+	}
+
+	return menuItem;
+};
+
 // Opens the help
 WebDeveloper.Overlay.Options.help = function()
 {
@@ -71,8 +90,6 @@ WebDeveloper.Overlay.Options.resetPage = function()
 WebDeveloper.Overlay.Options.updateActiveFeaturesMenu = function(menu)
 {
 	var activeFeatures = WebDeveloper.Storage.getFeatures(WebDeveloper.Common.getTabBrowser().selectedTab);
-	var command				 = null;
-	var commandId			 = null;
 	var menuItem			 = null;
 	var separator			 = menu.getElementsByTagName("menuseparator")[0];
 
@@ -89,78 +106,62 @@ WebDeveloper.Overlay.Options.updateActiveFeaturesMenu = function(menu)
 			// Loop through the active features
 			for(var i = 0, l = activeFeatures.length; i < l; i++)
 			{
-				commandId = WebDeveloper.Common.getCommandId(activeFeatures[i]);
-				command		= document.getElementById(commandId);
+				menuItem = WebDeveloper.Overlay.Options.generateCommandMenu(WebDeveloper.Common.getCommandId(activeFeatures[i]));
 
-				// If the command exists
-				if(command)
+				// If the menu item is set
+				if(menuItem)
 				{
-					menuItem = document.createElement("menuitem");
-
-					menuItem.setAttribute("class", "web-developer-generated-menu");
-					menuItem.setAttribute("label", command.getAttribute("label"));
-					menuItem.setAttribute("command", commandId);
-					menuItem.setAttribute("type", "checkbox");
-
 					menu.insertBefore(menuItem, separator);
 				}
+			}
+		}
+
+		// If the edit CSS feature is active
+		if(WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("editCSS")))
+		{
+			menuItem = WebDeveloper.Overlay.Options.generateCommandMenu("web-developer-edit-css-command");
+
+			// If the menu item is set
+			if(menuItem)
+			{
+				menu.insertBefore(menuItem, separator);
+			}
+		}
+
+		// If the edit HTML feature is active
+		if(WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("editHTML")))
+		{
+			menuItem = WebDeveloper.Overlay.Options.generateCommandMenu("web-developer-edit-html-command");
+
+			// If the menu item is set
+			if(menuItem)
+			{
+				menu.insertBefore(menuItem, separator);
 			}
 		}
 
 		// If the element information feature is active
 		if(WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("elementInformation")))
 		{
-			commandId = "web-developer-display-element-information-command";
-			menuItem	= document.createElement("menuitem");
+			menuItem = WebDeveloper.Overlay.Options.generateCommandMenu("web-developer-display-element-information-command");
 
-			menuItem.setAttribute("class", "web-developer-generated-menu");
-			menuItem.setAttribute("label", document.getElementById(commandId).getAttribute("label"));
-			menuItem.setAttribute("command", commandId);
-			menuItem.setAttribute("type", "checkbox");
-
-			menu.insertBefore(menuItem, separator);
+			// If the menu item is set
+			if(menuItem)
+			{
+				menu.insertBefore(menuItem, separator);
+			}
 		}
 
 		// If the style information feature is active
 		if(WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("styleInformation")))
 		{
-			commandId = "web-developer-display-style-information-command";
-			menuItem	= document.createElement("menuitem");
+			menuItem = WebDeveloper.Overlay.Options.generateCommandMenu("web-developer-display-style-information-command");
 
-			menuItem.setAttribute("class", "web-developer-generated-menu");
-			menuItem.setAttribute("label", document.getElementById(commandId).getAttribute("label"));
-			menuItem.setAttribute("command", commandId);
-			menuItem.setAttribute("type", "checkbox");
-
-			menu.insertBefore(menuItem, separator);
-		}
-
-		// If the edit CSS feature is active
-		if(WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("editCSS")))
-		{
-			commandId = "web-developer-edit-css-command";
-			menuItem	= document.createElement("menuitem");
-
-			menuItem.setAttribute("class", "web-developer-generated-menu");
-			menuItem.setAttribute("label", document.getElementById(commandId).getAttribute("label"));
-			menuItem.setAttribute("command", commandId);
-			menuItem.setAttribute("type", "checkbox");
-
-			menu.insertBefore(menuItem, separator);
-		}
-
-		// If the edit HTML feature is active
-		if(WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("editHTML")))
-		{
-			commandId = "web-developer-edit-html-command";
-			menuItem	= document.createElement("menuitem");
-
-			menuItem.setAttribute("class", "web-developer-generated-menu");
-			menuItem.setAttribute("label", document.getElementById(commandId).getAttribute("label"));
-			menuItem.setAttribute("command", commandId);
-			menuItem.setAttribute("type", "checkbox");
-
-			menu.insertBefore(menuItem, separator);
+			// If the menu item is set
+			if(menuItem)
+			{
+				menu.insertBefore(menuItem, separator);
+			}
 		}
 	}
 };
@@ -169,18 +170,6 @@ WebDeveloper.Overlay.Options.updateActiveFeaturesMenu = function(menu)
 WebDeveloper.Overlay.Options.updateOptionsMenu = function(suffix)
 {
 	var activeFeatures = WebDeveloper.Storage.hasFeatures();
-
-	// If there are no active features
-	if(!activeFeatures)
-	{
-		activeFeatures = WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("elementInformation"));
-	}
-
-	// If there are no active features
-	if(!activeFeatures)
-	{
-		activeFeatures = WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("styleInformation"));
-	}
 
 	// If there are no active features
 	if(!activeFeatures)
@@ -194,6 +183,18 @@ WebDeveloper.Overlay.Options.updateOptionsMenu = function(suffix)
 		activeFeatures = WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("editHTML"));
 	}
 
-	WebDeveloper.Common.configureElement(document.getElementById("web-developer-pin-features-command"), "checked", WebDeveloper.Preferences.getExtensionBooleanPreference("pin.features"));
+	// If there are no active features
+	if(!activeFeatures)
+	{
+		activeFeatures = WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("elementInformation"));
+	}
+
+	// If there are no active features
+	if(!activeFeatures)
+	{
+		activeFeatures = WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("styleInformation"));
+	}
+
 	WebDeveloper.Common.configureElement(document.getElementById("web-developer-active-features-" + suffix), "disabled", !activeFeatures);
+	WebDeveloper.Common.configureElement(document.getElementById("web-developer-pin-features-command"), "checked", WebDeveloper.Preferences.getExtensionBooleanPreference("pin.features"));
 };
