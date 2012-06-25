@@ -21,7 +21,7 @@
     <em:targetApplication>
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
-        <em:maxVersion>16.0.*</em:maxVersion>
+        <em:maxVersion>15.*</em:maxVersion>
         <em:minVersion>3.6</em:minVersion>
       </Description>
     </em:targetApplication>
@@ -32,5 +32,6 @@
 		    <em:minVersion>2.0</em:minVersion>
 		  </Description>
 		</em:targetApplication>
+		<em:type>2</em:type>
   </Description>
 </RDF>
