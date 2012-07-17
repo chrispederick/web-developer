@@ -417,10 +417,6 @@ WebDeveloper.Content.getDocumentOutline = function()
 				{
 					headingText = "(" + headingText + ")";
 				}
-				else
-				{
-					headingText = WebDeveloper.Locales.getString("noHeadingText");
-				}
 			}
 
 			documentHeading.text = headingText;

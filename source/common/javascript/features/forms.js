@@ -726,7 +726,7 @@ WebDeveloper.Forms.outlineFormFieldsWithoutLabels = function(outline, documents)
 };
 
 // Populates all form fields
-WebDeveloper.Forms.populateFormFields = function(documents, emailAddress)
+WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, password)
 {
 	var contentDocument					 = null;
 	var inputElement						 = null;
@@ -736,6 +736,7 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress)
 	var inputElementType				 = null;
 	var option									 = null;
 	var options									 = null;
+	var populatedFormFields			 = 0;
 	var selectElement						 = null;
 	var selectElements					 = null;
 	var textAreaElement					 = null;
@@ -770,26 +771,38 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress)
 					if((inputElementType && inputElementType.toLowerCase() == "email") || ((!inputElementType || inputElementType == "text") && inputElementName && inputElementName.toLowerCase().indexOf("email") >= 0))
 					{
 						inputElement.value = emailAddress;
+
+						populatedFormFields++;
 					}
 					else if(inputElementType && inputElementType.toLowerCase() == "password")
 					{
-						inputElement.value = WebDeveloper.Locales.getString("password").toLowerCase();
+						inputElement.value = password;
+
+						populatedFormFields++;
 					}
 					else if(inputElementType && inputElementType.toLowerCase() == "url")
 					{
 						inputElement.value = "http://localhost/";
+
+						populatedFormFields++;
 					}
 					else if(inputElementName && inputElementName.toLowerCase().indexOf("zip") >= 0)
 					{
 						inputElement.value = "90210";
+
+						populatedFormFields++;
 					}
 					else if(inputElementName)
 					{
 						inputElement.value = inputElementName;
+
+						populatedFormFields++;
 					}
 					else
 					{
 						inputElement.value = "@name@";
+
+						populatedFormFields++;
 					}
 
 					// If the input element has a maxlength attribute
@@ -801,6 +814,8 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress)
 				else if(inputElementType && (inputElementType.toLowerCase() == "checkbox" || inputElementType.toLowerCase() == "radio"))
 				{
 					inputElement.checked = true;
+
+					populatedFormFields++;
 				}
 			}
 		}
@@ -816,7 +831,7 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress)
 				options = selectElement.options;
 
 				// Loop through the options
-				for(var k = 0, n = options.length; k < n; j++)
+				for(var k = 0, n = options.length; k < n; k++)
 				{
 					option = options.item(k);
 
@@ -824,6 +839,8 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress)
 					if(option && WebDeveloper.Common.trim(option.text) && WebDeveloper.Common.trim(option.value))
 					{
 						selectElement.selectedIndex = k;
+
+						populatedFormFields++;
 
 						break;
 					}
@@ -842,6 +859,8 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress)
 				textAreaElementMaxlength = textAreaElement.getAttribute("maxlength");
 				textAreaElement.value		 = textAreaElement.getAttribute("name");
 
+				populatedFormFields++;
+
 				// If the text area element has a maxlength attribute
 				if(textAreaElementMaxlength && textAreaElement.value > textAreaElementMaxlength)
 				{
@@ -849,6 +868,16 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress)
 				}
 			}
 		}
+	}
+
+	// If one form field was populated
+	if(populatedFormFields == 1)
+	{
+		WebDeveloper.Common.displayNotification("populateFormFieldsSingleResult");
+	}
+	else
+	{
+		WebDeveloper.Common.displayNotification("populateFormFieldsMultipleResult", [populatedFormFields]);
 	}
 };
 

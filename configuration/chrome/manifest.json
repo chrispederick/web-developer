@@ -4,7 +4,7 @@
 	"content_scripts": [{"js": ["content/content.js"], "matches": ["<all_urls>"]}],
 	"default_locale":	 "en_US",
   "description":     "__MSG_extensionDescription__",
-  "homepage_url":		"@url@",
+  "homepage_url":		 "@url@",
   "icons":           {"16": "icons/16.png", "48":  "icons/48.png", "128": "icons/128.png"},
   "name": 			     "__MSG_extensionName__",
   "options_page":		 "options/options.html",

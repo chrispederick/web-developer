@@ -61,8 +61,12 @@ WebDeveloper.Overlay.Images.displayAltAttributes = function(element)
 WebDeveloper.Overlay.Images.displayImageDimensions = function(element)
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
+	var locale		= WebDeveloper.Locales.setupGeneratedLocale();
 
-	WebDeveloper.Images.displayImageDimensions(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
+	locale.height	= WebDeveloper.Locales.getString("height");
+	locale.width	= WebDeveloper.Locales.getString("width");
+
+	WebDeveloper.Images.displayImageDimensions(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()), locale);
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 

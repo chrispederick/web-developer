@@ -90,7 +90,7 @@ WebDeveloper.Overlay.Forms.outlineFormFieldsWithoutLabels = function(element)
 // Populates all form fields
 WebDeveloper.Overlay.Forms.populateFormFields = function()
 {
-	WebDeveloper.Forms.populateFormFields(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()), WebDeveloper.Preferences.getExtensionStringPreference("populate.email.address"));
+	WebDeveloper.Forms.populateFormFields(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()), WebDeveloper.Preferences.getExtensionStringPreference("populate.email.address"), WebDeveloper.Locales.getString("password").toLowerCase());
 };
 
 // Removes maximum lengths from all elements

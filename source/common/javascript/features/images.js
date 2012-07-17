@@ -1,6 +1,7 @@
 var WebDeveloper = WebDeveloper || {};
 
 WebDeveloper.Images													= WebDeveloper.Images || {};
+WebDeveloper.Images.imageDimensionsLocale		= null;
 WebDeveloper.Images.imageDimensionsTimeout	= null;
 WebDeveloper.Images.imageDimensionsUpdating = false;
 
@@ -43,9 +44,23 @@ WebDeveloper.Images.displayAltAttributes = function(display, documents)
 };
 
 // Displays the dimensions for all images
-WebDeveloper.Images.displayImageDimensions = function(display, documents)
+WebDeveloper.Images.displayImageDimensions = function(display, documents, locale)
 {
 	var contentDocument = null;
+
+	// If displaying the image dimensions
+	if(display)
+	{
+		WebDeveloper.Images.imageDimensionsLocale = locale;
+
+		window.addEventListener("resize", WebDeveloper.Images.resizeImageDimensions, false);
+	}
+	else
+	{
+		WebDeveloper.Images.imageDimensionsLocale = null;
+
+		window.removeEventListener("resize", WebDeveloper.Images.resizeImageDimensions, false);
+	}
 
 	// Loop through the documents
 	for(var i = 0, l = documents.length; i < l; i++)
@@ -64,16 +79,6 @@ WebDeveloper.Images.displayImageDimensions = function(display, documents)
 
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-image-dimensions-before", contentDocument, false);
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/display-image-dimensions.css", "web-developer-display-image-dimensions", contentDocument, false);
-	}
-
-	// If displaying the image dimensions
-	if(display)
-	{
-		window.addEventListener("resize", WebDeveloper.Information.resizeImageDimensions, false);
-	}
-	else
-	{
-		window.removeEventListener("resize", WebDeveloper.Information.resizeImageDimensions, false);
 	}
 };
 
@@ -626,7 +631,7 @@ WebDeveloper.Images.updateImageDimensions = function(contentDocument)
 	for(var i = 0, l = images.length; i < l; i++)
 	{
 		image	= images[i];
-		text	= WebDeveloper.Common.formatDimensions(image.width, image.height);
+		text	= WebDeveloper.Common.formatDimensions(image.width, image.height, WebDeveloper.Images.imageDimensionsLocale);
 
 		// If the text is set
 		if(text)

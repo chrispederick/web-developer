@@ -36,6 +36,7 @@ WebDeveloper.Overlay.Information.getViewDocumentOutlineLocale = function()
 	locale.heading				 = WebDeveloper.Locales.getString("heading");
 	locale.headings				 = WebDeveloper.Locales.getString("headings");
 	locale.missingHeading  = WebDeveloper.Locales.getString("missingHeading");
+	locale.noHeadingText	 = WebDeveloper.Locales.getString("noHeadingText");
 
 	return locale;
 };

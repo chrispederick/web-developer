@@ -1,6 +1,6 @@
 /* Reset styles */
 
-.webdeveloper-line-guide
+.web-developer-line-guide
 {
 	background: transparent !important;
 	border: none !important;
@@ -10,7 +10,6 @@
 	font-style: normal !important;
 	font-variant: normal !important;
 	font-weight: normal !important;
-  height: auto !important;
 	letter-spacing: 0 !important;
 	line-height: 1 !important;
 	margin: 0 !important;
@@ -21,7 +20,6 @@
 	text-decoration: none !important;
 	text-shadow: none !important;
 	text-transform: none !important;
-  width: auto !important;
 }
 
 /* Line guides styles */

@@ -109,8 +109,12 @@ WebDeveloper.Overlay.Information.displayDivDimensions = function()
 		{
 			var feature = featureItem.attr("id");
 			var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
+			var locale	= "";
 
-			WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayDivDimensions(" + display + ", [document]);");
+			locale += "'height': '" + WebDeveloper.Locales.getString("height") + "',";
+			locale += "'width': '" + WebDeveloper.Locales.getString("width") + "'";
+
+			WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayDivDimensions(" + display + ", [document], {" + locale + "});");
 		}
 	});
 };
@@ -262,7 +266,7 @@ WebDeveloper.Overlay.Information.displayTableDepth = function()
 			var feature = featureItem.attr("id");
 			var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
 
-			WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayTableDepth(" + display + ", [document]);");
+			WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayTableDepth(" + display + ", [document], " + '"' + WebDeveloper.Locales.getString("depth") + '");');
 		}
 	});
 };

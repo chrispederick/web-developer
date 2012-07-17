@@ -1,7 +1,13 @@
 var WebDeveloper = WebDeveloper || {};
 
-WebDeveloper.Dashboard				= WebDeveloper.Dashboard || {};
-WebDeveloper.Dashboard.resize	= false;
+WebDeveloper.Dashboard					= WebDeveloper.Dashboard || {};
+WebDeveloper.Dashboard.resizing	= false;
+
+// Adjusts the bottom margin of the body
+WebDeveloper.Dashboard.adjustBodyBottomMargin = function(contentDocument, height)
+{
+	WebDeveloper.Common.getDocumentBodyElement(contentDocument).style.setProperty("margin-bottom", (height + 20) + "px", "important");
+};
 
 // Closes a dashboard tab
 WebDeveloper.Dashboard.closeDashboardTab = function(tabId, contentDocument)
@@ -52,10 +58,20 @@ WebDeveloper.Dashboard.createDashboard = function(contentDocument, dashboardHTML
 	// Get the dashboard templates
 	chrome.extension.sendRequest({ "item": "dashboard_height", "type": "get-storage-item" }, function(response)
 	{
+		var height = response.value;
+
 		// If the dashboard height value was returned
-		if(response.value)
+		if(height)
 		{
-			dashboard.style.setProperty("height", response.value, "important");
+			var pixels = height.indexOf("px");
+
+			// If there are pixels in the height
+			if(pixels != -1)
+			{
+				height = height.substring(0, pixels);
+			}
+
+			WebDeveloper.Dashboard.resize(height);
 		}
 	});
 };
@@ -70,28 +86,16 @@ WebDeveloper.Dashboard.getDashboard = function(contentDocument)
 WebDeveloper.Dashboard.mouseMove = function()
 {
 	// If resizing the dashboard
-	if(WebDeveloper.Dashboard.resize)
+	if(WebDeveloper.Dashboard.resizing)
 	{
-		var dashboard = WebDeveloper.Dashboard.getDashboard(WebDeveloper.Common.getContentDocument());
-		var height		= (dashboard.offsetHeight - event.pageY) + "px";
-
-		dashboard.style.setProperty("height", height, "important");
-
-		WebDeveloper.EditCSS.resize(dashboard);
-		WebDeveloper.ElementInformation.resize(dashboard);
-
-		// Get the dashboard templates
-		chrome.extension.sendRequest({ "item": "dashboard_height", "type": "set-storage-item", "value": height }, function(response)
-		{
-			// Ignore
-		});
+		WebDeveloper.Dashboard.resize(WebDeveloper.Dashboard.getDashboard(WebDeveloper.Common.getContentDocument()).offsetHeight - event.pageY);
 	}
 };
 
 // Handles the mouse up event
 WebDeveloper.Dashboard.mouseUp = function()
 {
-	WebDeveloper.Dashboard.resize = false;
+	WebDeveloper.Dashboard.resizing = false;
 };
 
 // Opens a dashboard tab
@@ -135,12 +139,31 @@ WebDeveloper.Dashboard.removeDashboard = function(contentDocument)
 	window.WebDeveloperEvents.Dashboard = null;
 };
 
+// Resizes the dashboard
+WebDeveloper.Dashboard.resize = function(height)
+{
+	var contentDocument = WebDeveloper.Common.getContentDocument();
+	var dashboard				= WebDeveloper.Dashboard.getDashboard(contentDocument);
+
+	dashboard.style.setProperty("height", height + "px", "important");
+
+	WebDeveloper.Dashboard.adjustBodyBottomMargin(contentDocument, height);
+	WebDeveloper.EditCSS.resize(dashboard);
+	WebDeveloper.ElementInformation.resize(dashboard);
+
+	// Get the dashboard templates
+	chrome.extension.sendRequest({ "item": "dashboard_height", "type": "set-storage-item", "value": height }, function(response)
+	{
+		// Ignore
+	});
+};
+
 // Handles the resizer mouse down event
 WebDeveloper.Dashboard.resizerMouseDown = function(event)
 {
 	// If the click was not a right click
 	if(event.button != 2)
 	{
-		WebDeveloper.Dashboard.resize = true;
+		WebDeveloper.Dashboard.resizing = true;
 	}
 };

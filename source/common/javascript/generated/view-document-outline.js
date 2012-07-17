@@ -14,6 +14,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
 	var headingLevel				 = null;
 	var headings						 = null;
 	var headingsLength			 = null;
+	var headingText					 = null;
 	var previousHeadingLevel = null;
 
 	WebDeveloper.Generated.emptyContent();
@@ -47,6 +48,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
 			{
 				heading			 = headings[j];
 				headingLevel = heading.level;
+				headingText	 = heading.text;
 
 				// Loop through any missing headers
 				for(var k = previousHeadingLevel + 1; k < headingLevel; k++)
@@ -54,7 +56,13 @@ WebDeveloper.Generated.initialize = function(data, locale)
 					container.append("<h" + k + ' class="web-developer-missing-heading"><span class="label label-warning">&lt;h' + k + "&gt;</span>" + locale.missingHeading + "</h" + k + ">");
 				}
 
-				container.append("<h" + headingLevel + '><span class="label label-success">&lt;h' + headingLevel + "&gt;</span>" + heading.text + "</h" + k + ">");
+				// If there is no heading text
+				if(!headingText)
+				{
+					headingText = locale.noHeadingText;
+				}
+
+				container.append("<h" + headingLevel + '><span class="label label-success">&lt;h' + headingLevel + "&gt;</span>" + headingText + "</h" + k + ">");
 
 				previousHeadingLevel = headingLevel;
 			}

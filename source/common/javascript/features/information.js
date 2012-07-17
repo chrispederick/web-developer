@@ -1,6 +1,7 @@
 var WebDeveloper = WebDeveloper || {};
 
 WebDeveloper.Information											 = WebDeveloper.Information || {};
+WebDeveloper.Information.divDimensionsLocale	 = null;
 WebDeveloper.Information.divDimensionsTimeout  = null;
 WebDeveloper.Information.divDimensionsUpdating = false;
 
@@ -135,9 +136,23 @@ WebDeveloper.Information.displayARIARoles = function(documents)
 };
 
 // Displays the dimensions for divs on a page
-WebDeveloper.Information.displayDivDimensions = function(display, documents)
+WebDeveloper.Information.displayDivDimensions = function(display, documents, locale)
 {
 	var contentDocument = null;
+
+	// If displaying the div dimensions
+	if(display)
+	{
+		WebDeveloper.Information.divDimensionsLocale = locale;
+
+		window.addEventListener("resize", WebDeveloper.Information.resizeDivDimensions, false);
+	}
+	else
+	{
+		WebDeveloper.Information.divDimensionsLocale = null;
+
+		window.removeEventListener("resize", WebDeveloper.Information.resizeDivDimensions, false);
+	}
 
 	// Loop through the documents
 	for(var i = 0, l = documents.length; i < l; i++)
@@ -156,16 +171,6 @@ WebDeveloper.Information.displayDivDimensions = function(display, documents)
 
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-div-dimensions-before", contentDocument, false);
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/information/display-div-dimensions.css", "web-developer-display-div-dimensions", contentDocument, false);
-	}
-
-	// If displaying the div dimensions
-	if(display)
-	{
-		window.addEventListener("resize", WebDeveloper.Information.resizeDivDimensions, false);
-	}
-	else
-	{
-		window.removeEventListener("resize", WebDeveloper.Information.resizeDivDimensions, false);
 	}
 };
 
@@ -238,12 +243,12 @@ WebDeveloper.Information.displayIdClassDetails = function(display, documents)
 				// If the id class element is not the document root element or a Web Developer element
 				if(idClassElement != contentDocument.documentElement && ((idClassElement.hasAttribute("class") && idClassElement.getAttribute("class").indexOf("web-developer-") !== 0) || (idClassElement.hasAttribute("id") && idClassElement.getAttribute("id").indexOf("web-developer-") !== 0)))
 				{
-					 spanElement = contentDocument.createElement("span");
-					 text				 = WebDeveloper.Information.getElementDescription(idClassElement);
+					spanElement = contentDocument.createElement("span");
+					text				 = WebDeveloper.Information.getElementDescription(idClassElement);
 
-					 spanElement.setAttribute("class", "web-developer-id-class-details");
-					 spanElement.appendChild(contentDocument.createTextNode(text));
-					 idClassElement.parentNode.insertBefore(spanElement, idClassElement);
+					spanElement.setAttribute("class", "web-developer-id-class-details");
+					spanElement.appendChild(contentDocument.createTextNode(text));
+					idClassElement.parentNode.insertBefore(spanElement, idClassElement);
 				}
 			}
 		}
@@ -524,7 +529,7 @@ WebDeveloper.Information.displayTableCellInformation = function(tableCell, conte
 };
 
 // Displays the depth of all tables on a page
-WebDeveloper.Information.displayTableDepth = function(display, documents)
+WebDeveloper.Information.displayTableDepth = function(display, documents, depth)
 {
 	var contentDocument = null;
 	var spanElement			= null;
@@ -549,7 +554,7 @@ WebDeveloper.Information.displayTableDepth = function(display, documents)
 			{
 				spanElement	= contentDocument.createElement("span");
 				table				= tables[j];
-				text				= WebDeveloper.Locales.getString("depth") + " = " + WebDeveloper.Information.getTableDepth(table);
+				text				= depth + " = " + WebDeveloper.Information.getTableDepth(table);
 
 				spanElement.setAttribute("class", "web-developer-display-table-depth");
 				spanElement.appendChild(contentDocument.createTextNode(text));
@@ -785,7 +790,7 @@ WebDeveloper.Information.updateDivDimensions = function(contentDocument)
 	{
 		div					= divs[i];
 		spanElement	= contentDocument.createElement("span");
-		text				= WebDeveloper.Information.getElementDescription(div) + " " + WebDeveloper.Common.formatDimensions(div.offsetWidth, div.offsetHeight);
+		text				= WebDeveloper.Information.getElementDescription(div) + " " + WebDeveloper.Common.formatDimensions(div.offsetWidth, div.offsetHeight, WebDeveloper.Information.divDimensionsLocale);
 
 		spanElement.style.left		 = div.offsetLeft + "px";
 		spanElement.style.position = "absolute";

@@ -27,7 +27,7 @@ pref("extensions.webdeveloper.keyboard.5.modifiers", "alt shift");
 pref("extensions.webdeveloper.keyboard.6.feature", "view-source-view-source");
 pref("extensions.webdeveloper.keyboard.6.key", "chrome://web-developer/locale/options/options.properties");
 pref("extensions.webdeveloper.keyboard.6.modifiers", "alt shift");
-pref("extensions.webdeveloper.keyboard.7.feature", "view-style-information");
+pref("extensions.webdeveloper.keyboard.7.feature", "display-style-information");
 pref("extensions.webdeveloper.keyboard.7.key", "chrome://web-developer/locale/options/options.properties");
 pref("extensions.webdeveloper.keyboard.7.modifiers", "alt shift");
 pref("extensions.webdeveloper.keyboard.count", 7);

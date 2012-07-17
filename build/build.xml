@@ -132,11 +132,14 @@
     	<fileset file="../source/common/javascript/common/css.js"/>
     	<fileset file="../source/common/javascript/features/css.js"/>
     </concat>
-    <concat destfile="chrome/features/javascript/forms.js">
+    <concat destfile="chrome/features/javascript/forms.temp">
     	<fileset file="../source/common/javascript/common/common.js"/>
     	<fileset file="../source/chrome/javascript/features/common.js"/>
     	<fileset file="../source/common/javascript/features/forms.js"/>
     </concat>
+    <move file="chrome/features/javascript/forms.temp" tofile="chrome/features/javascript/forms.js">
+      <filterset refid="chrome.filters"/>
+    </move>
     <concat destfile="chrome/features/javascript/images.js">
     	<fileset file="../source/common/javascript/common/common.js"/>
     	<fileset file="../source/chrome/javascript/features/common.js"/>

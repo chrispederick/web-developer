@@ -48,8 +48,12 @@ WebDeveloper.Overlay.Information.displayDivOrder = function(element)
 WebDeveloper.Overlay.Information.displayDivDimensions = function(element)
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
+	var locale		= WebDeveloper.Locales.setupGeneratedLocale();
 
-	WebDeveloper.Information.displayDivDimensions(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
+	locale.height	= WebDeveloper.Locales.getString("height");
+	locale.width	= WebDeveloper.Locales.getString("width");
+
+	WebDeveloper.Information.displayDivDimensions(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()), locale);
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 
@@ -117,7 +121,7 @@ WebDeveloper.Overlay.Information.displayTableDepth = function(element)
 {
 	var featureId = WebDeveloper.Common.getFeatureId(element.getAttribute("id"));
 
-	WebDeveloper.Information.displayTableDepth(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
+	WebDeveloper.Information.displayTableDepth(!WebDeveloper.Storage.isFeatureActive(featureId), WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()), WebDeveloper.Locales.getString("depth"));
 	WebDeveloper.Storage.toggleFeature(featureId);
 };
 

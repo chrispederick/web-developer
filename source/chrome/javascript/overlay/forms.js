@@ -242,7 +242,7 @@ WebDeveloper.Overlay.Forms.populateFormFields = function()
 		// If the tab is valid
 		if(WebDeveloper.Overlay.isValidTab(tab))
 		{
-			WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, 'WebDeveloper.Forms.populateFormFields([document], "' + chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("populate_email_address") + '");');
+			WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, 'WebDeveloper.Forms.populateFormFields([document], "' + chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("populate_email_address") + '", "' + WebDeveloper.Locales.getString("password").toLowerCase() + '");');
 		}
 	});
 };

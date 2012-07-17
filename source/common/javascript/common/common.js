@@ -136,20 +136,20 @@ WebDeveloper.Common.endsWith = function(string, endsWith)
 };
 
 // Formats dimensions
-WebDeveloper.Common.formatDimensions = function(width, height)
+WebDeveloper.Common.formatDimensions = function(width, height, locale)
 {
 	// If the width and height are set
 	if(width && height)
 	{
-		return WebDeveloper.Locales.getString("width") + " = " + width + "px " + WebDeveloper.Locales.getString("height") + " = " + height + "px";
+		return locale.width + " = " + width + "px " + locale.height + " = " + height + "px";
 	}
 	else if(width)
 	{
-		return WebDeveloper.Locales.getString("width") + " = " + width + "px";
+		return locale.width + " = " + width + "px";
 	}
 	else if(height)
 	{
-		return WebDeveloper.Locales.getString("height") + " = " + height + "px";
+		return locale.height + " = " + height + "px";
 	}
 
 	return "";
