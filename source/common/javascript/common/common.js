@@ -1,6 +1,7 @@
 var WebDeveloper = WebDeveloper || {};
 
-WebDeveloper.Common = WebDeveloper.Common || {};
+WebDeveloper.Common								 = WebDeveloper.Common || {};
+WebDeveloper.Common.requestTimeout = 10000;
 
 // Adds a class to an element
 WebDeveloper.Common.addClass = function(element, className)
@@ -8,7 +9,7 @@ WebDeveloper.Common.addClass = function(element, className)
 	// If the element and class name are set and the element does not already have this class
 	if(element && className && !WebDeveloper.Common.hasClass(element, className))
 	{
-		element.className = WebDeveloper.Common.trim(element.className + " " + className);
+		element.className = (element.className + " " + className).trim();
 	}
 };
 
@@ -56,24 +57,6 @@ WebDeveloper.Common.adjustElementPosition = function(element, xPosition, yPositi
 		else
 		{
 			element.style.top = (innerHeight + offsetY - offsetHeight - offset) + "px";
-		}
-	}
-};
-
-// Adjusts the position of the given element
-WebDeveloper.Common.appendHTML = function(html, element, contentDocument)
-{
-	// If the HTML, element and content document are set
-	if(html && element && contentDocument)
-	{
-		var htmlElement = contentDocument.createElement("div");
-
-		htmlElement.innerHTML = html;
-
-		// While there children of the HTML element
-		while(htmlElement.firstChild)
-		{
-			element.appendChild(htmlElement.firstChild);
 		}
 	}
 };
@@ -385,6 +368,19 @@ WebDeveloper.Common.getElementText = function(element)
 	return elementText;
 };
 
+// Returns the contents of the given URLs
+WebDeveloper.Common.getURLContents = function(urlContentRequests, errorMessage, callback)
+{
+	var urlContentRequestsRemaining = urlContentRequests.length;
+	var configuration								= { "callback": callback, "urlContentRequestsRemaining": urlContentRequestsRemaining };
+
+	// Loop through the URL content requests
+	for(var i = 0, l = urlContentRequests.length; i < l; i++)
+	{
+		WebDeveloper.Common.getURLContent(urlContentRequests[i], errorMessage, configuration);
+	}
+};
+
 // Returns true if an element has the specified class
 WebDeveloper.Common.hasClass = function(element, className)
 {
@@ -414,12 +410,29 @@ WebDeveloper.Common.inArray = function(item, array)
 };
 
 // Includes JavaScript in a document
-WebDeveloper.Common.includeJavaScript = function(url, contentDocument)
+WebDeveloper.Common.includeJavaScript = function(url, contentDocument, callback)
 {
 	var scriptElement = contentDocument.createElement("script");
 
-	scriptElement.setAttribute("src", WebDeveloper.Common.getChromeURL(url));
+	// If a callback is set
+	if(callback)
+	{
+		var load = (function(callbackFunction)
+		{
+			var handler = function(event)
+			{
+				callbackFunction();
 
+				scriptElement.removeEventListener("load", handler, true);
+			};
+
+			return handler;
+		})(callback);
+
+		scriptElement.addEventListener("load", load, true);
+	}
+
+	scriptElement.setAttribute("src", WebDeveloper.Common.getChromeURL(url));
 	WebDeveloper.Common.getDocumentBodyElement(contentDocument).appendChild(scriptElement);
 };
 
@@ -524,7 +537,7 @@ WebDeveloper.Common.removeClass = function(element, className)
 			{
 				classes.splice(i, 1);
 
-				element.className = WebDeveloper.Common.trim(classes.join(" "));
+				element.className = classes.join(" ").trim();
 
 				break;
 			}
@@ -638,8 +651,16 @@ WebDeveloper.Common.toggleStyleSheet = function(url, id, contentDocument, insert
 	}
 };
 
-// Trims a string
-WebDeveloper.Common.trim = function(string)
+// Handles the completion of a URL content request
+WebDeveloper.Common.urlContentRequestComplete = function(content, urlContentRequest, configuration)
 {
-	return string.replace(/^\s\s*/, "").replace(/\s\s*$/, "");
+	urlContentRequest.content = content;
+
+	configuration.urlContentRequestsRemaining--;
+
+	// If there are no URL content requests remaining
+	if(configuration.urlContentRequestsRemaining === 0)
+	{
+		configuration.callback();
+	}
 };

@@ -9,9 +9,11 @@ WebDeveloper.Generated.initialize = function(data, locale)
 	var anchorInformation = locale.anchorInformation;
 	var anchors						= null;
 	var anchorsLength			= null;
+	var content						= document.getElementById("content");
 	var contentDocument		= null;
 	var documents					= data.documents;
 	var list							= null;
+	var listElement				= null;
 	var url								= null;
 
 	WebDeveloper.Generated.emptyContent();
@@ -38,15 +40,16 @@ WebDeveloper.Generated.initialize = function(data, locale)
 		// If there are anchors
 		if(anchorsLength > 0)
 		{
-			list = $("<ol></ol>");
+			list				= document.createElement("ol");
+			listElement = $(list);
 
 			// Loop through the anchors
 			for(var j = 0; j < anchorsLength; j++)
 			{
-				list.append(ich.anchor({ "anchor": anchors[j], "url": url }));
+				listElement.append(ich.anchor({ "anchor": anchors[j], "url": url }));
 			}
 
-			$("#content").append(list);
+			content.appendChild(list);
 		}
 
 		WebDeveloper.Generated.addSeparator();

@@ -7,30 +7,53 @@ WebDeveloper.Generated.maximumURLLength = 100;
 // Adds a document
 WebDeveloper.Generated.addDocument = function(documentURL, documentCount, itemDescription, itemCount)
 {
-	$("#content").append('<h2 id="document-' + (documentCount + 1) + '"><a href="' + documentURL + '">' + documentURL + "</a></h2>");
-	$(".dropdown-menu", $("#documents-dropdown")).append('<li><a href="#document-' + (documentCount + 1) + '">' + WebDeveloper.Generated.formatURL(documentURL) + "</a></li>");
+	var childElement = document.createElement("a");
+	var element			 = document.createElement("h2");
+	var fragment		 = document.createDocumentFragment();
 
-	// If the item description are set
+	childElement.appendChild(document.createTextNode(documentURL));
+
+	childElement.setAttribute("href", documentURL);
+	element.setAttribute("id", "document-" + (documentCount + 1));
+	element.appendChild(childElement);
+	fragment.appendChild(element);
+
+	element			 = document.createElement("li");
+	childElement = document.createElement("a");
+
+	childElement.appendChild(document.createTextNode(WebDeveloper.Generated.formatURL(documentURL)));
+	childElement.setAttribute("href", "#document-" + (documentCount + 1));
+	element.appendChild(childElement);
+	$(".dropdown-menu", $("#documents-dropdown")).get(0).appendChild(element);
+
+	// If the item description is set
 	if(itemDescription)
 	{
-		var description = "<h3>";
+		element = document.createElement("h3");
 
 		// If there are items
 		if(itemCount !== 0)
 		{
-			description += '<i class="icon-caret-down"></i>';
+			childElement = document.createElement("i");
+
+			childElement.setAttribute("class", "icon-caret-down");
+			element.appendChild(childElement);
 		}
 
-		description += itemCount + " " + itemDescription + "</h3>";
-
-		$("#content").append(description);
+		element.appendChild(document.createTextNode(itemCount + " " + itemDescription));
+		fragment.appendChild(element);
 	}
+
+	document.getElementById("content").appendChild(fragment);
 };
 
 // Adds a separator
 WebDeveloper.Generated.addSeparator = function()
 {
-	$("#content").append('<div class="web-developer-separator"></div>');
+	var separator = document.createElement("div");
+
+	separator.setAttribute("class", "web-developer-separator");
+	document.getElementById("content").appendChild(separator);
 };
 
 // Collapses all the output
@@ -90,7 +113,11 @@ WebDeveloper.Generated.formatURL = function(url)
 // Generates a document container
 WebDeveloper.Generated.generateDocumentContainer = function()
 {
-	return $('<div class="web-developer-document"></div>');
+	var documentContainer = document.createElement("div");
+
+	documentContainer.setAttribute("class", "web-developer-document");
+
+	return documentContainer;
 };
 
 // Initializes the common page elements
@@ -131,7 +158,7 @@ WebDeveloper.Generated.initializeSyntaxHighlight = function(color)
 					readOnly: true,
 					tabSize: 2,
 					theme: color,
-					value: pre.html()
+					value: pre.text()
 				});
 			}, 0);
 		});
@@ -161,38 +188,63 @@ WebDeveloper.Generated.localizeHeader = function(locale)
 };
 
 // Outputs content
-WebDeveloper.Generated.output = function(content, title, url, anchor, type, outputOriginal)
+WebDeveloper.Generated.output = function(title, url, anchor, type, outputOriginal)
 {
-	var contentElement = $("#content");
-	var pre						 = $('<pre class="web-developer-syntax-highlight" data-line-numbers="true" data-type="' + type + '"></pre>');
+	var childElement		 = document.createElement("i");
+	var container				 = document.createElement("pre");
+	var content					 = document.getElementById("content");
+	var element					 = document.createElement("h3");
+	var outputContainers = [];
+	var outputTitle			 = title;
+
+	childElement.setAttribute("class", "icon-caret-down");
+	element.appendChild(childElement);
+	element.setAttribute("id", anchor);
 
 	// If the URL is set
 	if(url)
 	{
-		var formattedURL = WebDeveloper.Generated.formatURL(url);
+		childElement = document.createElement("a");
+		outputTitle  = WebDeveloper.Generated.formatURL(url);
 
-		contentElement.append('<h3 id="' + anchor + '"><i class="icon-caret-down"></i><a href="' + url + '">' + formattedURL + "</a></h3>");
-		$(".dropdown-menu", $("#files-dropdown")).append('<li><a href="#' + anchor + '">' + formattedURL + "</a></li>");
+		childElement.appendChild(document.createTextNode(outputTitle));
+		childElement.setAttribute("href", url);
+		element.appendChild(childElement);
 	}
 	else
 	{
-		contentElement.append('<h3 id="' + anchor + '"><i class="icon-caret-down"></i>' + title + "</h3>");
-		$(".dropdown-menu", $("#files-dropdown")).append('<li><a href="#' + anchor + '">' + title + "</a></li>");
+		element.appendChild(document.createTextNode(outputTitle));
 	}
 
-	pre.text(content);
-	contentElement.append(pre);
+	content.appendChild(element);
+
+	childElement = document.createElement("a");
+	element			 = document.createElement("li");
+
+	childElement.appendChild(document.createTextNode(outputTitle));
+	childElement.setAttribute("href", "#" + anchor);
+	element.appendChild(childElement);
+	$(".dropdown-menu", $("#files-dropdown")).get(0).appendChild(element);
+
+	container.setAttribute("class", "web-developer-syntax-highlight");
+	container.setAttribute("data-line-numbers", "true");
+	container.setAttribute("data-type", type);
+	content.appendChild(container);
+	outputContainers.push($(container));
 
 	// If the original should be output
 	if(outputOriginal)
 	{
-		pre = $('<pre class="web-developer-original"></pre>');
+		var originalContainer = document.createElement("pre");
 
-		pre.text(content);
-		contentElement.append(pre);
+		originalContainer.setAttribute("class", "web-developer-original");
+		content.appendChild(originalContainer);
+		outputContainers.push($(originalContainer));
 	}
 
 	WebDeveloper.Generated.addSeparator();
+
+	return outputContainers;
 };
 
 // Sets the page title
@@ -200,7 +252,7 @@ WebDeveloper.Generated.setPageTitle = function(type, data, locale)
 {
 	document.title = type + " " + locale.from.toLowerCase() + " " + WebDeveloper.Generated.formatURL(data.pageURL);
 
-	$("a.brand", $(".navbar")).html(type);
+	$("a.brand", $(".navbar")).text(type);
 };
 
 // Toggles the collapsed state of an output

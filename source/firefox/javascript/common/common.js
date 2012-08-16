@@ -1,6 +1,6 @@
 var WebDeveloper = WebDeveloper || {};
 
-WebDeveloper.Common = WebDeveloper.Common || {};
+WebDeveloper.Common	= WebDeveloper.Common || {};
 
 // Clears a notification
 WebDeveloper.Common.clearNotification = function()
@@ -115,16 +115,266 @@ WebDeveloper.Common.getContentDocument = function()
 	return WebDeveloper.Common.getSelectedBrowser().contentDocument;
 };
 
-// Gets the content from a URL
-WebDeveloper.Common.getContentFromURL = function(url, errorMessage)
+// Returns the current content window
+WebDeveloper.Common.getContentWindow = function()
 {
-	var content = null;
+	return WebDeveloper.Common.getSelectedBrowser().contentWindow;
+};
+
+// Returns a CSS property
+WebDeveloper.Common.getCSSProperty = function(property)
+{
+	// If the property is set
+	if(property)
+	{
+		return property[0];
+	}
+
+	return null;
+};
+
+// Returns the id for a feature
+WebDeveloper.Common.getFeatureId = function(id)
+{
+	// If the id is set
+	if(id)
+	{
+		return id.replace("web-developer-", "").replace("-command", "");
+	}
+
+	return "";
+};
+
+// Handles the completion of a file size request
+WebDeveloper.Common.fileSizeRequestComplete = function(fileSize, fileSizeRequest, configuration)
+{
+	fileSizeRequest.fileObject.size = fileSize;
+
+	configuration.fileSizeRequestsRemaining--;
+
+	// If there are no file size requests remaining
+	if(configuration.fileSizeRequestsRemaining === 0)
+	{
+		configuration.callback();
+	}
+};
+
+// Returns the size of a file
+WebDeveloper.Common.getFileSize = function(fileSizeRequest, configuration)
+{
+	var cacheService			= Components.classes["@mozilla.org/network/cache-service;1"].getService(Components.interfaces.nsICacheService);
+	var cacheSession			= null;
+	var file							= null;
+	var fileSize					= {};
+	var includeCompressed = fileSizeRequest.includeCompressed;
+	var readAccess				= Components.interfaces.nsICache.ACCESS_READ;
+	var size							= null;
+	var url								= fileSizeRequest.url;
+
+	// Try to get the file size from the HTTP cache
+	try
+	{
+		cacheSession											= cacheService.createSession("HTTP", 0, true);
+		cacheSession.doomEntriesIfExpired = false;
+		file															= cacheSession.openCacheEntry(url, readAccess, false);
+
+		// If there is a file
+		if(file)
+		{
+			size = file.dataSize;
+		}
+	}
+	catch(exception)
+	{
+		// Try to get the file size from the FTP cache
+		try
+		{
+			cacheSession											= cacheService.createSession("FTP", 0, true);
+			cacheSession.doomEntriesIfExpired = false;
+			file															= cacheSession.openCacheEntry(url, readAccess, false);
+
+			// If there is a file
+			if(file)
+			{
+				size = file.dataSize;
+			}
+		}
+		catch(exception2)
+		{
+			size = null;
+		}
+	}
+
+	// If the file size could not be retrieved from the cache
+	if(!size)
+	{
+		// Try to download the file
+		try
+		{
+			var ioService = Components.classes["@mozilla.org/network/io-service;1"].getService(Components.interfaces.nsIIOService);
+
+			size = ioService.newChannelFromURI(ioService.newURI(url, null, null)).open().available();
+		}
+		catch(exception3)
+		{
+			size = null;
+		}
+	}
+
+	fileSize.size = size;
+
+	// If including the compressed size
+	if(includeCompressed)
+	{
+		var fileCompressed	 = true;
+		var uncompressedSize = null;
+
+		// If there is a file
+		if(file)
+		{
+			var encoding				= null;
+			var responseHeaders = null;
+
+			// Try to get the cache encoding
+			try
+			{
+				// Specific case-sensitive required
+				encoding = file.getMetaDataElement("request-Accept-Encoding");
+			}
+			catch(exception4)
+			{
+				encoding = null;
+
+				// Try to get the response headers
+				try
+				{
+					// Specific case-sensitive required
+					responseHeaders = file.getMetaDataElement("response-head");
+				}
+				catch(exception5)
+				{
+					responseHeaders = null;
+				}
+			}
+
+			// If the cache is not GZIP encoded
+			if((!encoding || encoding.indexOf("gzip") == -1) && (!responseHeaders || responseHeaders.indexOf("Content-Encoding: gzip") == -1))
+			{
+				fileCompressed = false;
+			}
+		}
+
+		// If the file is compressed
+		if(fileCompressed)
+		{
+			// Try to download the file
+			try
+			{
+				var request = new XMLHttpRequest();
+
+				request.timeout = WebDeveloper.Common.requestTimeout;
+
+				request.onreadystatechange = function()
+				{
+					// If the request completed
+					if(request.readyState == 4)
+					{
+						uncompressedSize = request.responseText.length;
+
+						// If the uncompressed size is smaller than the size
+						if(uncompressedSize < size)
+						{
+							uncompressedSize = size;
+						}
+
+						fileSize.uncompressedSize	= uncompressedSize;
+
+						WebDeveloper.Common.fileSizeRequestComplete(fileSize, fileSizeRequest, configuration);
+					}
+				};
+
+				request.ontimeout = function()
+				{
+					WebDeveloper.Common.fileSizeRequestComplete(fileSize, fileSizeRequest, configuration);
+				};
+
+				request.open("get", url);
+				request.send(null);
+			}
+			catch(exception6)
+			{
+				WebDeveloper.Common.fileSizeRequestComplete(fileSize, fileSizeRequest, configuration);
+			}
+		}
+		else
+		{
+			WebDeveloper.Common.fileSizeRequestComplete(fileSize, fileSizeRequest, configuration);
+		}
+	}
+	else
+	{
+		WebDeveloper.Common.fileSizeRequestComplete(fileSize, fileSizeRequest, configuration);
+	}
+};
+
+// Returns the file sizes of the given files
+WebDeveloper.Common.getFileSizes = function(fileSizeRequests, callback)
+{
+	var fileSizeRequestsRemaining = fileSizeRequests.length;
+	var configuration							= { "callback": callback, "fileSizeRequestsRemaining": fileSizeRequestsRemaining };
+
+	// Loop through the file size requests
+	for(var i = 0, l = fileSizeRequests.length; i < l; i++)
+	{
+		WebDeveloper.Common.getFileSize(fileSizeRequests[i], configuration);
+	}
+};
+
+// Returns the main window
+WebDeveloper.Common.getMainWindow = function()
+{
+	return Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator).getMostRecentWindow("navigator:browser");
+};
+
+// Returns the selected browser
+WebDeveloper.Common.getSelectedBrowser = function()
+{
+	return WebDeveloper.Common.getTabBrowser().selectedBrowser;
+};
+
+// Returns the tab browser
+WebDeveloper.Common.getTabBrowser = function()
+{
+	return WebDeveloper.Common.getMainWindow().gBrowser;
+};
+
+// Returns the tab that contains the given document
+WebDeveloper.Common.getTabForDocument = function(documentElement)
+{
+	var tabBrowser = WebDeveloper.Common.getTabBrowser();
+
+	// If the tabs are set (requires Firefox 3.6)
+	if(tabBrowser.tabs)
+	{
+		return tabBrowser.tabs[tabBrowser.getBrowserIndexForDocument(documentElement)];
+	}
+	else
+	{
+		return tabBrowser.tabContainer.getItemAtIndex(tabBrowser.getBrowserIndexForDocument(documentElement));
+	}
+};
+
+// Gets the content from a URL
+WebDeveloper.Common.getURLContent = function(urlContentRequest, errorMessage, configuration)
+{
+	var url = urlContentRequest.url;
 
 	// If the URL is not entirely generated
 	if(url.indexOf("wyciwyg://") !== 0)
 	{
 		var cacheService = Components.classes["@mozilla.org/network/cache-service;1"].getService(Components.interfaces.nsICacheService);
 		var cacheSession = null;
+		var content			 = null;
 		var file				 = null;
 		var readAccess	 = Components.interfaces.nsICache.ACCESS_READ;
 
@@ -193,152 +443,42 @@ WebDeveloper.Common.getContentFromURL = function(url, errorMessage)
 			}
 		}
 
-		// If the content has not been loaded
-		if(!content)
+		// If the content has been loaded
+		if(content)
 		{
-			// Try to load the URL
+			WebDeveloper.Common.urlContentRequestComplete(content, urlContentRequest, configuration);
+		}
+		else
+		{
+			// Try to download the file
 			try
 			{
 				var request = new XMLHttpRequest();
 
-				request.open("get", url, false);
+				request.timeout = WebDeveloper.Common.requestTimeout;
+
+				request.onreadystatechange = function()
+				{
+					// If the request completed
+					if(request.readyState == 4)
+					{
+						WebDeveloper.Common.urlContentRequestComplete(request.responseText, urlContentRequest, configuration);
+					}
+				};
+
+				request.ontimeout = function()
+				{
+					WebDeveloper.Common.urlContentRequestComplete(errorMessage, urlContentRequest, configuration);
+				};
+
+				request.open("get", url);
 				request.send(null);
-
-				content = request.responseText;
 			}
-			catch(exception5)
+			catch(exception6)
 			{
-				content = errorMessage;
+				WebDeveloper.Common.urlContentRequestComplete(errorMessage, urlContentRequest, configuration);
 			}
 		}
-	}
-
-	return content;
-};
-
-// Returns the current content window
-WebDeveloper.Common.getContentWindow = function()
-{
-	return WebDeveloper.Common.getSelectedBrowser().contentWindow;
-};
-
-// Returns a CSS property
-WebDeveloper.Common.getCSSProperty = function(property)
-{
-	// If the property is set
-	if(property)
-	{
-		return property[0];
-	}
-
-	return null;
-};
-
-// Returns the id for a feature
-WebDeveloper.Common.getFeatureId = function(id)
-{
-	// If the id is set
-	if(id)
-	{
-		return id.replace("web-developer-", "").replace("-command", "");
-	}
-
-	return "";
-};
-
-// Gets the size of a file
-WebDeveloper.Common.getFileSize = function(url)
-{
-	var cacheService = Components.classes["@mozilla.org/network/cache-service;1"].getService(Components.interfaces.nsICacheService);
-	var cacheSession = null;
-	var file				 = null;
-	var fileSize		 = null;
-	var readAccess	 = Components.interfaces.nsICache.ACCESS_READ;
-
-	// Try to get the file size from the HTTP cache
-	try
-	{
-		cacheSession											= cacheService.createSession("HTTP", 0, true);
-		cacheSession.doomEntriesIfExpired = false;
-		file															= cacheSession.openCacheEntry(url, readAccess, false);
-
-		// If there is a file
-		if(file)
-		{
-			fileSize = file.dataSize;
-		}
-	}
-	catch(exception)
-	{
-		// Try to get the file size from the FTP cache
-		try
-		{
-			cacheSession											= cacheService.createSession("FTP", 0, true);
-			cacheSession.doomEntriesIfExpired = false;
-			file															= cacheSession.openCacheEntry(url, readAccess, false);
-
-			// If there is a file
-			if(file)
-			{
-				fileSize = file.dataSize;
-			}
-		}
-		catch(exception2)
-		{
-			fileSize = null;
-		}
-	}
-
-	// If the file size could not be retrieved from the cache
-	if(!fileSize)
-	{
-		// Try to download the file
-		try
-		{
-			var ioService = Components.classes["@mozilla.org/network/io-service;1"].getService(Components.interfaces.nsIIOService);
-
-			fileSize = ioService.newChannelFromURI(ioService.newURI(url, null, null)).open().available();
-		}
-		catch(exception3)
-		{
-			fileSize = null;
-		}
-	}
-
-	return fileSize;
-};
-
-// Returns the main window
-WebDeveloper.Common.getMainWindow = function()
-{
-	return Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator).getMostRecentWindow("navigator:browser");
-};
-
-// Returns the selected browser
-WebDeveloper.Common.getSelectedBrowser = function()
-{
-	return WebDeveloper.Common.getTabBrowser().selectedBrowser;
-};
-
-// Returns the tab browser
-WebDeveloper.Common.getTabBrowser = function()
-{
-	return WebDeveloper.Common.getMainWindow().gBrowser;
-};
-
-// Returns the tab that contains the given document
-WebDeveloper.Common.getTabForDocument = function(documentElement)
-{
-	var tabBrowser = WebDeveloper.Common.getTabBrowser();
-
-	// If the tabs are set (requires Firefox 3.6)
-	if(tabBrowser.tabs)
-	{
-		return tabBrowser.tabs[tabBrowser.getBrowserIndexForDocument(documentElement)];
-	}
-	else
-	{
-		return tabBrowser.tabContainer.getItemAtIndex(tabBrowser.getBrowserIndexForDocument(documentElement));
 	}
 };
 

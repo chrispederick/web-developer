@@ -105,7 +105,7 @@ WebDeveloper.EditCSS.retrieveCSS = function(contentDocument, dashboardPanel, edi
 	dashboardPanel.innerHTML = editCSSPanel;
 
 	// Get the style sheet content
-	chrome.extension.sendRequest({type: "get-content-from-urls", urls: documentCSS.styleSheets}, function(response)
+	chrome.extension.sendRequest({ "errorMessage": "/* " + locale.couldNotLoadCSS + " */", "type": "get-url-contents", "urls": documentCSS.styleSheets }, function(response)
 	{
 		var dashboardDocument = WebDeveloper.Dashboard.getDashboard(contentDocument).contentDocument;
 		var panels						= dashboardDocument.getElementById("web-developer-edit-css-panels");

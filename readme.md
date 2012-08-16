@@ -73,7 +73,7 @@ To build the extension for Chrome or Firefox only run `ant chrome` or `ant firef
 When the extension is built it creates a `chrome` and a `firefox` directory as well as packaged versions of the extensions `web-developer-chrome.zip` and `web-developer-firefox.xpi` in the `build` directory.
 
 The extension can be installed in Chrome by loading the unpacked extension in `build/chrome` as described in the [Chrome documentation](http://code.google.com/chrome/extensions/getstarted.html#load-ext).
-The extension can be installed in Firefox by installing `web-developer-firefox.xpi` like a regular extension.
+The extension can be installed in Firefox by installing `web-developer-firefox.xpi` like a regular extension or automatically with `ant install.firefox` and the [Extension Auto-Installer extension](https://addons.mozilla.org/en-US/firefox/addon/autoinstaller/).
 
 ### Included libraries
 
@@ -89,6 +89,7 @@ The following libraries are used by and included in the extension as-is:
 * Table Drag and Drop jQuery Plugin: [http://www.isocra.com/2008/02/table-drag-and-drop-jquery-plugin/](http://www.isocra.com/2008/02/table-drag-and-drop-jquery-plugin/)
 
 They should not be altered apart from to update to their latest versions for maintenance reasons.
+The latest versions of Bootstrap from Twitter, CodeMirror and Font Awesome can be automatically merged into the repository using `ant merge.bootstrap`, `ant merge.codemirror` and `ant merge.fontawesome` respectively.
 
 ### Icons
 

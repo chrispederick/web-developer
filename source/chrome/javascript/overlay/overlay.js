@@ -137,8 +137,8 @@ WebDeveloper.Overlay.displayConfirmation = function(title, message, buttonText, 
 			buttonHTML = '<i class="icon-' + buttonIcon + '"></i> ' + buttonText;
 		}
 
-		$("span", confirmation).html(message);
-		$("#confirmation-cancel").html(WebDeveloper.Locales.getString("cancel"));
+		$("span", confirmation).text(message);
+		$("#confirmation-cancel").text(WebDeveloper.Locales.getString("cancel"));
 		$(".btn-warning", confirmation).html(buttonHTML).off("click").on("click", callback);
 		confirmation.slideDown(WebDeveloper.Overlay.animationSpeed);
 	});

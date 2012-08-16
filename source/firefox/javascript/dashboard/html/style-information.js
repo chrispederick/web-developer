@@ -10,7 +10,7 @@ WebDeveloper.Dashboard.initialize = function(styleInformation, theme)
 	// Fades out the previous content before updating
 	content.fadeOut(WebDeveloper.Generated.animationDuration, function()
 	{
-		content.css("visibility", "hidden").show().html(styleInformation);
+		content.css("visibility", "hidden").show().empty().get(0).appendChild(styleInformation);
 
 		WebDeveloper.Dashboard.adjustBreadcrumb();
 		WebDeveloper.Generated.resizeAncestors(true);

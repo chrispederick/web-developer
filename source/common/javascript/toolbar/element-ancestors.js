@@ -4,65 +4,61 @@ WebDeveloper.ElementAncestors					= WebDeveloper.ElementAncestors || {};
 WebDeveloper.ElementAncestors.element = null;
 
 // Returns the ancestor information for an element
-WebDeveloper.ElementAncestors.getAncestorInformation = function(element)
+WebDeveloper.ElementAncestors.getAncestorInformation = function(element, contentDocument)
 {
-	var ancestorInformation				= WebDeveloper.ElementAncestors.getElementDescription(element, true);
-	var parentAncestorInformation = null;
-	var parentElement							= null;
+	var ancestorInformation	= contentDocument.createElement("ul");
+	var parentElement				= null;
+
+	ancestorInformation.setAttribute("class", "breadcrumb");
+	WebDeveloper.Common.insertAsFirstChild(ancestorInformation, WebDeveloper.ElementAncestors.getElementDescription(element, contentDocument, true));
 
 	// While there is a parent element
 	while((parentElement = element.parentNode) !== null)
 	{
-		element										= parentElement;
-		parentAncestorInformation = WebDeveloper.ElementAncestors.getElementDescription(element, false);
+		element	= parentElement;
 
-		// If the parent ancestor information is set
-		if(parentAncestorInformation)
-		{
-			ancestorInformation = parentAncestorInformation + ancestorInformation;
-		}
+		WebDeveloper.Common.insertAsFirstChild(ancestorInformation, WebDeveloper.ElementAncestors.getElementDescription(element, contentDocument, false));
 	}
 
-	return '<ul class="breadcrumb">' + ancestorInformation + "</ul>";
+	return ancestorInformation;
 };
 
 // Returns the description for an element
-WebDeveloper.ElementAncestors.getElementDescription = function(element, active)
+WebDeveloper.ElementAncestors.getElementDescription = function(element, contentDocument, active)
 {
-	var description = "";
+	var description = null;
 
 	// If the element and tag name are set
 	if(element && element.tagName)
 	{
 		var classList = element.className.split(" ");
-		var className = null;
-		var classes		= "";
+
+		description = contentDocument.createElement("li");
 
 		// If this is the active element
 		if(active)
 		{
-			description = '<li class="active"';
-		}
-		else
-		{
-			description = "<li";
+			description.setAttribute("class", "active");
 		}
 
-		description += ' data-web-developer-element-tag="' + element.tagName.toLowerCase() + '"';
+		description.setAttribute("data-web-developer-element-tag", element.tagName.toLowerCase());
 
 		// If the element has an id attribute
 		if(element.hasAttribute("id"))
 		{
-			description += ' data-web-developer-element-id="#' + element.getAttribute("id") + '"';
+			description.setAttribute("data-web-developer-element-id", "#" + element.getAttribute("id"));
 		}
 
 		// If the element has an class attribute
 		if(element.hasAttribute("class"))
 		{
+			var className = null;
+			var classes		= "";
+
 			// Loop through the classes
 			for(var i = 0, l = classList.length; i < l; i++)
 			{
-				className = WebDeveloper.Common.trim(classList[i]);
+				className = classList[i].trim();
 
 				// If the class name is set
 				if(className)
@@ -71,17 +67,23 @@ WebDeveloper.ElementAncestors.getElementDescription = function(element, active)
 				}
 			}
 
-			description += ' data-web-developer-element-classes="' + classes + '"';
+			description.setAttribute("data-web-developer-element-classes", classes);
 		}
 
-		// If this is the active element
-		if(active)
+		// If this is not the active element
+		if(!active)
 		{
-			description += "></li>";
-		}
-		else
-		{
-			description += '><a href="#" class="web-developer-ancestor"></a><span class="divider">&gt;</span></li>';
+			var childElement = contentDocument.createElement("a");
+
+			childElement.setAttribute("href", "#");
+			childElement.setAttribute("class", "web-developer-ancestor");
+			description.appendChild(childElement);
+
+			childElement = contentDocument.createElement("span");
+
+			childElement.appendChild(contentDocument.createTextNode(">"));
+			childElement.setAttribute("class", "divider");
+			description.appendChild(childElement);
 		}
 	}
 
@@ -133,7 +135,7 @@ WebDeveloper.ElementAncestors.removeOutline = function(contentDocument)
 		element.style.outline = "";
 
 		// If the element has an empty style attribute
-		if(element.hasAttribute("style") && WebDeveloper.Common.trim(element.getAttribute("style")) === "")
+		if(element.hasAttribute("style") && element.getAttribute("style").trim() === "")
 		{
 			element.removeAttribute("style");
 		}

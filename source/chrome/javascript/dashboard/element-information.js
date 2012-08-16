@@ -6,11 +6,13 @@ WebDeveloper.ElementInformation.locale = null;
 // Displays the information for an element
 WebDeveloper.ElementInformation.displayElementInformation = function(element)
 {
-	var contentDocument		= WebDeveloper.Common.getContentDocument();
-	var generatedDocument = WebDeveloper.Dashboard.getDashboard(contentDocument).contentDocument;
-	var dispatchEvent			= generatedDocument.createEvent("Events");
+	var contentDocument		 = WebDeveloper.Common.getContentDocument();
+	var generatedDocument  = WebDeveloper.Dashboard.getDashboard(contentDocument).contentDocument;
+	var elementInformation = generatedDocument.getElementById("element-information-content");
+	var dispatchEvent			 = generatedDocument.createEvent("Events");
 
-	generatedDocument.getElementById("element-information-content").innerHTML = WebDeveloper.ElementInformation.generateElementInformation(element, contentDocument, "none");
+	WebDeveloper.Common.empty(elementInformation);
+	elementInformation.appendChild(WebDeveloper.ElementInformation.generateElementInformation(element, contentDocument, generatedDocument, "none"));
 
 	dispatchEvent.initEvent("web-developer-initialize-ancestors-event", true, false);
 	generatedDocument.querySelector("#element-information-content .breadcrumb").dispatchEvent(dispatchEvent);

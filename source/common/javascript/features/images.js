@@ -19,8 +19,6 @@ WebDeveloper.Images.displayAltAttributes = function(display, documents)
 	{
 		contentDocument = documents[i];
 
-		WebDeveloper.Common.removeMatchingElements("span.web-developer-display-alt-attributes", contentDocument);
-
 		// If displaying the alt attributes
 		if(display)
 		{
@@ -37,6 +35,10 @@ WebDeveloper.Images.displayAltAttributes = function(display, documents)
 				spanElement.appendChild(contentDocument.createTextNode(text));
 				image.parentNode.insertBefore(spanElement, image);
 			}
+		}
+		else
+		{
+			WebDeveloper.Common.removeMatchingElements(".web-developer-display-alt-attributes", contentDocument);
 		}
 
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-alt-attributes", contentDocument, false);
@@ -74,7 +76,7 @@ WebDeveloper.Images.displayImageDimensions = function(display, documents, locale
 		}
 		else
 		{
-			WebDeveloper.Common.removeMatchingElements("span.web-developer-display-image-dimensions", contentDocument);
+			WebDeveloper.Common.removeMatchingElements(".web-developer-display-image-dimensions", contentDocument);
 		}
 
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-image-dimensions-before", contentDocument, false);
@@ -98,8 +100,6 @@ WebDeveloper.Images.displayImagePaths = function(display, documents)
 	{
 		contentDocument = documents[i];
 
-		WebDeveloper.Common.removeMatchingElements("span.web-developer-display-image-paths", contentDocument);
-
 		// If displaying the alt attributes
 		if(display)
 		{
@@ -120,6 +120,10 @@ WebDeveloper.Images.displayImagePaths = function(display, documents)
 				spanElement.appendChild(linkElement);
 				image.parentNode.insertBefore(spanElement, image);
 			}
+		}
+		else
+		{
+			WebDeveloper.Common.removeMatchingElements(".web-developer-display-image-paths", contentDocument);
 		}
 
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-image-paths", contentDocument, false);
@@ -564,8 +568,6 @@ WebDeveloper.Images.replaceImagesWithAltAttributes = function(replace, documents
 	{
 		contentDocument = documents[i];
 
-		WebDeveloper.Common.removeMatchingElements("span.web-developer-replace-images-with-alt-attributes", contentDocument);
-
 		// If replacing the images
 		if(replace)
 		{
@@ -582,6 +584,10 @@ WebDeveloper.Images.replaceImagesWithAltAttributes = function(replace, documents
 				spanElement.appendChild(contentDocument.createTextNode(text));
 				image.parentNode.insertBefore(spanElement, image);
 			}
+		}
+		else
+		{
+			WebDeveloper.Common.removeMatchingElements(".web-developer-display-image-paths", contentDocument);
 		}
 
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-replace-images-with-alt-attributes-before", contentDocument, false);

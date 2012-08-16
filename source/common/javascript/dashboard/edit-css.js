@@ -42,10 +42,10 @@ WebDeveloper.EditCSS.applyCSS = function()
 		}
 
 		// If the styles have changed
-		if(styleElement.innerHTML != styles)
+		if(styleElement.textContent != styles)
 		{
-			styleElement.innerHTML = styles;
-			stylesUpdated					 = true;
+			styleElement.textContent = styles;
+			stylesUpdated						 = true;
 		}
 	}
 

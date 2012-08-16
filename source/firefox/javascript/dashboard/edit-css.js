@@ -4,15 +4,14 @@ WebDeveloper.EditCSS								 = WebDeveloper.EditCSS || {};
 WebDeveloper.EditCSS.selectedBrowser = null;
 
 // Adds a tab
-WebDeveloper.EditCSS.addTab = function(title, styles, stylesURL, tabs, tabPanels, color)
+WebDeveloper.EditCSS.addTab = function(title, styles, stylesURL, tabs, tabPanels, color, errorMessage)
 {
 	var browser  = document.createElement("browser");
-	var load		 = null;
 	var tab			 = document.createElement("tab");
 	var tabPanel = document.createElement("tabpanel");
-	var url			 = Components.classes["@mozilla.org/network/standard-url;1"].createInstance(Components.interfaces.nsIURL);
+	var uri			 = Components.classes["@mozilla.org/network/standard-url;1"].createInstance(Components.interfaces.nsIURL);
 
-	url.spec = stylesURL;
+	uri.spec = stylesURL;
 
 	tab.setAttribute("label", title);
 	tabs.appendChild(tab);
@@ -21,11 +20,9 @@ WebDeveloper.EditCSS.addTab = function(title, styles, stylesURL, tabs, tabPanels
 	browser.setAttribute("enablehistory", "false");
 	browser.setAttribute("flex", "1");
 	browser.setAttribute("src", "chrome://web-developer/content/dashboard/edit-css.html");
-	browser.setAttribute("web-developer-base", url.directory);
-	tabPanel.appendChild(browser);
-	tabPanels.appendChild(tabPanel);
+	browser.setAttribute("web-developer-base", uri.directory);
 
-	load = (function(styleContent)
+	var load = (function(styleContent, url, theme, loadErrorMessage)
 	{
 		var handler = function(event)
 		{
@@ -34,16 +31,32 @@ WebDeveloper.EditCSS.addTab = function(title, styles, stylesURL, tabs, tabPanels
 			var headElement			= WebDeveloper.Common.getDocumentHeadElement(contentDocument);
 
 			dispatchEvent.initEvent("web-developer-dashboard-event", true, false);
-			headElement.setAttribute("data-web-developer", JSON.stringify({ "content": styleContent, "theme": color }));
-			headElement.dispatchEvent(dispatchEvent);
+
+			// If there is a load error message we need to load the content
+			if(loadErrorMessage)
+			{
+				var urlContentRequest = { "url": url };
+
+				WebDeveloper.Common.getURLContent(urlContentRequest, loadErrorMessage, { "urlContentRequestsRemaining": 1, "callback": function() {
+					headElement.setAttribute("data-web-developer", JSON.stringify({ "content": urlContentRequest.content, "theme": theme }));
+					headElement.dispatchEvent(dispatchEvent);
+				}});
+			}
+			else
+			{
+				headElement.setAttribute("data-web-developer", JSON.stringify({ "content": styleContent, "theme": theme }));
+				headElement.dispatchEvent(dispatchEvent);
+			}
 
 			browser.removeEventListener("load", handler, true);
 		};
 
 		return handler;
-	})(styles);
+	})(styles, stylesURL, color, errorMessage);
 
 	browser.addEventListener("load", load, true);
+	tabPanel.appendChild(browser);
+	tabPanels.appendChild(tabPanel);
 };
 
 // Applies the CSS
@@ -234,7 +247,7 @@ WebDeveloper.EditCSS.retrieveCSS = function(contentDocument, theme)
 	{
 		styleSheet = documentCSS.styleSheets[i];
 
-		WebDeveloper.EditCSS.addTab(WebDeveloper.Dashboard.formatURL(styleSheet), WebDeveloper.Common.getContentFromURL(styleSheet, errorMessage), styleSheet, tabs, tabPanels, theme);
+		WebDeveloper.EditCSS.addTab(WebDeveloper.Dashboard.formatURL(styleSheet), null, styleSheet, tabs, tabPanels, theme, errorMessage);
 	}
 
 	// If there are embedded styles

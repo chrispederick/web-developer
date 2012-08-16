@@ -278,19 +278,10 @@ WebDeveloper.Forms.displayFormDetails = function(display, documents)
 		contentDocument = documents[i];
 		inputElements		= contentDocument.getElementsByTagName("input");
 
-		WebDeveloper.Common.removeMatchingElements("span.web-developer-display-form-details", contentDocument);
-
 		// Loop through the input tags
 		for(var j = 0, m = inputElements.length; j < m; j++)
 		{
 			inputElement = inputElements[j];
-
-			// If the input element was un-hidden
-			if(inputElement.hasAttribute("web-developer-unhidden"))
-			{
-				inputElement.removeAttribute("web-developer-unhidden");
-				inputElement.setAttribute("type", "hidden");
-			}
 
 			// If displaying the form details
 			if(display)
@@ -352,6 +343,15 @@ WebDeveloper.Forms.displayFormDetails = function(display, documents)
 				spanElement.setAttribute("class", "web-developer-display-form-details");
 				spanElement.appendChild(contentDocument.createTextNode(text));
 				inputElement.parentNode.insertBefore(spanElement, inputElement);
+			}
+			else
+			{
+				// If the input element was un-hidden
+				if(inputElement.hasAttribute("web-developer-unhidden"))
+				{
+					inputElement.removeAttribute("web-developer-unhidden");
+					inputElement.setAttribute("type", "hidden");
+				}
 			}
 		}
 
@@ -460,6 +460,10 @@ WebDeveloper.Forms.displayFormDetails = function(display, documents)
 				spanElement.appendChild(contentDocument.createTextNode(text));
 				textAreaElement.parentNode.insertBefore(spanElement, textAreaElement);
 			}
+		}
+		else
+		{
+			WebDeveloper.Common.removeMatchingElements(".web-developer-display-form-details", contentDocument);
 		}
 
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-form-details-before", contentDocument, false);
@@ -762,7 +766,7 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
 				inputElementType = inputElement.getAttribute("type");
 
 				// If the input element value is not set and the type is not set or is email, password or text
-				if(!WebDeveloper.Common.trim(inputElement.value) && (!inputElementType || inputElementType.toLowerCase() == "email" || inputElementType.toLowerCase() == "password" || inputElementType.toLowerCase() == "search" || inputElementType.toLowerCase() == "text" || inputElementType.toLowerCase() == "url"))
+				if(!inputElement.value.trim() && (!inputElementType || inputElementType.toLowerCase() == "email" || inputElementType.toLowerCase() == "password" || inputElementType.toLowerCase() == "search" || inputElementType.toLowerCase() == "text" || inputElementType.toLowerCase() == "url"))
 				{
 					inputElementName			= inputElement.getAttribute("name");
 					inputElementMaxlength = inputElement.getAttribute("maxlength");
@@ -826,7 +830,7 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
 			selectElement = selectElements[j];
 
 			// If the select element is not disabled and the value is not set
-			if(!selectElement.disabled && !WebDeveloper.Common.trim(selectElement.value))
+			if(!selectElement.disabled && !selectElement.value.trim())
 			{
 				options = selectElement.options;
 
@@ -836,7 +840,7 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
 					option = options.item(k);
 
 					// If the option is set and the option text and option value are not empty
-					if(option && WebDeveloper.Common.trim(option.text) && WebDeveloper.Common.trim(option.value))
+					if(option && option.text.trim() && option.value.trim())
 					{
 						selectElement.selectedIndex = k;
 
@@ -854,7 +858,7 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
 			textAreaElement = textAreaElements[j];
 
 			// If the text area element is not disabled and the value is not set
-			if(!textAreaElement.disabled && !WebDeveloper.Common.trim(textAreaElement.value))
+			if(!textAreaElement.disabled && !textAreaElement.value.trim())
 			{
 				textAreaElementMaxlength = textAreaElement.getAttribute("maxlength");
 				textAreaElement.value		 = textAreaElement.getAttribute("name");

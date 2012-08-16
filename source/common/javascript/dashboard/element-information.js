@@ -86,83 +86,103 @@ WebDeveloper.ElementInformation.clickOutput = function(event)
 };
 
 // Generates ancestor information for an element
-WebDeveloper.ElementInformation.generateAncestorInformation = function(element)
+WebDeveloper.ElementInformation.generateAncestorInformation = function(element, contentDocument)
 {
-	var ancestorInformation				= "";
-	var parentAncestorInformation = null;
-	var parentElement							= null;
+	var ancestorInformation = contentDocument.createElement("div");
+	var ancestorList				= contentDocument.createElement("ul");
+	var hasAncestors				= false;
+	var heading							= contentDocument.createElement("h3");
+	var parentElement				= null;
+
+	heading.appendChild(contentDocument.createTextNode(WebDeveloper.ElementInformation.getLocaleString("ancestors")));
 
 	// While there is a parent element
 	while((parentElement = element.parentNode) !== null)
 	{
-		element										= parentElement;
-		parentAncestorInformation = WebDeveloper.ElementInformation.getElementDescription(element, "web-developer-ancestor");
+		element			 = parentElement;
+		hasAncestors = true;
 
-		// If the parent ancestor information is set
-		if(parentAncestorInformation)
-		{
-			ancestorInformation = parentAncestorInformation + ancestorInformation;
-		}
+		WebDeveloper.Common.insertAsFirstChild(ancestorList, WebDeveloper.ElementInformation.getElementDescription(element, contentDocument, "web-developer-ancestor"));
 	}
 
-	// If the ancestor information is set
-	if(ancestorInformation)
+	ancestorInformation.setAttribute("class", "web-developer-section web-developer-ancestors");
+	ancestorInformation.appendChild(heading);
+
+	// If there are ancestors
+	if(hasAncestors)
 	{
-		ancestorInformation = "<ul>" + ancestorInformation + '<li class="last"></li></ul>';
+		var lastItem = contentDocument.createElement("li");
+
+		lastItem.setAttribute("class", "last");
+		ancestorList.appendChild(lastItem);
+		ancestorInformation.appendChild(ancestorList);
 	}
 
-	return '<div class="web-developer-section web-developer-ancestors"><h3>' + WebDeveloper.ElementInformation.getLocaleString("ancestors") + "</h3>" + ancestorInformation + "</div>";
+	return ancestorInformation;
 };
 
 // Generates children information for an element
-WebDeveloper.ElementInformation.generateChildrenInformation = function(element)
+WebDeveloper.ElementInformation.generateChildrenInformation = function(element, contentDocument)
 {
+	var childList						= contentDocument.createElement("ul");
 	var childNodes					= element.childNodes;
-	var childrenInformation = "";
+	var childrenInformation = contentDocument.createElement("div");
+	var elementDescription	= null;
+	var hasChildren					= false;
+	var heading							= contentDocument.createElement("h3");
+
+	heading.appendChild(contentDocument.createTextNode(WebDeveloper.ElementInformation.getLocaleString("children")));
 
 	// Loop through the child nodes
 	for(var i = 0, l = childNodes.length; i < l; i++)
 	{
-		childrenInformation += WebDeveloper.ElementInformation.getElementDescription(childNodes[i], "web-developer-child");
-	}
+		elementDescription = WebDeveloper.ElementInformation.getElementDescription(childNodes[i], contentDocument, "web-developer-child");
 
-	// If the children information is set
-	if(childrenInformation)
-	{
-		childrenInformation = "<ul>" + childrenInformation + "</ul>";
-	}
-
-	return '<div class="web-developer-section web-developer-children"><h3>' + WebDeveloper.ElementInformation.getLocaleString("children") + "</h3>" + childrenInformation + "</div>";
-};
-
-// Generates DON information for an element
-WebDeveloper.ElementInformation.generateDOMInformation = function(element, theme)
-{
-	var attribute					 = null;
-	var attributeName			 = null;
-	var attributes				 = element.attributes;
-	var attributeValue		 = null;
-	var elementInformation = null;
-	var tagName						 = element.tagName.toLowerCase();
-
-	// If there is no theme
-	if(theme == "none")
-	{
-		elementInformation = "&lt;";
-	}
-	else
-	{
-		elementInformation = "<";
-
-		// If this is the body or HTML tag
-		if(tagName == "body" || tagName == "html")
+		// If the element description is set
+		if(elementDescription)
 		{
-			// This works around an issue with the syntax highlighting not working with body or HTML tags
-			tagName += ".";
+			hasChildren = true;
+
+			childList.appendChild(elementDescription);
 		}
 	}
 
-	elementInformation += tagName;
+	childrenInformation.setAttribute("class", "web-developer-section web-developer-children");
+	childrenInformation.appendChild(heading);
+
+	// If there are children
+	if(hasChildren)
+	{
+		childrenInformation.appendChild(childList);
+	}
+
+	return childrenInformation;
+};
+
+// Generates DON information for an element
+WebDeveloper.ElementInformation.generateDOMInformation = function(element, contentDocument, theme)
+{
+	var attribute			 = null;
+	var attributeName	 = null;
+	var attributes		 = element.attributes;
+	var attributeValue = null;
+	var childElement	 = contentDocument.createElement("h3");
+	var domInformation = contentDocument.createElement("div");
+	var domContent		 = "<";
+	var tagName				 = element.tagName.toLowerCase();
+
+	childElement.appendChild(contentDocument.createTextNode(WebDeveloper.ElementInformation.getLocaleString("dom")));
+
+	domInformation.setAttribute("class", "web-developer-section");
+	domInformation.appendChild(childElement);
+
+	childElement = contentDocument.createElement("pre");
+
+	childElement.setAttribute("class", "web-developer-syntax-highlight");
+	childElement.setAttribute("data-line-numbers", "false");
+	childElement.setAttribute("data-type", "htmlmixed");
+
+	domContent += tagName;
 
 	// Loop through the attributes
 	for(var i = 0, l = attributes.length; i < l; i++)
@@ -176,157 +196,199 @@ WebDeveloper.ElementInformation.generateDOMInformation = function(element, theme
 			// If the element has the Web Developer outline attribute
 			if(element.hasAttribute("data-web-developer-element-ancestors-outline"))
 			{
-				attributeValue = WebDeveloper.Common.trim(WebDeveloper.Common.removeSubstring(attribute.value, "outline-width: 1px; outline-style: solid; outline-color: rgb(255, 0, 0);"));
-				attributeValue = WebDeveloper.Common.trim(WebDeveloper.Common.removeSubstring(attributeValue, "outline: 1px solid rgb(255, 0, 0);"));
-				attributeValue = WebDeveloper.Common.trim(WebDeveloper.Common.removeSubstring(attributeValue, "outline: rgb(255, 0, 0) solid 1px;"));
+				attributeValue = WebDeveloper.Common.removeSubstring(attribute.value, "outline-width: 1px; outline-style: solid; outline-color: rgb(255, 0, 0);").trim();
+				attributeValue = WebDeveloper.Common.removeSubstring(attributeValue, "outline: 1px solid rgb(255, 0, 0);").trim();
+				attributeValue = WebDeveloper.Common.removeSubstring(attributeValue, "outline: rgb(255, 0, 0) solid 1px;").trim();
 
 				// If the attribute value is set
 				if(attributeValue)
 				{
-					elementInformation += " " + attributeName + '="' + attributeValue + '"';
+					domContent += " " + attributeName + '="' + attributeValue + '"';
 				}
 			}
 			else
 			{
-				elementInformation += " " + attributeName + '="' + attribute.value + '"';
+				domContent += " " + attributeName + '="' + attribute.value + '"';
 			}
 		}
 		else if(attributeName != "data-web-developer-element-ancestors-outline")
 		{
-			elementInformation += " " + attributeName + '="' + attribute.value + '"';
+			domContent += " " + attributeName + '="' + attribute.value + '"';
 		}
 	}
 
-	// If there is no theme
-	if(theme == "none")
-	{
-		elementInformation += "&gt;";
-	}
-	else
-	{
-		elementInformation += ">";
-	}
+	domContent += ">";
 
 	// If this is not a self-closing tag
 	if(!WebDeveloper.Common.inArray(tagName, WebDeveloper.ElementInformation.selfClosingTags))
 	{
-		elementInformation += "\n...\n";
-
-		// If there is no theme
-		if(theme == "none")
-		{
-			elementInformation += "&lt;/" + tagName + "&gt;";
-		}
-		else
-		{
-			elementInformation += "</" + tagName + ">";
-		}
+		domContent += "\n...\n";
+		domContent += "</" + tagName + ">";
 	}
 
-	return '<div class="web-developer-section"><h3>' + WebDeveloper.ElementInformation.getLocaleString("dom") + '</h3><pre class="web-developer-syntax-highlight" data-line-numbers="false" data-type="htmlmixed">' + elementInformation + "</pre></div>";
+	childElement.appendChild(contentDocument.createTextNode(domContent));
+
+	domInformation.appendChild(childElement);
+
+	return domInformation;
 };
 
 // Generates the information for an element
-WebDeveloper.ElementInformation.generateElementInformation = function(element, contentDocument, theme)
+WebDeveloper.ElementInformation.generateElementInformation = function(element, contentDocument, generatedDocument, theme)
 {
-	var elementInformation = "";
+	var divElement				 = generatedDocument.createElement("div");
+	var elementInformation = generatedDocument.createDocumentFragment();
 
 	WebDeveloper.ElementInformation.currentElement = element;
 
-	elementInformation += WebDeveloper.ElementAncestors.generateAncestorInformation(element);
-	elementInformation += "<div>";
-	elementInformation += WebDeveloper.ElementInformation.generateDOMInformation(element, theme);
-	elementInformation += WebDeveloper.ElementInformation.generateLayoutInformation(element);
-	elementInformation += WebDeveloper.ElementInformation.generatePositionInformation(element, contentDocument);
-	elementInformation += WebDeveloper.ElementInformation.generateTextInformation(element, contentDocument);
-	elementInformation += WebDeveloper.ElementInformation.generateAncestorInformation(element);
-	elementInformation += WebDeveloper.ElementInformation.generateChildrenInformation(element);
-	elementInformation += "</div>";
+	elementInformation.appendChild(WebDeveloper.ElementAncestors.generateAncestorInformation(element, generatedDocument));
+	divElement.appendChild(WebDeveloper.ElementInformation.generateDOMInformation(element, generatedDocument, theme));
+	divElement.appendChild(WebDeveloper.ElementInformation.generateLayoutInformation(element, generatedDocument));
+	divElement.appendChild(WebDeveloper.ElementInformation.generatePositionInformation(element, contentDocument, generatedDocument));
+	divElement.appendChild(WebDeveloper.ElementInformation.generateTextInformation(element, contentDocument, generatedDocument));
+	divElement.appendChild(WebDeveloper.ElementInformation.generateAncestorInformation(element, generatedDocument));
+	divElement.appendChild(WebDeveloper.ElementInformation.generateChildrenInformation(element, generatedDocument));
+	elementInformation.appendChild(divElement);
 
 	return elementInformation;
 };
 
 // Generates layout information for an element
-WebDeveloper.ElementInformation.generateLayoutInformation = function(element)
+WebDeveloper.ElementInformation.generateLayoutInformation = function(element, contentDocument)
 {
-	var elementInformation = "height: " + element.offsetHeight + "px;\nwidth: " + element.offsetWidth + "px;";
+	var childElement			= contentDocument.createElement("h3");
+	var layoutInformation = contentDocument.createElement("div");
 
-	return '<div class="web-developer-section web-developer-css"><h3>' + WebDeveloper.ElementInformation.getLocaleString("layout") + '</h3><pre class="web-developer-syntax-highlight" data-line-numbers="false" data-type="css">' + elementInformation + "</pre></div>";
+	childElement.appendChild(contentDocument.createTextNode(WebDeveloper.ElementInformation.getLocaleString("layout")));
+
+	layoutInformation.setAttribute("class", "web-developer-section web-developer-css");
+	layoutInformation.appendChild(childElement);
+
+	childElement = contentDocument.createElement("pre");
+
+	childElement.setAttribute("class", "web-developer-syntax-highlight");
+	childElement.setAttribute("data-line-numbers", "false");
+	childElement.setAttribute("data-type", "css");
+
+	childElement.appendChild(contentDocument.createTextNode("height: " + element.offsetHeight + "px;\nwidth: " + element.offsetWidth + "px;"));
+
+	layoutInformation.appendChild(childElement);
+
+	return layoutInformation;
 };
 
 // Generates position information for an element
-WebDeveloper.ElementInformation.generatePositionInformation = function(element, contentDocument)
+WebDeveloper.ElementInformation.generatePositionInformation = function(element, contentDocument, generatedDocument)
 {
-	var elementInformation = "";
+	var childElement				= generatedDocument.createElement("h3");
+	var positionInformation = generatedDocument.createElement("div");
+	var positionContent			= "";
 
-	elementInformation += WebDeveloper.ElementInformation.addCSSProperty(element, "display", contentDocument);
-	elementInformation += WebDeveloper.ElementInformation.addCSSProperty(element, "float", contentDocument);
-	elementInformation += WebDeveloper.ElementInformation.addCSSProperty(element, "position", contentDocument);
+	childElement.appendChild(generatedDocument.createTextNode(WebDeveloper.ElementInformation.getLocaleString("position")));
+	positionInformation.setAttribute("class", "web-developer-section web-developer-css");
+	positionInformation.appendChild(childElement);
 
-	// If element information was set
-	if(elementInformation)
+	childElement = generatedDocument.createElement("pre");
+
+	childElement.setAttribute("class", "web-developer-syntax-highlight");
+	childElement.setAttribute("data-line-numbers", "false");
+	childElement.setAttribute("data-type", "css");
+
+	positionContent += WebDeveloper.ElementInformation.addCSSProperty(element, "display", contentDocument);
+	positionContent += WebDeveloper.ElementInformation.addCSSProperty(element, "float", contentDocument);
+	positionContent += WebDeveloper.ElementInformation.addCSSProperty(element, "position", contentDocument);
+
+	// If the position content was set
+	if(positionContent)
 	{
-		elementInformation = WebDeveloper.Common.trim(elementInformation);
+		positionContent = positionContent.trim();
 	}
 
-	return '<div class="web-developer-section web-developer-css"><h3>' + WebDeveloper.ElementInformation.getLocaleString("position") + '</h3><pre class="web-developer-syntax-highlight" data-line-numbers="false" data-type="css">' + elementInformation + "</pre></div>";
+	childElement.appendChild(generatedDocument.createTextNode(positionContent));
+	positionInformation.appendChild(childElement);
+
+	return positionInformation;
 };
 
 // Generates text information for an element
-WebDeveloper.ElementInformation.generateTextInformation = function(element, contentDocument)
+WebDeveloper.ElementInformation.generateTextInformation = function(element, contentDocument, generatedDocument)
 {
-	var elementInformation = "";
+	var childElement		= generatedDocument.createElement("h3");
+	var textInformation = generatedDocument.createElement("div");
+	var textContent			= "";
 
-	elementInformation += WebDeveloper.ElementInformation.addCSSProperty(element, "font-family", contentDocument);
-	elementInformation += WebDeveloper.ElementInformation.addCSSProperty(element, "font-size", contentDocument);
-	elementInformation += WebDeveloper.ElementInformation.addCSSProperty(element, "line-height", contentDocument);
+	childElement.appendChild(contentDocument.createTextNode(WebDeveloper.ElementInformation.getLocaleString("text")));
 
-	// If element information was set
-	if(elementInformation)
+	textInformation.setAttribute("class", "web-developer-section web-developer-css");
+	textInformation.appendChild(childElement);
+
+	childElement = generatedDocument.createElement("pre");
+
+	childElement.setAttribute("class", "web-developer-syntax-highlight");
+	childElement.setAttribute("data-line-numbers", "false");
+	childElement.setAttribute("data-type", "css");
+
+	textContent += WebDeveloper.ElementInformation.addCSSProperty(element, "font-family", contentDocument);
+	textContent += WebDeveloper.ElementInformation.addCSSProperty(element, "font-size", contentDocument);
+	textContent += WebDeveloper.ElementInformation.addCSSProperty(element, "line-height", contentDocument);
+
+	// If the text content was set
+	if(textContent)
 	{
-		elementInformation = WebDeveloper.Common.trim(elementInformation);
+		textContent = textContent.trim();
 	}
 
-	return '<div class="web-developer-section web-developer-css"><h3>' + WebDeveloper.ElementInformation.getLocaleString("text") + '</h3><pre class="web-developer-syntax-highlight" data-line-numbers="false" data-type="css">' + elementInformation + "</pre></div>";
+	childElement.appendChild(contentDocument.createTextNode(textContent));
+	textInformation.appendChild(childElement);
+
+	return textInformation;
 };
 
 // Returns the element description
-WebDeveloper.ElementInformation.getElementDescription = function(element, type)
+WebDeveloper.ElementInformation.getElementDescription = function(element, contentDocument, type)
 {
-	var description = "";
+	var description = null;
 
 	// If the element and tag name are set
 	if(element && element.tagName)
 	{
 		var classList = element.className.split(" ");
-		var className = null;
-		var classes		= "";
+		var link			= contentDocument.createElement("a");
+		var linkText	= element.tagName.toLowerCase();
 
-		description = '<li><a href="#" class="' + type + '">' + element.tagName.toLowerCase();
+		description = contentDocument.createElement("li");
+
+		link.setAttribute("class", "type");
+		link.setAttribute("href", "#");
 
 		// If the element has an id attribute
 		if(element.hasAttribute("id"))
 		{
-			description += "#" + element.getAttribute("id");
+			linkText += "#" + element.getAttribute("id");
 		}
 
 		// If the element has an class attribute
 		if(element.hasAttribute("class"))
 		{
+			var className = null;
+			var classes		= "";
+
 			// Loop through the classes
 			for(var i = 0, l = classList.length; i < l; i++)
 			{
-				className = WebDeveloper.Common.trim(classList[i]);
+				className = classList[i].trim();
 
 				// If the class name is set
 				if(className)
 				{
-					description += "." + className;
+					linkText += "." + className;
 				}
 			}
 		}
 
-		description += "</a></li>";
+		link.appendChild(contentDocument.createTextNode(linkText));
+
+		description.appendChild(link);
 	}
 
 	return description;

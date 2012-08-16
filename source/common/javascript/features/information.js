@@ -34,7 +34,7 @@ WebDeveloper.Information.displayAccessKeys = function(display, documents)
 	{
 		contentDocument = documents[i];
 
-		WebDeveloper.Common.removeMatchingElements("span.web-developer-display-access-keys", contentDocument);
+		WebDeveloper.Common.removeMatchingElements(".web-developer-display-access-keys", contentDocument);
 
 		// If displaying the access keys
 		if(display)
@@ -75,7 +75,7 @@ WebDeveloper.Information.displayAnchors = function(display, documents)
 	{
 		contentDocument = documents[i];
 
-		WebDeveloper.Common.removeMatchingElements("span.web-developer-display-anchors", contentDocument);
+		WebDeveloper.Common.removeMatchingElements(".web-developer-display-anchors", contentDocument);
 
 		// If displaying the anchors
 		if(display)
@@ -166,7 +166,7 @@ WebDeveloper.Information.displayDivDimensions = function(display, documents, loc
 		}
 		else
 		{
-			WebDeveloper.Common.removeMatchingElements("span.web-developer-display-div-dimensions", contentDocument);
+			WebDeveloper.Common.removeMatchingElements(".web-developer-display-div-dimensions", contentDocument);
 		}
 
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-div-dimensions-before", contentDocument, false);
@@ -188,8 +188,6 @@ WebDeveloper.Information.displayDivOrder = function(display, documents)
 	{
 		contentDocument = documents[i];
 
-		WebDeveloper.Common.removeMatchingElements("span.web-developer-display-div-order", contentDocument);
-
 		// If displaying the div order
 		if(display)
 		{
@@ -207,6 +205,10 @@ WebDeveloper.Information.displayDivOrder = function(display, documents)
 
 				WebDeveloper.Common.insertAsFirstChild(div, spanElement);
 			}
+		}
+		else
+		{
+			WebDeveloper.Common.removeMatchingElements(".web-developer-display-div-order", contentDocument);
 		}
 
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-div-order-before", contentDocument, false);
@@ -227,8 +229,6 @@ WebDeveloper.Information.displayIdClassDetails = function(display, documents)
 	for(var i = 0, l = documents.length; i < l; i++)
 	{
 		contentDocument = documents[i];
-
-		WebDeveloper.Common.removeMatchingElements("span.web-developer-id-class-details", contentDocument);
 
 		// If displaying the id and class details
 		if(display)
@@ -251,6 +251,10 @@ WebDeveloper.Information.displayIdClassDetails = function(display, documents)
 					idClassElement.parentNode.insertBefore(spanElement, idClassElement);
 				}
 			}
+		}
+		else
+		{
+			WebDeveloper.Common.removeMatchingElements(".web-developer-id-class-details", contentDocument);
 		}
 
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-id-class-details", contentDocument, false);
@@ -289,8 +293,6 @@ WebDeveloper.Information.displayObjectInformation = function(display, documents)
 	for(var i = 0, l = documents.length; i < l; i++)
 	{
 		contentDocument = documents[i];
-
-		WebDeveloper.Common.removeMatchingElements("div.web-developer-display-object-information", contentDocument);
 
 		// If displaying the object information
 		if(display)
@@ -396,6 +398,10 @@ WebDeveloper.Information.displayObjectInformation = function(display, documents)
 				object.parentNode.insertBefore(divElement, object);
 			}
 		}
+		else
+		{
+			WebDeveloper.Common.removeMatchingElements(".web-developer-display-object-information", contentDocument);
+		}
 
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-object-information-before", contentDocument, false);
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/information/display-object-information.css", "web-developer-display-object-information", contentDocument, false);
@@ -416,8 +422,6 @@ WebDeveloper.Information.displayStackLevels = function(display, documents)
 	{
 		contentDocument = documents[i];
 
-		WebDeveloper.Common.removeMatchingElements("span.web-developer-display-stack-levels", contentDocument);
-
 		// If displaying the stack levels
 		if(display)
 		{
@@ -434,6 +438,10 @@ WebDeveloper.Information.displayStackLevels = function(display, documents)
 
 				node.parentNode.insertBefore(spanElement, node);
 			}
+		}
+		else
+		{
+			WebDeveloper.Common.removeMatchingElements(".web-developer-display-stack-levels", contentDocument);
 		}
 
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-stack-levels", contentDocument, false);
@@ -454,8 +462,6 @@ WebDeveloper.Information.displayTabIndex = function(display, documents)
 	{
 		contentDocument = documents[i];
 
-		WebDeveloper.Common.removeMatchingElements("span.web-developer-display-tab-index", contentDocument);
-
 		// If displaying the tab indices
 		if(display)
 		{
@@ -472,6 +478,10 @@ WebDeveloper.Information.displayTabIndex = function(display, documents)
 				spanElement.appendChild(contentDocument.createTextNode(text));
 				tabIndexElement.parentNode.insertBefore(spanElement, tabIndexElement);
 			}
+		}
+		else
+		{
+			WebDeveloper.Common.removeMatchingElements(".web-developer-display-tab-index", contentDocument);
 		}
 
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-tab-index", contentDocument, false);
@@ -542,8 +552,6 @@ WebDeveloper.Information.displayTableDepth = function(display, documents, depth)
 	{
 		contentDocument = documents[i];
 
-		WebDeveloper.Common.removeMatchingElements("span.web-developer-display-table-depth", contentDocument);
-
 		// If displaying the tab indices
 		if(display)
 		{
@@ -560,6 +568,10 @@ WebDeveloper.Information.displayTableDepth = function(display, documents, depth)
 				spanElement.appendChild(contentDocument.createTextNode(text));
 				table.parentNode.insertBefore(spanElement, table);
 			}
+		}
+		else
+		{
+			WebDeveloper.Common.removeMatchingElements(".web-developer-display-table-depth", contentDocument);
 		}
 
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-table-depth", contentDocument, false);
@@ -579,8 +591,6 @@ WebDeveloper.Information.displayTableInformation = function(display, documents)
 	for(var i = 0, l = documents.length; i < l; i++)
 	{
 		contentDocument = documents[i];
-
-		WebDeveloper.Common.removeMatchingElements("div.web-developer-display-table-information", contentDocument);
 
 		// If displaying the table information
 		if(display)
@@ -618,6 +628,10 @@ WebDeveloper.Information.displayTableInformation = function(display, documents)
 				}
 			}
 		}
+		else
+		{
+			WebDeveloper.Common.removeMatchingElements(".web-developer-display-table-information", contentDocument);
+		}
 
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-table-information-before", contentDocument, false);
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/information/display-table-information.css", "web-developer-display-table-information", contentDocument, false);
@@ -638,8 +652,6 @@ WebDeveloper.Information.displayTitleAttributes = function(display, documents)
 	{
 		contentDocument = documents[i];
 
-		WebDeveloper.Common.removeMatchingElements("span.web-developer-display-title-attributes", contentDocument);
-
 		// If displaying the title attributes
 		if(display)
 		{
@@ -656,6 +668,10 @@ WebDeveloper.Information.displayTitleAttributes = function(display, documents)
 				spanElement.appendChild(contentDocument.createTextNode(text));
 				titleAttributeElement.parentNode.insertBefore(spanElement, titleAttributeElement);
 			}
+		}
+		else
+		{
+			WebDeveloper.Common.removeMatchingElements(".web-developer-display-title-attributes", contentDocument);
 		}
 
 		WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-title-attributes", contentDocument, false);
@@ -691,7 +707,7 @@ WebDeveloper.Information.getElementDescription = function(element)
 		// Loop through the element classes
 		for(var i = 0, l = classes.length; i < l; i++)
 		{
-			description += "." + WebDeveloper.Common.trim(classes[i]);
+			description += "." + classes[i].trim();
 		}
 	}
 

@@ -81,27 +81,53 @@ WebDeveloper.StyleInformation.copyAncestorPath = function()
 // Displays the style information for an element
 WebDeveloper.StyleInformation.displayStyleInformation = function(element)
 {
-	var generatedDocument = document.getElementById("web-developer-style-information-browser").contentDocument;
-	var generatedContent	= generatedDocument.getElementById("content");
-	var styleInformation	= WebDeveloper.ElementAncestors.generateAncestorInformation(element);
-	var styleSheet				= null;
-	var styleSheets				= WebDeveloper.StyleInformation.getStyleInformation(element);
+	var childElement			 = null;
+	var generatedDocument	 = document.getElementById("web-developer-style-information-browser").contentDocument;
+	var generatedContent	 = generatedDocument.getElementById("content");
+	var headingElement		 = null;
+	var noStyleInformation = true;
+	var styleInformation	 = generatedDocument.createDocumentFragment();
+	var styleSheet				 = null;
+	var styleSheets				 = WebDeveloper.StyleInformation.getStyleInformation(element);
 
 	WebDeveloper.StyleInformation.currentElement = element;
 
 	WebDeveloper.Common.empty(generatedContent);
+	styleInformation.appendChild(WebDeveloper.ElementAncestors.generateAncestorInformation(element, generatedDocument));
 
 	// Loop through the style sheets
 	for(styleSheet in styleSheets)
 	{
-		styleInformation += '<h3><span></span><a href="' + styleSheet + '">' + styleSheet + "</a></h3>";
-		styleInformation += '<pre class="web-developer-syntax-highlight" data-line-numbers="false" data-type="css">' + WebDeveloper.Common.trim(styleSheets[styleSheet]) + "</pre>";
+		childElement	 = generatedDocument.createElement("span");
+		headingElement = generatedDocument.createElement("h3");
+
+		headingElement.appendChild(childElement);
+
+		childElement = generatedDocument.createElement("a");
+
+		childElement.appendChild(generatedDocument.createTextNode(styleSheet));
+		childElement.setAttribute("href", styleSheet);
+		styleInformation.appendChild(headingElement);
+
+		childElement = generatedDocument.createElement("pre");
+
+		childElement.appendChild(generatedDocument.createTextNode(styleSheets[styleSheet].trim()));
+		childElement.setAttribute("class", "web-developer-syntax-highlight");
+		childElement.setAttribute("data-line-numbers", "false");
+		childElement.setAttribute("data-type", "css");
+		styleInformation.appendChild(childElement);
+
+		noStyleInformation = false;
 	}
 
 	// If no style information was found
-	if(!styleInformation)
+	if(noStyleInformation)
 	{
-		styleInformation += '<p class="web-developer-information">' + WebDeveloper.Locales.getString("noStyleInformation") + "</p>";
+		childElement = generatedDocument.createElement("p");
+
+		childElement.appendChild(generatedDocument.createTextNode(WebDeveloper.Locales.getString("noStyleInformation")));
+		childElement.setAttribute("class", "web-developer-information");
+		styleInformation.appendChild(childElement);
 	}
 
 	generatedDocument.defaultView.WebDeveloper.Dashboard.setPosition(WebDeveloper.Preferences.getExtensionStringPreference("dashboard.position"));
@@ -194,12 +220,12 @@ WebDeveloper.StyleInformation.getStyleInformation = function(element)
 				if(inlineStyle)
 				{
 					ruleStyle = inlineStyle.split(":");
-					property	= WebDeveloper.Common.trim(ruleStyle[0]);
+					property	= ruleStyle[0].trim();
 
 					// If the property is not an outline
 					if(property != "outline")
 					{
-						styleText += WebDeveloper.StyleInformation.formatStyle(property, WebDeveloper.Common.trim(ruleStyle[1]));
+						styleText += WebDeveloper.StyleInformation.formatStyle(property, ruleStyle[1].trim());
 					}
 				}
 			}
@@ -234,8 +260,8 @@ WebDeveloper.StyleInformation.initialize = function()
 
 	WebDeveloper.ElementAncestors.createToolbar();
 
-	contentDocument																												= document.getElementById("web-developer-style-information-browser").contentDocument;
-	contentDocument.querySelector(".web-developer-information").innerHTML = WebDeveloper.Locales.getString("selectAnElementDisplayStyles");
+	contentDocument																													= document.getElementById("web-developer-style-information-browser").contentDocument;
+	contentDocument.querySelector(".web-developer-information").textContent = WebDeveloper.Locales.getString("selectAnElementDisplayStyles");
 
 	contentDocument.addEventListener("click", WebDeveloper.StyleInformation.clickOutput, false);
 };

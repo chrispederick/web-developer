@@ -145,7 +145,7 @@ WebDeveloper.Preferences.getLocalizedPreference = function(preference)
 	// Try to get the preference
 	try
 	{
-		return WebDeveloper.Common.trim(WebDeveloper.Preferences.getExtensionBranch().getComplexValue(preference, Components.interfaces.nsIPrefLocalizedString).data);
+		return WebDeveloper.Preferences.getExtensionBranch().getComplexValue(preference, Components.interfaces.nsIPrefLocalizedString).data.trim();
 	}
 	catch(exception)
 	{
@@ -179,7 +179,7 @@ WebDeveloper.Preferences.getStringPreference = function(preference, branch)
 	// Try to get the preference
 	try
 	{
-		return WebDeveloper.Common.trim(branch.getComplexValue(preference, Components.interfaces.nsISupportsString).data);
+		return branch.getComplexValue(preference, Components.interfaces.nsISupportsString).data.trim();
 	}
 	catch(exception)
 	{

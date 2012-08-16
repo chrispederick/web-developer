@@ -30,7 +30,7 @@ WebDeveloper.LineGuides.hideInformation = function(contentDocument)
 };
 
 // Removes the line guides events
-WebDeveloper.Ruler.removeEvents = function(contentDocument)
+WebDeveloper.LineGuides.removeEvents = function(contentDocument)
 {
 	contentDocument.removeEventListener("mousemove", WebDeveloper.LineGuides.moveLineGuide, false);
 	contentDocument.removeEventListener("resize", WebDeveloper.LineGuides.resizeLineGuides, false);

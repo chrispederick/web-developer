@@ -26,7 +26,7 @@ WebDeveloper.Generated.hideAncestors = function()
 // Hides ancestors from the middle of the path
 WebDeveloper.Generated.populateAncestors = function(ancestors)
 {
-	$("#content").html(ancestors);
+	$("#content").empty().get(0).appendChild(ancestors);
 	WebDeveloper.Generated.resizeAncestors(true);
 };
 
@@ -121,11 +121,11 @@ WebDeveloper.Generated.setAncestorDescription = function(ancestor, includeId, in
 	// If this is the active ancestor
 	if(ancestor.hasClass("active"))
 	{
-		ancestor.html(ancestorDescription);
+		ancestor.text(ancestorDescription);
 	}
 	else
 	{
-		$("a", ancestor).html(ancestorDescription);
+		$("a", ancestor).text(ancestorDescription);
 	}
 };
 
@@ -142,7 +142,7 @@ WebDeveloper.Generated.toggleMiddleAncestor = function(display)
 	{
 		var middleAncestor = WebDeveloper.Generated.ancestors.eq(Math.floor(WebDeveloper.Generated.ancestors.length / 2)).addClass("web-developer-middle-ancestor");
 
-		$("a", middleAncestor).html("...");
+		$("a", middleAncestor).text("...");
 	}
 };
 

@@ -5,12 +5,12 @@ WebDeveloper.Cookie = WebDeveloper.Cookie || {};
 // Handles the cookie dialog being accepted
 WebDeveloper.Cookie.accept = function()
 {
-	var host				= WebDeveloper.Common.trim(document.getElementById("web-developer-host").value);
+	var host				= document.getElementById("web-developer-host").value.trim();
 	var errors			= "";
-	var expires			= WebDeveloper.Common.trim(document.getElementById("web-developer-expires").value);
+	var expires			= document.getElementById("web-developer-expires").value.trim();
 	var expiresDate = new Date(expires);
-	var name				= WebDeveloper.Common.trim(document.getElementById("web-developer-name").value);
-	var path				= WebDeveloper.Common.trim(document.getElementById("web-developer-path").value);
+	var name				= document.getElementById("web-developer-name").value.trim();
+	var path				= document.getElementById("web-developer-path").value.trim();
 
 	// If the name is empty
 	if(!name)
@@ -47,13 +47,13 @@ WebDeveloper.Cookie.accept = function()
 	// If there are errors
 	if(errors)
 	{
-		WebDeveloper.Common.displayError(WebDeveloper.Locales.getString("addCookieError"), WebDeveloper.Common.trim(errors));
+		WebDeveloper.Common.displayError(WebDeveloper.Locales.getString("addCookieError"), errors.trim());
 
 		return false;
 	}
 	else
 	{
-		var value						 = WebDeveloper.Common.trim(document.getElementById("web-developer-value").value);
+		var value						 = document.getElementById("web-developer-value").value.trim();
 		var cookie					 = name + "=" + value + ";path=" + path + ";";
 		var cookiePreference = WebDeveloper.Preferences.getIntegerPreference("network.cookie.cookieBehavior");
 		var scheme					 = "http://";

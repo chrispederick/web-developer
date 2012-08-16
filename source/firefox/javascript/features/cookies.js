@@ -5,10 +5,10 @@ WebDeveloper.Cookies = WebDeveloper.Cookies || {};
 // Adds a cookie
 WebDeveloper.Cookies.addCookie = function(cookie)
 {
-	var path						 = WebDeveloper.Common.trim(cookie.path);
-	var cookieString		 = WebDeveloper.Common.trim(cookie.name) + "=" + WebDeveloper.Common.trim(cookie.value) + ";path=" + path + ";";
+	var path						 = cookie.path.trim();
+	var cookieString		 = cookie.name.trim() + "=" + cookie.value.trim() + ";path=" + path + ";";
 	var cookiePreference = WebDeveloper.Preferences.getIntegerPreference("network.cookie.cookieBehavior");
-	var host						 = WebDeveloper.Common.trim(cookie.host);
+	var host						 = cookie.host.trim();
 	var scheme					 = "http://";
 	var uri							 = null;
 
@@ -22,7 +22,7 @@ WebDeveloper.Cookies.addCookie = function(cookie)
 	// If this is not a session cookie
 	if(!cookie.session)
 	{
-		cookieString += "expires=" + new Date(WebDeveloper.Common.trim(cookie.expires)).toUTCString() + ";";
+		cookieString += "expires=" + new Date(cookie.expires.trim()).toUTCString() + ";";
 	}
 
 	// If the cookie is secure

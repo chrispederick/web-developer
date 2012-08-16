@@ -19,16 +19,16 @@ $(function()
 	$("#add-cookie-expires, #add-cookie-host, #add-cookie-name, #add-cookie-path, #add-cookie-value").on("keypress", WebDeveloper.Overlay.Cookies.addCookieKeyPress);
 	$("#add-cookie-submit").on("click", WebDeveloper.Overlay.Cookies.submitAddCookie);
 
-	$("legend", $("#add-cookie-dialog")).html(WebDeveloper.Locales.getString("addCookie"));
-	$("#add-cookie-cancel").html(WebDeveloper.Locales.getString("cancel"));
+	$("legend", $("#add-cookie-dialog")).text(WebDeveloper.Locales.getString("addCookie"));
+	$("#add-cookie-cancel").text(WebDeveloper.Locales.getString("cancel"));
 	$("#add-cookie-secure").after(WebDeveloper.Locales.getString("secureCookie"));
 	$("#add-cookie-session").after(WebDeveloper.Locales.getString("sessionCookie")).on("change", WebDeveloper.Overlay.Cookies.changeSession);
 	$("#add-cookie-submit").append(WebDeveloper.Locales.getString("add"));
-	$('[for="add-cookie-expires"]').html(WebDeveloper.Locales.getString("expires"));
-	$('[for="add-cookie-host"]').html(WebDeveloper.Locales.getString("host"));
-	$('[for="add-cookie-name"]').html(WebDeveloper.Locales.getString("name"));
-	$('[for="add-cookie-path"]').html(WebDeveloper.Locales.getString("path"));
-	$('[for="add-cookie-value"]').html(WebDeveloper.Locales.getString("value"));
+	$('[for="add-cookie-expires"]').text(WebDeveloper.Locales.getString("expires"));
+	$('[for="add-cookie-host"]').text(WebDeveloper.Locales.getString("host"));
+	$('[for="add-cookie-name"]').text(WebDeveloper.Locales.getString("name"));
+	$('[for="add-cookie-path"]').text(WebDeveloper.Locales.getString("path"));
+	$('[for="add-cookie-value"]').text(WebDeveloper.Locales.getString("value"));
 
 	WebDeveloper.Overlay.updateContentSettingMenu(disableCookiesMenu, "cookies");
 });
@@ -204,7 +204,7 @@ WebDeveloper.Overlay.Cookies.populateCookieFromDialog = function()
 WebDeveloper.Overlay.Cookies.resetAddDialog = function(addDialog)
 {
 	$(".error", addDialog).removeClass("error");
-	$(".help-inline", addDialog).html("");
+	$(".help-inline", addDialog).text("");
 };
 
 // Adds a cookie
@@ -235,7 +235,7 @@ WebDeveloper.Overlay.Cookies.validateAddDialog = function()
 {
 	var expires		= $("#add-cookie-expires");
 	var host			= $("#add-cookie-host");
-	var hostValue = WebDeveloper.Common.trim(host.val());
+	var hostValue = host.val().trim();
 	var name			= $("#add-cookie-name");
 	var path			= $("#add-cookie-path");
 	var valid			= true;
@@ -245,7 +245,7 @@ WebDeveloper.Overlay.Cookies.validateAddDialog = function()
 	// If the cookie name is not set
 	if(!name.val())
 	{
-		name.next().html(WebDeveloper.Locales.getString("nameCannotBeEmpty"));
+		name.next().text(WebDeveloper.Locales.getString("nameCannotBeEmpty"));
 		name.closest(".control-group").addClass("error");
 
 		valid = false;
@@ -254,7 +254,7 @@ WebDeveloper.Overlay.Cookies.validateAddDialog = function()
 	// If the cookie host is not set
 	if(!hostValue)
 	{
-		host.next().html(WebDeveloper.Locales.getString("hostCannotBeEmpty"));
+		host.next().text(WebDeveloper.Locales.getString("hostCannotBeEmpty"));
 		host.closest(".control-group").addClass("error");
 
 		valid = false;
@@ -270,7 +270,7 @@ WebDeveloper.Overlay.Cookies.validateAddDialog = function()
 	// If the cookie path is not set
 	if(!path.val())
 	{
-		path.next().html(WebDeveloper.Locales.getString("pathCannotBeEmpty"));
+		path.next().text(WebDeveloper.Locales.getString("pathCannotBeEmpty"));
 		path.closest(".control-group").addClass("error");
 
 		valid = false;
@@ -279,19 +279,19 @@ WebDeveloper.Overlay.Cookies.validateAddDialog = function()
 	// If the cookie is not a session cookie
 	if(!$("#add-cookie-session").prop("checked"))
 	{
-		var expiresValue = WebDeveloper.Common.trim(expires.val());
+		var expiresValue = expires.val().trim();
 
 		// If the cookie expires is not set
 		if(!expiresValue)
 		{
-			expires.next().html(WebDeveloper.Locales.getString("expiresCannotBeEmpty"));
+			expires.next().text(WebDeveloper.Locales.getString("expiresCannotBeEmpty"));
 			expires.closest(".control-group").addClass("error");
 
 			valid = false;
 		}
 		else if(new Date(expiresValue) == "Invalid Date")
 		{
-			expires.next().html(WebDeveloper.Locales.getString("expiresNotValid"));
+			expires.next().text(WebDeveloper.Locales.getString("expiresNotValid"));
 			expires.closest(".control-group").addClass("error");
 
 			valid = false;

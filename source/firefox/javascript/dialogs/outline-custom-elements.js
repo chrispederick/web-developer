@@ -60,7 +60,7 @@ WebDeveloper.OutlineCustomElements.outline = function()
 				// Loop through the elements
 				for(var k = 0, m = outlineElements.length; k < m; k++)
 				{
-					outlineElementValue = WebDeveloper.Common.trim(outlineElements[k]);
+					outlineElementValue = outlineElements[k].trim();
 
 					styles += outlineElementValue + " { outline: 1px solid " + outlineColor + " !important; } ";
 					styles += outlineElementValue + ':before { content: "<' + outlineElementValue + '>" !important; } ';
@@ -71,9 +71,9 @@ WebDeveloper.OutlineCustomElements.outline = function()
 		// If the styles are set
 		if(styles)
 		{
-			styleElement					 = contentDocument.createElement("style");
-			styleElement.innerHTML = styles;
+			styleElement = contentDocument.createElement("style");
 
+			styleElement.appendChild(contentDocument.createTextNode(styles));
 			styleElement.setAttribute("id", "web-developer-outline-custom-elements");
 
 			WebDeveloper.Common.getDocumentHeadElement(contentDocument).appendChild(styleElement);

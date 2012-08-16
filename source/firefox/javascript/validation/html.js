@@ -119,7 +119,7 @@ WebDeveloperValidateHTML.prototype.submitBackgroundRequest = function()
 	scriptableStream.close();
 	inputStream.close();
 
-	this.validationRequest.open("post", "http://validator.w3.org/check", true);
+	this.validationRequest.open("post", "http://validator.w3.org/check");
 
 	// Try to set the request header
 	try
@@ -163,24 +163,26 @@ WebDeveloperValidateHTML.prototype.validateBackgroundHTML = function(uri)
 // Validate the HTML from the given URI
 WebDeveloperValidateHTML.prototype.validateHTML = function(uri)
 {
-	var validationURL = WebDeveloper.Common.getChromeURL("validation/html.html");
-	var tab						= WebDeveloper.Common.getTabBrowser().getBrowserForTab(WebDeveloper.Common.openURL(validationURL));
-	var that					= this;
-
-	tab.addEventListener("load", function()
+	var tab  = WebDeveloper.Common.getTabBrowser().getBrowserForTab(WebDeveloper.Common.openURL(WebDeveloper.Common.getChromeURL("validation/html.html")));
+	var load = (function(validator, url)
 	{
-		// If this is the validation page
-		if(tab.currentURI.spec == validationURL)
+		var handler = function(event)
 		{
 			var contentDocument = tab.contentDocument;
 
-			that.file				 = that.createSourceFile(uri);
-			that.fileElement = contentDocument.getElementById("file");
-			that.formElement = contentDocument.getElementById("form");
+			validator.file				= validator.createSourceFile(url);
+			validator.fileElement = contentDocument.getElementById("file");
+			validator.formElement = contentDocument.getElementById("form");
 
-			that.saveHTML(uri);
-		}
-	}, true);
+			validator.saveHTML(url);
+
+			tab.removeEventListener("load", handler, true);
+		};
+
+		return handler;
+	})(this, uri);
+
+	tab.addEventListener("load", load, true);
 };
 
 // Called when the progress state changes

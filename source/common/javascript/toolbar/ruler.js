@@ -8,41 +8,50 @@ WebDeveloper.Ruler.createRuler = function(contentDocument)
 	var divElement = null;
 
 	WebDeveloper.Ruler.container = contentDocument.createElement("div");
+
 	WebDeveloper.Ruler.container.setAttribute("id", "web-developer-ruler-container");
 	WebDeveloper.Common.getDocumentBodyElement(contentDocument).appendChild(WebDeveloper.Ruler.container);
 	WebDeveloper.Ruler.resizeContainer();
 
 	WebDeveloper.Ruler.backgroundBottom = contentDocument.createElement("div");
+
 	WebDeveloper.Ruler.backgroundBottom.setAttribute("id", "web-developer-ruler-background-bottom");
 	WebDeveloper.Ruler.container.appendChild(WebDeveloper.Ruler.backgroundBottom);
 
 	WebDeveloper.Ruler.backgroundLeft = contentDocument.createElement("div");
+
 	WebDeveloper.Ruler.backgroundLeft.setAttribute("id", "web-developer-ruler-background-left");
 	WebDeveloper.Ruler.container.appendChild(WebDeveloper.Ruler.backgroundLeft);
 
 	WebDeveloper.Ruler.backgroundRight = contentDocument.createElement("div");
+
 	WebDeveloper.Ruler.backgroundRight.setAttribute("id", "web-developer-ruler-background-right");
 	WebDeveloper.Ruler.container.appendChild(WebDeveloper.Ruler.backgroundRight);
 
 	WebDeveloper.Ruler.backgroundTop = contentDocument.createElement("div");
+
 	WebDeveloper.Ruler.backgroundTop.setAttribute("id", "web-developer-ruler-background-top");
 	WebDeveloper.Ruler.container.appendChild(WebDeveloper.Ruler.backgroundTop);
 
 	WebDeveloper.Ruler.ruler = contentDocument.createElement("div");
 
 	divElement = contentDocument.createElement("div");
+
 	divElement.setAttribute("id", "web-developer-ruler-bottom-left");
 	WebDeveloper.Ruler.ruler.appendChild(divElement);
 
 	divElement = contentDocument.createElement("div");
+
 	divElement.setAttribute("id", "web-developer-ruler-bottom-right");
 	WebDeveloper.Ruler.ruler.appendChild(divElement);
 
 	divElement = contentDocument.createElement("div");
+
 	divElement.setAttribute("id", "web-developer-ruler-top-left");
 	WebDeveloper.Ruler.ruler.appendChild(divElement);
 
 	divElement = contentDocument.createElement("div");
+
 	divElement.setAttribute("id", "web-developer-ruler-top-right");
 	WebDeveloper.Ruler.ruler.appendChild(divElement);
 
@@ -71,7 +80,7 @@ WebDeveloper.Ruler.displayRuler = function(display, contentDocument, toolbarHTML
 	// If displaying the ruler
 	if(display)
 	{
-		WebDeveloper.Ruler.initialize();
+		WebDeveloper.Ruler.reset();
 		WebDeveloper.Ruler.createRuler(contentDocument);
 		WebDeveloper.Ruler.createEvents(contentDocument);
 		WebDeveloper.Ruler.createToolbar(contentDocument, toolbarHTML);
@@ -81,27 +90,9 @@ WebDeveloper.Ruler.displayRuler = function(display, contentDocument, toolbarHTML
 		WebDeveloper.Ruler.removeRuler(contentDocument);
 		WebDeveloper.Ruler.removeEvents(contentDocument);
 		WebDeveloper.Ruler.removeToolbar(contentDocument);
+		WebDeveloper.Ruler.reset();
 	}
-};
 
-// Initializes the ruler
-WebDeveloper.Ruler.initialize = function()
-{
-	WebDeveloper.Ruler.backgroundBottom = null;
-	WebDeveloper.Ruler.backgroundLeft		= null;
-	WebDeveloper.Ruler.backgroundRight	= null;
-	WebDeveloper.Ruler.backgroundTop		= null;
-	WebDeveloper.Ruler.container				= null;
-	WebDeveloper.Ruler.drag							= false;
-	WebDeveloper.Ruler.endX							= 498;
-	WebDeveloper.Ruler.endY							= 398;
-	WebDeveloper.Ruler.move							= false;
-	WebDeveloper.Ruler.moveX						= 0;
-	WebDeveloper.Ruler.moveY						= 0;
-	WebDeveloper.Ruler.resize						= false;
-	WebDeveloper.Ruler.ruler						= null;
-	WebDeveloper.Ruler.startX						= 200;
-	WebDeveloper.Ruler.startY						= 200;
 };
 
 // Handles the mouse down event
@@ -327,6 +318,26 @@ WebDeveloper.Ruler.mouseUp = function(event)
 WebDeveloper.Ruler.removeRuler = function(contentDocument)
 {
 	WebDeveloper.Common.removeMatchingElements("#web-developer-ruler-container", contentDocument);
+};
+
+// Resets the ruler
+WebDeveloper.Ruler.reset = function()
+{
+	WebDeveloper.Ruler.backgroundBottom = null;
+	WebDeveloper.Ruler.backgroundLeft		= null;
+	WebDeveloper.Ruler.backgroundRight	= null;
+	WebDeveloper.Ruler.backgroundTop		= null;
+	WebDeveloper.Ruler.container				= null;
+	WebDeveloper.Ruler.drag							= false;
+	WebDeveloper.Ruler.endX							= 498;
+	WebDeveloper.Ruler.endY							= 398;
+	WebDeveloper.Ruler.move							= false;
+	WebDeveloper.Ruler.moveX						= 0;
+	WebDeveloper.Ruler.moveY						= 0;
+	WebDeveloper.Ruler.resize						= false;
+	WebDeveloper.Ruler.ruler						= null;
+	WebDeveloper.Ruler.startX						= 200;
+	WebDeveloper.Ruler.startY						= 200;
 };
 
 // Resizes the ruler backgrounds

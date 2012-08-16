@@ -5,8 +5,8 @@ WebDeveloper.ResizeWindow = WebDeveloper.ResizeWindow || {};
 // Handles the resize window dialog being accepted
 WebDeveloper.ResizeWindow.accept = function()
 {
-	var height = WebDeveloper.Common.trim(document.getElementById("web-developer-resize-height").value.replace(/px/gi, ""));
-	var width  = WebDeveloper.Common.trim(document.getElementById("web-developer-resize-width").value.replace(/px/gi, ""));
+	var height = document.getElementById("web-developer-resize-height").value.replace(/px/gi, "").trim();
+	var width  = document.getElementById("web-developer-resize-width").value.replace(/px/gi, "").trim();
 
 	// If the width and height are valid
 	if(width && height && (width == "*" || (parseInt(width, 10) == width && width > 0)) && (height == "*" || (parseInt(height, 10) == height && height > 0)))

@@ -72,13 +72,13 @@ WebDeveloper.Generated.addSection = function(elements, descriptionSingular, desc
 	// If the size is set
 	if(sectionSize > 0)
 	{
-		$("td:eq(1)", sectionHeader).html(WebDeveloper.Common.formatFileSize(sectionSize, bytesLocale, kilobytesLocale));
+		$("td:eq(1)", sectionHeader).text(WebDeveloper.Common.formatFileSize(sectionSize, bytesLocale, kilobytesLocale));
 	}
 
 	// If the uncompressed size is set
 	if(sectionUncompressedSize > 0)
 	{
-		$("td:eq(2)", sectionHeader).html(WebDeveloper.Common.formatFileSize(sectionUncompressedSize, bytesLocale, kilobytesLocale));
+		$("td:eq(2)", sectionHeader).text(WebDeveloper.Common.formatFileSize(sectionUncompressedSize, bytesLocale, kilobytesLocale));
 	}
 
 	return { "files": filesLength, "size": sectionSize, "uncompressedSize": sectionUncompressedSize };

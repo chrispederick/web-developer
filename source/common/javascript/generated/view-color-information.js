@@ -9,6 +9,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
 	var colorInformation = locale.colorInformation;
 	var colorsLength		 = null;
 	var container				 = null;
+	var content				 = document.getElementById("content");
 	var contentDocument  = null;
 	var documents				 = data.documents;
 
@@ -36,8 +37,8 @@ WebDeveloper.Generated.initialize = function(data, locale)
 		{
 			container = WebDeveloper.Generated.generateDocumentContainer();
 
-			container.append(ich.colors(contentDocument));
-			$("#content").append(container);
+			$(container).append(ich.colors(contentDocument));
+			content.appendChild(container);
 		}
 
 		WebDeveloper.Generated.addSeparator();

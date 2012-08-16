@@ -223,7 +223,10 @@ WebDeveloper.Overlay.Information.viewDocumentSize = function()
 	locale.styleSheets			= WebDeveloper.Locales.getString("styleSheets");
 	locale.uncompressedSize = WebDeveloper.Locales.getString("uncompressedSize");
 
-	WebDeveloper.Overlay.openGeneratedTab(WebDeveloper.Common.getChromeURL("generated/view-document-size.html"), WebDeveloper.Content.getDocumentSize(), locale);
+	WebDeveloper.Content.getDocumentSize(function(data)
+	{
+		WebDeveloper.Overlay.openGeneratedTab(WebDeveloper.Common.getChromeURL("generated/view-document-size.html"), data, locale);
+	});
 };
 
 // Displays the JavaScript

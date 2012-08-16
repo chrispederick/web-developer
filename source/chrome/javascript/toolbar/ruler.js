@@ -97,25 +97,25 @@ WebDeveloper.Ruler.updateInformation = function()
 		// If the end x position is greater than the start x position
 		if(WebDeveloper.Ruler.endX > WebDeveloper.Ruler.startX)
 		{
-			WebDeveloper.Ruler.toolbarDocument.getElementById("web-developer-ruler-end-x").innerHTML	 = (WebDeveloper.Ruler.endX + 2) + "px";
-			WebDeveloper.Ruler.toolbarDocument.getElementById("web-developer-ruler-start-x").innerHTML = WebDeveloper.Ruler.startX + "px";
+			WebDeveloper.Ruler.toolbarDocument.getElementById("web-developer-ruler-end-x").textContent	 = (WebDeveloper.Ruler.endX + 2) + "px";
+			WebDeveloper.Ruler.toolbarDocument.getElementById("web-developer-ruler-start-x").textContent = WebDeveloper.Ruler.startX + "px";
 		}
 		else
 		{
-			WebDeveloper.Ruler.toolbarDocument.getElementById("web-developer-ruler-end-x").innerHTML	 = WebDeveloper.Ruler.endX + "px";
-			WebDeveloper.Ruler.toolbarDocument.getElementById("web-developer-ruler-start-x").innerHTML = (WebDeveloper.Ruler.startX + 2) + "px";
+			WebDeveloper.Ruler.toolbarDocument.getElementById("web-developer-ruler-end-x").textContent	 = WebDeveloper.Ruler.endX + "px";
+			WebDeveloper.Ruler.toolbarDocument.getElementById("web-developer-ruler-start-x").textContent = (WebDeveloper.Ruler.startX + 2) + "px";
 		}
 
 		// If the end y position is greater than the start y position
 		if(WebDeveloper.Ruler.endY > WebDeveloper.Ruler.startY)
 		{
-			WebDeveloper.Ruler.toolbarDocument.getElementById("web-developer-ruler-end-y").innerHTML	 = (WebDeveloper.Ruler.endY + 2) + "px";
-			WebDeveloper.Ruler.toolbarDocument.getElementById("web-developer-ruler-start-y").innerHTML = WebDeveloper.Ruler.startY + "px";
+			WebDeveloper.Ruler.toolbarDocument.getElementById("web-developer-ruler-end-y").textContent	 = (WebDeveloper.Ruler.endY + 2) + "px";
+			WebDeveloper.Ruler.toolbarDocument.getElementById("web-developer-ruler-start-y").textContent = WebDeveloper.Ruler.startY + "px";
 		}
 		else
 		{
-			WebDeveloper.Ruler.toolbarDocument.getElementById("web-developer-ruler-end-y").innerHTML	 = WebDeveloper.Ruler.endY + "px";
-			WebDeveloper.Ruler.toolbarDocument.getElementById("web-developer-ruler-start-y").innerHTML = (WebDeveloper.Ruler.startY + 2) + "px";
+			WebDeveloper.Ruler.toolbarDocument.getElementById("web-developer-ruler-end-y").textContent	 = WebDeveloper.Ruler.endY + "px";
+			WebDeveloper.Ruler.toolbarDocument.getElementById("web-developer-ruler-start-y").textContent = (WebDeveloper.Ruler.startY + 2) + "px";
 		}
 	}
 };

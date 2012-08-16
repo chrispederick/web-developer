@@ -60,40 +60,6 @@ WebDeveloper.Background.getColor = function(x, y, eventType)
 	return {};
 };
 
-// Gets the content from a set of URLs
-WebDeveloper.Background.getContentFromURLs = function(urls)
-{
-	var contentFromURLs = [];
-	var contentURL			= null;
-	var request					= null;
-	var response				= null;
-
-	// Loop through the urls
-	for(var i = 0, l = urls.length; i < l; i++)
-	{
-		contentURL = urls[i];
-
-		// Try to get the content
-		try
-		{
-			request = new XMLHttpRequest();
-
-			request.open("get", contentURL, false);
-			request.send(null);
-
-			response = request.responseText;
-		}
-		catch(exception)
-		{
-			response = null;
-		}
-
-		contentFromURLs.push({ "content": response, "url": contentURL });
-	}
-
-	return contentFromURLs;
-};
-
 // Returns the edit CSS dashboard HTML template
 WebDeveloper.Background.getEditCSSDashboardTemplates = function(parameters)
 {
@@ -143,6 +109,53 @@ WebDeveloper.Background.getStylesFromCSS = function(cssDocuments)
 	}
 
 	return { "css": styles };
+};
+
+// Gets the content from a URL
+WebDeveloper.Background.getURLContent = function(url, errorMessage)
+{
+	var content	= null;
+
+	// Try to get the content
+	try
+	{
+		var request	= new XMLHttpRequest();
+
+		request.timeout = WebDeveloper.Common.requestTimeout;
+
+		request.ontimeout = function()
+		{
+			content = errorMessage;
+		};
+
+		request.open("get", url, false);
+		request.send(null);
+
+		content = request.responseText;
+	}
+	catch(exception)
+	{
+		content = errorMessage;
+	}
+
+	return content;
+};
+
+// Gets the content from a set of URLs
+WebDeveloper.Background.getURLContents = function(urls, errorMessage)
+{
+	var url					= null;
+	var urlContents = [];
+
+	// Loop through the urls
+	for(var i = 0, l = urls.length; i < l; i++)
+	{
+		url = urls[i];
+
+		urlContents.push({ "content": WebDeveloper.Background.getURLContent(url, errorMessage), "url": url });
+	}
+
+	return urlContents;
 };
 
 // Initializes a generated tab
@@ -215,10 +228,6 @@ WebDeveloper.Background.request = function(request, sender, sendResponse)
 	{
 		sendResponse(WebDeveloper.Background.getColor(request.x, request.y, request.eventType));
 	}
-	else if(request.type == "get-content-from-urls")
-	{
-		sendResponse(WebDeveloper.Background.getContentFromURLs(request.urls));
-	}
 	else if(request.type == "get-edit-css-dashboard-templates")
 	{
 		sendResponse(WebDeveloper.Background.getEditCSSDashboardTemplates({ "dashboardTitle": request.dashboardTitle, "tabId": request.tabId, "title": request.title }));
@@ -234,6 +243,10 @@ WebDeveloper.Background.request = function(request, sender, sendResponse)
 	else if(request.type == "get-storage-item")
 	{
 		sendResponse({ "value": WebDeveloper.Storage.getItem(request.item) });
+	}
+	else if(request.type == "get-url-contents")
+	{
+		sendResponse(WebDeveloper.Background.getURLContents(request.urls, request.errorMessage));
 	}
 	else if(request.type == "set-storage-item")
 	{

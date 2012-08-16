@@ -6,6 +6,7 @@ WebDeveloper.Generated = WebDeveloper.Generated || {};
 WebDeveloper.Generated.initialize = function(data, locale)
 {
 	var brokenImages		 = locale.brokenImages;
+	var content					 = document.getElementById("content");
 	var contentDocument  = null;
 	var documents				 = data.documents;
 	var imageDescription = null;
@@ -34,10 +35,10 @@ WebDeveloper.Generated.initialize = function(data, locale)
 		// If there are broken images
 		if(imagesLength > 0)
 		{
-			list = $("<ol></ol>");
+			list = document.createElement("ol");
 
-			list.append(ich.brokenImages(contentDocument));
-			$("#content").append(list);
+			$(list).append(ich.brokenImages(contentDocument));
+			content.appendChild(list);
 		}
 
 		WebDeveloper.Generated.addSeparator();

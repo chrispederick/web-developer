@@ -198,6 +198,7 @@ WebDeveloper.Overlay.CSS.editCSS = function()
 			var edit		= !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
 			var locale	= "";
 
+			locale += "'couldNotLoadCSS': '" + WebDeveloper.Locales.getString("couldNotLoadCSS") + "',";
 			locale += "'dashboardTitle': '" + WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("dashboard") + "',";
 			locale += "'editCSS': '" + WebDeveloper.Locales.getString("editCSS") + "',";
 			locale += "'embeddedStyles': '" + WebDeveloper.Locales.getString("embeddedStyles") + "'";

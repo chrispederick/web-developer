@@ -6,7 +6,7 @@
 .table tbody tr.tDnD_whileDrag { background-color: #f5f5f5; }
 .table td { vertical-align: middle; }
 .table thead tr { cursor: auto !important; }
-.table .btn-primary { margin: 0 5px 5px 0; }
+.table .btn-primary { margin-right: 5px; }
 
 @media (max-width: 979px)
 {

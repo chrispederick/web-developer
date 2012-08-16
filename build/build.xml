@@ -35,8 +35,8 @@
     <copy file="../source/common/html/about/about.html" tofile="chrome/about/about.html">
       <filterset refid="chrome.filters"/>
     </copy>
+    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="chrome/about/javascript/jquery.js"/>
     <concat destfile="chrome/about/javascript/about.js">
-    	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
     	<fileset file="../source/common/javascript/generated/common.js"/>
     	<fileset file="../source/common/javascript/about/about.js"/>
     </concat>
@@ -56,9 +56,11 @@
     <copy file="../source/chrome/html/background/background.html" tofile="chrome/background/background.html">
       <filterset refid="chrome.filters"/>
     </copy>
+    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="chrome/background/javascript/jquery.js"/>
     <concat destfile="chrome/background/javascript/background.temp">
-      <fileset file="../source/common/javascript/common/jquery/jquery.js"/>
       <fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
+    	<fileset file="../source/common/javascript/common/common.js"/>
+    	<fileset file="../source/chrome/javascript/common/common.js"/>
     	<fileset file="../source/chrome/javascript/background/background.js"/>
       <fileset file="../source/chrome/javascript/locales/locales.js"/>
     	<fileset file="../source/chrome/javascript/storage/storage.js"/>
@@ -93,8 +95,8 @@
   <!-- Builds the dashboard for Chrome -->
   <target name="build.chrome.dashboard" depends="initialize.chrome">
     <echo level="info" message="Building the dashboard"/>
+    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="chrome/dashboard/javascript/html/jquery.js"/>
     <concat destfile="chrome/dashboard/javascript/html/dashboard.js">
-      <fileset file="../source/common/javascript/common/jquery/jquery.js"/>
       <fileset file="../source/common/javascript/common/bootstrap/tab.js"/>
     	<fileset file="../source/common/javascript/toolbar/html/element-ancestors.js"/>
     	<fileset file="../source/chrome/javascript/dashboard/common.js"/>
@@ -171,7 +173,7 @@
       <fileset dir="../source/chrome/html/validation"/>
       <filterset refid="chrome.filters"/>
     </copy>
-    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="chrome/validation/javascript/common.js"/>
+    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="chrome/validation/javascript/jquery.js"/>
     <copy todir="chrome/validation/javascript">
       <fileset dir="../source/chrome/javascript/validation"/>
     </copy>
@@ -194,11 +196,12 @@
       </fileset>
       <filterset refid="chrome.filters"/>
     </copy>
+    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="chrome/generated/javascript/jquery.js"/>
     <concat destfile="chrome/generated/javascript/common.js">
-    	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
      	<fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
 	  	<fileset file="../source/common/javascript/common/bootstrap/collapse.js"/>
     	<fileset file="../source/common/javascript/common/bootstrap/dropdown.js"/>
+    	<fileset file="../source/common/javascript/common/common.js"/>
     	<fileset file="../source/chrome/javascript/common/common.js"/>
     	<fileset file="../source/common/javascript/generated/common.js"/>
     </concat>
@@ -268,8 +271,8 @@
     	<fileset file="../source/chrome/html/options/options.html"/>
       <filterset refid="chrome.filters"/>
     </copy>
+    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="chrome/options/javascript/jquery.js"/>
     <concat destfile="chrome/options/javascript/options.js">
-      <fileset file="../source/common/javascript/common/jquery/jquery.js"/>
       <fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
       <fileset file="../source/common/javascript/common/bootstrap/modal.js"/>
       <fileset file="../source/common/javascript/common/bootstrap/tab.js"/>
@@ -281,7 +284,6 @@
       <fileset file="../source/chrome/javascript/storage/storage.js"/>
     </concat>
     <concat destfile="chrome/options/javascript/syntax-highlight.js">
-    	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
     	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
     	<fileset file="../source/common/javascript/common/codemirror/css.js"/>
     	<fileset file="../source/common/javascript/common/codemirror/htmlmixed.js"/>
@@ -317,8 +319,8 @@
     <copy file="../source/chrome/html/overlay/overlay.html" tofile="chrome/overlay/overlay.html">
       <filterset refid="chrome.filters"/>
     </copy>
+    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="chrome/overlay/javascript/jquery.js"/>
     <concat destfile="chrome/overlay/javascript/overlay.temp">
-      <fileset file="../source/common/javascript/common/jquery/jquery.js"/>
       <fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
       <fileset file="../source/common/javascript/common/bootstrap/tab.js"/>
       <fileset file="../source/common/javascript/common/bootstrap/transition.js"/>
@@ -438,8 +440,8 @@
     <copy file="../source/common/html/about/about.html" tofile="firefox/content/web-developer/about/about.html">
       <filterset refid="firefox.filters"/>
     </copy>
+    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="firefox/content/web-developer/about/javascript/jquery.js"/>
     <concat destfile="firefox/content/web-developer/about/javascript/about.js">
-    	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
     	<fileset file="../source/common/javascript/generated/common.js"/>
     	<fileset file="../source/common/javascript/about/about.js"/>
     </concat>
@@ -516,8 +518,8 @@
      		<exclude name="common.js"/>
       </fileset>
     </copy>
+    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="firefox/content/web-developer/dashboard/javascript/html/jquery.js"/>
     <concat destfile="firefox/content/web-developer/dashboard/javascript/html/common.js">
-    	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
     	<fileset file="../source/common/javascript/generated/common.js"/>
     	<fileset file="../source/firefox/javascript/dashboard/html/common.js"/>
     </concat>
@@ -576,6 +578,7 @@
     <echo level="info" message="Building the features"/>
     <copy todir="firefox/content/web-developer/features/style-sheets">
       <fileset dir="../source/common/style-sheets/features"/>
+      <fileset dir="../source/firefox/style-sheets/features"/>
     </copy>
     <copy file="../source/common/style-sheets/common/reset.css" tofile="firefox/content/web-developer/features/style-sheets/css/disable-browser-default-styles.css"/>
     <copy file="../images/common/transparent.png" tofile="firefox/content/web-developer/features/style-sheets/images/transparent.png"/>
@@ -606,11 +609,12 @@
       <fileset dir="../source/firefox/style-sheets/generated"/>
       <filterset refid="firefox.filters"/>
     </copy>
+    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="firefox/content/web-developer/generated/javascript/jquery.js"/>
     <concat destfile="firefox/content/web-developer/generated/javascript/common.js">
-    	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
     	<fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
     	<fileset file="../source/common/javascript/common/bootstrap/collapse.js"/>
     	<fileset file="../source/common/javascript/common/bootstrap/dropdown.js"/>
+    	<fileset file="../source/common/javascript/common/common.js"/>
     	<fileset file="../source/firefox/javascript/common/common.js"/>
     	<fileset file="../source/common/javascript/generated/common.js"/>
     	<fileset file="../source/firefox/javascript/generated/common.js"/>
@@ -688,8 +692,8 @@
     <copy todir="firefox/content/web-developer/options/dialogs/javascript">
       <fileset dir="../source/firefox/javascript/options/dialogs"/>
     </copy>
-    <concat destfile="firefox/content/web-developer/options/html/javascript/syntax-highlight.js">
-    	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
+    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="firefox/content/web-developer/options/html/javascript/jquery.js"/>
+   <concat destfile="firefox/content/web-developer/options/html/javascript/syntax-highlight.js">
     	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
     	<fileset file="../source/common/javascript/common/codemirror/css.js"/>
     	<fileset file="../source/common/javascript/common/codemirror/htmlmixed.js"/>
@@ -1212,8 +1216,8 @@
     <copy file="../source/firefox/html/toolbar/element-ancestors.html" tofile="firefox/content/web-developer/toolbar/html/element-ancestors.html">
     	<filterset refid="firefox.filters"/>
     </copy>
-    <concat destfile="firefox/content/web-developer/toolbar/html/javascript/element-ancestors.js">
-    	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
+    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="firefox/content/web-developer/toolbar/html/javascript/jquery.js"/>
+   <concat destfile="firefox/content/web-developer/toolbar/html/javascript/element-ancestors.js">
     	<fileset file="../source/common/javascript/generated/common.js"/>
     	<fileset file="../source/common/javascript/toolbar/html/element-ancestors.js"/>
     </concat>
@@ -1275,6 +1279,14 @@
       <filtersfile file="../configuration/common/configuration.properties"/>
       <filtersfile file="../configuration/firefox/configuration.properties"/>
     </filterset>
+	</target>
+
+  <!-- Installs the extension in Firefox using the Extension Auto-Installer extension on port 9999 and wget -->
+  <target name="install.firefox" depends="build.firefox">
+    <echo level="info" message="Installing the extension for Firefox"/>
+		<exec executable="wget">
+		  <arg line="--post-file=web-developer-firefox.xpi http://localhost:9999/"/>
+		</exec>
 	</target>
 
   <!-- Merges in Bootstrap -->

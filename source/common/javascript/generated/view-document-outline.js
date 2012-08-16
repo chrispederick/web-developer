@@ -5,7 +5,9 @@ WebDeveloper.Generated = WebDeveloper.Generated || {};
 // Initializes the page with data
 WebDeveloper.Generated.initialize = function(data, locale)
 {
+	var childElement				 = null;
 	var container						 = null;
+	var content							 = document.getElementById("content");
 	var contentDocument			 = null;
 	var documentOutline			 = locale.documentOutline;
 	var documents						 = data.documents;
@@ -53,7 +55,15 @@ WebDeveloper.Generated.initialize = function(data, locale)
 				// Loop through any missing headers
 				for(var k = previousHeadingLevel + 1; k < headingLevel; k++)
 				{
-					container.append("<h" + k + ' class="web-developer-missing-heading"><span class="label label-warning">&lt;h' + k + "&gt;</span>" + locale.missingHeading + "</h" + k + ">");
+					childElement = document.createElement("span");
+					heading			 = document.createElement("h" + k);
+
+					childElement.appendChild(document.createTextNode("<h" + k + ">"));
+					childElement.setAttribute("class", "label label-warning");
+					heading.appendChild(childElement);
+					heading.appendChild(document.createTextNode(locale.missingHeading));
+					heading.setAttribute("class", "web-developer-missing-heading");
+					container.appendChild(heading);
 				}
 
 				// If there is no heading text
@@ -62,12 +72,19 @@ WebDeveloper.Generated.initialize = function(data, locale)
 					headingText = locale.noHeadingText;
 				}
 
-				container.append("<h" + headingLevel + '><span class="label label-success">&lt;h' + headingLevel + "&gt;</span>" + headingText + "</h" + k + ">");
+				childElement = document.createElement("span");
+				heading			 = document.createElement("h" + headingLevel);
+
+				childElement.appendChild(document.createTextNode("<h" + headingLevel + ">"));
+				childElement.setAttribute("class", "label label-success");
+				heading.appendChild(childElement);
+				heading.appendChild(document.createTextNode(headingText));
+				container.appendChild(heading);
 
 				previousHeadingLevel = headingLevel;
 			}
 
-			$("#content").append(container);
+			content.appendChild(container);
 		}
 
 		WebDeveloper.Generated.addSeparator();

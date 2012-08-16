@@ -121,10 +121,8 @@ WebDeveloper.Overlay.openErrorConsole = function()
 // Opens a generated tab
 WebDeveloper.Overlay.openGeneratedTab = function(url, data, locale)
 {
-	var load = null;
 	var tab  = WebDeveloper.Common.getTabBrowser().getBrowserForTab(WebDeveloper.Common.openURL(url));
-
-	load = (function(dataContent, localeContent)
+	var load = (function(dataContent, localeContent)
 	{
 		var handler = function(event)
 		{

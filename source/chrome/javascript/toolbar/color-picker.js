@@ -108,5 +108,5 @@ WebDeveloper.ColorPicker.setColor = function(color, type)
 {
 	WebDeveloper.ColorPicker.toolbarDocument.getElementById("web-developer-color-picker-" + type + "-color").setAttribute("style", "background-color: " + color);
 
-	WebDeveloper.ColorPicker.toolbarDocument.getElementById("web-developer-color-picker-" + type + "-hex").innerHTML = color;
+	WebDeveloper.ColorPicker.toolbarDocument.getElementById("web-developer-color-picker-" + type + "-hex").textContent = color;
 };

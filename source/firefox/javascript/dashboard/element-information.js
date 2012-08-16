@@ -17,7 +17,7 @@ WebDeveloper.ElementInformation.displayElementInformation = function(element)
 	var theme							= WebDeveloper.Preferences.getExtensionStringPreference("syntax.highlight.theme");
 
 	generatedDocument.defaultView.WebDeveloper.Dashboard.setPosition(WebDeveloper.Preferences.getExtensionStringPreference("dashboard.position"));
-	generatedDocument.defaultView.WebDeveloper.Dashboard.initialize(WebDeveloper.ElementInformation.generateElementInformation(element, generatedDocument, theme), theme);
+	generatedDocument.defaultView.WebDeveloper.Dashboard.initialize(WebDeveloper.ElementInformation.generateElementInformation(element, element.ownerDocument, generatedDocument, theme), theme);
 };
 
 // Returns a string from the locale
@@ -45,8 +45,8 @@ WebDeveloper.ElementInformation.initialize = function()
 
 	WebDeveloper.ElementAncestors.createToolbar();
 
-	contentDocument																												= document.getElementById("web-developer-element-information-browser").contentDocument;
-	contentDocument.querySelector(".web-developer-information").innerHTML = WebDeveloper.Locales.getString("selectAnElementDisplayInformation");
+	contentDocument																													= document.getElementById("web-developer-element-information-browser").contentDocument;
+	contentDocument.querySelector(".web-developer-information").textContent = WebDeveloper.Locales.getString("selectAnElementDisplayInformation");
 
 	contentDocument.addEventListener("click", WebDeveloper.ElementInformation.clickOutput, false);
 };

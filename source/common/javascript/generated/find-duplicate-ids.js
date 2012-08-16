@@ -5,6 +5,7 @@ WebDeveloper.Generated = WebDeveloper.Generated || {};
 // Initializes the page with data
 WebDeveloper.Generated.initialize = function(data, locale)
 {
+	var content					= document.getElementById("content");
 	var contentDocument = null;
 	var documents				= data.documents;
 	var duplicateIds		= locale.duplicateIds;
@@ -12,6 +13,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
 	var ids							= null;
 	var idsLength				= null;
 	var list						= null;
+	var listElement			= null;
 	var url							= null;
 
 	WebDeveloper.Generated.emptyContent();
@@ -38,15 +40,16 @@ WebDeveloper.Generated.initialize = function(data, locale)
 		// If there are duplicate ids
 		if(idsLength > 0)
 		{
-			list = $("<ol></ol>");
+			list				= document.createElement("ol");
+			listElement = $(list);
 
 			// Loop through the ids
 			for(var j = 0; j < idsLength; j++)
 			{
-				list.append(ich.duplicateId({ "id": ids[j], "url": url }));
+				$(list).append(ich.duplicateId({ "id": ids[j], "url": url }));
 			}
 
-			$("#content").append(list);
+			content.appendChild(list);
 		}
 
 		WebDeveloper.Generated.addSeparator();

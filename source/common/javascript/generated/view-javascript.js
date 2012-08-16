@@ -8,7 +8,8 @@ WebDeveloper.Generated.theme				= null;
 WebDeveloper.Generated.beautifyJavaScript = function(event)
 {
 	var beautifyLink = $(this);
-	var pre					 = null;
+	var newPre			 = null;
+	var oldPre			 = null;
 
 	WebDeveloper.Generated.expandAllOutput();
 	$(".CodeMirror").remove();
@@ -19,9 +20,14 @@ WebDeveloper.Generated.beautifyJavaScript = function(event)
 		// Loop through the original JavaScript
 		$(".web-developer-original").each(function()
 		{
-			pre = $(this);
+			newPre = document.createElement("pre");
+			oldPre = $(this);
 
-			$('<pre class="web-developer-syntax-highlight" data-line-numbers="true" data-type="javascript"></pre>').insertBefore(pre).text(pre.text());
+			newPre.setAttribute("class", "web-developer-syntax-highlight");
+			newPre.setAttribute("data-line-numbers", "true");
+			newPre.setAttribute("data-type", "javascript");
+
+			$(newPre).insertBefore(oldPre).text(oldPre.text());
 		});
 
 		beautifyLink.text(WebDeveloper.Generated.storedLocale.beautifyJavaScript).removeClass("web-developer-beautified");
@@ -31,9 +37,14 @@ WebDeveloper.Generated.beautifyJavaScript = function(event)
 		// Loop through the original JavaScript
 		$(".web-developer-original").each(function()
 		{
-			pre = $(this);
+			newPre = document.createElement("pre");
+			oldPre = $(this);
 
-			$('<pre class="web-developer-syntax-highlight" data-line-numbers="true" data-type="javascript"></pre>').insertBefore(pre).text(js_beautify(pre.text()));
+			newPre.setAttribute("class", "web-developer-syntax-highlight");
+			newPre.setAttribute("data-line-numbers", "true");
+			newPre.setAttribute("data-type", "javascript");
+
+			$(newPre).insertBefore(oldPre).text(js_beautify(oldPre.text()));
 		});
 
 		beautifyLink.text(WebDeveloper.Generated.storedLocale.undoBeautifyJavaScript).addClass("web-developer-beautified");
@@ -50,13 +61,14 @@ WebDeveloper.Generated.initialize = function(data, locale)
 	var contentDocument				 = null;
 	var documents							 = data.documents;
 	var embedded							 = null;
+	var embeddedContainers		 = null;
 	var embeddedJavaScriptFrom = locale.embeddedJavaScriptFrom;
-	var errorMessage					 = "// " + locale.couldNotLoadJavaScript;
 	var javaScript						 = null;
 	var javaScriptCount				 = null;
 	var javaScriptCounter			 = 1;
 	var javaScriptDescription  = locale.javaScript;
 	var url										 = null;
+	var urlContentRequests		 = [];
 
 	WebDeveloper.Generated.emptyContent();
 	WebDeveloper.Generated.localizeHeader(locale);
@@ -76,15 +88,21 @@ WebDeveloper.Generated.initialize = function(data, locale)
 		// If there are embedded JavaScript
 		if(contentDocument.embedded)
 		{
-			WebDeveloper.Generated.output(contentDocument.embedded, embeddedJavaScriptFrom + " " + url, null, "javascript-" + (javaScriptCounter++), "javascript", true);
+			embeddedContainers = WebDeveloper.Generated.output(embeddedJavaScriptFrom + " " + url, null, "javascript-" + (javaScriptCounter++), "javascript", true);
+
+			// Loop through the embedded containers
+			for(var j = 0, m = embeddedContainers.length; j < m; j++)
+			{
+				embeddedContainers[j].text(contentDocument.embedded);
+			}
 		}
 
 		// Loop through the JavaScript
-		for(var j = 0; j < javaScriptCount; j++)
+		for(var k = 0; k < javaScriptCount; k++)
 		{
-			url	= javaScript[j];
+			url	= javaScript[k];
 
-			WebDeveloper.Generated.output(WebDeveloper.Common.getContentFromURL(url, errorMessage), null, url, "javascript-" + (javaScriptCounter++), "javascript", true);
+			urlContentRequests.push({ "outputContainers": WebDeveloper.Generated.output(null, url, "javascript-" + (javaScriptCounter++), "javascript", true), "url": url });
 		}
 
 		// If there is no JavaScript
@@ -100,5 +118,25 @@ WebDeveloper.Generated.initialize = function(data, locale)
 	$("#web-developer-beautify").text(locale.beautifyJavaScript).on("click", WebDeveloper.Generated.beautifyJavaScript);
 
 	WebDeveloper.Generated.initializeCommonElements();
-	WebDeveloper.Generated.initializeSyntaxHighlight(WebDeveloper.Generated.theme);
+
+	WebDeveloper.Common.getURLContents(urlContentRequests, "// " + locale.couldNotLoadJavaScript, function()
+	{
+		var outputContainers	= null;
+		var urlContentRequest = null;
+
+		// Loop through the URL content requests
+		for(var n = 0, p = urlContentRequests.length; n < p; n++)
+		{
+			urlContentRequest = urlContentRequests[n];
+			outputContainers	= urlContentRequest.outputContainers;
+
+			// Loop through the output containers
+			for(var q = 0, r = outputContainers.length; q < r; q++)
+			{
+				outputContainers[q].text(urlContentRequest.content);
+			}
+		}
+
+		WebDeveloper.Generated.initializeSyntaxHighlight(WebDeveloper.Generated.theme);
+	});
 };

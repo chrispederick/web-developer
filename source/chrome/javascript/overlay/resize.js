@@ -18,11 +18,11 @@ $(function()
 	$("#resize-window-dialog").on("submit", function(event) { event.preventDefault(); });
 	$("#resize-window-submit").on("click", WebDeveloper.Overlay.Resize.submitResizeWindow);
 
-	$("legend", $("#resize-window-dialog")).html(WebDeveloper.Locales.getString("resizeWindow"));
-	$("#resize-window-cancel").html(WebDeveloper.Locales.getString("cancel"));
+	$("legend", $("#resize-window-dialog")).text(WebDeveloper.Locales.getString("resizeWindow"));
+	$("#resize-window-cancel").text(WebDeveloper.Locales.getString("cancel"));
 	$("#resize-window-submit").append(WebDeveloper.Locales.getString("resize"));
-	$('[for="resize-window-height"]').html(WebDeveloper.Locales.getString("height"));
-	$('[for="resize-window-width"]').html(WebDeveloper.Locales.getString("width"));
+	$('[for="resize-window-height"]').text(WebDeveloper.Locales.getString("height"));
+	$('[for="resize-window-width"]').text(WebDeveloper.Locales.getString("width"));
 
 	resizeWindowHeight.attr("placeholder", WebDeveloper.Locales.getString("heightPlaceholder"));
 	resizeWindowWidth.attr("placeholder", WebDeveloper.Locales.getString("widthPlaceholder"));
@@ -100,7 +100,7 @@ WebDeveloper.Overlay.Resize.editResizeDimensions = function()
 WebDeveloper.Overlay.Resize.resetResizeDialog = function(resizeDialog)
 {
 	$(".error", resizeDialog).removeClass("error");
-	$(".help-inline", resizeDialog).html("");
+	$(".help-inline", resizeDialog).text("");
 };
 
 // Resizes the window
@@ -186,9 +186,9 @@ WebDeveloper.Overlay.Resize.submitResizeWindow = function()
 WebDeveloper.Overlay.Resize.validateResizeDialog = function()
 {
 	var height			= $("#resize-window-height");
-	var heightValue	= WebDeveloper.Common.trim(height.val());
+	var heightValue	= height.val().trim();
 	var width				= $("#resize-window-width");
-	var widthValue	= WebDeveloper.Common.trim(width.val());
+	var widthValue	= width.val().trim();
 	var valid				= true;
 
 	WebDeveloper.Overlay.Resize.resetResizeDialog($("#resize-window-dialog"));
@@ -196,14 +196,14 @@ WebDeveloper.Overlay.Resize.validateResizeDialog = function()
 	// If the height is not set
 	if(!heightValue)
 	{
-		height.next().html(WebDeveloper.Locales.getString("heightCannotBeEmpty"));
+		height.next().text(WebDeveloper.Locales.getString("heightCannotBeEmpty"));
 		height.closest(".control-group").addClass("error");
 
 		valid = false;
 	}
 	else if(heightValue != "*" && (parseInt(heightValue, 10) != heightValue || heightValue <= 0))
 	{
-		height.next().html(WebDeveloper.Locales.getString("heightNotValid"));
+		height.next().text(WebDeveloper.Locales.getString("heightNotValid"));
 		height.closest(".control-group").addClass("error");
 
 		valid = false;
@@ -212,14 +212,14 @@ WebDeveloper.Overlay.Resize.validateResizeDialog = function()
 	// If the width is not set
 	if(!widthValue)
 	{
-		width.next().html(WebDeveloper.Locales.getString("widthCannotBeEmpty"));
+		width.next().text(WebDeveloper.Locales.getString("widthCannotBeEmpty"));
 		width.closest(".control-group").addClass("error");
 
 		valid = false;
 	}
 	else if(widthValue != "*" && (parseInt(widthValue, 10) != widthValue || widthValue <= 0))
 	{
-		width.next().html(WebDeveloper.Locales.getString("widthNotValid"));
+		width.next().text(WebDeveloper.Locales.getString("widthNotValid"));
 		width.closest(".control-group").addClass("error");
 
 		valid = false;

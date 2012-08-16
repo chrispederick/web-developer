@@ -5,12 +5,12 @@ WebDeveloper.Cookies = WebDeveloper.Cookies || {};
 // Adds a cookie
 WebDeveloper.Cookies.addCookie = function(cookie)
 {
-	var host		 = WebDeveloper.Common.trim(cookie.host);
-	var name		 = WebDeveloper.Common.trim(cookie.name);
+	var host		 = cookie.host.trim();
+	var name		 = cookie.name.trim();
 	var protocol = "http://";
 	var secure	 = cookie.secure;
 	var url			 = null;
-	var value		 = WebDeveloper.Common.trim(cookie.value);
+	var value		 = cookie.value.trim();
 
 	// If the cookie is secure
 	if(secure)
@@ -18,7 +18,7 @@ WebDeveloper.Cookies.addCookie = function(cookie)
 		protocol = "https://";
 	}
 
-	url = protocol + host + WebDeveloper.Common.trim(cookie.path);
+	url = protocol + host + cookie.path.trim();
 
 	// If the cookie is a session cookie
 	if(cookie.session)
@@ -27,7 +27,7 @@ WebDeveloper.Cookies.addCookie = function(cookie)
 	}
 	else
 	{
-		chrome.cookies.set({ "domain": host, "expirationDate": (new Date(WebDeveloper.Common.trim(cookie.expires)).getTime()) / 1000, "name": name, "secure": secure, "url": url, "value": value });
+		chrome.cookies.set({ "domain": host, "expirationDate": (new Date(cookie.expires.trim()).getTime()) / 1000, "name": name, "secure": secure, "url": url, "value": value });
 	}
 };
 

@@ -5,6 +5,7 @@ WebDeveloper.Generated = WebDeveloper.Generated || {};
 // Initializes the page with data
 WebDeveloper.Generated.initialize = function(data, locale)
 {
+	var content					= document.getElementById("content");
 	var contentDocument = null;
 	var documents				= data.documents;
 	var linkDescription = null;
@@ -34,10 +35,10 @@ WebDeveloper.Generated.initialize = function(data, locale)
 		// If there are links
 		if(linksLength > 0)
 		{
-			list = $("<ol></ol>");
+			list = document.createElement("ol");
 
-			list.append(ich.links(contentDocument));
-			$("#content").append(list);
+			$(list).append(ich.links(contentDocument));
+			content.appendChild(list);
 		}
 
 		WebDeveloper.Generated.addSeparator();

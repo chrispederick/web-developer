@@ -320,7 +320,7 @@ WebDeveloper.Content.getDocumentCSS = function(contentDocument)
 		// If this is a valid style sheet
 		if(WebDeveloper.CSS.isValidStyleSheet(styleSheet.sheet))
 		{
-			embeddedStyles += WebDeveloper.Common.trim(styleSheet.innerHTML) + "\n\n";
+			embeddedStyles += styleSheet.textContent.trim() + "\n\n";
 
 			documentCSS.styleSheets = documentCSS.styleSheets.concat(WebDeveloper.CSS.getImportedStyleSheets(styleSheet.sheet));
 		}
@@ -396,7 +396,7 @@ WebDeveloper.Content.getDocumentOutline = function()
 		{
 			documentHeading				= {};
 			heading								= documentAllHeadings[j];
-			headingText						= WebDeveloper.Common.trim(WebDeveloper.Common.getElementText(heading));
+			headingText						= WebDeveloper.Common.getElementText(heading).trim();
 			documentHeading.level = parseInt(heading.tagName.toLowerCase().substring(1), 10);
 
 			// If there is no heading text
@@ -410,7 +410,7 @@ WebDeveloper.Content.getDocumentOutline = function()
 					headingText += headingImages[k].getAttribute("alt") + " ";
 				}
 
-				headingText = WebDeveloper.Common.trim(headingText);
+				headingText = headingText.trim();
 
 				// If there is heading text
 				if(headingText)
@@ -597,7 +597,7 @@ WebDeveloper.Content.getForms = function()
 				// If the parent element is a label
 				if(labelElement.tagName.toLowerCase() == "label")
 				{
-					documentFormElement.label = WebDeveloper.Common.trim(labelElement.textContent);
+					documentFormElement.label = labelElement.textContent.trim();
 				}
 
 				// If the form element has an id attribute
@@ -613,7 +613,7 @@ WebDeveloper.Content.getForms = function()
 						// If a label element was found
 						if(labelElement)
 						{
-							documentFormElement.label = WebDeveloper.Common.trim(labelElement.textContent);
+							documentFormElement.label = labelElement.textContent.trim();
 						}
 					}
 				}
@@ -737,7 +737,7 @@ WebDeveloper.Content.getJavaScript = function()
 			}
 			else
 			{
-				embeddedJavaScript += WebDeveloper.Common.trim(script.innerHTML) + "\n\n";
+				embeddedJavaScript += script.textContent.trim() + "\n\n";
 			}
 		}
 

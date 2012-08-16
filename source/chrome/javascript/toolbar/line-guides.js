@@ -77,9 +77,9 @@ WebDeveloper.LineGuides.removeToolbar = function(contentDocument)
 // Updates the line guide information
 WebDeveloper.LineGuides.updateInformation = function(position, previousPosition, nextPosition)
 {
-	WebDeveloper.LineGuides.toolbarDocument.getElementById("line-guide-position").innerHTML					 = position + "px";
-	WebDeveloper.LineGuides.toolbarDocument.getElementById("next-line-guide-position").innerHTML		 = nextPosition + "px";
-	WebDeveloper.LineGuides.toolbarDocument.getElementById("previous-line-guide-position").innerHTML = previousPosition + "px";
+	WebDeveloper.LineGuides.toolbarDocument.getElementById("line-guide-position").textContent					 = position + "px";
+	WebDeveloper.LineGuides.toolbarDocument.getElementById("next-line-guide-position").textContent		 = nextPosition + "px";
+	WebDeveloper.LineGuides.toolbarDocument.getElementById("previous-line-guide-position").textContent = previousPosition + "px";
 
 	WebDeveloper.Common.addClass(WebDeveloper.Common.getDocumentBodyElement(WebDeveloper.LineGuides.toolbarDocument), "display-information");
 };

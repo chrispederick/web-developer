@@ -6,7 +6,7 @@ WebDeveloper.Dashboard.resizing	= false;
 // Adjusts the bottom margin of the body
 WebDeveloper.Dashboard.adjustBodyBottomMargin = function(contentDocument, height)
 {
-	WebDeveloper.Common.getDocumentBodyElement(contentDocument).style.setProperty("margin-bottom", (height + 20) + "px", "important");
+	WebDeveloper.Common.getDocumentBodyElement(contentDocument).style.setProperty("margin-bottom", (parseInt(height, 10) + 20) + "px", "important");
 };
 
 // Closes a dashboard tab
@@ -44,7 +44,9 @@ WebDeveloper.Dashboard.createDashboard = function(contentDocument, dashboardHTML
 
 	WebDeveloper.Common.getDocumentBodyElement(dashboardDocument).innerHTML = dashboardHTML;
 
-	WebDeveloper.Common.includeJavaScript("dashboard/javascript/html/dashboard.js", dashboardDocument);
+	WebDeveloper.Common.includeJavaScript("dashboard/javascript/html/jquery.js", dashboardDocument, function() {
+		WebDeveloper.Common.includeJavaScript("dashboard/javascript/html/dashboard.js", dashboardDocument);
+	});
 
 	dashboardDocument.querySelector(".brand img").setAttribute("src", WebDeveloper.Common.getChromeURL("dashboard/images/logo.png"));
 

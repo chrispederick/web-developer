@@ -1,7 +1,7 @@
 // Constructs a validate CSS object
 function WebDeveloperValidateCSS()
 {
-	this.file						 = null;
+	this.file							 = null;
 	this.validationRequest = null;
 }
 
@@ -66,13 +66,13 @@ WebDeveloperValidateCSS.prototype.createSourceFile = function(uri)
 };
 
 // Returns the CSS as text
-WebDeveloperValidateCSS.prototype.getCSS = function(css)
+WebDeveloperValidateCSS.prototype.getCSS = function(css, callback)
 {
-	var contentDocument = null;
-	var cssText					= "";
-	var documents				= css.documents;
-	var request					= null;
-	var styleSheets			= null;
+	var contentDocument		 = null;
+	var cssText						 = "";
+	var documents					 = css.documents;
+	var styleSheets				 = null;
+	var urlContentRequests = [];
 
 	// Loop through the documents
 	for(var i = 0, l = documents.length; i < l; i++)
@@ -80,33 +80,29 @@ WebDeveloperValidateCSS.prototype.getCSS = function(css)
 		contentDocument = documents[i];
 		styleSheets			= contentDocument.styleSheets;
 
-		// Loop through the style sheets
-		for(var j = 0, m = styleSheets.length; j < m; j++)
-		{
-			// Try to get the CSS
-			try
-			{
-				request = new XMLHttpRequest();
-
-				request.open("get", styleSheets[j], false);
-				request.send(null);
-
-				cssText += request.responseText;
-			}
-			catch(exception)
-			{
-				// Ignore
-			}
-		}
-
 		// If there are embedded styles
 		if(contentDocument.embedded)
 		{
 			cssText += contentDocument.embedded;
 		}
+
+		// Loop through the style sheets
+		for(var j = 0, m = styleSheets.length; j < m; j++)
+		{
+			urlContentRequests.push({ "url": styleSheets[j] });
+		}
 	}
 
-	return cssText;
+	WebDeveloper.Common.getURLContents(urlContentRequests, "", function()
+	{
+		// Loop through the URL content requests
+		for(var k = 0, n = urlContentRequests.length; k < n; k++)
+		{
+			cssText += urlContentRequests[k].content;
+		}
+
+		callback(cssText);
+	});
 };
 
 // Parses the validation results by type
@@ -142,8 +138,8 @@ WebDeveloperValidateCSS.prototype.validateBackgroundCSS = function(uri, css)
 {
 	var boundaryString = new Date().getTime();
 	var boundary			 = "--" + boundaryString;
-	var requestBody		 = null;
 	var fileName			 = "css";
+	var validator			 = this;
 
 	// Try to get the host
 	try
@@ -163,60 +159,68 @@ WebDeveloperValidateCSS.prototype.validateBackgroundCSS = function(uri, css)
 
 	this.validationRequest.onreadystatechange = WebDeveloper.PageValidation.updateCSSValidationDetails;
 
-	requestBody  = boundary + "\r\nContent-Disposition: form-data; name=\"file\"; filename=\"" + fileName + ".css\"\r\n";
-	requestBody += "Content-Type: text/css\r\n\r\n";
-	requestBody += this.getCSS(css) + "\r\n";
-	requestBody += boundary + "\r\n";
-	requestBody += "Content-Disposition: form-data; name=\"profile\"\r\n\r\ncss3\r\n";
-	requestBody += boundary + "\r\n";
-	requestBody += "Content-Disposition: form-data; name=\"usermedium\"\r\n\r\nall\r\n";
-	requestBody += boundary + "\r\n";
-	requestBody += "Content-Disposition: form-data; name=\"warning\"\r\n\r\n0\r\n";
-	requestBody += boundary + "--";
-
-	this.validationRequest.open("post", "http://jigsaw.w3.org/css-validator/validator", true);
+	this.validationRequest.open("post", "http://jigsaw.w3.org/css-validator/validator");
 	this.validationRequest.setRequestHeader("Content-Type", "multipart/form-data; boundary=" + boundaryString);
 
-	// Try to set the request header
-	try
+	this.getCSS(css, function(cssText)
 	{
-		this.validationRequest.sendAsBinary(requestBody);
-	}
-	catch(exception2)
-	{
-		// Reset the validation request
-		this.validationRequest = new XMLHttpRequest();
-	}
+		var requestBody = boundary + "\r\nContent-Disposition: form-data; name=\"file\"; filename=\"" + fileName + ".css\"\r\n";
+
+		requestBody += "Content-Type: text/css\r\n\r\n";
+		requestBody += cssText + "\r\n";
+		requestBody += boundary + "\r\n";
+		requestBody += "Content-Disposition: form-data; name=\"profile\"\r\n\r\ncss3\r\n";
+		requestBody += boundary + "\r\n";
+		requestBody += "Content-Disposition: form-data; name=\"usermedium\"\r\n\r\nall\r\n";
+		requestBody += boundary + "\r\n";
+		requestBody += "Content-Disposition: form-data; name=\"warning\"\r\n\r\n0\r\n";
+		requestBody += boundary + "--";
+
+		// Try to send the request
+		try
+		{
+			validator.validationRequest.sendAsBinary(requestBody);
+		}
+		catch(exception2)
+		{
+			// Reset the validation request
+			validator.validationRequest = new XMLHttpRequest();
+		}
+	});
 };
 
 // Validate the CSS from the given URI and document list
 WebDeveloperValidateCSS.prototype.validateCSS = function(uri, css)
 {
-	var validationURL = WebDeveloper.Common.getChromeURL("validation/css.html");
-	var tab						= WebDeveloper.Common.getTabBrowser().getBrowserForTab(WebDeveloper.Common.openURL(validationURL));
-	var that					= this;
-
-	tab.addEventListener("load", function()
+	var tab  = WebDeveloper.Common.getTabBrowser().getBrowserForTab(WebDeveloper.Common.openURL(WebDeveloper.Common.getChromeURL("validation/css.html")));
+	var load = (function(validator, url)
 	{
-		// If this is the validation page
-		if(tab.currentURI.spec == validationURL)
+		var handler = function(event)
 		{
-			var contentDocument = tab.contentDocument;
-			var cssText					= that.getCSS(css);
-			var outputStream		= Components.classes["@mozilla.org/network/file-output-stream;1"].createInstance(Components.interfaces.nsIFileOutputStream);
+			validator.getCSS(css, function(cssText)
+			{
+				var contentDocument = tab.contentDocument;
+				var outputStream		= Components.classes["@mozilla.org/network/file-output-stream;1"].createInstance(Components.interfaces.nsIFileOutputStream);
 
-			that.file = that.createSourceFile(uri);
+				validator.file = validator.createSourceFile(url);
 
-			that.file.create(Components.interfaces.nsIFile.NORMAL_FILE_TYPE, parseInt(644, 8));
-			outputStream.init(that.file, parseInt(4, 16) | parseInt(8, 16) | parseInt(20, 16), parseInt(644, 8), null);
+				validator.file.create(Components.interfaces.nsIFile.NORMAL_FILE_TYPE, parseInt(644, 8));
+				outputStream.init(validator.file, parseInt(4, 16) | parseInt(8, 16) | parseInt(20, 16), parseInt(644, 8), null);
 
-			outputStream.write(cssText, cssText.length);
-			outputStream.close();
+				outputStream.write(cssText, cssText.length);
+				outputStream.close();
 
-			contentDocument.getElementById("file").value = that.file.path;
+				contentDocument.getElementById("file").value = validator.file.path;
 
-			contentDocument.getElementById("form").submit();
-			window.setTimeout(function() { that.cleanUp(); }, 1000);
-		}
-	}, true);
+				contentDocument.getElementById("form").submit();
+				window.setTimeout(function() { validator.cleanUp(); }, 1000);
+			});
+
+			tab.removeEventListener("load", handler, true);
+		};
+
+		return handler;
+	})(this, uri);
+
+	tab.addEventListener("load", load, true);
 };

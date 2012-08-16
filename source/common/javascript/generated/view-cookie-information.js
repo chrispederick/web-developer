@@ -39,13 +39,171 @@ WebDeveloper.Generated.clickEdit = function()
 // Deletes a cookie
 WebDeveloper.Generated.deleteCookie = function()
 {
+	var alert	 = document.createElement("div");
 	var cookie = WebDeveloper.Generated.populateCookieFromElement(WebDeveloper.Generated.cookie);
+
+	alert.appendChild(document.createTextNode(WebDeveloper.Generated.storedLocale.cookieDeleted.replace("%S", "'" + cookie.name + "'")));
+	alert.setAttribute("class", "alert alert-success");
 
 	WebDeveloper.Cookies.deleteCookie(cookie);
 
 	WebDeveloper.Generated.cookie.slideUp(WebDeveloper.Generated.animationSpeed, function() { WebDeveloper.Generated.cookie.remove(); });
 	$("#delete-dialog").modal("hide");
-	WebDeveloper.Generated.cookie.before('<div class="alert alert-success">' + WebDeveloper.Generated.storedLocale.cookieDeleted.replace("%S", "<strong>" + cookie.name + "</strong>") + "</div>");
+	WebDeveloper.Generated.cookie.before(alert);
+};
+
+// Displays a cookie
+WebDeveloper.Generated.displayCookie = function(cookie, container, cookiesCounter, locale)
+{
+	var childElement				= document.createElement("th");
+	var cookieElement				= document.createElement("div");
+	var cookieExpires				= cookie.expires;
+	var cookieName					= cookie.name;
+	var element							= document.createElement("tr");
+	var expiresDescription	= locale.atEndOfSession;
+	var httpOnlyDescription = locale.no;
+	var secureDescription		= locale.no;
+	var separator						= document.createElement("div");
+	var table								= document.createElement("table");
+	var tableContainer			= document.createElement("thead");
+
+	// If the cookie has an expiration
+	if(cookieExpires)
+	{
+		expiresDescription = new Date(cookieExpires * 1000).toUTCString();
+	}
+
+	// If the cookie is HttpOnly
+	if(cookie.httpOnly)
+	{
+		httpOnlyDescription = locale.yes;
+	}
+
+	// If the cookie is secure
+	if(cookie.secure)
+	{
+		secureDescription = locale.yes;
+	}
+
+	cookieElement.setAttribute("class", "web-developer-cookie");
+	cookieElement.setAttribute("id", "cookie-" + cookiesCounter);
+
+	childElement.appendChild(document.createTextNode(locale.property));
+	element.appendChild(childElement);
+
+	childElement = document.createElement("th");
+
+	childElement.appendChild(document.createTextNode(locale.value));
+	element.appendChild(childElement);
+	tableContainer.appendChild(element);
+
+	childElement	 = document.createElement("td");
+	element				 = document.createElement("tr");
+	tableContainer = document.createElement("tbody");
+
+	childElement.appendChild(document.createTextNode(locale.name));
+	element.appendChild(childElement);
+
+	childElement = document.createElement("td");
+
+	childElement.appendChild(document.createTextNode(cookieName));
+	childElement.setAttribute("class", "web-developer-name");
+	element.appendChild(childElement);
+	tableContainer.appendChild(element);
+
+	childElement = document.createElement("td");
+	element			 = document.createElement("tr");
+
+	childElement.appendChild(document.createTextNode(locale.value));
+	element.appendChild(childElement);
+
+	childElement = document.createElement("td");
+
+	childElement.appendChild(document.createTextNode(cookie.value));
+	childElement.setAttribute("class", "web-developer-value");
+	element.appendChild(childElement);
+	tableContainer.appendChild(element);
+
+	childElement = document.createElement("td");
+	element			 = document.createElement("tr");
+
+	childElement.appendChild(document.createTextNode(locale.host));
+	element.appendChild(childElement);
+
+	childElement = document.createElement("td");
+
+	childElement.appendChild(document.createTextNode(cookie.host));
+	childElement.setAttribute("class", "web-developer-host");
+	element.appendChild(childElement);
+	tableContainer.appendChild(element);
+
+	childElement = document.createElement("td");
+	element			 = document.createElement("tr");
+
+	childElement.appendChild(document.createTextNode(locale.path));
+	element.appendChild(childElement);
+
+	childElement = document.createElement("td");
+
+	childElement.appendChild(document.createTextNode(cookie.path));
+	childElement.setAttribute("class", "web-developer-path");
+	element.appendChild(childElement);
+	tableContainer.appendChild(element);
+
+	childElement = document.createElement("td");
+	element			 = document.createElement("tr");
+
+	childElement.appendChild(document.createTextNode(locale.expires));
+	element.appendChild(childElement);
+
+	childElement = document.createElement("td");
+
+	childElement.appendChild(document.createTextNode(expiresDescription));
+	childElement.setAttribute("class", "web-developer-expires");
+	element.appendChild(childElement);
+	tableContainer.appendChild(element);
+
+	childElement = document.createElement("td");
+	element			 = document.createElement("tr");
+
+	childElement.appendChild(document.createTextNode(locale.secure));
+	element.appendChild(childElement);
+
+	childElement = document.createElement("td");
+
+	childElement.appendChild(document.createTextNode(secureDescription));
+	childElement.setAttribute("class", "web-developer-secure");
+	element.appendChild(childElement);
+	tableContainer.appendChild(element);
+
+	childElement = document.createElement("td");
+	element			 = document.createElement("tr");
+
+	childElement.appendChild(document.createTextNode(locale.httpOnly));
+	element.appendChild(childElement);
+
+	childElement = document.createElement("td");
+
+	childElement.appendChild(document.createTextNode(httpOnlyDescription));
+	element.appendChild(childElement);
+	tableContainer.appendChild(element);
+
+	table.appendChild(tableContainer);
+	table.setAttribute("class", "table table-bordered table-striped");
+	cookieElement.appendChild(table);
+	cookieElement.appendChild(WebDeveloper.Generated.generateCommands(cookie, locale));
+	container.appendChild(cookieElement);
+	separator.setAttribute("class", "web-developer-separator");
+	container.appendChild(separator);
+	document.getElementById("content").appendChild(container);
+
+	childElement = document.createElement("a");
+	element			 = document.createElement("li");
+
+	childElement.appendChild(document.createTextNode(cookieName));
+	childElement.setAttribute("href", "#cookie-" + cookiesCounter);
+	element.appendChild(childElement);
+	$(".dropdown-menu", $("#cookies-dropdown")).get(0).appendChild(element);
 };
 
 // Edits a cookie
@@ -54,6 +212,7 @@ WebDeveloper.Generated.editCookie = function()
 	// If the dialog is valid
 	if(WebDeveloper.Generated.validateEditDialog())
 	{
+		var alert			= document.createElement("div");
 		var newCookie = WebDeveloper.Generated.populateCookieFromDialog();
 		var oldCookie = WebDeveloper.Generated.populateCookieFromElement(WebDeveloper.Generated.cookie);
 
@@ -61,7 +220,10 @@ WebDeveloper.Generated.editCookie = function()
 		WebDeveloper.Cookies.addCookie(newCookie);
 		WebDeveloper.Generated.populateElementFromCookie(WebDeveloper.Generated.cookie, newCookie);
 
-		WebDeveloper.Generated.cookie.prepend('<div class="alert alert-success">' + WebDeveloper.Generated.storedLocale.cookieEdited.replace("%S", "<strong>" + oldCookie.name + "</strong>") + "</div>");
+		alert.appendChild(document.createTextNode(WebDeveloper.Generated.storedLocale.cookieEdited.replace("%S", "'" + oldCookie.name + "'")));
+		alert.setAttribute("class", "alert alert-success");
+
+		WebDeveloper.Generated.cookie.prepend(alert);
 		$("#edit-dialog").modal("hide");
 	}
 };
@@ -69,24 +231,45 @@ WebDeveloper.Generated.editCookie = function()
 // Generates the commands
 WebDeveloper.Generated.generateCommands = function(cookie, locale)
 {
-	var commands	 = "";
-	var cookieHost = cookie.host;
+	var childElement = document.createElement("i");
+	var commands		 = document.createDocumentFragment();
+	var cookieHost	 = cookie.host;
+	var element			 = document.createElement("button");
 
-	commands += '<button class="web-developer-delete btn btn-danger"><i class="icon-trash"></i> ' + locale.deleteConfirmation + "</button>";
+	childElement.setAttribute("class", "icon-trash");
+	element.appendChild(childElement);
+	element.appendChild(document.createTextNode(" " + locale.deleteConfirmation));
+	element.setAttribute("class", "web-developer-delete btn btn-danger");
+	commands.appendChild(element);
+
+	childElement = document.createElement("i");
+	element			 = document.createElement("button");
+
+	childElement.setAttribute("class", "icon-pencil");
+	element.appendChild(childElement);
+	element.appendChild(document.createTextNode(" " + locale.edit));
 
 	// If the cookie is HTTP onlu
 	if(cookie.httpOnly)
 	{
-		commands += '<button class="web-developer-edit btn" data-content="' + locale.cannotEditHTTPOnlyCookies + '" data-title="' + locale.cannotEdit + '" data-trigger="manual"><i class="icon-pencil"></i> ' + locale.edit + "</button>";
+		element.setAttribute("class", "web-developer-edit btn");
+		element.setAttribute("data-content", locale.cannotEditHTTPOnlyCookies);
+		element.setAttribute("data-title", locale.cannotEdit);
+		element.setAttribute("data-trigger", "manual");
 	}
 	else if(!WebDeveloper.Cookies.canEditLocalCookie() && (cookieHost == "localhost" || cookieHost == ".localhost"))
 	{
-		commands += '<button class="web-developer-edit btn" data-content=' + "'" + locale.cannotEditLocalhostCookies + "'" + ' data-title="' + locale.cannotEdit + '" data-trigger="manual"><i class="icon-pencil"></i> ' + locale.edit + "</button>";
+		element.setAttribute("class", "web-developer-edit btn");
+		element.setAttribute("data-content", locale.cannotEditLocalhostCookies);
+		element.setAttribute("data-title", locale.cannotEdit);
+		element.setAttribute("data-trigger", "manual");
 	}
 	else
 	{
-		commands += '<button class="web-developer-edit btn btn-primary"><i class="icon-pencil"></i> ' + locale.edit + "</button>";
+		element.setAttribute("class", "web-developer-edit btn btn-primary");
 	}
+
+	commands.appendChild(element);
 
 	return commands;
 };
@@ -94,28 +277,17 @@ WebDeveloper.Generated.generateCommands = function(cookie, locale)
 // Initializes the page with data
 WebDeveloper.Generated.initialize = function(data, locale)
 {
-	var container						= null;
-	var content							= $("#content");
-	var contentDocument			= null;
-	var cookieInformation		= locale.cookieInformation;
-	var documents						= data.documents;
-	var cookie							= null;
-	var cookieDescription		= null;
-	var cookieElement				= null;
-	var cookieExpires				= null;
-	var cookieName					= null;
-	var cookies							= null;
-	var cookiesCounter			= 1;
-	var cookiesDropdown			= $("#cookies-dropdown");
-	var cookiesDropdownMenu = $(".dropdown-menu", cookiesDropdown);
-	var cookiesLength				= null;
-	var deleteDialog				= $("#delete-dialog");
-	var editDialog					= $("#edit-dialog");
-	var expiresDescription	= null;
-	var httpOnlyDescription = null;
-	var secureDescription		= null;
-	var table								= null;
-	var tableBody						= null;
+	var container					= null;
+	var contentDocument		= null;
+	var cookieInformation	= locale.cookieInformation;
+	var documents					= data.documents;
+	var cookieDescription	= null;
+	var cookies						= null;
+	var cookiesCounter		= 1;
+	var cookiesDropdown		= $("#cookies-dropdown");
+	var cookiesLength			= null;
+	var deleteDialog			= $("#delete-dialog");
+	var editDialog				= $("#edit-dialog");
 
 	WebDeveloper.Generated.emptyContent();
 	WebDeveloper.Generated.localizeHeader(locale);
@@ -147,51 +319,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
 			// Loop through the cookies
 			for(var j = 0; j < cookiesLength; j++)
 			{
-				cookie							= cookies[j];
-				cookieElement				= $('<div id="cookie-' + cookiesCounter + '" class="web-developer-cookie"></div>');
-				cookieExpires				= cookie.expires;
-				cookieName					= cookie.name;
-				expiresDescription	= locale.atEndOfSession;
-				httpOnlyDescription = locale.no;
-				secureDescription		= locale.no;
-				table								= $('<table class="table table-bordered table-striped"></table>');
-				tableBody						= $("<tbody></tbody>");
-
-				table.append('<thead><tr><th>' + locale.property + '</th><th>' + locale.value + '</th></tr></thead>');
-				tableBody.append('<tr><td>' + locale.name + '</td><td class="web-developer-name">' + cookieName + '</td></tr>');
-				tableBody.append('<tr><td>' + locale.value + '</td><td class="web-developer-value">' + cookie.value + '</td></tr>');
-				tableBody.append('<tr><td>' + locale.host + '</td><td class="web-developer-host">' + cookie.host + '</td></tr>');
-				tableBody.append('<tr><td>' + locale.path + '</td><td class="web-developer-path">' + cookie.path + '</td></tr>');
-
-				// If the cookie has an expiration
-				if(cookieExpires)
-				{
-					expiresDescription = new Date(cookieExpires * 1000).toUTCString();
-				}
-
-				tableBody.append('<tr><td>' + locale.expires + '</td><td class="web-developer-expires">' + expiresDescription + '</td></tr>');
-
-				// If the cookie is secure
-				if(cookie.secure)
-				{
-					secureDescription = locale.yes;
-				}
-
-				tableBody.append('<tr><td>' + locale.secure + '</td><td class="web-developer-secure">' + secureDescription + '</td></tr>');
-
-				// If the cookie is HttpOnly
-				if(cookie.httpOnly)
-				{
-					httpOnlyDescription = locale.yes;
-				}
-
-				tableBody.append('<tr><td>' + locale.httpOnly + '</td><td>' + httpOnlyDescription + '</td></tr>');
-
-				table.append(tableBody);
-				cookieElement.append(table).append(WebDeveloper.Generated.generateCommands(cookie, locale));
-				container.append(cookieElement).append('<div class="web-developer-separator"></div>');
-				content.append(container);
-				cookiesDropdownMenu.append('<li><a href="#cookie-' + cookiesCounter + '">' + cookieName + "</a></li>");
+				WebDeveloper.Generated.displayCookie(cookies[j], container, cookiesCounter, locale);
 
 				cookiesCounter++;
 			}
@@ -208,15 +336,15 @@ WebDeveloper.Generated.initialize = function(data, locale)
 	$("#cookie-session").after(locale.sessionCookie).on("change", WebDeveloper.Generated.changeSession);
 	$(".btn-danger", deleteDialog).append(locale.deleteLabel).on("click", WebDeveloper.Generated.deleteCookie);
 	$(".btn-primary", editDialog).append(locale.save).on("click", WebDeveloper.Generated.editCookie);
-	$('button[data-dismiss="modal"]', deleteDialog).html(locale.cancel);
-	$('button[data-dismiss="modal"]', editDialog).html(locale.cancel);
+	$('button[data-dismiss="modal"]', deleteDialog).text(locale.cancel);
+	$('button[data-dismiss="modal"]', editDialog).text(locale.cancel);
 	$(".web-developer-delete").on("click", WebDeveloper.Generated.showDeleteDialog);
 	$(".web-developer-edit").on("click", WebDeveloper.Generated.clickEdit);
-	$('[for="cookie-expires"]').html(locale.expires);
-	$('[for="cookie-host"]').html(locale.host);
-	$('[for="cookie-name"]').html(locale.name);
-	$('[for="cookie-path"]').html(locale.path);
-	$('[for="cookie-value"]').html(locale.value);
+	$('[for="cookie-expires"]').text(locale.expires);
+	$('[for="cookie-host"]').text(locale.host);
+	$('[for="cookie-name"]').text(locale.name);
+	$('[for="cookie-path"]').text(locale.path);
+	$('[for="cookie-value"]').text(locale.value);
 
 	WebDeveloper.Generated.initializeCommonElements();
 };
@@ -336,7 +464,7 @@ WebDeveloper.Generated.populateElementFromCookie = function(cookieElement, cooki
 WebDeveloper.Generated.resetEditDialog = function(editDialog)
 {
 	$(".error", editDialog).removeClass("error");
-	$(".help-inline", editDialog).html("");
+	$(".help-inline", editDialog).text("");
 };
 
 // Shows the delete cookie dialog
@@ -350,8 +478,8 @@ WebDeveloper.Generated.showDeleteDialog = function()
 
 	$(".alert").remove();
 
-	$("h3", deleteDialog).html(WebDeveloper.Generated.storedLocale.deleteCookie);
-	$("p", deleteDialog).html(WebDeveloper.Generated.storedLocale.deleteCookieConfirmation.replace("%S", "<strong>" + cookieName + "</strong>"));
+	$("h3", deleteDialog).text(WebDeveloper.Generated.storedLocale.deleteCookie);
+	$("p", deleteDialog).text(WebDeveloper.Generated.storedLocale.deleteCookieConfirmation.replace("%S", "'" + cookieName + "'"));
 
 	deleteDialog.modal("show");
 };
@@ -365,7 +493,7 @@ WebDeveloper.Generated.showEditDialog = function(cookieElement)
 
 	$(".alert").remove();
 
-	$("h3", editDialog).html(WebDeveloper.Generated.storedLocale.editCookie);
+	$("h3", editDialog).text(WebDeveloper.Generated.storedLocale.editCookie);
 	WebDeveloper.Generated.populateDialogFromElement(cookieElement);
 	WebDeveloper.Generated.resetEditDialog(editDialog);
 
@@ -386,7 +514,7 @@ WebDeveloper.Generated.validateEditDialog = function()
 	// If the cookie name is not set
 	if(!name.val())
 	{
-		name.next().html(WebDeveloper.Generated.storedLocale.nameCannotBeEmpty);
+		name.next().text(WebDeveloper.Generated.storedLocale.nameCannotBeEmpty);
 		name.closest(".control-group").addClass("error");
 
 		valid = false;
@@ -395,7 +523,7 @@ WebDeveloper.Generated.validateEditDialog = function()
 	// If the cookie host is not set
 	if(!host.val())
 	{
-		host.next().html(WebDeveloper.Generated.storedLocale.hostCannotBeEmpty);
+		host.next().text(WebDeveloper.Generated.storedLocale.hostCannotBeEmpty);
 		host.closest(".control-group").addClass("error");
 
 		valid = false;
@@ -404,7 +532,7 @@ WebDeveloper.Generated.validateEditDialog = function()
 	// If the cookie path is not set
 	if(!path.val())
 	{
-		path.next().html(WebDeveloper.Generated.storedLocale.pathCannotBeEmpty);
+		path.next().text(WebDeveloper.Generated.storedLocale.pathCannotBeEmpty);
 		path.closest(".control-group").addClass("error");
 
 		valid = false;
@@ -413,19 +541,19 @@ WebDeveloper.Generated.validateEditDialog = function()
 	// If the cookie is not a session cookie
 	if(!$("#cookie-session").prop("checked"))
 	{
-		var expiresValue = WebDeveloper.Common.trim(expires.val());
+		var expiresValue = expires.val().trim();
 
 		// If the cookie expires is not set
 		if(!expiresValue)
 		{
-			expires.next().html(WebDeveloper.Generated.storedLocale.expiresCannotBeEmpty);
+			expires.next().text(WebDeveloper.Generated.storedLocale.expiresCannotBeEmpty);
 			expires.closest(".control-group").addClass("error");
 
 			valid = false;
 		}
 		else if(new Date(expiresValue) == "Invalid Date")
 		{
-			expires.next().html(WebDeveloper.Generated.storedLocale.expiresNotValid);
+			expires.next().text(WebDeveloper.Generated.storedLocale.expiresNotValid);
 			expires.closest(".control-group").addClass("error");
 
 			valid = false;

@@ -5,13 +5,16 @@ WebDeveloper.Generated = WebDeveloper.Generated || {};
 // Initializes the page with data
 WebDeveloper.Generated.initialize = function(data, locale)
 {
+	var childElement				= null;
+	var content							= document.getElementById("content");
 	var contentDocument			= null;
 	var documents						= data.documents;
+	var element							= null;
 	var metaTagDescription	= null;
 	var metaTagsDescription = locale.metaTags;
 	var metaTagsLength			= null;
 	var table								= null;
-	var tableBody						= null;
+	var tableContainer			= null;
 
 	WebDeveloper.Generated.emptyContent();
 	WebDeveloper.Generated.localizeHeader(locale);
@@ -35,13 +38,27 @@ WebDeveloper.Generated.initialize = function(data, locale)
 		// If there are meta tags
 		if(metaTagsLength > 0)
 		{
-			table			= $('<table class="table table-bordered table-striped"></table>');
-			tableBody = $("<tbody></tbody>");
+			childElement	 = document.createElement("th");
+			element				 = document.createElement("tr");
+			table					 = document.createElement("table");
+			tableContainer = document.createElement("thead");
 
-			table.append("<thead><tr><th>" + locale.name + "</th><th>" + locale.content + "</th></tr></thead>");
-			tableBody.append(ich.metaTags(contentDocument));
-			table.append(tableBody);
-			$("#content").append(table);
+			childElement.appendChild(document.createTextNode(locale.name));
+			element.appendChild(childElement);
+
+			childElement = document.createElement("th");
+
+			childElement.appendChild(document.createTextNode(locale.content));
+			element.appendChild(childElement);
+			tableContainer.appendChild(element);
+			table.setAttribute("class", "table table-bordered table-striped");
+			table.appendChild(tableContainer);
+
+			tableContainer = document.createElement("tbody");
+
+			$(tableContainer).append(ich.metaTags(contentDocument));
+			table.appendChild(tableContainer);
+			content.appendChild(table);
 		}
 
 		WebDeveloper.Generated.addSeparator();

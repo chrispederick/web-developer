@@ -11,13 +11,25 @@ WebDeveloper.ElementAncestors.createToolbar = function(contentDocument)
 // Displays the ancestors of an element
 WebDeveloper.ElementAncestors.displayElementAncestors = function(element)
 {
-	WebDeveloper.Common.getMainWindow().document.getElementById("web-developer-element-ancestors-browser").contentDocument.defaultView.WebDeveloper.Generated.populateAncestors(WebDeveloper.ElementAncestors.getAncestorInformation(element));
+	var contentDocument = WebDeveloper.Common.getMainWindow().document.getElementById("web-developer-element-ancestors-browser").contentDocument;
+
+	contentDocument.defaultView.WebDeveloper.Generated.populateAncestors(WebDeveloper.ElementAncestors.getAncestorInformation(element, contentDocument));
 };
 
 // Generates ancestor information for an element
-WebDeveloper.ElementAncestors.generateAncestorInformation = function(element)
+WebDeveloper.ElementAncestors.generateAncestorInformation = function(element, contentDocument)
 {
-	return '<div id="web-developer-ancestors"><button id="web-developer-copy-ancestor-path" class="btn btn-primary">' + WebDeveloper.Locales.getString("copyAncestorPath") + "</button>" + WebDeveloper.ElementAncestors.getAncestorInformation(element) + "</div>";
+	var ancestorInformation = contentDocument.createElement("div");
+	var buttonElement				= contentDocument.createElement("button");
+
+	buttonElement.appendChild(contentDocument.createTextNode(WebDeveloper.Locales.getString("copyAncestorPath")));
+	buttonElement.setAttribute("class", "btn btn-primary");
+	buttonElement.setAttribute("id", "web-developer-copy-ancestor-path");
+	ancestorInformation.appendChild(buttonElement);
+	ancestorInformation.appendChild(WebDeveloper.ElementAncestors.getAncestorInformation(element, contentDocument));
+	ancestorInformation.setAttribute("id", "web-developer-ancestors");
+
+	return ancestorInformation;
 };
 
 // Removes the element information toolbar

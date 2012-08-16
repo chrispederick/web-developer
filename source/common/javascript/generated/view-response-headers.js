@@ -1,14 +1,31 @@
 var WebDeveloper = WebDeveloper || {};
 
-WebDeveloper.Generated = WebDeveloper.Generated || {};
+WebDeveloper.Generated								= WebDeveloper.Generated || {};
+WebDeveloper.Generated.requestTimeout = 10000;
+
+// Displays the headers
+WebDeveloper.Generated.displayHeaders = function(url, headers, status, statusText)
+{
+	var childElement = document.createElement("a");
+	var content			 = document.getElementById("content");
+	var element			 = document.createElement("h2");
+
+	childElement.appendChild(document.createTextNode(url));
+	childElement.setAttribute("href", url);
+	element.appendChild(childElement);
+	content.appendChild(element);
+
+	element	= document.createElement("pre");
+
+	element.appendChild(document.createTextNode(headers + "\n" + status + " " + statusText));
+	content.appendChild(element);
+};
 
 // Initializes the page with data
 WebDeveloper.Generated.initialize = function(data, locale)
 {
-	var content			= $("#content");
-	var documentURL	= data.pageURL;
-	var headers			= null;
-	var request			= null;
+	var request	= null;
+	var url			= data.pageURL;
 
 	WebDeveloper.Generated.emptyContent();
 	WebDeveloper.Generated.localizeHeader(locale);
@@ -17,18 +34,28 @@ WebDeveloper.Generated.initialize = function(data, locale)
 	// Try to get the response headers
 	try
 	{
-		request = new XMLHttpRequest();
+		request					= new XMLHttpRequest();
+		request.timeout = WebDeveloper.Generated.requestTimeout;
 
-		request.open("get", documentURL, false);
+		request.onreadystatechange = function()
+		{
+			// If the request completed
+			if(request.readyState == 4)
+			{
+				WebDeveloper.Generated.displayHeaders(url, request.getAllResponseHeaders(), request.status, request.statusText);
+			}
+		};
+
+		request.ontimeout = function()
+		{
+			WebDeveloper.Generated.displayHeaders(url, locale.couldNotLoadResponseHeaders, "", "");
+		};
+
+		request.open("get", url);
 		request.send(null);
-
-		headers = request.getAllResponseHeaders();
 	}
 	catch(exception)
 	{
-		headers = locale.couldNotLoadResponseHeaders;
+		WebDeveloper.Generated.displayHeaders(url, locale.couldNotLoadResponseHeaders, "", "");
 	}
-
-	content.append('<h2><a href="' + documentURL + '">' + documentURL + "</a></h2>");
-	content.append("<pre>" + headers + "\n" + request.status + " " + request.statusText + "</pre>");
 };

@@ -36,6 +36,7 @@ WebDeveloper.Outline.outlineDeprecatedElements = function(documents)
 WebDeveloper.Outline.outlineExternalLinks = function(outline, documents)
 {
 	var contentDocument = null;
+	var hostName				= null;
 	var location				= null;
 	var protocol				= null;
 	var styleElement		= null;
@@ -49,11 +50,12 @@ WebDeveloper.Outline.outlineExternalLinks = function(outline, documents)
 		if(outline)
 		{
 			location		 = contentDocument.location;
+			hostName		 = location.hostname.replace(/\./gi, "\\.");
 			protocol		 = location.protocol.replace(/:/gi, "\\:");
 			styleElement = contentDocument.createElement("style");
 
 			styleElement.setAttribute("id", "web-developer-outline-external-links");
-			styleElement.appendChild(contentDocument.createTextNode("a:not([href^=http\\:\\/\\/" + location.hostname.replace(/\\/gi, "\\.") + "]):not([href^=https\\:\\/\\/" + location.hostname.replace(/\\/gi, "\\.") + "]) { outline: 1px solid #f00 !important; }"));
+			styleElement.appendChild(contentDocument.createTextNode("a:not([href^=http\\:\\/\\/" + hostName + "]):not([href^=https\\:\\/\\/" + hostName + "]) { outline: 1px solid #f00 !important; }"));
 			styleElement.appendChild(contentDocument.createTextNode("a:not([href^=http\\:\\/\\/]):not([href^=https\\:\\/\\/]) { outline-style: none !important; }"));
 
 			WebDeveloper.Common.getDocumentHeadElement(contentDocument).appendChild(styleElement);
