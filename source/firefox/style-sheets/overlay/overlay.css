@@ -7,9 +7,9 @@
 #web-developer-dashboard-splitter.right { border-left-width: 1px; }
 #web-developer-dashboard-splitter.top { border-bottom-width: 1px; }
 #web-developer-dashboard-tab-box { margin: 0; }
-#web-developer-dashboard-tab-panels { -moz-appearance: none; padding: 0; }
+#web-developer-dashboard-tab-panels { -webkit-appearance: none; -moz-appearance: none; padding: 0; }
 #web-developer-dashboard-tabs { padding: 0; }
-#web-developer-dashboard-tabs > .tabs-left, #web-developer-dashboard-tabs > .tabs-right { -moz-box-flex: 0; }
+#web-developer-dashboard-tabs > .tabs-left, #web-developer-dashboard-tabs > .tabs-right { -webkit-box-flex: 0; -ms-box-flex: 0; -moz-box-flex: 0; box-flex: 0; }
 #web-developer-dashboard-tabs > .tabs-right { display: none; }
 
 /* Feature toolbar styles */
@@ -21,7 +21,7 @@
 
 /* Element ancestors styles */
 
-#web-developer-element-ancestors-browser { border: 1px solid #999; -webkit-border-radius: 3px; border-radius: 3px; height: 28px; }
+#web-developer-element-ancestors-browser { border: 1px solid #999; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; height: 28px; }
 
 /* Line guide styles */
 

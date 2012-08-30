@@ -1,5 +1,3 @@
-/* Line guides styles */
-
 span { display: none; }
 #add-horizontal-line-guide { margin: 0 5px 0 20px; }
 #line-guide-position, #previous-line-guide-position { margin: 0 10px 0 5px; }

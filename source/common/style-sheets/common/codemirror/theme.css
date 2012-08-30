@@ -1,7 +1,7 @@
 /* Code theme styles */
 
-.CodeMirror { font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 12px; }
-.CodeMirror pre { line-height: 1.25em; }
+.CodeMirror { font-family: Monaco, Menlo, Consolas, "Courier New", monospace; font-size: 13px; }
+.CodeMirror pre { line-height: 20px; }
 .CodeMirror-gutter { border-style: none; }
 .CodeMirror-scroll { height: auto; }
 

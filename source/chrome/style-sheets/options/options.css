@@ -10,7 +10,7 @@
 
 @media (max-width: 979px)
 {
-	.navbar span.brand { padding-left: 20px; }
+  .navbar span.brand { padding-left: 20px; }
 }
 
 /* Tab styles */
@@ -25,13 +25,13 @@
 
 @media (max-width: 979px)
 {
-	.tabbable { margin-top: 0; }
+  .tabbable { margin-top: 0; }
 }
 
 /* Advanced styles */
 
-#advanced-options > .form-horizontal .control-label { width: 325px; }
-#advanced-options > .form-horizontal .controls { margin-left: 345px; }
+#advanced-options > .form-horizontal .control-label { width: 350px; }
+#advanced-options > .form-horizontal .controls { margin-left: 370px; }
 
 /* Color styles */
 

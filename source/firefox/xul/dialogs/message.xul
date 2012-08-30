@@ -7,9 +7,7 @@
   <script src="chrome://web-developer/content/dialogs/javascript/message.js"/>
 
   <vbox id="web-developer-message-details">
-    <box>
-      <description id="web-developer-message"/>
-    </box>
+    <description id="web-developer-message"/>
     <description id="web-developer-more-information" value="&webdeveloper.more.information;" onclick="WebDeveloper.Message.moreInformation()" class="url"/>
   </vbox>
 </dialog>

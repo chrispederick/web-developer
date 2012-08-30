@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE overlay SYSTEM "chrome://web-developer/locale/options/options.dtd">
 <overlay id="web-developer-options-keyboard-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	<prefpane id="web-developer-options-keyboard-pane" label="&webdeveloper.keyboard;">
+  <prefpane id="web-developer-options-keyboard-pane" label="&webdeveloper.keyboard;">
     <description value="&webdeveloper.keyboard.shortcuts.restart;"/>
     <description value="&webdeveloper.tools.keyboard.shortcuts;"/>
     <separator/>
@@ -11,16 +11,16 @@
         <listheader label="&webdeveloper.feature;"/>
         <listheader label="&webdeveloper.keyboard;"/>
       </listhead>
-      
+
       <listcols>
         <listcol flex="1"/>
         <listcol/>
       </listcols>
     </listbox>
 
-		<hbox>		
+    <hbox>
       <button label="&webdeveloper.add;" oncommand="WebDeveloper.Options.addKeyboardShortcut()"/>
-    	<button id="web-developer-edit-keyboard-shortcut" disabled="true" label="&webdeveloper.edit;" oncommand="WebDeveloper.Options.editKeyboardShortcut()"/>
+      <button id="web-developer-edit-keyboard-shortcut" disabled="true" label="&webdeveloper.edit;" oncommand="WebDeveloper.Options.editKeyboardShortcut()"/>
       <button id="web-developer-delete-keyboard-shortcut" disabled="true" label="&webdeveloper.delete;" oncommand="WebDeveloper.Options.deleteKeyboardShortcut()"/>
     </hbox>
   </prefpane>

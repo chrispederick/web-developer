@@ -9,20 +9,20 @@
   <script src="chrome://web-developer/content/options/dialogs/javascript/view-source-with.js"/>
   <script src="chrome://web-developer/content/preferences/preferences.js"/>
 
-	<stringbundleset>
-	  <stringbundle id="web-developer-platform-keys" src="chrome://global-platform/locale/platformKeys.properties"/>
-	  <stringbundle id="web-developer-string-bundle" src="chrome://web-developer/locale/options/options.properties"/>
-	</stringbundleset>
+  <stringbundleset>
+    <stringbundle id="web-developer-platform-keys" src="chrome://global-platform/locale/platformKeys.properties"/>
+    <stringbundle id="web-developer-string-bundle" src="chrome://web-developer/locale/options/options.properties"/>
+  </stringbundleset>
 
-	<prefpane id="web-developer-view-source-with-dialog-pane">
-  	<preferences id="web-developer-view-source-with-preferences"/>
-  		
+  <prefpane id="web-developer-view-source-with-dialog-pane">
+    <preferences id="web-developer-view-source-with-preferences"/>
+
     <grid>
       <columns>
         <column/>
         <column/>
       </columns>
-      
+
       <rows>
         <row align="center">
           <label control="web-developer-view-source-with-description" value="&webdeveloper.description.label;"/>
@@ -31,27 +31,27 @@
 
         <row align="center">
           <label control="web-developer-view-source-with-path" value="&webdeveloper.application.label;"/>
-	        <hbox align="center">
-	          <textbox id="web-developer-view-source-with-path" flex="1" preference="webdeveloper.view.source.with.path"/>
-	          <button label="&webdeveloper.choose;" oncommand="WebDeveloper.ViewSourceWith.chooseApplication()"/>
- 					</hbox>
+          <hbox align="center">
+            <textbox id="web-developer-view-source-with-path" flex="1" preference="webdeveloper.view.source.with.path"/>
+            <button label="&webdeveloper.choose;" oncommand="WebDeveloper.ViewSourceWith.chooseApplication()"/>
+          </hbox>
         </row>
 
         <row align="center">
           <label control="web-developer-view-source-with-key" value="&webdeveloper.keyboard.label;"/>
-	        <hbox align="center">
-	          <menulist id="web-developer-view-source-with-modifiers" preference="webdeveloper.view.source.with.modifiers">
-	          	<menupopup>
-	          		<menuitem id="web-developer-view-source-with-alt-shift" value="alt shift"/>
-	          		<menuitem id="web-developer-view-source-with-control-shift" value="control shift"/>
-	          		<menuitem id="web-developer-view-source-with-meta-shift" value="meta shift"/>
-	          	</menupopup>
-	          </menulist>
-	          <textbox id="web-developer-view-source-with-key" preference="webdeveloper.view.source.with.key" size="1"/>
-					</hbox>
+          <hbox align="center">
+            <menulist id="web-developer-view-source-with-modifiers" preference="webdeveloper.view.source.with.modifiers">
+              <menupopup>
+                <menuitem id="web-developer-view-source-with-alt-shift" value="alt shift"/>
+                <menuitem id="web-developer-view-source-with-control-shift" value="control shift"/>
+                <menuitem id="web-developer-view-source-with-meta-shift" value="meta shift"/>
+              </menupopup>
+            </menulist>
+            <textbox id="web-developer-view-source-with-key" preference="webdeveloper.view.source.with.key" size="1"/>
+          </hbox>
         </row>
       </rows>
     </grid>
-		<separator/>
-	</prefpane>
+    <separator/>
+  </prefpane>
 </prefwindow>

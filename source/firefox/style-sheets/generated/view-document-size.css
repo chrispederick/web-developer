@@ -1,6 +1,4 @@
-/* View document size styles */
-
-tbody > tr.odd { background-color: #f9f9f9; }
+tbody > .odd { background-color: #f9f9f9; }
 td:first-child { max-width: 500px; padding-left: 14px; word-wrap: break-word; }
 td:nth-child(2), td:nth-child(3), th:nth-child(2), th:nth-child(3) { text-align: right; width: 150px; white-space: nowrap; }
 #web-developer-total > td, .web-developer-section > td:first-child { font-weight: bold; }

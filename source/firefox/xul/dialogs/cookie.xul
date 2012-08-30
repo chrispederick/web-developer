@@ -40,11 +40,11 @@
           <textbox flex="1" id="web-developer-expires" size="35"/>
         </row>
         <row>
-        	<spacer/>
-		    	<vbox>
-				    <checkbox id="web-developer-session-cookie" label="&webdeveloper.session.cookie.label;" oncommand="WebDeveloper.Cookie.updateExpiryStatus()"/>
-				    <checkbox id="web-developer-secure-cookie" label="&webdeveloper.secure.cookie.label;"/>
-					</vbox>
+          <spacer/>
+          <vbox>
+            <checkbox id="web-developer-session-cookie" label="&webdeveloper.session.cookie.label;" oncommand="WebDeveloper.Cookie.updateExpiryStatus()"/>
+            <checkbox id="web-developer-secure-cookie" label="&webdeveloper.secure.cookie.label;"/>
+          </vbox>
         </row>
       </rows>
     </grid>

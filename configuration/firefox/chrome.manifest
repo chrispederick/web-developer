@@ -1,5 +1,8 @@
 content web-developer content/web-developer/ contentaccessible=yes
 locale web-developer en-US locale/en-US/
+locale web-developer fr-FR locale/fr-FR/
+locale web-developer pl-PL locale/pl-PL/
+locale web-developer sv-SE locale/sv-SE/
 overlay	chrome://browser/content/browser.xul chrome://web-developer/content/overlay/overlay.xul
 overlay	chrome://navigator/content/navigator.xul chrome://web-developer/content/overlay/overlay.xul
 skin web-developer classic/1.0 skin/default/

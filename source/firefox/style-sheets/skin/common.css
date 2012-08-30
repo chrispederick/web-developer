@@ -61,7 +61,7 @@
 
 /* Menu item icons */
 
-#web-developer-context menuitem.menuitem-iconic, #web-developer-menu menuitem.menuitem-iconic, #web-developer-seamonkey menuitem.menuitem-iconic, #web-developer-toolbar menuitem.menuitem-iconic, #web-developer-toolbar-button menuitem.menuitem-iconic { list-style-image: url(chrome://web-developer/skin/disabled.png); }
+#web-developer-button.color menuitem.menuitem-iconic, #web-developer-context menuitem.menuitem-iconic, #web-developer-menu menuitem.menuitem-iconic, #web-developer-seamonkey menuitem.menuitem-iconic, #web-developer-toolbar menuitem.menuitem-iconic { list-style-image: url(chrome://web-developer/skin/disabled.png); }
 
 /* Feature toolbar buttons */
 

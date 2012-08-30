@@ -8,8 +8,8 @@
   <script src="chrome://web-developer/content/options/dialogs/javascript/responsive-layout.js"/>
   <script src="chrome://web-developer/content/preferences/preferences.js"/>
 
-	<prefpane id="web-developer-responsive-layout-dialog-pane">
-  	<preferences id="web-developer-responsive-layout-preferences"/>
+  <prefpane id="web-developer-responsive-layout-dialog-pane">
+    <preferences id="web-developer-responsive-layout-preferences"/>
 
     <grid>
       <columns>
@@ -26,20 +26,20 @@
         <row align="center">
           <label control="web-developer-responsive-layout-width" value="&webdeveloper.width.label;"/>
           <hbox align="center">
-	          <textbox id="web-developer-responsive-layout-width" preference="webdeveloper.responsive.layout.width" size="5"/>
+            <textbox id="web-developer-responsive-layout-width" preference="webdeveloper.responsive.layout.width" size="5"/>
             <spacer flex="1"/>
-	        </hbox>
+          </hbox>
         </row>
 
         <row align="center">
           <label control="web-developer-responsive-layout-height" value="&webdeveloper.height.label;"/>
           <hbox align="center">
-	          <textbox id="web-developer-responsive-layout-height" preference="webdeveloper.responsive.layout.height" size="5"/>
+            <textbox id="web-developer-responsive-layout-height" preference="webdeveloper.responsive.layout.height" size="5"/>
             <spacer flex="1"/>
-	        </hbox>
+          </hbox>
         </row>
       </rows>
     </grid>
-		<separator/>
-	</prefpane>
+    <separator/>
+  </prefpane>
 </prefwindow>

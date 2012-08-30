@@ -2,15 +2,15 @@
 <html id="web-developer-options" lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<title>@name@</title>
-	<link href="options.css" rel="stylesheet">
-	<link href="images/favicon.png" rel="shortcut icon">
+  <meta charset="utf-8">
+  <title>@name@</title>
+  <link href="options.css" rel="stylesheet">
+  <link href="images/favicon.png" rel="shortcut icon">
 </head>
 
 <body>
 
-<div class="navbar navbar-fixed-top">
+<div class="navbar navbar-fixed-top navbar-inverse">
   <div class="navbar-inner">
     <div class="container-fluid">
       <span class="brand">@name@</span>
@@ -20,290 +20,290 @@
 </div>
 
 <div id="content" class="container-fluid">
-	<div class="tabbable">
-	  <ul class="nav nav-tabs">
-			<li id="colors-tab" class="active"><a href="#colors-options" data-toggle="tab"><span></span></a></li>
-			<li id="resize-tab"><a href="#resize-options" data-toggle="tab"><span></span></a></li>
-			<li id="responsive-layouts-tab"><a href="#responsive-layouts-options" data-toggle="tab"><span></span></a></li>
-			<li id="tools-tab"><a href="#tools-options" data-toggle="tab"><span></span></a></li>
-			<li id="advanced-tab"><a href="#advanced-options" data-toggle="tab"><span></span></a></li>
-	  </ul>
+  <div class="tabbable">
+    <ul class="nav nav-tabs">
+      <li id="colors-tab" class="active"><a href="#colors-options" data-toggle="tab"><span></span></a></li>
+      <li id="resize-tab"><a href="#resize-options" data-toggle="tab"><span></span></a></li>
+      <li id="responsive-layouts-tab"><a href="#responsive-layouts-options" data-toggle="tab"><span></span></a></li>
+      <li id="tools-tab"><a href="#tools-options" data-toggle="tab"><span></span></a></li>
+      <li id="advanced-tab"><a href="#advanced-options" data-toggle="tab"><span></span></a></li>
+    </ul>
 
-	  <div class="tab-content">
-	    <div id="colors-options" class="tab-pane active">
-				<form class="form-horizontal">
-					<div class="control-group">
-						<label for="syntax_highlight_theme" class="control-label"></label>
-						<div class="controls">
-							<select id="syntax_highlight_theme">
-								<option value="dark"></option>
-								<option value="light"></option>
-								<option value="none"></option>
-							</select>
-						</div>
-					</div>
-				</form>
+    <div class="tab-content">
+      <div id="colors-options" class="tab-pane active">
+        <form class="form-horizontal">
+          <div class="control-group">
+            <label for="syntax_highlight_theme" class="control-label"></label>
+            <div class="controls">
+              <select id="syntax_highlight_theme">
+                <option value="dark"></option>
+                <option value="light"></option>
+                <option value="none"></option>
+              </select>
+            </div>
+          </div>
+        </form>
 
-				<p></p>
-				<iframe id="syntax-highlight-browser" src="syntax-highlight.html" width="600" height="150"></iframe>
-			</div>
+        <p></p>
+        <iframe id="syntax-highlight-browser" src="syntax-highlight.html" width="600" height="150"></iframe>
+      </div>
 
-	    <div id="resize-options" class="tab-pane">
-	    	<div class="table-container">
-		    	<div class="row">
-		    		<div class="span10">
-				    	<table class="table table-bordered table-striped">
-				    		<thead>
-				    			<tr>
-				    				<th></th>
-				    				<th></th>
-				    				<th></th>
-				    				<th></th>
-				    				<th></th>
-				    			</tr>
-				    		</thead>
-				    		<tbody></tbody>
-				    	</table>
-				    </div>
+      <div id="resize-options" class="tab-pane">
+        <div class="table-container">
+          <div class="row">
+            <div class="span10">
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
 
-				    <div class="span2 muted"></div>
-				  </div>
+            <div class="span2 muted"></div>
+          </div>
 
-		    	<button class="btn btn-primary"><i class="icon-plus"></i> </button>
-		    </div>
+          <button class="btn btn-primary"><i class="icon-plus"></i> </button>
+        </div>
 
-		    <form id="resize-form" class="form-horizontal">
-					<fieldset>
-						<legend></legend>
+        <form id="resize-form" class="form-horizontal">
+          <fieldset>
+            <legend></legend>
 
-						<div class="control-group">
-							<label for="resize-description" class="control-label"></label>
-							<div class="controls">
-								<div class="input-prepend">
-									<span class="add-on"><i class="icon-pencil"></i></span><input id="resize-description" type="text" class="span3">
-								</div>
-								<span class="help-inline"></span>
-							</div>
-						</div>
+            <div class="control-group">
+              <label for="resize-description" class="control-label"></label>
+              <div class="controls">
+                <div class="input-prepend">
+                  <span class="add-on"><i class="icon-pencil"></i></span><input id="resize-description" type="text" class="span3">
+                </div>
+                <span class="help-inline"></span>
+              </div>
+            </div>
 
-						<div class="control-group">
-							<label for="resize-width" class="control-label"></label>
-							<div class="controls">
-								<div class="input-prepend">
-									<span class="add-on"><i class="icon-resize-horizontal"></i></span><input id="resize-width" type="text" class="span3">
-								</div>
-								<span class="help-inline"></span>
-							</div>
-						</div>
+            <div class="control-group">
+              <label for="resize-width" class="control-label"></label>
+              <div class="controls">
+                <div class="input-prepend">
+                  <span class="add-on"><i class="icon-resize-horizontal"></i></span><input id="resize-width" type="text" class="span3">
+                </div>
+                <span class="help-inline"></span>
+              </div>
+            </div>
 
-						<div class="control-group">
-							<label for="resize-height" class="control-label"></label>
-							<div class="controls">
-								<div class="input-prepend">
-									<span class="add-on"><i class="icon-resize-vertical"></i></span><input id="resize-height" type="text" class="span3">
-								</div>
-								<span class="help-inline"></span>
-							</div>
-						</div>
+            <div class="control-group">
+              <label for="resize-height" class="control-label"></label>
+              <div class="controls">
+                <div class="input-prepend">
+                  <span class="add-on"><i class="icon-resize-vertical"></i></span><input id="resize-height" type="text" class="span3">
+                </div>
+                <span class="help-inline"></span>
+              </div>
+            </div>
 
-						<div class="form-actions">
-					    <button id="resize-cancel" class="btn"></button>
-					    <button id="resize-submit" class="btn btn-primary"><i class="icon-ok"></i> <span></span></button>
-					  </div>
-					</fieldset>
-		    </form>
-			</div>
+            <div class="form-actions">
+              <button id="resize-cancel" class="btn"></button>
+              <button id="resize-submit" class="btn btn-primary"><i class="icon-ok"></i> <span></span></button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
 
-	    <div id="responsive-layouts-options" class="tab-pane">
-	    	<div class="table-container">
-		    	<div class="row">
-		    		<div class="span10">
-				    	<table class="table table-bordered table-striped">
-				    		<thead>
-				    			<tr>
-				    				<th></th>
-				    				<th></th>
-				    				<th></th>
-				    				<th></th>
-				    			</tr>
-				    		</thead>
-				    		<tbody></tbody>
-				    	</table>
-				    </div>
+      <div id="responsive-layouts-options" class="tab-pane">
+        <div class="table-container">
+          <div class="row">
+            <div class="span10">
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
 
-				    <div class="span2 muted"></div>
-				  </div>
+            <div class="span2 muted"></div>
+          </div>
 
-		    	<button class="btn btn-primary"><i class="icon-plus"></i> </button>
-		    </div>
+          <button class="btn btn-primary"><i class="icon-plus"></i> </button>
+        </div>
 
-		    <form id="responsive-layout-form" class="form-horizontal">
-					<fieldset>
-						<legend></legend>
+        <form id="responsive-layout-form" class="form-horizontal">
+          <fieldset>
+            <legend></legend>
 
-						<div class="control-group">
-							<label for="responsive-layout-description" class="control-label"></label>
-							<div class="controls">
-								<div class="input-prepend">
-									<span class="add-on"><i class="icon-pencil"></i></span><input id="responsive-layout-description" type="text" class="span3">
-								</div>
-								<span class="help-inline"></span>
-							</div>
-						</div>
+            <div class="control-group">
+              <label for="responsive-layout-description" class="control-label"></label>
+              <div class="controls">
+                <div class="input-prepend">
+                  <span class="add-on"><i class="icon-pencil"></i></span><input id="responsive-layout-description" type="text" class="span3">
+                </div>
+                <span class="help-inline"></span>
+              </div>
+            </div>
 
-						<div class="control-group">
-							<label for="responsive-layout-width" class="control-label"></label>
-							<div class="controls">
-								<div class="input-prepend">
-									<span class="add-on"><i class="icon-resize-horizontal"></i></span><input id="responsive-layout-width" type="text" class="span3">
-								</div>
-								<span class="help-inline"></span>
-							</div>
-						</div>
+            <div class="control-group">
+              <label for="responsive-layout-width" class="control-label"></label>
+              <div class="controls">
+                <div class="input-prepend">
+                  <span class="add-on"><i class="icon-resize-horizontal"></i></span><input id="responsive-layout-width" type="text" class="span3">
+                </div>
+                <span class="help-inline"></span>
+              </div>
+            </div>
 
-						<div class="control-group">
-							<label for="responsive-layout-height" class="control-label"></label>
-							<div class="controls">
-								<div class="input-prepend">
-									<span class="add-on"><i class="icon-resize-vertical"></i></span><input id="responsive-layout-height" type="text" class="span3">
-								</div>
-								<span class="help-inline"></span>
-							</div>
-						</div>
+            <div class="control-group">
+              <label for="responsive-layout-height" class="control-label"></label>
+              <div class="controls">
+                <div class="input-prepend">
+                  <span class="add-on"><i class="icon-resize-vertical"></i></span><input id="responsive-layout-height" type="text" class="span3">
+                </div>
+                <span class="help-inline"></span>
+              </div>
+            </div>
 
-						<div class="form-actions">
-					    <button id="responsive-layout-cancel" class="btn"></button>
-					    <button id="responsive-layout-submit" class="btn btn-primary"><i class="icon-ok"></i> <span></span></button>
-					  </div>
-					</fieldset>
-		    </form>
-			</div>
+            <div class="form-actions">
+              <button id="responsive-layout-cancel" class="btn"></button>
+              <button id="responsive-layout-submit" class="btn btn-primary"><i class="icon-ok"></i> <span></span></button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
 
-	    <div id="tools-options" class="tab-pane">
-	    	<div class="table-container">
-		    	<div class="row">
-		    		<div class="span10">
-				    	<table class="table table-bordered table-striped">
-				    		<thead>
-				    			<tr>
-				    				<th></th>
-				    				<th></th>
-				    				<th></th>
-				    				<th></th>
-				    			</tr>
-				    		</thead>
-				    		<tbody></tbody>
-				    	</table>
-				    </div>
+      <div id="tools-options" class="tab-pane">
+        <div class="table-container">
+          <div class="row">
+            <div class="span10">
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
 
-				    <div class="span2 muted"></div>
-				  </div>
+            <div class="span2 muted"></div>
+          </div>
 
-		    	<button class="btn btn-primary"><i class="icon-plus"></i> </button>
-		    </div>
+          <button class="btn btn-primary"><i class="icon-plus"></i> </button>
+        </div>
 
-		    <form id="tool-form" class="form-horizontal">
-					<fieldset>
-						<legend></legend>
+        <form id="tool-form" class="form-horizontal">
+          <fieldset>
+            <legend></legend>
 
-						<div class="control-group">
-							<label for="tool-description" class="control-label"></label>
-							<div class="controls">
-								<div class="input-prepend">
-									<span class="add-on"><i class="icon-pencil"></i></span><input id="tool-description" type="text" class="span6">
-								</div>
-								<span class="help-inline"></span>
-							</div>
-						</div>
+            <div class="control-group">
+              <label for="tool-description" class="control-label"></label>
+              <div class="controls">
+                <div class="input-prepend">
+                  <span class="add-on"><i class="icon-pencil"></i></span><input id="tool-description" type="text" class="span6">
+                </div>
+                <span class="help-inline"></span>
+              </div>
+            </div>
 
-						<div class="control-group">
-							<label for="tool-url" class="control-label"></label>
-							<div class="controls">
-								<div class="input-prepend">
-									<span class="add-on"><i class="icon-link"></i></span><input id="tool-url" type="url" class="span6">
-								</div>
-								<span class="help-inline"></span>
-							</div>
-						</div>
+            <div class="control-group">
+              <label for="tool-url" class="control-label"></label>
+              <div class="controls">
+                <div class="input-prepend">
+                  <span class="add-on"><i class="icon-link"></i></span><input id="tool-url" type="url" class="span6">
+                </div>
+                <span class="help-inline"></span>
+              </div>
+            </div>
 
-						<div class="form-actions">
-					    <button id="tool-cancel" class="btn"></button>
-					    <button id="tool-submit" class="btn btn-primary"><i class="icon-ok"></i> <span></span></button>
-					  </div>
-					</fieldset>
-		    </form>
-			</div>
+            <div class="form-actions">
+              <button id="tool-cancel" class="btn"></button>
+              <button id="tool-submit" class="btn btn-primary"><i class="icon-ok"></i> <span></span></button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
 
-	    <div id="advanced-options" class="tab-pane">
-				<form class="form-horizontal">
-					<div class="control-group">
-						<label for="populate_email_address" class="control-label"></label>
-						<div class="controls">
-							<div class="input-prepend">
+      <div id="advanced-options" class="tab-pane">
+        <form class="form-horizontal">
+          <div class="control-group">
+            <label for="populate_email_address" class="control-label"></label>
+            <div class="controls">
+              <div class="input-prepend">
                 <span class="add-on"><i class="icon-envelope"></i></span><input id="populate_email_address" type="email">
               </div>
-						</div>
-					</div>
-				</form>
-			</div>
-	  </div>
-	</div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
-	<div id="delete-dialog" class="modal fade in">
-	  <div class="modal-header">
-	    <a class="close" data-dismiss="modal">&times;</a>
-	    <h3></h3>
-	  </div>
+  <div id="delete-dialog" class="modal fade in">
+    <div class="modal-header">
+      <a class="close" data-dismiss="modal">&times;</a>
+      <h3></h3>
+    </div>
 
-	  <div class="modal-body">
-	    <p></p>
-	  </div>
+    <div class="modal-body">
+      <p></p>
+    </div>
 
-	  <div class="modal-footer">
-	    <button class="btn" data-dismiss="modal"></button>
-	    <button class="btn btn-danger"><i class="icon-trash"></i> </button>
-	  </div>
-	</div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal"></button>
+      <button class="btn btn-danger"><i class="icon-trash"></i> </button>
+    </div>
+  </div>
 </div>
 
-<script src="javascript/jquery.js"></script>
+<script src="@jquery_prefix@/common/jquery.js"></script>
 <script src="javascript/options.js"></script>
 
 <script id="resizeOption" type="text/html">
-	<tr>
-		<td>{{description}}</td>
-		<td>{{width}}</td>
-		<td>{{height}}</td>
-		<td>{{keyboard}}</td>
-		<td>
-			<button class="btn btn-primary"><i class="icon-pencil"></i> <span></span></button>
-			<button class="btn btn-danger"><i class="icon-trash"></i> <span></span></button>
-		</td>
-	</tr>
+  <tr>
+    <td>{{description}}</td>
+    <td>{{width}}</td>
+    <td>{{height}}</td>
+    <td>{{keyboard}}</td>
+    <td>
+      <button class="btn btn-primary"><i class="icon-pencil"></i> <span></span></button>
+      <button class="btn btn-danger"><i class="icon-trash"></i> <span></span></button>
+    </td>
+  </tr>
 </script>
 
 <script id="responsiveLayout" type="text/html">
-	<tr>
-		<td>{{description}}</td>
-		<td>{{width}}</td>
-		<td>{{height}}</td>
-		<td>
-			<button class="btn btn-primary"><i class="icon-pencil"></i> <span></span></button>
-			<button class="btn btn-danger"><i class="icon-trash"></i> <span></span></button>
-		</td>
-	</tr>
+  <tr>
+    <td>{{description}}</td>
+    <td>{{width}}</td>
+    <td>{{height}}</td>
+    <td>
+      <button class="btn btn-primary"><i class="icon-pencil"></i> <span></span></button>
+      <button class="btn btn-danger"><i class="icon-trash"></i> <span></span></button>
+    </td>
+  </tr>
 </script>
 
 <script id="tool" type="text/html">
-	<tr>
-		<td>{{description}}</td>
-		<td>{{url}}</td>
-		<td>{{keyboard}}</td>
-		<td>
-			<button class="btn btn-primary"><i class="icon-pencil"></i> <span></span></button>
-			<button class="btn btn-danger"><i class="icon-trash"></i> <span></span></button>
-		</td>
-	</tr>
+  <tr>
+    <td>{{description}}</td>
+    <td>{{url}}</td>
+    <td>{{keyboard}}</td>
+    <td>
+      <button class="btn btn-primary"><i class="icon-pencil"></i> <span></span></button>
+      <button class="btn btn-danger"><i class="icon-trash"></i> <span></span></button>
+    </td>
+  </tr>
 </script>
 
 </body>

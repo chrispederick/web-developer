@@ -22,7 +22,6 @@
 <!ENTITY webdeveloper.advanced "Advanced">
 <!ENTITY webdeveloper.colors "Colors">
 <!ENTITY webdeveloper.general "General">
-<!ENTITY webdeveloper.keyboard "Keyboard">
 <!ENTITY webdeveloper.resize "Resize">
 <!ENTITY webdeveloper.responsive "Responsive">
 <!ENTITY webdeveloper.tools "Tools">
@@ -42,7 +41,8 @@
 <!ENTITY webdeveloper.light "Light">
 <!ENTITY webdeveloper.none "None">
 <!ENTITY webdeveloper.preview "Preview:">
-<!ENTITY webdeveloper.theme "Theme:">
+<!ENTITY webdeveloper.syntax.highlight.theme "Syntax highlighting theme:">
+<!ENTITY webdeveloper.toolbar.color "Display the toolbar icons in color">
 
 <!-- Keyboard pane -->
 <!ENTITY webdeveloper.feature "Feature">

@@ -1,82 +1,82 @@
 var WebDeveloper = WebDeveloper || {};
 
-WebDeveloper.EditCSS								 = WebDeveloper.EditCSS || {};
-WebDeveloper.EditCSS.updateFrequency = 250;
-window.WebDeveloperIntervals				 = window.WebDeveloperIntervals || {};
+WebDeveloper.EditCSS                 = WebDeveloper.EditCSS || {};
+WebDeveloper.EditCSS.contentDocument = null;
+WebDeveloper.EditCSS.interval        = null;
+WebDeveloper.EditCSS.updateFrequency = 500;
 
 // Applies the CSS
 WebDeveloper.EditCSS.applyCSS = function()
 {
-	var contentDocument  = WebDeveloper.Common.getContentDocument();
-	var headElement			 = WebDeveloper.Common.getDocumentHeadElement(contentDocument);
-	var styleBase				 = null;
-	var styleElement		 = null;
-	var styles					 = null;
-	var stylesContainer	 = null;
-	var stylesContainers = WebDeveloper.EditCSS.getStylesContainers();
-	var stylesUpdated		 = false;
+  var headElement      = WebDeveloper.Common.getDocumentHeadElement(WebDeveloper.EditCSS.contentDocument);
+  var styleBase        = null;
+  var styleElement     = null;
+  var styles           = null;
+  var stylesContainer  = null;
+  var stylesContainers = WebDeveloper.EditCSS.getStylesContainers();
+  var stylesUpdated    = false;
 
-	// Loop through the styles containers
-	for(var i = 0, l = stylesContainers.length; i < l; i++)
-	{
-		styleElement		= contentDocument.getElementById("web-developer-edit-css-styles-" + i);
-		stylesContainer	= stylesContainers[i];
-		styles					= WebDeveloper.EditCSS.getStylesFromContainer(stylesContainer);
+  // Loop through the styles containers
+  for(var i = 0, l = stylesContainers.length; i < l; i++)
+  {
+    styleElement    = WebDeveloper.EditCSS.contentDocument.getElementById("web-developer-edit-css-styles-" + i);
+    stylesContainer = stylesContainers[i];
+    styles          = WebDeveloper.EditCSS.getStylesFromContainer(stylesContainer);
 
-		// If the style element does not exist
-		if(!styleElement)
-		{
-			styleBase		 = stylesContainer.getAttribute("web-developer-base");
-			styleElement = contentDocument.createElement("style");
+    // If the style element does not exist
+    if(!styleElement)
+    {
+      styleBase    = stylesContainer.getAttribute("web-developer-base");
+      styleElement = WebDeveloper.EditCSS.contentDocument.createElement("style");
 
-			styleElement.setAttribute("id", "web-developer-edit-css-styles-" + i);
-			styleElement.setAttribute("class", "web-developer-edit-css-styles");
+      styleElement.setAttribute("id", "web-developer-edit-css-styles-" + i);
+      styleElement.setAttribute("class", "web-developer-edit-css-styles");
 
-			// If the style base is set
-			if(styleBase)
-			{
-				styleElement.setAttribute("xml:base", styleBase);
-			}
+      // If the style base is set
+      if(styleBase)
+      {
+        styleElement.setAttribute("xml:base", styleBase);
+      }
 
-			headElement.appendChild(styleElement);
-		}
+      headElement.appendChild(styleElement);
+    }
 
-		// If the styles have changed
-		if(styleElement.textContent != styles)
-		{
-			styleElement.textContent = styles;
-			stylesUpdated						 = true;
-		}
-	}
+    // If the styles have changed
+    if(styleElement.textContent != styles)
+    {
+      styleElement.textContent = styles;
+      stylesUpdated            = true;
+    }
+  }
 
-	return stylesUpdated;
+  return stylesUpdated;
 };
 
 // Resets a document
-WebDeveloper.EditCSS.resetDocument = function(contentDocument)
+WebDeveloper.EditCSS.resetDocument = function()
 {
-	WebDeveloper.Common.removeMatchingElements(".web-developer-edit-css-styles", contentDocument);
-	WebDeveloper.CSS.toggleAllStyleSheets(false, contentDocument);
+  WebDeveloper.Common.removeMatchingElements(".web-developer-edit-css-styles", WebDeveloper.EditCSS.contentDocument);
+  WebDeveloper.CSS.toggleAllStyleSheets(false, WebDeveloper.EditCSS.contentDocument);
 };
 
 // Stops the CSS updating
 WebDeveloper.EditCSS.stopUpdate = function()
 {
-	// If the interval id is set
-	if(window.WebDeveloperIntervals.editCSS)
-	{
-		window.clearInterval(window.WebDeveloperIntervals.editCSS);
+  // If the interval id is set
+  if(WebDeveloper.EditCSS.interval)
+  {
+    window.clearInterval(WebDeveloper.EditCSS.interval);
 
-		window.WebDeveloperIntervals.editCSS = null;
-	}
+    WebDeveloper.EditCSS.interval = null;
+  }
 };
 
 // Updates the CSS
-WebDeveloper.EditCSS.update = function(contentDocument)
+WebDeveloper.EditCSS.update = function()
 {
-	// If the update frequency is greater than 0
-	if(WebDeveloper.EditCSS.updateFrequency > 0)
-	{
-		window.WebDeveloperIntervals.editCSS = window.setInterval(WebDeveloper.EditCSS.apply, WebDeveloper.EditCSS.updateFrequency);
-	}
+  // If the update frequency is greater than 0
+  if(WebDeveloper.EditCSS.updateFrequency > 0)
+  {
+    WebDeveloper.EditCSS.interval = window.setInterval(WebDeveloper.EditCSS.apply, WebDeveloper.EditCSS.updateFrequency);
+  }
 };

@@ -1,6 +1,6 @@
 /* Common styles */
 
-#web-developer-search-dashboard-text { font-size: 12px; }
+#web-developer-search-dashboard-text { font-size: 13px; }
 
 /* Element information styles */
 
@@ -12,16 +12,16 @@
 
 /* Edit CSS styles */
 
-#web-developer-edit-css-dashboard > toolbar { -moz-box-align: center; }
+#web-developer-edit-css-dashboard > toolbar { -webkit-box-align: center; -ms-box-align: center; -moz-box-align: center; box-align: center; }
 #web-developer-edit-css-tab-box { margin: 0; }
-#web-developer-edit-css-tab-panels { -moz-appearance: none; padding: 0; }
+#web-developer-edit-css-tab-panels { -webkit-appearance: none; -moz-appearance: none; padding: 0; }
 #web-developer-edit-css-tab-panels browser { border: 1px solid #999; }
 #web-developer-edit-css-tabs { display: block; padding: 0; }
-#web-developer-edit-css-tabs > .tabs-left, #web-developer-edit-css-tabs > .tabs-right { -moz-box-flex: 0; }
+#web-developer-edit-css-tabs > .tabs-left, #web-developer-edit-css-tabs > .tabs-right { -webkit-box-flex: 0; -ms-box-flex: 0; -moz-box-flex: 0; box-flex: 0; }
 #web-developer-edit-css-tabs > .tabs-right { display: none; }
 
 /* Edit HTML styles */
 
 #web-developer-edit-html-dashboard > browser { border: 1px solid #999; }
 #web-developer-edit-html-dashboard > description { margin: 0.5em; }
-#web-developer-edit-html-dashboard > toolbar { -moz-box-align: center; }
+#web-developer-edit-html-dashboard > toolbar { -webkit-box-align: center; -ms-box-align: center; -moz-box-align: center; box-align: center; }

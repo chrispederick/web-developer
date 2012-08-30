@@ -5,12 +5,13 @@
 <!DOCTYPE dialog SYSTEM "chrome://web-developer/locale/dialogs/outline-custom-elements.dtd">
 <dialog id="web-developer-outline-custom-elements-dialog" buttons="accept,cancel" ondialogaccept="return WebDeveloper.OutlineCustomElements.accept()" onload="WebDeveloper.OutlineCustomElements.initialize()" title="&webdeveloper.outline.custom.elements;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script src="chrome://web-developer/content/common/common.js"/>
+  <script src="chrome://web-developer/content/content/content.js"/>
   <script src="chrome://web-developer/content/dialogs/javascript/outline-custom-elements.js"/>
   <script src="chrome://web-developer/content/preferences/preferences.js"/>
   <script src="chrome://web-developer/content/storage/storage.js"/>
 
   <description value="&webdeveloper.outline.custom.elements.description;"/>
-  
+
   <groupbox>
     <caption label="&webdeveloper.element.1;"/>
     <hbox align="center">

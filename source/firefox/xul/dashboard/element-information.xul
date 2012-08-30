@@ -17,5 +17,5 @@
     <stringbundle id="web-developer-string-bundle" src="chrome://web-developer/locale/dashboard/dashboard.properties"/>
   </stringbundleset>
 
-	<browser id="web-developer-element-information-browser" disablehistory="true" enablehistory="false" flex="1" src="chrome://web-developer/content/dashboard/element-information.html"/>
+  <browser id="web-developer-element-information-browser" disablehistory="true" enablehistory="false" flex="1" src="chrome://web-developer/content/dashboard/element-information.html"/>
 </window>

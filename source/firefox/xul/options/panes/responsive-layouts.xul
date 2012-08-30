@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE overlay SYSTEM "chrome://web-developer/locale/options/options.dtd">
 <overlay id="web-developer-options-responsive-layouts-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	<prefpane id="web-developer-options-responsive-layouts-pane" label="&webdeveloper.responsive;">
-  	<preferences/>
+  <prefpane id="web-developer-options-responsive-layouts-pane" label="&webdeveloper.responsive;">
+    <preferences/>
 
     <hbox align="top">
       <listbox id="web-developer-responsive-layouts" flex="1" onselect="WebDeveloper.Options.selectResponsiveLayout()">

@@ -15,17 +15,17 @@
     <stringbundle id="web-developer-string-bundle" src="chrome://web-developer/locale/dashboard/dashboard.properties"/>
   </stringbundleset>
 
-  <toolbar mode="icons">
+  <toolbar id="web-developer-dashboard-toolbar" mode="icons">
     <toolbarbutton id="web-developer-save-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.save;" oncommand="WebDeveloper.EditHTML.save()"/>
     <toolbarbutton id="web-developer-clear-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.clear;" oncommand="WebDeveloper.EditHTML.clear()"/>
     <toolbarbutton id="web-developer-reset-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.reset;" oncommand="WebDeveloper.EditHTML.reset()"/>
     <toolbarspring/>
     <hbox id="web-developer-search" align="center">
-		  <label control="web-developer-search-dashboard-text" value="&webdeveloper.search.label;"/>
-	    <textbox id="web-developer-search-dashboard-text" size="20"/>
-	    <toolbarbutton id="web-developer-search-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.search;" oncommand="WebDeveloper.EditHTML.search()"/>
-	  </hbox>
+      <label control="web-developer-search-dashboard-text" value="&webdeveloper.search.label;"/>
+      <textbox id="web-developer-search-dashboard-text" size="20"/>
+      <toolbarbutton id="web-developer-search-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.search;" oncommand="WebDeveloper.EditHTML.search()"/>
+    </hbox>
   </toolbar>
   <description value="&webdeveloper.html.body;"/>
-	<browser id="web-developer-edit-html-browser" disablehistory="true" enablehistory="false" flex="1" src="chrome://web-developer/content/dashboard/edit-html.html"/>
+  <browser id="web-developer-edit-html-browser" disablehistory="true" enablehistory="false" flex="1" src="chrome://web-developer/content/dashboard/edit-html.html"/>
 </window>

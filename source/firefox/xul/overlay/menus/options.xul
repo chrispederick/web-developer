@@ -3,7 +3,7 @@
   <menu id="web-developer-active-features-${suffix}" accesskey="&webdeveloper.active.features.key;" label="&webdeveloper.active.features.label;">
     <menupopup onpopupshowing="WebDeveloper.Overlay.Options.updateActiveFeaturesMenu(this)">
       <menuseparator id="web-developer-active-features-separator1-${suffix}"/>
-		  <menuitem id="web-developer-reset-page-${suffix}" command="web-developer-reset-page-command"/>
+      <menuitem id="web-developer-reset-page-${suffix}" command="web-developer-reset-page-command"/>
     </menupopup>
   </menu>
   <menuseparator id="web-developer-options-separator1-${suffix}"/>

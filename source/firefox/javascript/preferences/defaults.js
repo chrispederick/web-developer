@@ -33,16 +33,16 @@ pref("extensions.webdeveloper.keyboard.7.modifiers", "alt shift");
 pref("extensions.webdeveloper.keyboard.count", 7);
 
 // Miscellaneous
-pref("extensions.webdeveloper.line.guides.color", "#ff0000");
+pref("extensions.webdeveloper.line.guides.color", "#cc0000");
 pref("extensions.webdeveloper.magnification.level", "2");
-pref("extensions.webdeveloper.ruler.color", "#ff0000");
+pref("extensions.webdeveloper.ruler.color", "#cc0000");
 
 // Outline
-pref("extensions.webdeveloper.outline.custom.element.1.color", "#ff0000");
-pref("extensions.webdeveloper.outline.custom.element.2.color", "#0000ff");
-pref("extensions.webdeveloper.outline.custom.element.3.color", "#00ff00");
-pref("extensions.webdeveloper.outline.custom.element.4.color", "#ff0000");
-pref("extensions.webdeveloper.outline.custom.element.5.color", "#0000ff");
+pref("extensions.webdeveloper.outline.custom.element.1.color", "#cc0000");
+pref("extensions.webdeveloper.outline.custom.element.2.color", "#3333ff");
+pref("extensions.webdeveloper.outline.custom.element.3.color", "#009900");
+pref("extensions.webdeveloper.outline.custom.element.4.color", "#cc0000");
+pref("extensions.webdeveloper.outline.custom.element.5.color", "#3333ff");
 
 // Resize
 pref("extensions.webdeveloper.resize.1.description", "chrome://web-developer/locale/options/options.properties");

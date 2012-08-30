@@ -38,6 +38,6 @@
       <menuitem id="web-developer-use-manual-proxy-${suffix}" command="web-developer-use-manual-proxy-command" name="web-developer-disable-proxy-group-${suffix}" type="radio"/>
       <menuitem id="web-developer-use-system-proxy-${suffix}" command="web-developer-use-system-proxy-command" name="web-developer-disable-proxy-group-${suffix}" type="radio"/>
     </menupopup>
-	</menu>
-  <menuitem id="web-developer-disable-referrers-${suffix}" command="web-developer-disable-referrers-command"/>
+  </menu>
+  <menuitem id="web-developer-disable-referrers-${suffix}" command="web-developer-disable-referrers-command" type="checkbox"/>
 </menupopup>

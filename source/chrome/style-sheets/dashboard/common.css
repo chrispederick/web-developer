@@ -4,13 +4,13 @@ html { padding-bottom: 0; }
 #web-developer-dashboard-panels .nav-tabs > li:first-child, #web-developer-dashboard-tabs > li:first-child { margin-left: 10px; }
 #web-developer-dashboard-resizer { background-color: #ccc; border-bottom: 1px solid #666; color: #666; cursor: row-resize; font-size: 9px; height: 5px; line-height: 5px; text-align: center; }
 #web-developer-dashboard-tabs { margin-bottom: 5px; }
-.brand { -webkit-background-clip: text; background-clip: text; background-color: #666; color: transparent; font-size: 13px; font-weight: bold; position: absolute; right: 10px; text-shadow: rgba(255, 255, 255, 0.4) 0px 2px 1px; }
+.brand { -webkit-background-clip: text; -moz-background-clip: text; background-clip: text; background-color: #666; color: transparent; font-size: 13px; font-weight: bold; position: absolute; right: 10px; text-shadow: rgba(255, 255, 255, 0.4) 0 2px 1px; }
 .brand img { margin-right: 5px; opacity: 0.4; position: relative; top: -2px; }
 .container-fluid { padding: 0 10px; }
 
 /* Edit CSS styles */
 
-#web-developer-edit-css-panels > div > textarea { border-style: none; -webkit-box-shadow: none; box-shadow: none; font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 12px; height: 100%; margin-bottom: 0; width: 100%; word-wrap: normal; }
+#web-developer-edit-css-panels > div > textarea { border-style: none; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; font-family: Monaco, Menlo, Consolas, "Courier New", monospace; font-size: 13px; height: 100%; margin-bottom: 0; width: 100%; word-wrap: normal; }
 #web-developer-edit-css-tabs { margin-bottom: 0; }
 
 /* Element information styles */
@@ -19,7 +19,7 @@ html { padding-bottom: 0; }
 
 /* Element ancestors styles */
 
-#current-element-ancestors { background-color: #fff; border-top: 1px solid #ccc; bottom: 0; box-shadow: 0 0 7px rgba(0, 0, 0, 0.3); left: 0; padding: 5px 0; position: fixed; width: 100%; }
-#current-element-ancestors .breadcrumb { -webkit-border-radius: 0; border-radius: 0; border-style: none; margin: 0; padding-bottom: 4px; padding-top: 4px; }
+#current-element-ancestors { background-color: #fff; border-top: 1px solid #ccc; bottom: 0; -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, 0.3); -moz-box-shadow: 0 0 7px rgba(0, 0, 0, 0.3); box-shadow: 0 0 7px rgba(0, 0, 0, 0.3); left: 0; padding: 5px 0; position: fixed; width: 100%; }
+#current-element-ancestors .breadcrumb { -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; border-style: none; margin: 0; padding-bottom: 4px; padding-top: 4px; }
 #current-element-ancestors .breadcrumb > li { color: #404040; }
 #current-element-ancestors .breadcrumb > li > a { color: #808080; cursor: text; text-decoration: none; }

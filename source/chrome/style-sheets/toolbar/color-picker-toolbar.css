@@ -1,7 +1,5 @@
-/* Color picker styles */
-
 h1, span { top: -3px; }
 img { position: relative; top: -5px; }
 #web-developer-color-picker-hover-color, #web-developer-color-picker-selected-color { border: 1px solid #666; display: inline-block; height: 16px; margin: 0 10px 0 5px; top: 1px; width: 24px; }
 #web-developer-color-picker-hover-hex { margin-right: 20px; }
-#web-developer-color-picker-hover-hex, #web-developer-color-picker-selected-hex { font-family: Menlo, Monaco, "Courier New", monospace; font-size: 12px; }
+#web-developer-color-picker-hover-hex, #web-developer-color-picker-selected-hex { font-family: Monaco, Menlo, Consolas, "Courier New", monospace; font-size: 13px; }

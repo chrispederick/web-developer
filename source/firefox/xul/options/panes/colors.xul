@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE overlay SYSTEM "chrome://web-developer/locale/options/options.dtd">
 <overlay id="web-developer-options-colors-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	<prefpane id="web-developer-options-colors-pane" label="&webdeveloper.colors;">
-  	<preferences>
-  		<preference id="webdeveloper.syntax.highlight.theme" name="extensions.webdeveloper.syntax.highlight.theme" type="string"/>
-  	</preferences>
+  <prefpane id="web-developer-options-colors-pane" label="&webdeveloper.colors;">
+    <preferences>
+      <preference id="webdeveloper.syntax.highlight.theme" name="extensions.webdeveloper.syntax.highlight.theme" type="string"/>
+      <preference id="webdeveloper.toolbar.color" name="extensions.webdeveloper.toolbar.color" type="bool"/>
+    </preferences>
 
     <hbox align="center">
-      <label control="web-developer-syntax-highlight-theme" value="&webdeveloper.theme;"/>
+      <label control="web-developer-syntax-highlight-theme" value="&webdeveloper.syntax.highlight.theme;"/>
       <menulist id="web-developer-syntax-highlight-theme" preference="webdeveloper.syntax.highlight.theme" oncommand="WebDeveloper.Options.updateSyntaxHighlightTheme()">
         <menupopup>
           <menuitem value="dark" label="&webdeveloper.dark;"/>
@@ -19,7 +20,10 @@
     <separator/>
 
     <description value="&webdeveloper.preview;"/>
-		<browser id="web-developer-syntax-highlight-browser" disablehistory="true" enablehistory="false" flex="1" src="chrome://web-developer/content/options/html/syntax-highlight.html"/>
-		<separator/>
+    <browser id="web-developer-syntax-highlight-browser" disablehistory="true" enablehistory="false" flex="1" src="chrome://web-developer/content/options/html/syntax-highlight.html"/>
+    <separator/>
+
+    <checkbox id="web-developer-toolbar-color" hidden="true" label="&webdeveloper.toolbar.color;" preference="webdeveloper.toolbar.color"/>
+    <separator/>
   </prefpane>
 </overlay>

@@ -1,0 +1,8 @@
+<!-- Konturera anpassade element -->
+<!ENTITY webdeveloper.element.1 "Element 1">
+<!ENTITY webdeveloper.element.2 "Element 2">
+<!ENTITY webdeveloper.element.3 "Element 3">
+<!ENTITY webdeveloper.element.4 "Element 4">
+<!ENTITY webdeveloper.element.5 "Element 5">
+<!ENTITY webdeveloper.outline.custom.elements "Konturera anpassade element">
+<!ENTITY webdeveloper.outline.custom.elements.description "Ange de element som skall kontureras (t.ex. div) och de färger som skall användas">

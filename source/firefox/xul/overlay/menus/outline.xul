@@ -24,4 +24,6 @@
       <menuitem id="web-developer-outline-all-tables-${suffix}" command="web-developer-outline-all-tables-command" type="checkbox"/>
     </menupopup>
   </menu>
+  <menuseparator id="web-developer-outline-separator4-${suffix}"/>
+  <menuitem id="web-developer-outline-show-element-tag-names-${suffix}" command="web-developer-outline-show-element-tag-names-command" type="checkbox"/>
 </menupopup>

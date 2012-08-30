@@ -1,11 +1,9 @@
-/* Ruler styles */
-
 * { cursor: crosshair !important; }
 
 #web-developer-ruler { border-width: 1px !important; cursor: move !important; }
-#web-developer-ruler, #web-developer-ruler div { border-color: #f00; border-style: solid !important; }
+#web-developer-ruler, #web-developer-ruler div { border-color: #cc0000; border-style: solid !important; }
 #web-developer-ruler, #web-developer-ruler div, #web-developer-ruler-background-bottom, #web-developer-ruler-background-left, #web-developer-ruler-background-right, #web-developer-ruler-background-top, #web-developer-ruler-container { position: absolute !important; }
-#web-developer-ruler div { background-color: rgba(255, 0, 0, 0.25); height: 20px !important; width: 20px !important; }
+#web-developer-ruler div { background-color: rgba(204, 0, 0, 0.25); height: 20px !important; width: 20px !important; }
 #web-developer-ruler-background-bottom, #web-developer-ruler-bottom-left, #web-developer-ruler-bottom-right { bottom: 0 !important; }
 #web-developer-ruler-background-bottom, #web-developer-ruler-background-left, #web-developer-ruler-background-right, #web-developer-ruler-background-top { background: rgba(0, 0, 0, 0.25) !important; height: 0; width: 0; }
 #web-developer-ruler-background-bottom, #web-developer-ruler-background-top, #web-developer-ruler-bottom-left, #web-developer-ruler-container, #web-developer-ruler-top-left { left: 0 !important; }

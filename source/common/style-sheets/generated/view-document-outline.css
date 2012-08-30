@@ -1,10 +1,8 @@
-/* View document outline styles */
-
-h1 > .label { top: -6px; }
-h2 > .label { top: -4px; }
-h3 > .label { top: -2px; }
-h4, h5, h6 { line-height: 22px; }
-.label { background-image: none; cursor: auto; display: inline; font-size: 12px; font-weight: normal; margin-right: 5px; position: relative; top: -1px; }
+h1 > .label { top: -8px; }
+h2 > .label { top: -6px; }
+h3 > .label { top: -4px; }
+h4 > .label { top: -2px; }
+.label { background-image: none; cursor: auto; display: inline; font-size: 13px; font-weight: normal; margin-right: 5px; position: relative; top: -1px; }
 .web-developer-document > h1 { margin-bottom: 0; }
 .web-developer-document > h2 { margin-left: 40px; padding-top: 0; }
 .web-developer-document > h3 { margin-left: 80px; }

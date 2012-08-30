@@ -1,5 +1,3 @@
-/* Ruler styles */
-
 #web-developer-ruler-end-x, #web-developer-ruler-start-x { margin: 0 10px 0 5px; }
 #web-developer-ruler-end-y { margin-left: 5px; }
 #web-developer-ruler-height, #web-developer-ruler-width { border: 1px solid #666; margin: 0 20px 0 0; width: 60px; }

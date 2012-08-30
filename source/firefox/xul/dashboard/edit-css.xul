@@ -17,7 +17,7 @@
     <stringbundle id="web-developer-string-bundle" src="chrome://web-developer/locale/dashboard/dashboard.properties"/>
   </stringbundleset>
 
-  <toolbar mode="icons">
+  <toolbar id="web-developer-dashboard-toolbar" mode="icons">
     <toolbarbutton id="web-developer-open-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.open;" oncommand="WebDeveloper.EditCSS.open()"/>
     <toolbarbutton id="web-developer-save-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.save;" oncommand="WebDeveloper.EditCSS.save()"/>
     <toolbarbutton id="web-developer-clear-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.clear;" oncommand="WebDeveloper.EditCSS.clear()"/>
@@ -25,10 +25,10 @@
     <toolbarbutton id="web-developer-pin-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.pin.css;" type="checkbox" oncommand="WebDeveloper.EditCSS.togglePin()"/>
     <toolbarspring/>
     <hbox id="web-developer-search" align="center">
-		  <label control="web-developer-search-dashboard-text" value="&webdeveloper.search.label;"/>
-	    <textbox id="web-developer-search-dashboard-text" size="20"/>
-	    <toolbarbutton id="web-developer-search-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.search;" oncommand="WebDeveloper.EditCSS.search()"/>
-	  </hbox>
+      <label control="web-developer-search-dashboard-text" value="&webdeveloper.search.label;"/>
+      <textbox id="web-developer-search-dashboard-text" size="20"/>
+      <toolbarbutton id="web-developer-search-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.search;" oncommand="WebDeveloper.EditCSS.search()"/>
+    </hbox>
   </toolbar>
 
   <tabbox id="web-developer-edit-css-tab-box" flex="1">

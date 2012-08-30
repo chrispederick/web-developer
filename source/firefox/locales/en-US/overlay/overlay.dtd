@@ -360,6 +360,8 @@
 <!ENTITY webdeveloper.outline.positioned.elements.key "P">
 <!ENTITY webdeveloper.outline.tables.label "Outline Tables">
 <!ENTITY webdeveloper.outline.tables.key "T">
+<!ENTITY webdeveloper.outline.show.element.tag.names.label "Show Element Tag Names When Outlining">
+<!ENTITY webdeveloper.outline.show.element.tag.names.key "S">
 
 <!-- Outline Tables Features -->
 <!ENTITY webdeveloper.outline.table.captions.label "Outline Table Captions">

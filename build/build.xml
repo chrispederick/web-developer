@@ -18,7 +18,7 @@
     <antcall target="build.chrome.configuration"/>
     <antcall target="build.chrome.about.page"/>
  	  <antcall target="build.chrome.background.page"/>
-    <antcall target="build.chrome.content.javascript"/>
+    <antcall target="build.chrome.common.javascript"/>
     <antcall target="build.chrome.dashboard"/>
     <antcall target="build.chrome.features"/>
     <antcall target="build.chrome.generated.pages"/>
@@ -35,7 +35,6 @@
     <copy file="../source/common/html/about/about.html" tofile="chrome/about/about.html">
       <filterset refid="chrome.filters"/>
     </copy>
-    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="chrome/about/javascript/jquery.js"/>
     <concat destfile="chrome/about/javascript/about.js">
     	<fileset file="../source/common/javascript/generated/common.js"/>
     	<fileset file="../source/common/javascript/about/about.js"/>
@@ -56,7 +55,6 @@
     <copy file="../source/chrome/html/background/background.html" tofile="chrome/background/background.html">
       <filterset refid="chrome.filters"/>
     </copy>
-    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="chrome/background/javascript/jquery.js"/>
     <concat destfile="chrome/background/javascript/background.temp">
       <fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
     	<fileset file="../source/common/javascript/common/common.js"/>
@@ -72,17 +70,10 @@
     </move>
 	</target>
 
-  <!-- Builds the configuration for Chrome -->
-  <target name="build.chrome.configuration" depends="initialize.chrome">
-    <echo level="info" message="Building the configuration"/>
-    <copy file="../configuration/chrome/manifest.json" tofile="chrome/manifest.json">
-      <filterset refid="chrome.filters"/>
-		</copy>
-	</target>
-
-  <!-- Builds the content JavaScript for Chrome -->
-  <target name="build.chrome.content.javascript" depends="initialize.chrome">
-    <echo level="info" message="Building the content JavaScript"/>
+  <!-- Builds the common JavaScript for Chrome -->
+  <target name="build.chrome.common.javascript" depends="initialize.chrome">
+    <echo level="info" message="Building the common JavaScript"/>
+    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="chrome/common/jquery.js"/>
     <concat destfile="chrome/content/content.js">
     	<fileset file="../source/common/javascript/common/common.js"/>
     	<fileset file="../source/chrome/javascript/common/common.js"/>
@@ -92,16 +83,23 @@
     </concat>
 	</target>
 
+  <!-- Builds the configuration for Chrome -->
+  <target name="build.chrome.configuration" depends="initialize.chrome">
+    <echo level="info" message="Building the configuration"/>
+    <copy file="../configuration/chrome/manifest.json" tofile="chrome/manifest.json">
+      <filterset refid="chrome.filters"/>
+		</copy>
+	</target>
+
   <!-- Builds the dashboard for Chrome -->
   <target name="build.chrome.dashboard" depends="initialize.chrome">
     <echo level="info" message="Building the dashboard"/>
-    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="chrome/dashboard/javascript/html/jquery.js"/>
     <concat destfile="chrome/dashboard/javascript/html/dashboard.js">
       <fileset file="../source/common/javascript/common/bootstrap/tab.js"/>
     	<fileset file="../source/common/javascript/toolbar/html/element-ancestors.js"/>
     	<fileset file="../source/chrome/javascript/dashboard/common.js"/>
     </concat>
-    <concat destfile="chrome/dashboard/javascript/dashboard.js">
+    <concat destfile="chrome/dashboard/javascript/dashboard.temp">
     	<fileset file="../source/common/javascript/common/common.js"/>
     	<fileset file="../source/chrome/javascript/common/common.js"/>
     	<fileset file="../source/common/javascript/dashboard/dashboard.js"/>
@@ -113,6 +111,9 @@
     	<fileset file="../source/common/javascript/toolbar/element-ancestors.js"/>
     	<fileset file="../source/chrome/javascript/toolbar/element-ancestors.js"/>
     </concat>
+    <move file="chrome/dashboard/javascript/dashboard.temp" tofile="chrome/dashboard/javascript/dashboard.js">
+      <filterset refid="chrome.filters"/>
+    </move>
     <copy file="../source/chrome/style-sheets/dashboard/dashboard.css" tofile="chrome/dashboard/style-sheets/dashboard.css"/>
     <concat destfile="chrome/dashboard/style-sheets/common.css">
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
@@ -173,7 +174,6 @@
       <fileset dir="../source/chrome/html/validation"/>
       <filterset refid="chrome.filters"/>
     </copy>
-    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="chrome/validation/javascript/jquery.js"/>
     <copy todir="chrome/validation/javascript">
       <fileset dir="../source/chrome/javascript/validation"/>
     </copy>
@@ -196,7 +196,6 @@
       </fileset>
       <filterset refid="chrome.filters"/>
     </copy>
-    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="chrome/generated/javascript/jquery.js"/>
     <concat destfile="chrome/generated/javascript/common.js">
      	<fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
 	  	<fileset file="../source/common/javascript/common/bootstrap/collapse.js"/>
@@ -271,7 +270,6 @@
     	<fileset file="../source/chrome/html/options/options.html"/>
       <filterset refid="chrome.filters"/>
     </copy>
-    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="chrome/options/javascript/jquery.js"/>
     <concat destfile="chrome/options/javascript/options.js">
       <fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
       <fileset file="../source/common/javascript/common/bootstrap/modal.js"/>
@@ -319,7 +317,6 @@
     <copy file="../source/chrome/html/overlay/overlay.html" tofile="chrome/overlay/overlay.html">
       <filterset refid="chrome.filters"/>
     </copy>
-    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="chrome/overlay/javascript/jquery.js"/>
     <concat destfile="chrome/overlay/javascript/overlay.temp">
       <fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
       <fileset file="../source/common/javascript/common/bootstrap/tab.js"/>
@@ -328,7 +325,6 @@
       <fileset file="../source/common/javascript/features/cookies.js"/>
       <fileset file="../source/common/javascript/locales/locales.js"/>
       <fileset dir="../source/common/javascript/overlay"/>
-      <fileset file="../source/common/javascript/platform/platform.js"/>
       <fileset file="../source/chrome/javascript/features/cookies.js"/>
       <fileset file="../source/chrome/javascript/locales/locales.js"/>
       <fileset file="../source/chrome/javascript/overlay/overlay.js"/>
@@ -440,7 +436,6 @@
     <copy file="../source/common/html/about/about.html" tofile="firefox/content/web-developer/about/about.html">
       <filterset refid="firefox.filters"/>
     </copy>
-    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="firefox/content/web-developer/about/javascript/jquery.js"/>
     <concat destfile="firefox/content/web-developer/about/javascript/about.js">
     	<fileset file="../source/common/javascript/generated/common.js"/>
     	<fileset file="../source/common/javascript/about/about.js"/>
@@ -462,7 +457,10 @@
     	<fileset file="../source/common/javascript/common/common.js"/>
     	<fileset file="../source/firefox/javascript/common/common.js"/>
     </concat>
-    <copy file="../source/common/javascript/common/css.js" tofile="firefox/content/web-developer/common/css.js"/>
+		<copy todir="firefox/content/web-developer/common">
+    	<fileset file="../source/common/javascript/common/css.js"/>
+    	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
+    </copy>
     <concat destfile="firefox/content/web-developer/content/content.js">
     	<fileset file="../source/common/javascript/content/content.js"/>
     	<fileset file="../source/firefox/javascript/content/content.js"/>
@@ -518,7 +516,6 @@
      		<exclude name="common.js"/>
       </fileset>
     </copy>
-    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="firefox/content/web-developer/dashboard/javascript/html/jquery.js"/>
     <concat destfile="firefox/content/web-developer/dashboard/javascript/html/common.js">
     	<fileset file="../source/common/javascript/generated/common.js"/>
     	<fileset file="../source/firefox/javascript/dashboard/html/common.js"/>
@@ -540,6 +537,7 @@
     <concat destfile="firefox/content/web-developer/dashboard/common.css">
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
+    	<fileset file="../source/common/style-sheets/common/bootstrap/font-awesome.css"/>
     	<fileset file="../source/common/style-sheets/common/codemirror/codemirror.css"/>
     	<fileset file="../source/common/style-sheets/common/codemirror/theme.css"/>
     	<fileset file="../source/common/style-sheets/common/common.css"/>
@@ -555,6 +553,9 @@
     	<fileset file="../source/common/style-sheets/generated/common.css"/>
     	<fileset file="../source/firefox/style-sheets/dashboard/html/style-information.css"/>
     </concat>
+    <copy todir="firefox/content/web-developer/dashboard/fonts">
+      <fileset dir="../source/common/fonts"/>
+    </copy>
 	</target>
 
   <!-- Builds the dialogs for Firefox -->
@@ -609,7 +610,6 @@
       <fileset dir="../source/firefox/style-sheets/generated"/>
       <filterset refid="firefox.filters"/>
     </copy>
-    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="firefox/content/web-developer/generated/javascript/jquery.js"/>
     <concat destfile="firefox/content/web-developer/generated/javascript/common.js">
     	<fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
     	<fileset file="../source/common/javascript/common/bootstrap/collapse.js"/>
@@ -635,6 +635,7 @@
       <fileset file="../source/common/javascript/common/bootstrap/transition.js"/>
     	<fileset file="../source/common/javascript/generated/view-cookie-information.js"/>
     	<fileset file="../source/firefox/javascript/features/cookies.js"/>
+    	<fileset file="../source/firefox/javascript/preferences/preferences.js"/>
     </concat>
     <concat destfile="firefox/content/web-developer/generated/javascript/view-document-size.js">
     	<fileset file="../source/firefox/javascript/generated/view-document-size.js"/>
@@ -692,8 +693,7 @@
     <copy todir="firefox/content/web-developer/options/dialogs/javascript">
       <fileset dir="../source/firefox/javascript/options/dialogs"/>
     </copy>
-    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="firefox/content/web-developer/options/html/javascript/jquery.js"/>
-   <concat destfile="firefox/content/web-developer/options/html/javascript/syntax-highlight.js">
+   	<concat destfile="firefox/content/web-developer/options/html/javascript/syntax-highlight.js">
     	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
     	<fileset file="../source/common/javascript/common/codemirror/css.js"/>
     	<fileset file="../source/common/javascript/common/codemirror/htmlmixed.js"/>
@@ -1204,10 +1204,19 @@
       <fileset dir="../images/firefox/skins"/>
     </copy>
     <copy file="../images/common/logos/16.png" tofile="firefox/skin/default/menu.png"/>
+    <copy file="../images/common/toolbar.png" tofile="firefox/skin/default/toolbar.png"/>
     <copy file="../images/common/logos/monochrome.png" tofile="firefox/skin/mac/button.png"/>
     <copy file="../images/common/logos/monochrome.png" tofile="firefox/skin/mac/menu.png"/>
-    <copy file="../images/common/toolbar.png" tofile="firefox/skin/default/toolbar.png"/>
     <copy file="../images/firefox/skins/default/options.png" tofile="firefox/skin/mac/options.png"/>
+    <copy todir="firefox/skin/mac/color">
+      <fileset dir="../images/firefox/skins/default">
+     		<exclude name="button.png"/>
+     		<exclude name="options.png"/>
+      </fileset>
+    </copy>
+    <copy file="../images/common/logos/16.png" tofile="firefox/skin/mac/color/button.png"/>
+    <copy file="../images/common/logos/16.png" tofile="firefox/skin/mac/color/menu.png"/>
+    <copy file="../images/common/toolbar.png" tofile="firefox/skin/mac/color/toolbar.png"/>
 	</target>
 
   <!-- Builds the toolbars for Firefox -->
@@ -1216,8 +1225,7 @@
     <copy file="../source/firefox/html/toolbar/element-ancestors.html" tofile="firefox/content/web-developer/toolbar/html/element-ancestors.html">
     	<filterset refid="firefox.filters"/>
     </copy>
-    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="firefox/content/web-developer/toolbar/html/javascript/jquery.js"/>
-   <concat destfile="firefox/content/web-developer/toolbar/html/javascript/element-ancestors.js">
+   	<concat destfile="firefox/content/web-developer/toolbar/html/javascript/element-ancestors.js">
     	<fileset file="../source/common/javascript/generated/common.js"/>
     	<fileset file="../source/common/javascript/toolbar/html/element-ancestors.js"/>
     </concat>
@@ -1248,12 +1256,12 @@
   	<delete file="web-developer-firefox.xpi"/>
   </target>
 
-  <!-- Converts spaces to tabs in the extension -->
-  <target name="convert.spaces.tabs">
-    <echo level="info" message="Converting spaces to tabs"/>
-		<fixcrlf srcdir="../source/chrome/javascript" excludes="**/options/tablednd.js" tab="add" tablength="2"/>
-		<fixcrlf srcdir="../source/common/javascript" excludes="**/beautify/beautify.js,**/bootstrap/collapse.js,**/bootstrap/dropdown.js,**/bootstrap/modal.js,**/bootstrap/tab.js,**/bootstrap/transition.js,**/codemirror/codemirror.js,**/codemirror/css.js,**/codemirror/htmlmixed.js,**/codemirror/javascript.js,**/codemirror/searchcursor.js,**/jquery/icanhaz.js,**/jquery/jquery.js,**/codemirror/xml.js" tab="add" tablength="2"/>
-		<fixcrlf srcdir="../source/firefox/javascript" tab="add" tablength="2"/>
+  <!-- Converts tabs to spaces in the extension -->
+  <target name="convert.tabs.spaces">
+    <echo level="info" message="Converting tabs to spaces"/>
+		<fixcrlf srcdir="../source/chrome/javascript" excludes="**/options/tablednd.js" tab="remove" tablength="2"/>
+		<fixcrlf srcdir="../source/common/javascript" excludes="**/beautify/beautify.js,**/bootstrap/collapse.js,**/bootstrap/dropdown.js,**/bootstrap/modal.js,**/bootstrap/tab.js,**/bootstrap/transition.js,**/codemirror/codemirror.js,**/codemirror/css.js,**/codemirror/htmlmixed.js,**/codemirror/javascript.js,**/codemirror/searchcursor.js,**/jquery/icanhaz.js,**/jquery/jquery.js,**/codemirror/xml.js" tab="remove" tablength="2"/>
+		<fixcrlf srcdir="../source/firefox/javascript" tab="remove" tablength="2"/>
  	</target>
 
   <!-- Initializes the settings -->
@@ -1340,7 +1348,7 @@
   </target>
 
   <!-- Test the extension -->
-  <target name="test" depends="convert.spaces.tabs">
+  <target name="test" depends="convert.tabs.spaces">
     <echo level="info" message="Running JSLint"/>
 		<jslint haltOnFailure="false" options="browser,forin,indent=2,maxerr=100,undef">
     	<formatter type="plain"/>

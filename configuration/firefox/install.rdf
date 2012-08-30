@@ -12,16 +12,23 @@
     <em:optionsURL>chrome://web-developer/content/options/options.xul</em:optionsURL>
     <em:version>@version@</em:version>
     <em:localized>
-			<Description>
+      <Description>
         <em:locale>en-US</em:locale>
         <em:name>@name@</em:name>
         <em:description>@description@</em:description>
       </Description>
     </em:localized>
+    <em:localized>
+      <Description>
+        <em:locale>sv-SE</em:locale>
+        <em:name>@name@</em:name>
+        <em:description>Lägger till en meny och ett verktygsfält med diverse webbutvecklingsverktyg.</em:description>
+      </Description>
+    </em:localized>
     <em:targetApplication>
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
-        <em:maxVersion>16.*</em:maxVersion>
+        <em:maxVersion>17.*</em:maxVersion>
         <em:minVersion>3.6</em:minVersion>
       </Description>
     </em:targetApplication>

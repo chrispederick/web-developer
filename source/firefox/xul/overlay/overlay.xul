@@ -21,7 +21,7 @@
     <broadcaster id="web-developer-view-toolbar-command" checked="true" oncommand="WebDeveloper.Overlay.toggleToolbar()"/>
   </broadcasterset>
 
-	<commandset id="mainCommandSet">
+  <commandset id="mainCommandSet">
     <command id="web-developer-disable-entire-cache-command" class="web-developer-feature-command" accesskey="&webdeveloper.disable.entire.cache.key;" label="&webdeveloper.disable.entire.cache.label;" oncommand="WebDeveloper.Overlay.Disable.toggleCache(this)"/>
     <command id="web-developer-check-for-newer-version-of-page-when-page-is-out-of-date-command" class="web-developer-feature-command" accesskey="&webdeveloper.check.for.newer.version.of.page.when.page.is.out.of.date.key;" label="&webdeveloper.check.for.newer.version.of.page.when.page.is.out.of.date.label;" oncommand="WebDeveloper.Overlay.Disable.toggleCheckForNewerVersionOfPage(3)"/>
     <command id="web-developer-check-for-newer-version-of-page-every-time-command" class="web-developer-feature-command" accesskey="&webdeveloper.check.for.newer.version.of.page.every.time.key;" label="&webdeveloper.check.for.newer.version.of.page.every.time.label;" oncommand="WebDeveloper.Overlay.Disable.toggleCheckForNewerVersionOfPage(1)"/>
@@ -162,12 +162,13 @@
     <command id="web-developer-outline-table-captions-command" class="web-developer-feature-command" accesskey="&webdeveloper.outline.table.captions.key;" label="&webdeveloper.outline.table.captions.label;" oncommand="WebDeveloper.Overlay.Outline.outlineTableCaptions(this)"/>
     <command id="web-developer-outline-table-cells-command" class="web-developer-feature-command" accesskey="&webdeveloper.outline.table.cells.key;" label="&webdeveloper.outline.table.cells.label;" oncommand="WebDeveloper.Overlay.Outline.outlineTableCells(this)"/>
     <command id="web-developer-outline-all-tables-command" class="web-developer-feature-command" accesskey="&webdeveloper.outline.all.tables.key;" label="&webdeveloper.outline.all.tables.label;" oncommand="WebDeveloper.Overlay.Outline.outlineTables(this)"/>
+    <command id="web-developer-outline-show-element-tag-names-command" accesskey="&webdeveloper.outline.show.element.tag.names.key;" label="&webdeveloper.outline.show.element.tag.names.label;" oncommand="WebDeveloper.Overlay.Outline.toggleShowElementTagNames(this)"/>
 
     <command id="web-developer-display-window-size-command" class="web-developer-feature-command" accesskey="&webdeveloper.display.window.size.key;" label="&webdeveloper.display.window.size.label;" oncommand="WebDeveloper.Overlay.Resize.displayWindowSize()"/>
     <command id="web-developer-display-window-size-title-command" class="web-developer-feature-command" accesskey="&webdeveloper.display.window.size.title.key;" label="&webdeveloper.display.window.size.title.label;" oncommand="WebDeveloper.Overlay.Resize.displayWindowSizeInTitle(this)"/>
     <command id="web-developer-resize-window-command" class="web-developer-feature-command" accesskey="&webdeveloper.resize.window.key;" label="&webdeveloper.resize.window.label;" oncommand="WebDeveloper.Overlay.Resize.customResizeWindow()"/>
     <command id="web-developer-edit-resize-dimensions-command" accesskey="&webdeveloper.edit.resize.dimensions.key;" label="&webdeveloper.edit.resize.dimensions.label;" oncommand="WebDeveloper.Overlay.Options.options('resize')"/>
-    <command id="web-developer-view-responsive-layouts-command" accesskey="&webdeveloper.view.responsive.layouts.key;" label="&webdeveloper.view.responsive.layouts.label;" oncommand="WebDeveloper.Overlay.Resize.viewResponsiveLayouts()"/>
+    <command id="web-developer-view-responsive-layouts-command" class="web-developer-feature-command" accesskey="&webdeveloper.view.responsive.layouts.key;" label="&webdeveloper.view.responsive.layouts.label;" oncommand="WebDeveloper.Overlay.Resize.viewResponsiveLayouts()"/>
 
     <command id="web-developer-edit-tools-command" accesskey="&webdeveloper.edit.tools.key;" label="&webdeveloper.edit.tools.label;" oncommand="WebDeveloper.Overlay.Options.options('tools')"/>
     <command id="web-developer-display-page-validation-command" class="web-developer-feature-command" accesskey="&webdeveloper.display.page.validation.key;" label="&webdeveloper.display.page.validation.label;" oncommand="WebDeveloper.Overlay.Tools.displayPageValidation(this)"/>
@@ -187,7 +188,7 @@
     <command id="web-developer-about-command" accesskey="&webdeveloper.about.key;" label="&webdeveloper.about.label;" oncommand="WebDeveloper.Overlay.Options.about()"/>
 
     <command id="web-developer-toolbar-command" class="web-developer-feature-command" label="&webdeveloper.toolbar.name;" oncommand="WebDeveloper.Overlay.toggleToolbar()"/>
-	</commandset>
+  </commandset>
 
   <menupopup id="view_toolbars_popup">
     <menuitem id="web-developer-view-toolbar" accesskey="&webdeveloper.key;" label="&webdeveloper.toolbar.name;" type="checkbox" observes="web-developer-view-toolbar-command"/>
@@ -197,41 +198,41 @@
     <menu id="web-developer-app-menu" accesskey="&webdeveloper.key;" class="menu-iconic" insertafter="appmenu_webDeveloper" label="&webdeveloper.expanded.name;">
       <menupopup>
         <menu id="web-developer-disable-app-menu" accesskey="&webdeveloper.disable.key;" label="&webdeveloper.disable.label;">
-        	${app.menu.disable}
+          ${app.menu.disable}
         </menu>
         <menu id="web-developer-cookies-app-menu" accesskey="&webdeveloper.cookies.key;" label="&webdeveloper.cookies.label;">
-					${app.menu.cookies}
+          ${app.menu.cookies}
         </menu>
         <menu id="web-developer-css-app-menu" accesskey="&webdeveloper.css.key;" label="&webdeveloper.css.label;">
-					${app.menu.css}
+          ${app.menu.css}
         </menu>
         <menu id="web-developer-forms-app-menu" accesskey="&webdeveloper.forms.key;" label="&webdeveloper.forms.label;">
-					${app.menu.forms}
+          ${app.menu.forms}
         </menu>
         <menu id="web-developer-images-app-menu" accesskey="&webdeveloper.images.key;" label="&webdeveloper.images.label;">
-					${app.menu.images}
+          ${app.menu.images}
         </menu>
         <menu id="web-developer-information-app-menu" accesskey="&webdeveloper.information.key;" label="&webdeveloper.information.label;">
-					${app.menu.information}
+          ${app.menu.information}
         </menu>
         <menu id="web-developer-miscellaneous-app-menu" accesskey="&webdeveloper.miscellaneous.key;" label="&webdeveloper.miscellaneous.label;">
-					${app.menu.miscellaneous}
+          ${app.menu.miscellaneous}
         </menu>
         <menu id="web-developer-outline-app-menu" accesskey="&webdeveloper.outline.key;" label="&webdeveloper.outline.label;">
-					${app.menu.outline}
+          ${app.menu.outline}
         </menu>
         <menu id="web-developer-resize-app-menu" accesskey="&webdeveloper.resize.key;" label="&webdeveloper.resize.label;">
-					${app.menu.resize}
+          ${app.menu.resize}
         </menu>
         <menu id="web-developer-tools-app-menu" accesskey="&webdeveloper.tools.key;" label="&webdeveloper.tools.label;">
-					${app.menu.tools}
+          ${app.menu.tools}
         </menu>
         <menu id="web-developer-view-source-app-menu" accesskey="&webdeveloper.view.source.key;" label="&webdeveloper.view.source.label;">
-					${app.menu.view.source}
+          ${app.menu.view.source}
         </menu>
         <menuseparator id="web-developer-app-menu-separator1"/>
         <menu id="web-developer-options-app-menu" accesskey="&webdeveloper.options.key;" label="&webdeveloper.options.label;">
-					${app.menu.options}
+          ${app.menu.options}
         </menu>
       </menupopup>
     </menu>
@@ -241,41 +242,41 @@
     <menu id="web-developer-menu" accesskey="&webdeveloper.key;" class="menu-iconic" insertbefore="menu_pageInfo" label="&webdeveloper.expanded.name;">
       <menupopup>
         <menu id="web-developer-disable-menu" accesskey="&webdeveloper.disable.key;" label="&webdeveloper.disable.label;">
-					${menu.disable}
+          ${menu.disable}
         </menu>
         <menu id="web-developer-cookies-menu" accesskey="&webdeveloper.cookies.key;" label="&webdeveloper.cookies.label;">
-					${menu.cookies}
+          ${menu.cookies}
         </menu>
         <menu id="web-developer-css-menu" accesskey="&webdeveloper.css.key;" label="&webdeveloper.css.label;">
-					${menu.css}
+          ${menu.css}
         </menu>
         <menu id="web-developer-forms-menu" accesskey="&webdeveloper.forms.key;" label="&webdeveloper.forms.label;">
-					${menu.forms}
+          ${menu.forms}
         </menu>
         <menu id="web-developer-images-menu" accesskey="&webdeveloper.images.key;" label="&webdeveloper.images.label;">
-					${menu.images}
+          ${menu.images}
         </menu>
         <menu id="web-developer-information-menu" accesskey="&webdeveloper.information.key;" label="&webdeveloper.information.label;">
-					${menu.information}
+          ${menu.information}
         </menu>
         <menu id="web-developer-miscellaneous-menu" accesskey="&webdeveloper.miscellaneous.key;" label="&webdeveloper.miscellaneous.label;">
-					${menu.miscellaneous}
+          ${menu.miscellaneous}
         </menu>
         <menu id="web-developer-outline-menu" accesskey="&webdeveloper.outline.key;" label="&webdeveloper.outline.label;">
-					${menu.outline}
+          ${menu.outline}
         </menu>
         <menu id="web-developer-resize-menu" accesskey="&webdeveloper.resize.key;" label="&webdeveloper.resize.label;">
-					${menu.resize}
+          ${menu.resize}
         </menu>
         <menu id="web-developer-tools-menu" accesskey="&webdeveloper.tools.key;" label="&webdeveloper.tools.label;">
-					${menu.tools}
+          ${menu.tools}
         </menu>
         <menu id="web-developer-view-source-menu" accesskey="&webdeveloper.view.source.key;" label="&webdeveloper.view.source.label;">
-					${menu.view.source}
+          ${menu.view.source}
         </menu>
         <menuseparator id="web-developer-menu-separator1"/>
         <menu id="web-developer-options-menu" accesskey="&webdeveloper.options.key;" label="&webdeveloper.options.label;">
-					${menu.options}
+          ${menu.options}
         </menu>
       </menupopup>
     </menu>
@@ -285,168 +286,168 @@
     <menu id="web-developer-seamonkey" accesskey="&webdeveloper.key;" class="menu-iconic" insertbefore="sep_switchprofile" label="&webdeveloper.expanded.name;">
       <menupopup>
         <menu id="web-developer-disable-seamonkey" accesskey="&webdeveloper.disable.key;" label="&webdeveloper.disable.label;">
-					${seamonkey.disable}
+          ${seamonkey.disable}
         </menu>
         <menu id="web-developer-cookies-seamonkey" accesskey="&webdeveloper.cookies.key;" label="&webdeveloper.cookies.label;">
-					${seamonkey.cookies}
+          ${seamonkey.cookies}
         </menu>
         <menu id="web-developer-css-seamonkey" accesskey="&webdeveloper.css.key;" label="&webdeveloper.css.label;">
-					${seamonkey.css}
+          ${seamonkey.css}
         </menu>
         <menu id="web-developer-forms-seamonkey" accesskey="&webdeveloper.forms.key;" label="&webdeveloper.forms.label;">
-					${seamonkey.forms}
+          ${seamonkey.forms}
         </menu>
         <menu id="web-developer-images-seamonkey" accesskey="&webdeveloper.images.key;" label="&webdeveloper.images.label;">
-					${seamonkey.images}
+          ${seamonkey.images}
         </menu>
         <menu id="web-developer-information-seamonkey" accesskey="&webdeveloper.information.key;" label="&webdeveloper.information.label;">
-					${seamonkey.information}
+          ${seamonkey.information}
         </menu>
         <menu id="web-developer-miscellaneous-seamonkey" accesskey="&webdeveloper.miscellaneous.key;" label="&webdeveloper.miscellaneous.label;">
-					${seamonkey.miscellaneous}
+          ${seamonkey.miscellaneous}
         </menu>
         <menu id="web-developer-outline-seamonkey" accesskey="&webdeveloper.outline.key;" label="&webdeveloper.outline.label;">
-					${seamonkey.outline}
+          ${seamonkey.outline}
         </menu>
         <menu id="web-developer-resize-seamonkey" accesskey="&webdeveloper.resize.key;" label="&webdeveloper.resize.label;">
-					${seamonkey.resize}
+          ${seamonkey.resize}
         </menu>
         <menu id="web-developer-tools-seamonkey" accesskey="&webdeveloper.tools.key;" label="&webdeveloper.tools.label;">
-					${seamonkey.tools}
+          ${seamonkey.tools}
         </menu>
         <menu id="web-developer-view-source-seamonkey" accesskey="&webdeveloper.view.source.key;" label="&webdeveloper.view.source.label;">
-					${seamonkey.view.source}
+          ${seamonkey.view.source}
         </menu>
         <menuseparator id="web-developer-seamonkey-separator1"/>
         <menu id="web-developer-options-seamonkey" accesskey="&webdeveloper.options.key;" label="&webdeveloper.options.label;">
-					${seamonkey.options}
+          ${seamonkey.options}
         </menu>
       </menupopup>
     </menu>
   </menupopup>
 
-	<popup id="contentAreaContextMenu">
-		<menuseparator id="web-developer-context-separator1"/>
+  <popup id="contentAreaContextMenu">
+    <menuseparator id="web-developer-context-separator1"/>
     <menu id="web-developer-context" accesskey="&webdeveloper.context.key;" class="menu-iconic" label="&webdeveloper.name;">
       <menupopup>
         <menu id="web-developer-disable-context" accesskey="&webdeveloper.disable.key;" label="&webdeveloper.disable.label;">
-					${context.disable}
+          ${context.disable}
         </menu>
         <menu id="web-developer-cookies-context" accesskey="&webdeveloper.cookies.key;" label="&webdeveloper.cookies.label;">
-					${context.cookies}
+          ${context.cookies}
         </menu>
         <menu id="web-developer-css-context" accesskey="&webdeveloper.css.key;" label="&webdeveloper.css.label;">
-					${context.css}
+          ${context.css}
         </menu>
         <menu id="web-developer-forms-context" accesskey="&webdeveloper.forms.key;" label="&webdeveloper.forms.label;">
-					${context.forms}
+          ${context.forms}
         </menu>
         <menu id="web-developer-images-context" accesskey="&webdeveloper.images.key;" label="&webdeveloper.images.label;">
-					${context.images}
+          ${context.images}
         </menu>
         <menu id="web-developer-information-context" accesskey="&webdeveloper.information.key;" label="&webdeveloper.information.label;">
-					${context.information}
+          ${context.information}
         </menu>
         <menu id="web-developer-miscellaneous-context" accesskey="&webdeveloper.miscellaneous.key;" label="&webdeveloper.miscellaneous.label;">
-					${context.miscellaneous}
+          ${context.miscellaneous}
         </menu>
         <menu id="web-developer-outline-context" accesskey="&webdeveloper.outline.key;" label="&webdeveloper.outline.label;">
-					${context.outline}
+          ${context.outline}
         </menu>
         <menu id="web-developer-resize-context" accesskey="&webdeveloper.resize.key;" label="&webdeveloper.resize.label;">
-					${context.resize}
+          ${context.resize}
         </menu>
         <menu id="web-developer-tools-context" accesskey="&webdeveloper.tools.key;" label="&webdeveloper.tools.label;">
-					${context.tools}
+          ${context.tools}
         </menu>
         <menu id="web-developer-view-source-context" accesskey="&webdeveloper.view.source.key;" label="&webdeveloper.view.source.label;">
-					${context.view.source}
+          ${context.view.source}
         </menu>
         <menuseparator id="web-developer-context-separator1"/>
         <menu id="web-developer-options-context" accesskey="&webdeveloper.options.key;" label="&webdeveloper.options.label;">
-					${context.options}
+          ${context.options}
         </menu>
       </menupopup>
     </menu>
-	</popup>
+  </popup>
 
   <toolbarpalette id="BrowserToolbarPalette">
     <toolbarbutton id="web-developer-button" class="chromeclass-toolbar-additional toolbarbutton-1" label="&webdeveloper.name;" tooltiptext="&webdeveloper.name;" type="menu-button" oncommand="WebDeveloper.Overlay.toggleToolbar(event)">
       <menupopup>
         <menu id="web-developer-disable-toolbar-button" accesskey="&webdeveloper.disable.key;" label="&webdeveloper.disable.label;">
-					${toolbar.button.disable}
+          ${toolbar.button.disable}
         </menu>
         <menu id="web-developer-cookies-toolbar-button" accesskey="&webdeveloper.cookies.key;" label="&webdeveloper.cookies.label;">
-					${toolbar.button.cookies}
+          ${toolbar.button.cookies}
         </menu>
         <menu id="web-developer-css-toolbar-button" accesskey="&webdeveloper.css.key;" label="&webdeveloper.css.label;">
-					${toolbar.button.css}
+          ${toolbar.button.css}
         </menu>
         <menu id="web-developer-forms-toolbar-button" accesskey="&webdeveloper.forms.key;" label="&webdeveloper.forms.label;">
-					${toolbar.button.forms}
+          ${toolbar.button.forms}
         </menu>
         <menu id="web-developer-images-toolbar-button" accesskey="&webdeveloper.images.key;" label="&webdeveloper.images.label;">
-					${toolbar.button.images}
+          ${toolbar.button.images}
         </menu>
         <menu id="web-developer-information-toolbar-button" accesskey="&webdeveloper.information.key;" label="&webdeveloper.information.label;">
-					${toolbar.button.information}
+          ${toolbar.button.information}
         </menu>
         <menu id="web-developer-miscellaneous-toolbar-button" accesskey="&webdeveloper.miscellaneous.key;" label="&webdeveloper.miscellaneous.label;">
-					${toolbar.button.miscellaneous}
+          ${toolbar.button.miscellaneous}
         </menu>
         <menu id="web-developer-outline-toolbar-button" accesskey="&webdeveloper.outline.key;" label="&webdeveloper.outline.label;">
-					${toolbar.button.outline}
+          ${toolbar.button.outline}
         </menu>
         <menu id="web-developer-resize-toolbar-button" accesskey="&webdeveloper.resize.key;" label="&webdeveloper.resize.label;">
-					${toolbar.button.resize}
+          ${toolbar.button.resize}
         </menu>
         <menu id="web-developer-tools-toolbar-button" accesskey="&webdeveloper.tools.key;" label="&webdeveloper.tools.label;">
-					${toolbar.button.tools}
+          ${toolbar.button.tools}
         </menu>
         <menu id="web-developer-view-source-toolbar-button" accesskey="&webdeveloper.view.source.key;" label="&webdeveloper.view.source.label;">
-					${toolbar.button.view.source}
+          ${toolbar.button.view.source}
         </menu>
         <menuseparator id="web-developer-toolbar-button-separator1"/>
         <menu id="web-developer-options-toolbar-button" accesskey="&webdeveloper.options.key;" label="&webdeveloper.options.label;">
-					${toolbar.button.options}
+          ${toolbar.button.options}
         </menu>
       </menupopup>
     </toolbarbutton>
-    <toolbarbutton id="web-developer-disable-toolbar" label="&webdeveloper.disable.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
-			${toolbar.disable}
+    <toolbarbutton id="web-developer-disable-toolbar" label="&webdeveloper.disable.label;" tooltiptext="&webdeveloper.disable.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+      ${toolbar.disable}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-cookies-toolbar" label="&webdeveloper.cookies.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
-			${toolbar.cookies}
+    <toolbarbutton id="web-developer-cookies-toolbar" label="&webdeveloper.cookies.label;" tooltiptext="&webdeveloper.cookies.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+      ${toolbar.cookies}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-css-toolbar" label="&webdeveloper.css.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
-			${toolbar.css}
+    <toolbarbutton id="web-developer-css-toolbar" label="&webdeveloper.css.label;" tooltiptext="&webdeveloper.css.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+      ${toolbar.css}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-forms-toolbar" label="&webdeveloper.forms.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
-			${toolbar.forms}
+    <toolbarbutton id="web-developer-forms-toolbar" label="&webdeveloper.forms.label;" tooltiptext="&webdeveloper.forms.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+      ${toolbar.forms}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-images-toolbar" label="&webdeveloper.images.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
-			${toolbar.images}
+    <toolbarbutton id="web-developer-images-toolbar" label="&webdeveloper.images.label;" tooltiptext="&webdeveloper.images.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+      ${toolbar.images}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-information-toolbar" label="&webdeveloper.information.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
-			${toolbar.information}
+    <toolbarbutton id="web-developer-information-toolbar" label="&webdeveloper.information.label;" tooltiptext="&webdeveloper.information.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+      ${toolbar.information}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-miscellaneous-toolbar" label="&webdeveloper.miscellaneous.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
-			${toolbar.miscellaneous}
+    <toolbarbutton id="web-developer-miscellaneous-toolbar" label="&webdeveloper.miscellaneous.label;" tooltiptext="&webdeveloper.information.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+      ${toolbar.miscellaneous}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-outline-toolbar" label="&webdeveloper.outline.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
-			${toolbar.outline}
+    <toolbarbutton id="web-developer-outline-toolbar" label="&webdeveloper.outline.label;" tooltiptext="&webdeveloper.outline.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+      ${toolbar.outline}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-resize-toolbar" label="&webdeveloper.resize.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
-			${toolbar.resize}
+    <toolbarbutton id="web-developer-resize-toolbar" label="&webdeveloper.resize.label;" tooltiptext="&webdeveloper.resize.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+      ${toolbar.resize}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-tools-toolbar" label="&webdeveloper.tools.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
-			${toolbar.tools}
+    <toolbarbutton id="web-developer-tools-toolbar" label="&webdeveloper.tools.label;" tooltiptext="&webdeveloper.tools.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+      ${toolbar.tools}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-view-source-toolbar" label="&webdeveloper.view.source.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
-			${toolbar.view.source}
+    <toolbarbutton id="web-developer-view-source-toolbar" label="&webdeveloper.view.source.label;" tooltiptext="&webdeveloper.view.source.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+      ${toolbar.view.source}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-options-toolbar" label="&webdeveloper.options.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
-			${toolbar.options}
+    <toolbarbutton id="web-developer-options-toolbar" label="&webdeveloper.options.label;" tooltiptext="&webdeveloper.options.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+      ${toolbar.options}
     </toolbarbutton>
     <toolbarbutton id="web-developer-render-mode-statusbar" tooltiptext="&webdeveloper.render.mode;" oncommand="WebDeveloper.Overlay.Information.viewPageInformation()"/>
     <toolbarbutton id="web-developer-css-statusbar" tooltiptext="&webdeveloper.no.css.errors;" oncommand="WebDeveloper.Overlay.openErrorConsole()"/>
@@ -459,7 +460,7 @@
       <hbox align="center" flex="1">
         <description class="web-developer-name" value="&webdeveloper.name;"/>
         <spacer class="web-developer-small"/>
-				<browser id="web-developer-element-ancestors-browser" disablehistory="true" enablehistory="false" flex="1" src="chrome://web-developer/content/toolbar/html/element-ancestors.html"/>
+        <browser id="web-developer-element-ancestors-browser" disablehistory="true" enablehistory="false" flex="1" src="chrome://web-developer/content/toolbar/html/element-ancestors.html"/>
       </hbox>
     </toolbar>
     <toolbar id="web-developer-line-guides-toolbar" class="chromeclass-toolbar web-developer-toolbar" collapsed="false" grippytooltiptext="&webdeveloper.line.guides;" hidden="true" inherits="collapsed,hidden" mode="full">
@@ -473,20 +474,20 @@
         <button label="&webdeveloper.add.horizontal.line.guide;" oncommand="WebDeveloper.LineGuides.addHorizontalLineGuide()"/>
         <button label="&webdeveloper.add.vertical.line.guide;" oncommand="WebDeveloper.LineGuides.addVerticalLineGuide()"/>
         <hbox id="web-developer-line-guides-information" align="center" hidden="true">
-	        <spacer/>
-	        <description value="&webdeveloper.position.label;"/>
-	        <description id="web-developer-line-guide-position"/>
-	        <spacer class="web-developer-small"/>
-	        <description value="&webdeveloper.previous.position.label;"/>
-	        <description id="web-developer-previous-line-guide-position"/>
-	        <spacer class="web-developer-small"/>
-	        <description value="&webdeveloper.next.position.label;"/>
-	        <description id="web-developer-next-line-guide-position"/>
+          <spacer/>
+          <description value="&webdeveloper.position.label;"/>
+          <description id="web-developer-line-guide-position"/>
+          <spacer class="web-developer-small"/>
+          <description value="&webdeveloper.previous.position.label;"/>
+          <description id="web-developer-previous-line-guide-position"/>
+          <spacer class="web-developer-small"/>
+          <description value="&webdeveloper.next.position.label;"/>
+          <description id="web-developer-next-line-guide-position"/>
         </hbox>
       </hbox>
       <toolbarspring/>
       <hbox align="center">
-	      <toolbarbutton class="web-developer-close" tooltiptext="&webdeveloper.close.toolbar;" oncommand="WebDeveloper.Overlay.Miscellaneous.displayLineGuides(document.getElementById('web-developer-display-line-guides-command'))"/>
+        <toolbarbutton class="web-developer-close" tooltiptext="&webdeveloper.close.toolbar;" oncommand="WebDeveloper.Overlay.Miscellaneous.displayLineGuides(document.getElementById('web-developer-display-line-guides-command'))"/>
       </hbox>
     </toolbar>
     <toolbar id="web-developer-page-magnifier-toolbar" class="chromeclass-toolbar web-developer-toolbar" collapsed="false" grippytooltiptext="&webdeveloper.page.magnifier;" hidden="true" inherits="collapsed,hidden" mode="full">
@@ -499,7 +500,7 @@
       </hbox>
       <toolbarspring/>
       <hbox align="center">
-	      <toolbarbutton class="web-developer-close" tooltiptext="&webdeveloper.close.toolbar;" oncommand="WebDeveloper.Overlay.Miscellaneous.displayPageMagnifier(document.getElementById('web-developer-display-page-magnifier-command'))"/>
+        <toolbarbutton class="web-developer-close" tooltiptext="&webdeveloper.close.toolbar;" oncommand="WebDeveloper.Overlay.Miscellaneous.displayPageMagnifier(document.getElementById('web-developer-display-page-magnifier-command'))"/>
       </hbox>
     </toolbar>
     <toolbar id="web-developer-page-validation-toolbar" class="chromeclass-toolbar web-developer-toolbar" collapsed="false" grippytooltiptext="&webdeveloper.page.validation;" hidden="true" inherits="collapsed,hidden" mode="full">
@@ -515,7 +516,7 @@
       </hbox>
       <toolbarspring/>
       <hbox align="center">
-	      <toolbarbutton class="web-developer-close" tooltiptext="&webdeveloper.close.toolbar;" oncommand="WebDeveloper.Overlay.Tools.displayPageValidation(document.getElementById('web-developer-display-page-validation-command'))"/>
+        <toolbarbutton class="web-developer-close" tooltiptext="&webdeveloper.close.toolbar;" oncommand="WebDeveloper.Overlay.Tools.displayPageValidation(document.getElementById('web-developer-display-page-validation-command'))"/>
       </hbox>
     </toolbar>
     <toolbar id="web-developer-ruler-toolbar" class="chromeclass-toolbar web-developer-toolbar" collapsed="false" grippytooltiptext="&webdeveloper.ruler;" hidden="true" inherits="collapsed,hidden" mode="full">
@@ -549,7 +550,7 @@
       </hbox>
       <toolbarspring/>
       <hbox align="center">
-	      <toolbarbutton class="web-developer-close" tooltiptext="&webdeveloper.close.toolbar;" oncommand="WebDeveloper.Overlay.Miscellaneous.displayRuler(document.getElementById('web-developer-display-ruler-command'))"/>
+        <toolbarbutton class="web-developer-close" tooltiptext="&webdeveloper.close.toolbar;" oncommand="WebDeveloper.Overlay.Miscellaneous.displayRuler(document.getElementById('web-developer-display-ruler-command'))"/>
       </hbox>
     </toolbar>
   </toolbox>
@@ -561,12 +562,12 @@
         <tabs id="web-developer-dashboard-tabs">
           <spacer id="web-developer-dashboard-flex-spacer" flex="1"/>
           <toolbarbutton id="web-developer-move-dashboard" tooltiptext="&webdeveloper.move.dashboard;" type="menu">
-			      <menupopup onpopupshowing="WebDeveloper.Dashboard.updateMoveMenu()">
-			        <menuitem id="web-developer-move-dashboard-bottom" label="&webdeveloper.bottom;" name="web-developer-move-dashboard-group" type="radio" oncommand="WebDeveloper.Dashboard.moveDashboard('bottom')"/>
-			        <menuitem id="web-developer-move-dashboard-left" label="&webdeveloper.left;" name="web-developer-move-dashboard-group" type="radio" oncommand="WebDeveloper.Dashboard.moveDashboard('left')"/>
-			        <menuitem id="web-developer-move-dashboard-right" label="&webdeveloper.right;" name="web-developer-move-dashboard-group" type="radio" oncommand="WebDeveloper.Dashboard.moveDashboard('right')"/>
-			        <menuitem id="web-developer-move-dashboard-top" label="&webdeveloper.top;" name="web-developer-move-dashboard-group" type="radio" oncommand="WebDeveloper.Dashboard.moveDashboard('top')"/>
-			      </menupopup>
+            <menupopup onpopupshowing="WebDeveloper.Dashboard.updateMoveMenu()">
+              <menuitem id="web-developer-move-dashboard-bottom" label="&webdeveloper.bottom;" name="web-developer-move-dashboard-group" type="radio" oncommand="WebDeveloper.Dashboard.moveDashboard('bottom')"/>
+              <menuitem id="web-developer-move-dashboard-left" label="&webdeveloper.left;" name="web-developer-move-dashboard-group" type="radio" oncommand="WebDeveloper.Dashboard.moveDashboard('left')"/>
+              <menuitem id="web-developer-move-dashboard-right" label="&webdeveloper.right;" name="web-developer-move-dashboard-group" type="radio" oncommand="WebDeveloper.Dashboard.moveDashboard('right')"/>
+              <menuitem id="web-developer-move-dashboard-top" label="&webdeveloper.top;" name="web-developer-move-dashboard-group" type="radio" oncommand="WebDeveloper.Dashboard.moveDashboard('top')"/>
+            </menupopup>
           </toolbarbutton>
           <spacer id="web-developer-dashboard-spacer"/>
           <toolbarbutton class="web-developer-close" tooltiptext="&webdeveloper.close.dashboard.tab;" oncommand="WebDeveloper.Dashboard.closeDashboardTab()"/>

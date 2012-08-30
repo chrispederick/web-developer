@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE overlay SYSTEM "chrome://web-developer/locale/options/options.dtd">
 <overlay id="web-developer-options-resize-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	<prefpane id="web-developer-options-resize-pane" label="&webdeveloper.resize;">
-  	<preferences/>
+  <prefpane id="web-developer-options-resize-pane" label="&webdeveloper.resize;">
+    <preferences/>
 
     <hbox align="top">
       <listbox id="web-developer-resize-options" flex="1" onselect="WebDeveloper.Options.selectResizeOption()">

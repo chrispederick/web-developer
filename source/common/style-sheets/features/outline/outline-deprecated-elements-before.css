@@ -1,0 +1,12 @@
+applet:before, basefont:before, center:before, dir:before, font:before, isindex:before, menu:before, s:before, strike:before, u:before { outline: 1px solid #b94a48 !important; }
+
+applet:before { content: "<applet>" !important; }
+basefont:before { content: "<basefont>" !important; }
+center:before { content: "<center>" !important; }
+dir:before { content: "<dir>" !important; }
+font:before { content: "<font>" !important; }
+isindex:before { content: "<isindex>" !important; }
+menu:before { content: "<menu>" !important; }
+s:before { content: "<s>" !important; }
+strike:before { content: "<strike>" !important; }
+u:before { content: "<u>" !important; }

@@ -1,0 +1,61 @@
+<!-- Common -->
+<!ENTITY webdeveloper.add "Lägg till…">
+<!ENTITY webdeveloper.application.label "Program:">
+<!ENTITY webdeveloper.choose "Välj…">
+<!ENTITY webdeveloper.delete "Ta bort…">
+<!ENTITY webdeveloper.description "Beskrivning">
+<!ENTITY webdeveloper.description.label "Beskrivning:">
+<!ENTITY webdeveloper.edit "Redigera…">
+<!ENTITY webdeveloper.height "Höjd">
+<!ENTITY webdeveloper.height.label "Höjd:">
+<!ENTITY webdeveloper.keyboard "Kortkommandon">
+<!ENTITY webdeveloper.keyboard.label "Kortkommando:">
+<!ENTITY webdeveloper.keyboard.shortcuts.restart "Ändringar av kortkommandon kräver en omstart av webbläsaren.">
+<!ENTITY webdeveloper.move.down "Flytta nedåt">
+<!ENTITY webdeveloper.move.up "Flytta uppåt">
+<!ENTITY webdeveloper.new.separator "Ny avgränsare">
+<!ENTITY webdeveloper.options.title "Inställningar för Web Developer">
+<!ENTITY webdeveloper.width "Bredd">
+<!ENTITY webdeveloper.width.label "Bredd:">
+<!-- Pane titles -->
+<!ENTITY webdeveloper.advanced "Avancerat">
+<!ENTITY webdeveloper.colors "Färger">
+<!ENTITY webdeveloper.general "Allmänt">
+<!ENTITY webdeveloper.resize "Storleksändring">
+<!ENTITY webdeveloper.responsive "Anpassningsbar webbdesign">
+<!ENTITY webdeveloper.tools "Verktyg">
+<!ENTITY webdeveloper.view.source "Visa källkod">
+<!-- Allmänt pane -->
+<!ENTITY webdeveloper.context.hide "Dölj Web Developers snabbmeny">
+<!ENTITY webdeveloper.icons "Ikoner">
+<!ENTITY webdeveloper.icons.text "Ikoner &amp; text">
+<!ENTITY webdeveloper.menu.hide "Dölj Web Devlopers program- och Verktyg-menyer">
+<!ENTITY webdeveloper.text "Text">
+<!ENTITY webdeveloper.text.color "Text:">
+<!ENTITY webdeveloper.toolbar.icons "Visa Web Devlopers verktygsfält med:">
+<!-- Färger pane -->
+<!ENTITY webdeveloper.dark "Mörk">
+<!ENTITY webdeveloper.light "Ljus">
+<!ENTITY webdeveloper.none "Ingen">
+<!ENTITY webdeveloper.preview "Förhandsgranskning:">
+<!ENTITY webdeveloper.syntax.highlight.theme "Syntaxmarkering:">
+<!ENTITY webdeveloper.toolbar.color "Visa verktygsfältsikoner i färg">
+<!-- Kortkommando pane -->
+<!ENTITY webdeveloper.feature "Funktion">
+<!ENTITY webdeveloper.feature.label "Funktion:">
+<!ENTITY webdeveloper.tools.keyboard.shortcuts "Verktygens kortkommandon kan ändras under panelen Verktyg i inställningarna.">
+<!-- Byt storlek pane -->
+<!ENTITY webdeveloper.viewport "Visningsområde">
+<!-- Byt storlek dialog -->
+<!ENTITY webdeveloper.resize.viewport "Byt storlek på visningsområdet">
+<!-- Verktyg pane -->
+<!ENTITY webdeveloper.application.url "Program/URL">
+<!-- Tool dialog -->
+<!ENTITY webdeveloper.url "URL:">
+<!-- Visa källkod pane -->
+<!ENTITY webdeveloper.application "Program">
+<!ENTITY webdeveloper.view.source.tab "Visa källkod i en flik istället för ett fönster (källkoden läses inte in från cachen)">
+<!ENTITY webdeveloper.view.source.with "Visa källkod med">
+<!-- Avancerat pane -->
+<!ENTITY webdeveloper.confirmation.dialogs.hide "Dölj Web Developers bekräftelsedialoger">
+<!ENTITY webdeveloper.populate.email.address "E-postadress att använda till att fylla i e-postfält i formulär:">

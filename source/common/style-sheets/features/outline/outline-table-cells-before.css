@@ -1,0 +1,9 @@
+td:before, th:before { background: #b94a48 !important; }
+table table td:before, table table th:before { background: #468847 !important; }
+table table table td:before, table table table th:before { background: #3a87ad !important; }
+table table table table td:before, table table table table th:before { background: #b94a48 !important; }
+table table table table table td:before, table table table table table th:before { background: #468847 !important; }
+table table table table table table td:before, table table table table table table th:before { background: #3a87ad !important; }
+
+td:before { content: "<td>" !important; }
+th:before { content: "<th>" !important; }

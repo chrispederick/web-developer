@@ -2,39 +2,39 @@
 <html id="web-developer-about" lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<title>@name@</title>
-	<link href="about.css" rel="stylesheet">
-	<link href="images/favicon.png" rel="shortcut icon">
+  <meta charset="utf-8">
+  <title>@name@</title>
+  <link href="about.css" rel="stylesheet">
+  <link href="images/favicon.png" rel="shortcut icon">
 </head>
 
 <body>
 
-<div class="hero-unit">
-	<h1>@name@</h1>
-	<p id="description"></p>
+<div class="hero-unit well well-large">
+  <h1>@name@</h1>
+  <p id="description"></p>
 
-	<div class="row">
-		<div class="span2">
-			<h2 id="author"></h2>
-			<a href="http://chrispederick.com/about/">@author@</a>
-		</div>
+  <div class="row">
+    <div class="span2">
+      <h2 id="author"></h2>
+      <a href="http://chrispederick.com/about/">@author@</a>
+    </div>
 
-		<div class="span2">
-			<h2 id="version"></h2>
-			@version@
-		</div>
+    <div class="span2">
+      <h2 id="version"></h2>
+      @version@
+    </div>
 
-		<div class="span2">
-			<h2 id="build-date"></h2>
-			@build.date@
-		</div>
-	</div>
+    <div class="span2">
+      <h2 id="build-date"></h2>
+      @build.date@
+    </div>
+  </div>
 
-	<p class="url"><a href="@url@">@url@</a></p>
+  <p class="url"><a href="@url@">@url@</a></p>
 </div>
 
-<script src="javascript/jquery.js"></script>
+<script src="@jquery_prefix@/common/jquery.js"></script>
 <script src="javascript/about.js"></script>
 
 </body>

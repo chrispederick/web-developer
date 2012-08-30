@@ -2,41 +2,41 @@
 <html id="web-developer-background" lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<title>@name@</title>
+  <meta charset="utf-8">
+  <title>@name@</title>
 </head>
 
 <body>
 
-<script src="javascript/jquery.js"></script>
+<script src="@jquery_prefix@/common/jquery.js"></script>
 <script src="javascript/background.js"></script>
 
 <script id="dashboard" type="text/html">
-	<div id="web-developer-dashboard-resizer">&bull;</div><h1 class="brand"><img width="16" height="16" alt="">{{dashboardTitle}}</h1><div class="tabbable tabs-below"><ul id="web-developer-dashboard-tabs" class="nav nav-tabs"></ul><div id="web-developer-dashboard-panels" class="tab-content"></div></div>
+  <div id="web-developer-dashboard-resizer">&bull;</div><h1 class="brand"><img width="16" height="16" alt="">{{dashboardTitle}}</h1><div class="tabbable tabs-below"><ul id="web-developer-dashboard-tabs" class="nav nav-tabs"></ul><div id="web-developer-dashboard-panels" class="tab-content"></div></div>
 </script>
 
 <script id="dashboardPanel" type="text/html">
-	<div id="{{tabId}}-panel" class="tab-pane active"></div>
+  <div id="{{tabId}}-panel" class="tab-pane active"></div>
 </script>
 
 <script id="dashboardTab" type="text/html">
-	<li id="{{tabId}}-tab" class="active"><a href="#{{tabId}}-panel" data-toggle="tab">{{title}}</a></li>
+  <li id="{{tabId}}-tab" class="active"><a href="#{{tabId}}-panel" data-toggle="tab">{{title}}</a></li>
 </script>
 
 <script id="elementInformationPanel" type="text/html">
-	<div id="element-information-content" class="container-fluid"><p class="web-developer-information">{{selectAnElementDisplayInformation}}</p></div><div id="current-element-ancestors"></div>
+  <div id="element-information-content" class="container-fluid"><p class="web-developer-information">{{selectAnElementDisplayInformation}}</p></div><div id="current-element-ancestors"></div>
 </script>
 
 <script id="editCSSPanel" type="text/html">
-	<div class="tabbable"><ul id="web-developer-edit-css-tabs" class="nav nav-tabs"></ul><div id="web-developer-edit-css-panels" class="tab-content"></div></div>
+  <div class="tabbable"><ul id="web-developer-edit-css-tabs" class="nav nav-tabs"></ul><div id="web-developer-edit-css-panels" class="tab-content"></div></div>
 </script>
 
 <script id="editCSSTabPanel" type="text/html">
-	<div id="edit-css-panel-{{position}}" class="tab-pane {{active}}"><textarea>{{css}}</textarea></div>
+  <div id="edit-css-panel-{{position}}" class="tab-pane {{active}}"><textarea>{{css}}</textarea></div>
 </script>
 
 <script id="editCSSTab" type="text/html">
-	<li id="edit-css-tab-{{position}}" class="{{active}}"><a href="#edit-css-panel-{{position}}" data-toggle="tab">{{title}}</a></li>
+  <li id="edit-css-tab-{{position}}" class="{{active}}"><a href="#edit-css-panel-{{position}}" data-toggle="tab">{{title}}</a></li>
 </script>
 
 </body>
