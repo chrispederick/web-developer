@@ -18,6 +18,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var layouts           = data.layouts;
   var url               = data.pageURL;
   var width             = null;
+  var scrollbarWidth  = WebDeveloper.Common.getScrollbarWidth();
 
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.localizeHeader(locale);
@@ -33,9 +34,9 @@ WebDeveloper.Generated.initialize = function(data, locale)
     layout            = layouts[i];
     childElement      = document.createElement("i");
     element           = document.createElement("h3");
-    height            = layout.height;
-    width             = layout.width;
-    layoutDescription = layout.description + " (" + width + "x" + height + ")";
+    height            = parseInt(layout.height) + scrollbarWidth;
+    width             = parseInt(layout.width) + scrollbarWidth;
+    layoutDescription = layout.description + " (" + layout.height + "x" + layout.width + ")";
 
     childElement.setAttribute("class", "icon-caret-down");
     element.appendChild(childElement);
