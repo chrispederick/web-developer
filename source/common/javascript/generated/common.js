@@ -268,10 +268,10 @@ WebDeveloper.Common.getScrollbarWidth = function()
   var inner= document.createElement('div');
   var scrollWidth;
   
-  outer.style.width = '100px';
-  outer.style.height = '100px';
-  outer.style.overflow = 'auto';
-  inner.style.height = '150px';
+  outer.style.width		= '100px';
+  outer.style.height	= '100px';
+  outer.style.overflow	= 'auto';
+  inner.style.height	= '150px';
   
   document.body.appendChild(outer);
   outer.appendChild(inner);
