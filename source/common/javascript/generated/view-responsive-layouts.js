@@ -50,6 +50,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
     childElement.setAttribute("height", height);
     childElement.setAttribute("src", url);
     childElement.setAttribute("width", width);
+	childElement.setAttribute("scrolling", "yes");
 
     container.appendChild(childElement);
     content.appendChild(container);
