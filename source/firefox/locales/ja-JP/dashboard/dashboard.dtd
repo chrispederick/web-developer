@@ -1,0 +1,21 @@
+<!-- Common -->
+<!ENTITY webdeveloper.clear "CSSを全消去">
+<!ENTITY webdeveloper.dark "Dark">
+<!ENTITY webdeveloper.light "Light">
+<!ENTITY webdeveloper.none "None">
+<!ENTITY webdeveloper.reset "CSSを初期値に戻す">
+<!ENTITY webdeveloper.save "保存">
+<!ENTITY webdeveloper.search "検索">
+<!ENTITY webdeveloper.search.label "検索:">
+<!ENTITY webdeveloper.syntax.highlighting "Syntax Highlighting">
+<!-- Element Information -->
+<!ENTITY webdeveloper.element.information "要素(タグ)の情報">
+<!-- Style Information -->
+<!ENTITY webdeveloper.style.information "CSSの情報">
+<!-- Edit CSS -->
+<!ENTITY webdeveloper.edit.css "CSS編集">
+<!ENTITY webdeveloper.open "開く">
+<!ENTITY webdeveloper.pin.css "ピンを打つ">
+<!-- Edit HTML -->
+<!ENTITY webdeveloper.edit.html "HTML編集">
+<!ENTITY webdeveloper.html.body "HTML Body">

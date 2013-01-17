@@ -1,0 +1,5 @@
+<!-- Resize Window -->
+<!ENTITY webdeveloper.width "Breite:">
+<!ENTITY webdeveloper.height "Höhe:">
+<!ENTITY webdeveloper.resize.viewport "Größe des Ansichtsfensters verändern">
+<!ENTITY webdeveloper.resize.window "Fenstergröße verändern">

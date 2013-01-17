@@ -22,6 +22,14 @@
     <toolbarbutton id="web-developer-save-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.save;" oncommand="WebDeveloper.EditCSS.save()"/>
     <toolbarbutton id="web-developer-clear-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.clear;" oncommand="WebDeveloper.EditCSS.clear()"/>
     <toolbarbutton id="web-developer-reset-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.reset;" oncommand="WebDeveloper.EditCSS.reset()"/>
+    <toolbarseparator/>
+    <toolbarbutton id="web-developer-syntax-highlight-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.syntax.highlighting;" type="menu">
+      <menupopup>
+        <menuitem id="web-developer-syntax-highlight-dark" label="&webdeveloper.dark;" name="web-developer-syntax-highlight-dashboard-group" type="radio" oncommand="WebDeveloper.EditCSS.changeSyntaxHighlightTheme('css', 'dark')"/>
+        <menuitem id="web-developer-syntax-highlight-light" label="&webdeveloper.light;" name="web-developer-syntax-highlight-dashboard-group" type="radio" oncommand="WebDeveloper.EditCSS.changeSyntaxHighlightTheme('css', 'light')"/>
+        <menuitem id="web-developer-syntax-highlight-none" label="&webdeveloper.none;" name="web-developer-syntax-highlight-dashboard-group" type="radio" oncommand="WebDeveloper.EditCSS.changeSyntaxHighlightTheme('css', 'none')"/>
+      </menupopup>
+    </toolbarbutton>
     <toolbarbutton id="web-developer-pin-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.pin.css;" type="checkbox" oncommand="WebDeveloper.EditCSS.togglePin()"/>
     <toolbarspring/>
     <hbox id="web-developer-search" align="center">

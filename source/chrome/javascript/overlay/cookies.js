@@ -41,7 +41,7 @@ WebDeveloper.Overlay.Cookies.addCookie = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.tabs.sendRequest(tab.id, {type: "get-location-details"}, function(response)
+      chrome.tabs.sendMessage(tab.id, {type: "get-location-details"}, function(response)
       {
         var addCookieDialog = $("#add-cookie-dialog");
 
@@ -134,7 +134,7 @@ WebDeveloper.Overlay.Cookies.deleteDomainCookies = function()
     {
       chrome.cookies.getAll({}, function(allCookies)
       {
-        chrome.tabs.sendRequest(tab.id, { "allCookies": WebDeveloper.Overlay.Cookies.convertCookies(allCookies), "type": "get-domain-cookies" }, function(cookies)
+        chrome.tabs.sendMessage(tab.id, { "allCookies": WebDeveloper.Overlay.Cookies.convertCookies(allCookies), "type": "get-domain-cookies" }, function(cookies)
         {
           WebDeveloper.Cookies.deleteDomainCookies(cookies);
         });
@@ -153,7 +153,7 @@ WebDeveloper.Overlay.Cookies.deletePathCookies = function()
     {
       chrome.cookies.getAll({}, function(allCookies)
       {
-        chrome.tabs.sendRequest(tab.id, { "allCookies": WebDeveloper.Overlay.Cookies.convertCookies(allCookies), "type": "get-path-cookies" }, function(cookies)
+        chrome.tabs.sendMessage(tab.id, { "allCookies": WebDeveloper.Overlay.Cookies.convertCookies(allCookies), "type": "get-path-cookies" }, function(cookies)
         {
           WebDeveloper.Cookies.deletePathCookies(cookies);
         });
@@ -311,7 +311,7 @@ WebDeveloper.Overlay.Cookies.viewCookieInformation = function()
     {
       chrome.cookies.getAll({}, function(allCookies)
       {
-        chrome.tabs.sendRequest(tab.id, { "allCookies": WebDeveloper.Overlay.Cookies.convertCookies(allCookies), "type": "get-cookies" }, function(data)
+        chrome.tabs.sendMessage(tab.id, { "allCookies": WebDeveloper.Overlay.Cookies.convertCookies(allCookies), "type": "get-cookies" }, function(data)
         {
           chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-cookie-information.html"), tab.index, data, WebDeveloper.Overlay.Cookies.getViewCookieInformationLocale());
 

@@ -1,0 +1,62 @@
+<!-- Common -->
+<!ENTITY webdeveloper.add "Ajouter…">
+<!ENTITY webdeveloper.application.label "Application :">
+<!ENTITY webdeveloper.choose "Choisir…">
+<!ENTITY webdeveloper.delete "Supprimer…">
+<!ENTITY webdeveloper.description "Description">
+<!ENTITY webdeveloper.description.label "Description :">
+<!ENTITY webdeveloper.edit "Modifier…">
+<!ENTITY webdeveloper.height "Hauteur">
+<!ENTITY webdeveloper.height.label "Hauteur :">
+<!ENTITY webdeveloper.keyboard "Clavier">
+<!ENTITY webdeveloper.keyboard.label "Clavier :">
+<!ENTITY webdeveloper.keyboard.shortcuts.restart "Les modifications des raccourcis clavier nécessitent un redémarrage du navigateur.">
+<!ENTITY webdeveloper.move.down "Descendre">
+<!ENTITY webdeveloper.move.up "Monter">
+<!ENTITY webdeveloper.new.separator "Nouveau séparateur">
+<!ENTITY webdeveloper.options.title "Options Web Developer">
+<!ENTITY webdeveloper.width "Largeur">
+<!ENTITY webdeveloper.width.label "Largeur :">
+<!-- Pane titles -->
+<!ENTITY webdeveloper.advanced "Avancé">
+<!ENTITY webdeveloper.colors "Couleurs">
+<!ENTITY webdeveloper.general "Général">
+<!ENTITY webdeveloper.resize "Redimension.">
+<!ENTITY webdeveloper.responsive "Adaptation">
+<!ENTITY webdeveloper.tools "Outils">
+<!ENTITY webdeveloper.view.source "Code source">
+<!-- General pane -->
+<!ENTITY webdeveloper.context.hide "Masquer le menu contextuel Web Developer">
+<!ENTITY webdeveloper.icons "Icônes">
+<!ENTITY webdeveloper.icons.text "Icônes &amp; textes">
+<!ENTITY webdeveloper.menu.hide "Masquer Web Developer du menu Outils et du bouton Firefox">
+<!ENTITY webdeveloper.text "Texte">
+<!ENTITY webdeveloper.text.color "Texte :">
+<!ENTITY webdeveloper.toolbar.icons "Afficher la barre d&apos;outils avec :">
+<!-- Colors pane -->
+<!ENTITY webdeveloper.dark "Foncé">
+<!ENTITY webdeveloper.light "Clair">
+<!ENTITY webdeveloper.none "Aucun">
+<!ENTITY webdeveloper.preview "Aperçu :">
+<!ENTITY webdeveloper.syntax.highlight.performance "Note that turning on syntax highlighting can affect the performance of the browser.">
+<!ENTITY webdeveloper.syntax.highlight.theme "Thème de la coloration syntaxique :">
+<!ENTITY webdeveloper.toolbar.color "Afficher les icônes de la barre d'outils en couleur">
+<!-- Keyboard pane -->
+<!ENTITY webdeveloper.feature "Fonctionnalité">
+<!ENTITY webdeveloper.feature.label "Fonctionnalité :">
+<!ENTITY webdeveloper.tools.keyboard.shortcuts "Les raccourcis claviers des outils peuvent être modifiés dans le réglage des outils.">
+<!-- Resize pane -->
+<!ENTITY webdeveloper.viewport "Espace visible">
+<!-- Resize dialog -->
+<!ENTITY webdeveloper.resize.viewport "Redimensionner l'espace visible">
+<!-- Tools pane -->
+<!ENTITY webdeveloper.application.url "Application/URL">
+<!-- Tool dialog -->
+<!ENTITY webdeveloper.url "URL :">
+<!-- View Source pane -->
+<!ENTITY webdeveloper.application "Application">
+<!ENTITY webdeveloper.view.source.tab "Voir le code source dans un nouvel onglet plutôt qu&apos;une nouvelle fenêtre (ne charge pas le code source à partir du cache)">
+<!ENTITY webdeveloper.view.source.with "Voir le code source avec">
+<!-- Advanced pane -->
+<!ENTITY webdeveloper.confirmation.dialogs.hide "Masquer les dialogues de confirmation de Web Developer">
+<!ENTITY webdeveloper.populate.email.address "Adresse à utiliser pour remplir les champs de formulaire courriel :">

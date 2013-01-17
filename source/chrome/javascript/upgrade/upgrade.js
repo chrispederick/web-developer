@@ -15,7 +15,7 @@ WebDeveloper.Upgrade.setupDefaultOptions = function()
   WebDeveloper.Storage.setItemIfNotSet("populate_email_address", "example@example.com");
 
   // Colors
-  WebDeveloper.Storage.setItemIfNotSet("syntax_highlight_theme", "light");
+  WebDeveloper.Storage.setItemIfNotSet("syntax_highlight_theme", "none");
 
   // Resize
   WebDeveloper.Storage.setItemIfNotSet("resize_1_description", WebDeveloper.Locales.getString("resize_1_description"));

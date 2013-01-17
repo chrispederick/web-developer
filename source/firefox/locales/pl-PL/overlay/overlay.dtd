@@ -39,7 +39,7 @@
 <!ENTITY webdeveloper.disable.java.key "J">
 <!ENTITY webdeveloper.disable.javascript.label "Wyłącz JavaScript">
 <!ENTITY webdeveloper.disable.javascript.key "S">
-<!ENTITY webdeveloper.disable.meta.redirects.label "Wyłącz przekierowania typu meta">
+<!ENTITY webdeveloper.disable.meta.redirects.label "Wyłącz przekierowania typu <meta>">
 <!ENTITY webdeveloper.disable.meta.redirects.key "M">
 <!ENTITY webdeveloper.disable.minimum.font.size.label "Wyłącz minimalny rozmiar czcionki">
 <!ENTITY webdeveloper.disable.minimum.font.size.key "o">
@@ -84,7 +84,7 @@
 <!-- Cookies Features -->
 <!ENTITY webdeveloper.disable.cookies.label "Odrzucaj ciasteczka">
 <!ENTITY webdeveloper.disable.cookies.key "O">
-<!ENTITY webdeveloper.add.cookie.label "Dodaj ciasteczko...">
+<!ENTITY webdeveloper.add.cookie.label "Dodaj ciasteczko…">
 <!ENTITY webdeveloper.add.cookie.key "D">
 <!ENTITY webdeveloper.delete.domain.cookies.label "Usuń ciasteczka domeny">
 <!ENTITY webdeveloper.delete.domain.cookies.key "m">
@@ -102,7 +102,7 @@
 <!-- CSS Features -->
 <!ENTITY webdeveloper.disable.styles.label "Wyłącz style">
 <!ENTITY webdeveloper.disable.styles.key "W">
-<!ENTITY webdeveloper.add.user.style.sheet.label "Dodaj style użytkownika...">
+<!ENTITY webdeveloper.add.user.style.sheet.label "Dodaj style użytkownika…">
 <!ENTITY webdeveloper.add.user.style.sheet.key "D">
 <!ENTITY webdeveloper.display.style.information.label "Wyświetlaj panel informacji o stylach">
 <!ENTITY webdeveloper.display.style.information.key "N">
@@ -145,7 +145,7 @@
 <!ENTITY webdeveloper.convert.form.methods.key "M">
 <!ENTITY webdeveloper.convert.select.elements.text.inputs.label "Przekształć pola wyboru na pola tekstowe">
 <!ENTITY webdeveloper.convert.select.elements.text.inputs.key "K">
-<!ENTITY webdeveloper.convert.text.inputs.textareas.label "Przekształć pola tekstowe na pola wielowierszowe">
+<!ENTITY webdeveloper.convert.text.inputs.textareas.label "Przekształć pola tekstowe na pola wielowierszowe ">
 <!ENTITY webdeveloper.convert.text.inputs.textareas.key "S">
 <!ENTITY webdeveloper.display.form.details.label "Wyświetl szczegóły formularza">
 <!ENTITY webdeveloper.display.form.details.key "S">
@@ -309,7 +309,7 @@
 <!ENTITY webdeveloper.clear.history.key "H">
 <!ENTITY webdeveloper.clear.http.authentication.label "Wyczyść dane uwierzytelniania HTTP">
 <!ENTITY webdeveloper.clear.http.authentication.key "D">
-<!ENTITY webdeveloper.clear.all.private.data.label "Wyczyść wszystkie prywatne dane...">
+<!ENTITY webdeveloper.clear.all.private.data.label "Wyczyść wszystkie prywatne dane…">
 <!ENTITY webdeveloper.clear.all.private.data.key "W">
 <!-- Toggle Visited Links Features -->
 <!ENTITY webdeveloper.mark.all.links.unvisited.label "Zaznacz wszystkie odnośniki jako nieodwiedzone">
@@ -319,7 +319,7 @@
 <!-- Outline Features -->
 <!ENTITY webdeveloper.outline.block.level.elements.label "Wyróżnij elementy blokowe">
 <!ENTITY webdeveloper.outline.block.level.elements.key "B">
-<!ENTITY webdeveloper.outline.custom.elements.label "Wyróżnianie niestandardowe...">
+<!ENTITY webdeveloper.outline.custom.elements.label "Wyróżnianie niestandardowe…">
 <!ENTITY webdeveloper.outline.custom.elements.key "N">
 <!ENTITY webdeveloper.outline.deprecated.elements.label "Wyróżnij elementy przestarzałe">
 <!ENTITY webdeveloper.outline.deprecated.elements.key "S">
@@ -358,14 +358,14 @@
 <!ENTITY webdeveloper.display.window.size.key "R">
 <!ENTITY webdeveloper.display.window.size.title.label "Wyświetlaj rozmiar okna na etykiecie karty">
 <!ENTITY webdeveloper.display.window.size.title.key "T">
-<!ENTITY webdeveloper.resize.window.label "Zmień rozmiar okna...">
+<!ENTITY webdeveloper.resize.window.label "Zmień rozmiar okna…">
 <!ENTITY webdeveloper.resize.window.key "O">
-<!ENTITY webdeveloper.edit.resize.dimensions.label "Edytuj wymiary skalowania...">
+<!ENTITY webdeveloper.edit.resize.dimensions.label "Edytuj wymiary skalowania…">
 <!ENTITY webdeveloper.edit.resize.dimensions.key "E">
 <!ENTITY webdeveloper.view.responsive.layouts.label "Wyświetl układy responsywne">
 <!ENTITY webdeveloper.view.responsive.layouts.key "U">
 <!-- Tools Features -->
-<!ENTITY webdeveloper.edit.tools.label "Narzędzia edycji...">
+<!ENTITY webdeveloper.edit.tools.label "Narzędzia edycji…">
 <!ENTITY webdeveloper.edit.tools.key "N">
 <!ENTITY webdeveloper.display.page.validation.label "Sprawdź stronę">
 <!ENTITY webdeveloper.display.page.validation.key "S">
@@ -382,18 +382,18 @@
 <!ENTITY webdeveloper.view.frame.source.key "R">
 <!ENTITY webdeveloper.view.generated.source.label "Wygeneruj źródło strony">
 <!ENTITY webdeveloper.view.generated.source.key "W">
-<!ENTITY webdeveloper.edit.view.source.with.applications.label "Edytuj źródło strony w programie...">
+<!ENTITY webdeveloper.edit.view.source.with.applications.label "Edytuj źródło strony w programie…">
 <!ENTITY webdeveloper.edit.view.source.with.applications.key "E">
 <!-- Options Features -->
 <!ENTITY webdeveloper.pin.features.label "Zablokuj funkcje">
 <!ENTITY webdeveloper.pin.features.key "Z">
 <!ENTITY webdeveloper.active.features.label "Aktywuj funkcje">
 <!ENTITY webdeveloper.active.features.key "A">
-<!ENTITY webdeveloper.options.menu.label "Ustawienia...">
+<!ENTITY webdeveloper.options.menu.label "Ustawienia…">
 <!ENTITY webdeveloper.options.menu.key "U">
-<!ENTITY webdeveloper.help.label "Pomoc...">
+<!ENTITY webdeveloper.help.label "Pomoc…">
 <!ENTITY webdeveloper.help.key "P">
-<!ENTITY webdeveloper.about.label "O rozszerzeniu...">
+<!ENTITY webdeveloper.about.label "O rozszerzeniu…">
 <!ENTITY webdeveloper.about.key "O">
 <!-- Active Features -->
 <!ENTITY webdeveloper.reset.page.label "Resetuj stronę">

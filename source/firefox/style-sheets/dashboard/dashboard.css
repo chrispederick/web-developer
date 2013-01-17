@@ -1,5 +1,6 @@
 /* Common styles */
 
+#web-developer-syntax-highlight-dashboard { -moz-box-orient: horizontal; }
 #web-developer-search-dashboard-text { font-size: 13px; }
 
 /* Element information styles */

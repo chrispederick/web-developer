@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
   <Description about="urn:mozilla:install-manifest">
-    <em:aboutURL>chrome://web-developer/content/about/about.xul</em:aboutURL>
     <em:creator>@author@</em:creator>
     <em:description>@description@</em:description>
     <em:homepageURL>@url@</em:homepageURL>
@@ -20,22 +19,43 @@
     </em:localized>
     <em:localized>
       <Description>
+        <em:locale>de</em:locale>
+        <em:name>@name@</em:name>
+        <em:description>Fügt ein Menü und eine Symbolleiste mit diversen Werkzeugen für Webentwickler hinzu.</em:description>
+      </Description>
+    </em:localized>
+    <em:localized>
+      <Description>
+        <em:locale>ja-JP</em:locale>
+        <em:name>@name@</em:name>
+        <em:description>はツールバーや右クリックメニューから利用できる便利なWeb開発ツールです</em:description>
+      </Description>
+    </em:localized>
+    <em:localized>
+      <Description>
         <em:locale>sv-SE</em:locale>
         <em:name>@name@</em:name>
         <em:description>Lägger till en meny och ett verktygsfält med diverse webbutvecklingsverktyg.</em:description>
       </Description>
     </em:localized>
+    <em:localized>
+      <Description>
+        <em:locale>zh-CN</em:locale>
+        <em:name>@name@</em:name>
+        <em:description>款能在浏览器中添加各种Web开发功能的工具</em:description>
+      </Description>
+    </em:localized>
     <em:targetApplication>
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
-        <em:maxVersion>17.*</em:maxVersion>
+        <em:maxVersion>20.*</em:maxVersion>
         <em:minVersion>3.6</em:minVersion>
       </Description>
     </em:targetApplication>
 		<em:targetApplication>
 		  <Description>
 		    <em:id>{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}</em:id>
-		    <em:maxVersion>2.11.*</em:maxVersion>
+		    <em:maxVersion>2.16.*</em:maxVersion>
 		    <em:minVersion>2.0</em:minVersion>
 		  </Description>
 		</em:targetApplication>

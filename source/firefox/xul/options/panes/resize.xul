@@ -4,6 +4,9 @@
   <prefpane id="web-developer-options-resize-pane" label="&webdeveloper.resize;">
     <preferences/>
 
+    <description value="&webdeveloper.keyboard.shortcuts.restart;"/>
+    <separator/>
+
     <hbox align="top">
       <listbox id="web-developer-resize-options" flex="1" onselect="WebDeveloper.Options.selectResizeOption()">
         <listhead>

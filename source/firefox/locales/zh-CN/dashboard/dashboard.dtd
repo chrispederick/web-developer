@@ -1,0 +1,21 @@
+<!-- Common -->
+<!ENTITY webdeveloper.clear "清除">
+<!ENTITY webdeveloper.dark "Dark">
+<!ENTITY webdeveloper.light "Light">
+<!ENTITY webdeveloper.none "None">
+<!ENTITY webdeveloper.reset "重置">
+<!ENTITY webdeveloper.save "保存...">
+<!ENTITY webdeveloper.search "搜索">
+<!ENTITY webdeveloper.search.label "搜索:">
+<!ENTITY webdeveloper.syntax.highlighting "Syntax Highlighting">
+<!-- Element Information -->
+<!ENTITY webdeveloper.element.information "元素 信息">
+<!-- Style Information -->
+<!ENTITY webdeveloper.style.information "样式 信息">
+<!-- Edit CSS -->
+<!ENTITY webdeveloper.edit.css "编辑 CSS">
+<!ENTITY webdeveloper.open "打开...">
+<!ENTITY webdeveloper.pin.css "保持 CSS">
+<!-- Edit HTML -->
+<!ENTITY webdeveloper.edit.html "编辑 HTML">
+<!ENTITY webdeveloper.html.body "HTML Body">

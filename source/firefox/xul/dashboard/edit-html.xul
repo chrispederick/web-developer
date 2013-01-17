@@ -19,8 +19,16 @@
     <toolbarbutton id="web-developer-save-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.save;" oncommand="WebDeveloper.EditHTML.save()"/>
     <toolbarbutton id="web-developer-clear-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.clear;" oncommand="WebDeveloper.EditHTML.clear()"/>
     <toolbarbutton id="web-developer-reset-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.reset;" oncommand="WebDeveloper.EditHTML.reset()"/>
+    <toolbarseparator/>
+    <toolbarbutton id="web-developer-syntax-highlight-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.syntax.highlighting;" type="menu">
+      <menupopup>
+        <menuitem id="web-developer-syntax-highlight-dark" label="&webdeveloper.dark;" name="web-developer-syntax-highlight-dashboard-group" type="radio" oncommand="WebDeveloper.EditHTML.changeSyntaxHighlightTheme('htmlmixed', 'dark')"/>
+        <menuitem id="web-developer-syntax-highlight-light" label="&webdeveloper.light;" name="web-developer-syntax-highlight-dashboard-group" type="radio" oncommand="WebDeveloper.EditHTML.changeSyntaxHighlightTheme('htmlmixed', 'light')"/>
+        <menuitem id="web-developer-syntax-highlight-none" label="&webdeveloper.none;" name="web-developer-syntax-highlight-dashboard-group" type="radio" oncommand="WebDeveloper.EditHTML.changeSyntaxHighlightTheme('htmlmixed', 'none')"/>
+      </menupopup>
+    </toolbarbutton>
     <toolbarspring/>
-    <hbox id="web-developer-search" align="center">
+    <hbox align="center">
       <label control="web-developer-search-dashboard-text" value="&webdeveloper.search.label;"/>
       <textbox id="web-developer-search-dashboard-text" size="20"/>
       <toolbarbutton id="web-developer-search-dashboard" class="toolbarbutton-1" tooltiptext="&webdeveloper.search;" oncommand="WebDeveloper.EditHTML.search()"/>

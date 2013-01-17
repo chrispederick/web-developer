@@ -5,6 +5,8 @@ WebDeveloper.Overlay.Outline = WebDeveloper.Overlay.Outline || {};
 
 $(function()
 {
+  var showElementTagNamesMenu = $("#show-element-tag-names");
+
   $("#outline-absolute-positioned-elements").append(WebDeveloper.Locales.getString("outlineAbsolutePositionedElements")).on("click", WebDeveloper.Overlay.Outline.outlineAbsolutePositionedElements);
   $("#outline-block-level-elements").append(WebDeveloper.Locales.getString("outlineBlockLevelElements")).on("click", WebDeveloper.Overlay.Outline.outlineBlockLevelElements);
   $("#outline-deprecated-elements").append(WebDeveloper.Locales.getString("outlineDeprecatedElements")).on("click", WebDeveloper.Overlay.Outline.outlineDeprecatedElements);
@@ -18,6 +20,13 @@ $(function()
   $("#outline-table-captions").append(WebDeveloper.Locales.getString("outlineTableCaptions")).on("click", WebDeveloper.Overlay.Outline.outlineTableCaptions);
   $("#outline-table-cells").append(WebDeveloper.Locales.getString("outlineTableCells")).on("click", WebDeveloper.Overlay.Outline.outlineTableCells);
   $("#outline-tables").append(WebDeveloper.Locales.getString("outlineTables")).on("click", WebDeveloper.Overlay.Outline.outlineTables);
+  showElementTagNamesMenu.append(WebDeveloper.Locales.getString("showElementTagNames")).on("click", WebDeveloper.Overlay.Outline.toggleShowElementTagNames);
+
+  // If the outline show element tag names preference is set to true
+  if(chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names") == "true")
+  {
+    showElementTagNamesMenu.addClass("active");
+  }
 });
 
 // Outlines all absolute positioned elements
@@ -48,7 +57,9 @@ WebDeveloper.Overlay.Outline.outlineBlockLevelElements = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineBlockLevelElements([document]);");
+      var showElementTagNames = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names") == "true";
+
+      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineBlockLevelElements([document], " + showElementTagNames + ");");
     }
   });
 };
@@ -63,7 +74,9 @@ WebDeveloper.Overlay.Outline.outlineDeprecatedElements = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineDeprecatedElements([document]);");
+      var showElementTagNames = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names") == "true";
+
+      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineDeprecatedElements([document], " + showElementTagNames + ");");
     }
   });
 };
@@ -147,7 +160,9 @@ WebDeveloper.Overlay.Outline.outlineHeadings = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineHeadings([document]);");
+      var showElementTagNames = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names") == "true";
+
+      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineHeadings([document], " + showElementTagNames + ");");
     }
   });
 };
@@ -210,7 +225,9 @@ WebDeveloper.Overlay.Outline.outlineTableCells = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTableCells([document]);");
+      var showElementTagNames = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names") == "true";
+
+      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTableCells([document], " + showElementTagNames + ");");
     }
   });
 };
@@ -235,3 +252,13 @@ WebDeveloper.Overlay.Outline.toggleFeatureOnTab = function(featureItem, tab, scr
 {
   WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "features/javascript/outline.js", scriptCode);
 };
+
+// Toggles whether to show element tag names when outlining
+WebDeveloper.Overlay.Outline.toggleShowElementTagNames = function()
+{
+  var featureItem = $(this);
+
+  featureItem.toggleClass("active");
+  chrome.extension.getBackgroundPage().WebDeveloper.Storage.setItem("outline.show.element.tag.names", featureItem.hasClass("active"));
+};
+

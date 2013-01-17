@@ -7,6 +7,7 @@ WebDeveloper.Dashboard.editor        = null;
 WebDeveloper.Dashboard.editorElement = null;
 WebDeveloper.Dashboard.lastPosition  = null;
 WebDeveloper.Dashboard.lastQuery     = null;
+WebDeveloper.Dashboard.textArea      = null;
 
 // Adjusts the breadcrumb
 WebDeveloper.Dashboard.adjustBreadcrumb = function()
@@ -15,6 +16,30 @@ WebDeveloper.Dashboard.adjustBreadcrumb = function()
   if(!$("html").hasClass("vertical"))
   {
     $(".breadcrumb").css("margin-right", ($("#web-developer-copy-ancestor-path").outerWidth() + 10) + "px");
+  }
+};
+
+// Changes the syntax highlight theme
+WebDeveloper.Dashboard.changeSyntaxHighlightTheme = function(type, color)
+{
+  WebDeveloper.Dashboard.setContent(WebDeveloper.Dashboard.getContent(), true);
+
+  // If the color is not set
+  if(color == "none")
+  {
+    $(".CodeMirror").hide();
+    WebDeveloper.Dashboard.textArea.show();
+  }
+  else if(WebDeveloper.Dashboard.editorElement)
+  {
+    $(".CodeMirror").show();
+    WebDeveloper.Dashboard.textArea.hide();
+
+    WebDeveloper.Dashboard.editor.setOption("theme", color);
+  }
+  else
+  {
+    WebDeveloper.Dashboard.initializeSyntaxHighlight(type, color);
   }
 };
 
@@ -61,18 +86,14 @@ WebDeveloper.Dashboard.getAncestorPath = function()
 // Returns the content
 WebDeveloper.Dashboard.getContent = function()
 {
-  // If the editor is set
-  if(WebDeveloper.Dashboard.editor)
+  // If the text area is set and is visible
+  if(WebDeveloper.Dashboard.textArea && WebDeveloper.Dashboard.textArea.is(":visible"))
   {
-    // If the editor element is set
-    if(WebDeveloper.Dashboard.editorElement)
-    {
-      return WebDeveloper.Dashboard.editor.getValue();
-    }
-    else
-    {
-      return WebDeveloper.Dashboard.editor.val();
-    }
+    return WebDeveloper.Dashboard.textArea.val();
+  }
+  else if(WebDeveloper.Dashboard.editor)
+  {
+    return WebDeveloper.Dashboard.editor.getValue();
   }
 
   return null;
@@ -82,33 +103,12 @@ WebDeveloper.Dashboard.getContent = function()
 WebDeveloper.Dashboard.initializeEditor = function(type, color)
 {
   WebDeveloper.Dashboard.browserWindow = $(window);
+  WebDeveloper.Dashboard.textArea      = $("#web-developer-content");
 
-  // If the color is not set
-  if(color == "none")
+  // If the color is set
+  if(color != "none")
   {
-    WebDeveloper.Dashboard.editor = $("#web-developer-content");
-  }
-  else if(!WebDeveloper.Dashboard.editor)
-  {
-    WebDeveloper.Dashboard.editor = CodeMirror.fromTextArea($("#web-developer-content").get(0),
-    {
-      lineNumbers: true,
-      mode: type,
-      onCursorActivity: function()
-      {
-        // If the current line is set
-        if(WebDeveloper.Dashboard.currentLine)
-        {
-          WebDeveloper.Dashboard.editor.setLineClass(WebDeveloper.Dashboard.currentLine, null);
-        }
-
-        WebDeveloper.Dashboard.currentLine = WebDeveloper.Dashboard.editor.setLineClass(WebDeveloper.Dashboard.editor.getCursor().line, "current-line");
-      },
-      tabSize: 2,
-      theme: color
-    });
-
-    WebDeveloper.Dashboard.editorElement = $(WebDeveloper.Dashboard.editor.getScrollerElement());
+    WebDeveloper.Dashboard.initializeSyntaxHighlight(type, color);
   }
 
   WebDeveloper.Dashboard.resize();
@@ -116,17 +116,39 @@ WebDeveloper.Dashboard.initializeEditor = function(type, color)
   WebDeveloper.Dashboard.browserWindow.on("resize", WebDeveloper.Dashboard.resize);
 };
 
+// Initializes the syntax highlight functionality
+WebDeveloper.Dashboard.initializeSyntaxHighlight = function(type, color)
+{
+  WebDeveloper.Dashboard.editor = CodeMirror.fromTextArea($("#web-developer-content").get(0),
+  {
+    lineNumbers: true,
+    mode: type,
+    onCursorActivity: function()
+    {
+      // If the current line is set
+      if(WebDeveloper.Dashboard.currentLine)
+      {
+        WebDeveloper.Dashboard.editor.setLineClass(WebDeveloper.Dashboard.currentLine, null);
+      }
+
+      WebDeveloper.Dashboard.currentLine = WebDeveloper.Dashboard.editor.setLineClass(WebDeveloper.Dashboard.editor.getCursor().line, null, "current-line");
+    },
+    tabSize: 2,
+    theme: color
+  });
+
+  WebDeveloper.Dashboard.editorElement = $(WebDeveloper.Dashboard.editor.getScrollerElement());
+};
+
 // Handles the window being resized
 WebDeveloper.Dashboard.resize = function()
 {
+  WebDeveloper.Dashboard.textArea.height(WebDeveloper.Dashboard.browserWindow.height());
+
   // If the editor element is set
   if(WebDeveloper.Dashboard.editorElement)
   {
     WebDeveloper.Dashboard.editorElement.height(WebDeveloper.Dashboard.browserWindow.height());
-  }
-  else
-  {
-    WebDeveloper.Dashboard.editor.height(WebDeveloper.Dashboard.browserWindow.height());
   }
 };
 
@@ -166,16 +188,20 @@ WebDeveloper.Dashboard.search = function(query)
 };
 
 // Sets the content
-WebDeveloper.Dashboard.setContent = function(content)
+WebDeveloper.Dashboard.setContent = function(content, excludeNewLine)
 {
-  // If the editor element is set
-  if(WebDeveloper.Dashboard.editorElement)
+  WebDeveloper.Dashboard.textArea.val(content);
+
+  // If the editor is set
+  if(WebDeveloper.Dashboard.editor)
   {
-    WebDeveloper.Dashboard.editor.setValue(content + "\n");
-  }
-  else
-  {
-    WebDeveloper.Dashboard.editor.val(content);
+    // If not excluding the new line
+    if(!excludeNewLine)
+    {
+      content += "\n";
+    }
+
+    WebDeveloper.Dashboard.editor.setValue(content);
   }
 };
 

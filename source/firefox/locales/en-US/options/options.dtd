@@ -41,6 +41,7 @@
 <!ENTITY webdeveloper.light "Light">
 <!ENTITY webdeveloper.none "None">
 <!ENTITY webdeveloper.preview "Preview:">
+<!ENTITY webdeveloper.syntax.highlight.performance "Note that turning on syntax highlighting can affect the performance of the browser.">
 <!ENTITY webdeveloper.syntax.highlight.theme "Syntax highlighting theme:">
 <!ENTITY webdeveloper.toolbar.color "Display the toolbar icons in color">
 

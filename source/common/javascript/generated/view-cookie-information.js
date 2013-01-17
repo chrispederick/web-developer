@@ -20,22 +20,6 @@ WebDeveloper.Generated.changeSession = function()
   }
 };
 
-// Handles clicking edit
-WebDeveloper.Generated.clickEdit = function()
-{
-  var editButton = $(this);
-
-  // If the cookie can be edited
-  if(editButton.hasClass("btn-primary"))
-  {
-    WebDeveloper.Generated.showEditDialog(editButton.parent());
-  }
-  else
-  {
-    editButton.popover("toggle");
-  }
-};
-
 // Deletes a cookie
 WebDeveloper.Generated.deleteCookie = function()
 {
@@ -249,20 +233,18 @@ WebDeveloper.Generated.generateCommands = function(cookie, locale)
   element.appendChild(childElement);
   element.appendChild(document.createTextNode(" " + locale.edit));
 
-  // If the cookie is HTTP onlu
+  // If the cookie is HTTP only
   if(cookie.httpOnly)
   {
     element.setAttribute("class", "web-developer-edit btn");
     element.setAttribute("data-content", locale.cannotEditHTTPOnlyCookies);
     element.setAttribute("data-title", locale.cannotEdit);
-    element.setAttribute("data-trigger", "manual");
   }
   else if(!WebDeveloper.Cookies.canEditLocalCookie() && (cookieHost == "localhost" || cookieHost == ".localhost"))
   {
     element.setAttribute("class", "web-developer-edit btn");
     element.setAttribute("data-content", locale.cannotEditLocalhostCookies);
     element.setAttribute("data-title", locale.cannotEdit);
-    element.setAttribute("data-trigger", "manual");
   }
   else
   {
@@ -339,7 +321,8 @@ WebDeveloper.Generated.initialize = function(data, locale)
   $('button[data-dismiss="modal"]', deleteDialog).text(locale.cancel);
   $('button[data-dismiss="modal"]', editDialog).text(locale.cancel);
   $(".web-developer-delete").on("click", WebDeveloper.Generated.showDeleteDialog);
-  $(".web-developer-edit").on("click", WebDeveloper.Generated.clickEdit);
+  $(".web-developer-edit.btn-primary").on("click", WebDeveloper.Generated.showEditDialog);
+  $(".web-developer-edit:not(.btn-primary)").popover();
   $('[for="cookie-expires"]').text(locale.expires);
   $('[for="cookie-host"]').text(locale.host);
   $('[for="cookie-name"]').text(locale.name);
@@ -485,9 +468,10 @@ WebDeveloper.Generated.showDeleteDialog = function()
 };
 
 // Shows the edit cookie dialog
-WebDeveloper.Generated.showEditDialog = function(cookieElement)
+WebDeveloper.Generated.showEditDialog = function()
 {
-  var editDialog = $("#edit-dialog");
+  var cookieElement = $(this).parent();
+  var editDialog    = $("#edit-dialog");
 
   WebDeveloper.Generated.cookie = cookieElement;
 

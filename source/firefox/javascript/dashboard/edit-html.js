@@ -20,6 +20,12 @@ WebDeveloper.EditHTML.apply = function()
   }
 };
 
+// Changes the syntax highlight theme
+WebDeveloper.EditHTML.changeSyntaxHighlightTheme = function(type, color)
+{
+  document.getElementById("web-developer-edit-html-browser").contentDocument.defaultView.WebDeveloper.Dashboard.changeSyntaxHighlightTheme(type, color);
+};
+
 // Clear the HTML
 WebDeveloper.EditHTML.clear = function()
 {
@@ -38,10 +44,11 @@ WebDeveloper.EditHTML.initialize = function()
     if(tabBrowser)
     {
       var tabContainer = tabBrowser.tabContainer;
+      var theme        = WebDeveloper.Preferences.getExtensionStringPreference("syntax.highlight.theme");
 
       WebDeveloper.EditHTML.contentDocument = WebDeveloper.Common.getContentDocument();
 
-      WebDeveloper.EditHTML.retrieveHTML();
+      WebDeveloper.EditHTML.retrieveHTML(theme);
       WebDeveloper.EditHTML.update();
 
       // If the tab container is set
@@ -51,14 +58,17 @@ WebDeveloper.EditHTML.initialize = function()
       }
 
       // If the theme is not set
-      if(WebDeveloper.Preferences.getExtensionStringPreference("syntax.highlight.theme") == "none")
+      if(theme == "none")
       {
-        document.getElementById("web-developer-search").hidden = true;
+        document.getElementById("web-developer-search-dashboard").disabled      = true;
+        document.getElementById("web-developer-search-dashboard-text").disabled = true;
       }
       else
       {
         document.getElementById("web-developer-search-dashboard-text").addEventListener("keypress", WebDeveloper.EditHTML.search, false);
       }
+
+      WebDeveloper.Common.configureElement(document.getElementById("web-developer-syntax-highlight-" + theme), "checked", true);
 
       // If the extension is running on a Mac
       if(WebDeveloper.Common.isMac())
@@ -92,13 +102,13 @@ WebDeveloper.EditHTML.pageLoad = function(event)
     {
       window.setTimeout(function()
       {
-        WebDeveloper.EditHTML.retrieveHTML();
+        WebDeveloper.EditHTML.retrieveHTML(WebDeveloper.Preferences.getExtensionStringPreference("syntax.highlight.theme"));
         WebDeveloper.EditHTML.update();
       }, 1000);
     }
     else
     {
-      WebDeveloper.EditHTML.retrieveHTML();
+      WebDeveloper.EditHTML.retrieveHTML(WebDeveloper.Preferences.getExtensionStringPreference("syntax.highlight.theme"));
       WebDeveloper.EditHTML.update();
     }
   }
@@ -111,7 +121,7 @@ WebDeveloper.EditHTML.reset = function()
 };
 
 // Retrieves the HTML
-WebDeveloper.EditHTML.retrieveHTML = function()
+WebDeveloper.EditHTML.retrieveHTML = function(theme)
 {
   var contentBody = WebDeveloper.Common.getDocumentBodyElement(WebDeveloper.EditHTML.contentDocument);
 
@@ -120,7 +130,7 @@ WebDeveloper.EditHTML.retrieveHTML = function()
   {
     var editor = document.getElementById("web-developer-edit-html-browser").contentDocument.defaultView.WebDeveloper.Dashboard;
 
-    editor.initializeEditor("htmlmixed", WebDeveloper.Preferences.getExtensionStringPreference("syntax.highlight.theme"));
+    editor.initializeEditor("htmlmixed", theme);
     editor.setContent(contentBody.innerHTML);
   }
 
@@ -201,7 +211,7 @@ WebDeveloper.EditHTML.tabSelect = function()
 
     WebDeveloper.EditHTML.contentDocument = contentDocument;
 
-    WebDeveloper.EditHTML.retrieveHTML();
+    WebDeveloper.EditHTML.retrieveHTML(WebDeveloper.Preferences.getExtensionStringPreference("syntax.highlight.theme"));
   }
 };
 

@@ -93,7 +93,7 @@ WebDeveloperValidateHTML.prototype.saveHTML = function(uri)
   webBrowserPersist.persistFlags     = webBrowserPersistInterface.PERSIST_FLAGS_AUTODETECT_APPLY_CONVERSION | webBrowserPersistInterface.PERSIST_FLAGS_FROM_CACHE | webBrowserPersistInterface.PERSIST_FLAGS_REPLACE_EXISTING_FILES;
   webBrowserPersist.progressListener = this;
 
-  webBrowserPersist.saveURI(uri, null, uri, this.getPostData(), null, this.file);
+  webBrowserPersist.saveURI(uri, null, uri, this.getPostData(), null, this.file, null);
 };
 
 // Submits the background request to validate the HTML

@@ -38,6 +38,7 @@
 <!ENTITY webdeveloper.light "Ljus">
 <!ENTITY webdeveloper.none "Ingen">
 <!ENTITY webdeveloper.preview "Förhandsgranskning:">
+<!ENTITY webdeveloper.syntax.highlight.performance "Note that turning on syntax highlighting can affect the performance of the browser.">
 <!ENTITY webdeveloper.syntax.highlight.theme "Syntaxmarkering:">
 <!ENTITY webdeveloper.toolbar.color "Visa verktygsfältsikoner i färg">
 <!-- Kortkommando pane -->

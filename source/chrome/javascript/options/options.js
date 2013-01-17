@@ -234,6 +234,7 @@ WebDeveloper.Options.initializeColorsTab = function()
 {
   $("#syntax_highlight_theme").val(WebDeveloper.Storage.getItem("syntax_highlight_theme")).on("change", WebDeveloper.Options.updateSyntaxHighlightTheme);
   $("#syntax-highlight-browser").on("load", WebDeveloper.Options.updateSyntaxHighlightTheme);
+  $("#icon_color").prop("checked", WebDeveloper.Storage.getItem("icon_color") == "true").on("change", WebDeveloper.Options.updateIconColor);
 };
 
 // Initializes the resize tab
@@ -422,7 +423,8 @@ WebDeveloper.Options.localizeAdvancedTab = function()
 // Localizes the colors tab
 WebDeveloper.Options.localizeColorsTab = function()
 {
-  $('[for="syntax_highlight_theme"]').text(WebDeveloper.Locales.getString("theme"));
+  $('[for="syntax_highlight_theme"]').text(WebDeveloper.Locales.getString("syntaxHighlightTheme"));
+  $('#icon_color').after(WebDeveloper.Locales.getString("displayExtensionIconColor"));
 
   $('[value="dark"]').text(WebDeveloper.Locales.getString("dark"));
   $('[value="light"]').text(WebDeveloper.Locales.getString("light"));
@@ -580,6 +582,13 @@ WebDeveloper.Options.submitTool = function()
 WebDeveloper.Options.tableDragStart = function(table)
 {
   $(table).removeClass("table-striped");
+};
+
+// Updates the icon color
+WebDeveloper.Options.updateIconColor = function()
+{
+  WebDeveloper.Storage.setItem("icon_color", $("#icon_color").prop("checked"));
+  WebDeveloper.Storage.updateIcon();
 };
 
 // Updates the populate email address

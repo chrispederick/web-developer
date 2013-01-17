@@ -25,33 +25,78 @@ prefpane .groupbox-title { border-bottom: 1px solid #ccc; }
 
 /* Web Developer menus */
 
-#web-developer-app-menu.color, #web-developer-context.color, #web-developer-menu.color, #web-developer-seamonkey.color { list-style-image: url(chrome://web-developer/skin/color/menu.png); }
+#web-developer-app-menu, #web-developer-context, #web-developer-menu, #web-developer-seamonkey { list-style-image: url(chrome://web-developer/skin/button.png); }
+#web-developer-app-menu.color, #web-developer-context.color, #web-developer-menu.color, #web-developer-seamonkey.color { list-style-image: url(chrome://web-developer/skin/color/button.png); }
+
+@media (min--moz-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx)
+{
+  #web-developer-app-menu, #web-developer-context, #web-developer-menu, #web-developer-seamonkey { list-style-image: url(chrome://web-developer/skin/button-2x.png); }
+  #web-developer-app-menu.color, #web-developer-context.color, #web-developer-menu.color, #web-developer-seamonkey.color { list-style-image: url(chrome://web-developer/skin/color/button-2x.png); }
+}
 
 /* Web Developer button */
 
 #web-developer-button.color { list-style-image: url(chrome://web-developer/skin/color/button.png); }
 
+@media (min--moz-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx)
+{
+  #web-developer-button .toolbarbutton-icon { height: 16px; width: 16px; }
+  #web-developer-button.color { list-style-image: url(chrome://web-developer/skin/color/button-2x.png); }
+}
+
 /* Toolbar buttons */
 
 #web-developer-cookies-toolbar.color, #web-developer-css-toolbar.color, #web-developer-disable-toolbar.color, #web-developer-forms-toolbar.color, #web-developer-images-toolbar.color, #web-developer-information-toolbar.color, #web-developer-miscellaneous-toolbar.color, #web-developer-options-toolbar.color, #web-developer-outline-toolbar.color, #web-developer-resize-toolbar.color, #web-developer-tools-toolbar.color, #web-developer-view-source-toolbar.color { list-style-image: url(chrome://web-developer/skin/color/toolbar.png); }
+
+@media (min--moz-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx)
+{
+  #web-developer-cookies-toolbar.color, #web-developer-css-toolbar.color, #web-developer-disable-toolbar.color, #web-developer-forms-toolbar.color, #web-developer-images-toolbar.color, #web-developer-information-toolbar.color, #web-developer-miscellaneous-toolbar.color, #web-developer-options-toolbar.color, #web-developer-outline-toolbar.color, #web-developer-resize-toolbar.color, #web-developer-tools-toolbar.color, #web-developer-view-source-toolbar.color { list-style-image: url(chrome://web-developer/skin/color/toolbar-2x.png); }
+}
 
 /* Statusbar buttons */
 
 #web-developer-css-statusbar[web-developer-color="true"], #web-developer-javascript-statusbar[web-developer-color="true"], #web-developer-render-mode-statusbar[web-developer-color="true"] { list-style-image: url(chrome://web-developer/skin/color/statusbar.png); }
 
+@media (min--moz-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx)
+{
+  #web-developer-css-statusbar[web-developer-color="true"], #web-developer-javascript-statusbar[web-developer-color="true"], #web-developer-render-mode-statusbar[web-developer-color="true"] { list-style-image: url(chrome://web-developer/skin/color/statusbar-2x.png); }
+}
+
 /* Dashboard buttons */
 
-.color #web-developer-clear-dashboard, .color #web-developer-move-dashboard, .color #web-developer-open-dashboard, .color #web-developer-pin-dashboard, .color #web-developer-reset-dashboard, .color #web-developer-save-dashboard, .color #web-developer-search-dashboard { list-style-image: url(chrome://web-developer/skin/color/dashboard.png); }
+.color #web-developer-clear-dashboard, .color #web-developer-move-dashboard, .color #web-developer-open-dashboard, .color #web-developer-pin-dashboard, .color #web-developer-reset-dashboard, .color #web-developer-save-dashboard, .color #web-developer-search-dashboard, .color #web-developer-syntax-highlight-dashboard { list-style-image: url(chrome://web-developer/skin/color/dashboard.png); }
+
+@media (min--moz-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx)
+{
+  .color #web-developer-clear-dashboard, .color #web-developer-move-dashboard, .color #web-developer-open-dashboard, .color #web-developer-pin-dashboard, .color #web-developer-reset-dashboard, .color #web-developer-save-dashboard, .color #web-developer-search-dashboard, .color #web-developer-syntax-highlight-dashboard { list-style-image: url(chrome://web-developer/skin/color/dashboard-2x.png); }
+}
 
 /* Menu item icons */
 
 #web-developer-button.color menuitem.menuitem-iconic, #web-developer-context.color menuitem.menuitem-iconic, #web-developer-menu.color menuitem.menuitem-iconic, #web-developer-seamonkey.color menuitem.menuitem-iconic, #web-developer-toolbar.color menuitem.menuitem-iconic { list-style-image: url(chrome://web-developer/skin/color/disabled.png); }
+
+@media (min--moz-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx)
+{
+  #web-developer-button.color menuitem.menuitem-iconic, #web-developer-context.color menuitem.menuitem-iconic, #web-developer-menu.color menuitem.menuitem-iconic, #web-developer-seamonkey.color menuitem.menuitem-iconic, #web-developer-toolbar.color menuitem.menuitem-iconic { list-style-image: url(chrome://web-developer/skin/color/disabled-2x.png); }
+}
 
 /* Feature toolbar buttons */
 
 .color .web-developer-close { list-style-image: url(chrome://web-developer/skin/color/close.png); }
 .color .web-developer-name { background-image: url(chrome://web-developer/skin/color/button.png); }
 
+@media (min--moz-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx)
+{
+  .color .web-developer-close { list-style-image: url(chrome://web-developer/skin/color/close-2x.png); }
+  .color .web-developer-name { background-image: url(chrome://web-developer/skin/color/button-2x.png); }
+  .web-developer-name { background-size: 16px 16px; }
+}
+
 /* Page validation toolbar buttons */
 
 .color #web-developer-css-validation[class], .color #web-developer-html-validation[class] { list-style-image: url(chrome://web-developer/skin/color/validation.png); }
+
+@media (min--moz-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx)
+{
+  .color #web-developer-css-validation[class], .color #web-developer-html-validation[class] { list-style-image: url(chrome://web-developer/skin/color/validation-2x.png); }
+}

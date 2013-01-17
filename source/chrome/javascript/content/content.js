@@ -63,83 +63,83 @@ WebDeveloper.Content.getPathCookies = function(allCookies)
   return pathCookies;
 };
 
-// Handles any content requests
-WebDeveloper.Content.request = function(request, sender, sendResponse)
+// Handles any content messages
+WebDeveloper.Content.message = function(message, sender, sendResponse)
 {
-  // If the request type is to get anchors
-  if(request.type == "get-anchors")
+  // If the message type is to get anchors
+  if(message.type == "get-anchors")
   {
     sendResponse(WebDeveloper.Content.getAnchors());
   }
-  else if(request.type == "get-broken-images")
+  else if(message.type == "get-broken-images")
   {
     sendResponse(WebDeveloper.Content.getBrokenImages());
   }
-  else if(request.type == "get-colors")
+  else if(message.type == "get-colors")
   {
     sendResponse(WebDeveloper.Content.getColors());
   }
-  else if(request.type == "get-cookies")
+  else if(message.type == "get-cookies")
   {
-    sendResponse(WebDeveloper.Content.getCookies(request.allCookies));
+    sendResponse(WebDeveloper.Content.getCookies(message.allCookies));
   }
-  else if(request.type == "get-css")
+  else if(message.type == "get-css")
   {
     sendResponse(WebDeveloper.Content.getCSS());
   }
-  else if(request.type == "get-document-details")
+  else if(message.type == "get-document-details")
   {
     sendResponse(WebDeveloper.Content.getDocumentDetails());
   }
-  else if(request.type == "get-document-outline")
+  else if(message.type == "get-document-outline")
   {
     sendResponse(WebDeveloper.Content.getDocumentOutline());
   }
-  else if(request.type == "get-domain-cookies")
+  else if(message.type == "get-domain-cookies")
   {
-    sendResponse(WebDeveloper.Content.getDomainCookies(request.allCookies));
+    sendResponse(WebDeveloper.Content.getDomainCookies(message.allCookies));
   }
-  else if(request.type == "get-duplicate-ids")
+  else if(message.type == "get-duplicate-ids")
   {
     sendResponse(WebDeveloper.Content.getDuplicateIds());
   }
-  else if(request.type == "get-forms")
+  else if(message.type == "get-forms")
   {
     sendResponse(WebDeveloper.Content.getForms());
   }
-  else if(request.type == "get-images")
+  else if(message.type == "get-images")
   {
     sendResponse(WebDeveloper.Content.getImages());
   }
-  else if(request.type == "get-javascript")
+  else if(message.type == "get-javascript")
   {
     sendResponse(WebDeveloper.Content.getJavaScript());
   }
-  else if(request.type == "get-links")
+  else if(message.type == "get-links")
   {
     sendResponse(WebDeveloper.Content.getLinks());
   }
-  else if(request.type == "get-location-details")
+  else if(message.type == "get-location-details")
   {
     sendResponse(WebDeveloper.Content.getLocationDetails());
   }
-  else if(request.type == "get-meta-tags")
+  else if(message.type == "get-meta-tags")
   {
     sendResponse(WebDeveloper.Content.getMetaTags());
   }
-  else if(request.type == "get-path-cookies")
+  else if(message.type == "get-path-cookies")
   {
-    sendResponse(WebDeveloper.Content.getPathCookies(request.allCookies));
+    sendResponse(WebDeveloper.Content.getPathCookies(message.allCookies));
   }
-  else if(request.type == "get-window-size")
+  else if(message.type == "get-window-size")
   {
     sendResponse(WebDeveloper.Content.getWindowSize());
   }
   else
   {
-    // Unknown request
+    // Unknown message
     sendResponse({});
   }
 };
 
-chrome.extension.onRequest.addListener(WebDeveloper.Content.request);
+chrome.extension.onMessage.addListener(WebDeveloper.Content.message);

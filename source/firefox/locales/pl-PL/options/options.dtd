@@ -1,11 +1,11 @@
 <!-- Common -->
-<!ENTITY webdeveloper.add "Dodaj...">
+<!ENTITY webdeveloper.add "Dodaj…">
 <!ENTITY webdeveloper.application.label "Aplikacja:">
-<!ENTITY webdeveloper.choose "Wybierz...">
-<!ENTITY webdeveloper.delete "Usuń...">
+<!ENTITY webdeveloper.choose "Wybierz…">
+<!ENTITY webdeveloper.delete "Usuń…">
 <!ENTITY webdeveloper.description "Opis">
 <!ENTITY webdeveloper.description.label "Opis:">
-<!ENTITY webdeveloper.edit "Edytuj...">
+<!ENTITY webdeveloper.edit "Edytuj…">
 <!ENTITY webdeveloper.height "Wysokość">
 <!ENTITY webdeveloper.height.label "Wysokość:">
 <!ENTITY webdeveloper.keyboard "Skróty">
@@ -38,6 +38,7 @@
 <!ENTITY webdeveloper.light "Jasny">
 <!ENTITY webdeveloper.none "Brak">
 <!ENTITY webdeveloper.preview "Podgląd:">
+<!ENTITY webdeveloper.syntax.highlight.performance "Note that turning on syntax highlighting can affect the performance of the browser.">
 <!ENTITY webdeveloper.syntax.highlight.theme "Motyw podświetlania składni:">
 <!ENTITY webdeveloper.toolbar.color "Wyświetlaj kolorowe przyciski">
 <!-- Keyboard pane -->

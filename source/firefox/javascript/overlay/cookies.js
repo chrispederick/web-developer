@@ -57,7 +57,7 @@ WebDeveloper.Overlay.Cookies.deletePathCookies = function()
     }
   }
 
-  WebDeveloper.Cookies.deleteDomainCookies(pathCookies);
+  WebDeveloper.Cookies.deletePathCookies(pathCookies);
 };
 
 // Deletes all session cookies

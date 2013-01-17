@@ -48,8 +48,12 @@ WebDeveloper.Overlay.Information.getViewJavaScriptLocale = function()
 
   locale.beautifyJavaScript     = WebDeveloper.Locales.getString("beautifyJavaScript");
   locale.couldNotLoadJavaScript = WebDeveloper.Locales.getString("couldNotLoadJavaScript");
+  locale.dark                   = WebDeveloper.Locales.getString("dark");
   locale.embeddedJavaScriptFrom = WebDeveloper.Locales.getString("embeddedJavaScriptFrom");
   locale.javaScript             = WebDeveloper.Locales.getString("javaScript");
+  locale.light                  = WebDeveloper.Locales.getString("light");
+  locale.none                   = WebDeveloper.Locales.getString("none");
+  locale.syntaxHighlighting     = WebDeveloper.Locales.getString("syntaxHighlighting");
   locale.undoBeautifyJavaScript = WebDeveloper.Locales.getString("undoBeautifyJavaScript");
 
   return locale;

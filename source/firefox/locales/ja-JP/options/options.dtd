@@ -1,0 +1,62 @@
+<!-- Common -->
+<!ENTITY webdeveloper.add "追加">
+<!ENTITY webdeveloper.application.label "アプリケーション:">
+<!ENTITY webdeveloper.choose "選択">
+<!ENTITY webdeveloper.delete "削除">
+<!ENTITY webdeveloper.description "概要">
+<!ENTITY webdeveloper.description.label "概要:">
+<!ENTITY webdeveloper.edit "編集">
+<!ENTITY webdeveloper.height "縦幅">
+<!ENTITY webdeveloper.height.label "縦幅:">
+<!ENTITY webdeveloper.keyboard "キーボード">
+<!ENTITY webdeveloper.keyboard.label "キーボード:">
+<!ENTITY webdeveloper.keyboard.shortcuts.restart "キーボードのショートカットを変更するにはブラウザの再起動が必要です。">
+<!ENTITY webdeveloper.move.down "下へ">
+<!ENTITY webdeveloper.move.up "上へ">
+<!ENTITY webdeveloper.new.separator "新しいセパレータ">
+<!ENTITY webdeveloper.options.title "Web Developerオプション">
+<!ENTITY webdeveloper.width "横幅">
+<!ENTITY webdeveloper.width.label "横幅:">
+<!-- Pane titles -->
+<!ENTITY webdeveloper.advanced "その他">
+<!ENTITY webdeveloper.colors "色">
+<!ENTITY webdeveloper.general "一般">
+<!ENTITY webdeveloper.resize "サイズ変更">
+<!ENTITY webdeveloper.responsive "画面表示">
+<!ENTITY webdeveloper.tools "ツール">
+<!ENTITY webdeveloper.view.source "ソース表示">
+<!-- General pane -->
+<!ENTITY webdeveloper.context.hide "右クリック時にWeb Developerメニューを表示しない">
+<!ENTITY webdeveloper.icons "アイコンのみ">
+<!ENTITY webdeveloper.icons.text "アイコンとテキスト">
+<!ENTITY webdeveloper.menu.hide "ブラウザの「ツール」にWeb Developerメニューを表示しない">
+<!ENTITY webdeveloper.text "テキストのみ">
+<!ENTITY webdeveloper.text.color "テキスト:">
+<!ENTITY webdeveloper.toolbar.icons "ツールバーのメニュー表示:">
+<!-- Colors pane -->
+<!ENTITY webdeveloper.dark "暗い">
+<!ENTITY webdeveloper.light "明るい">
+<!ENTITY webdeveloper.none "なし">
+<!ENTITY webdeveloper.preview "プレビュー:">
+<!ENTITY webdeveloper.syntax.highlight.performance "Note that turning on syntax highlighting can affect the performance of the browser.">
+<!ENTITY webdeveloper.syntax.highlight.theme "シンタックスハイライトのテーマ:">
+<!ENTITY webdeveloper.toolbar.color "Display the toolbar icons in color">
+<!-- Keyboard pane -->
+<!ENTITY webdeveloper.feature "機能">
+<!ENTITY webdeveloper.feature.label "機能:">
+<!ENTITY webdeveloper.tools.keyboard.shortcuts "キーボードのショートカットは「ツール」で変更してください">
+<!-- Resize pane -->
+<!ENTITY webdeveloper.viewport "ビューポート">
+<!-- Resize dialog -->
+<!ENTITY webdeveloper.resize.viewport "ビューポートのサイズ変更">
+<!-- Tools pane -->
+<!ENTITY webdeveloper.application.url "アプリケーション/URL">
+<!-- Tool dialog -->
+<!ENTITY webdeveloper.url "URL:">
+<!-- View Source pane -->
+<!ENTITY webdeveloper.application "アプリケーション">
+<!ENTITY webdeveloper.view.source.tab "ソースを新規ウィンドウの替りにタブで開く(ソースはキャッシュを利用しません)">
+<!ENTITY webdeveloper.view.source.with "ソースの表示">
+<!-- Advanced pane -->
+<!ENTITY webdeveloper.confirmation.dialogs.hide "Web Developerの確認ダイアログを表示しない">
+<!ENTITY webdeveloper.populate.email.address "自動埋め込みするメールアドレス:">

@@ -1,8 +1,7 @@
 var WebDeveloper = WebDeveloper || {};
 
-WebDeveloper.codeMirror      = null;
-WebDeveloper.pre             = null;
-WebDeveloper.syntaxHighlight = null;
+WebDeveloper.pre               = null;
+WebDeveloper.syntaxHighlighter = null;
 
 // Initializes the syntax highlighting
 WebDeveloper.initialize = function()
@@ -13,7 +12,7 @@ WebDeveloper.initialize = function()
 
   WebDeveloper.pre.text(textArea.val()).hide();
 
-  WebDeveloper.codeMirror = CodeMirror.fromTextArea(textArea.get(0),
+  WebDeveloper.syntaxHighlighter = CodeMirror.fromTextArea(textArea.get(0),
   {
     mode: "htmlmixed",
     readOnly: "nocursor",
@@ -21,7 +20,7 @@ WebDeveloper.initialize = function()
     theme: "light"
   });
 
-  WebDeveloper.syntaxHighlight = $(WebDeveloper.codeMirror.getWrapperElement());
+  WebDeveloper.syntaxHighlight = $(WebDeveloper.syntaxHighlighter.getWrapperElement());
 };
 
 // Sets the theme
@@ -30,19 +29,14 @@ WebDeveloper.setTheme = function(theme)
   // If there is no theme
   if(theme == "none")
   {
-    WebDeveloper.syntaxHighlight.hide();
+    $(WebDeveloper.syntaxHighlighter.getWrapperElement()).hide();
     WebDeveloper.pre.show();
   }
   else
   {
-    // If the code mirror is set
-    if(WebDeveloper.codeMirror)
-    {
-      WebDeveloper.codeMirror.setOption("theme", theme);
-    }
-
+    WebDeveloper.syntaxHighlighter.setOption("theme", theme);
     WebDeveloper.pre.hide();
-    WebDeveloper.syntaxHighlight.show();
+    $(WebDeveloper.syntaxHighlighter.getWrapperElement()).show();
   }
 };
 

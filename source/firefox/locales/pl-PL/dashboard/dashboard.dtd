@@ -1,9 +1,13 @@
 <!-- Common -->
 <!ENTITY webdeveloper.clear "Wyczyść">
+<!ENTITY webdeveloper.dark "Dark">
+<!ENTITY webdeveloper.light "Light">
+<!ENTITY webdeveloper.none "None">
 <!ENTITY webdeveloper.reset "Resetuj">
 <!ENTITY webdeveloper.save "Zapisz…">
 <!ENTITY webdeveloper.search "Szukaj">
 <!ENTITY webdeveloper.search.label "Szukaj:">
+<!ENTITY webdeveloper.syntax.highlighting "Syntax Highlighting">
 <!-- Element Information -->
 <!ENTITY webdeveloper.element.information "Informacje o elemencie">
 <!-- Style Information -->

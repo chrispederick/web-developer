@@ -13,7 +13,7 @@ WebDeveloper.EditCSS.addTab = function(title, css, tabs, panels, position, conte
   }
 
   // Get the edit CSS tab templates
-  chrome.extension.sendRequest({ "active": active, "css": css, "position": position, "title": title, "type": "get-edit-css-tab-templates" }, function(response)
+  chrome.extension.sendMessage({ "active": active, "css": css, "position": position, "title": title, "type": "get-edit-css-tab-templates" }, function(response)
   {
     WebDeveloper.Common.appendHTML(response.panel, panels, contentDocument);
     WebDeveloper.Common.appendHTML(response.tab, tabs, contentDocument);
@@ -73,7 +73,7 @@ WebDeveloper.EditCSS.getStylesFromContainer = function(stylesContainer)
 WebDeveloper.EditCSS.loadDashboardTemplates = function(locale)
 {
   // Get the dashboard templates
-  chrome.extension.sendRequest({ "dashboardTitle": locale.dashboardTitle, "tabId": "edit-css", "title": locale.editCSS, "type": "get-edit-css-dashboard-templates" }, function(response)
+  chrome.extension.sendMessage({ "dashboardTitle": locale.dashboardTitle, "tabId": "edit-css", "title": locale.editCSS, "type": "get-edit-css-dashboard-templates" }, function(response)
   {
     // If the dashboard template was returned - sometimes this fails
     if(response.dashboard)
@@ -111,7 +111,7 @@ WebDeveloper.EditCSS.retrieveCSS = function(dashboardPanel, editCSSPanel, locale
   dashboardPanel.innerHTML = editCSSPanel;
 
   // Get the style sheet content
-  chrome.extension.sendRequest({ "errorMessage": "/* " + locale.couldNotLoadCSS + " */", "type": "get-url-contents", "urls": documentCSS.styleSheets }, function(response)
+  chrome.extension.sendMessage({ "errorMessage": "/* " + locale.couldNotLoadCSS + " */", "type": "get-url-contents", "urls": documentCSS.styleSheets }, function(response)
   {
     var dashboardDocument = WebDeveloper.Dashboard.getDashboard(WebDeveloper.EditCSS.contentDocument).contentDocument;
     var panels            = dashboardDocument.getElementById("web-developer-edit-css-panels");

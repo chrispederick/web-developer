@@ -298,11 +298,12 @@ WebDeveloper.Content.getDocumentColors = function(contentDocument)
 // Returns the CSS for the specified document
 WebDeveloper.Content.getDocumentCSS = function(contentDocument, screenOnly)
 {
-  var documentCSS    = {};
-  var embeddedStyles = "";
-  var styleSheet     = null;
-  var styleSheets    = contentDocument.getElementsByTagName("style");
-  var styleSheetURL  = null;
+  var documentCSS     = {};
+  var embeddedStyles  = "";
+  var styleSheet      = null;
+  var styleSheets     = contentDocument.getElementsByTagName("style");
+  var styleSheetSheet = null;
+  var styleSheetURL   = null;
 
   documentCSS.url         = contentDocument.documentURI;
   documentCSS.styleSheets = [];
@@ -310,14 +311,15 @@ WebDeveloper.Content.getDocumentCSS = function(contentDocument, screenOnly)
   // Loop through the embedded style sheets
   for(var i = 0, l = styleSheets.length; i < l; i++)
   {
-    styleSheet = styleSheets[i];
+    styleSheet      = styleSheets[i];
+    styleSheetSheet = styleSheet.sheet;
 
-    // If this is a valid style sheet
-    if(WebDeveloper.CSS.isValidStyleSheet(styleSheet.sheet))
+    // If this is a valid style sheet and not returning media screen only or this is an active screen style sheet
+    if(WebDeveloper.CSS.isValidStyleSheet(styleSheetSheet) && (!screenOnly || WebDeveloper.CSS.isMediaStyleSheet(styleSheetSheet, "screen")))
     {
       embeddedStyles += styleSheet.textContent.trim() + "\n\n";
 
-      documentCSS.styleSheets = documentCSS.styleSheets.concat(WebDeveloper.CSS.getImportedStyleSheets(styleSheet.sheet));
+      documentCSS.styleSheets = documentCSS.styleSheets.concat(WebDeveloper.CSS.getImportedStyleSheets(styleSheetSheet));
     }
   }
 

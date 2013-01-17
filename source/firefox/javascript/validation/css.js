@@ -93,16 +93,24 @@ WebDeveloperValidateCSS.prototype.getCSS = function(css, callback)
     }
   }
 
-  WebDeveloper.Common.getURLContents(urlContentRequests, "", function()
+  // If there are external style sheets to get the CSS from
+  if(urlContentRequests.length)
   {
-    // Loop through the URL content requests
-    for(var k = 0, n = urlContentRequests.length; k < n; k++)
+    WebDeveloper.Common.getURLContents(urlContentRequests, "", function()
     {
-      cssText += urlContentRequests[k].content;
-    }
+      // Loop through the URL content requests
+      for(var k = 0, n = urlContentRequests.length; k < n; k++)
+      {
+        cssText += urlContentRequests[k].content;
+      }
 
+      callback(cssText);
+    });
+  }
+  else
+  {
     callback(cssText);
-  });
+  }
 };
 
 // Parses the validation results by type

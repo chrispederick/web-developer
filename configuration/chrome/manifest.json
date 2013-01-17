@@ -1,14 +1,15 @@
 {
-	"background": 			{ "page": "background/background.html"/*, "persistent": false*/ },
-  "browser_action":  	{ "default_icon": "overlay/images/icon.png", "default_popup": "overlay/overlay.html", "default_title": "__MSG_extensionName__" },
-	"content_scripts": 	[{ "js": ["content/content.js"], "matches": ["<all_urls>"] }],
-	"default_locale":	 	"en_US",
-  "description":     	"__MSG_extensionDescription__",
-  "homepage_url":		 	"@url@",
-  "icons":           	{ "16": "icons/16.png", "48":  "icons/48.png", "128": "icons/128.png" },
-  //"manifest_version": 2,
-  "name": 			     	"__MSG_extensionName__",
-  "options_page":		 	"options/options.html",
-  "permissions":     	["clipboardWrite", "contentSettings", "cookies", "history", "proxy", "tabs", "<all_urls>"],
-  "version": 		     	"@version@"
+	"background": { "page": "background/background.html"/*, "persistent": false*/ },
+  "browser_action": { "default_icon": { "19": "overlay/images/icon.png", "38": "overlay/images/icon-2x.png" }, "default_popup": "overlay/overlay.html", "default_title": "__MSG_extensionName__" },
+	"content_scripts": [{ "js": ["content/content.js"], "matches": ["<all_urls>"] }],
+	"default_locale": "en_US",
+  "description": "__MSG_extensionDescription__",
+  "homepage_url":	"@url@",
+  "icons": { "16": "icons/16.png", "48":  "icons/48.png", "128": "icons/128.png" },
+  "manifest_version": 2,
+  "name": "__MSG_extensionName__",
+  "options_page":	"options/options.html",
+  "permissions": ["clipboardWrite", "contentSettings", "cookies", "history", "proxy", "tabs", "<all_urls>"],
+  "version": "@version@",
+  "web_accessible_resources": ["*"]
 }

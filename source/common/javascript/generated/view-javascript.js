@@ -7,27 +7,26 @@ WebDeveloper.Generated.theme        = null;
 // Beautifies the JavaScript
 WebDeveloper.Generated.beautifyJavaScript = function(event)
 {
-  var beautifyLink = $(this);
-  var newPre       = null;
-  var oldPre       = null;
-
-  WebDeveloper.Generated.expandAllOutput();
-  $(".CodeMirror").remove();
+  var beautifyLink       = $(this);
+  var newJavaScript      = null;
+  var originalJavaScript = null;
 
   // If the JavaScript was already beautified
   if(beautifyLink.hasClass("web-developer-beautified"))
   {
     // Loop through the original JavaScript
-    $(".web-developer-original").each(function()
+    $(".web-developer-original").each(function(position, element)
     {
-      newPre = document.createElement("pre");
-      oldPre = $(this);
+      originalJavaScript = $(element);
+      newJavaScript      = originalJavaScript.text();
 
-      newPre.setAttribute("class", "web-developer-syntax-highlight");
-      newPre.setAttribute("data-line-numbers", "true");
-      newPre.setAttribute("data-type", "javascript");
+      $(".web-developer-syntax-highlight", originalJavaScript.parent()).text(newJavaScript);
 
-      $(newPre).insertBefore(oldPre).text(oldPre.text());
+      // If there is a corresponding syntax highlight
+      if(WebDeveloper.Generated.syntaxHighlighters.length > position)
+      {
+        WebDeveloper.Generated.syntaxHighlighters[position].setValue(newJavaScript);
+      }
     });
 
     beautifyLink.text(WebDeveloper.Generated.storedLocale.beautifyJavaScript).removeClass("web-developer-beautified");
@@ -35,22 +34,22 @@ WebDeveloper.Generated.beautifyJavaScript = function(event)
   else
   {
     // Loop through the original JavaScript
-    $(".web-developer-original").each(function()
+    $(".web-developer-original").each(function(position, element)
     {
-      newPre = document.createElement("pre");
-      oldPre = $(this);
+      originalJavaScript = $(element);
+      newJavaScript      = js_beautify(originalJavaScript.text(), { "indent_size": 2, "max_preserve_newlines": 1, "space_before_conditional": false });
 
-      newPre.setAttribute("class", "web-developer-syntax-highlight");
-      newPre.setAttribute("data-line-numbers", "true");
-      newPre.setAttribute("data-type", "javascript");
+      $(".web-developer-syntax-highlight", originalJavaScript.parent()).text(newJavaScript);
 
-      $(newPre).insertBefore(oldPre).text(js_beautify(oldPre.text(), { "indent_size": 2, "max_preserve_newlines": 1, "space_before_conditional": false }));
+      // If there is a corresponding syntax highlight
+      if(WebDeveloper.Generated.syntaxHighlighters.length > position)
+      {
+        WebDeveloper.Generated.syntaxHighlighters[position].setValue(newJavaScript);
+      }
     });
 
     beautifyLink.text(WebDeveloper.Generated.storedLocale.undoBeautifyJavaScript).addClass("web-developer-beautified");
   }
-
-  WebDeveloper.Generated.initializeSyntaxHighlight(WebDeveloper.Generated.theme);
 
   event.preventDefault();
 };
@@ -118,24 +117,32 @@ WebDeveloper.Generated.initialize = function(data, locale)
 
   WebDeveloper.Generated.initializeCommonElements();
 
-  WebDeveloper.Common.getURLContents(urlContentRequests, "// " + locale.couldNotLoadJavaScript, function()
+  // If there are external style sheets to get the CSS from
+  if(urlContentRequests.length)
   {
-    var outputContainers  = null;
-    var urlContentRequest = null;
-
-    // Loop through the URL content requests
-    for(var n = 0, p = urlContentRequests.length; n < p; n++)
+    WebDeveloper.Common.getURLContents(urlContentRequests, "// " + locale.couldNotLoadJavaScript, function()
     {
-      urlContentRequest = urlContentRequests[n];
-      outputContainers  = urlContentRequest.outputContainers;
+      var outputContainers  = null;
+      var urlContentRequest = null;
 
-      // Loop through the output containers
-      for(var q = 0, r = outputContainers.length; q < r; q++)
+      // Loop through the URL content requests
+      for(var n = 0, p = urlContentRequests.length; n < p; n++)
       {
-        outputContainers[q].text(urlContentRequest.content);
-      }
-    }
+        urlContentRequest = urlContentRequests[n];
+        outputContainers  = urlContentRequest.outputContainers;
 
-    WebDeveloper.Generated.initializeSyntaxHighlight(WebDeveloper.Generated.theme);
-  });
+        // Loop through the output containers
+        for(var q = 0, r = outputContainers.length; q < r; q++)
+        {
+          outputContainers[q].text(urlContentRequest.content);
+        }
+      }
+
+      WebDeveloper.Generated.initializeSyntaxHighlight(WebDeveloper.Generated.theme, locale);
+    });
+  }
+  else
+  {
+    WebDeveloper.Generated.initializeSyntaxHighlight(WebDeveloper.Generated.theme, locale);
+  }
 };

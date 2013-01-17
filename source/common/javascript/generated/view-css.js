@@ -60,24 +60,32 @@ WebDeveloper.Generated.initialize = function(data, locale)
 
   WebDeveloper.Generated.initializeCommonElements();
 
-  WebDeveloper.Common.getURLContents(urlContentRequests, "/* " + locale.couldNotLoadCSS + " */", function()
+  // If there are external style sheets to get the CSS from
+  if(urlContentRequests.length)
   {
-    var outputContainers  = null;
-    var urlContentRequest = null;
-
-    // Loop through the URL content requests
-    for(var n = 0, p = urlContentRequests.length; n < p; n++)
+    WebDeveloper.Common.getURLContents(urlContentRequests, "/* " + locale.couldNotLoadCSS + " */", function()
     {
-      urlContentRequest = urlContentRequests[n];
-      outputContainers  = urlContentRequest.outputContainers;
+      var outputContainers  = null;
+      var urlContentRequest = null;
 
-      // Loop through the output containers
-      for(var q = 0, r = outputContainers.length; q < r; q++)
+      // Loop through the URL content requests
+      for(var n = 0, p = urlContentRequests.length; n < p; n++)
       {
-        outputContainers[q].text(urlContentRequest.content);
-      }
-    }
+        urlContentRequest = urlContentRequests[n];
+        outputContainers  = urlContentRequest.outputContainers;
 
-    WebDeveloper.Generated.initializeSyntaxHighlight(data.theme);
-  });
+        // Loop through the output containers
+        for(var q = 0, r = outputContainers.length; q < r; q++)
+        {
+          outputContainers[q].text(urlContentRequest.content);
+        }
+      }
+
+      WebDeveloper.Generated.initializeSyntaxHighlight(data.theme, locale);
+    });
+  }
+  else
+  {
+    WebDeveloper.Generated.initializeSyntaxHighlight(data.theme, locale);
+  }
 };

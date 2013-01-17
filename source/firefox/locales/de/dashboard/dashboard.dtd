@@ -1,0 +1,17 @@
+<!-- Common -->
+<!ENTITY webdeveloper.clear "Löschen">
+<!ENTITY webdeveloper.reset "Zurücksetzen">
+<!ENTITY webdeveloper.save "Speichern...">
+<!ENTITY webdeveloper.search "Suchen">
+<!ENTITY webdeveloper.search.label "Suchen:">
+<!-- Element Information -->
+<!ENTITY webdeveloper.element.information "Elementinformationen">
+<!-- Style Information -->
+<!ENTITY webdeveloper.style.information "Stilinformationen">
+<!-- Edit CSS -->
+<!ENTITY webdeveloper.edit.css "CSS bearbeiten">
+<!ENTITY webdeveloper.open "Öffnen...">
+<!ENTITY webdeveloper.pin.css "CSS anheften">
+<!-- Edit HTML -->
+<!ENTITY webdeveloper.edit.html "HTML bearbeiten">
+<!ENTITY webdeveloper.html.body "HTML-Body">

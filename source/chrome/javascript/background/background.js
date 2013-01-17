@@ -100,7 +100,7 @@ WebDeveloper.Background.getStylesFromCSS = function(cssDocuments)
     }
   }
 
-  cssContent = WebDeveloper.Background.getContentFromURLs(styleSheets);
+  cssContent = WebDeveloper.Background.getURLContents(styleSheets, "");
 
   // Loop through the CSS content
   for(i = 0, l = cssContent.length; i < l; i++)
@@ -200,6 +200,48 @@ WebDeveloper.Background.initializeValidationTab = function(url, data)
   }
 };
 
+// Handles any background messages
+WebDeveloper.Background.message = function(message, sender, sendResponse)
+{
+  // If the message type is to get the current color
+  if(message.type == "get-color")
+  {
+    sendResponse(WebDeveloper.Background.getColor(message.x, message.y, message.eventType));
+  }
+  else if(message.type == "get-edit-css-dashboard-templates")
+  {
+    sendResponse(WebDeveloper.Background.getEditCSSDashboardTemplates({ "dashboardTitle": message.dashboardTitle, "tabId": message.tabId, "title": message.title }));
+  }
+  else if(message.type == "get-edit-css-tab-templates")
+  {
+    sendResponse(WebDeveloper.Background.getEditCSSTabTemplates({ "active": message.active, "css": message.css, "position": message.position, "title": message.title }));
+  }
+  else if(message.type == "get-element-information-dashboard-templates")
+  {
+    sendResponse(WebDeveloper.Background.getElementInformationDashboardTemplates({ "dashboardTitle": message.dashboardTitle, "selectAnElementDisplayInformation": message.selectAnElementDisplayInformation, "tabId": message.tabId, "title": message.title }));
+  }
+  else if(message.type == "get-storage-item")
+  {
+    sendResponse({ "value": WebDeveloper.Storage.getItem(message.item) });
+  }
+  else if(message.type == "get-url-contents")
+  {
+    sendResponse(WebDeveloper.Background.getURLContents(message.urls, message.errorMessage));
+  }
+  else if(message.type == "set-storage-item")
+  {
+    WebDeveloper.Storage.setItem(message.item, message.value);
+
+    // No response required
+    sendResponse({});
+  }
+  else
+  {
+    // Unknown message
+    sendResponse({});
+  }
+};
+
 // Opens a generated tab
 WebDeveloper.Background.openGeneratedTab = function(tabURL, tabIndex, data, locale)
 {
@@ -218,48 +260,6 @@ WebDeveloper.Background.openGeneratedTab = function(tabURL, tabIndex, data, loca
 
     chrome.tabs.onUpdated.addListener(tabLoaded);
   });
-};
-
-// Handles any background requests
-WebDeveloper.Background.request = function(request, sender, sendResponse)
-{
-  // If the request type is to get the current color
-  if(request.type == "get-color")
-  {
-    sendResponse(WebDeveloper.Background.getColor(request.x, request.y, request.eventType));
-  }
-  else if(request.type == "get-edit-css-dashboard-templates")
-  {
-    sendResponse(WebDeveloper.Background.getEditCSSDashboardTemplates({ "dashboardTitle": request.dashboardTitle, "tabId": request.tabId, "title": request.title }));
-  }
-  else if(request.type == "get-edit-css-tab-templates")
-  {
-    sendResponse(WebDeveloper.Background.getEditCSSTabTemplates({ "active": request.active, "css": request.css, "position": request.position, "title": request.title }));
-  }
-  else if(request.type == "get-element-information-dashboard-templates")
-  {
-    sendResponse(WebDeveloper.Background.getElementInformationDashboardTemplates({ "dashboardTitle": request.dashboardTitle, "selectAnElementDisplayInformation": request.selectAnElementDisplayInformation, "tabId": request.tabId, "title": request.title }));
-  }
-  else if(request.type == "get-storage-item")
-  {
-    sendResponse({ "value": WebDeveloper.Storage.getItem(request.item) });
-  }
-  else if(request.type == "get-url-contents")
-  {
-    sendResponse(WebDeveloper.Background.getURLContents(request.urls, request.errorMessage));
-  }
-  else if(request.type == "set-storage-item")
-  {
-    WebDeveloper.Storage.setItem(request.item, request.value);
-
-    // No response required
-    sendResponse({});
-  }
-  else
-  {
-    // Unknown request
-    sendResponse({});
-  }
 };
 
 // Validates the CSS of the local page
@@ -302,4 +302,4 @@ WebDeveloper.Background.validateLocalHTML = function(tabURL, tabIndex, validateU
   });
 };
 
-chrome.extension.onRequest.addListener(WebDeveloper.Background.request);
+chrome.extension.onMessage.addListener(WebDeveloper.Background.message);

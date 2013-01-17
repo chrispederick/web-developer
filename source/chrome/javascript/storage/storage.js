@@ -166,6 +166,22 @@ WebDeveloper.Storage.updateBadgeText = function(featureTabId)
   chrome.browserAction.setTitle({ "title": badgeTooltip, "tabId": featureTabId });
 };
 
+// Updates the extension icon
+WebDeveloper.Storage.updateIcon = function()
+{
+  var icon = { "path": { "19": "/overlay/images/icon.png", "38": "/overlay/images/icon-2x.png" } };
+
+  // If the icon should be in color
+  if(WebDeveloper.Storage.getItem("icon_color") == "true")
+  {
+    icon = { "path": { "19": "/overlay/images/icon-color.png", "38": "/overlay/images/icon-color-2x.png" } };
+  }
+
+  chrome.browserAction.setIcon(icon);
+};
+
+WebDeveloper.Storage.updateIcon();
+
 chrome.tabs.onRemoved.addListener(WebDeveloper.Storage.tabUpdated);
 chrome.tabs.onSelectionChanged.addListener(WebDeveloper.Storage.tabSelectionChanged);
 chrome.tabs.onUpdated.addListener(WebDeveloper.Storage.tabUpdated);

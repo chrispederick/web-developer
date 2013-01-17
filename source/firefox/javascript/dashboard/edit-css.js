@@ -1,6 +1,7 @@
 var WebDeveloper = WebDeveloper || {};
 
-WebDeveloper.EditCSS = WebDeveloper.EditCSS || {};
+WebDeveloper.EditCSS       = WebDeveloper.EditCSS || {};
+WebDeveloper.EditCSS.theme = null;
 
 // Adds a tab
 WebDeveloper.EditCSS.addTab = function(title, styles, stylesURL, tabs, tabPanels, color, errorMessage)
@@ -76,6 +77,27 @@ WebDeveloper.EditCSS.apply = function()
     window.setTimeout(function() { body.style.display = "block"; }, 0);
   }
   */
+};
+
+// Changes the syntax highlight theme
+WebDeveloper.EditCSS.changeSyntaxHighlightTheme = function(type, color)
+{
+  var stylesContainer  = null;
+  var stylesContainers = WebDeveloper.EditCSS.getStylesContainers();
+
+  WebDeveloper.EditCSS.theme = color;
+
+  // Loop through the styles containers
+  for(var i = 0, l = stylesContainers.length; i < l; i++)
+  {
+    stylesContainer = stylesContainers[i];
+
+    // If the styles container is fully loaded
+    if(stylesContainer.contentDocument.defaultView.WebDeveloper)
+    {
+      stylesContainer.contentDocument.defaultView.WebDeveloper.Dashboard.changeSyntaxHighlightTheme(type, color);
+    }
+  }
 };
 
 // Clear the CSS
@@ -160,12 +182,15 @@ WebDeveloper.EditCSS.initialize = function()
       // If the theme is not set
       if(theme == "none")
       {
-        document.getElementById("web-developer-search").hidden = true;
+        document.getElementById("web-developer-search-dashboard").disabled      = true;
+        document.getElementById("web-developer-search-dashboard-text").disabled = true;
       }
       else
       {
         document.getElementById("web-developer-search-dashboard-text").addEventListener("keypress", WebDeveloper.EditCSS.search, false);
       }
+
+      WebDeveloper.Common.configureElement(document.getElementById("web-developer-syntax-highlight-" + theme), "checked", true);
 
       // If the extension is running on a Mac
       if(WebDeveloper.Common.isMac())
@@ -233,9 +258,17 @@ WebDeveloper.EditCSS.pageLoad = function(event)
 // Resets the CSS
 WebDeveloper.EditCSS.reset = function()
 {
+  var theme = WebDeveloper.EditCSS.theme;
+
+  // If the theme is not set
+  if(!theme)
+  {
+    theme = WebDeveloper.Preferences.getExtensionStringPreference("syntax.highlight.theme");
+  }
+
   WebDeveloper.EditCSS.stopUpdate();
   WebDeveloper.EditCSS.resetDocument();
-  WebDeveloper.EditCSS.retrieveCSS(WebDeveloper.Preferences.getExtensionStringPreference("syntax.highlight.theme"));
+  WebDeveloper.EditCSS.retrieveCSS(theme);
   WebDeveloper.CSS.toggleAllStyleSheets(true, WebDeveloper.EditCSS.contentDocument);
   WebDeveloper.EditCSS.update();
 };

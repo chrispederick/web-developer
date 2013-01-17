@@ -21,6 +21,11 @@ body { overflow: hidden; width: 800px; }
 #resize-toolbar > a > span { background-position: -128px 0; }
 #tools-toolbar > a > span { background-position: -144px 0; }
 
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5)
+{
+  .nav-tabs > li > a > span { background-image: url(images/toolbar-2x.png); background-size: 192px 16px; }
+}
+
 /* Menu styles */
 
 .tab-pane > ul, .tab-pane > ul > li > a, .tab-pane > ul > li > a > span { display: inline-block; }
@@ -29,6 +34,11 @@ body { overflow: hidden; width: 800px; }
 .tab-pane > ul > li > a > span { height: 16px; margin-right: 4px; position: relative; top: 2px; width: 16px; }
 .tab-pane > ul > li > .active > span { background: url(images/feature.png) 0 0 no-repeat; }
 .tab-pane > ul > li > .active:hover > span { background-position: 0 -16px; }
+
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5)
+{
+  .tab-pane > ul > li > .active > span { background-image: url(images/feature-2x.png); background-size: 16px 32px; }
+}
 
 /* Confirmation and notification styles */
 

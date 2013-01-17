@@ -1,0 +1,21 @@
+<!-- Common -->
+<!ENTITY webdeveloper.clear "Effacer">
+<!ENTITY webdeveloper.dark "Dark">
+<!ENTITY webdeveloper.light "Light">
+<!ENTITY webdeveloper.none "None">
+<!ENTITY webdeveloper.reset "Réinitialiser tout">
+<!ENTITY webdeveloper.save "Enregistrer…">
+<!ENTITY webdeveloper.search "Recherche">
+<!ENTITY webdeveloper.search.label "Rechercher :">
+<!ENTITY webdeveloper.syntax.highlighting "Syntax Highlighting">
+<!-- Element Information -->
+<!ENTITY webdeveloper.element.information "Informations sur l&apos;élément">
+<!-- Style Information -->
+<!ENTITY webdeveloper.style.information "Information de style">
+<!-- Edit CSS -->
+<!ENTITY webdeveloper.edit.css "Éditer les CSS">
+<!ENTITY webdeveloper.open "Ouvrir…">
+<!ENTITY webdeveloper.pin.css "Verrouiller les CSS">
+<!-- Edit HTML -->
+<!ENTITY webdeveloper.edit.html "Édition HTML">
+<!ENTITY webdeveloper.html.body "<body> du HTML">

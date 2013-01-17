@@ -7,6 +7,9 @@
       <preference id="webdeveloper.toolbar.color" name="extensions.webdeveloper.toolbar.color" type="bool"/>
     </preferences>
 
+    <description value="&webdeveloper.syntax.highlight.performance;"/>
+    <separator/>
+
     <hbox align="center">
       <label control="web-developer-syntax-highlight-theme" value="&webdeveloper.syntax.highlight.theme;"/>
       <menulist id="web-developer-syntax-highlight-theme" preference="webdeveloper.syntax.highlight.theme" oncommand="WebDeveloper.Options.updateSyntaxHighlightTheme()">

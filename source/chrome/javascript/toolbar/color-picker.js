@@ -80,7 +80,7 @@ WebDeveloper.ColorPicker.getColor = function(event, type)
       // If the event target is not the color picker, the color picker is not an ancestor of the event target and the event target is not a scrollbar
       if(eventTarget != colorPicker && !WebDeveloper.Common.isAncestor(eventTarget, colorPicker) && tagName && tagName.toLowerCase() != "scrollbar")
       {
-        chrome.extension.sendRequest({type: "get-color", x: event.clientX, y: event.clientY, eventType: type});
+        chrome.extension.sendMessage({type: "get-color", x: event.clientX, y: event.clientY, eventType: type});
       }
     }
   }

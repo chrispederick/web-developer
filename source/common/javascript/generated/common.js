@@ -1,8 +1,9 @@
 var WebDeveloper = WebDeveloper || {};
 
-WebDeveloper.Generated                  = WebDeveloper.Generated || {};
-WebDeveloper.Generated.animationSpeed   = 200;
-WebDeveloper.Generated.maximumURLLength = 100;
+WebDeveloper.Generated                    = WebDeveloper.Generated || {};
+WebDeveloper.Generated.animationSpeed     = 200;
+WebDeveloper.Generated.maximumURLLength   = 100;
+WebDeveloper.Generated.syntaxHighlighters = [];
 
 // Adds a document
 WebDeveloper.Generated.addDocument = function(documentURL, documentCount, itemDescription, itemCount)
@@ -54,6 +55,46 @@ WebDeveloper.Generated.addSeparator = function()
 
   separator.setAttribute("class", "web-developer-separator");
   document.getElementById("content").appendChild(separator);
+};
+
+// Changes the syntax highlight theme
+WebDeveloper.Generated.changeSyntaxHighlightTheme = function(event)
+{
+  var themeMenu = $(this);
+  var themeIcon = $("i", themeMenu);
+
+  // If this is not the current theme
+  if(themeIcon.hasClass("icon-empty"))
+  {
+    var theme = themeMenu.attr("id").replace("web-developer-syntax-highlighting-", "");
+
+    // If there is no theme
+    if(theme == "none")
+    {
+      $(".CodeMirror").hide();
+      $(".web-developer-syntax-highlight").show();
+    }
+    else if(WebDeveloper.Generated.syntaxHighlighters.length)
+    {
+      $(".CodeMirror").show();
+      $(".web-developer-syntax-highlight").hide();
+
+      // Loop through the syntax highlighters
+      for(var i = 0, l = WebDeveloper.Generated.syntaxHighlighters.length; i < l; i++)
+      {
+        WebDeveloper.Generated.syntaxHighlighters[i].setOption("theme", theme);
+      }
+    }
+    else
+    {
+      WebDeveloper.Generated.initializeSyntaxHighlight(theme);
+    }
+
+    $(".dropdown-menu .icon-ok", $("#web-developer-syntax-highlighting-dropdown")).removeClass("icon-ok").addClass("icon-empty");
+    themeIcon.removeClass("icon-empty").addClass("icon-ok");
+  }
+
+  event.preventDefault();
 };
 
 // Collapses all the output
@@ -135,22 +176,34 @@ WebDeveloper.Generated.initializeCommonElements = function()
 };
 
 // Initializes the syntax highlight functionality
-WebDeveloper.Generated.initializeSyntaxHighlight = function(color)
+WebDeveloper.Generated.initializeSyntaxHighlight = function(color, locale)
 {
-  // If there is a color
+  // If the locale is set
+  if(locale)
+  {
+    $(".dropdown-toggle", $("#web-developer-syntax-highlighting-dropdown")).prepend(locale.syntaxHighlighting);
+    $("#web-developer-syntax-highlighting-dark").append(locale.dark);
+    $("#web-developer-syntax-highlighting-light").append(locale.light);
+    $("#web-developer-syntax-highlighting-none").append(locale.none);
+
+    $(".dropdown-menu a", $("#web-developer-syntax-highlighting-dropdown")).on("click", WebDeveloper.Generated.changeSyntaxHighlightTheme);
+    $("i", $("#web-developer-syntax-highlighting-" + color)).removeClass("icon-empty").addClass("icon-ok");
+  }
+
+  // If a color is set
   if(color != "none")
   {
     // Loop through the syntax highlight elements
-    $('.web-developer-syntax-highlight').each(function()
+    $(".web-developer-syntax-highlight").each(function()
     {
       var pre = $(this);
 
       window.setTimeout(function()
       {
-        CodeMirror(function(element)
+        WebDeveloper.Generated.syntaxHighlighters.push(CodeMirror(function(element)
         {
           pre.after(element);
-          pre.remove();
+          pre.hide();
         },
         {
           lineNumbers: pre.data("line-numbers"),
@@ -159,7 +212,7 @@ WebDeveloper.Generated.initializeSyntaxHighlight = function(color)
           tabSize: 2,
           theme: color,
           value: pre.text()
-        });
+        }));
       }, 0);
     });
   }
@@ -190,12 +243,13 @@ WebDeveloper.Generated.localizeHeader = function(locale)
 // Outputs content
 WebDeveloper.Generated.output = function(title, url, anchor, type, outputOriginal)
 {
-  var childElement     = document.createElement("i");
-  var container        = document.createElement("pre");
-  var content          = document.getElementById("content");
-  var element          = document.createElement("h3");
-  var outputContainers = [];
-  var outputTitle      = title;
+  var childElement      = document.createElement("i");
+  var container         = document.createElement("pre");
+  var content           = document.getElementById("content");
+  var documentContainer = WebDeveloper.Generated.generateDocumentContainer();
+  var element           = document.createElement("h3");
+  var outputContainers  = [];
+  var outputTitle       = title;
 
   childElement.setAttribute("class", "icon-caret-down");
   element.appendChild(childElement);
@@ -229,7 +283,7 @@ WebDeveloper.Generated.output = function(title, url, anchor, type, outputOrigina
   container.setAttribute("class", "web-developer-syntax-highlight");
   container.setAttribute("data-line-numbers", "true");
   container.setAttribute("data-type", type);
-  content.appendChild(container);
+  documentContainer.appendChild(container);
   outputContainers.push($(container));
 
   // If the original should be output
@@ -238,10 +292,11 @@ WebDeveloper.Generated.output = function(title, url, anchor, type, outputOrigina
     var originalContainer = document.createElement("pre");
 
     originalContainer.setAttribute("class", "web-developer-original");
-    content.appendChild(originalContainer);
+    documentContainer.appendChild(originalContainer);
     outputContainers.push($(originalContainer));
   }
 
+  content.appendChild(documentContainer);
   WebDeveloper.Generated.addSeparator();
 
   return outputContainers;

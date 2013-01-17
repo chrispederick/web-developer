@@ -580,10 +580,9 @@ WebDeveloper.Images.replaceImagesWithAltAttributes = function(replace, documents
     }
     else
     {
-      WebDeveloper.Common.removeMatchingElements(".web-developer-display-image-paths", contentDocument);
+      WebDeveloper.Common.removeMatchingElements(".web-developer-replace-images-with-alt-attributes", contentDocument);
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-replace-images-with-alt-attributes-before", contentDocument, false);
     WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/hide-images.css", "web-developer-replace-images-with-alt-attributes", contentDocument, false);
   }
 };
@@ -625,6 +624,8 @@ WebDeveloper.Images.updateImageDimensions = function(contentDocument)
   var text        = null;
 
   WebDeveloper.Images.imageDimensionsUpdating = true;
+
+  WebDeveloper.Common.removeMatchingElements(".web-developer-display-image-dimensions", contentDocument);
 
   // Loop through the images
   for(var i = 0, l = images.length; i < l; i++)

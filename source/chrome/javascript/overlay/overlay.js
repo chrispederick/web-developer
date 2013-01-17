@@ -197,6 +197,18 @@ WebDeveloper.Overlay.isValidTab = function(tab)
   return true;
 };
 
+// Handles any overlay messages
+WebDeveloper.Overlay.message = function(message, sender, sendResponse)
+{
+  // If the message type is a notification
+  if(message.type == "display-notification")
+  {
+    WebDeveloper.Common.displayNotification(message.message, message.parameters);
+  }
+
+  sendResponse({});
+};
+
 // Opens a tab to the URL
 WebDeveloper.Overlay.openTab = function(tabURL)
 {
@@ -219,18 +231,6 @@ WebDeveloper.Overlay.openURL = function()
 
     WebDeveloper.Overlay.close();
   });
-};
-
-// Handles any overlay requests
-WebDeveloper.Overlay.request = function(request, sender, sendResponse)
-{
-  // If the request type is a notification
-  if(request.type == "display-notification")
-  {
-    WebDeveloper.Common.displayNotification(request.message, request.parameters);
-  }
-
-  sendResponse({});
 };
 
 // Toggles a content setting
@@ -312,4 +312,4 @@ WebDeveloper.Overlay.updateContentSettingMenu = function(menu, settingType)
   });
 };
 
-chrome.extension.onRequest.addListener(WebDeveloper.Overlay.request);
+chrome.extension.onMessage.addListener(WebDeveloper.Overlay.message);

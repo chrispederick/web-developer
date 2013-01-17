@@ -3,7 +3,7 @@ pref("extensions.webdeveloper.dashboard.position", "bottom");
 pref("extensions.webdeveloper.populate.email.address", "example@example.com");
 
 // Colors
-pref("extensions.webdeveloper.syntax.highlight.theme", "light");
+pref("extensions.webdeveloper.syntax.highlight.theme", "none");
 
 // General
 pref("extensions.webdeveloper.toolbar.icons", "full");

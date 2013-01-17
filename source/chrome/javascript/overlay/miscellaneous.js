@@ -192,7 +192,7 @@ WebDeveloper.Overlay.Miscellaneous.toggleVisitedLinks = function(visited)
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.tabs.sendRequest(tab.id, {type: "get-links"}, function(data)
+      chrome.tabs.sendMessage(tab.id, {type: "get-links"}, function(data)
       {
         var documents = data.documents;
         var links     = null;

@@ -1,5 +1,10 @@
 h1 { background: url(images/logo.png) no-repeat 0 0; min-height: 64px; padding-left: 75px; }
-h2, .hero-unit > .url { font-size: 14px; line-height: 18px; }
+h2, .hero-unit > .url { font-size: 18px; line-height: 20px; }
 img { vertical-align: top; }
-.hero-unit { background-color: #f5f5f5; margin: 50px auto; width: 575px; }
+.hero-unit { margin: 50px auto; width: 575px; }
 .row { margin-bottom: 20px; margin-top: 25px; }
+
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5)
+{
+  h1 { background-image: url(images/logo-2x.png); background-size: 64px 64px; }
+}

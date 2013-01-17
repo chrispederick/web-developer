@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <project name="web-developer" default="build">
 	<!-- Custom tasks -->
+  <taskdef name="jshint" classname="com.philmander.jshint.JsHintAntTask" classpath="ant-jshint.jar" />
 	<taskdef name="jslint" classname="com.googlecode.jslint4java.ant.JSLintTask" classpath="jslint4java.jar"/>
 	<taskdef resource="net/sf/antcontrib/antlib.xml" classpath="ant-contrib.jar"/>
 
@@ -11,6 +12,7 @@
   <target name="clean" depends="clean.chrome,clean.firefox" description="Cleans up the build"/>
 	<target name="firefox" depends="build.firefox" description="Builds the extension for Firefox"/>
 	<target name="package" depends="build.firefox,package.chrome" description="Packages the extension"/>
+  <target name="test" depends="jshint,jslint" description="Tests the extension"/>
 
   <!-- Builds the extension for Chrome -->
   <target name="build.chrome" depends="clean.chrome">
@@ -45,8 +47,9 @@
     	<fileset file="../source/common/style-sheets/common/common.css"/>
     	<fileset file="../source/common/style-sheets/about/about.css"/>
     </concat>
-    <copy file="../images/common/logos/16.png" tofile="chrome/about/images/favicon.png"/>
+    <copy file="../images/common/logos/favicon.ico" tofile="chrome/about/images/favicon.ico"/>
     <copy file="../images/common/logos/64.png" tofile="chrome/about/images/logo.png"/>
+    <copy file="../images/common/logos/128.png" tofile="chrome/about/images/logo-2x.png"/>
 	</target>
 
   <!-- Builds the background page for Chrome -->
@@ -59,11 +62,11 @@
       <fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
     	<fileset file="../source/common/javascript/common/common.js"/>
     	<fileset file="../source/chrome/javascript/common/common.js"/>
-    	<fileset file="../source/chrome/javascript/background/background.js"/>
       <fileset file="../source/chrome/javascript/locales/locales.js"/>
     	<fileset file="../source/chrome/javascript/storage/storage.js"/>
     	<fileset file="../source/common/javascript/upgrade/upgrade.js"/>
     	<fileset file="../source/chrome/javascript/upgrade/upgrade.js"/>
+      <fileset file="../source/chrome/javascript/background/background.js"/>
     </concat>
     <move file="chrome/background/javascript/background.temp" tofile="chrome/background/javascript/background.js">
       <filterset refid="chrome.filters"/>
@@ -123,7 +126,7 @@
     	<fileset file="../source/common/style-sheets/dashboard/element-information.css"/>
     	<fileset file="../source/chrome/style-sheets/dashboard/common.css"/>
     </concat>
-    <copy file="../images/common/logos/monochrome.png" tofile="chrome/dashboard/images/logo.png"/>
+    <copy file="../images/common/logos/monochrome/16.png" tofile="chrome/dashboard/images/logo.png"/>
 	</target>
 
   <!-- Builds the features for Chrome -->
@@ -183,7 +186,7 @@
     	<fileset file="../source/common/style-sheets/common/common.css"/>
     	<fileset file="../source/common/style-sheets/generated/common.css"/>
     </concat>
-    <copy file="../images/common/logos/16.png" tofile="chrome/validation/images/favicon.png"/>
+    <copy file="../images/common/logos/favicon.ico" tofile="chrome/validation/images/favicon.ico"/>
 	</target>
 
   <!-- Builds the generated pages for Chrome -->
@@ -219,6 +222,7 @@
       <fileset file="../source/common/javascript/common/bootstrap/popover.js"/>
       <fileset file="../source/common/javascript/common/bootstrap/transition.js"/>
     	<fileset file="../source/common/javascript/generated/view-cookie-information.js"/>
+      <fileset file="../source/common/javascript/features/cookies.js"/>
     	<fileset file="../source/chrome/javascript/features/cookies.js"/>
     </concat>
     <copy todir="chrome/generated/javascript">
@@ -238,8 +242,7 @@
     	<fileset file="../source/common/style-sheets/common/codemirror/codemirror.css"/>
     	<fileset file="../source/common/style-sheets/common/codemirror/theme.css"/>
     </concat>
-    <copy file="../images/common/logos/16.png" tofile="chrome/generated/images/favicon.png"/>
-    <copy file="../images/common/logos/monochrome.png" tofile="chrome/generated/images/logo.png"/>
+    <copy file="../images/common/logos/favicon.ico" tofile="chrome/generated/images/favicon.ico"/>
     <copy todir="chrome/generated/fonts">
       <fileset dir="../source/common/fonts"/>
     </copy>
@@ -303,9 +306,9 @@
     	<fileset file="../source/common/style-sheets/common/codemirror/theme.css"/>
     	<fileset file="../source/common/style-sheets/options/syntax-highlight.css"/>
     </concat>
-    <copy file="../images/common/logos/16.png" tofile="chrome/options/images/favicon.png"/>
-    <copy file="../images/common/logos/monochrome.png" tofile="chrome/options/images/logo.png"/>
+    <copy file="../images/common/logos/favicon.ico" tofile="chrome/options/images/favicon.ico"/>
     <copy file="../images/chrome/options.png" tofile="chrome/options/images/options.png"/>
+    <copy file="../images/chrome/options-2x.png" tofile="chrome/options/images/options-2x.png"/>
     <copy todir="chrome/options/fonts">
       <fileset dir="../source/common/fonts"/>
     </copy>
@@ -343,8 +346,13 @@
     	<fileset file="../source/chrome/style-sheets/overlay/overlay.css"/>
     </concat>
     <copy file="../images/common/toolbar.png" tofile="chrome/overlay/images/toolbar.png"/>
+    <copy file="../images/common/toolbar-2x.png" tofile="chrome/overlay/images/toolbar-2x.png"/>
     <copy file="../images/chrome/feature.png" tofile="chrome/overlay/images/feature.png"/>
+    <copy file="../images/chrome/feature-2x.png" tofile="chrome/overlay/images/feature-2x.png"/>
     <copy file="../images/chrome/icon.png" tofile="chrome/overlay/images/icon.png"/>
+    <copy file="../images/chrome/icon-2x.png" tofile="chrome/overlay/images/icon-2x.png"/>
+    <copy file="../images/chrome/icon-color.png" tofile="chrome/overlay/images/icon-color.png"/>
+    <copy file="../images/chrome/icon-color-2x.png" tofile="chrome/overlay/images/icon-color-2x.png"/>
     <copy todir="chrome/overlay/fonts">
       <fileset dir="../source/common/fonts"/>
     </copy>
@@ -403,7 +411,7 @@
     	<fileset file="../source/chrome/style-sheets/toolbar/common.css"/>
     	<fileset file="../source/chrome/style-sheets/toolbar/ruler.css"/>
     </concat>
-    <copy file="../images/common/logos/monochrome.png" tofile="chrome/toolbar/images/logo.png"/>
+    <copy file="../images/common/logos/monochrome/16.png" tofile="chrome/toolbar/images/logo.png"/>
 	</target>
 
   <!-- Builds the extension for Firefox -->
@@ -446,8 +454,9 @@
     	<fileset file="../source/common/style-sheets/common/common.css"/>
     	<fileset file="../source/common/style-sheets/about/about.css"/>
     </concat>
-    <copy file="../images/common/logos/16.png" tofile="firefox/content/web-developer/about/images/favicon.png"/>
+    <copy file="../images/common/logos/favicon.ico" tofile="firefox/content/web-developer/about/images/favicon.ico"/>
     <copy file="../images/common/logos/64.png" tofile="firefox/content/web-developer/about/images/logo.png"/>
+    <copy file="../images/common/logos/128.png" tofile="firefox/content/web-developer/about/images/logo-2x.png"/>
 	</target>
 
   <!-- Builds the common JavaScript for Firefox -->
@@ -595,7 +604,7 @@
     	<fileset file="../source/common/style-sheets/common/common.css"/>
     	<fileset file="../source/common/style-sheets/generated/common.css"/>
     </concat>
-    <copy file="../images/common/logos/16.png" tofile="firefox/content/web-developer/validation/images/favicon.png"/>
+    <copy file="../images/common/logos/favicon.ico" tofile="firefox/content/web-developer/validation/images/favicon.ico"/>
 	</target>
 
   <!-- Builds the generated pages for Firefox -->
@@ -634,6 +643,7 @@
       <fileset file="../source/common/javascript/common/bootstrap/popover.js"/>
       <fileset file="../source/common/javascript/common/bootstrap/transition.js"/>
     	<fileset file="../source/common/javascript/generated/view-cookie-information.js"/>
+      <fileset file="../source/common/javascript/features/cookies.js"/>
     	<fileset file="../source/firefox/javascript/features/cookies.js"/>
     	<fileset file="../source/firefox/javascript/preferences/preferences.js"/>
     </concat>
@@ -657,8 +667,7 @@
     	<fileset file="../source/common/style-sheets/common/codemirror/codemirror.css"/>
     	<fileset file="../source/common/style-sheets/common/codemirror/theme.css"/>
     </concat>
-    <copy file="../images/common/logos/16.png" tofile="firefox/content/web-developer/generated/images/favicon.png"/>
-    <copy file="../images/common/logos/monochrome.png" tofile="firefox/content/web-developer/generated/images/logo.png"/>
+    <copy file="../images/common/logos/favicon.ico" tofile="firefox/content/web-developer/generated/images/favicon.ico"/>
     <copy todir="firefox/content/web-developer/generated/fonts">
       <fileset dir="../source/common/fonts"/>
     </copy>
@@ -1204,19 +1213,27 @@
       <fileset dir="../images/firefox/skins"/>
     </copy>
     <copy file="../images/common/logos/16.png" tofile="firefox/skin/default/menu.png"/>
+    <copy file="../images/common/logos/32.png" tofile="firefox/skin/default/menu-2x.png"/>
     <copy file="../images/common/toolbar.png" tofile="firefox/skin/default/toolbar.png"/>
-    <copy file="../images/common/logos/monochrome.png" tofile="firefox/skin/mac/button.png"/>
-    <copy file="../images/common/logos/monochrome.png" tofile="firefox/skin/mac/menu.png"/>
+    <copy file="../images/common/toolbar-2x.png" tofile="firefox/skin/default/toolbar-2x.png"/>
+    <copy file="../images/common/logos/monochrome/16.png" tofile="firefox/skin/mac/button.png"/>
+    <copy file="../images/common/logos/monochrome/32.png" tofile="firefox/skin/mac/button-2x.png"/>
     <copy file="../images/firefox/skins/default/options.png" tofile="firefox/skin/mac/options.png"/>
+    <copy file="../images/firefox/skins/default/options-2x.png" tofile="firefox/skin/mac/options-2x.png"/>
     <copy todir="firefox/skin/mac/color">
       <fileset dir="../images/firefox/skins/default">
      		<exclude name="button.png"/>
+        <exclude name="button-2x.png"/>
      		<exclude name="options.png"/>
+        <exclude name="options-2x.png"/>
       </fileset>
     </copy>
     <copy file="../images/common/logos/16.png" tofile="firefox/skin/mac/color/button.png"/>
     <copy file="../images/common/logos/16.png" tofile="firefox/skin/mac/color/menu.png"/>
+    <copy file="../images/common/logos/32.png" tofile="firefox/skin/mac/color/button-2x.png"/>
+    <copy file="../images/common/logos/32.png" tofile="firefox/skin/mac/color/menu-2x.png"/>
     <copy file="../images/common/toolbar.png" tofile="firefox/skin/mac/color/toolbar.png"/>
+    <copy file="../images/common/toolbar-2x.png" tofile="firefox/skin/mac/color/toolbar-2x.png"/>
 	</target>
 
   <!-- Builds the toolbars for Firefox -->
@@ -1297,6 +1314,30 @@
 		</exec>
 	</target>
 
+  <!-- Runs JSHint on the extension -->
+  <target name="jshint" depends="convert.tabs.spaces">
+    <echo level="info" message="Running JSHint"/>
+    <property name="jshint.globals" value="$:true,BrowserPageInfo:true,BrowserReload:true,BrowserViewSourceOfDocument:true,chrome:true,CodeMirror:true,Components:true,CSSPrimitiveValue:true,getWebNavigation:true,HTMLDocument:true,ich:true,inspectDOMDocument:true,js_beautify:true,Node:true,NodeFilter:true,pref:true,toJavaScriptConsole:true,WebDeveloper:true,WebDeveloperApplication:true,WebDeveloperValidateCSS:true,WebDeveloperValidateHTML:true"/>
+    <property name="jshint.options" value="bitwise:false,eqeqeq:false,forin:false,plusplus:false,strict:false"/>
+    <jshint dir="../source/chrome/javascript" excludes="**/options/tablednd.js" fail="false" globals="${jshint.globals}" options="${jshint.options}"/>
+    <jshint dir="../source/common/javascript" excludes="**/beautify/beautify.js,**/bootstrap/collapse.js,**/bootstrap/dropdown.js,**/bootstrap/modal.js,**/bootstrap/popover.js,**/bootstrap/tab.js,**/bootstrap/tooltip.js,**/bootstrap/transition.js,**/codemirror/codemirror.js,**/codemirror/css.js,**/codemirror/htmlmixed.js,**/codemirror/javascript.js,**/codemirror/searchcursor.js,**/jquery/icanhaz.js,**/jquery/jquery.js,**/codemirror/xml.js" fail="false" globals="${jshint.globals}" options="${jshint.options}"/>
+    <jshint dir="../source/firefox/javascript" fail="false" globals="${jshint.globals}" options="${jshint.options}"/>
+    <echo level="info" message="Result should be 27 errors"/>
+  </target>
+
+  <!-- Runs JSLint on the extension -->
+  <target name="jslint" depends="convert.tabs.spaces">
+    <echo level="info" message="Running JSLint"/>
+    <jslint haltOnFailure="false" options="browser,forin,indent=2,maxerr=100,undef">
+      <formatter type="plain"/>
+      <predef>$$,BrowserPageInfo,BrowserReload,BrowserViewSourceOfDocument,chrome,CodeMirror,Components,CSSPrimitiveValue,getWebNavigation,HTMLDocument,ich,Image,inspectDOMDocument,js_beautify,Node,NodeFilter,pref,toJavaScriptConsole,WebDeveloper,WebDeveloperApplication,WebDeveloperValidateCSS,WebDeveloperValidateHTML,window</predef>
+      <fileset dir="../source/chrome/javascript" excludes="**/options/tablednd.js"/>
+      <fileset dir="../source/common/javascript" excludes="**/beautify/beautify.js,**/bootstrap/collapse.js,**/bootstrap/dropdown.js,**/bootstrap/modal.js,**/bootstrap/popover.js,**/bootstrap/tab.js,**/bootstrap/tooltip.js,**/bootstrap/transition.js,**/codemirror/codemirror.js,**/codemirror/css.js,**/codemirror/htmlmixed.js,**/codemirror/javascript.js,**/codemirror/searchcursor.js,**/jquery/icanhaz.js,**/jquery/jquery.js,**/codemirror/xml.js"/>
+      <fileset dir="../source/firefox/javascript"/>
+    </jslint>
+    <echo level="info" message="Result should be 27 errors in 9 files"/>
+  </target>
+
   <!-- Merges in Bootstrap -->
   <target name="merge.bootstrap">
     <echo level="info" message="Merging Bootstrap into the source"/>
@@ -1346,16 +1387,4 @@
       <zipfileset file="license.txt"/>
     </zip>
   </target>
-
-  <!-- Test the extension -->
-  <target name="test" depends="convert.tabs.spaces">
-    <echo level="info" message="Running JSLint"/>
-		<jslint haltOnFailure="false" options="browser,forin,indent=2,maxerr=100,undef">
-    	<formatter type="plain"/>
-    	<predef>$$,BrowserPageInfo,BrowserReload,BrowserViewSourceOfDocument,chrome,CodeMirror,Components,CSSPrimitiveValue,getWebNavigation,HTMLDocument,ich,Image,inspectDOMDocument,js_beautify,Node,NodeFilter,pref,toJavaScriptConsole,WebDeveloper,WebDeveloperApplication,WebDeveloperValidateCSS,WebDeveloperValidateHTML,window</predef>
-    	<fileset dir="../source/chrome/javascript" excludes="**/options/tablednd.js"/>
-    	<fileset dir="../source/common/javascript" excludes="**/beautify/beautify.js,**/bootstrap/collapse.js,**/bootstrap/dropdown.js,**/bootstrap/modal.js,**/bootstrap/popover.js,**/bootstrap/tab.js,**/bootstrap/tooltip.js,**/bootstrap/transition.js,**/codemirror/codemirror.js,**/codemirror/css.js,**/codemirror/htmlmixed.js,**/codemirror/javascript.js,**/codemirror/searchcursor.js,**/jquery/icanhaz.js,**/jquery/jquery.js,**/codemirror/xml.js"/>
-    	<fileset dir="../source/firefox/javascript"/>
-  	</jslint>
- 	</target>
 </project>
