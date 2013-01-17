@@ -2,6 +2,28 @@ var WebDeveloper = WebDeveloper || {};
 
 WebDeveloper.Generated = WebDeveloper.Generated || {};
 
+// Returns the width of the vertical scrollbar (same as the height of the horizontal one)
+WebDeveloper.Generated.getScrollbarWidth = function(content)
+{
+  var innerDiv       = document.createElement("div");
+  var outerDiv       = document.createElement("div");
+  var scrollbarWidth = 0;
+
+  innerDiv.style.height   = "150px";
+  outerDiv.style.height   = "100px";
+  outerDiv.style.overflow = "auto";
+  outerDiv.style.width    = "100px";
+
+  outerDiv.appendChild(innerDiv);
+  content.appendChild(outerDiv);
+
+  scrollbarWidth = outerDiv.offsetWidth - innerDiv.offsetWidth;
+
+  content.removeChild(outerDiv);
+
+  return scrollbarWidth;
+};
+
 // Initializes the page with data
 WebDeveloper.Generated.initialize = function(data, locale)
 {
@@ -16,10 +38,10 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var layout            = null;
   var layoutDescription = null;
   var layouts           = data.layouts;
+  var scrollbarWidth    = WebDeveloper.Generated.getScrollbarWidth(content);
   var url               = data.pageURL;
   var width             = null;
-  var scrollbarWidth	= WebDeveloper.Common.getScrollbarWidth();
-  
+
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.localizeHeader(locale);
   WebDeveloper.Generated.setPageTitle(locale.responsiveLayouts, data, locale);
@@ -34,9 +56,9 @@ WebDeveloper.Generated.initialize = function(data, locale)
     layout            = layouts[i];
     childElement      = document.createElement("i");
     element           = document.createElement("h3");
-    height            = parseInt(layout.height) + scrollbarWidth;
-    width             = parseInt(layout.width) + scrollbarWidth;
-    layoutDescription = layout.description + " (" + layout.height + "x" + layout.width + ")";
+    height            = layout.height;
+    width             = layout.width;
+    layoutDescription = layout.description + " (" + width + "x" + height + ")";
 
     childElement.setAttribute("class", "icon-caret-down");
     element.appendChild(childElement);
@@ -47,10 +69,10 @@ WebDeveloper.Generated.initialize = function(data, locale)
     childElement = document.createElement("iframe");
     container    = WebDeveloper.Generated.generateDocumentContainer();
 
-    childElement.setAttribute("height", height);
+    childElement.setAttribute("height", parseInt(height, 10) + scrollbarWidth);
+    childElement.setAttribute("scrolling", "yes");
     childElement.setAttribute("src", url);
-    childElement.setAttribute("width", width);
-	childElement.setAttribute("scrolling", "yes");
+    childElement.setAttribute("width", parseInt(width, 10) + scrollbarWidth);
 
     container.appendChild(childElement);
     content.appendChild(container);
@@ -63,7 +85,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
     childElement.setAttribute("href", "#" + anchor);
     filesDropdownMenu.appendChild(element);
   }
-  
+
   $("#web-developer-reload").text(locale.reloadLayouts).on("click", WebDeveloper.Generated.reloadLayouts);
 
   WebDeveloper.Generated.initializeCommonElements();

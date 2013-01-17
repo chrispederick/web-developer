@@ -316,29 +316,4 @@ WebDeveloper.Generated.toggleOutput = function()
   $(this).toggleClass("icon-caret-down").toggleClass("icon-caret-right").parent().next().slideToggle(WebDeveloper.Generated.animationSpeed);
 };
 
-/*
- * Calculates width of the user agent vertical scrollbar (same as the height of the horizontal one)
- * @return int scrollbar width
- */
-WebDeveloper.Common.getScrollbarWidth = function()
-{
-  var outer= document.createElement('div');
-  var inner= document.createElement('div');
-  var scrollWidth;
-  
-  outer.style.width   = '100px';
-  outer.style.height  = '100px';
-  outer.style.overflow  = 'auto';
-  inner.style.height  = '150px';
-  
-  document.body.appendChild(outer);
-  outer.appendChild(inner);
-  
-  scrollWidth = outer.offsetWidth - inner.offsetWidth;
-  
-  document.body.removeChild(outer);
-  
-  return scrollWidth;
-};
-
 window.addEventListener("web-developer-generated-event", WebDeveloper.Generated.initializeWithJSON, false);
