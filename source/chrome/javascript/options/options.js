@@ -423,6 +423,8 @@ WebDeveloper.Options.localizeAdvancedTab = function()
 // Localizes the colors tab
 WebDeveloper.Options.localizeColorsTab = function()
 {
+  $('#syntax-highlight-performance').text(WebDeveloper.Locales.getString("syntaxHighlightPerformance"));
+
   $('[for="syntax_highlight_theme"]').text(WebDeveloper.Locales.getString("syntaxHighlightTheme"));
   $('#icon_color').after(WebDeveloper.Locales.getString("displayExtensionIconColor"));
 
@@ -430,7 +432,7 @@ WebDeveloper.Options.localizeColorsTab = function()
   $('[value="light"]').text(WebDeveloper.Locales.getString("light"));
   $('[value="none"]').text(WebDeveloper.Locales.getString("none"));
 
-  $("p", $("#colors-options")).text(WebDeveloper.Locales.getString("preview"));
+  $('#preview').text(WebDeveloper.Locales.getString("preview"));
 };
 
 // Localizes the resize tab

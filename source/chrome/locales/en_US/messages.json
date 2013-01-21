@@ -359,6 +359,7 @@
   "editTool": { "message": "Edit Tool" },
   "heightPlaceholder": { "message": "Enter the height in pixels" },
   "populateEmailAddress": { "message": "Email address to use for populating email form fields" },
+  "syntaxHighlightPerformance": { "message": "Note that turning on syntax highlighting can affect the performance of the browser." },
   "syntaxHighlightTheme": { "message": "Syntax highlighting theme" },
   "urlPlaceholder": { "message": "Enter a URL" },
   "viewportDescription": { "message": "Resize the viewport" },

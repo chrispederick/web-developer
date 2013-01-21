@@ -37,9 +37,10 @@
 /* Color styles */
 
 iframe { border: 1px solid #ccc; margin: 0 0 20px 190px; }
-#colors-options p { margin: 0 0 0 190px; }
 #colors-options > .form-horizontal .control-label { width: 170px; }
 #colors-options > .form-horizontal .controls { margin-left: 190px; }
+#preview { margin: 0 0 0 190px; }
+#syntax-highlight-performance { margin: 0 0 20px 5px; }
 
 /* Resize styles */
 
