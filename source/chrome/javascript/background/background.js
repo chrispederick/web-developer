@@ -292,7 +292,7 @@ WebDeveloper.Background.validateLocalHTML = function(tabURL, tabIndex, validateU
       // If this is the opened tab and it finished loading
       if(tabId == openedTab.id && tabInformation.status == "complete")
       {
-        WebDeveloper.Background.initializeValidationTab(tabURL, WebDeveloper.Background.getContentFromURLs([validateURL]));
+        WebDeveloper.Background.initializeValidationTab(tabURL, WebDeveloper.Background.getURLContents([validateURL], ""));
 
         chrome.tabs.onUpdated.removeListener(tabLoaded);
       }
