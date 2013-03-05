@@ -59,7 +59,6 @@
       <filterset refid="chrome.filters"/>
     </copy>
     <concat destfile="chrome/background/javascript/background.temp">
-      <fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
     	<fileset file="../source/common/javascript/common/common.js"/>
     	<fileset file="../source/chrome/javascript/common/common.js"/>
       <fileset file="../source/chrome/javascript/locales/locales.js"/>
@@ -76,7 +75,16 @@
   <!-- Builds the common JavaScript for Chrome -->
   <target name="build.chrome.common.javascript" depends="initialize.chrome">
     <echo level="info" message="Building the common JavaScript"/>
-    <copy file="../source/common/javascript/common/jquery/jquery.js" tofile="chrome/common/jquery.js"/>
+    <copy todir="chrome/common/bootstrap">
+      <fileset dir="../source/common/javascript/common/bootstrap"/>
+    </copy>
+    <copy todir="chrome/common/codemirror">
+      <fileset dir="../source/common/javascript/common/codemirror"/>
+    </copy>
+    <copy todir="chrome/common/jquery">
+      <fileset dir="../source/common/javascript/common/jquery"/>
+      <fileset dir="../source/chrome/javascript/common/jquery"/>
+    </copy>
     <concat destfile="chrome/content/content.js">
     	<fileset file="../source/common/javascript/common/common.js"/>
     	<fileset file="../source/chrome/javascript/common/common.js"/>
@@ -98,7 +106,6 @@
   <target name="build.chrome.dashboard" depends="initialize.chrome">
     <echo level="info" message="Building the dashboard"/>
     <concat destfile="chrome/dashboard/javascript/html/dashboard.js">
-      <fileset file="../source/common/javascript/common/bootstrap/tab.js"/>
     	<fileset file="../source/common/javascript/toolbar/html/element-ancestors.js"/>
     	<fileset file="../source/chrome/javascript/dashboard/common.js"/>
     </concat>
@@ -200,27 +207,12 @@
       <filterset refid="chrome.filters"/>
     </copy>
     <concat destfile="chrome/generated/javascript/common.js">
-     	<fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
-	  	<fileset file="../source/common/javascript/common/bootstrap/collapse.js"/>
-    	<fileset file="../source/common/javascript/common/bootstrap/dropdown.js"/>
     	<fileset file="../source/common/javascript/common/common.js"/>
     	<fileset file="../source/chrome/javascript/common/common.js"/>
     	<fileset file="../source/common/javascript/generated/common.js"/>
     </concat>
     <copy file="../source/common/javascript/generated/beautify/beautify.js" tofile="chrome/generated/javascript/beautify/beautify.js"/>
-    <concat destfile="chrome/generated/javascript/syntax-highlight-css.js">
-    	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/css.js"/>
-    </concat>
-    <concat destfile="chrome/generated/javascript/syntax-highlight-javascript.js">
-    	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/javascript.js"/>
-    </concat>
     <concat destfile="chrome/generated/javascript/view-cookie-information.js">
-      <fileset file="../source/common/javascript/common/bootstrap/modal.js"/>
-      <fileset file="../source/common/javascript/common/bootstrap/tooltip.js"/>
-      <fileset file="../source/common/javascript/common/bootstrap/popover.js"/>
-      <fileset file="../source/common/javascript/common/bootstrap/transition.js"/>
     	<fileset file="../source/common/javascript/generated/view-cookie-information.js"/>
       <fileset file="../source/common/javascript/features/cookies.js"/>
     	<fileset file="../source/chrome/javascript/features/cookies.js"/>
@@ -274,24 +266,12 @@
       <filterset refid="chrome.filters"/>
     </copy>
     <concat destfile="chrome/options/javascript/options.js">
-      <fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
-      <fileset file="../source/common/javascript/common/bootstrap/modal.js"/>
-      <fileset file="../source/common/javascript/common/bootstrap/tab.js"/>
-      <fileset file="../source/common/javascript/common/bootstrap/transition.js"/>
     	<fileset file="../source/common/javascript/common/common.js"/>
       <fileset file="../source/chrome/javascript/locales/locales.js"/>
       <fileset file="../source/chrome/javascript/options/options.js"/>
-      <fileset file="../source/chrome/javascript/options/tablednd.js"/>
       <fileset file="../source/chrome/javascript/storage/storage.js"/>
     </concat>
-    <concat destfile="chrome/options/javascript/syntax-highlight.js">
-    	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/css.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/htmlmixed.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/javascript.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/xml.js"/>
-    	<fileset file="../source/common/javascript/options/syntax-highlight.js"/>
-    </concat>
+    <copy file="../source/common/javascript/options/syntax-highlight.js" tofile="chrome/options/javascript/syntax-highlight.js"/>
     <concat destfile="chrome/options/options.css">
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
@@ -321,9 +301,6 @@
       <filterset refid="chrome.filters"/>
     </copy>
     <concat destfile="chrome/overlay/javascript/overlay.temp">
-      <fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
-      <fileset file="../source/common/javascript/common/bootstrap/tab.js"/>
-      <fileset file="../source/common/javascript/common/bootstrap/transition.js"/>
       <fileset file="../source/common/javascript/common/common.js"/>
       <fileset file="../source/common/javascript/features/cookies.js"/>
       <fileset file="../source/common/javascript/locales/locales.js"/>
@@ -466,9 +443,15 @@
     	<fileset file="../source/common/javascript/common/common.js"/>
     	<fileset file="../source/firefox/javascript/common/common.js"/>
     </concat>
-		<copy todir="firefox/content/web-developer/common">
-    	<fileset file="../source/common/javascript/common/css.js"/>
-    	<fileset file="../source/common/javascript/common/jquery/jquery.js"/>
+    <copy file="../source/common/javascript/common/css.js" tofile="firefox/content/web-developer/common/css.js"/>
+    <copy todir="firefox/content/web-developer/common/bootstrap">
+      <fileset dir="../source/common/javascript/common/bootstrap"/>
+    </copy>
+    <copy todir="firefox/content/web-developer/common/codemirror">
+      <fileset dir="../source/common/javascript/common/codemirror"/>
+    </copy>
+    <copy todir="firefox/content/web-developer/common/jquery">
+      <fileset dir="../source/common/javascript/common/jquery"/>
     </copy>
     <concat destfile="firefox/content/web-developer/content/content.js">
     	<fileset file="../source/common/javascript/content/content.js"/>
@@ -530,19 +513,6 @@
     	<fileset file="../source/firefox/javascript/dashboard/html/common.js"/>
     </concat>
   	<copy file="../source/common/javascript/toolbar/html/element-ancestors.js" tofile="firefox/content/web-developer/dashboard/javascript/html/element-ancestors.js"/>
-    <concat destfile="firefox/content/web-developer/dashboard/javascript/html/syntax-highlight-css.js">
-    	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/css.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/searchcursor.js"/>
-    </concat>
-    <concat destfile="firefox/content/web-developer/dashboard/javascript/html/syntax-highlight-html.js">
-    	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/css.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/htmlmixed.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/javascript.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/searchcursor.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/xml.js"/>
-    </concat>
     <concat destfile="firefox/content/web-developer/dashboard/common.css">
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap-responsive.css"/>
@@ -620,28 +590,13 @@
       <filterset refid="firefox.filters"/>
     </copy>
     <concat destfile="firefox/content/web-developer/generated/javascript/common.js">
-    	<fileset file="../source/common/javascript/common/jquery/icanhaz.js"/>
-    	<fileset file="../source/common/javascript/common/bootstrap/collapse.js"/>
-    	<fileset file="../source/common/javascript/common/bootstrap/dropdown.js"/>
     	<fileset file="../source/common/javascript/common/common.js"/>
     	<fileset file="../source/firefox/javascript/common/common.js"/>
     	<fileset file="../source/common/javascript/generated/common.js"/>
     	<fileset file="../source/firefox/javascript/generated/common.js"/>
     </concat>
     <copy file="../source/common/javascript/generated/beautify/beautify.js" tofile="firefox/content/web-developer/generated/javascript/beautify/beautify.js"/>
-    <concat destfile="firefox/content/web-developer/generated/javascript/syntax-highlight-css.js">
-    	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/css.js"/>
-    </concat>
-    <concat destfile="firefox/content/web-developer/generated/javascript/syntax-highlight-javascript.js">
-    	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/javascript.js"/>
-    </concat>
     <concat destfile="firefox/content/web-developer/generated/javascript/view-cookie-information.js">
-      <fileset file="../source/common/javascript/common/bootstrap/modal.js"/>
-      <fileset file="../source/common/javascript/common/bootstrap/tooltip.js"/>
-      <fileset file="../source/common/javascript/common/bootstrap/popover.js"/>
-      <fileset file="../source/common/javascript/common/bootstrap/transition.js"/>
     	<fileset file="../source/common/javascript/generated/view-cookie-information.js"/>
       <fileset file="../source/common/javascript/features/cookies.js"/>
     	<fileset file="../source/firefox/javascript/features/cookies.js"/>
@@ -702,14 +657,7 @@
     <copy todir="firefox/content/web-developer/options/dialogs/javascript">
       <fileset dir="../source/firefox/javascript/options/dialogs"/>
     </copy>
-   	<concat destfile="firefox/content/web-developer/options/html/javascript/syntax-highlight.js">
-    	<fileset file="../source/common/javascript/common/codemirror/codemirror.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/css.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/htmlmixed.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/javascript.js"/>
-    	<fileset file="../source/common/javascript/common/codemirror/xml.js"/>
-    	<fileset file="../source/common/javascript/options/syntax-highlight.js"/>
-    </concat>
+    <copy file="../source/common/javascript/options/syntax-highlight.js" tofile="firefox/content/web-developer/options/html/javascript/syntax-highlight.js"/>
     <copy file="../source/firefox/style-sheets/options/options.css" tofile="firefox/content/web-developer/options/style-sheets/options.css"/>
     <concat destfile="firefox/content/web-developer/options/html/syntax-highlight.css">
     	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
@@ -1276,7 +1224,7 @@
   <!-- Converts tabs to spaces in the extension -->
   <target name="convert.tabs.spaces">
     <echo level="info" message="Converting tabs to spaces"/>
-		<fixcrlf srcdir="../source/chrome/javascript" excludes="**/options/tablednd.js" tab="remove" tablength="2"/>
+		<fixcrlf srcdir="../source/chrome/javascript" excludes="**/jquery/tablednd.js" tab="remove" tablength="2"/>
 		<fixcrlf srcdir="../source/common/javascript" excludes="**/beautify/beautify.js,**/bootstrap/collapse.js,**/bootstrap/dropdown.js,**/bootstrap/modal.js,**/bootstrap/tab.js,**/bootstrap/transition.js,**/codemirror/codemirror.js,**/codemirror/css.js,**/codemirror/htmlmixed.js,**/codemirror/javascript.js,**/codemirror/searchcursor.js,**/jquery/icanhaz.js,**/jquery/jquery.js,**/codemirror/xml.js" tab="remove" tablength="2"/>
 		<fixcrlf srcdir="../source/firefox/javascript" tab="remove" tablength="2"/>
  	</target>
@@ -1319,7 +1267,7 @@
     <echo level="info" message="Running JSHint"/>
     <property name="jshint.globals" value="$:true,BrowserPageInfo:true,BrowserReload:true,BrowserViewSourceOfDocument:true,chrome:true,CodeMirror:true,Components:true,CSSPrimitiveValue:true,getWebNavigation:true,HTMLDocument:true,ich:true,inspectDOMDocument:true,js_beautify:true,Node:true,NodeFilter:true,pref:true,toJavaScriptConsole:true,WebDeveloper:true,WebDeveloperApplication:true,WebDeveloperValidateCSS:true,WebDeveloperValidateHTML:true"/>
     <property name="jshint.options" value="bitwise:false,eqeqeq:false,forin:false,plusplus:false,strict:false"/>
-    <jshint dir="../source/chrome/javascript" excludes="**/options/tablednd.js" fail="false" globals="${jshint.globals}" options="${jshint.options}"/>
+    <jshint dir="../source/chrome/javascript" excludes="**/jquery/tablednd.js" fail="false" globals="${jshint.globals}" options="${jshint.options}"/>
     <jshint dir="../source/common/javascript" excludes="**/beautify/beautify.js,**/bootstrap/collapse.js,**/bootstrap/dropdown.js,**/bootstrap/modal.js,**/bootstrap/popover.js,**/bootstrap/tab.js,**/bootstrap/tooltip.js,**/bootstrap/transition.js,**/codemirror/codemirror.js,**/codemirror/css.js,**/codemirror/htmlmixed.js,**/codemirror/javascript.js,**/codemirror/searchcursor.js,**/jquery/icanhaz.js,**/jquery/jquery.js,**/codemirror/xml.js" fail="false" globals="${jshint.globals}" options="${jshint.options}"/>
     <jshint dir="../source/firefox/javascript" fail="false" globals="${jshint.globals}" options="${jshint.options}"/>
     <echo level="info" message="Result should be 27 errors"/>
@@ -1331,7 +1279,7 @@
     <jslint haltOnFailure="false" options="browser,forin,indent=2,maxerr=100,undef">
       <formatter type="plain"/>
       <predef>$$,BrowserPageInfo,BrowserReload,BrowserViewSourceOfDocument,chrome,CodeMirror,Components,CSSPrimitiveValue,getWebNavigation,HTMLDocument,ich,Image,inspectDOMDocument,js_beautify,Node,NodeFilter,pref,toJavaScriptConsole,WebDeveloper,WebDeveloperApplication,WebDeveloperValidateCSS,WebDeveloperValidateHTML,window</predef>
-      <fileset dir="../source/chrome/javascript" excludes="**/options/tablednd.js"/>
+      <fileset dir="../source/chrome/javascript" excludes="**/jquery/tablednd.js"/>
       <fileset dir="../source/common/javascript" excludes="**/beautify/beautify.js,**/bootstrap/collapse.js,**/bootstrap/dropdown.js,**/bootstrap/modal.js,**/bootstrap/popover.js,**/bootstrap/tab.js,**/bootstrap/tooltip.js,**/bootstrap/transition.js,**/codemirror/codemirror.js,**/codemirror/css.js,**/codemirror/htmlmixed.js,**/codemirror/javascript.js,**/codemirror/searchcursor.js,**/jquery/icanhaz.js,**/jquery/jquery.js,**/codemirror/xml.js"/>
       <fileset dir="../source/firefox/javascript"/>
     </jslint>

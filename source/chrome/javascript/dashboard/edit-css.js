@@ -23,7 +23,11 @@ WebDeveloper.EditCSS.addTab = function(title, css, tabs, panels, position, conte
 // Applies the CSS
 WebDeveloper.EditCSS.apply = function()
 {
-  WebDeveloper.EditCSS.applyCSS();
+  // If the content document is set
+  if(WebDeveloper.EditCSS.contentDocument)
+  {
+    WebDeveloper.EditCSS.applyCSS();
+  }
 };
 
 // Edits the CSS of the page

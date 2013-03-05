@@ -44,7 +44,7 @@ WebDeveloper.Content.getDocumentSize = function(callback)
     scripts                   = contentDocument.querySelectorAll("script[src]");
     styleSheets               = contentDocument.styleSheets;
 
-    fileSizeRequests.push({ "fileObject": documentSizeDocument, "includeCompressed": true, "url": documentURL });
+    fileSizeRequests.push({ "fileObject": documentSizeDocument, "includeUncompressed": true, "url": documentURL });
 
     // Loop through the images
     for(var j = 0, m = images.length; j < m; j++)
@@ -54,7 +54,7 @@ WebDeveloper.Content.getDocumentSize = function(callback)
       url                   = image.src;
       documentSizeImage.url = url;
 
-      fileSizeRequests.push({ "fileObject": documentSizeImage, "includeCompressed": false, "url": url });
+      fileSizeRequests.push({ "fileObject": documentSizeImage, "includeUncompressed": false, "url": url });
 
       documentSize.images.push(documentSizeImage);
     }
@@ -67,7 +67,7 @@ WebDeveloper.Content.getDocumentSize = function(callback)
       url                    = object.src;
       documentSizeObject.url = url;
 
-      fileSizeRequests.push({ "fileObject": documentSizeObject, "includeCompressed": false, "url": url });
+      fileSizeRequests.push({ "fileObject": documentSizeObject, "includeUncompressed": false, "url": url });
 
       documentSize.objects.push(documentSizeObject);
     }
@@ -80,7 +80,7 @@ WebDeveloper.Content.getDocumentSize = function(callback)
       url                    = script.src;
       documentSizeScript.url = url;
 
-      fileSizeRequests.push({ "fileObject": documentSizeScript, "includeCompressed": true, "url": url });
+      fileSizeRequests.push({ "fileObject": documentSizeScript, "includeUncompressed": true, "url": url });
 
       documentSize.scripts.push(documentSizeScript);
     }
@@ -97,7 +97,7 @@ WebDeveloper.Content.getDocumentSize = function(callback)
         url                        = styleSheet.href;
         documentSizeStyleSheet.url = url;
 
-        fileSizeRequests.push({ "fileObject": documentSizeStyleSheet, "includeCompressed": true, "url": url });
+        fileSizeRequests.push({ "fileObject": documentSizeStyleSheet, "includeUncompressed": true, "url": url });
 
         documentSize.styleSheets.push(documentSizeStyleSheet);
       }

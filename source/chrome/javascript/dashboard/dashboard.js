@@ -44,8 +44,10 @@ WebDeveloper.Dashboard.createDashboard = function(contentDocument, dashboardHTML
 
   WebDeveloper.Common.getDocumentBodyElement(dashboardDocument).innerHTML = dashboardHTML;
 
-  WebDeveloper.Common.includeJavaScript("@jquery_prefix@/common/jquery.js", dashboardDocument, function() {
-    WebDeveloper.Common.includeJavaScript("dashboard/javascript/html/dashboard.js", dashboardDocument);
+  WebDeveloper.Common.includeJavaScript("@common.prefix@/common/jquery/jquery.js", dashboardDocument, function() {
+    WebDeveloper.Common.includeJavaScript("@common.prefix@/common/bootstrap/tab.js", dashboardDocument, function() {
+      WebDeveloper.Common.includeJavaScript("dashboard/javascript/html/dashboard.js", dashboardDocument);
+    });
   });
 
   dashboardDocument.querySelector(".brand img").setAttribute("src", WebDeveloper.Common.getChromeURL("dashboard/images/logo.png"));
