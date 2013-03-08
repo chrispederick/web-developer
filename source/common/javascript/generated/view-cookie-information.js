@@ -236,9 +236,11 @@ WebDeveloper.Generated.generateCommands = function(cookie, locale)
   // If the cookie is HTTP only
   if(cookie.httpOnly)
   {
-    element.setAttribute("class", "web-developer-edit btn");
-    element.setAttribute("data-content", locale.cannotEditHTTPOnlyCookies);
-    element.setAttribute("data-title", locale.cannotEdit);
+  	//Added to allow the edit of HTTP Only cookies.
+    element.setAttribute("class", "web-developer-edit btn btn-primary");
+    //element.setAttribute("class", "web-developer-edit btn");
+    //element.setAttribute("data-content", locale.cannotEditHTTPOnlyCookies);
+    //element.setAttribute("data-title", locale.cannotEdit);
   }
   else if(!WebDeveloper.Cookies.canEditLocalCookie() && (cookieHost == "localhost" || cookieHost == ".localhost"))
   {
