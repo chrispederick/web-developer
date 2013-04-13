@@ -139,5 +139,5 @@ WebDeveloper.Overlay.Tools.validateLocalCSS = function()
 // Validates a local HTML file
 WebDeveloper.Overlay.Tools.validateLocalHTML = function()
 {
-  new WebDeveloperValidateHTML().validateHTML(WebDeveloper.Common.getTabBrowser().currentURI);
+  new WebDeveloperValidateHTML().validateHTML(WebDeveloper.Common.getTabBrowser().currentURI, WebDeveloper.Common.getContentWindow());
 };

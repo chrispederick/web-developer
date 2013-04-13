@@ -85,7 +85,7 @@ WebDeveloperValidateHTML.prototype.getPostData = function()
 };
 
 // Saves the HTML
-WebDeveloperValidateHTML.prototype.saveHTML = function(uri)
+WebDeveloperValidateHTML.prototype.saveHTML = function(uri, contentWindow)
 {
   var webBrowserPersistInterface = Components.interfaces.nsIWebBrowserPersist;
   var webBrowserPersist          = Components.classes["@mozilla.org/embedding/browser/nsWebBrowserPersist;1"].createInstance(webBrowserPersistInterface);
@@ -93,7 +93,7 @@ WebDeveloperValidateHTML.prototype.saveHTML = function(uri)
   webBrowserPersist.persistFlags     = webBrowserPersistInterface.PERSIST_FLAGS_AUTODETECT_APPLY_CONVERSION | webBrowserPersistInterface.PERSIST_FLAGS_FROM_CACHE | webBrowserPersistInterface.PERSIST_FLAGS_REPLACE_EXISTING_FILES;
   webBrowserPersist.progressListener = this;
 
-  webBrowserPersist.saveURI(uri, null, uri, this.getPostData(), null, this.file, WebDeveloper.Common.getContentWindow().QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIWebNavigation).QueryInterface(Components.interfaces.nsILoadContext));
+  webBrowserPersist.saveURI(uri, null, uri, this.getPostData(), null, this.file, contentWindow.QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIWebNavigation).QueryInterface(Components.interfaces.nsILoadContext));
 };
 
 // Submits the background request to validate the HTML
@@ -147,7 +147,7 @@ WebDeveloperValidateHTML.prototype.submitForm = function()
 };
 
 // Validate the HTML from the given URI in the background
-WebDeveloperValidateHTML.prototype.validateBackgroundHTML = function(uri)
+WebDeveloperValidateHTML.prototype.validateBackgroundHTML = function(uri, contentWindow)
 {
   this.file = this.createSourceFile(uri);
 
@@ -157,11 +157,11 @@ WebDeveloperValidateHTML.prototype.validateBackgroundHTML = function(uri)
     this.validationRequest = new XMLHttpRequest();
   }
 
-  this.saveHTML(uri);
+  this.saveHTML(uri, contentWindow);
 };
 
 // Validate the HTML from the given URI
-WebDeveloperValidateHTML.prototype.validateHTML = function(uri)
+WebDeveloperValidateHTML.prototype.validateHTML = function(uri, contentWindow)
 {
   var tab  = WebDeveloper.Common.getTabBrowser().getBrowserForTab(WebDeveloper.Common.openURL(WebDeveloper.Common.getChromeURL("validation/html.html")));
   var load = (function(validator, url)
@@ -174,7 +174,7 @@ WebDeveloperValidateHTML.prototype.validateHTML = function(uri)
       validator.fileElement = contentDocument.getElementById("file");
       validator.formElement = contentDocument.getElementById("form");
 
-      validator.saveHTML(url);
+      validator.saveHTML(url, contentWindow);
 
       tab.removeEventListener("load", handler, true);
     };

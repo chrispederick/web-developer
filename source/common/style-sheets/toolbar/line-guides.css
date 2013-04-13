@@ -27,6 +27,6 @@
 
 .web-developer-horizontal-line-guide { left: 0 !important; padding: 2px 0 !important; }
 .web-developer-horizontal-line-guide div { height: 1px !important; width: 100% !important; }
-.web-developer-line-guide { cursor: move !important; position: absolute !important; z-index: 2147483646 !important; }
+.web-developer-line-guide { cursor: move !important; position: fixed !important; z-index: 2147483646 !important; }
 .web-developer-vertical-line-guide { padding: 0 2px !important; top: 0 !important; }
 .web-developer-vertical-line-guide div { height: 100% !important; width: 1px !important; }

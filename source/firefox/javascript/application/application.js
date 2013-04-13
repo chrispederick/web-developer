@@ -95,7 +95,7 @@ WebDeveloperApplication.prototype.launchWithFile = function()
 };
 
 // Launch the application with the source from the given URI
-WebDeveloperApplication.prototype.launchWithSource = function(uri)
+WebDeveloperApplication.prototype.launchWithSource = function(uri, contentWindow)
 {
   var temporaryDirectory = Components.classes["@mozilla.org/file/directory_service;1"].getService(Components.interfaces.nsIProperties).get("TmpD", Components.interfaces.nsIFile);
 
@@ -119,7 +119,7 @@ WebDeveloperApplication.prototype.launchWithSource = function(uri)
         webBrowserPersist.persistFlags     = webBrowserPersistInterface.PERSIST_FLAGS_AUTODETECT_APPLY_CONVERSION | webBrowserPersistInterface.PERSIST_FLAGS_FROM_CACHE | webBrowserPersistInterface.PERSIST_FLAGS_REPLACE_EXISTING_FILES;
         webBrowserPersist.progressListener = this;
 
-        webBrowserPersist.saveURI(uri, null, uri, this.getPostData(), null, this.file, WebDeveloper.Common.getContentWindow().QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIWebNavigation).QueryInterface(Components.interfaces.nsILoadContext));
+        webBrowserPersist.saveURI(uri, null, uri, this.getPostData(), null, this.file, contentWindow.QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIWebNavigation).QueryInterface(Components.interfaces.nsILoadContext));
       }
     }
     else

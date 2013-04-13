@@ -42,7 +42,7 @@ WebDeveloper.Overlay.ViewSource.loadApplicationWithSource = function(application
   {
     application = new WebDeveloperApplication(application);
 
-    application.launchWithSource(WebDeveloper.Common.getTabBrowser().currentURI);
+    application.launchWithSource(WebDeveloper.Common.getTabBrowser().currentURI, WebDeveloper.Common.getContentWindow());
   }
 };
 

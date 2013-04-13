@@ -98,6 +98,16 @@ WebDeveloper.EditCSS.changeSyntaxHighlightTheme = function(type, color)
       stylesContainer.contentDocument.defaultView.WebDeveloper.Dashboard.changeSyntaxHighlightTheme(type, color);
     }
   }
+
+  // If the color is not set
+  if(color == "none")
+  {
+    WebDeveloper.EditCSS.toggleSearch(false);
+  }
+  else
+  {
+    WebDeveloper.EditCSS.toggleSearch(true);
+  }
 };
 
 // Clear the CSS
@@ -182,13 +192,10 @@ WebDeveloper.EditCSS.initialize = function()
       // If the theme is not set
       if(theme == "none")
       {
-        document.getElementById("web-developer-search-dashboard").disabled      = true;
-        document.getElementById("web-developer-search-dashboard-text").disabled = true;
+        WebDeveloper.EditCSS.toggleSearch(false);
       }
-      else
-      {
-        document.getElementById("web-developer-search-dashboard-text").addEventListener("keypress", WebDeveloper.EditCSS.search, false);
-      }
+
+      document.getElementById("web-developer-search-dashboard-text").addEventListener("keypress", WebDeveloper.EditCSS.search, false);
 
       WebDeveloper.Common.configureElement(document.getElementById("web-developer-syntax-highlight-" + theme), "checked", true);
 
@@ -386,6 +393,13 @@ WebDeveloper.EditCSS.togglePin = function()
 {
   WebDeveloper.Preferences.setExtensionBooleanPreference("edit.css.pin", !WebDeveloper.Preferences.getExtensionBooleanPreference("edit.css.pin"));
   WebDeveloper.EditCSS.updatePinButton();
+};
+
+// Toggles the search
+WebDeveloper.EditCSS.toggleSearch = function(enable)
+{
+  document.getElementById("web-developer-search-dashboard").disabled      = !enable;
+  document.getElementById("web-developer-search-dashboard-text").disabled = !enable;
 };
 
 // Uninitializes edit CSS

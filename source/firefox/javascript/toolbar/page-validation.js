@@ -62,7 +62,7 @@ WebDeveloper.PageValidation.createToolbar = function()
   WebDeveloper.PageValidation.htmlValidator = new WebDeveloperValidateHTML();
 
   WebDeveloper.PageValidation.updateCSSValidation(contentDocument);
-  WebDeveloper.PageValidation.updateHTMLValidation(contentDocument);
+  WebDeveloper.PageValidation.updateHTMLValidation(contentDocument, WebDeveloper.Common.getContentWindow());
 
   WebDeveloper.Common.configureElement(document.getElementById("web-developer-page-validation-toolbar"), "hidden", false);
 
@@ -138,7 +138,7 @@ WebDeveloper.PageValidation.pageLoad = function(event)
     if(WebDeveloper.PageValidation.isValidatablePage(contentDocument.documentURI))
     {
       WebDeveloper.PageValidation.updateCSSValidation(contentDocument);
-      WebDeveloper.PageValidation.updateHTMLValidation(contentDocument);
+      WebDeveloper.PageValidation.updateHTMLValidation(contentDocument, WebDeveloper.Common.getContentWindow());
     }
   }
 };
@@ -176,7 +176,7 @@ WebDeveloper.PageValidation.tabSelect = function()
     if(WebDeveloper.PageValidation.isValidatablePage(contentDocument.documentURI))
     {
       WebDeveloper.PageValidation.updateCSSValidation(contentDocument);
-      WebDeveloper.PageValidation.updateHTMLValidation(contentDocument);
+      WebDeveloper.PageValidation.updateHTMLValidation(contentDocument, WebDeveloper.Common.getContentWindow());
     }
   }
 };
@@ -235,11 +235,11 @@ WebDeveloper.PageValidation.updateCSSValidationDetails = function()
 };
 
 // Updates the HTML validation for the page
-WebDeveloper.PageValidation.updateHTMLValidation = function(contentDocument)
+WebDeveloper.PageValidation.updateHTMLValidation = function(contentDocument, contentWindow)
 {
   WebDeveloper.PageValidation.updateValidation(document.getElementById("web-developer-html-validation"));
   WebDeveloper.PageValidation.htmlValidator.cleanUp();
-  WebDeveloper.PageValidation.htmlValidator.validateBackgroundHTML(Components.classes["@mozilla.org/network/io-service;1"].getService(Components.interfaces.nsIIOService).newURI(contentDocument.documentURI, null, null));
+  WebDeveloper.PageValidation.htmlValidator.validateBackgroundHTML(Components.classes["@mozilla.org/network/io-service;1"].getService(Components.interfaces.nsIIOService).newURI(contentDocument.documentURI, null, null), contentWindow);
 };
 
 // Updates the HTML validation details for the page

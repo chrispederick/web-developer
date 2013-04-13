@@ -5,5 +5,5 @@ html { padding-bottom: 10px; }
 .web-developer-ancestors > ul > li, .web-developer-children > ul > li { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .web-developer-ancestors > ul > .last { display: none; }
 .web-developer-css .CodeMirror-scroll > div { height: auto !important; }
-.web-developer-section { display: inline-block; margin: 10px 2% 0 0; vertical-align: top; width: 49%; }
+.web-developer-section { display: inline-block; margin-right: 2%; vertical-align: top; width: 49%; }
 .web-developer-section:nth-child(even) { margin-right: 0; }
