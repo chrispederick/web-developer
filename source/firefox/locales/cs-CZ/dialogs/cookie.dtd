@@ -1,0 +1,8 @@
+<!ENTITY webdeveloper.add.cookie "Přidat cookie">
+<!ENTITY webdeveloper.expires.label "Vyprší:">
+<!ENTITY webdeveloper.host.label "Server:">
+<!ENTITY webdeveloper.name.label "Název:">
+<!ENTITY webdeveloper.path.label "Cesta:">
+<!ENTITY webdeveloper.secure.cookie.label "Zabezpečená cookie">
+<!ENTITY webdeveloper.session.cookie.label "Session cookie">
+<!ENTITY webdeveloper.value.label "Hodnota:">

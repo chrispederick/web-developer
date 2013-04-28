@@ -143,9 +143,9 @@
 <!ENTITY webdeveloper.clear.radio.buttons.key "r">
 <!ENTITY webdeveloper.convert.form.methods.label "Convertir les méthodes de formulaire">
 <!ENTITY webdeveloper.convert.form.methods.key "C">
-<!ENTITY webdeveloper.convert.select.elements.text.inputs.label "Convertir les éléments <select> en <input type="text">">
+<!ENTITY webdeveloper.convert.select.elements.text.inputs.label "Convertir les éléments select en input type=text">
 <!ENTITY webdeveloper.convert.select.elements.text.inputs.key "s">
-<!ENTITY webdeveloper.convert.text.inputs.textareas.label "Convertir les éléments <input type="text"> en <textarea>">
+<!ENTITY webdeveloper.convert.text.inputs.textareas.label "Convertir les éléments input type=text en textarea">
 <!ENTITY webdeveloper.convert.text.inputs.textareas.key "t">
 <!ENTITY webdeveloper.display.form.details.label "Afficher les infos de formulaire">
 <!ENTITY webdeveloper.display.form.details.key "d">
@@ -155,7 +155,7 @@
 <!ENTITY webdeveloper.enable.auto.completion.key "A">
 <!ENTITY webdeveloper.enable.form.fields.label "Autoriser tous les champs de formulaire">
 <!ENTITY webdeveloper.enable.form.fields.key "f">
-<!ENTITY webdeveloper.expand.select.elements.label "Dérouler les éléments <select>">
+<!ENTITY webdeveloper.expand.select.elements.label "Dérouler les éléments select">
 <!ENTITY webdeveloper.expand.select.elements.key "D">
 <!ENTITY webdeveloper.make.form.fields.writable.label "Rendre inscriptibles les champs de formulaire">
 <!ENTITY webdeveloper.make.form.fields.writable.key "i">
@@ -239,9 +239,9 @@
 <!ENTITY webdeveloper.display.anchors.key "a">
 <!ENTITY webdeveloper.display.aria.roles.label "Afficher les rôles ARIA">
 <!ENTITY webdeveloper.display.aria.roles.key "r">
-<!ENTITY webdeveloper.display.div.dimensions.label "Afficher les dimensions des <div>">
+<!ENTITY webdeveloper.display.div.dimensions.label "Afficher les dimensions des div">
 <!ENTITY webdeveloper.display.div.dimensions.key "s">
-<!ENTITY webdeveloper.display.div.order.label "Afficher l'ordre des éléments <div>">
+<!ENTITY webdeveloper.display.div.order.label "Afficher l'ordre des éléments div">
 <!ENTITY webdeveloper.display.div.order.key "o">
 <!ENTITY webdeveloper.display.element.information.label "Afficher les informations de l'élément">
 <!ENTITY webdeveloper.display.element.information.key "i">
@@ -249,7 +249,7 @@
 <!ENTITY webdeveloper.display.id.class.details.key "d">
 <!ENTITY webdeveloper.display.link.details.label "Afficher les infos des liens">
 <!ENTITY webdeveloper.display.link.details.key "l">
-<!ENTITY webdeveloper.display.object.information.label "Afficher les infos des éléments <object>">
+<!ENTITY webdeveloper.display.object.information.label "Afficher les infos des éléments object">
 <!ENTITY webdeveloper.display.object.information.key "o">
 <!ENTITY webdeveloper.display.stack.levels.label "Afficher les niveaux des éléments empilés">
 <!ENTITY webdeveloper.display.stack.levels.key "n">

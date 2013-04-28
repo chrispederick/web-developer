@@ -56,7 +56,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
 
       tableContainer = document.createElement("tbody");
 
-      $(tableContainer).append(ich.metaTags(contentDocument));
+      $(tableContainer).append(ich.metaTags(contentDocument, true));
       table.appendChild(tableContainer);
       content.appendChild(table);
     }

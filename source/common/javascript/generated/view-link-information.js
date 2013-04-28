@@ -37,7 +37,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
     {
       list = document.createElement("ol");
 
-      $(list).append(ich.links(contentDocument));
+      $(list).append(ich.links(contentDocument, true));
       content.appendChild(list);
     }
 

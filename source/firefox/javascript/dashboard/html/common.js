@@ -41,6 +41,8 @@ WebDeveloper.Dashboard.changeSyntaxHighlightTheme = function(type, color)
   {
     WebDeveloper.Dashboard.initializeSyntaxHighlight(type, color);
   }
+
+  WebDeveloper.Dashboard.resize();
 };
 
 // Returns the ancestor path

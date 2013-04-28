@@ -39,7 +39,7 @@
 <!ENTITY webdeveloper.disable.java.key "J">
 <!ENTITY webdeveloper.disable.javascript.label "Wyłącz JavaScript">
 <!ENTITY webdeveloper.disable.javascript.key "S">
-<!ENTITY webdeveloper.disable.meta.redirects.label "Wyłącz przekierowania typu <meta>">
+<!ENTITY webdeveloper.disable.meta.redirects.label "Wyłącz przekierowania typu meta">
 <!ENTITY webdeveloper.disable.meta.redirects.key "M">
 <!ENTITY webdeveloper.disable.minimum.font.size.label "Wyłącz minimalny rozmiar czcionki">
 <!ENTITY webdeveloper.disable.minimum.font.size.key "o">

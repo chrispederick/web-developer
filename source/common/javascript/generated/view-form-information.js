@@ -95,7 +95,7 @@ WebDeveloper.Generated.displayForm = function(form, container, formsCounter, loc
 
     tableContainer = document.createElement("tbody");
 
-    $(tableContainer).append(ich.formElements(form));
+    $(tableContainer).append(ich.formElements(form, true));
     table.appendChild(tableContainer);
     table.setAttribute("class", "table table-bordered table-striped");
     container.appendChild(table);

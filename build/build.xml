@@ -1160,7 +1160,9 @@
     <copy todir="firefox/skin">
       <fileset dir="../images/firefox/skins"/>
     </copy>
+    <copy file="../images/common/logos/16.png" tofile="firefox/skin/default/button.png"/>
     <copy file="../images/common/logos/16.png" tofile="firefox/skin/default/menu.png"/>
+    <copy file="../images/common/logos/32.png" tofile="firefox/skin/default/button-2x.png"/>
     <copy file="../images/common/logos/32.png" tofile="firefox/skin/default/menu-2x.png"/>
     <copy file="../images/common/toolbar.png" tofile="firefox/skin/default/toolbar.png"/>
     <copy file="../images/common/toolbar-2x.png" tofile="firefox/skin/default/toolbar-2x.png"/>
@@ -1170,8 +1172,6 @@
     <copy file="../images/firefox/skins/default/options-2x.png" tofile="firefox/skin/mac/options-2x.png"/>
     <copy todir="firefox/skin/mac/color">
       <fileset dir="../images/firefox/skins/default">
-     		<exclude name="button.png"/>
-        <exclude name="button-2x.png"/>
      		<exclude name="options.png"/>
         <exclude name="options-2x.png"/>
       </fileset>

@@ -1,5 +1,0 @@
-<!-- Resize Window -->
-<!ENTITY webdeveloper.width "宽度（像素）:">
-<!ENTITY webdeveloper.height "高度（像素）:">
-<!ENTITY webdeveloper.resize.viewport "自定义浏览范围大小">
-<!ENTITY webdeveloper.resize.window "改变窗口大小">

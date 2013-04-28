@@ -24,6 +24,16 @@ WebDeveloper.EditHTML.apply = function()
 WebDeveloper.EditHTML.changeSyntaxHighlightTheme = function(type, color)
 {
   document.getElementById("web-developer-edit-html-browser").contentDocument.defaultView.WebDeveloper.Dashboard.changeSyntaxHighlightTheme(type, color);
+
+  // If the color is not set
+  if(color == "none")
+  {
+    WebDeveloper.EditHTML.toggleSearch(false);
+  }
+  else
+  {
+    WebDeveloper.EditHTML.toggleSearch(true);
+  }
 };
 
 // Clear the HTML
@@ -60,13 +70,10 @@ WebDeveloper.EditHTML.initialize = function()
       // If the theme is not set
       if(theme == "none")
       {
-        document.getElementById("web-developer-search-dashboard").disabled      = true;
-        document.getElementById("web-developer-search-dashboard-text").disabled = true;
+        WebDeveloper.EditHTML.toggleSearch(false);
       }
-      else
-      {
-        document.getElementById("web-developer-search-dashboard-text").addEventListener("keypress", WebDeveloper.EditHTML.search, false);
-      }
+
+      document.getElementById("web-developer-search-dashboard-text").addEventListener("keypress", WebDeveloper.EditHTML.search, false);
 
       WebDeveloper.Common.configureElement(document.getElementById("web-developer-syntax-highlight-" + theme), "checked", true);
 
@@ -213,6 +220,13 @@ WebDeveloper.EditHTML.tabSelect = function()
 
     WebDeveloper.EditHTML.retrieveHTML(WebDeveloper.Preferences.getExtensionStringPreference("syntax.highlight.theme"));
   }
+};
+
+// Toggles the search
+WebDeveloper.EditHTML.toggleSearch = function(enable)
+{
+  document.getElementById("web-developer-search-dashboard").disabled      = !enable;
+  document.getElementById("web-developer-search-dashboard-text").disabled = !enable;
 };
 
 // Uninitializes edit HTML

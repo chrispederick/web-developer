@@ -1,0 +1,16 @@
+<!ENTITY webdeveloper.clear "Vymazat">
+<!ENTITY webdeveloper.dark "Dark">
+<!ENTITY webdeveloper.light "Light">
+<!ENTITY webdeveloper.none "None">
+<!ENTITY webdeveloper.reset "Obnovit vše">
+<!ENTITY webdeveloper.save "Uložit…">
+<!ENTITY webdeveloper.search "Hledat">
+<!ENTITY webdeveloper.search.label "Hledat">
+<!ENTITY webdeveloper.syntax.highlighting "Syntax Highlighting">
+<!ENTITY webdeveloper.element.information "Informace o prvku">
+<!ENTITY webdeveloper.style.information "Informace o stylu">
+<!ENTITY webdeveloper.edit.css "Upravit CSS">
+<!ENTITY webdeveloper.open "Otevřít…">
+<!ENTITY webdeveloper.pin.css "Připíchnout CSS">
+<!ENTITY webdeveloper.edit.html "Upravit HTML">
+<!ENTITY webdeveloper.html.body "Tělo HTML">

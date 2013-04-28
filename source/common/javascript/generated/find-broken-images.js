@@ -37,7 +37,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
     {
       list = document.createElement("ol");
 
-      $(list).append(ich.brokenImages(contentDocument));
+      $(list).append(ich.brokenImages(contentDocument, true));
       content.appendChild(list);
     }
 

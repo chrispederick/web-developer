@@ -37,7 +37,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
     {
       container = WebDeveloper.Generated.generateDocumentContainer();
 
-      $(container).append(ich.colors(contentDocument));
+      $(container).append(ich.colors(contentDocument, true));
       content.appendChild(container);
     }
 
