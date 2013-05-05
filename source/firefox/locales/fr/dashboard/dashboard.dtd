@@ -18,4 +18,4 @@
 <!ENTITY webdeveloper.pin.css "Verrouiller les CSS">
 <!-- Edit HTML -->
 <!ENTITY webdeveloper.edit.html "Édition HTML">
-<!ENTITY webdeveloper.html.body "<body> du HTML">
+<!ENTITY webdeveloper.html.body "body du HTML">
