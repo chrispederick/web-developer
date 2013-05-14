@@ -82,7 +82,7 @@ The following libraries are used by and included in the extension as-is:
 * Bootstrap from Twitter: [http://twitter.github.com/bootstrap/](http://twitter.github.com/bootstrap/)
 * CodeMirror: [http://codemirror.net/](http://codemirror.net/)
 * Eric Meyer's Reset CSS: [http://meyerweb.com/eric/tools/css/reset/](http://meyerweb.com/eric/tools/css/reset/)
-* Font Awesome: [http://fortawesome.github.com/Font-Awesome/](http://fortawesome.github.com/Font-Awesome/)
+* Font Awesome: [http://fontawesome.io/](http://fontawesome.io/)
 * ICanHaz: [http://icanhazjs.com/](http://icanhazjs.com/)
 * jQuery: [http://jquery.com/](http://jquery.com/)
 * JS Beautifier: [https://github.com/einars/js-beautify](https://github.com/einars/js-beautify)
@@ -95,7 +95,7 @@ The latest versions of Bootstrap from Twitter, CodeMirror and Font Awesome can b
 
 The icons used in the extension are:
 
-* Font Awesome: [http://fortawesome.github.com/Font-Awesome/](http://fortawesome.github.com/Font-Awesome/)
+* Font Awesome: [http://fontawesome.io/](http://fontawesome.io/)
 * Helveticons: [http://helveticons.ch/](http://helveticons.ch/)
 * Icon Drawer classic set: [http://icondrawer.com/](http://icondrawer.com/)
 
