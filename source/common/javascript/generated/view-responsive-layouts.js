@@ -73,7 +73,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
     childElement.setAttribute("scrolling", "yes");
     childElement.setAttribute("src", url);
     childElement.setAttribute("width", parseInt(width, 10) + scrollbarWidth);
-    childElement.setAttribute("sandbox", "allow-forms allow-scripts");
+    childElement.setAttribute("sandbox", "allow-forms allow-scripts allow-same-origin");
 
     container.appendChild(childElement);
     content.appendChild(container);
