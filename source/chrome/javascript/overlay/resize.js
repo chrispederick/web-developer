@@ -121,6 +121,9 @@ WebDeveloper.Overlay.Resize.resizeWindow = function(height, width)
     {
       size.width = parseInt(width, 10);
     }
+    
+    // Set window state to normal when resizing window
+    size.state = 'normal';
 
     chrome.windows.update(selectedWindow.id, size, function()
     {
