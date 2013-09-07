@@ -338,8 +338,6 @@ WebDeveloper.Overlay.Information.findDuplicateIds = function()
         locale.duplicateIds = WebDeveloper.Locales.getString("duplicateIds");
 
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/find-duplicate-ids.html"), tab.index, data, locale);
-
-        WebDeveloper.Overlay.close();
       });
     }
   });
@@ -362,8 +360,6 @@ WebDeveloper.Overlay.Information.viewAnchorInformation = function()
       chrome.tabs.sendMessage(tab.id, {type: "get-anchors"}, function(data)
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-anchor-information.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewAnchorInformationLocale());
-
-        WebDeveloper.Overlay.close();
       });
     }
   });
@@ -380,8 +376,6 @@ WebDeveloper.Overlay.Information.viewColorInformation = function()
       chrome.tabs.sendMessage(tab.id, {type: "get-colors"}, function(data)
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-color-information.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewColorInformationLocale());
-
-        WebDeveloper.Overlay.close();
       });
     }
   });
@@ -398,8 +392,6 @@ WebDeveloper.Overlay.Information.viewDocumentOutline = function()
       chrome.tabs.sendMessage(tab.id, {type: "get-document-outline"}, function(data)
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-document-outline.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewDocumentOutlineLocale());
-
-        WebDeveloper.Overlay.close();
       });
     }
   });
@@ -418,8 +410,6 @@ WebDeveloper.Overlay.Information.viewJavaScript = function()
         data.theme = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("syntax_highlight_theme");
 
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-javascript.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewJavaScriptLocale());
-
-        WebDeveloper.Overlay.close();
       });
     }
   });
@@ -436,8 +426,6 @@ WebDeveloper.Overlay.Information.viewLinkInformation = function()
       chrome.tabs.sendMessage(tab.id, {type: "get-links"}, function(data)
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-link-information.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewLinkInformationLocale());
-
-        WebDeveloper.Overlay.close();
       });
     }
   });
@@ -454,8 +442,6 @@ WebDeveloper.Overlay.Information.viewMetaTagInformation = function()
       chrome.tabs.sendMessage(tab.id, {type: "get-meta-tags"}, function(data)
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-meta-tag-information.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewMetaTagInformationLocale());
-
-        WebDeveloper.Overlay.close();
       });
     }
   });
@@ -472,8 +458,6 @@ WebDeveloper.Overlay.Information.viewResponseHeaders = function()
       chrome.tabs.sendMessage(tab.id, {type: "get-document-details"}, function(data)
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-response-headers.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewResponseHeadersLocale());
-
-        WebDeveloper.Overlay.close();
       });
     }
   });

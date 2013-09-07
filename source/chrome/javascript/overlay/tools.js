@@ -22,8 +22,6 @@ WebDeveloper.Overlay.Tools.customTool = function()
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     WebDeveloper.Overlay.openTab(featureItem.data("url") + tab.url);
-
-    WebDeveloper.Overlay.close();
   });
 };
 
@@ -74,8 +72,6 @@ WebDeveloper.Overlay.Tools.validateLocalCSS = function()
       chrome.tabs.sendMessage(tab.id, {type: "get-css"}, function(data)
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.validateLocalCSS(chrome.extension.getURL("validation/css.html"), tab.index, data);
-
-        WebDeveloper.Overlay.close();
       });
     }
   });
@@ -90,8 +86,6 @@ WebDeveloper.Overlay.Tools.validateLocalHTML = function()
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
       chrome.extension.getBackgroundPage().WebDeveloper.Background.validateLocalHTML(chrome.extension.getURL("validation/html.html"), tab.index, tab.url);
-
-      WebDeveloper.Overlay.close();
     }
   });
 };

@@ -413,40 +413,40 @@
         </menu>
       </menupopup>
     </toolbarbutton>
-    <toolbarbutton id="web-developer-disable-toolbar" label="&webdeveloper.disable.label;" tooltiptext="&webdeveloper.disable.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+    <toolbarbutton id="web-developer-disable-toolbar" class="toolbarbutton-1" label="&webdeveloper.disable.label;" tooltiptext="&webdeveloper.disable.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
       ${toolbar.disable}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-cookies-toolbar" label="&webdeveloper.cookies.label;" tooltiptext="&webdeveloper.cookies.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+    <toolbarbutton id="web-developer-cookies-toolbar" class="toolbarbutton-1" label="&webdeveloper.cookies.label;" tooltiptext="&webdeveloper.cookies.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
       ${toolbar.cookies}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-css-toolbar" label="&webdeveloper.css.label;" tooltiptext="&webdeveloper.css.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+    <toolbarbutton id="web-developer-css-toolbar" class="toolbarbutton-1" label="&webdeveloper.css.label;" tooltiptext="&webdeveloper.css.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
       ${toolbar.css}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-forms-toolbar" label="&webdeveloper.forms.label;" tooltiptext="&webdeveloper.forms.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+    <toolbarbutton id="web-developer-forms-toolbar" class="toolbarbutton-1" label="&webdeveloper.forms.label;" tooltiptext="&webdeveloper.forms.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
       ${toolbar.forms}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-images-toolbar" label="&webdeveloper.images.label;" tooltiptext="&webdeveloper.images.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+    <toolbarbutton id="web-developer-images-toolbar" class="toolbarbutton-1" label="&webdeveloper.images.label;" tooltiptext="&webdeveloper.images.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
       ${toolbar.images}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-information-toolbar" label="&webdeveloper.information.label;" tooltiptext="&webdeveloper.information.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+    <toolbarbutton id="web-developer-information-toolbar" class="toolbarbutton-1" label="&webdeveloper.information.label;" tooltiptext="&webdeveloper.information.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
       ${toolbar.information}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-miscellaneous-toolbar" label="&webdeveloper.miscellaneous.label;" tooltiptext="&webdeveloper.information.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+    <toolbarbutton id="web-developer-miscellaneous-toolbar" class="toolbarbutton-1" label="&webdeveloper.miscellaneous.label;" tooltiptext="&webdeveloper.miscellaneous.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
       ${toolbar.miscellaneous}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-outline-toolbar" label="&webdeveloper.outline.label;" tooltiptext="&webdeveloper.outline.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+    <toolbarbutton id="web-developer-outline-toolbar" class="toolbarbutton-1" label="&webdeveloper.outline.label;" tooltiptext="&webdeveloper.outline.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
       ${toolbar.outline}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-resize-toolbar" label="&webdeveloper.resize.label;" tooltiptext="&webdeveloper.resize.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+    <toolbarbutton id="web-developer-resize-toolbar" class="toolbarbutton-1" label="&webdeveloper.resize.label;" tooltiptext="&webdeveloper.resize.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
       ${toolbar.resize}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-tools-toolbar" label="&webdeveloper.tools.label;" tooltiptext="&webdeveloper.tools.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+    <toolbarbutton id="web-developer-tools-toolbar" class="toolbarbutton-1" label="&webdeveloper.tools.label;" tooltiptext="&webdeveloper.tools.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
       ${toolbar.tools}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-view-source-toolbar" label="&webdeveloper.view.source.label;" tooltiptext="&webdeveloper.view.source.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+    <toolbarbutton id="web-developer-view-source-toolbar" class="toolbarbutton-1" label="&webdeveloper.view.source.label;" tooltiptext="&webdeveloper.view.source.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
       ${toolbar.view.source}
     </toolbarbutton>
-    <toolbarbutton id="web-developer-options-toolbar" label="&webdeveloper.options.label;" tooltiptext="&webdeveloper.options.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
+    <toolbarbutton id="web-developer-options-toolbar" class="toolbarbutton-1" label="&webdeveloper.options.label;" tooltiptext="&webdeveloper.options.label;" type="menu" onmouseover="WebDeveloper.Overlay.openToolbarButton(this)">
       ${toolbar.options}
     </toolbarbutton>
     <toolbarbutton id="web-developer-render-mode-statusbar" tooltiptext="&webdeveloper.render.mode;" oncommand="WebDeveloper.Overlay.Information.viewPageInformation()"/>

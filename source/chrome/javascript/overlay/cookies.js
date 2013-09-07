@@ -5,6 +5,11 @@ WebDeveloper.Overlay.Cookies = WebDeveloper.Overlay.Cookies || {};
 
 $(function()
 {
+  var addCookieExpires   = $("#add-cookie-expires");
+  var addCookieHost      = $("#add-cookie-host");
+  var addCookieName      = $("#add-cookie-name");
+  var addCookiePath      = $("#add-cookie-path");
+  var addCookieValue     = $("#add-cookie-value");
   var disableCookiesMenu = $("#disable-cookies");
 
   disableCookiesMenu.append(WebDeveloper.Locales.getString("disableCookies")).on("click", WebDeveloper.Overlay.Cookies.toggleCookies);
@@ -16,7 +21,6 @@ $(function()
 
   $("#add-cookie-cancel").on("click", WebDeveloper.Overlay.Cookies.cancelAddCookie);
   $("#add-cookie-dialog").on("submit", function(event) { event.preventDefault(); });
-  $("#add-cookie-expires, #add-cookie-host, #add-cookie-name, #add-cookie-path, #add-cookie-value").on("keypress", WebDeveloper.Overlay.Cookies.addCookieKeyPress);
   $("#add-cookie-submit").on("click", WebDeveloper.Overlay.Cookies.submitAddCookie);
 
   $("legend", $("#add-cookie-dialog")).text(WebDeveloper.Locales.getString("addCookie"));
@@ -29,6 +33,13 @@ $(function()
   $('[for="add-cookie-name"]').text(WebDeveloper.Locales.getString("name"));
   $('[for="add-cookie-path"]').text(WebDeveloper.Locales.getString("path"));
   $('[for="add-cookie-value"]').text(WebDeveloper.Locales.getString("value"));
+
+  addCookieExpires.attr("placeholder", WebDeveloper.Locales.getString("expiresPlaceholder"));
+  addCookieHost.attr("placeholder", WebDeveloper.Locales.getString("hostPlaceholder"));
+  addCookieName.attr("placeholder", WebDeveloper.Locales.getString("namePlaceholder"));
+  addCookiePath.attr("placeholder", WebDeveloper.Locales.getString("pathPlaceholder"));
+  addCookieValue.attr("placeholder", WebDeveloper.Locales.getString("valuePlaceholder"));
+  addCookieExpires.add(addCookieHost).add(addCookieName).add(addCookiePath).add(addCookieValue).on("keypress", WebDeveloper.Overlay.Cookies.addCookieKeyPress);
 
   WebDeveloper.Overlay.updateContentSettingMenu(disableCookiesMenu, "cookies");
 });
@@ -203,8 +214,8 @@ WebDeveloper.Overlay.Cookies.populateCookieFromDialog = function()
 // Resets the add cookie dialog
 WebDeveloper.Overlay.Cookies.resetAddDialog = function(addDialog)
 {
-  $(".error", addDialog).removeClass("error");
-  $(".help-inline", addDialog).text("");
+  $(".has-error", addDialog).removeClass("has-error");
+  $(".help-block", addDialog).text("");
 };
 
 // Adds a cookie
@@ -245,8 +256,8 @@ WebDeveloper.Overlay.Cookies.validateAddDialog = function()
   // If the cookie name is not set
   if(!name.val())
   {
-    name.next().text(WebDeveloper.Locales.getString("nameCannotBeEmpty"));
-    name.closest(".control-group").addClass("error");
+    name.closest(".form-group").addClass("has-error");
+    name.next(".help-block").text(WebDeveloper.Locales.getString("nameCannotBeEmpty"));
 
     valid = false;
   }
@@ -254,15 +265,15 @@ WebDeveloper.Overlay.Cookies.validateAddDialog = function()
   // If the cookie host is not set
   if(!hostValue)
   {
-    host.next().text(WebDeveloper.Locales.getString("hostCannotBeEmpty"));
-    host.closest(".control-group").addClass("error");
+    host.closest(".form-group").addClass("has-error");
+    host.next(".help-block").text(WebDeveloper.Locales.getString("hostCannotBeEmpty"));
 
     valid = false;
   }
   else if(hostValue == "localhost" || hostValue == ".localhost")
   {
-    host.next().html(WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("hostCannotBeLocalhost"));
-    host.closest(".control-group").addClass("error");
+    host.closest(".form-group").addClass("has-error");
+    host.next(".help-block").html(WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("hostCannotBeLocalhost"));
 
     valid = false;
   }
@@ -270,8 +281,8 @@ WebDeveloper.Overlay.Cookies.validateAddDialog = function()
   // If the cookie path is not set
   if(!path.val())
   {
-    path.next().text(WebDeveloper.Locales.getString("pathCannotBeEmpty"));
-    path.closest(".control-group").addClass("error");
+    path.closest(".form-group").addClass("has-error");
+    path.next(".help-block").text(WebDeveloper.Locales.getString("pathCannotBeEmpty"));
 
     valid = false;
   }
@@ -284,15 +295,15 @@ WebDeveloper.Overlay.Cookies.validateAddDialog = function()
     // If the cookie expires is not set
     if(!expiresValue)
     {
-      expires.next().text(WebDeveloper.Locales.getString("expiresCannotBeEmpty"));
-      expires.closest(".control-group").addClass("error");
+      expires.closest(".form-group").addClass("has-error");
+      expires.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("expiresCannotBeEmpty"));
 
       valid = false;
     }
     else if(new Date(expiresValue) == "Invalid Date")
     {
-      expires.next().text(WebDeveloper.Locales.getString("expiresNotValid"));
-      expires.closest(".control-group").addClass("error");
+      expires.closest(".form-group").addClass("has-error");
+      expires.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("expiresNotValid"));
 
       valid = false;
     }
@@ -314,8 +325,6 @@ WebDeveloper.Overlay.Cookies.viewCookieInformation = function()
         chrome.tabs.sendMessage(tab.id, { "allCookies": WebDeveloper.Overlay.Cookies.convertCookies(allCookies), "type": "get-cookies" }, function(data)
         {
           chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-cookie-information.html"), tab.index, data, WebDeveloper.Overlay.Cookies.getViewCookieInformationLocale());
-
-          WebDeveloper.Overlay.close();
         });
       });
     }

@@ -5,7 +5,7 @@ WebDeveloper.Upgrade = WebDeveloper.Upgrade || {};
 // Opens the upgrade URL
 WebDeveloper.Upgrade.openUpgradeURL = function(version)
 {
-  chrome.tabs.create({ "url": "@url@installed/" + version.replace(".", "") + "/" });
+  chrome.tabs.create({ "url": "@url@/@browser@/installed/" + version.replace(".", "") + "/" });
 };
 
 // Sets up the default options

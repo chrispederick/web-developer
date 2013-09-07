@@ -1,0 +1,4 @@
+.web-developer-display-object-information { margin: 1px 0 5px 0 !important; padding: 5px !important; }
+.web-developer-display-object-information, .web-developer-display-object-information p { display: block !important; }
+.web-developer-display-object-information p { line-height: 13px !important; margin: 0 !important; }
+.web-developer-display-object-information .web-developer-object-information-param { background: transparent !important; border-style: none !important; margin-left: 20px !important; word-wrap: break-word !important; }

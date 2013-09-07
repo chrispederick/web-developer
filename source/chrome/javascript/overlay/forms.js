@@ -294,8 +294,6 @@ WebDeveloper.Overlay.Forms.viewFormInformation = function()
       chrome.tabs.sendMessage(tab.id, {type: "get-forms"}, function(data)
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-form-information.html"), tab.index, data, WebDeveloper.Overlay.Forms.getViewFormInformationLocale());
-
-        WebDeveloper.Overlay.close();
       });
     }
   });

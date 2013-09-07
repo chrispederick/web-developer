@@ -25,13 +25,13 @@ prefpane .groupbox-title { border-bottom: 1px solid #ccc; }
 
 /* Web Developer menus */
 
-#web-developer-app-menu, #web-developer-context, #web-developer-menu, #web-developer-seamonkey { list-style-image: url(chrome://web-developer/skin/button.png); }
-#web-developer-app-menu.color, #web-developer-context.color, #web-developer-menu.color, #web-developer-seamonkey.color { list-style-image: url(chrome://web-developer/skin/color/button.png); }
+#web-developer-app-menu, #web-developer-context, #web-developer-menu, #web-developer-seamonkey { list-style-image: url(chrome://web-developer/skin/menu.png); }
+#web-developer-app-menu.color, #web-developer-context.color, #web-developer-menu.color, #web-developer-seamonkey.color { list-style-image: url(chrome://web-developer/skin/color/menu.png); }
 
 @media (min--moz-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx)
 {
-  #web-developer-app-menu, #web-developer-context, #web-developer-menu, #web-developer-seamonkey { list-style-image: url(chrome://web-developer/skin/button-2x.png); }
-  #web-developer-app-menu.color, #web-developer-context.color, #web-developer-menu.color, #web-developer-seamonkey.color { list-style-image: url(chrome://web-developer/skin/color/button-2x.png); }
+  #web-developer-app-menu, #web-developer-context, #web-developer-menu, #web-developer-seamonkey { list-style-image: url(chrome://web-developer/skin/menu-2x.png); }
+  #web-developer-app-menu.color, #web-developer-context.color, #web-developer-menu.color, #web-developer-seamonkey.color { list-style-image: url(chrome://web-developer/skin/color/menu-2x.png); }
 }
 
 /* Web Developer button */

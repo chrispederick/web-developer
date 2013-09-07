@@ -1,0 +1,7 @@
+table { border-collapse: separate !important; }
+td, th { border: 1px solid #b94a48 !important; }
+table table td, table table th { border-color: #468847 !important; }
+table table table td, table table table th { border-color: #3a87ad !important; }
+table table table table td, table table table table th { border-color: #b94a48 !important; }
+table table table table table td, table table table table table th { border-color: #468847 !important; }
+table table table table table table td, table table table table table table th { border-color: #3a87ad !important; }

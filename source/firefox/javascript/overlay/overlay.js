@@ -618,7 +618,7 @@ WebDeveloper.Overlay.uninitialize = function()
         WebDeveloper.Overlay.preferenceBranch.removeObserver("", WebDeveloper.Overlay.PreferenceObserver);
       }
 
-      window.removeEventListener("close", WebDeveloper.Overlay.uninitialize, false);
+      window.removeEventListener("unload", WebDeveloper.Overlay.uninitialize, false);
     }
   }
   catch(exception)
@@ -908,8 +908,8 @@ WebDeveloper.Overlay.PreferenceObserver =
     // If a preference was changed
     if(topic == "nsPref:changed")
     {
-      // If the toolbar color or icons preference was changed
-      if(data == "toolbar.color" || data == "toolbar.icons")
+      // If the context hide, menu hide, toolbar color or toolbar icons preference was changed
+      if(data == "context.hide" || data == "menu.hide" || data == "toolbar.color" || data == "toolbar.icons")
       {
         WebDeveloper.Overlay.updateChrome();
       }

@@ -17,8 +17,6 @@ WebDeveloper.Overlay.Options.about = function()
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("about/about.html"), tab.index, null, WebDeveloper.Overlay.Options.getAboutLocale());
-
-    WebDeveloper.Overlay.close();
   });
 };
 

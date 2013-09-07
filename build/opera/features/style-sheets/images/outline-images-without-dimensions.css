@@ -1,0 +1,1 @@
+img:not([height]):not([width]) { outline: 1px solid #b94a48 !important; }

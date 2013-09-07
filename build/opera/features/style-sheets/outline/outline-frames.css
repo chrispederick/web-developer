@@ -1,0 +1,2 @@
+frame, frameset { border: 1px solid #b94a48 !important; }
+iframe:not([id^=web-developer]) { border: 1px solid #468847 !important; }

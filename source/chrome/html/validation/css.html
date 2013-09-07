@@ -4,15 +4,17 @@
 <head>
   <meta charset="utf-8">
   <title>@name@</title>
-  <link href="validation.css" rel="stylesheet">
-  <link href="images/favicon.ico" rel="shortcut icon">
+  <link href="@common.prefix@/common/style-sheets/bootstrap.css" rel="stylesheet">
+  <link href="@common.prefix@/common/style-sheets/generated.css" rel="stylesheet">
+  <meta name="viewport" content="initial-scale=1.0,width=device-width">
+  <link href="@common.prefix@/common/images/logos/favicon.ico" rel="shortcut icon">
 </head>
 
 <body>
 
-<div id="content" class="container-fluid">
-  <div class="active progress progress-info progress-striped">
-    <div class="bar"></div>
+<div id="content" class="container">
+  <div class="active progress progress-striped">
+    <div class="progress-bar progress-bar-info"></div>
   </div>
 </div>
 
@@ -23,7 +25,7 @@
   <input type="hidden" name="warning" value="0">
 </form>
 
-<script src="@common.prefix@/common/jquery/jquery.js"></script>
+<script src="@common.prefix@/common/javascript/jquery/jquery.js"></script>
 <script src="javascript/css.js"></script>
 
 </body>

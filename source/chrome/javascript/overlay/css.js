@@ -257,8 +257,6 @@ WebDeveloper.Overlay.CSS.viewCSS = function()
         data.theme = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("syntax_highlight_theme");
 
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-css.html"), tab.index, data, WebDeveloper.Overlay.CSS.getViewCSSLocale());
-
-        WebDeveloper.Overlay.close();
       });
     }
   });

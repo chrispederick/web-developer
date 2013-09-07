@@ -99,8 +99,8 @@ WebDeveloper.Overlay.Resize.editResizeDimensions = function()
 // Resets the add cookie dialog
 WebDeveloper.Overlay.Resize.resetResizeDialog = function(resizeDialog)
 {
-  $(".error", resizeDialog).removeClass("error");
-  $(".help-inline", resizeDialog).text("");
+  $(".has-error", resizeDialog).removeClass("has-error");
+  $(".help-block", resizeDialog).text("");
 };
 
 // Resizes the window
@@ -109,6 +109,9 @@ WebDeveloper.Overlay.Resize.resizeWindow = function(height, width)
   WebDeveloper.Overlay.getSelectedWindow(function(selectedWindow)
   {
     var size = {};
+
+    // Set the window state to normal before resizing the window
+    size.state = "normal";
 
     // If the height is not a wildcard
     if(height != "*")
@@ -121,9 +124,6 @@ WebDeveloper.Overlay.Resize.resizeWindow = function(height, width)
     {
       size.width = parseInt(width, 10);
     }
-    
-    // Set window state to normal when resizing window
-    size.state = 'normal';
 
     chrome.windows.update(selectedWindow.id, size, function()
     {
@@ -199,15 +199,15 @@ WebDeveloper.Overlay.Resize.validateResizeDialog = function()
   // If the height is not set
   if(!heightValue)
   {
-    height.next().text(WebDeveloper.Locales.getString("heightCannotBeEmpty"));
-    height.closest(".control-group").addClass("error");
+    height.closest(".form-group").addClass("has-error");
+    height.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("heightCannotBeEmpty"));
 
     valid = false;
   }
   else if(heightValue != "*" && (parseInt(heightValue, 10) != heightValue || heightValue <= 0))
   {
-    height.next().text(WebDeveloper.Locales.getString("heightNotValid"));
-    height.closest(".control-group").addClass("error");
+    height.closest(".form-group").addClass("has-error");
+    height.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("heightNotValid"));
 
     valid = false;
   }
@@ -215,15 +215,15 @@ WebDeveloper.Overlay.Resize.validateResizeDialog = function()
   // If the width is not set
   if(!widthValue)
   {
-    width.next().text(WebDeveloper.Locales.getString("widthCannotBeEmpty"));
-    width.closest(".control-group").addClass("error");
+    width.closest(".form-group").addClass("has-error");
+    width.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("widthCannotBeEmpty"));
 
     valid = false;
   }
   else if(widthValue != "*" && (parseInt(widthValue, 10) != widthValue || widthValue <= 0))
   {
-    width.next().text(WebDeveloper.Locales.getString("widthNotValid"));
-    width.closest(".control-group").addClass("error");
+    width.closest(".form-group").addClass("has-error");
+    width.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("widthNotValid"));
 
     valid = false;
   }
@@ -246,8 +246,8 @@ WebDeveloper.Overlay.Resize.viewResponsiveLayouts = function()
       var storage     = chrome.extension.getBackgroundPage().WebDeveloper.Storage;
       var width       = null;
 
-      data.layouts             = [];
-      data.pageURL             = tab.url;
+      data.layouts = [];
+      data.pageURL = tab.url;
 
       // Loop through the possible responsive options
       for(var i = 1, l = storage.getItem("responsive_layout_count"); i <= l; i++)
@@ -269,8 +269,6 @@ WebDeveloper.Overlay.Resize.viewResponsiveLayouts = function()
       }
 
       chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-responsive-layouts.html"), tab.index, data, WebDeveloper.Overlay.Resize.getViewResponsiveLayoutsLocale());
-
-      WebDeveloper.Overlay.close();
     }
   });
 };

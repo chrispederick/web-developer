@@ -8,12 +8,16 @@
 
 <body>
 
-<script src="@common.prefix@/common/jquery/jquery.js"></script>
-<script src="@common.prefix@/common/jquery/icanhaz.js"></script>
+<script src="@common.prefix@/common/javascript/jquery/jquery.js"></script>
+<script src="@common.prefix@/common/javascript/jquery/icanhaz.js"></script>
+<script src="@common.prefix@/common/javascript/common.js"></script>
+<script src="@common.prefix@/locales/locales.js"></script>
+<script src="@common.prefix@/storage/storage.js"></script>
+<script src="@common.prefix@/upgrade/upgrade.js"></script>
 <script src="javascript/background.js"></script>
 
 <script id="dashboard" type="text/html">
-  <div id="web-developer-dashboard-resizer">&bull;</div><h1 class="brand"><img width="16" height="16" alt="">{{dashboardTitle}}</h1><div class="tabbable tabs-below"><ul id="web-developer-dashboard-tabs" class="nav nav-tabs"></ul><div id="web-developer-dashboard-panels" class="tab-content"></div></div>
+  <div id="web-developer-dashboard-resizer">&bull;</div><h1 id="web-developer-dashboard-title" class="text-muted">{{dashboardTitle}}</h1><ul id="web-developer-dashboard-tabs" class="nav nav-pills"></ul><div id="web-developer-dashboard-panels" class="tab-content"></div>
 </script>
 
 <script id="dashboardPanel" type="text/html">
@@ -25,15 +29,15 @@
 </script>
 
 <script id="elementInformationPanel" type="text/html">
-  <div id="element-information-content" class="container-fluid"><p class="muted web-developer-information">{{selectAnElementDisplayInformation}}</p></div><div id="current-element-ancestors"></div>
+  <div id="element-information-content"><p id="web-developer-information" class="lead text-info">{{selectAnElementDisplayInformation}}</p></div><div id="current-element-ancestors"></div>
 </script>
 
 <script id="editCSSPanel" type="text/html">
-  <div class="tabbable"><ul id="web-developer-edit-css-tabs" class="nav nav-tabs"></ul><div id="web-developer-edit-css-panels" class="tab-content"></div></div>
+  <ul id="web-developer-edit-css-tabs" class="nav nav-tabs"></ul><div id="web-developer-edit-css-panels" class="tab-content"></div>
 </script>
 
 <script id="editCSSTabPanel" type="text/html">
-  <div id="edit-css-panel-{{position}}" class="tab-pane {{active}}"><textarea>{{css}}</textarea></div>
+  <div id="edit-css-panel-{{position}}" class="tab-pane {{active}}"><textarea class="form-control">{{css}}</textarea></div>
 </script>
 
 <script id="editCSSTab" type="text/html">

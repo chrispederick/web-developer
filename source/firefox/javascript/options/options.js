@@ -210,7 +210,7 @@ WebDeveloper.Options.initializeColorsBrowser = function()
 // Initializes the colors pane
 WebDeveloper.Options.initializeColorsPane = function()
 {
-  // If the extension is not running on a Mac
+  // If the extension is running on a Mac
   if(WebDeveloper.Common.isMac())
   {
     document.getElementById("web-developer-toolbar-color").hidden = false;
@@ -236,8 +236,8 @@ WebDeveloper.Options.initializeKeyboardPane = function()
   // Loop through the keyboard shortcuts
   for(var i = 1, l = WebDeveloper.Preferences.getExtensionIntegerPreference("keyboard.count"); i <= l; i++)
   {
-    feature = WebDeveloper.Preferences.getExtensionStringPreference("keyboard." + i + ".feature");
-    key     = WebDeveloper.Preferences.getLocalizedPreference("keyboard." + i + ".key");
+    feature   = WebDeveloper.Preferences.getExtensionStringPreference("keyboard." + i + ".feature");
+    key       = WebDeveloper.Preferences.getLocalizedPreference("keyboard." + i + ".key");
     modifiers = WebDeveloper.Preferences.getExtensionStringPreference("keyboard." + i + ".modifiers");
 
     // If the feature, key and modifiers are set

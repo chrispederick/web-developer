@@ -3,7 +3,7 @@ var WebDeveloper = WebDeveloper || {};
 WebDeveloper.Overlay         = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.Options = WebDeveloper.Overlay.Options || {};
 
-// Displays the about dialog
+// Displays the about page
 WebDeveloper.Overlay.Options.about = function()
 {
   WebDeveloper.Overlay.openGeneratedTab(WebDeveloper.Common.getChromeURL("about/about.html"), null, WebDeveloper.Overlay.Options.getAboutLocale());

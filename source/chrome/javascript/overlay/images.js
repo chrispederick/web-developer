@@ -110,8 +110,6 @@ WebDeveloper.Overlay.Images.findBrokenImages = function()
         locale.brokenImages = WebDeveloper.Locales.getString("brokenImages");
 
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/find-broken-images.html"), tab.index, data, locale);
-
-        WebDeveloper.Overlay.close();
       });
     }
   });
@@ -356,8 +354,6 @@ WebDeveloper.Overlay.Images.viewImageInformation = function()
       chrome.tabs.sendMessage(tab.id, {type: "get-images"}, function(data)
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-image-information.html"), tab.index, data, WebDeveloper.Overlay.Images.getViewImageInformationLocale());
-
-        WebDeveloper.Overlay.close();
       });
     }
   });

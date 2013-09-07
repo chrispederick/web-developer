@@ -44,13 +44,11 @@ WebDeveloper.Dashboard.createDashboard = function(contentDocument, dashboardHTML
 
   WebDeveloper.Common.getDocumentBodyElement(dashboardDocument).innerHTML = dashboardHTML;
 
-  WebDeveloper.Common.includeJavaScript("@common.prefix@/common/jquery/jquery.js", dashboardDocument, function() {
-    WebDeveloper.Common.includeJavaScript("@common.prefix@/common/bootstrap/tab.js", dashboardDocument, function() {
+  WebDeveloper.Common.includeJavaScript("@common.prefix@/common/javascript/jquery/jquery.js", dashboardDocument, function() {
+    WebDeveloper.Common.includeJavaScript("@common.prefix@/common/javascript/bootstrap/tab.js", dashboardDocument, function() {
       WebDeveloper.Common.includeJavaScript("dashboard/javascript/html/dashboard.js", dashboardDocument);
     });
   });
-
-  dashboardDocument.querySelector(".brand img").setAttribute("src", WebDeveloper.Common.getChromeURL("dashboard/images/logo.png"));
 
   resizer = dashboardDocument.getElementById("web-developer-dashboard-resizer");
 
@@ -87,7 +85,7 @@ WebDeveloper.Dashboard.getDashboard = function(contentDocument)
 };
 
 // Handles the mouse move event
-WebDeveloper.Dashboard.mouseMove = function()
+WebDeveloper.Dashboard.mouseMove = function(event)
 {
   // If resizing the dashboard
   if(WebDeveloper.Dashboard.resizing)

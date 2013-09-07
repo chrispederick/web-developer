@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html id="web-developer-background" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Web Developer</title>
+</head>
+
+<body>
+
+<script src="/common/javascript/jquery/jquery.js"></script>
+<script src="/common/javascript/jquery/icanhaz.js"></script>
+<script src="/common/javascript/common.js"></script>
+<script src="/locales/locales.js"></script>
+<script src="/storage/storage.js"></script>
+<script src="/upgrade/upgrade.js"></script>
+<script src="javascript/background.js"></script>
+
+<script id="dashboard" type="text/html">
+  <div id="web-developer-dashboard-resizer">&bull;</div><h1 id="web-developer-dashboard-title" class="text-muted">{{dashboardTitle}}</h1><ul id="web-developer-dashboard-tabs" class="nav nav-pills"></ul><div id="web-developer-dashboard-panels" class="tab-content"></div>
+</script>
+
+<script id="dashboardPanel" type="text/html">
+  <div id="{{tabId}}-panel" class="tab-pane active"></div>
+</script>
+
+<script id="dashboardTab" type="text/html">
+  <li id="{{tabId}}-tab" class="active"><a href="#{{tabId}}-panel" data-toggle="tab">{{title}}</a></li>
+</script>
+
+<script id="elementInformationPanel" type="text/html">
+  <div id="element-information-content"><p id="web-developer-information" class="lead text-info">{{selectAnElementDisplayInformation}}</p></div><div id="current-element-ancestors"></div>
+</script>
+
+<script id="editCSSPanel" type="text/html">
+  <ul id="web-developer-edit-css-tabs" class="nav nav-tabs"></ul><div id="web-developer-edit-css-panels" class="tab-content"></div>
+</script>
+
+<script id="editCSSTabPanel" type="text/html">
+  <div id="edit-css-panel-{{position}}" class="tab-pane {{active}}"><textarea class="form-control">{{css}}</textarea></div>
+</script>
+
+<script id="editCSSTab" type="text/html">
+  <li id="edit-css-tab-{{position}}" class="{{active}}"><a href="#edit-css-panel-{{position}}" data-toggle="tab">{{title}}</a></li>
+</script>
+
+</body>
+
+</html>

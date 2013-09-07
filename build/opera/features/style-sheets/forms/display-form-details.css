@@ -1,0 +1,41 @@
+form { outline: 1px solid #b94a48 !important; }
+
+form[action]:before { content: "<form action=\"" attr(action) "\">" !important; }
+form[action][autocomplete]:before { content: "<form action=\"" attr(action) "\" autocomplete=\"" attr(autocomplete) "\">" !important; }
+form[action][autocomplete][enctype]:before { content: "<form action=\"" attr(action) "\" autocomplete=\"" attr(autocomplete) "\" enctype=\"" attr(enctype) "\">" !important; }
+form[action][autocomplete][enctype][id]:before { content: "<form action=\"" attr(action) "\" autocomplete=\"" attr(autocomplete) "\" enctype=\"" attr(enctype) "\" id=\"" attr(id) "\">" !important; }
+form[action][autocomplete][enctype][id][method]:before { content: "<form action=\"" attr(action) "\" autocomplete=\"" attr(autocomplete) "\" enctype=\"" attr(enctype) "\" id=\"" attr(id) "\" method=\"" attr(method) "\">" !important; }
+form[action][autocomplete][enctype][id][method][name]:before { content: "<form action=\"" attr(action) "\" autocomplete=\"" attr(autocomplete) "\" enctype=\"" attr(enctype) "\" id=\"" attr(id) "\" method=\"" attr(method) "\" name=\"" attr(name) "\">" !important; }
+form[action][enctype]:before { content: "<form action=\"" attr(action) "\" enctype=\"" attr(enctype) "\">" !important; }
+form[action][enctype][id]:before { content: "<form action=\"" attr(action) "\" enctype=\"" attr(enctype) "\" id=\"" attr(id) "\">" !important; }
+form[action][enctype][id][method]:before { content: "<form action=\"" attr(action) "\" enctype=\"" attr(enctype) "\" id=\"" attr(id) "\" method=\"" attr(method) "\">" !important; }
+form[action][enctype][id][method][name]:before { content: "<form action=\"" attr(action) "\" enctype=\"" attr(enctype) "\" id=\"" attr(id) "\" method=\"" attr(method) "\" name=\"" attr(name) "\">" !important; }
+form[action][id]:before { content: "<form action=\"" attr(action) "\" id=\"" attr(id) "\">" !important; }
+form[action][id][method]:before { content: "<form action=\"" attr(action) "\" id=\"" attr(id) "\" method=\"" attr(method) "\">" !important; }
+form[action][id][method][name]:before { content: "<form action=\"" attr(action) "\" id=\"" attr(id) "\" method=\"" attr(method) "\" name=\"" attr(name) "\">" !important; }
+form[action][method]:before { content: "<form action=\"" attr(action) "\" method=\"" attr(method) "\">" !important; }
+form[action][method][name]:before { content: "<form action=\"" attr(action) "\" method=\"" attr(method) "\" name=\"" attr(name) "\">" !important; }
+form[action][name]:before { content: "<form action=\"" attr(action) "\" name=\"" attr(name) "\">" !important; }
+form[autocomplete]:before { content: "<form autocomplete=\"" attr(autocomplete) "\">" !important; }
+form[autocomplete][enctype]:before { content: "<form autocomplete=\"" attr(autocomplete) "\" enctype=\"" attr(enctype) "\">" !important; }
+form[autocomplete][enctype][id]:before { content: "<form autocomplete=\"" attr(autocomplete) "\" enctype=\"" attr(enctype) "\" id=\"" attr(id) "\">" !important; }
+form[autocomplete][enctype][id][method]:before { content: "<form autocomplete=\"" attr(autocomplete) "\" enctype=\"" attr(enctype) "\" id=\"" attr(id) "\" method=\"" attr(method) "\">" !important; }
+form[autocomplete][enctype][id][method][name]:before { content: "<form autocomplete=\"" attr(autocomplete) "\" enctype=\"" attr(enctype) "\" id=\"" attr(id) "\" method=\"" attr(method) "\" name=\"" attr(name) "\">" !important; }
+form[autocomplete][id]:before { content: "<form autocomplete=\"" attr(autocomplete) "\" id=\"" attr(id) "\">" !important; }
+form[autocomplete][id][method]:before { content: "<form autocomplete=\"" attr(autocomplete) "\" id=\"" attr(id) "\" method=\"" attr(method) "\">" !important; }
+form[autocomplete][id][method][name]:before { content: "<form autocomplete=\"" attr(autocomplete) "\" id=\"" attr(id) "\" method=\"" attr(method) "\" name=\"" attr(name) "\">" !important; }
+form[autocomplete][method]:before { content: "<form autocomplete=\"" attr(autocomplete) "\" method=\"" attr(method) "\">" !important; }
+form[autocomplete][method][name]:before { content: "<form autocomplete=\"" attr(autocomplete) "\" method=\"" attr(method) "\" name=\"" attr(name) "\">" !important; }
+form[enctype]:before { content: "<form enctype=\"" attr(enctype) "\">" !important; }
+form[enctype][id]:before { content: "<form enctype=\"" attr(enctype) "\" id=\"" attr(id) "\">" !important; }
+form[enctype][id][method]:before { content: "<form enctype=\"" attr(enctype) "\" id=\"" attr(id) "\" method=\"" attr(method) "\">" !important; }
+form[enctype][id][method][name]:before { content: "<form enctype=\"" attr(enctype) "\" id=\"" attr(id) "\" method=\"" attr(method) "\" name=\"" attr(name) "\">" !important; }
+form[enctype][method]:before { content: "<form enctype=\"" attr(enctype) "\" method=\"" attr(method) "\">" !important; }
+form[enctype][method][name]:before { content: "<form enctype=\"" attr(enctype) "\" method=\"" attr(method) "\" name=\"" attr(name) "\">" !important; }
+form[id]:before { content: "<form id=\"" attr(id) "\">" !important; }
+form[id][method]:before { content: "<form id=\"" attr(id) "\" method=\"" attr(method) "\">" !important; }
+form[id][method][name]:before { content: "<form id=\"" attr(id) "\" method=\"" attr(method) "\" name=\"" attr(name) "\">" !important; }
+form[id][name]:before { content: "<form id=\"" attr(id) "\" name=\"" attr(name) "\">" !important; }
+form[method]:before { content: "<form method=\"" attr(method) "\">" !important; }
+form[method][name]:before { content: "<form method=\"" attr(method) "\" name=\"" attr(name) "\">" !important; }
+form[name]:before { content: "<form name=\"" attr(name) "\">" !important; }

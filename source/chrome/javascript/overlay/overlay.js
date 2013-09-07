@@ -21,6 +21,12 @@ $(function()
   $("#resize-toolbar > a").append(WebDeveloper.Locales.getString("resize"));
   $("#tools-toolbar > a").append(WebDeveloper.Locales.getString("tools"));
 
+  // If the menu is not set
+  if(!menu)
+  {
+    menu = $(".nav-tabs > li:visible:first").attr("id");
+  }
+
   // If the menu is set
   if(menu)
   {
@@ -157,7 +163,7 @@ WebDeveloper.Overlay.displayNotification = function(message, type)
 
   WebDeveloper.Overlay.closeNotification(null, function()
   {
-    notification.removeClass().addClass("alert alert-" + type);
+    notification.removeClass().addClass("alert alert-dismissable alert-" + type);
     $("span", notification).html(message);
     notification.slideDown(WebDeveloper.Overlay.animationSpeed);
   });
@@ -166,7 +172,10 @@ WebDeveloper.Overlay.displayNotification = function(message, type)
 // Returns the selected tab
 WebDeveloper.Overlay.getSelectedTab = function(callback)
 {
-  chrome.tabs.getSelected(null, callback);
+  chrome.tabs.query({ "active": true, "currentWindow": true }, function(tabs)
+  {
+    callback(tabs[0]);
+  });
 };
 
 // Returns the selected window
@@ -296,20 +305,24 @@ WebDeveloper.Overlay.toggleFeatureOnTab = function(featureItem, tab, scriptFile,
 // Updates the menu
 WebDeveloper.Overlay.updateContentSettingMenu = function(menu, settingType)
 {
-  chrome.contentSettings[settingType].get({ "primaryUrl": "http://*/*" }, function(details)
+  // If content settings exists
+  if(chrome.contentSettings)
   {
-    var setting = details.setting;
+    chrome.contentSettings[settingType].get({ "primaryUrl": "http://*/*" }, function(details)
+    {
+      var setting = details.setting;
 
-    // If the setting is currently set to block
-    if(setting == "block")
-    {
-      menu.addClass("active");
-    }
-    else if(menu.hasClass("active"))
-    {
-      menu.removeClass("active");
-    }
-  });
+      // If the setting is currently set to block
+      if(setting == "block")
+      {
+        menu.addClass("active");
+      }
+      else if(menu.hasClass("active"))
+      {
+        menu.removeClass("active");
+      }
+    });
+  }
 };
 
 chrome.extension.onMessage.addListener(WebDeveloper.Overlay.message);

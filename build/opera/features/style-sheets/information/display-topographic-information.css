@@ -1,0 +1,17 @@
+* { background-color: #000 !important; background-image: none !important; border-color: #000 !important; color: #fff !important; }
+* > * { background-color: #111 !important; border-color: #111 !important; }
+* > * > * { background-color: #222 !important; border-color: #222 !important; }
+* > * > * > * { background-color: #333 !important; border-color: #333 !important; }
+* > * > * > * > * { background-color: #444 !important; border-color: #444 !important; }
+* > * > * > * > * > * { background-color: #555 !important; border-color: #555 !important; }
+* > * > * > * > * > * > * { background-color: #666 !important; border-color: #666 !important; }
+* > * > * > * > * > * > * > * { background-color: #777 !important; border-color: #777 !important; }
+* > * > * > * > * > * > * > * > * { background-color: #888 !important; border-color: #888 !important; }
+* > * > * > * > * > * > * > * > * > * { background-color: #999 !important; border-color: #999 !important; }
+* > * > * > * > * > * > * > * > * > * > * { background-color: #aaa !important; border-color: #aaa !important; color: #000 !important; }
+* > * > * > * > * > * > * > * > * > * > * > * { background-color: #bbb !important; border-color: #bbb !important; color: #000 !important; }
+* > * > * > * > * > * > * > * > * > * > * > * > * { background-color: #ccc !important; border-color: #ccc !important; color: #000 !important; }
+* > * > * > * > * > * > * > * > * > * > * > * > * > * { background-color: #ddd !important; border-color: #ddd !important; color: #000 !important; }
+* > * > * > * > * > * > * > * > * > * > * > * > * > * > * { background-color: #eee !important; border-color: #eee !important; color: #000 !important; }
+* > * > * > * > * > * > * > * > * > * > * > * > * > * > * > * { background-color: #fff !important; border-color: #fff !important; color: #000 !important; }
+* > * > * > * > * > * > * > * > * > * > * > * > * > * > * > * > * { background-color: #f0f !important; border-color: #f0f !important; color: #000 !important; }

@@ -1,7 +1,8 @@
 var WebDeveloper = WebDeveloper || {};
 
-WebDeveloper.ElementInformation        = WebDeveloper.ElementInformation || {};
-WebDeveloper.ElementInformation.locale = null;
+WebDeveloper.ElementInformation                  = WebDeveloper.ElementInformation || {};
+WebDeveloper.ElementInformation.breadcrumbHeight = 37;
+WebDeveloper.ElementInformation.locale           = null;
 
 // Displays the information for an element
 WebDeveloper.ElementInformation.displayElementInformation = function(element)
@@ -87,7 +88,7 @@ WebDeveloper.ElementInformation.resize = function(dashboard)
   // If the element information panel exists
   if(elementInformationPanel)
   {
-    elementInformationPanel.style.height = (dashboard.offsetHeight - elementInformationPanel.offsetTop - 38) + "px";
+    elementInformationPanel.style.height = (dashboard.offsetHeight - elementInformationPanel.offsetTop - WebDeveloper.ElementInformation.breadcrumbHeight) + "px";
   }
 };
 

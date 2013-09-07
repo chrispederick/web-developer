@@ -13,6 +13,8 @@ WebDeveloper.Overlay.Options.getAboutLocale = function()
   locale.buildDate            = WebDeveloper.Locales.getString("buildDate");
   locale.extensionDescription = WebDeveloper.Locales.getString("extensionDescription");
   locale.extensionName        = WebDeveloper.Locales.getString("extensionName");
+  locale.followOnAppNet       = WebDeveloper.Locales.getString("followOnAppNet");
+  locale.followOnTwitter      = WebDeveloper.Locales.getString("followOnTwitter");
   locale.version              = WebDeveloper.Locales.getString("version");
 
   return locale;

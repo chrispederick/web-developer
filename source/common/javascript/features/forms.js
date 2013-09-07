@@ -733,11 +733,17 @@ WebDeveloper.Forms.outlineFormFieldsWithoutLabels = function(outline, documents)
 WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, password)
 {
   var contentDocument          = null;
+  var date                     = new Date();
+  var dateString               = date.toISOString().split('T')[0];
+  var day                      = date.getDay();
   var inputElement             = null;
   var inputElementMaxlength    = null;
   var inputElementName         = null;
   var inputElements            = null;
   var inputElementType         = null;
+  var maximumValue             = 0;
+  var minimumValue             = 0;
+  var month                    = dateString.split('-');
   var option                   = null;
   var options                  = null;
   var populatedFormFields      = 0;
@@ -746,34 +752,27 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
   var textAreaElement          = null;
   var textAreaElements         = null;
   var textAreaElementMaxlength = null;
+  var time                     = date.getHours() + ':' + date.getMinutes();
+  var localDateTime            = dateString + 'T' + time;
+  var week                     = null;
+  var weekDate                 = new Date();
+  var weekNumber               = null;
+  var year                     = weekDate.getFullYear();
 
-  // Handle date values
-  var date                     = new Date();
-
-  // Get a valid date string
-  var dateString               = date.toISOString().split('T')[0];
-
-  // Get a valid month string
-  var month                    = dateString.split('-');
   month.pop();
+
   month = month.join('-');
 
-  // Get a valid week string
-  var week;
-  var determineWeekDate = new Date();
-  var D = determineWeekDate.getDay();
-  if(D == 0) D = 7;
-  determineWeekDate.setDate(determineWeekDate.getDate() + (4 - D));
-  var YN = determineWeekDate.getFullYear();
-  var ZBDoCY = Math.floor((determineWeekDate.getTime() - new Date(YN, 0, 1, -6)) / 86400000);
-  var WN = 1 + Math.floor(ZBDoCY / 7);
-  week = date.getFullYear() + '-W' + WN;
+  // If the day is not set
+  if(day === 0)
+  {
+    day = 7;
+  }
 
-  // Get a valid time string
-  var time                    = date.getHours() + ':' + date.getMinutes();
+  weekDate.setDate(weekDate.getDate() + (4 - day));
 
-  // Get a valid local date and time string
-  var localDateTime           = dateString + 'T' + time;
+  weekNumber = 1 + Math.floor(Math.floor((weekDate.getTime() - new Date(year, 0, 1, -6)) / 86400000) / 7);
+  week       = date.getFullYear() + '-W' + weekNumber;
 
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
@@ -793,16 +792,40 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
       {
         inputElementType = inputElement.getAttribute("type");
 
-        // If the input element value is not set and the type is not set or is email, password or text
-        if(!inputElement.value.trim() && (!inputElementType || inputElementType.toLowerCase() == "email" || inputElementType.toLowerCase() == "password" || inputElementType.toLowerCase() == "search" || inputElementType.toLowerCase() == "text" || inputElementType.toLowerCase() == "tel" || inputElementType.toLowerCase() == "date" || inputElementType.toLowerCase() == "datetime" || inputElementType.toLowerCase() == "datetime-local" || inputElementType.toLowerCase() == "month" || inputElementType.toLowerCase() == "week" || inputElementType.toLowerCase() == "time" || inputElementType.toLowerCase() == "number" || inputElementType.toLowerCase() == "range" || inputElementType.toLowerCase() == "color" || inputElementType.toLowerCase() == "url"))
+        // If the input element value is not set and the type is not set or is one of the supported types
+        if(!inputElement.value.trim() && (!inputElementType || inputElementType.toLowerCase() == "color" || inputElementType.toLowerCase() == "date" || inputElementType.toLowerCase() == "datetime" || inputElementType.toLowerCase() == "datetime-local" || inputElementType.toLowerCase() == "email" || inputElementType.toLowerCase() == "month" || inputElementType.toLowerCase() == "number" || inputElementType.toLowerCase() == "password" || inputElementType.toLowerCase() == "search" || inputElementType.toLowerCase() == "tel" || inputElementType.toLowerCase() == "text" || inputElementType.toLowerCase() == "time" || inputElementType.toLowerCase() == "url" || inputElementType.toLowerCase() == "week"))
         {
           inputElementName      = inputElement.getAttribute("name");
           inputElementMaxlength = inputElement.getAttribute("maxlength");
 
-          // If the input element type is set and is email or is text and the name contains email
-          if((inputElementType && inputElementType.toLowerCase() == "email") || ((!inputElementType || inputElementType == "text") && inputElementName && inputElementName.toLowerCase().indexOf("email") >= 0))
+          // If the input element type is set and is color
+          if(inputElementType && inputElementType.toLowerCase() == "color")
+          {
+            inputElement.value = "#ff0000";
+
+            populatedFormFields++;
+          }
+          else if(inputElementType && inputElementType.toLowerCase() == "date")
+          {
+            inputElement.value = dateString;
+
+            populatedFormFields++;
+          }
+          else if(inputElementType && (inputElementType.toLowerCase() == "datetime" || inputElementType.toLowerCase() == "datetime-local"))
+          {
+            inputElement.value = localDateTime;
+
+            populatedFormFields++;
+          }
+          else if((inputElementType && inputElementType.toLowerCase() == "email") || ((!inputElementType || inputElementType == "text") && inputElementName && inputElementName.toLowerCase().indexOf("email") >= 0))
           {
             inputElement.value = emailAddress;
+
+            populatedFormFields++;
+          }
+          else if(inputElementType && inputElementType.toLowerCase() == "month")
+          {
+            inputElement.value = month;
 
             populatedFormFields++;
           }
@@ -812,67 +835,48 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
 
             populatedFormFields++;
           }
+          else if(inputElementType && inputElementType.toLowerCase() == "number")
+          {
+            maximumValue = parseInt(inputElement.max, 10);
+            minimumValue = parseInt(inputElement.min, 10);
+
+            // If the maximum value is not a number
+            if(isNaN(maximumValue))
+            {
+              maximumValue = 1;
+            }
+
+            // If the minimum value is not a number
+            if(isNaN(minimumValue))
+            {
+              minimumValue = 0;
+            }
+
+            inputElement.value = Math.round(Math.random() * (maximumValue - minimumValue));
+
+            populatedFormFields++;
+          }
+          else if((inputElementType && inputElementType.toLowerCase() == "tel") || (inputElementName && (inputElementName.toLowerCase().indexOf("phone") >= 0 || inputElementName && inputElementName.toLowerCase().indexOf("tel") >= 0)) )
+          {
+            inputElement.value = "1234567890";
+
+            populatedFormFields++;
+          }
+          else if(inputElementType && inputElementType.toLowerCase() == "time")
+          {
+            inputElement.value = time;
+
+            populatedFormFields++;
+          }
           else if(inputElementType && inputElementType.toLowerCase() == "url")
           {
             inputElement.value = "http://localhost/";
 
             populatedFormFields++;
           }
-          else if(inputElementType && inputElementType.toLowerCase() == "date")
-          {
-            // todo: handle min/max/step
-            inputElement.value = dateString;
-
-            populatedFormFields++;
-          }
-          else if(inputElementType && inputElementType.toLowerCase() == "month")
-          {
-            // todo: handle min/max/step
-            inputElement.value = month;
-
-            populatedFormFields++;
-          }
           else if(inputElementType && inputElementType.toLowerCase() == "week")
           {
-            // todo: handle min/max/step
             inputElement.value = week;
-
-            populatedFormFields++;
-          }
-          else if(inputElementType && inputElementType.toLowerCase() == "time")
-          {
-            // todo: handle min/max/step
-            inputElement.value = time;
-
-            populatedFormFields++;
-          }
-          else if(inputElementType && (inputElementType.toLowerCase() == "datetime-local" || inputElementType.toLowerCase() == "datetime"))
-          {
-            // todo: handle min/max/step
-            inputElement.value = localDateTime;
-
-            populatedFormFields++;
-          }
-          else if(inputElementType && inputElementType.toLowerCase() == "number")
-          {
-            var min = parseInt(inputElement.min, 10);
-            var max = parseInt(inputElement.max, 10);
-            if(isNaN(min)) min = 0;
-            if(isNaN(max)) max = 10;
-
-            inputElement.value = Math.floor(Math.random() * (max - min + 1)) + min;
-
-            populatedFormFields++;
-          }
-          else if(inputElementType && inputElementType.toLowerCase() == "color")
-          {
-            inputElement.value = '#f660ab';
-
-            populatedFormFields++;
-          }
-          else if( (inputElementType && inputElementType.toLowerCase() == "tel") || (inputElementName && (inputElementName.toLowerCase().indexOf("phone") >= 0 || inputElementName && inputElementName.toLowerCase().indexOf("tel") >= 0)) )
-          {
-            inputElement.value = "1234567890";
 
             populatedFormFields++;
           }

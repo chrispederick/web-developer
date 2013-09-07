@@ -27,20 +27,25 @@ WebDeveloper.Overlay.Cookies.getViewCookieInformationLocale = function()
   locale.expires                    = WebDeveloper.Locales.getString("expires");
   locale.expiresCannotBeEmpty       = WebDeveloper.Locales.getString("expiresCannotBeEmpty");
   locale.expiresNotValid            = WebDeveloper.Locales.getString("expiresNotValid");
+  locale.expiresPlaceholder         = WebDeveloper.Locales.getString("expiresPlaceholder");
   locale.host                       = WebDeveloper.Locales.getString("host");
   locale.hostCannotBeEmpty          = WebDeveloper.Locales.getString("hostCannotBeEmpty");
+  locale.hostPlaceholder            = WebDeveloper.Locales.getString("hostPlaceholder");
   locale.httpOnly                   = WebDeveloper.Locales.getString("httpOnly");
   locale.name                       = WebDeveloper.Locales.getString("name");
   locale.nameCannotBeEmpty          = WebDeveloper.Locales.getString("nameCannotBeEmpty");
+  locale.namePlaceholder            = WebDeveloper.Locales.getString("namePlaceholder");
   locale.no                         = WebDeveloper.Locales.getString("no");
   locale.path                       = WebDeveloper.Locales.getString("path");
   locale.pathCannotBeEmpty          = WebDeveloper.Locales.getString("pathCannotBeEmpty");
+  locale.pathPlaceholder            = WebDeveloper.Locales.getString("pathPlaceholder");
   locale.property                   = WebDeveloper.Locales.getString("property");
   locale.save                       = WebDeveloper.Locales.getString("save");
   locale.secure                     = WebDeveloper.Locales.getString("secure");
   locale.secureCookie               = WebDeveloper.Locales.getString("secureCookie");
   locale.sessionCookie              = WebDeveloper.Locales.getString("sessionCookie");
   locale.value                      = WebDeveloper.Locales.getString("value");
+  locale.valuePlaceholder           = WebDeveloper.Locales.getString("valuePlaceholder");
   locale.yes                        = WebDeveloper.Locales.getString("yes");
 
   return locale;

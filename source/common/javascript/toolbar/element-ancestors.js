@@ -6,7 +6,7 @@ WebDeveloper.ElementAncestors.element = null;
 // Returns the ancestor information for an element
 WebDeveloper.ElementAncestors.getAncestorInformation = function(element, contentDocument)
 {
-  var ancestorInformation = contentDocument.createElement("ul");
+  var ancestorInformation = contentDocument.createElement("ol");
   var parentElement       = null;
 
   ancestorInformation.setAttribute("class", "breadcrumb");
@@ -77,12 +77,6 @@ WebDeveloper.ElementAncestors.getElementDescription = function(element, contentD
 
       childElement.setAttribute("href", "#");
       childElement.setAttribute("class", "web-developer-ancestor");
-      description.appendChild(childElement);
-
-      childElement = contentDocument.createElement("span");
-
-      childElement.appendChild(contentDocument.createTextNode(">"));
-      childElement.setAttribute("class", "divider");
       description.appendChild(childElement);
     }
   }

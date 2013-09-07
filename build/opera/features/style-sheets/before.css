@@ -1,0 +1,28 @@
+*:before, [class^=web-developer], [class^=web-developer] *
+{
+  background: transparent !important;
+  border: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  clear: none !important;
+  float: none !important;
+  font-style: normal !important;
+  font-variant: normal !important;
+  font-weight: normal !important;
+  height: auto !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  opacity: 1 !important;
+  padding: 0 !important;
+  position: static !important;
+  text-align: left !important;
+  text-decoration: none !important;
+  text-shadow: none !important;
+  text-transform: none !important;
+  width: auto !important;
+}
+
+*:before, [class^=web-developer] { background: #b94a48 !important; -webkit-border-radius: 3px !important; -moz-border-radius: 3px !important; border-radius: 3px !important; -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3) !important; -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3) !important; box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3) !important; margin: 1px !important; padding: 1px !important; z-index: 2147483647 !important; }
+*:before, [class^=web-developer], [class^=web-developer] * { color: #fff !important; display: inline !important; font-family: Monaco, Menlo, Consolas, "Courier New", monospace !important; font-size: 13px !important; line-height: 15px !important; }

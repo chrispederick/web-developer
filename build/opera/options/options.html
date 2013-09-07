@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html id="web-developer-options" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Web Developer</title>
+  <link href="/common/style-sheets/bootstrap.css" rel="stylesheet">
+  <link href="options.css" rel="stylesheet">
+  <meta name="viewport" content="initial-scale=1.0,width=device-width">
+  <link href="/common/images/logos/favicon.ico" rel="shortcut icon">
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="#content" class="navbar-brand">Web Developer</a>
+    </div>
+
+    <div class="collapse navbar-collapse">
+      <p class="navbar-text pull-right">Web Developer</p>
+    </div>
+  </div>
+</div>
+
+<div id="content" class="container">
+  <ul class="nav nav-tabs">
+    <li id="colors-tab" class="active"><a href="#colors-options" data-toggle="tab"><span></span></a></li>
+    <li id="resize-tab"><a href="#resize-options" data-toggle="tab"><span></span></a></li>
+    <li id="responsive-layouts-tab"><a href="#responsive-layouts-options" data-toggle="tab"><span></span></a></li>
+    <li id="tools-tab"><a href="#tools-options" data-toggle="tab"><span></span></a></li>
+    <li id="advanced-tab"><a href="#advanced-options" data-toggle="tab"><span></span></a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="colors-options" class="tab-pane active">
+      <div id="syntax-highlight-performance" class="alert"></div>
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label for="syntax_highlight_theme" class="col-sm-3 control-label"></label>
+          <div class="col-sm-3">
+            <select id="syntax_highlight_theme" class="form-control">
+              <option value="dark"></option>
+              <option value="light"></option>
+              <option value="none"></option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-3">
+            <p id="preview"></p>
+          </div>
+          <div class="col-sm-3">
+            <iframe id="syntax-highlight-browser" src="syntax-highlight.html" width="500" height="150"></iframe>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-3 col-sm-offset-3">
+            <div class="checkbox">
+              <label>
+                <input id="icon_color" type="checkbox">
+              </label>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div id="resize-options" class="tab-pane">
+      <div class="table-container">
+        <div class="row">
+          <div class="col-sm-10">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <div class="col-sm-2 text-muted"></div>
+        </div>
+
+        <button type="button" class="btn btn-primary"><i class="icon-plus"></i> </button>
+      </div>
+
+      <form id="resize-form" class="form-horizontal">
+        <fieldset>
+          <legend></legend>
+
+          <div class="form-group">
+            <label for="resize-description" class="col-sm-2 control-label"></label>
+            <div class="col-sm-3">
+              <input id="resize-description" type="text" class="form-control">
+              <span class="help-block"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="resize-width" class="col-sm-2 control-label"></label>
+            <div class="col-sm-3">
+              <div class="input-group">
+                <input id="resize-width" type="text" class="form-control">
+                <span class="input-group-addon">px</span>
+              </div>
+              <span class="help-block"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="resize-height" class="col-sm-2 control-label"></label>
+            <div class="col-sm-3">
+              <div class="input-group">
+                <input id="resize-height" type="text" class="form-control">
+                <span class="input-group-addon">px</span>
+              </div>
+              <span class="help-block"></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-5 text-right">
+              <button id="resize-cancel" type="button" class="btn btn-default"></button>
+              <button id="resize-submit" type="button" class="btn btn-primary"><i class="icon-ok"></i> <span></span></button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+
+    <div id="responsive-layouts-options" class="tab-pane">
+      <div class="table-container">
+        <div class="row">
+          <div class="col-sm-10">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <div class="col-sm-2 text-muted"></div>
+        </div>
+
+        <button type="button" class="btn btn-primary"><i class="icon-plus"></i> </button>
+      </div>
+
+      <form id="responsive-layout-form" class="form-horizontal">
+        <fieldset>
+          <legend></legend>
+
+          <div class="form-group">
+            <label for="responsive-layout-description" class="col-sm-2 control-label"></label>
+            <div class="col-sm-3">
+              <input id="responsive-layout-description" type="text" class="form-control">
+              <span class="help-block"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="responsive-layout-width" class="col-sm-2 control-label"></label>
+            <div class="col-sm-3">
+              <div class="input-group">
+                <input id="responsive-layout-width" type="text" class="form-control">
+                <span class="input-group-addon">px</span>
+              </div>
+              <span class="help-block"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="responsive-layout-height" class="col-sm-2 control-label"></label>
+            <div class="col-sm-3">
+              <div class="input-group">
+                <input id="responsive-layout-height" type="text" class="form-control">
+                <span class="input-group-addon">px</span>
+              </div>
+              <span class="help-block"></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-5 text-right">
+              <button id="responsive-layout-cancel" type="button" class="btn btn-default"></button>
+              <button id="responsive-layout-submit" type="button" class="btn btn-primary"><i class="icon-ok"></i> <span></span></button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+
+    <div id="tools-options" class="tab-pane">
+      <div class="table-container">
+        <div class="row">
+          <div class="col-sm-10">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <div class="col-sm-2 text-muted"></div>
+        </div>
+
+        <button type="button" class="btn btn-primary"><i class="icon-plus"></i> </button>
+      </div>
+
+      <form id="tool-form" class="form-horizontal">
+        <fieldset>
+          <legend></legend>
+
+          <div class="form-group">
+            <label for="tool-description" class="col-sm-2 control-label"></label>
+            <div class="col-sm-6">
+              <input id="tool-description" type="text" class="form-control">
+              <span class="help-block"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="tool-url" class="col-sm-2 control-label"></label>
+            <div class="col-sm-6">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="icon-link"></i></span>
+                <input id="tool-url" type="url" class="form-control">
+              </div>
+              <span class="help-block"></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-8 text-right">
+              <button id="tool-cancel" type="button" class="btn btn-default"></button>
+              <button id="tool-submit" type="button" class="btn btn-primary"><i class="icon-ok"></i> <span></span></button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+
+    <div id="advanced-options" class="tab-pane">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label for="populate_email_address" class="col-sm-3 control-label"></label>
+          <div class="col-sm-3">
+            <div class="input-group">
+              <span class="input-group-addon">@</span>
+              <input id="populate_email_address" type="email" class="form-control">
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="delete-dialog" class="modal fade in">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4></h4>
+        </div>
+
+        <div class="modal-body">
+          <p></p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal"></button>
+          <button type="button" class="btn btn-danger"><i class="icon-trash"></i> </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/common/javascript/jquery/jquery.js"></script>
+<script src="/common/javascript/jquery/icanhaz.js"></script>
+<script src="/common/javascript/jquery/tablednd.js"></script>
+<script src="/common/javascript/bootstrap/modal.js"></script>
+<script src="/common/javascript/bootstrap/tab.js"></script>
+<script src="/common/javascript/bootstrap/transition.js"></script>
+<script src="/common/javascript/common.js"></script>
+<script src="/locales/locales.js"></script>
+<script src="/storage/storage.js"></script>
+<script src="javascript/options.js"></script>
+
+<script id="resizeOption" type="text/html">
+  <tr>
+    <td>{{description}}</td>
+    <td>{{width}}</td>
+    <td>{{height}}</td>
+    <td>{{keyboard}}</td>
+    <td>
+      <button type="button" class="btn btn-primary"><i class="icon-pencil"></i> <span></span></button>
+      <button type="button" class="btn btn-danger"><i class="icon-trash"></i> <span></span></button>
+    </td>
+  </tr>
+</script>
+
+<script id="responsiveLayout" type="text/html">
+  <tr>
+    <td>{{description}}</td>
+    <td>{{width}}</td>
+    <td>{{height}}</td>
+    <td>
+      <button type="button" class="btn btn-primary"><i class="icon-pencil"></i> <span></span></button>
+      <button type="button" class="btn btn-danger"><i class="icon-trash"></i> <span></span></button>
+    </td>
+  </tr>
+</script>
+
+<script id="tool" type="text/html">
+  <tr>
+    <td>{{description}}</td>
+    <td>{{url}}</td>
+    <td>{{keyboard}}</td>
+    <td>
+      <button type="button" class="btn btn-primary"><i class="icon-pencil"></i> <span></span></button>
+      <button type="button" class="btn btn-danger"><i class="icon-trash"></i> <span></span></button>
+    </td>
+  </tr>
+</script>
+
+</body>
+
+</html>

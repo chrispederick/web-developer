@@ -10,7 +10,7 @@
 
 /* Web Developer button */
 
-#web-developer-button { list-style-image: url(chrome://web-developer/skin/button.png); }
+#web-developer-button { -moz-box-orient: horizontal; list-style-image: url(chrome://web-developer/skin/button.png); }
 
 @media (min--moz-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx)
 {
@@ -20,7 +20,7 @@
 
 /* Toolbar buttons */
 
-#web-developer-cookies-toolbar, #web-developer-css-toolbar, #web-developer-disable-toolbar, #web-developer-forms-toolbar, #web-developer-images-toolbar, #web-developer-information-toolbar, #web-developer-miscellaneous-toolbar, #web-developer-options-toolbar, #web-developer-outline-toolbar, #web-developer-resize-toolbar, #web-developer-tools-toolbar, #web-developer-view-source-toolbar { list-style-image: url(chrome://web-developer/skin/toolbar.png); }
+#web-developer-cookies-toolbar, #web-developer-css-toolbar, #web-developer-disable-toolbar, #web-developer-forms-toolbar, #web-developer-images-toolbar, #web-developer-information-toolbar, #web-developer-miscellaneous-toolbar, #web-developer-options-toolbar, #web-developer-outline-toolbar, #web-developer-resize-toolbar, #web-developer-tools-toolbar, #web-developer-view-source-toolbar { -moz-box-orient: horizontal; list-style-image: url(chrome://web-developer/skin/toolbar.png); }
 #web-developer-disable-toolbar { -moz-image-region: rect(0, 16px, 16px, 0); }
 #web-developer-cookies-toolbar { -moz-image-region: rect(0, 32px, 16px, 16px); }
 #web-developer-css-toolbar { -moz-image-region: rect(0, 48px, 16px, 32px); }

@@ -1,6 +1,7 @@
 var WebDeveloper = WebDeveloper || {};
 
-WebDeveloper.Locales = WebDeveloper.Locales || {};
+WebDeveloper.Locales                 = WebDeveloper.Locales || {};
+WebDeveloper.Locales.defaultBundleId = "web-developer-string-bundle";
 
 // Returns a formatted string from the locale
 WebDeveloper.Locales.getFormattedString = function(name, parameters, bundleId)
@@ -13,7 +14,7 @@ WebDeveloper.Locales.getFormattedString = function(name, parameters, bundleId)
     // If the bundle id is not set
     if(!bundleId)
     {
-      bundleId = "web-developer-string-bundle";
+      bundleId = WebDeveloper.Locales.defaultBundleId;
     }
 
     localeString = document.getElementById(bundleId).getFormattedString(name, parameters);
@@ -37,7 +38,7 @@ WebDeveloper.Locales.getString = function(name, bundleId)
     // If the bundle id is not set
     if(!bundleId)
     {
-      bundleId = "web-developer-string-bundle";
+      bundleId = WebDeveloper.Locales.defaultBundleId;
     }
 
     localeString = document.getElementById(bundleId).getString(name);
