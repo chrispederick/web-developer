@@ -1,7 +1,0 @@
-a[href]:before { content: 'href="' attr(href) '"' !important; }
-a[href][rel]:before { content: 'href="' attr(href) '" rel="' attr(rel) '"' !important; }
-a[href][rel][target]:before { content: 'href="' attr(href) '" rel="' attr(rel) '" target="' attr(target) '"' !important; }
-a[href][target]:before { content: 'href="' attr(href) '" target="' attr(target) '"' !important; }
-a[rel]:before { content: 'rel="' attr(rel) '"' !important; }
-a[rel][target]:before { content: 'rel="' attr(rel) '" target="' attr(target) '"' !important; }
-a[target]:before { content: 'target="' attr(target) '"' !important; }

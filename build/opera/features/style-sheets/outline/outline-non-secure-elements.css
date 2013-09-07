@@ -1,2 +1,0 @@
-img[src^=http\:], object[codebase^=http\:], object[src^=http\:] { outline: 1px solid #b94a48 !important; }
-iframe[src^=http\:] { border: 1px solid #b94a48 !important; }

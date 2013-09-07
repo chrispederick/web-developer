@@ -1,1 +1,0 @@
-*[role]:before { content: 'role="' attr(role) '"' !important; }

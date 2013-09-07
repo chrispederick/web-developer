@@ -1,2 +1,0 @@
-abbr:before { content: 'abbr="' attr(title) '"' !important; }
-acronym:before { content: 'acronym="' attr(title) '"' !important; }
