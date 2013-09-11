@@ -3,9 +3,9 @@
   <Description about="urn:mozilla:install-manifest">
     <em:creator>@author@</em:creator>
     <em:description>@description@</em:description>
-    <em:homepageURL>@url@</em:homepageURL>
-    <em:iconURL>chrome://web-developer/content/icons/48.png</em:iconURL>
-    <em:icon64URL>chrome://web-developer/content/icons/64.png</em:icon64URL>
+    <em:homepageURL>@url@/@browser@/</em:homepageURL>
+    <em:iconURL>chrome://web-developer/content/common/images/logos/48.png</em:iconURL>
+    <em:icon64URL>chrome://web-developer/content/common/images/logos/64.png</em:icon64URL>
     <em:id>{c45c406e-ab73-11d8-be73-000a95be3b12}</em:id>
     <em:name>@name@</em:name>
     <em:optionsURL>chrome://web-developer/content/options/options.xul</em:optionsURL>

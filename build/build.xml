@@ -7,12 +7,12 @@
 
   <!-- Main targets -->
   <target name="all" depends="build,package,test" description="Builds, packages and tests the extension"/>
-  <target name="build" depends="build.chrome,build.firefox,build.opera" description="Builds the extension"/>
+  <target name="build" depends="build.chrome,build.opera,package.firefox" description="Builds the extension"/>
 	<target name="chrome" depends="build.chrome" description="Builds the extension for Chrome"/>
   <target name="clean" depends="clean.chrome,clean.firefox,clean.opera" description="Cleans up the build"/>
-	<target name="firefox" depends="build.firefox" description="Builds the extension for Firefox"/>
+	<target name="firefox" depends="package.firefox" description="Builds the extension for Firefox"/>
   <target name="opera" depends="build.opera" description="Builds the extension for Opera"/>
-	<target name="package" depends="build.firefox,package.chrome,package.opera" description="Packages the extension"/>
+	<target name="package" depends="package.chrome,package.firefox,package.opera" description="Packages the extension"/>
   <target name="test" depends="jshint,jslint" description="Tests the extension"/>
 
   <!-- Build targets -->
@@ -29,6 +29,22 @@
     <antcall target="build.chrome.options" inheritRefs="true"/>
     <antcall target="build.chrome.overlay" inheritRefs="true"/>
     <antcall target="build.chrome.toolbars" inheritRefs="true"/>
+  </target>
+
+  <target name="build.firefox" depends="initialize.firefox,clean.firefox">
+    <antcall target="build.firefox.configuration" inheritRefs="true"/>
+    <antcall target="build.firefox.about" inheritRefs="true"/>
+    <antcall target="build.firefox.common" inheritRefs="true"/>
+    <antcall target="build.firefox.content" inheritRefs="true"/>
+    <antcall target="build.firefox.dashboard" inheritRefs="true"/>
+    <antcall target="build.firefox.dialogs" inheritRefs="true"/>
+    <antcall target="build.firefox.features" inheritRefs="true"/>
+    <antcall target="build.firefox.generated" inheritRefs="true"/>
+    <antcall target="build.firefox.locales" inheritRefs="true"/>
+    <antcall target="build.firefox.options" inheritRefs="true"/>
+    <antcall target="build.firefox.overlay" inheritRefs="true"/>
+    <antcall target="build.firefox.skins" inheritRefs="true"/>
+    <antcall target="build.firefox.toolbars" inheritRefs="true"/>
   </target>
 
   <target name="build.opera" depends="initialize.opera,clean.opera">
@@ -249,7 +265,6 @@
       <filterset refid="filters"/>
     </copy>
     <copy file="../source/common/javascript/generated/beautify/beautify.js" tofile="${browser}/generated/javascript/beautify/beautify.js"/>
-    <copy file="../source/common/javascript/generated/beautify/beautify.js" tofile="${browser}/generated/javascript/beautify/beautify.js"/>
     <copy todir="${browser}/generated/javascript">
       <fileset dir="../source/common/javascript/generated"/>
     </copy>
@@ -359,70 +374,40 @@
     <copy file="../images/common/logos/monochrome/16.png" tofile="${browser}/toolbar/images/logo.png"/>
   </target>
 
-  <!-- Builds the extension for Firefox -->
-  <target name="build.firefox" depends="clean.firefox">
-    <echo level="info" message="Building the extension for Firefox"/>
-    <antcall target="build.firefox.configuration"/>
-    <antcall target="build.firefox.about.page"/>
-    <antcall target="build.firefox.common.javascript"/>
-    <antcall target="build.firefox.dashboard"/>
-    <antcall target="build.firefox.dialogs"/>
-    <antcall target="build.firefox.features"/>
-    <antcall target="build.firefox.generated.pages"/>
-    <antcall target="build.firefox.icons"/>
-    <antcall target="build.firefox.locales"/>
-    <antcall target="build.firefox.options"/>
-    <antcall target="build.firefox.overlay"/>
-    <antcall target="build.firefox.skins"/>
-    <antcall target="build.firefox.toolbars"/>
-
-    <echo level="info" message="Building the XPI"/>
-    <zip destfile="web-developer-firefox.xpi" level="1">
-      <zipfileset dir="firefox"/>
-      <zipfileset file="license.txt"/>
-    </zip>
-  </target>
-
   <!-- Builds the about page for Firefox -->
-  <target name="build.firefox.about.page" depends="initialize.firefox">
+  <target name="build.firefox.about">
     <echo level="info" message="Building the about page"/>
     <copy file="../source/common/html/about/about.html" tofile="firefox/content/web-developer/about/about.html">
-      <filterset refid="firefox.filters"/>
+      <filterset refid="filters"/>
     </copy>
     <concat destfile="firefox/content/web-developer/about/javascript/about.js">
     	<fileset file="../source/common/javascript/generated/common.js"/>
     	<fileset file="../source/common/javascript/about/about.js"/>
     </concat>
-    <concat destfile="firefox/content/web-developer/about/about.css">
-    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
-    	<fileset file="../source/common/style-sheets/common/common.css"/>
-    	<fileset file="../source/common/style-sheets/about/about.css"/>
-    </concat>
-    <copy file="../images/common/logos/favicon.ico" tofile="firefox/content/web-developer/about/images/favicon.ico"/>
-    <copy file="../images/common/logos/64.png" tofile="firefox/content/web-developer/about/images/logo.png"/>
-    <copy file="../images/common/logos/128.png" tofile="firefox/content/web-developer/about/images/logo-2x.png"/>
+    <copy file="../source/common/style-sheets/about/about.css" tofile="firefox/content/web-developer/about/about.css">
+      <filterset refid="filters"/>
+    </copy>
 	</target>
 
   <!-- Builds the common JavaScript for Firefox -->
-  <target name="build.firefox.common.javascript" depends="initialize.firefox">
-    <echo level="info" message="Building the common JavaScript"/>
-    <concat destfile="firefox/content/web-developer/common/common.js">
+  <target name="build.firefox.common">
+    <echo level="info" message="Building the common files"/>
+    <copy todir="firefox/content/web-developer/common/javascript/bootstrap">
+      <fileset dir="../source/common/javascript/common/bootstrap"/>
+    </copy>
+    <copy todir="firefox/content/web-developer/common/javascript/codemirror">
+      <fileset dir="../source/common/javascript/common/codemirror"/>
+    </copy>
+    <copy todir="firefox/content/web-developer/common/javascript/jquery">
+      <fileset dir="../source/common/javascript/common/jquery"/>
+    </copy>
+    <concat destfile="firefox/content/web-developer/common/javascript/common.js">
     	<fileset file="../source/common/javascript/common/common.js"/>
     	<fileset file="../source/firefox/javascript/common/common.js"/>
     </concat>
-    <copy file="../source/common/javascript/common/css.js" tofile="firefox/content/web-developer/common/css.js"/>
-    <copy todir="firefox/content/web-developer/common/bootstrap">
-      <fileset dir="../source/common/javascript/common/bootstrap"/>
-    </copy>
-    <copy todir="firefox/content/web-developer/common/codemirror">
-      <fileset dir="../source/common/javascript/common/codemirror"/>
-    </copy>
-    <copy todir="firefox/content/web-developer/common/jquery">
-      <fileset dir="../source/common/javascript/common/jquery"/>
-    </copy>
-    <concat destfile="firefox/content/web-developer/content/content.js">
-    	<fileset file="../source/common/javascript/content/content.js"/>
-    	<fileset file="../source/firefox/javascript/content/content.js"/>
+    <concat destfile="firefox/content/web-developer/cookies/cookies.js">
+      <fileset file="../source/common/javascript/cookies/cookies.js"/>
+      <fileset file="../source/firefox/javascript/cookies/cookies.js"/>
     </concat>
     <concat destfile="firefox/content/web-developer/locales/locales.js">
       <fileset file="../source/common/javascript/locales/locales.js"/>
@@ -438,24 +423,56 @@
     	<fileset file="../source/common/javascript/toolbar/element-ancestors.js"/>
     	<fileset file="../source/firefox/javascript/toolbar/element-ancestors.js"/>
     </concat>
+    <concat destfile="firefox/content/web-developer/common/style-sheets/bootstrap.css">
+      <fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
+      <fileset file="../source/common/style-sheets/common/bootstrap/font-awesome.css"/>
+    </concat>
+    <replace file="firefox/content/web-developer/common/style-sheets/bootstrap.css" token="fonts/fontawesome-webfont" value="../fonts/fontawesome-webfont"/>
+    <copy file="../source/common/style-sheets/generated/common.css" tofile="firefox/content/web-developer/common/style-sheets/generated.css">
+      <filterset refid="filters"/>
+    </copy>
+    <concat destfile="firefox/content/web-developer/common/style-sheets/syntax-highlight.css">
+      <fileset file="../source/common/style-sheets/common/codemirror/codemirror.css"/>
+      <fileset file="../source/common/style-sheets/common/codemirror/theme.css"/>
+    </concat>
+    <copy file="../images/common/logos/favicon.ico" tofile="firefox/content/web-developer/common/images/logos/favicon.ico"/>
+    <copy file="../images/common/logos/16.png" tofile="firefox/content/web-developer/common/images/logos/16.png"/>
+    <copy file="../images/common/logos/48.png" tofile="firefox/content/web-developer/common/images/logos/48.png"/>
+    <copy file="../images/common/logos/64.png" tofile="firefox/content/web-developer/common/images/logos/64.png"/>
+    <copy file="../images/common/logos/128.png" tofile="firefox/content/web-developer/common/images/logos/128.png"/>
+    <copy todir="firefox/content/web-developer/common/fonts">
+      <fileset dir="../source/common/fonts"/>
+    </copy>
 	</target>
 
   <!-- Builds the configuration for Firefox -->
-  <target name="build.firefox.configuration" depends="initialize.firefox">
+  <target name="build.firefox.configuration">
     <echo level="info" message="Building the configuration"/>
     <copy todir="firefox">
       <fileset file="../configuration/firefox/chrome.manifest"/>
       <fileset file="../configuration/firefox/install.rdf"/>
-      <filterset refid="firefox.filters"/>
+      <filterset refid="filters"/>
     </copy>
 	</target>
 
+  <!-- Builds the content JavaScript for Firefox -->
+  <target name="build.firefox.content">
+    <echo level="info" message="Building the content JavaScript"/>
+    <concat destfile="firefox/content/web-developer/content/content.js">
+      <fileset file="../source/common/javascript/common/common.js"/>
+      <fileset file="../source/firefox/javascript/common/common.js"/>
+      <fileset file="../source/common/javascript/common/css.js"/>
+      <fileset file="../source/common/javascript/content/content.js"/>
+      <fileset file="../source/firefox/javascript/content/content.js"/>
+    </concat>
+  </target>
+
   <!-- Builds the dashboard for Firefox -->
-  <target name="build.firefox.dashboard" depends="initialize.firefox">
+  <target name="build.firefox.dashboard">
     <echo level="info" message="Building the dashboard"/>
     <copy todir="firefox/content/web-developer/dashboard">
       <fileset dir="../source/firefox/html/dashboard"/>
-      <filterset refid="firefox.filters"/>
+      <filterset refid="filters"/>
     </copy>
     <copy todir="firefox/content/web-developer/dashboard">
       <fileset dir="../source/firefox/xul/dashboard"/>
@@ -485,11 +502,6 @@
     </concat>
   	<copy file="../source/common/javascript/toolbar/html/element-ancestors.js" tofile="firefox/content/web-developer/dashboard/javascript/html/element-ancestors.js"/>
     <concat destfile="firefox/content/web-developer/dashboard/common.css">
-    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
-    	<fileset file="../source/common/style-sheets/common/bootstrap/font-awesome.css"/>
-    	<fileset file="../source/common/style-sheets/common/codemirror/codemirror.css"/>
-    	<fileset file="../source/common/style-sheets/common/codemirror/theme.css"/>
-    	<fileset file="../source/common/style-sheets/common/common.css"/>
     	<fileset file="../source/common/style-sheets/dashboard/common.css"/>
     	<fileset file="../source/firefox/style-sheets/dashboard/html/common.css"/>
     </concat>
@@ -502,13 +514,10 @@
     	<fileset file="../source/common/style-sheets/generated/common.css"/>
     	<fileset file="../source/firefox/style-sheets/dashboard/html/style-information.css"/>
     </concat>
-    <copy todir="firefox/content/web-developer/dashboard/fonts">
-      <fileset dir="../source/common/fonts"/>
-    </copy>
 	</target>
 
   <!-- Builds the dialogs for Firefox -->
-  <target name="build.firefox.dialogs" depends="initialize.firefox">
+  <target name="build.firefox.dialogs">
     <echo level="info" message="Building the dialogs"/>
     <copy todir="firefox/content/web-developer/dialogs">
       <fileset dir="../source/firefox/xul/dialogs"/>
@@ -524,7 +533,7 @@
 	</target>
 
   <!-- Builds the features for Firefox -->
-  <target name="build.firefox.features" depends="initialize.firefox">
+  <target name="build.firefox.features">
     <echo level="info" message="Building the features"/>
     <copy todir="firefox/content/web-developer/features/style-sheets">
       <fileset dir="../source/common/style-sheets/features"/>
@@ -532,94 +541,54 @@
     </copy>
     <copy file="../source/common/style-sheets/common/reset.css" tofile="firefox/content/web-developer/features/style-sheets/css/disable-browser-default-styles.css"/>
     <copy file="../images/common/transparent.png" tofile="firefox/content/web-developer/features/style-sheets/images/transparent.png"/>
-
-    <echo level="info" message="Building the validation features"/>
     <copy todir="firefox/content/web-developer/validation">
       <fileset dir="../source/firefox/html/validation"/>
-      <filterset refid="firefox.filters"/>
+      <filterset refid="filters"/>
     </copy>
-    <concat destfile="firefox/content/web-developer/validation/validation.css">
-    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
-    	<fileset file="../source/common/style-sheets/common/common.css"/>
-    	<fileset file="../source/common/style-sheets/generated/common.css"/>
-    </concat>
-    <copy file="../images/common/logos/favicon.ico" tofile="firefox/content/web-developer/validation/images/favicon.ico"/>
 	</target>
 
   <!-- Builds the generated pages for Firefox -->
-  <target name="build.firefox.generated.pages" depends="initialize.firefox">
+  <target name="build.firefox.generated">
     <echo level="info" message="Building the generated pages"/>
     <copy todir="firefox/content/web-developer/generated">
       <fileset dir="../source/common/html/generated"/>
       <fileset dir="../source/firefox/html/generated"/>
       <fileset dir="../source/common/style-sheets/generated">
-     		<exclude name="common.css"/>
+        <exclude name="common.css"/>
       </fileset>
       <fileset dir="../source/firefox/style-sheets/generated"/>
-      <filterset refid="firefox.filters"/>
+      <filterset refid="filters"/>
     </copy>
-    <concat destfile="firefox/content/web-developer/generated/javascript/common.js">
-    	<fileset file="../source/common/javascript/common/common.js"/>
-    	<fileset file="../source/firefox/javascript/common/common.js"/>
-    	<fileset file="../source/common/javascript/generated/common.js"/>
-    	<fileset file="../source/firefox/javascript/generated/common.js"/>
-    </concat>
     <copy file="../source/common/javascript/generated/beautify/beautify.js" tofile="firefox/content/web-developer/generated/javascript/beautify/beautify.js"/>
-    <concat destfile="firefox/content/web-developer/generated/javascript/view-cookie-information.js">
-    	<fileset file="../source/common/javascript/generated/view-cookie-information.js"/>
-      <fileset file="../source/common/javascript/features/cookies.js"/>
-    	<fileset file="../source/firefox/javascript/features/cookies.js"/>
-    	<fileset file="../source/firefox/javascript/preferences/preferences.js"/>
-    </concat>
-    <concat destfile="firefox/content/web-developer/generated/javascript/view-document-size.js">
-    	<fileset file="../source/firefox/javascript/generated/view-document-size.js"/>
-    </concat>
     <copy todir="firefox/content/web-developer/generated/javascript">
       <fileset dir="../source/common/javascript/generated">
-     		<exclude name="common.js"/>
-     		<exclude name="view-cookie-information.js"/>
+        <exclude name="view-cookie-information.js"/>
       </fileset>
+      <fileset dir="../source/firefox/javascript/generated"/>
     </copy>
-    <concat destfile="firefox/content/web-developer/generated/common.css">
-    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
-    	<fileset file="../source/common/style-sheets/common/bootstrap/font-awesome.css"/>
-    	<fileset file="../source/common/style-sheets/common/common.css"/>
-    	<fileset file="../source/common/style-sheets/generated/common.css"/>
+    <concat destfile="firefox/content/web-developer/generated/javascript/view-cookie-information.js">
+      <fileset file="../source/common/javascript/generated/view-cookie-information.js"/>
+      <fileset file="../source/firefox/javascript/preferences/preferences.js"/>
     </concat>
-    <concat destfile="firefox/content/web-developer/generated/syntax-highlight.css">
-    	<fileset file="../source/common/style-sheets/common/codemirror/codemirror.css"/>
-    	<fileset file="../source/common/style-sheets/common/codemirror/theme.css"/>
-    </concat>
-    <copy file="../images/common/logos/favicon.ico" tofile="firefox/content/web-developer/generated/images/favicon.ico"/>
-    <copy todir="firefox/content/web-developer/generated/fonts">
-      <fileset dir="../source/common/fonts"/>
-    </copy>
-	</target>
-
-  <!-- Builds the icons for Firefox -->
-  <target name="build.firefox.icons" depends="initialize.firefox">
-    <echo level="info" message="Building the icons"/>
-    <copy file="../images/common/logos/48.png" tofile="firefox/content/web-developer/icons/48.png"/>
-    <copy file="../images/common/logos/64.png" tofile="firefox/content/web-developer/icons/64.png"/>
 	</target>
 
   <!-- Builds the locales for Firefox -->
-  <target name="build.firefox.locales" depends="initialize.firefox">
+  <target name="build.firefox.locales">
     <echo level="info" message="Building the locales"/>
     <copy todir="firefox/locale">
       <fileset dir="../source/firefox/locales"/>
-      <filterset refid="firefox.filters"/>
+      <filterset refid="filters"/>
     </copy>
 	</target>
 
   <!-- Builds the options for Firefox -->
-  <target name="build.firefox.options" depends="initialize.firefox">
+  <target name="build.firefox.options">
     <echo level="info" message="Building the options"/>
     <copy todir="firefox/content/web-developer/options">
       <fileset dir="../source/firefox/xul/options"/>
     </copy>
     <copy file="../source/common/html/options/syntax-highlight.html" tofile="firefox/content/web-developer/options/html/syntax-highlight.html">
-      <filterset refid="firefox.filters"/>
+      <filterset refid="filters"/>
     </copy>
     <copy file="../source/firefox/javascript/options/options.js" tofile="firefox/content/web-developer/options/javascript/options.js"/>
     <copy todir="firefox/content/web-developer/options/dialogs/javascript">
@@ -627,16 +596,11 @@
     </copy>
     <copy file="../source/common/javascript/options/syntax-highlight.js" tofile="firefox/content/web-developer/options/html/javascript/syntax-highlight.js"/>
     <copy file="../source/firefox/style-sheets/options/options.css" tofile="firefox/content/web-developer/options/style-sheets/options.css"/>
-    <concat destfile="firefox/content/web-developer/options/html/syntax-highlight.css">
-    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
-    	<fileset file="../source/common/style-sheets/common/codemirror/codemirror.css"/>
-    	<fileset file="../source/common/style-sheets/common/codemirror/theme.css"/>
-    	<fileset file="../source/common/style-sheets/options/syntax-highlight.css"/>
-    </concat>
+    <copy file="../source/common/style-sheets/options/syntax-highlight.css" tofile="firefox/content/web-developer/options/html/syntax-highlight.css"/>
 	</target>
 
   <!-- Builds the overlay for Firefox -->
-  <target name="build.firefox.overlay" depends="initialize.firefox">
+  <target name="build.firefox.overlay">
     <echo level="info" message="Building the overlay"/>
   	<antcallback target="build.firefox.overlay.menu" return="menu">
     	<param name="menu.name" value="cookies"/>
@@ -1097,7 +1061,7 @@
       <fileset dir="../source/firefox/javascript/validation"/>
     </concat>
     <move file="firefox/content/web-developer/overlay/javascript/overlay.temp" tofile="firefox/content/web-developer/overlay/javascript/overlay.js">
-      <filterset refid="firefox.filters"/>
+      <filterset refid="filters"/>
     </move>
     <copy file="../source/firefox/style-sheets/overlay/overlay.css" tofile="firefox/content/web-developer/overlay/style-sheets/overlay.css"/>
 	</target>
@@ -1113,7 +1077,7 @@
  	</target>
 
   <!-- Builds the skins for Firefox -->
-  <target name="build.firefox.skins" depends="initialize.firefox">
+  <target name="build.firefox.skins">
     <echo level="info" message="Building the skins"/>
     <copy file="../source/firefox/style-sheets/skin/common.css" tofile="firefox/skin/default/web-developer.css"/>
     <concat destfile="firefox/skin/mac/web-developer.css">
@@ -1148,24 +1112,19 @@
 	</target>
 
   <!-- Builds the toolbars for Firefox -->
-  <target name="build.firefox.toolbars" depends="initialize.firefox">
+  <target name="build.firefox.toolbars">
     <echo level="info" message="Building the toolbars"/>
     <copy file="../source/firefox/html/toolbar/element-ancestors.html" tofile="firefox/content/web-developer/toolbar/html/element-ancestors.html">
-    	<filterset refid="firefox.filters"/>
+    	<filterset refid="filters"/>
     </copy>
    	<concat destfile="firefox/content/web-developer/toolbar/html/javascript/element-ancestors.js">
     	<fileset file="../source/common/javascript/generated/common.js"/>
     	<fileset file="../source/common/javascript/toolbar/html/element-ancestors.js"/>
     </concat>
-    <concat destfile="firefox/content/web-developer/toolbar/html/element-ancestors.css">
-    	<fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
-    	<fileset file="../source/common/style-sheets/common/common.css"/>
-    	<fileset file="../source/common/style-sheets/toolbar/html/element-ancestors.css"/>
-    </concat>
+    <copy file="../source/common/style-sheets/toolbar/element-ancestors.css" tofile="firefox/content/web-developer/toolbar/html/element-ancestors.css"/>
     <copy todir="firefox/content/web-developer/toolbar">
       <fileset dir="../source/common/style-sheets/toolbar"/>
     </copy>
-    <copy file="../images/common/logos/16.png" tofile="firefox/content/web-developer/toolbar/images/logo.png"/>
 	</target>
 
   <!-- Builds the configuration for Opera -->
@@ -1176,22 +1135,19 @@
     </copy>
   </target>
 
-  <!-- Cleans up the build for Chrome -->
+  <!-- Clean targets -->
   <target name="clean.chrome">
     <echo level="info" message="Cleaning up the build for Chrome"/>
   	<delete dir="chrome"/>
   	<delete file="web-developer-chrome.zip"/>
   </target>
 
-  <!-- Cleans up the build for Firefox -->
   <target name="clean.firefox">
     <echo level="info" message="Cleaning up the build for Firefox"/>
   	<delete dir="firefox"/>
-  	<delete dir="temp-firefox"/>
   	<delete file="web-developer-firefox.xpi"/>
   </target>
 
-  <!-- Cleans up the build for Opera -->
   <target name="clean.opera">
     <echo level="info" message="Cleaning up the build for Opera"/>
     <delete dir="opera"/>
@@ -1206,14 +1162,13 @@
 		<fixcrlf srcdir="../source/firefox/javascript" tab="remove" tablength="2"/>
  	</target>
 
-  <!-- Initializes the settings -->
+  <!-- Initialize targets -->
   <target name="initialize">
     <tstamp>
       <format property="build.date" pattern="MMMM d, yyyy"/>
     </tstamp>
   </target>
 
-  <!-- Initializes the settings for Chrome -->
   <target name="initialize.chrome" depends="initialize">
     <echo level="info" message="Building the extension for Chrome"/>
     <var name="browser" value="chrome"/>
@@ -1225,16 +1180,17 @@
     </filterset>
 	</target>
 
-  <!-- Initializes the settings for Firefox -->
   <target name="initialize.firefox" depends="initialize">
-    <filterset id="firefox.filters">
+    <echo level="info" message="Building the extension for Firefox"/>
+    <var name="browser" value="firefox"/>
+    <filterset id="filters">
+      <filter token="browser" value="${browser}"/>
       <filter token="build.date" value="${build.date}"/>
       <filtersfile file="../configuration/common/configuration.properties"/>
       <filtersfile file="../configuration/firefox/configuration.properties"/>
     </filterset>
 	</target>
 
-  <!-- Initializes the settings for Opera -->
   <target name="initialize.opera" depends="initialize">
     <echo level="info" message="Building the extension for Opera"/>
     <var name="browser" value="opera"/>
@@ -1247,10 +1203,10 @@
   </target>
 
   <!-- Installs the extension in Firefox using the Extension Auto-Installer extension on port 9999 and wget -->
-  <target name="install.firefox" depends="build.firefox">
+  <target name="install.firefox" depends="package.firefox">
     <echo level="info" message="Installing the extension for Firefox"/>
 		<exec executable="wget">
-		  <arg line="--post-file=web-developer-firefox.xpi http://localhost:9999/"/>
+		  <arg line="-q --post-file=web-developer-firefox.xpi http://localhost:9999/"/>
 		</exec>
 	</target>
 
@@ -1316,19 +1272,26 @@
     </copy>
   </target>
 
-  <!-- Packages the extension for Chrome -->
+  <!-- Package targets -->
   <target name="package.chrome" depends="build.chrome" description="Packages the extension for Chrome">
     <echo level="info" message="Packaging the extension for Chrome"/>
-    <zip destfile="web-developer-chrome.zip">
+    <zip destfile="web-developer-chrome.zip" level="1">
       <zipfileset dir="chrome"/>
       <zipfileset file="license.txt"/>
     </zip>
   </target>
 
-  <!-- Packages the extension for Opera -->
+  <target name="package.firefox" depends="build.firefox" description="Packages the extension for Firefox">
+    <echo level="info" message="Packaging the extension for Firefox"/>
+    <zip destfile="web-developer-firefox.xpi" level="1">
+      <zipfileset dir="firefox"/>
+      <zipfileset file="license.txt"/>
+    </zip>
+  </target>
+
   <target name="package.opera" depends="build.opera" description="Packages the extension for Opera">
     <echo level="info" message="Packaging the extension for Opera"/>
-    <zip destfile="web-developer-opera.nex">
+    <zip destfile="web-developer-opera.nex" level="1">
       <zipfileset dir="opera"/>
       <zipfileset file="license.txt"/>
     </zip>

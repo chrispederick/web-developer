@@ -4,8 +4,7 @@
 <?xml-stylesheet href="chrome://web-developer/skin/web-developer.css"?>
 <!DOCTYPE window SYSTEM "chrome://web-developer/locale/dashboard/dashboard.dtd">
 <window id="web-developer-style-information-dashboard" onload="WebDeveloper.StyleInformation.initialize()" onunload="WebDeveloper.StyleInformation.uninitialize()" title="&webdeveloper.style.information;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:html="http://www.w3.org/1999/xhtml">
-  <script src="chrome://web-developer/content/common/common.js"/>
-  <script src="chrome://web-developer/content/common/css.js"/>
+  <script src="chrome://web-developer/content/common/javascript/common.js"/>
   <script src="chrome://web-developer/content/content/content.js"/>
   <script src="chrome://web-developer/content/dashboard/javascript/dashboard.js"/>
   <script src="chrome://web-developer/content/dashboard/javascript/style-information.js"/>

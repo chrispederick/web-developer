@@ -64,4 +64,4 @@ body, html { overflow: hidden; width: 800px; }
 
 /* Opera styles */
 
-.opera #disable-cookies, .opera #disable-images, .opera #disable-menu, .opera #disable-toolbar { display: none; }
+.opera #clear-cache, .opera #clear-history, .opera #disable-cookies, .opera #disable-images, .opera #disable-menu, .opera #disable-toolbar { display: none; }

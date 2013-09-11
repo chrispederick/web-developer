@@ -216,7 +216,7 @@ WebDeveloper.Upgrade.openUpgradeURL = function(version)
   window.setTimeout(function()
   {
     var tabBrowser = WebDeveloper.Common.getTabBrowser();
-    var newTab     = tabBrowser.addTab("@url@installed/" + version.replace(".", "") + "/");
+    var newTab     = tabBrowser.addTab("@url@/@browser@/installed/" + version.replace(".", "") + "/");
 
     tabBrowser.selectedTab = newTab;
   }, 0);

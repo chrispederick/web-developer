@@ -5,7 +5,7 @@
 <?xml-stylesheet href="chrome://web-developer/skin/web-developer.css"?>
 <!DOCTYPE window SYSTEM "chrome://web-developer/locale/dashboard/dashboard.dtd">
 <window id="web-developer-edit-html-dashboard" onload="WebDeveloper.EditHTML.initialize()" onunload="WebDeveloper.EditHTML.uninitialize()" title="&webdeveloper.edit.html;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:html="http://www.w3.org/1999/xhtml">
-  <script src="chrome://web-developer/content/common/common.js"/>
+  <script src="chrome://web-developer/content/common/javascript/common.js"/>
   <script src="chrome://web-developer/content/dashboard/javascript/dashboard.js"/>
   <script src="chrome://web-developer/content/dashboard/javascript/edit-html.js"/>
   <script src="chrome://web-developer/content/locales/locales.js"/>

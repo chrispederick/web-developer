@@ -3,7 +3,7 @@
 <?xml-stylesheet href="chrome://web-developer/skin/web-developer.css"?>
 <!DOCTYPE prefwindow SYSTEM "chrome://web-developer/locale/options/options.dtd">
 <prefwindow id="web-developer-keyboard-dialog" dlgbuttons="accept,cancel" ondialogaccept="WebDeveloper.Keyboard.accept()" onload="WebDeveloper.Keyboard.initialize()" type="child" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <script src="chrome://web-developer/content/common/common.js"/>
+  <script src="chrome://web-developer/content/common/javascript/common.js"/>
   <script src="chrome://web-developer/content/locales/locales.js"/>
   <script src="chrome://web-developer/content/options/dialogs/javascript/dialogs.js"/>
   <script src="chrome://web-developer/content/options/dialogs/javascript/keyboard.js"/>

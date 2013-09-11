@@ -31,7 +31,7 @@ WebDeveloper.Overlay.Options.generateCommandMenu = function(commandId)
 // Opens the help
 WebDeveloper.Overlay.Options.help = function()
 {
-  WebDeveloper.Common.openURL("@url@help/");
+  WebDeveloper.Common.openURL("@url@/@browser@/help/");
 };
 
 // Displays the options dialog
