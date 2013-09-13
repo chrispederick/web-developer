@@ -38,6 +38,13 @@
         <em:description>Lägger till en meny och ett verktygsfält med diverse webbutvecklingsverktyg.</em:description>
       </Description>
     </em:localized>
+    <em:localized>
+      <Description>
+        <em:locale>zh-CN</em:locale>
+        <em:name>@name@</em:name>
+        <em:description>@description@</em:description>
+      </Description>
+    </em:localized>
     <em:targetApplication>
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
