@@ -112,10 +112,18 @@ WebDeveloper.Overlay.isDOMInspectorAvailable = function()
   return false;
 };
 
-// Opens the error console
-WebDeveloper.Overlay.openErrorConsole = function()
+// Opens the browser console
+WebDeveloper.Overlay.openBrowserConsole = function()
 {
-  toJavaScriptConsole();
+  // If dev tools browser is set
+  if(gDevToolsBrowser)
+  {
+    gDevToolsBrowser.selectToolCommand(WebDeveloper.Common.getTabBrowser(), "webconsole");
+  }
+  else
+  {
+    toJavaScriptConsole();
+  }
 };
 
 // Opens a generated tab

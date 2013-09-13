@@ -365,14 +365,14 @@
 <!ENTITY webdeveloper.view.responsive.layouts.label "Angepasste Layouts anzeigen">
 <!ENTITY webdeveloper.view.responsive.layouts.key "A">
 <!-- Tools Features -->
+<!ENTITY webdeveloper.browser.console.label "Fehlerkonsole">
+<!ENTITY webdeveloper.browser.console.key "k">
 <!ENTITY webdeveloper.edit.tools.label "Werkzeuge bearbeiten...">
 <!ENTITY webdeveloper.edit.tools.key "W">
 <!ENTITY webdeveloper.display.page.validation.label "Seitenvalidierung anzeigen">
 <!ENTITY webdeveloper.display.page.validation.key "S">
 <!ENTITY webdeveloper.dom.inspector.label "DOM Inspector">
 <!ENTITY webdeveloper.dom.inspector.key "I">
-<!ENTITY webdeveloper.error.console.label "Fehlerkonsole">
-<!ENTITY webdeveloper.error.console.key "k">
 <!ENTITY webdeveloper.validate.local.css.label "Lokales CSS validieren">
 <!ENTITY webdeveloper.validate.local.css.key "L">
 <!ENTITY webdeveloper.validate.local.html.label "Lokales HTML validieren">

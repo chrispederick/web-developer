@@ -4,14 +4,37 @@ WebDeveloper.Overlay               = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.Miscellaneous = WebDeveloper.Overlay.Miscellaneous || {};
 
 // Adds an href to the history
-WebDeveloper.Overlay.Miscellaneous.addToHistory = function(uri)
+WebDeveloper.Overlay.Miscellaneous.addToHistory = function(link, uri)
 {
-  var globalHistory = Components.classes["@mozilla.org/browser/global-history;2"].getService(Components.interfaces.nsIGlobalHistory2);
+  var browserHistory = Components.classes["@mozilla.org/browser/history;1"];
 
-  // If the URI is not already in the history
-  if(!globalHistory.isVisited(uri))
+  // If browser history exists
+  if(browserHistory)
   {
-    globalHistory.addURI(uri, false, false, null);
+    browserHistory.getService(Components.interfaces.mozIAsyncHistory).isURIVisited(uri, function(uri, alreadyVisited)
+    {
+      // If the URI is not already in the history
+      if(!alreadyVisited)
+      {
+        var asyncHistory = Components.classes["@mozilla.org/browser/history;1"].getService(Components.interfaces.mozIAsyncHistory);
+
+        asyncHistory.updatePlaces({ "uri": uri, "visits": [{ "transitionType": Components.classes["@mozilla.org/browser/nav-history-service;1"].getService(Components.interfaces.nsINavHistoryService).TRANSITION_LINK, "visitDate": new Date().getTime() }] });
+      }
+
+      WebDeveloper.Overlay.Miscellaneous.recheckLink(link);
+    });
+  }
+  else
+  {
+    var globalHistory = Components.classes["@mozilla.org/browser/global-history;2"].getService(Components.interfaces.nsIGlobalHistory2);
+
+    // If the URI is not already in the history
+    if(!globalHistory.isVisited(uri))
+    {
+      globalHistory.addURI(uri, false, false, null);
+    }
+
+    WebDeveloper.Overlay.Miscellaneous.recheckLink(link);
   }
 };
 
@@ -159,20 +182,63 @@ WebDeveloper.Overlay.Miscellaneous.makeFramesResizable = function()
   WebDeveloper.Miscellaneous.makeFramesResizable(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 };
 
-// Removes an href from the history
-WebDeveloper.Overlay.Miscellaneous.removeFromHistory = function(uri)
+// Forces the browser to recheck a link
+WebDeveloper.Overlay.Miscellaneous.recheckLink = function(link)
 {
-  // If the URI is in the history
-  if(Components.classes["@mozilla.org/browser/global-history;2"].getService(Components.interfaces.nsIGlobalHistory2).isVisited(uri))
+  var href = link.href;
+
+  // Force the browser to recheck the history by changing the href
+  link.href = "";
+  link.href = href;
+};
+
+// Removes an href from the history
+WebDeveloper.Overlay.Miscellaneous.removeFromHistory = function(link, uri)
+{
+  var browserHistory = Components.classes["@mozilla.org/browser/history;1"];
+
+  // If browser history exists
+  if(browserHistory)
   {
-    Components.classes["@mozilla.org/browser/global-history;2"].getService(Components.interfaces.nsIBrowserHistory).removePage(uri);
+    browserHistory.getService(Components.interfaces.mozIAsyncHistory).isURIVisited(uri, function(uri, inHistory)
+    {
+      // If the URI is in the history
+      if(inHistory)
+      {
+        Components.classes["@mozilla.org/browser/nav-history-service;1"].getService(Components.interfaces.nsIBrowserHistory).removePage(uri);
+      }
+
+      WebDeveloper.Overlay.Miscellaneous.recheckLink(link);
+    });
+  }
+  else
+  {
+    var globalHistory = Components.classes["@mozilla.org/browser/global-history;2"];
+
+    // If the URI is in the history
+    if(globalHistory.getService(Components.interfaces.nsIGlobalHistory2).isVisited(uri))
+    {
+      globalHistory.getService(Components.interfaces.nsIBrowserHistory).removePage(uri);
+    }
+
+    WebDeveloper.Overlay.Miscellaneous.recheckLink(link);
   }
 };
 
 // Clears the history
 WebDeveloper.Overlay.Miscellaneous.removeAllFromHistory = function()
 {
-  Components.classes["@mozilla.org/browser/global-history;2"].getService(Components.interfaces.nsIBrowserHistory).removeAllPages();
+  var browserHistory = Components.classes["@mozilla.org/browser/nav-history-service;1"].getService(Components.interfaces.nsIBrowserHistory);
+
+  // If browser history is set
+  if(browserHistory)
+  {
+    browserHistory.removeAllPages();
+  }
+  else
+  {
+    Components.classes["@mozilla.org/browser/global-history;2"].getService(Components.interfaces.nsIBrowserHistory).removeAllPages();
+  }
 };
 
 // Toggles all links on the page between visited and unvisited
@@ -203,16 +269,12 @@ WebDeveloper.Overlay.Miscellaneous.toggleVisitedLinks = function(visited)
         // If marking links as visited
         if(visited)
         {
-          WebDeveloper.Overlay.Miscellaneous.addToHistory(uri);
+          WebDeveloper.Overlay.Miscellaneous.addToHistory(link, uri);
         }
         else
         {
-          WebDeveloper.Overlay.Miscellaneous.removeFromHistory(uri);
+          WebDeveloper.Overlay.Miscellaneous.removeFromHistory(link, uri);
         }
-
-        // Force the browser to recheck the history by changing the href
-        link.href = "";
-        link.href = href;
       }
     }
   }

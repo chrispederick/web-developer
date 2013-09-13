@@ -365,14 +365,14 @@
 <!ENTITY webdeveloper.view.responsive.layouts.label "Zobrazit responsivní layouty">
 <!ENTITY webdeveloper.view.responsive.layouts.key "r">
 <!-- Tools Features -->
+<!ENTITY webdeveloper.browser.console.label "Chybová konzola">
+<!ENTITY webdeveloper.browser.console.key "C">
 <!ENTITY webdeveloper.edit.tools.label "Nastavení nástrojů…">
 <!ENTITY webdeveloper.edit.tools.key "E">
 <!ENTITY webdeveloper.display.page.validation.label "Zobrazit validitu stránky">
 <!ENTITY webdeveloper.display.page.validation.key "Z">
 <!ENTITY webdeveloper.dom.inspector.label "DOM Inspektor">
 <!ENTITY webdeveloper.dom.inspector.key "D">
-<!ENTITY webdeveloper.error.console.label "Chybová konzola">
-<!ENTITY webdeveloper.error.console.key "C">
 <!ENTITY webdeveloper.validate.local.css.label "Validovat místní CSS">
 <!ENTITY webdeveloper.validate.local.css.key "C">
 <!ENTITY webdeveloper.validate.local.html.label "Validovat místní HTML">

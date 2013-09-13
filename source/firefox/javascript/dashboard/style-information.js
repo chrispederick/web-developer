@@ -104,11 +104,20 @@ WebDeveloper.StyleInformation.displayStyleInformation = function(element)
     childElement.setAttribute("class", "icon-caret-down");
     headingElement.appendChild(childElement);
 
-    childElement = generatedDocument.createElement("a");
+    // If this is the embedded style sheet
+    if(styleSheet == "web-developer-embedded")
+    {
+      headingElement.appendChild(generatedDocument.createTextNode(WebDeveloper.Locales.getString("embeddedStyles")));
+    }
+    else
+    {
+      childElement = generatedDocument.createElement("a");
 
-    childElement.appendChild(generatedDocument.createTextNode(styleSheet));
-    childElement.setAttribute("href", styleSheet);
-    headingElement.appendChild(childElement);
+      childElement.appendChild(generatedDocument.createTextNode(styleSheet));
+      childElement.setAttribute("href", styleSheet);
+      headingElement.appendChild(childElement);
+    }
+
     styleInformation.appendChild(headingElement);
 
     childElement = generatedDocument.createElement("pre");
@@ -128,7 +137,8 @@ WebDeveloper.StyleInformation.displayStyleInformation = function(element)
     childElement = generatedDocument.createElement("p");
 
     childElement.appendChild(generatedDocument.createTextNode(WebDeveloper.Locales.getString("noStyleInformation")));
-    childElement.setAttribute("class", "web-developer-information");
+    childElement.setAttribute("class", "lead text-info");
+    childElement.setAttribute("id", "web-developer-information");
     styleInformation.appendChild(childElement);
   }
 
@@ -174,6 +184,12 @@ WebDeveloper.StyleInformation.getStyleInformation = function(element)
       ruleStyles     = rule.style;
       styleSheetHref = styleSheet.href;
       styleText      = "/* " + WebDeveloper.Locales.getString("line") + " " + line + " */\n" + rule.selectorText + "\n{\n";
+
+      // If the style sheet href is not set
+      if(!styleSheetHref)
+      {
+        styleSheetHref = "web-developer-embedded";
+      }
 
       // Loop through the style rules
       for(var j = 0, m = ruleStyles.length; j < m; j++)
@@ -263,7 +279,7 @@ WebDeveloper.StyleInformation.initialize = function()
   WebDeveloper.ElementAncestors.createToolbar();
 
   contentDocument                                                         = document.getElementById("web-developer-style-information-browser").contentDocument;
-  contentDocument.querySelector(".web-developer-information").textContent = WebDeveloper.Locales.getString("selectAnElementDisplayStyles");
+  contentDocument.getElementById("web-developer-information").textContent = WebDeveloper.Locales.getString("selectAnElementDisplayStyles");
 
   contentDocument.addEventListener("click", WebDeveloper.StyleInformation.clickOutput, false);
 };

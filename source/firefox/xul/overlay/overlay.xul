@@ -170,10 +170,10 @@
     <command id="web-developer-edit-resize-dimensions-command" accesskey="&webdeveloper.edit.resize.dimensions.key;" label="&webdeveloper.edit.resize.dimensions.label;" oncommand="WebDeveloper.Overlay.Options.options('resize')"/>
     <command id="web-developer-view-responsive-layouts-command" class="web-developer-feature-command" accesskey="&webdeveloper.view.responsive.layouts.key;" label="&webdeveloper.view.responsive.layouts.label;" oncommand="WebDeveloper.Overlay.Resize.viewResponsiveLayouts()"/>
 
+    <command id="web-developer-browser-console-command" accesskey="&webdeveloper.browser.console.key;" label="&webdeveloper.browser.console.label;" oncommand="WebDeveloper.Overlay.openBrowserConsole()"/>
     <command id="web-developer-edit-tools-command" accesskey="&webdeveloper.edit.tools.key;" label="&webdeveloper.edit.tools.label;" oncommand="WebDeveloper.Overlay.Options.options('tools')"/>
     <command id="web-developer-display-page-validation-command" class="web-developer-feature-command" accesskey="&webdeveloper.display.page.validation.key;" label="&webdeveloper.display.page.validation.label;" oncommand="WebDeveloper.Overlay.Tools.displayPageValidation(this)"/>
     <command id="web-developer-dom-inspector-command" accesskey="&webdeveloper.dom.inspector.key;" label="&webdeveloper.dom.inspector.label;" oncommand="WebDeveloper.Overlay.Tools.openDOMInspector()"/>
-    <command id="web-developer-error-console-command" accesskey="&webdeveloper.error.console.key;" label="&webdeveloper.error.console.label;" oncommand="WebDeveloper.Overlay.openErrorConsole()"/>
     <command id="web-developer-validate-local-css-command" class="web-developer-feature-command" accesskey="&webdeveloper.validate.local.css.key;" label="&webdeveloper.validate.local.css.label;" oncommand="WebDeveloper.Overlay.Tools.validateLocalCSS()"/>
     <command id="web-developer-validate-local-html-command" class="web-developer-feature-command" accesskey="&webdeveloper.validate.local.html.key;" label="&webdeveloper.validate.local.html.label;" oncommand="WebDeveloper.Overlay.Tools.validateLocalHTML()"/>
 
@@ -450,8 +450,8 @@
       ${toolbar.options}
     </toolbarbutton>
     <toolbarbutton id="web-developer-render-mode-statusbar" tooltiptext="&webdeveloper.render.mode;" oncommand="WebDeveloper.Overlay.Information.viewPageInformation()"/>
-    <toolbarbutton id="web-developer-css-statusbar" tooltiptext="&webdeveloper.no.css.errors;" oncommand="WebDeveloper.Overlay.openErrorConsole()"/>
-    <toolbarbutton id="web-developer-javascript-statusbar" tooltiptext="&webdeveloper.no.javascript.errors;" oncommand="WebDeveloper.Overlay.openErrorConsole()"/>
+    <toolbarbutton id="web-developer-css-statusbar" tooltiptext="&webdeveloper.no.css.errors;" oncommand="WebDeveloper.Overlay.openBrowserConsole()"/>
+    <toolbarbutton id="web-developer-javascript-statusbar" tooltiptext="&webdeveloper.no.javascript.errors;" oncommand="WebDeveloper.Overlay.openBrowserConsole()"/>
   </toolbarpalette>
 
   <toolbox id="navigator-toolbox">

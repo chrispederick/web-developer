@@ -365,14 +365,14 @@
 <!ENTITY webdeveloper.view.responsive.layouts.label "Visa layouter för anpassningsbar webbdesign">
 <!ENTITY webdeveloper.view.responsive.layouts.key "V">
 <!-- Verktyg Features -->
+<!ENTITY webdeveloper.browser.console.label "Felkonsol">
+<!ENTITY webdeveloper.browser.console.key "F">
 <!ENTITY webdeveloper.edit.tools.label "Redigeringsverktyg…">
 <!ENTITY webdeveloper.edit.tools.key "R">
 <!ENTITY webdeveloper.display.page.validation.label "Visa sidvalidering">
 <!ENTITY webdeveloper.display.page.validation.key "s">
 <!ENTITY webdeveloper.dom.inspector.label "DOM-granskaren">
 <!ENTITY webdeveloper.dom.inspector.key "D">
-<!ENTITY webdeveloper.error.console.label "Felkonsol">
-<!ENTITY webdeveloper.error.console.key "F">
 <!ENTITY webdeveloper.validate.local.css.label "Validera lokal CSS">
 <!ENTITY webdeveloper.validate.local.css.key "C">
 <!ENTITY webdeveloper.validate.local.html.label "Validera lokal HTML">

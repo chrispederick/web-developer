@@ -46,7 +46,7 @@ WebDeveloper.ElementInformation.initialize = function()
   WebDeveloper.ElementAncestors.createToolbar();
 
   contentDocument                                                         = document.getElementById("web-developer-element-information-browser").contentDocument;
-  contentDocument.querySelector(".web-developer-information").textContent = WebDeveloper.Locales.getString("selectAnElementDisplayInformation");
+  contentDocument.getElementById("web-developer-information").textContent = WebDeveloper.Locales.getString("selectAnElementDisplayInformation");
 
   contentDocument.addEventListener("click", WebDeveloper.ElementInformation.clickOutput, false);
 };

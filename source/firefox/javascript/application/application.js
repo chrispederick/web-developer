@@ -67,7 +67,7 @@ WebDeveloperApplication.prototype.getPostData = function()
   try
   {
     var sessionHistory = getWebNavigation().sessionHistory;
-    var entry        = sessionHistory.getEntryAtIndex(sessionHistory.index, false).QueryInterface(Components.interfaces.nsISHEntry);
+    var entry          = sessionHistory.getEntryAtIndex(sessionHistory.index, false).QueryInterface(Components.interfaces.nsISHEntry);
 
     return entry.postData;
   }

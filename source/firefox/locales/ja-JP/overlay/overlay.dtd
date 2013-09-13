@@ -365,14 +365,14 @@
 <!ENTITY webdeveloper.view.responsive.layouts.label "ウィンドウサイズの変更結果を見る">
 <!ENTITY webdeveloper.view.responsive.layouts.key "V">
 <!-- Tools Features -->
+<!ENTITY webdeveloper.browser.console.label "エラーコンソール">
+<!ENTITY webdeveloper.browser.console.key "B">
 <!ENTITY webdeveloper.edit.tools.label "ツールを編集する">
 <!ENTITY webdeveloper.edit.tools.key "E">
 <!ENTITY webdeveloper.display.page.validation.label "ページ検証を表示">
 <!ENTITY webdeveloper.display.page.validation.key "D">
 <!ENTITY webdeveloper.dom.inspector.label "DOMインスペクタ">
 <!ENTITY webdeveloper.dom.inspector.key "I">
-<!ENTITY webdeveloper.error.console.label "エラーコンソール">
-<!ENTITY webdeveloper.error.console.key "C">
 <!ENTITY webdeveloper.validate.local.css.label "ローカルのCSSファイルを検証">
 <!ENTITY webdeveloper.validate.local.css.key "V">
 <!ENTITY webdeveloper.validate.local.html.label "ローカルのHTMLファイルを検証">
