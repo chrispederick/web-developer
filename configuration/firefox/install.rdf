@@ -42,7 +42,7 @@
       <Description>
         <em:locale>zh-CN</em:locale>
         <em:name>@name@</em:name>
-        <em:description>@description@</em:description>
+        <em:description>一款为WEB开发添加多种实用功能和工具的好插件</em:description>
       </Description>
     </em:localized>
     <em:targetApplication>
