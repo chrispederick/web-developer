@@ -230,6 +230,20 @@ WebDeveloper.Overlay.CSS.editCSS = function()
   }
 };
 
+// Formats a style sheet URL for a menu item
+WebDeveloper.Overlay.CSS.formatStyleSheetURLForMenu = function(url)
+{
+  var formattedURL = WebDeveloper.Common.removeReloadParameterFromURL(url);
+
+  // If the style sheet URL is too long for a menu
+  if(formattedURL.length > 65)
+  {
+    formattedURL = formattedURL.substring(0, 20) + "..." + formattedURL.substr(-40);
+  }
+
+  return formattedURL;
+};
+
 // Reloads linked style sheets
 WebDeveloper.Overlay.CSS.reloadLinkedStyleSheets = function()
 {
@@ -314,7 +328,7 @@ WebDeveloper.Overlay.CSS.updateDisableIndividualStyleSheetMenu = function(menu)
       menuItem = document.createElement("menuitem");
 
       menuItem.setAttribute("class", "web-developer-generated-menu");
-      menuItem.setAttribute("label", WebDeveloper.Common.removeReloadParameterFromURL(styleSheetURL));
+      menuItem.setAttribute("label", WebDeveloper.Overlay.CSS.formatStyleSheetURLForMenu(styleSheetURL));
       menuItem.setAttribute("oncommand", "WebDeveloper.Overlay.CSS.disableIndividualStyleSheet('" + styleSheetURL + "')");
       menuItem.setAttribute("type", "checkbox");
 
