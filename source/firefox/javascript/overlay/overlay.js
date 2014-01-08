@@ -537,14 +537,18 @@ WebDeveloper.Overlay.setupViewSourceWithKeyboardShortcuts = function(keySet)
 // Handles a tab being selected
 WebDeveloper.Overlay.tabSelect = function()
 {
-  // If a feature that uses the element information toolbar is active
-  if(WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("elementInformation")) || WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("styleInformation")))
-  {
-    document.getElementById("web-developer-element-information-toolbar").hidden = false;
-  }
-  else
-  {
-    document.getElementById("web-developer-element-information-toolbar").hidden = true;
+  var el = document.getElementById("web-developer-element-information-toolbar");
+
+  if (el) {
+    // If a feature that uses the element information toolbar is active
+    if(WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("elementInformation")) || WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("styleInformation")))
+    {
+      el.hidden = false;
+    }
+    else
+    {
+      el.hidden = true;
+    }
   }
 
   WebDeveloper.Overlay.resetCSSStatus();
@@ -826,7 +830,9 @@ WebDeveloper.Overlay.updateJavaScriptStatus = function(error)
 // Updates meta redirects
 WebDeveloper.Overlay.updateMetaRedirects = function(browserElement)
 {
-  browserElement.docShell.allowMetaRedirects = !WebDeveloper.Preferences.getExtensionBooleanPreference("meta.redirects.disable");
+  if (browserElement) {
+    browserElement.docShell.allowMetaRedirects = !WebDeveloper.Preferences.getExtensionBooleanPreference("meta.redirects.disable");
+  }
 };
 
 // Updates the render mode status button
