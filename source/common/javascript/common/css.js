@@ -77,7 +77,7 @@ WebDeveloper.CSS.formatStyleValue = function(styleValue)
 // Returns an array of style sheets imported in the given style sheet
 WebDeveloper.CSS.getImportedStyleSheets = function(styleSheet)
 {
- var styleSheets = [];
+  var styleSheets = [];
 
   // If the style sheet is set
   if(styleSheet)

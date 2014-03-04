@@ -854,7 +854,7 @@ WebDeveloper.Overlay.updateRenderMode = function()
       // If the toolbar is in text mode
       if(WebDeveloper.Preferences.getExtensionStringPreference("toolbar.icons") == "text")
       {
-          renderModeButton.setAttribute("label", WebDeveloper.Locales.getString("quirksModeLabel"));
+        renderModeButton.setAttribute("label", WebDeveloper.Locales.getString("quirksModeLabel"));
       }
     }
     else

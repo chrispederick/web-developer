@@ -130,8 +130,8 @@ WebDeveloper.Overlay.Disable.toggleMinimumFontSize = function(element)
 // Toggles the page colors
 WebDeveloper.Overlay.Disable.togglePageColors = function(element)
 {
-    WebDeveloper.Preferences.enablePreference(element, "browser.display.use_document_colors");
-    BrowserReload();
+  WebDeveloper.Preferences.enablePreference(element, "browser.display.use_document_colors");
+  BrowserReload();
 };
 
 // Toggles the proxy settings

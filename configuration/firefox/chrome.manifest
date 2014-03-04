@@ -5,6 +5,7 @@ locale web-developer de locale/de/
 locale web-developer fr locale/fr/
 locale web-developer ja-JP locale/ja-JP/
 locale web-developer pl-PL locale/pl-PL/
+locale web-developer pt-BR locale/pt-BR/
 locale web-developer sv-SE locale/sv-SE/
 locale web-developer zh-CN locale/zh-CN/
 overlay	chrome://browser/content/browser.xul chrome://web-developer/content/overlay/overlay.xul

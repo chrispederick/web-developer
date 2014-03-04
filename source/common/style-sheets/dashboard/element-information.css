@@ -1,6 +1,6 @@
-.CodeMirror { border: 1px solid rgba(0, 0, 0, 0.15); -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); }
+.CodeMirror { border-color: #000; border-color: rgba(0, 0, 0, 0.15); border-style: solid; border-width: 1px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); }
 .web-developer-ancestors, .web-developer-children { padding-bottom: 10px; }
-.web-developer-ancestors > ul, .web-developer-children > ul { background-color: #f5f5f5; border: 1px solid rgba(0, 0, 0, 0.15); -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; list-style-type: none; margin: 0; padding: 10px; }
+.web-developer-ancestors > ul, .web-developer-children > ul { background-color: #f5f5f5; border-color: #000; border-color: rgba(0, 0, 0, 0.15); border-style: solid; border-width: 1px; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; list-style-type: none; margin: 0; padding: 10px; }
 .web-developer-ancestors > ul > li, .web-developer-children > ul > li { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .web-developer-ancestors > ul > .last { display: none; }
 .web-developer-css .CodeMirror-scroll > div { height: auto !important; }
