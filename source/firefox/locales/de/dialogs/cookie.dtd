@@ -4,6 +4,6 @@
 <!ENTITY webdeveloper.host.label "Host:">
 <!ENTITY webdeveloper.name.label "Name:">
 <!ENTITY webdeveloper.path.label "Pfad:">
-<!ENTITY webdeveloper.secure.cookie.label "Sicheres Cookie">
+<!ENTITY webdeveloper.secure.cookie.label "Sicherer Cookie">
 <!ENTITY webdeveloper.session.cookie.label "Sitzungscookie">
 <!ENTITY webdeveloper.value.label "Wert:">
