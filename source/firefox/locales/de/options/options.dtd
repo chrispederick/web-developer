@@ -1,11 +1,11 @@
 <!-- Common -->
-<!ENTITY webdeveloper.add "Hinzufügen...">
+<!ENTITY webdeveloper.add "Hinzufügen …">
 <!ENTITY webdeveloper.application.label "Anwendung:">
-<!ENTITY webdeveloper.choose "Auswählen...">
-<!ENTITY webdeveloper.delete "Löschen...">
+<!ENTITY webdeveloper.choose "Auswählen …">
+<!ENTITY webdeveloper.delete "Löschen …">
 <!ENTITY webdeveloper.description "Beschreibung">
 <!ENTITY webdeveloper.description.label "Beschreibung:">
-<!ENTITY webdeveloper.edit "Bearbeiten...">
+<!ENTITY webdeveloper.edit "Bearbeiten …">
 <!ENTITY webdeveloper.height "Höhe">
 <!ENTITY webdeveloper.height.label "Höhe:">
 <!ENTITY webdeveloper.keyboard "Tastatur">
@@ -32,30 +32,30 @@
 <!ENTITY webdeveloper.menu.hide "Web-Developer-Symbolleiste ausblenden">
 <!ENTITY webdeveloper.text "Text">
 <!ENTITY webdeveloper.text.color "Text:">
-<!ENTITY webdeveloper.toolbar.icons "Symbolleiste von Web Developer anzeigen mit:">
+<!ENTITY webdeveloper.toolbar.icons "Symbolleiste von Web-Developer anzeigen mit:">
 <!-- Colors pane -->
 <!ENTITY webdeveloper.dark "Dunkel">
 <!ENTITY webdeveloper.light "Hell">
 <!ENTITY webdeveloper.none "Keins">
 <!ENTITY webdeveloper.preview "Vorschau:">
-<!ENTITY webdeveloper.syntax.highlight.performance "Note that turning on syntax highlighting can affect the performance of the browser.">
-<!ENTITY webdeveloper.syntax.highlight.theme "Theme für die Syntaxhervorhebung:">
-<!ENTITY webdeveloper.toolbar.color "Symbole der Symbolleiste anzeigen in Farbe">
+<!ENTITY webdeveloper.syntax.highlight.performance "Beachten Sie bitte, dass das Einschalten der Syntaxhervorhebung die Leistung des Browsers beeinflussen kann.">
+<!ENTITY webdeveloper.syntax.highlight.theme "Thema für die Syntaxhervorhebung:">
+<!ENTITY webdeveloper.toolbar.color "Symbole der Symbolleiste in Farbe anzeigen">
 <!-- Keyboard pane -->
-<!ENTITY webdeveloper.feature "Feature">
-<!ENTITY webdeveloper.feature.label "Feature:">
-<!ENTITY webdeveloper.tools.keyboard.shortcuts "Die Tastaturkürzel der Werkzeuge können auf dem Reiter Werkzeuge der Einstellungen geändert werden.">
+<!ENTITY webdeveloper.feature "Funktion">
+<!ENTITY webdeveloper.feature.label "Funktion:">
+<!ENTITY webdeveloper.tools.keyboard.shortcuts "Die Tastaturkürzel der Werkzeuge können im Werkzeugoptionsfenster geändert werden.">
 <!-- Resize pane -->
 <!ENTITY webdeveloper.viewport "Ansichtsfenster">
 <!-- Resize dialog -->
 <!ENTITY webdeveloper.resize.viewport "Größe des Ansichtsfensters verändern">
 <!-- Tools pane -->
-<!ENTITY webdeveloper.application.url "Anwendung/URL">
+<!ENTITY webdeveloper.application.url "Anwendung/Adresse">
 <!-- Tool dialog -->
-<!ENTITY webdeveloper.url "URL:">
+<!ENTITY webdeveloper.url "Adresse:">
 <!-- View Source pane -->
 <!ENTITY webdeveloper.application "Anwendung">
-<!ENTITY webdeveloper.view.source.tab "Quelltext in Tab statt in neuem Fenster anzeigen (lädt Quelltext nicht aus dem Cache)">
+<!ENTITY webdeveloper.view.source.tab "Quelltext im Reiter anstatt in einem neuen Fenster anzeigen (lädt den Quelltext nicht aus dem Zwischenspeicher)">
 <!ENTITY webdeveloper.view.source.with "Quelltext anzeigen mit">
 <!-- Advanced pane -->
 <!ENTITY webdeveloper.confirmation.dialogs.hide "Web-Developer-Bestätigungsabfragen ausschalten">
