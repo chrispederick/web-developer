@@ -84,6 +84,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
 
     childElement.appendChild(document.createTextNode(layoutDescription));
     childElement.setAttribute("href", "#" + anchor);
+    element.appendChild(childElement);
     filesDropdownMenu.appendChild(element);
   }
 

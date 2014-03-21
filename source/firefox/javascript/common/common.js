@@ -208,7 +208,7 @@ WebDeveloper.Common.getFileFromCache = function(url, callback)
     cacheSession.asyncOpenCacheEntry(url, Components.interfaces.nsICache.ACCESS_READ,
     {
       // Handles the cache entry being available
-      onCacheEntryAvailable: function(descriptor, accessGranted, status)
+      onCacheEntryAvailable: function(descriptor)
       {
         callback(descriptor);
       }

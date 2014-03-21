@@ -98,37 +98,41 @@ WebDeveloper.StyleInformation.displayStyleInformation = function(element)
   // Loop through the style sheets
   for(styleSheet in styleSheets)
   {
-    childElement   = generatedDocument.createElement("i");
-    headingElement = generatedDocument.createElement("h3");
-
-    childElement.setAttribute("class", "icon-caret-down");
-    headingElement.appendChild(childElement);
-
-    // If this is the embedded style sheet
-    if(styleSheet == "web-developer-embedded")
+    // Filter unwanted properties
+    if(styleSheets.hasOwnProperty(styleSheet))
     {
-      headingElement.appendChild(generatedDocument.createTextNode(WebDeveloper.Locales.getString("embeddedStyles")));
-    }
-    else
-    {
-      childElement = generatedDocument.createElement("a");
+      childElement   = generatedDocument.createElement("i");
+      headingElement = generatedDocument.createElement("h3");
 
-      childElement.appendChild(generatedDocument.createTextNode(styleSheet));
-      childElement.setAttribute("href", styleSheet);
+      childElement.setAttribute("class", "icon-caret-down");
       headingElement.appendChild(childElement);
+
+      // If this is the embedded style sheet
+      if(styleSheet == "web-developer-embedded")
+      {
+        headingElement.appendChild(generatedDocument.createTextNode(WebDeveloper.Locales.getString("embeddedStyles")));
+      }
+      else
+      {
+        childElement = generatedDocument.createElement("a");
+
+        childElement.appendChild(generatedDocument.createTextNode(styleSheet));
+        childElement.setAttribute("href", styleSheet);
+        headingElement.appendChild(childElement);
+      }
+
+      styleInformation.appendChild(headingElement);
+
+      childElement = generatedDocument.createElement("pre");
+
+      childElement.appendChild(generatedDocument.createTextNode(styleSheets[styleSheet].trim()));
+      childElement.setAttribute("class", "web-developer-syntax-highlight");
+      childElement.setAttribute("data-line-numbers", "false");
+      childElement.setAttribute("data-type", "css");
+      styleInformation.appendChild(childElement);
+
+      noStyleInformation = false;
     }
-
-    styleInformation.appendChild(headingElement);
-
-    childElement = generatedDocument.createElement("pre");
-
-    childElement.appendChild(generatedDocument.createTextNode(styleSheets[styleSheet].trim()));
-    childElement.setAttribute("class", "web-developer-syntax-highlight");
-    childElement.setAttribute("data-line-numbers", "false");
-    childElement.setAttribute("data-type", "css");
-    styleInformation.appendChild(childElement);
-
-    noStyleInformation = false;
   }
 
   // If no style information was found

@@ -537,14 +537,20 @@ WebDeveloper.Overlay.setupViewSourceWithKeyboardShortcuts = function(keySet)
 // Handles a tab being selected
 WebDeveloper.Overlay.tabSelect = function()
 {
-  // If a feature that uses the element information toolbar is active
-  if(WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("elementInformation")) || WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("styleInformation")))
+  var elementInformationToolbar = document.getElementById("web-developer-element-information-toolbar");
+
+  // If the element information toolbar is set
+  if(elementInformationToolbar)
   {
-    document.getElementById("web-developer-element-information-toolbar").hidden = false;
-  }
-  else
-  {
-    document.getElementById("web-developer-element-information-toolbar").hidden = true;
+    // If a feature that uses the element information toolbar is active
+    if(WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("elementInformation")) || WebDeveloper.Dashboard.isOpenInDashboard(WebDeveloper.Locales.getString("styleInformation")))
+    {
+      elementInformationToolbar.hidden = false;
+    }
+    else
+    {
+      elementInformationToolbar.hidden = true;
+    }
   }
 
   WebDeveloper.Overlay.resetCSSStatus();
@@ -826,7 +832,11 @@ WebDeveloper.Overlay.updateJavaScriptStatus = function(error)
 // Updates meta redirects
 WebDeveloper.Overlay.updateMetaRedirects = function(browserElement)
 {
-  browserElement.docShell.allowMetaRedirects = !WebDeveloper.Preferences.getExtensionBooleanPreference("meta.redirects.disable");
+  // If the browser element is set
+  if(browserElement)
+  {
+    browserElement.docShell.allowMetaRedirects = !WebDeveloper.Preferences.getExtensionBooleanPreference("meta.redirects.disable");
+  }
 };
 
 // Updates the render mode status button
@@ -848,7 +858,7 @@ WebDeveloper.Overlay.updateRenderMode = function()
       // If the toolbar is in text mode
       if(WebDeveloper.Preferences.getExtensionStringPreference("toolbar.icons") == "text")
       {
-          renderModeButton.setAttribute("label", WebDeveloper.Locales.getString("quirksModeLabel"));
+        renderModeButton.setAttribute("label", WebDeveloper.Locales.getString("quirksModeLabel"));
       }
     }
     else

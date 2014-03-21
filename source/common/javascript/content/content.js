@@ -436,10 +436,18 @@ WebDeveloper.Content.getDocuments = function(frame)
   {
     var frames = frame.frames;
 
-    // If the frame document exists
-    if(frame.document)
+    // Try to access the frame document
+    try
     {
-      documents.push(frame.document);
+      // If the frame document exists
+      if(frame.document)
+      {
+        documents.push(frame.document);
+      }
+    }
+    catch(exception)
+    {
+      // Ignore
     }
 
     // Loop through the frames

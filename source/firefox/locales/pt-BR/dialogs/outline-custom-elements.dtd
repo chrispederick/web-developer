@@ -1,0 +1,7 @@
+<!ENTITY webdeveloper.element.1 "Elemento 1">
+<!ENTITY webdeveloper.element.2 "Elemento 2">
+<!ENTITY webdeveloper.element.3 "Elemento 3">
+<!ENTITY webdeveloper.element.4 "Elemento 4">
+<!ENTITY webdeveloper.element.5 "Elemento 5">
+<!ENTITY webdeveloper.outline.custom.elements "Destacar elementos personalizados">
+<!ENTITY webdeveloper.outline.custom.elements.description "Informe os elementos a destacar (por exemplo, div) e as cores a usar">

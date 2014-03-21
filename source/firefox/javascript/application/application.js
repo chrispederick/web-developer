@@ -32,7 +32,7 @@ WebDeveloperApplication.prototype.createSourceFile = function(temporaryDirectory
     // If the URL has a file extension
     if(url.fileExtension)
     {
-        fileExtension = url.fileExtension;
+      fileExtension = url.fileExtension;
     }
 
     temporaryDirectory.append("webdeveloper-" + fileName + "-" + new Date().getTime() + "." + fileExtension);

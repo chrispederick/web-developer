@@ -123,6 +123,7 @@ WebDeveloper.Dashboard.initializeSyntaxHighlight = function(type, color)
 {
   WebDeveloper.Dashboard.editor = CodeMirror.fromTextArea($("#web-developer-content").get(0),
   {
+    onFocus: function() { window.focus(); },
     lineNumbers: true,
     mode: type,
     onCursorActivity: function()

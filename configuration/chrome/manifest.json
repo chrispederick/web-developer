@@ -9,7 +9,7 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "options_page":	"options/options.html",
-  "permissions": ["clipboardWrite", "contentSettings", "cookies", "history", "proxy", "tabs", "<all_urls>"],
+  "permissions": ["clipboardWrite", "contentSettings", "cookies", "history", "tabs", "<all_urls>"],
   "version": "@version@",
   "web_accessible_resources": ["*"]
 }

@@ -5,4 +5,5 @@ build/opera/
 build/web-developer-chrome.zip
 build/web-developer-firefox.xpi
 build/web-developer-opera.nex
-merge
+merge/
+node_modules/

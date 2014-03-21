@@ -5,7 +5,7 @@ h2:target, h3:target { margin-top: -50px; padding-top: 50px; }
 h3 > i { cursor: pointer; margin-right: 5px; }
 pre { overflow: auto; white-space: pre; }
 #web-developer-syntax-highlighting-dropdown i { margin-right: 5px; }
-.CodeMirror { border: 1px solid rgba(0, 0, 0, 0.15); -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); margin-bottom: 30px; }
+.CodeMirror { border-color: #000; border-color: rgba(0, 0, 0, 0.15); border-style: solid; border-width: 1px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); margin-bottom: 30px; }
 .dropdown-menu { min-width: 360px; max-width: 480px; }
 .dropdown-menu a { white-space: normal; }
 .help-block:empty { display: none; }
