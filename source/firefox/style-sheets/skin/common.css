@@ -11,10 +11,7 @@
 /* Web Developer button */
 
 #web-developer-button { -moz-box-orient: horizontal; list-style-image: url(chrome://web-developer/skin/button.png); }
-
-/* Australis Web Developer button */
-#web-developer-button[cui-areatype="menu-panel"],
-  toolbarpaletteitem[place="palette"] > #web-developer-button {-moz-box-orient: horizontal; list-style-image: url(chrome://web-developer/skin/button-2x.png); }
+#web-developer-button[cui-areatype="menu-panel"], toolbarpaletteitem[place="palette"] > #web-developer-button { -moz-box-orient: horizontal; list-style-image: url(chrome://web-developer/skin/button-2x.png); }
 
 @media (min--moz-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx)
 {

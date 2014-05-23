@@ -2,6 +2,7 @@
 
 *::selection { background-color: transparent; }
 body, html { overflow: hidden; width: 800px; }
+body::-webkit-scrollbar, html::-webkit-scrollbar { display: none; }
 .help-block:empty { display: none; }
 
 /* Toolbar styles */

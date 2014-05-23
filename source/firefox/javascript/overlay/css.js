@@ -206,7 +206,7 @@ WebDeveloper.Overlay.CSS.displayStyleInformation = function()
   }
   else
   {
-    WebDeveloper.Common.displayURLMessage(WebDeveloper.Locales.getString("domInspectorRequired"), "@url@faq/#dom-inspector");
+    WebDeveloper.Common.displayURLMessage(WebDeveloper.Locales.getString("domInspectorRequired"), "@url@/faq/#dom-inspector");
   }
 };
 

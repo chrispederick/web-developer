@@ -1,5 +1,5 @@
 body { background-color: transparent; margin: 5px 10px; overflow: hidden; text-align: right; }
-h1 { -webkit-background-clip: text; background-color: #666; color: transparent; display: inline; font-size: 13px; line-height: 13px; position: relative; top: 2px; text-shadow: rgba(255, 255, 255, 0.4) 0 2px 1px; }
+h1 { -webkit-background-clip: text; background-color: #666; color: transparent; display: inline-block; font-size: 13px; line-height: 30px; margin: 0; text-shadow: rgba(255, 255, 255, 0.4) 0 2px 1px; }
 img { margin: 0 5px 0 40px; opacity: 0.3; }
-label { display: inline-block; margin: 0 5px 0 0; }
-label, span { position: relative; text-shadow: 0 1px 1px #fff; top: 2px; }
+label { margin: 0 5px 0 0; }
+label, span { display: inline-block; text-shadow: 0 1px 1px #fff; }

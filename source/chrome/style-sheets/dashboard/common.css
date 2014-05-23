@@ -2,7 +2,7 @@
 
 html { padding-bottom: 0; }
 #web-developer-dashboard-panels .nav-tabs > li:first-child, #web-developer-dashboard-tabs > li:first-child { margin-left: 5px; }
-#web-developer-dashboard-resizer { background-color: #eee; border-bottom: 1px solid #666; color: #666; cursor: row-resize; font-size: 9px; height: 5px; line-height: 5px; text-align: center; }
+#web-developer-dashboard-resizer { background-color: #e6e6e6; border-bottom: 1px solid #a3a3a3; color: #666; cursor: row-resize; font-size: 9px; height: 5px; line-height: 5px; text-align: center; }
 #web-developer-dashboard-tabs { margin: 5px 0; }
 #web-developer-dashboard-title { background: url(@common.prefix@/common/images/logos/16.png) no-repeat 0 0; font-size: 14px; line-height: 16px; margin: 0; padding-left: 20px; position: absolute; right: 5px; top: 21px; }
 
@@ -21,7 +21,7 @@ html { padding-bottom: 0; }
 
 /* Element ancestors styles */
 
-#current-element-ancestors { border-top: 1px solid #666; bottom: 0; -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, 0.3); -moz-box-shadow: 0 0 7px rgba(0, 0, 0, 0.3); box-shadow: 0 0 7px rgba(0, 0, 0, 0.3); left: 0; position: fixed; width: 100%; }
-#current-element-ancestors > .breadcrumb { background-color: #eee; -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; margin: 0; }
+#current-element-ancestors { border-top: 1px solid #a3a3a3; bottom: 0; -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, 0.3); -moz-box-shadow: 0 0 7px rgba(0, 0, 0, 0.3); box-shadow: 0 0 7px rgba(0, 0, 0, 0.3); left: 0; position: fixed; width: 100%; }
+#current-element-ancestors > .breadcrumb { background-color: #e6e6e6; -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; margin: 0; }
 #current-element-ancestors > .breadcrumb > li { color: #333; }
 #current-element-ancestors > .breadcrumb > li > a { color: #999; cursor: text; pointer-events: none; text-decoration: none; }

@@ -192,13 +192,13 @@ WebDeveloper.Overlay.isValidTab = function(tab)
   // If this is a chrome URL
   if(url.indexOf("chrome://") === 0 || url.indexOf("chrome-extension://") === 0)
   {
-    WebDeveloper.Overlay.displayNotification(WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("internalBrowserPagesError"), "error");
+    WebDeveloper.Overlay.displayNotification(WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("internalBrowserPagesError"), "danger");
 
     return false;
   }
   else if(url.indexOf("https://chrome.google.com/extensions/") === 0 || url.indexOf("https://chrome.google.com/webstore/") === 0)
   {
-    WebDeveloper.Overlay.displayNotification(WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("chromeExtensionGalleryError"), "error");
+    WebDeveloper.Overlay.displayNotification(WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("chromeExtensionGalleryError"), "danger");
 
     return false;
   }
@@ -230,7 +230,7 @@ WebDeveloper.Overlay.openTab = function(tabURL)
 };
 
 // Opens a URL from the overlay
-WebDeveloper.Overlay.openURL = function()
+WebDeveloper.Overlay.openURL = function(event)
 {
   var href = $(this).attr("href");
 
@@ -240,6 +240,8 @@ WebDeveloper.Overlay.openURL = function()
 
     WebDeveloper.Overlay.close();
   });
+
+  event.preventDefault();
 };
 
 // Toggles a content setting
