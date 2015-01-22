@@ -9,17 +9,17 @@ $(function()
   var menu         = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("menu");
   var notification = $("#notification");
 
-  $("#cookies-toolbar > a").append(WebDeveloper.Locales.getString("cookies"));
-  $("#css-toolbar > a").append(WebDeveloper.Locales.getString("css"));
-  $("#disable-toolbar > a").append(WebDeveloper.Locales.getString("disable"));
-  $("#forms-toolbar > a").append(WebDeveloper.Locales.getString("forms"));
-  $("#images-toolbar > a").append(WebDeveloper.Locales.getString("images"));
-  $("#information-toolbar > a").append(WebDeveloper.Locales.getString("information"));
-  $("#miscellaneous-toolbar > a").append(WebDeveloper.Locales.getString("miscellaneous"));
-  $("#options-toolbar > a").append(WebDeveloper.Locales.getString("options"));
-  $("#outline-toolbar > a").append(WebDeveloper.Locales.getString("outline"));
-  $("#resize-toolbar > a").append(WebDeveloper.Locales.getString("resize"));
-  $("#tools-toolbar > a").append(WebDeveloper.Locales.getString("tools"));
+  $("#cookies-toolbar > a").attr("title", WebDeveloper.Locales.getString("cookies"));
+  $("#css-toolbar > a").attr("title", WebDeveloper.Locales.getString("css"));
+  $("#disable-toolbar > a").attr("title", WebDeveloper.Locales.getString("disable"));
+  $("#forms-toolbar > a").attr("title", WebDeveloper.Locales.getString("forms"));
+  $("#images-toolbar > a").attr("title", WebDeveloper.Locales.getString("images"));
+  $("#information-toolbar > a").attr("title", WebDeveloper.Locales.getString("information"));
+  $("#miscellaneous-toolbar > a").attr("title", WebDeveloper.Locales.getString("miscellaneous"));
+  $("#options-toolbar > a").attr("title", WebDeveloper.Locales.getString("options"));
+  $("#outline-toolbar > a").attr("title", WebDeveloper.Locales.getString("outline"));
+  $("#resize-toolbar > a").attr("title", WebDeveloper.Locales.getString("resize"));
+  $("#tools-toolbar > a").attr("title", WebDeveloper.Locales.getString("tools"));
 
   // If the menu is not set
   if(!menu)
