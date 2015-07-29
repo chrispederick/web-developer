@@ -90,7 +90,7 @@
 <!ENTITY webdeveloper.delete.domain.cookies.key "d">
 <!ENTITY webdeveloper.delete.path.cookies.label "Supprimer les cookies de ce chemin (path)">
 <!ENTITY webdeveloper.delete.path.cookies.key "P">
-<!ENTITY webdeveloper.delete.session.cookies.label "Effacer les cookies de session de ce site">
+<!ENTITY webdeveloper.delete.session.cookies.label "Effacer les cookies de session">
 <!ENTITY webdeveloper.delete.session.cookies.key "s">
 <!ENTITY webdeveloper.view.cookie.information.label "Informations sur les cookies">
 <!ENTITY webdeveloper.view.cookie.information.key "c">
