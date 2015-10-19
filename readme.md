@@ -105,6 +105,13 @@ Any new icons used in the extension should come from these existing icon sets fo
 
 An [EditorConfig](http://editorconfig.org/) file is included to unify the coding style for different editors.
 
+Acknowledgements
+----------------
+
+Supported by:
+
+* [BrowserStack](https://www.browserstack.com/)
+
 Author
 ------
 
