@@ -1,21 +1,7 @@
-engines:
-  csslint:
-    enabled: true
-  eslint:
-    enabled: true
-  fixme:
-    enabled: true
 exclude_paths:
-- .codeclimate.yml
-- Gruntfile.js
-- build/**/*
-- build/**/*
-- configuration/**/*
-- images/**/*
 - source/common/javascript/common/bootstrap/*.js
 - source/common/javascript/common/codemirror/*.js
 - source/common/javascript/common/jquery/*.js
 - source/common/javascript/generated/beautify/beautify.js
-ratings:
-  paths:
-  - source/**/*
+languages:
+  JavaScript: true
