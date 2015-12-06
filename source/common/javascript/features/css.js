@@ -254,7 +254,7 @@ WebDeveloper.CSS.togglePrintStyles = function(disable, documents)
       styleSheet = styleSheets[j];
 
       // If this is a valid style sheet, is not an inline style sheet, is not an alternate style sheet or style sheets are being disabled and is a print style sheet, but not a screen style sheet
-      if(WebDeveloper.CSS.isValidStyleSheet(styleSheet) && (!WebDeveloper.CSS.isAlternateStyleSheet(styleSheet) || disable) && WebDeveloper.CSS.isMediaStyleSheet(styleSheet, "print") && !WebDeveloper.CSS.isMediaStyleSheet(styleSheet, "screen"))
+      if(WebDeveloper.CSS.isValidStyleSheet(styleSheet) && (!WebDeveloper.CSS.isAlternateStyleSheet(styleSheet) || disable) && WebDeveloper.CSS.isMediaStyleSheet(styleSheet, "print"))
       {
         styleSheet.disabled = disable;
       }

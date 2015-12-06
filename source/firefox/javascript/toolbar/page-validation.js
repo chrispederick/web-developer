@@ -229,7 +229,59 @@ WebDeveloper.PageValidation.updateCSSValidationDetails = function()
   // If the CSS validation request is set and is ready
   if(WebDeveloper.PageValidation.cssValidator.validationRequest && WebDeveloper.PageValidation.cssValidator.validationRequest.readyState == 4)
   {
-    WebDeveloper.PageValidation.updateValidationDetails(WebDeveloper.PageValidation.cssValidator.validationRequest, document.getElementById("web-developer-css-validation"));
+    var buttonUpdated    = false;
+    var validationButton = document.getElementById("web-developer-css-validation");
+
+    // If the validation button is set
+    if(validationButton)
+    {
+      // Try to check the validation status
+      try
+      {
+        // If the validation status is set to success
+        if(WebDeveloper.PageValidation.cssValidator.validationRequest.status == 200)
+        {
+          var validationStatus = WebDeveloper.PageValidation.cssValidator.validationRequest.getResponseHeader("X-W3C-Validator-Status");
+
+          // If the validation status is set
+          if(validationStatus)
+          {
+            // If the validation status is valid
+            if(validationStatus == "Valid")
+            {
+              buttonUpdated          = true;
+              validationButton.label = WebDeveloper.Locales.getString("valid");
+
+              validationButton.setAttribute("class", "valid");
+            }
+            else if(validationStatus != "Abort")
+            {
+              buttonUpdated          = true;
+              validationButton.label = WebDeveloper.Locales.getString("invalid") + ": " + WebDeveloper.PageValidation.cssValidator.validationRequest.getResponseHeader("X-W3C-Validator-Errors") + " " + WebDeveloper.Locales.getString("errors").toLowerCase();
+
+              validationButton.setAttribute("class", "invalid");
+            }
+          }
+        }
+      }
+      catch(exception)
+      {
+        // Ignore
+      }
+
+      // If the button was not updated
+      if(!buttonUpdated)
+      {
+        validationButton.label = "";
+
+        // If the validation button has a class
+        if(validationButton.hasAttribute("class"))
+        {
+          validationButton.removeAttribute("class");
+        }
+      }
+    }
+
     WebDeveloper.PageValidation.cssValidator.cleanUp();
   }
 };
@@ -248,7 +300,59 @@ WebDeveloper.PageValidation.updateHTMLValidationDetails = function()
   // If the HTML validation request is set and is ready
   if(WebDeveloper.PageValidation.htmlValidator.validationRequest && WebDeveloper.PageValidation.htmlValidator.validationRequest.readyState == 4)
   {
-    WebDeveloper.PageValidation.updateValidationDetails(WebDeveloper.PageValidation.htmlValidator.validationRequest, document.getElementById("web-developer-html-validation"));
+    var buttonUpdated    = false;
+    var validationButton = document.getElementById("web-developer-html-validation");
+
+    // If the validation button is set
+    if(validationButton)
+    {
+      // Try to check the validation status
+      try
+      {
+        // If the validation status is set to success
+        if(WebDeveloper.PageValidation.htmlValidator.validationRequest.status == 200)
+        {
+          var validationResponse = WebDeveloper.PageValidation.htmlValidator.validationRequest.responseText;
+
+          // If the validation response is set
+          if(validationResponse)
+          {
+            // If the validation response contains success
+            if(validationResponse.indexOf('<p class="success">') != -1)
+            {
+              buttonUpdated          = true;
+              validationButton.label = WebDeveloper.Locales.getString("valid");
+
+              validationButton.setAttribute("class", "valid");
+            }
+            else if(validationResponse.indexOf('<p class="failure">') != -1)
+            {
+              buttonUpdated          = true;
+              validationButton.label = WebDeveloper.Locales.getString("invalid") + ": " + WebDeveloper.Common.getOccurrenceCount(validationResponse, '<li class="error"') + " " + WebDeveloper.Locales.getString("errors").toLowerCase();
+
+              validationButton.setAttribute("class", "invalid");
+            }
+          }
+        }
+      }
+      catch(exception)
+      {
+        // Ignore
+      }
+
+      // If the button was not updated
+      if(!buttonUpdated)
+      {
+        validationButton.label = "";
+
+        // If the validation button has a class
+        if(validationButton.hasAttribute("class"))
+        {
+          validationButton.removeAttribute("class");
+        }
+      }
+    }
+
     WebDeveloper.PageValidation.htmlValidator.cleanUp();
   }
 };
@@ -262,65 +366,5 @@ WebDeveloper.PageValidation.updateValidation = function(validationButton)
     validationButton.label = WebDeveloper.Locales.getString("validating");
 
     validationButton.setAttribute("class", "loading");
-  }
-};
-
-// Updates the validation details for the page
-WebDeveloper.PageValidation.updateValidationDetails = function(validationRequest, validationButton)
-{
-  // Try to check the validation status
-  try
-  {
-    // If the validation status is set to success
-    if(validationRequest.status == 200)
-    {
-      var validationStatus = validationRequest.getResponseHeader("X-W3C-Validator-Status");
-
-      // If the validation button and validation status are set
-      if(validationButton && validationStatus)
-      {
-        // If the validation status is valid
-        if(validationStatus == "Valid")
-        {
-          validationButton.label = WebDeveloper.Locales.getString("valid");
-
-          validationButton.setAttribute("class", "valid");
-        }
-        else if(validationStatus == "Abort")
-        {
-          validationButton.label = "";
-
-          // If the validation button has a class
-          if(validationButton.hasAttribute("class"))
-          {
-            validationButton.removeAttribute("class");
-          }
-        }
-        else
-        {
-          validationButton.label = WebDeveloper.Locales.getString("invalid") + ": " + validationRequest.getResponseHeader("X-W3C-Validator-Errors") + " " + WebDeveloper.Locales.getString("errors").toLowerCase();
-
-          validationButton.setAttribute("class", "invalid");
-        }
-      }
-    }
-    else
-    {
-      // If the validation button is set
-      if(validationButton)
-      {
-        validationButton.label = "";
-
-        // If the validation button has a class
-        if(validationButton.hasAttribute("class"))
-        {
-          validationButton.removeAttribute("class");
-        }
-      }
-    }
-  }
-  catch(exception)
-  {
-    // Ignore
   }
 };

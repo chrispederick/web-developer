@@ -46,7 +46,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
       // Loop through the anchors
       for(var j = 0; j < anchorsLength; j++)
       {
-        listElement.append(ich.anchor({ "anchor": anchors[j], "url": url }));
+        listElement.append(ich.anchor({ anchor: anchors[j], url: url }));
       }
 
       content.appendChild(list);

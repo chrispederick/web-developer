@@ -42,9 +42,9 @@ WebDeveloper.Content.getDocumentSize = function(callback)
     images                    = WebDeveloper.Common.getDocumentImages(contentDocument);
     objects                   = contentDocument.embeds;
     scripts                   = contentDocument.querySelectorAll("script[src]");
-    styleSheets               = contentDocument.styleSheets;
+    styleSheets               = WebDeveloper.Content.getDocumentCSS(contentDocument, false).styleSheets;
 
-    fileSizeRequests.push({ "fileObject": documentSizeDocument, "includeUncompressed": true, "url": documentURL });
+    fileSizeRequests.push({ fileObject: documentSizeDocument, includeUncompressed: true, url: documentURL });
 
     // Loop through the images
     for(var j = 0, m = images.length; j < m; j++)
@@ -54,7 +54,7 @@ WebDeveloper.Content.getDocumentSize = function(callback)
       url                   = image.src;
       documentSizeImage.url = url;
 
-      fileSizeRequests.push({ "fileObject": documentSizeImage, "includeUncompressed": false, "url": url });
+      fileSizeRequests.push({ fileObject: documentSizeImage, includeUncompressed: false, url: url });
 
       documentSize.images.push(documentSizeImage);
     }
@@ -67,7 +67,7 @@ WebDeveloper.Content.getDocumentSize = function(callback)
       url                    = object.src;
       documentSizeObject.url = url;
 
-      fileSizeRequests.push({ "fileObject": documentSizeObject, "includeUncompressed": false, "url": url });
+      fileSizeRequests.push({ fileObject: documentSizeObject, includeUncompressed: false, url: url });
 
       documentSize.objects.push(documentSizeObject);
     }
@@ -80,7 +80,7 @@ WebDeveloper.Content.getDocumentSize = function(callback)
       url                    = script.src;
       documentSizeScript.url = url;
 
-      fileSizeRequests.push({ "fileObject": documentSizeScript, "includeUncompressed": true, "url": url });
+      fileSizeRequests.push({ fileObject: documentSizeScript, includeUncompressed: true, url: url });
 
       documentSize.scripts.push(documentSizeScript);
     }
@@ -88,19 +88,13 @@ WebDeveloper.Content.getDocumentSize = function(callback)
     // Loop through the style sheets
     for(j = 0, m = styleSheets.length; j < m; j++)
     {
-      styleSheet = styleSheets[j];
+      documentSizeStyleSheet     = {};
+      url                        = styleSheets[j];
+      documentSizeStyleSheet.url = url;
 
-      // If this is a valid style sheet and is not an inline style sheet
-      if(WebDeveloper.CSS.isValidStyleSheet(styleSheet) && styleSheet.href && styleSheet.href != documentURL)
-      {
-        documentSizeStyleSheet     = {};
-        url                        = styleSheet.href;
-        documentSizeStyleSheet.url = url;
+      fileSizeRequests.push({ fileObject: documentSizeStyleSheet, includeUncompressed: true, url: url });
 
-        fileSizeRequests.push({ "fileObject": documentSizeStyleSheet, "includeUncompressed": true, "url": url });
-
-        documentSize.styleSheets.push(documentSizeStyleSheet);
-      }
+      documentSize.styleSheets.push(documentSizeStyleSheet);
     }
 
     documentSize.documents.push(documentSizeDocument);

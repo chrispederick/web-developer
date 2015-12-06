@@ -130,6 +130,15 @@ WebDeveloper.Overlay.Disable.toggleMinimumFontSize = function(element)
 // Toggles the page colors
 WebDeveloper.Overlay.Disable.togglePageColors = function(element)
 {
+  var pageColors = 2;
+
+  // If enabling page colors
+  if(WebDeveloper.Common.convertToBoolean(element.getAttribute("checked")))
+  {
+    pageColors = 0;
+  }
+
+  WebDeveloper.Preferences.setIntegerPreference("browser.display.document_color_use", pageColors);
   WebDeveloper.Preferences.enablePreference(element, "browser.display.use_document_colors");
   BrowserReload();
 };
@@ -177,20 +186,26 @@ WebDeveloper.Overlay.Disable.updateDisableCacheMenu = function()
 // Updates the disable menu
 WebDeveloper.Overlay.Disable.updateDisableMenu = function()
 {
-  var dnsCacheDisabled  = false;
-  var referrersDisabled = false;
+  var dnsCacheDisabled   = false;
+  var pageColorsDisabled = false;
+  var referrersDisabled  = false;
 
   WebDeveloper.Common.configureElement(document.getElementById("web-developer-disable-java-command"), "checked", !WebDeveloper.Preferences.getBooleanPreference("security.enable_java"));
   WebDeveloper.Common.configureElement(document.getElementById("web-developer-disable-javascript-command"), "checked", !WebDeveloper.Preferences.getBooleanPreference("javascript.enabled"));
   WebDeveloper.Common.configureElement(document.getElementById("web-developer-disable-meta-redirects-command"), "checked", WebDeveloper.Preferences.getExtensionBooleanPreference("meta.redirects.disable"));
   WebDeveloper.Common.configureElement(document.getElementById("web-developer-disable-minimum-font-size-command"), "checked", WebDeveloper.Preferences.getIntegerPreference("font.minimum-size.x-western") === 0);
-  WebDeveloper.Common.configureElement(document.getElementById("web-developer-disable-page-colors-command"), "checked", !WebDeveloper.Preferences.getBooleanPreference("browser.display.use_document_colors"));
   WebDeveloper.Common.configureElement(document.getElementById("web-developer-disable-popup-blocker-command"), "checked", !WebDeveloper.Preferences.getBooleanPreference("dom.disable_open_during_load"));
 
   // If the DNS cache preference is set to 0
   if(WebDeveloper.Preferences.isPreferenceSet("network.dnsCacheExpiration") && WebDeveloper.Preferences.getIntegerPreference("network.dnsCacheExpiration") === 0)
   {
     dnsCacheDisabled = true;
+  }
+
+  // If the page colors preference is set to 2 or true
+  if((WebDeveloper.Preferences.isPreferenceSet("browser.display.document_color_use") && WebDeveloper.Preferences.getIntegerPreference("browser.display.document_color_use") === 2) || !WebDeveloper.Preferences.getBooleanPreference("browser.display.use_document_colors"))
+  {
+    pageColorsDisabled = true;
   }
 
   // If the referrer preference is not set or is set to 0
@@ -200,6 +215,7 @@ WebDeveloper.Overlay.Disable.updateDisableMenu = function()
   }
 
   WebDeveloper.Common.configureElement(document.getElementById("web-developer-disable-dns-cache-command"), "checked", dnsCacheDisabled);
+  WebDeveloper.Common.configureElement(document.getElementById("web-developer-disable-page-colors-command"), "checked", pageColorsDisabled);
   WebDeveloper.Common.configureElement(document.getElementById("web-developer-disable-referrers-command"), "checked", referrersDisabled);
 };
 

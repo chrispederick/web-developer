@@ -7,12 +7,12 @@ WebDeveloper.ElementInformation.selfClosingTags = ["area", "br", "col", "hr", "i
 // Adds a CSS property
 WebDeveloper.ElementInformation.addCSSProperty = function(element, property, contentDocument)
 {
-  var cssProperty = contentDocument.defaultView.getComputedStyle(element, null).getPropertyCSSValue(property);
+  var cssProperty = WebDeveloper.Common.getPropertyCSSValue(contentDocument.defaultView.getComputedStyle(element, null), property);
 
   // If the CSS property is set
   if(cssProperty)
   {
-    return property + ": " + cssProperty.cssText + ";\n";
+    return property + ": " +  WebDeveloper.Common.getCSSText(cssProperty) + ";\n";
   }
 
   return "";

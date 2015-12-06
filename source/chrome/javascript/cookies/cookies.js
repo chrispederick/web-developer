@@ -23,11 +23,11 @@ WebDeveloper.Cookies.addCookie = function(cookie)
   // If the cookie is a session cookie
   if(cookie.session)
   {
-    chrome.cookies.set({ "domain": host, "name": name, "secure": secure, "url": url, "value": value });
+    chrome.cookies.set({ domain: host, name: name, secure: secure, url: url, value: value });
   }
   else
   {
-    chrome.cookies.set({ "domain": host, "expirationDate": (new Date(cookie.expires.trim()).getTime()) / 1000, "name": name, "secure": secure, "url": url, "value": value });
+    chrome.cookies.set({ domain: host, expirationDate: (new Date(cookie.expires.trim()).getTime()) / 1000, name: name, secure: secure, url: url, value: value });
   }
 };
 
@@ -48,5 +48,5 @@ WebDeveloper.Cookies.deleteCookie = function(cookie)
     protocol = "https://";
   }
 
-  chrome.cookies.remove({ "name": cookie.name, "url": protocol + cookie.host + cookie.path });
+  chrome.cookies.remove({ name: cookie.name, url: protocol + cookie.host + cookie.path });
 };

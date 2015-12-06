@@ -102,7 +102,7 @@ WebDeveloper.Overlay.Images.findBrokenImages = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.tabs.sendMessage(tab.id, {type: "get-broken-images"}, function(data)
+      chrome.tabs.sendMessage(tab.id, { type: "get-broken-images" }, function(data)
       {
         var locale = WebDeveloper.Locales.setupGeneratedLocale();
 
@@ -351,7 +351,7 @@ WebDeveloper.Overlay.Images.viewImageInformation = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.tabs.sendMessage(tab.id, {type: "get-images"}, function(data)
+      chrome.tabs.sendMessage(tab.id, { type: "get-images" }, function(data)
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-image-information.html"), tab.index, data, WebDeveloper.Overlay.Images.getViewImageInformationLocale());
       });

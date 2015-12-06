@@ -74,7 +74,7 @@ pref("extensions.webdeveloper.responsive.layout.count", 6);
 // Tools
 pref("extensions.webdeveloper.tool.count", 6);
 pref("extensions.webdeveloper.tool.1.description", "chrome://web-developer/locale/options/options.properties");
-pref("extensions.webdeveloper.tool.1.url", "http://jigsaw.w3.org/css-validator/validator?profile=css21&warning=0&uri=");
+pref("extensions.webdeveloper.tool.1.url", "http://jigsaw.w3.org/css-validator/validator?profile=css3&warning=0&uri=");
 pref("extensions.webdeveloper.tool.2.description", "chrome://web-developer/locale/options/options.properties");
 pref("extensions.webdeveloper.tool.2.url", "http://validator.w3.org/feed/check.cgi?url=");
 pref("extensions.webdeveloper.tool.3.description", "chrome://web-developer/locale/options/options.properties");

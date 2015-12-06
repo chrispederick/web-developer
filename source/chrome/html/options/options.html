@@ -31,7 +31,8 @@
 
 <div id="content" class="container">
   <ul class="nav nav-tabs">
-    <li id="colors-tab" class="active"><a href="#colors-options" data-toggle="tab"><span></span></a></li>
+    <li id="general-tab" class="active"><a href="#general-options" data-toggle="tab"><span></span></a></li>
+    <li id="colors-tab"><a href="#colors-options" data-toggle="tab"><span></span></a></li>
     <li id="resize-tab"><a href="#resize-options" data-toggle="tab"><span></span></a></li>
     <li id="responsive-layouts-tab"><a href="#responsive-layouts-options" data-toggle="tab"><span></span></a></li>
     <li id="tools-tab"><a href="#tools-options" data-toggle="tab"><span></span></a></li>
@@ -39,7 +40,22 @@
   </ul>
 
   <div class="tab-content">
-    <div id="colors-options" class="tab-pane active">
+    <div id="general-options" class="tab-pane active">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label for="display_overlay_with" class="col-sm-3 control-label"></label>
+          <div class="col-sm-3">
+            <select id="display_overlay_with" class="form-control">
+              <option value="icons_text"></option>
+              <option value="icons"></option>
+              <option value="text"></option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div id="colors-options" class="tab-pane">
       <div id="syntax-highlight-performance" class="alert"></div>
       <form class="form-horizontal">
         <div class="form-group">

@@ -1,0 +1,5 @@
+exclude_paths:
+- "source/common/javascript/common/bootstrap/*.js"
+- "source/common/javascript/common/codemirror/*.js"
+- "source/common/javascript/common/jquery/*.js"
+- "source/common/javascript/generated/beautify/beautify.js"

@@ -431,7 +431,7 @@ WebDeveloper.Information.displayStackLevels = function(display, documents)
       while((node = treeWalker.nextNode()) !== null)
       {
         spanElement = contentDocument.createElement("span");
-        text        = WebDeveloper.Information.getElementDescription(node) + ' z-index="' + node.ownerDocument.defaultView.getComputedStyle(node, null).getPropertyCSSValue("z-index").cssText + '"';
+        text        = WebDeveloper.Information.getElementDescription(node) + ' z-index="' + WebDeveloper.Common.getCSSText(WebDeveloper.Common.getPropertyCSSValue(node.ownerDocument.defaultView.getComputedStyle(node, null), "z-index")) + '"';
 
         spanElement.setAttribute("class", "web-developer-display-stack-levels");
         spanElement.appendChild(contentDocument.createTextNode(text));
@@ -777,7 +777,7 @@ WebDeveloper.Information.stackLevelFilter = function(node)
   // If the node does not have a class attribute or it does not start with web-developer
   if(node && (!node.hasAttribute("class") || node.getAttribute("class").indexOf("web-developer-") !== 0))
   {
-    var zIndex = node.ownerDocument.defaultView.getComputedStyle(node, null).getPropertyCSSValue("z-index").cssText;
+    var zIndex = WebDeveloper.Common.getCSSText(WebDeveloper.Common.getPropertyCSSValue(node.ownerDocument.defaultView.getComputedStyle(node, null), "z-index"));
 
     // If the node has a z-index and it is not set to auto
     if(zIndex && zIndex != "auto")

@@ -31,7 +31,7 @@ WebDeveloper.Overlay.Options.resetPage = function()
 {
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
-    WebDeveloper.Overlay.addScriptToTab(tab, { "code": "window.location.reload();" }, function()
+    WebDeveloper.Overlay.addScriptToTab(tab, { code: "window.location.reload();" }, function()
     {
       WebDeveloper.Overlay.close();
     });

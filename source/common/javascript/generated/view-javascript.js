@@ -37,7 +37,7 @@ WebDeveloper.Generated.beautifyJavaScript = function(event)
     $(".web-developer-original").each(function(position, element)
     {
       originalJavaScript = $(element);
-      newJavaScript      = js_beautify(originalJavaScript.text(), { "indent_size": 2, "max_preserve_newlines": 1, "space_before_conditional": false });
+      newJavaScript      = js_beautify(originalJavaScript.text(), { indent_size: 2, max_preserve_newlines: 1, space_before_conditional: false });
 
       $(".web-developer-syntax-highlight", originalJavaScript.parent()).text(newJavaScript);
 
@@ -100,7 +100,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
     {
       url = javaScript[k];
 
-      urlContentRequests.push({ "outputContainers": WebDeveloper.Generated.output(null, url, "javascript-" + (javaScriptCounter++), "javascript", true), "url": url });
+      urlContentRequests.push({ outputContainers: WebDeveloper.Generated.output(null, url, "javascript-" + (javaScriptCounter++), "javascript", true), url: url });
     }
 
     // If there is no JavaScript

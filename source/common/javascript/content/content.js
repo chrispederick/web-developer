@@ -8,16 +8,30 @@ WebDeveloper.Content.addColor = function(node, property, colors)
   // If the node, property and colors are set
   if(node && property && colors)
   {
-    var color = node.ownerDocument.defaultView.getComputedStyle(node, null).getPropertyCSSValue(property);
+    var color = WebDeveloper.Common.getPropertyCSSValue(node.ownerDocument.defaultView.getComputedStyle(node, null), property);
 
-    // If the color is set and it is a color
-    if(color && color.primitiveType == CSSPrimitiveValue.CSS_RGBCOLOR)
+    // If the color is set
+    if(color)
     {
-      var cssNumber = CSSPrimitiveValue.CSS_NUMBER;
+      // If the color has a primitive type of color
+      if(color.primitiveType == WebDeveloper.Common.getCSSPrimitiveValue("RGBCOLOR"))
+      {
+        var cssNumber = WebDeveloper.Common.getCSSPrimitiveValue("NUMBER");
 
-      color = color.getRGBColorValue();
+        color = color.getRGBColorValue();
 
-      colors.push("#" + WebDeveloper.Content.formatColor(color.red.getFloatValue(cssNumber)) + WebDeveloper.Content.formatColor(color.green.getFloatValue(cssNumber)) + WebDeveloper.Content.formatColor(color.blue.getFloatValue(cssNumber)));
+        colors.push("#" + WebDeveloper.Content.formatColor(color.red.getFloatValue(cssNumber)) + WebDeveloper.Content.formatColor(color.green.getFloatValue(cssNumber)) + WebDeveloper.Content.formatColor(color.blue.getFloatValue(cssNumber)));
+      }
+      else
+      {
+        color = color.match(/^rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/i);
+
+        // If the color is in RGB format
+        if(color)
+        {
+          colors.push("#" + WebDeveloper.Content.formatColor(parseInt(color[1], 10)) + WebDeveloper.Content.formatColor(parseInt(color[2], 10)) + WebDeveloper.Content.formatColor(parseInt(color[3], 10)));
+        }
+      }
     }
   }
 };
@@ -147,36 +161,29 @@ WebDeveloper.Content.getAnchors = function()
 // Returns any broken images in the document
 WebDeveloper.Content.getBrokenImages = function()
 {
+  var allImages         = null;
   var brokenImages      = {};
   var contentDocument   = WebDeveloper.Common.getContentDocument();
   var contentDocuments  = WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
-  var documentAllImages = null;
   var documentImages    = null;
-  var image             = null;
 
   brokenImages.documents = [];
   brokenImages.pageTitle = contentDocument.title;
   brokenImages.pageURL   = contentDocument.documentURI;
 
-  // Loop through the documents
+  // Loop through the documents to get the images and count them
   for(var i = 0, l = contentDocuments.length; i < l; i++)
   {
     contentDocument       = contentDocuments[i];
-    documentAllImages     = WebDeveloper.Common.getDocumentImages(contentDocument);
+    allImages             = WebDeveloper.Common.getDocumentImages(contentDocument);
     documentImages        = {};
     documentImages.images = [];
     documentImages.url    = contentDocument.documentURI;
 
     // Loop through the images
-    for(var j = 0, m = documentAllImages.length; j < m; j++)
+    for(var j = 0, m = allImages.length; j < m; j++)
     {
-      image = documentAllImages[j];
-
-      // If the image is broken
-      if(!image.naturalWidth && !image.naturalHeight)
-      {
-        documentImages.images.push(image.src);
-      }
+      documentImages.images.push(allImages[j].src);
     }
 
     brokenImages.documents.push(documentImages);
@@ -293,7 +300,6 @@ WebDeveloper.Content.getDocumentColors = function(contentDocument)
 
   return colors;
 };
-
 
 // Returns the CSS for the specified document
 WebDeveloper.Content.getDocumentCSS = function(contentDocument, screenOnly)
@@ -612,7 +618,7 @@ WebDeveloper.Content.getForms = function()
           // If the label is not already set
           if(!documentFormElement.label)
           {
-            labelElement = contentDocument.querySelector("label[for=" + formElementId + "]");
+            labelElement = contentDocument.querySelector('label[for="' + formElementId + '"]');
 
             // If a label element was found
             if(labelElement)

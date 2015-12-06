@@ -1,7 +1,9 @@
 /* Overlay styles */
 
 *::selection { background-color: transparent; }
-body, html { overflow: hidden; width: 800px; }
+html { width: 800px; }
+body, html { overflow: hidden; }
+body { max-width: 100vw; }
 body::-webkit-scrollbar, html::-webkit-scrollbar { display: none; }
 .help-block:empty { display: none; }
 
@@ -12,6 +14,7 @@ body::-webkit-scrollbar, html::-webkit-scrollbar { display: none; }
 .nav-tabs > li { font-size: 12px; }
 .nav-tabs > li > a { outline-style: none; padding: 3px; }
 .nav-tabs > li > a > span { background: url(images/toolbar.png) no-repeat 0 0; display: inline-block; height: 16px; margin-right: 2px; position: relative; top: 2px; width: 16px; }
+.overlay-text > li > a > span { background-image: none; margin-right: 0; width: 0; }
 
 #cookies-toolbar > a > span { background-position: -16px 0; }
 #css-toolbar > a > span { background-position: -32px 0; }

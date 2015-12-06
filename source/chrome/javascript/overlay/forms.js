@@ -291,7 +291,7 @@ WebDeveloper.Overlay.Forms.viewFormInformation = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.tabs.sendMessage(tab.id, {type: "get-forms"}, function(data)
+      chrome.tabs.sendMessage(tab.id, { type: "get-forms" }, function(data)
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-form-information.html"), tab.index, data, WebDeveloper.Overlay.Forms.getViewFormInformationLocale());
       });

@@ -50,10 +50,8 @@
 <script src="javascript/common.js"></script>
 <script src="javascript/find-broken-images.js"></script>
 
-<script id="brokenImages" type="text/html">
-  {{#images}}
-    <li><a href="{{.}}" target="_blank">{{.}}</a></li>
-  {{/images}}
+<script id="brokenImage" type="text/html">
+  <li><a href="{{src}}" target="_blank">{{src}}</a></li>
 </script>
 
 </body>

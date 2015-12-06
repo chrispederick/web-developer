@@ -330,7 +330,7 @@ WebDeveloper.Overlay.Information.findDuplicateIds = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.tabs.sendMessage(tab.id, {type: "get-duplicate-ids"}, function(data)
+      chrome.tabs.sendMessage(tab.id, { type: "get-duplicate-ids" }, function(data)
       {
         var locale = WebDeveloper.Locales.setupGeneratedLocale();
 
@@ -357,7 +357,7 @@ WebDeveloper.Overlay.Information.viewAnchorInformation = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.tabs.sendMessage(tab.id, {type: "get-anchors"}, function(data)
+      chrome.tabs.sendMessage(tab.id, { type: "get-anchors" }, function(data)
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-anchor-information.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewAnchorInformationLocale());
       });
@@ -373,7 +373,7 @@ WebDeveloper.Overlay.Information.viewColorInformation = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.tabs.sendMessage(tab.id, {type: "get-colors"}, function(data)
+      chrome.tabs.sendMessage(tab.id, { type: "get-colors" }, function(data)
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-color-information.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewColorInformationLocale());
       });
@@ -389,7 +389,7 @@ WebDeveloper.Overlay.Information.viewDocumentOutline = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.tabs.sendMessage(tab.id, {type: "get-document-outline"}, function(data)
+      chrome.tabs.sendMessage(tab.id, { type: "get-document-outline" }, function(data)
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-document-outline.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewDocumentOutlineLocale());
       });
@@ -405,7 +405,7 @@ WebDeveloper.Overlay.Information.viewJavaScript = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.tabs.sendMessage(tab.id, {type: "get-javascript"}, function(data)
+      chrome.tabs.sendMessage(tab.id, { type: "get-javascript" }, function(data)
       {
         data.theme = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("syntax_highlight_theme");
 
@@ -423,7 +423,7 @@ WebDeveloper.Overlay.Information.viewLinkInformation = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.tabs.sendMessage(tab.id, {type: "get-links"}, function(data)
+      chrome.tabs.sendMessage(tab.id, { type: "get-links" }, function(data)
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-link-information.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewLinkInformationLocale());
       });
@@ -439,7 +439,7 @@ WebDeveloper.Overlay.Information.viewMetaTagInformation = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.tabs.sendMessage(tab.id, {type: "get-meta-tags"}, function(data)
+      chrome.tabs.sendMessage(tab.id, { type: "get-meta-tags" }, function(data)
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-meta-tag-information.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewMetaTagInformationLocale());
       });
@@ -455,7 +455,7 @@ WebDeveloper.Overlay.Information.viewResponseHeaders = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.tabs.sendMessage(tab.id, {type: "get-document-details"}, function(data)
+      chrome.tabs.sendMessage(tab.id, { type: "get-document-details" }, function(data)
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-response-headers.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewResponseHeadersLocale());
       });

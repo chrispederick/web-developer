@@ -46,7 +46,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
       // Loop through the ids
       for(var j = 0; j < idsLength; j++)
       {
-        $(list).append(ich.duplicateId({ "id": ids[j], "url": url }));
+        $(list).append(ich.duplicateId({ id: ids[j], url: url }));
       }
 
       content.appendChild(list);

@@ -130,7 +130,7 @@ WebDeveloper.Options.displayDeleteConfirmation = function(title, message)
   var promptService = Components.interfaces.nsIPromptService;
 
   // If the deletion is confirmed
-  if(Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(promptService).confirmEx(null, title, message, promptService.BUTTON_TITLE_IS_STRING * promptService.BUTTON_POS_0 + promptService.BUTTON_TITLE_CANCEL * promptService.BUTTON_POS_1, WebDeveloper.Locales.getString("delete"), null, null, null, {value: false}) === 0)
+  if(Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(promptService).confirmEx(null, title, message, promptService.BUTTON_TITLE_IS_STRING * promptService.BUTTON_POS_0 + promptService.BUTTON_TITLE_CANCEL * promptService.BUTTON_POS_1, WebDeveloper.Locales.getString("delete"), null, null, null, { value: false }) === 0)
   {
     return true;
   }

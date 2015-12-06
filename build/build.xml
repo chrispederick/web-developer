@@ -116,13 +116,9 @@
     <move file="${browser}/storage/storage.temp" tofile="${browser}/storage/storage.js">
       <filterset refid="filters"/>
     </move>
-    <concat destfile="${browser}/upgrade/upgrade.temp">
-      <fileset file="../source/common/javascript/upgrade/upgrade.js"/>
-      <fileset file="../source/chrome/javascript/upgrade/upgrade.js"/>
-    </concat>
-    <move file="${browser}/upgrade/upgrade.temp" tofile="${browser}/upgrade/upgrade.js">
+    <copy file="../source/chrome/javascript/upgrade/upgrade.js" tofile="${browser}/upgrade/upgrade.js">
       <filterset refid="filters"/>
-    </move>
+    </copy>
     <concat destfile="${browser}/common/style-sheets/bootstrap.css">
       <fileset file="../source/common/style-sheets/common/bootstrap/bootstrap.css"/>
       <fileset file="../source/common/style-sheets/common/bootstrap/font-awesome.css"/>
@@ -1052,7 +1048,6 @@
     	<fileset dir="../source/common/javascript/toolbar">
      		<exclude name="**/html/**"/>
     	</fileset>
-      <fileset dir="../source/common/javascript/upgrade"/>
       <fileset dir="../source/firefox/javascript/application"/>
       <fileset dir="../source/firefox/javascript/features"/>
       <fileset dir="../source/firefox/javascript/overlay"/>

@@ -26,16 +26,17 @@ body { padding: 70px 0 20px 0; }
 
 /* Tab styles */
 
-#advanced-tab > a > span { background-position: -64px 0; }
-#resize-tab > a > span { background-position: -16px 0; }
-#responsive-layouts-tab > a > span { background-position: -32px 0; }
-#tools-tab > a > span { background-position: -48px 0; }
+#advanced-tab > a > span { background-position: -80px 0; }
+#colors-tab > a > span { background-position: -16px 0; }
+#resize-tab > a > span { background-position: -32px 0; }
+#responsive-layouts-tab > a > span { background-position: -48px 0; }
+#tools-tab > a > span { background-position: -64px 0; }
 .nav-tabs > li > a { outline-style: none; }
 .nav-tabs > li > a > span { background: url(images/options.png) no-repeat 0 0; display: inline-block; height: 16px; margin-right: 5px; position: relative; top: 2px; width: 16px; }
 
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5)
 {
-  .nav-tabs > li > a > span { background-image: url(images/options-2x.png); background-size: 80px 16px; }
+  .nav-tabs > li > a > span { background-image: url(images/options-2x.png); background-size: 96px 16px; }
 }
 
 /* Color styles */

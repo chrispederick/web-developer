@@ -32,16 +32,25 @@ WebDeveloper.Generated.addDocument = function(documentURL, documentCount, itemDe
   {
     element = document.createElement("h3");
 
-    // If there are items
-    if(itemCount !== 0)
+    // If the item count is set
+    if(itemCount)
     {
-      childElement = document.createElement("i");
+      // If there are items
+      if(itemCount !== 0)
+      {
+        childElement = document.createElement("i");
 
-      childElement.setAttribute("class", "icon-collapse-alt");
-      element.appendChild(childElement);
+        childElement.setAttribute("class", "icon-collapse-alt");
+        element.appendChild(childElement);
+      }
+
+      element.appendChild(document.createTextNode(itemCount + " " + itemDescription));
+    }
+    else
+    {
+      element.appendChild(document.createTextNode(itemDescription));
     }
 
-    element.appendChild(document.createTextNode(itemCount + " " + itemDescription));
     fragment.appendChild(element);
   }
 

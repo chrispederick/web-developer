@@ -42,11 +42,11 @@ WebDeveloper.Miscellaneous.hiddenNodeFilter = function(node)
     // If the computed style is set
     if(computedStyle)
     {
-      var display = computedStyle.getPropertyCSSValue("display");
+      var display = WebDeveloper.Common.getPropertyCSSValue(computedStyle, "display");
       var tagName = node.tagName;
 
       // If this element has a display and tag name, the display is set to none and the tag name is not script
-      if(display && tagName && display.cssText == "none")
+      if(display && tagName && WebDeveloper.Common.getCSSText(display) == "none")
       {
         return NodeFilter.FILTER_ACCEPT;
       }

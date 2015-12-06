@@ -702,7 +702,7 @@ WebDeveloper.Forms.outlineFormFieldsWithoutLabels = function(outline, documents)
             // If the form element has an id attribute
             if(formElementId)
             {
-              labelElement = contentDocument.querySelector("label[for=" + formElementId + "]");
+              labelElement = contentDocument.querySelector('label[for="' + formElementId + '"]');
 
               // If no label element was found
               if(!labelElement)
@@ -856,7 +856,7 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
 
             populatedFormFields++;
           }
-          else if((inputElementType && inputElementType.toLowerCase() == "tel") || (inputElementName && (inputElementName.toLowerCase().indexOf("phone") >= 0 || inputElementName && inputElementName.toLowerCase().indexOf("tel") >= 0)) )
+          else if((inputElementType && inputElementType.toLowerCase() == "tel") || (inputElementName && (inputElementName.toLowerCase().indexOf("phone") >= 0 || inputElementName && inputElementName.toLowerCase().indexOf("tel") >= 0)))
           {
             inputElement.value = "1234567890";
 

@@ -101,7 +101,7 @@ WebDeveloper.Outline.outlineFloatedElements = function(outline, documents)
       // While the tree walker has more nodes
       while((node = treeWalker.nextNode()) !== null)
       {
-        float = node.ownerDocument.defaultView.getComputedStyle(node, null).getPropertyCSSValue("float").cssText;
+        float = WebDeveloper.Common.getCSSText(WebDeveloper.Common.getPropertyCSSValue(node.ownerDocument.defaultView.getComputedStyle(node, null), "float"));
 
         // If this element has a background image and it is a URL
         if(float && float != "none")
@@ -188,7 +188,7 @@ WebDeveloper.Outline.outlinePositionedElements = function(positionType, outline,
       // While the tree walker has more nodes
       while((node = treeWalker.nextNode()) !== null)
       {
-        position = node.ownerDocument.defaultView.getComputedStyle(node, null).getPropertyCSSValue("position").cssText;
+        position = WebDeveloper.Common.getCSSText(WebDeveloper.Common.getPropertyCSSValue(node.ownerDocument.defaultView.getComputedStyle(node, null), "position"));
 
         // If this element has a background image and it is a URL
         if(position && position == positionType)

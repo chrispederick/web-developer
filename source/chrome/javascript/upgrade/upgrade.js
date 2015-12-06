@@ -5,7 +5,7 @@ WebDeveloper.Upgrade = WebDeveloper.Upgrade || {};
 // Opens the upgrade URL
 WebDeveloper.Upgrade.openUpgradeURL = function(version)
 {
-  chrome.tabs.create({ "url": "@url@/@browser@/installed/" + version.replace(".", "") + "/" });
+  chrome.tabs.create({ url: "@url@/@browser@/installed/" + version + "/" });
 };
 
 // Sets up the default options
@@ -16,6 +16,9 @@ WebDeveloper.Upgrade.setupDefaultOptions = function()
 
   // Colors
   WebDeveloper.Storage.setItemIfNotSet("syntax_highlight_theme", "none");
+
+  // General
+  WebDeveloper.Storage.setItemIfNotSet("display_overlay_with", "icons_text");
 
   // Resize
   WebDeveloper.Storage.setItemIfNotSet("resize_1_description", WebDeveloper.Locales.getString("resize_1_description"));
@@ -46,7 +49,7 @@ WebDeveloper.Upgrade.setupDefaultOptions = function()
 
   // Tools
   WebDeveloper.Storage.setItemIfNotSet("tool_1_description", WebDeveloper.Locales.getString("tool_1_description"));
-  WebDeveloper.Storage.setItemIfNotSet("tool_1_url", "http://jigsaw.w3.org/css-validator/validator?profile=css21&warning=0&uri=");
+  WebDeveloper.Storage.setItemIfNotSet("tool_1_url", "http://jigsaw.w3.org/css-validator/validator?profile=css3&warning=0&uri=");
   WebDeveloper.Storage.setItemIfNotSet("tool_2_description", WebDeveloper.Locales.getString("tool_2_description"));
   WebDeveloper.Storage.setItemIfNotSet("tool_2_url", "http://validator.w3.org/feed/check.cgi?url=");
   WebDeveloper.Storage.setItemIfNotSet("tool_3_description", WebDeveloper.Locales.getString("tool_3_description"));
@@ -64,15 +67,14 @@ WebDeveloper.Upgrade.setupDefaultOptions = function()
 WebDeveloper.Upgrade.upgrade = function()
 {
   var previousVersion = WebDeveloper.Storage.getItem("version");
-  var version         = WebDeveloper.Upgrade.formatVersionNumber("@version@");
 
   WebDeveloper.Upgrade.setupDefaultOptions();
 
   // If the versions do not match
-  if(previousVersion != version)
+  if(previousVersion != "@version@")
   {
-    WebDeveloper.Storage.setItem("version", version);
-    WebDeveloper.Upgrade.openUpgradeURL(version);
+    WebDeveloper.Storage.setItem("version", "@version@");
+    WebDeveloper.Upgrade.openUpgradeURL("@version@");
   }
 };
 

@@ -89,7 +89,7 @@ WebDeveloperValidateCSS.prototype.getCSS = function(css, callback)
     // Loop through the style sheets
     for(var j = 0, m = styleSheets.length; j < m; j++)
     {
-      urlContentRequests.push({ "url": styleSheets[j] });
+      urlContentRequests.push({ url: styleSheets[j] });
     }
   }
 
@@ -191,8 +191,16 @@ WebDeveloperValidateCSS.prototype.validateBackgroundCSS = function(uri, css)
     }
     catch(exception2)
     {
-      // Reset the validation request
-      validator.validationRequest = new XMLHttpRequest();
+      // Try to send as a blob
+      try
+      {
+        validator.validationRequest.send(new Blob([requestBody], { type: 'text/css' }));
+      }
+      catch(exception3)
+      {
+        // Reset the validation request
+        validator.validationRequest = new XMLHttpRequest();
+      }
     }
   });
 };

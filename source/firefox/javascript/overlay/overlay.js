@@ -26,7 +26,7 @@ WebDeveloper.Overlay.displayConfirmation = function(title, message, buttonText, 
   }
   else
   {
-    var checkBox      = {value: false};
+    var checkBox      = { value: false };
     var promptService = Components.interfaces.nsIPromptService;
     var result        = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(promptService).confirmEx(null, title, message, promptService.BUTTON_TITLE_IS_STRING * promptService.BUTTON_POS_0 + promptService.BUTTON_TITLE_CANCEL * promptService.BUTTON_POS_1, buttonText, null, null, WebDeveloper.Locales.getString("stopConfirmation"), checkBox);
 
@@ -200,6 +200,7 @@ WebDeveloper.Overlay.pageLoad = function(event)
     {
       WebDeveloper.Storage.deleteFeatures(tab);
       WebDeveloper.ElementAncestors.removeToolbar();
+      WebDeveloper.PageValidation.removeToolbar();
     }
 
     // If the selected browser is the one that loaded

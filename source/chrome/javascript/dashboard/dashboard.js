@@ -58,7 +58,7 @@ WebDeveloper.Dashboard.createDashboard = function(contentDocument, dashboardHTML
   resizer.addEventListener("mousedown", WebDeveloper.Dashboard.resizerMouseDown, false);
 
   // Get the dashboard templates
-  chrome.extension.sendMessage({ "item": "dashboard_height", "type": "get-storage-item" }, function(response)
+  chrome.extension.sendMessage({ item: "dashboard_height", type: "get-storage-item" }, function(response)
   {
     var height = response.value;
 
@@ -154,7 +154,7 @@ WebDeveloper.Dashboard.resize = function(height)
   WebDeveloper.ElementInformation.resize(dashboard);
 
   // Get the dashboard templates
-  chrome.extension.sendMessage({ "item": "dashboard_height", "type": "set-storage-item", "value": height }, function()
+  chrome.extension.sendMessage({ item: "dashboard_height", type: "set-storage-item", value: height }, function()
   {
     // Ignore
   });

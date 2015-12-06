@@ -1,12 +1,13 @@
 {
+  "description": "Web Developer",
   "name": "web-developer",
   "version": "1.0.0",
   "devDependencies": {
-    "grunt": "~0.4.2",
-    "grunt-contrib-csslint": "~0.2.0",
-    "grunt-contrib-jshint": "~0.8.0",
-    "grunt-jscs-checker": "~0.3.2",
-    "grunt-newer": "~0.6.0",
-    "load-grunt-tasks": "~0.3.0"
+    "grunt": "*",
+    "grunt-contrib-csslint": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-jscs": "*",
+    "grunt-newer": "*",
+    "load-grunt-tasks": "*"
   }
 }

@@ -48,7 +48,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
     {
       url = styleSheets[k];
 
-      urlContentRequests.push({ "outputContainers": WebDeveloper.Generated.output(null, url, "style-sheet-" + (styleSheetsCounter++), "css"), "url": url });
+      urlContentRequests.push({ outputContainers: WebDeveloper.Generated.output(null, url, "style-sheet-" + (styleSheetsCounter++), "css"), url: url });
     }
 
     // If there are no style sheets

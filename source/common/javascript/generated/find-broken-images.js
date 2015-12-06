@@ -24,20 +24,19 @@ WebDeveloper.Generated.initialize = function(data, locale)
     imageDescription = brokenImages.toLowerCase();
     imagesLength     = contentDocument.images.length;
 
-    // If there is only one image
-    if(imagesLength == 1)
-    {
-      imageDescription = locale.brokenImage;
-    }
-
-    WebDeveloper.Generated.addDocument(contentDocument.url, i, imageDescription, imagesLength);
+    WebDeveloper.Generated.addDocument(contentDocument.url, i, locale.brokenImages);
 
     // If there are broken images
     if(imagesLength > 0)
     {
       list = document.createElement("ol");
 
-      $(list).append(ich.brokenImages(contentDocument, true));
+      // Loop through the images
+      for(var j = 0, m = imagesLength; j < m; j++)
+      {
+        WebDeveloper.Generated.testForBrokenImage(contentDocument.images[j], list);
+      }
+
       content.appendChild(list);
     }
 
@@ -45,4 +44,18 @@ WebDeveloper.Generated.initialize = function(data, locale)
   }
 
   WebDeveloper.Generated.initializeCommonElements();
+};
+
+// Tests for a broken image
+WebDeveloper.Generated.testForBrokenImage = function(src, list)
+{
+  var image = new Image();
+
+  // Add a load event listener to the image
+  image.onerror = function()
+  {
+    $(list).append(ich.brokenImage({ src: image.src }));
+  };
+
+  image.src = src;
 };

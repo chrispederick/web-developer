@@ -69,7 +69,7 @@ WebDeveloper.Overlay.Tools.validateLocalCSS = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.tabs.sendMessage(tab.id, {type: "get-css"}, function(data)
+      chrome.tabs.sendMessage(tab.id, { type: "get-css" }, function(data)
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.validateLocalCSS(chrome.extension.getURL("validation/css.html"), tab.index, data);
       });

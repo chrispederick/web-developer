@@ -35,16 +35,16 @@ WebDeveloper.EditCSS.addTab = function(title, styles, stylesURL, tabs, tabPanels
       // If there is a load error message we need to load the content
       if(loadErrorMessage)
       {
-        var urlContentRequest = { "url": url };
+        var urlContentRequest = { url: url };
 
-        WebDeveloper.Common.getURLContent(urlContentRequest, loadErrorMessage, { "urlContentRequestsRemaining": 1, "callback": function() {
-          headElement.setAttribute("data-web-developer", JSON.stringify({ "content": urlContentRequest.content, "theme": theme }));
+        WebDeveloper.Common.getURLContent(urlContentRequest, loadErrorMessage, { urlContentRequestsRemaining: 1, callback: function() {
+          headElement.setAttribute("data-web-developer", JSON.stringify({ content: urlContentRequest.content, theme: theme }));
           headElement.dispatchEvent(dispatchEvent);
-        }});
+        } });
       }
       else
       {
-        headElement.setAttribute("data-web-developer", JSON.stringify({ "content": styleContent, "theme": theme }));
+        headElement.setAttribute("data-web-developer", JSON.stringify({ content: styleContent, theme: theme }));
         headElement.dispatchEvent(dispatchEvent);
       }
 

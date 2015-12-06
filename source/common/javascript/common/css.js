@@ -155,8 +155,8 @@ WebDeveloper.CSS.isMediaStyleSheet = function(styleSheet, mediaType)
     var mediaLength         = media.length;
     var styleSheetMediaType = null;
 
-    // If there is no media and the match media type is screen
-    if(mediaLength === 0 && mediaType == "screen")
+    // If there is no media
+    if(mediaLength === 0)
     {
       return true;
     }

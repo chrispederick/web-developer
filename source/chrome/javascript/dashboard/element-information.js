@@ -60,7 +60,7 @@ WebDeveloper.ElementInformation.initialize = function(display, contentDocument, 
 WebDeveloper.ElementInformation.loadDashboardTemplates = function(contentDocument, locale)
 {
   // Get the dashboard templates
-  chrome.extension.sendMessage({ "dashboardTitle": locale.dashboardTitle, "selectAnElementDisplayInformation": locale.selectAnElementDisplayInformation, "tabId": "element-information", "title": locale.elementInformation, "type": "get-element-information-dashboard-templates" }, function(response)
+  chrome.extension.sendMessage({ dashboardTitle: locale.dashboardTitle, selectAnElementDisplayInformation: locale.selectAnElementDisplayInformation, tabId: "element-information", title: locale.elementInformation, type: "get-element-information-dashboard-templates" }, function(response)
   {
     // If the dashboard template was returned - sometimes this fails
     if(response.dashboard)
@@ -91,4 +91,3 @@ WebDeveloper.ElementInformation.resize = function(dashboard)
     elementInformationPanel.style.height = (dashboard.offsetHeight - elementInformationPanel.offsetTop - WebDeveloper.ElementInformation.breadcrumbHeight) + "px";
   }
 };
-

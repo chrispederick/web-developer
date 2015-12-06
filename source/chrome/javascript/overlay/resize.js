@@ -56,7 +56,7 @@ WebDeveloper.Overlay.Resize.displayResizeDialog = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.tabs.sendMessage(tab.id, {type: "get-window-size"}, function(response)
+      chrome.tabs.sendMessage(tab.id, { type: "get-window-size" }, function(response)
       {
         var resizeWindowDialog = $("#resize-window-dialog");
 
@@ -82,7 +82,7 @@ WebDeveloper.Overlay.Resize.displayWindowSize = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.tabs.sendMessage(tab.id, {type: "get-window-size"}, function(response)
+      chrome.tabs.sendMessage(tab.id, { type: "get-window-size" }, function(response)
       {
         WebDeveloper.Overlay.displayNotification(WebDeveloper.Locales.getFormattedString("displayWindowSizeResult", [response.outerWidth, response.outerHeight, response.innerWidth, response.innerHeight]), "info");
       });

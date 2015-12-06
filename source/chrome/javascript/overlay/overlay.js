@@ -6,20 +6,27 @@ WebDeveloper.Overlay.animationSpeed = 100;
 
 $(function()
 {
-  var menu         = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("menu");
-  var notification = $("#notification");
+  var displayOverlayWith = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("display_overlay_with");
+  var menu               = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("menu");
+  var notification       = $("#notification");
 
-  $("#cookies-toolbar > a").attr("title", WebDeveloper.Locales.getString("cookies"));
-  $("#css-toolbar > a").attr("title", WebDeveloper.Locales.getString("css"));
-  $("#disable-toolbar > a").attr("title", WebDeveloper.Locales.getString("disable"));
-  $("#forms-toolbar > a").attr("title", WebDeveloper.Locales.getString("forms"));
-  $("#images-toolbar > a").attr("title", WebDeveloper.Locales.getString("images"));
-  $("#information-toolbar > a").attr("title", WebDeveloper.Locales.getString("information"));
-  $("#miscellaneous-toolbar > a").attr("title", WebDeveloper.Locales.getString("miscellaneous"));
-  $("#options-toolbar > a").attr("title", WebDeveloper.Locales.getString("options"));
-  $("#outline-toolbar > a").attr("title", WebDeveloper.Locales.getString("outline"));
-  $("#resize-toolbar > a").attr("title", WebDeveloper.Locales.getString("resize"));
-  $("#tools-toolbar > a").attr("title", WebDeveloper.Locales.getString("tools"));
+  WebDeveloper.Overlay.labelMenu($("#cookies-toolbar > a"), WebDeveloper.Locales.getString("cookies"), displayOverlayWith);
+  WebDeveloper.Overlay.labelMenu($("#css-toolbar > a"), WebDeveloper.Locales.getString("css"), displayOverlayWith);
+  WebDeveloper.Overlay.labelMenu($("#disable-toolbar > a"), WebDeveloper.Locales.getString("disable"), displayOverlayWith);
+  WebDeveloper.Overlay.labelMenu($("#forms-toolbar > a"), WebDeveloper.Locales.getString("forms"), displayOverlayWith);
+  WebDeveloper.Overlay.labelMenu($("#images-toolbar > a"), WebDeveloper.Locales.getString("images"), displayOverlayWith);
+  WebDeveloper.Overlay.labelMenu($("#information-toolbar > a"), WebDeveloper.Locales.getString("information"), displayOverlayWith);
+  WebDeveloper.Overlay.labelMenu($("#miscellaneous-toolbar > a"), WebDeveloper.Locales.getString("miscellaneous"), displayOverlayWith);
+  WebDeveloper.Overlay.labelMenu($("#options-toolbar > a"), WebDeveloper.Locales.getString("options"), displayOverlayWith);
+  WebDeveloper.Overlay.labelMenu($("#outline-toolbar > a"), WebDeveloper.Locales.getString("outline"), displayOverlayWith);
+  WebDeveloper.Overlay.labelMenu($("#resize-toolbar > a"), WebDeveloper.Locales.getString("resize"), displayOverlayWith);
+  WebDeveloper.Overlay.labelMenu($("#tools-toolbar > a"), WebDeveloper.Locales.getString("tools"), displayOverlayWith);
+
+  // If the display overlay with setting is set to text
+  if(displayOverlayWith == "text")
+  {
+    $(".nav-tabs").addClass("overlay-text");
+  }
 
   // If the menu is not set
   if(!menu)
@@ -84,9 +91,9 @@ WebDeveloper.Overlay.addScriptToTab = function(tab, script, callback)
 // Adds scripts to the tab
 WebDeveloper.Overlay.addScriptsToTab = function(tab, scriptFile, scriptCode, callback)
 {
-  WebDeveloper.Overlay.addScriptToTab(tab, { "file": scriptFile }, function()
+  WebDeveloper.Overlay.addScriptToTab(tab, { file: scriptFile }, function()
   {
-    WebDeveloper.Overlay.addScriptToTab(tab, { "code": scriptCode }, callback);
+    WebDeveloper.Overlay.addScriptToTab(tab, { code: scriptCode }, callback);
   });
 };
 
@@ -172,7 +179,7 @@ WebDeveloper.Overlay.displayNotification = function(message, type)
 // Returns the selected tab
 WebDeveloper.Overlay.getSelectedTab = function(callback)
 {
-  chrome.tabs.query({ "active": true, "currentWindow": true }, function(tabs)
+  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs)
   {
     callback(tabs[0]);
   });
@@ -206,6 +213,20 @@ WebDeveloper.Overlay.isValidTab = function(tab)
   return true;
 };
 
+// Labels a menu
+WebDeveloper.Overlay.labelMenu = function(menu, label, displayOverlayWith)
+{
+  // If the display overlay with setting is set to icons only
+  if(displayOverlayWith == "icons")
+  {
+    menu.attr("title", label);
+  }
+  else
+  {
+    menu.append(label);
+  }
+};
+
 // Handles any overlay messages
 WebDeveloper.Overlay.message = function(message, sender, sendResponse)
 {
@@ -223,7 +244,7 @@ WebDeveloper.Overlay.openTab = function(tabURL)
 {
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
-    chrome.tabs.create({ "index": tab.index + 1, "url": tabURL });
+    chrome.tabs.create({ index: tab.index + 1, url: tabURL });
 
     WebDeveloper.Overlay.close();
   });
@@ -236,7 +257,7 @@ WebDeveloper.Overlay.openURL = function(event)
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
-    chrome.tabs.create({ "index": tab.index + 1, "url": href });
+    chrome.tabs.create({ index: tab.index + 1, url: href });
 
     WebDeveloper.Overlay.close();
   });
@@ -247,7 +268,7 @@ WebDeveloper.Overlay.openURL = function(event)
 // Toggles a content setting
 WebDeveloper.Overlay.toggleContentSetting = function(settingType, menu, url, enableMessage, disableMessage)
 {
-  chrome.contentSettings[settingType].get({ "primaryUrl": url }, function(details)
+  chrome.contentSettings[settingType].get({ primaryUrl: url }, function(details)
   {
     var callback = null;
     var setting  = details.setting;
@@ -281,7 +302,7 @@ WebDeveloper.Overlay.toggleContentSetting = function(settingType, menu, url, ena
       };
     }
 
-    chrome.contentSettings[settingType].set({ "primaryPattern": url, "setting": setting }, callback);
+    chrome.contentSettings[settingType].set({ primaryPattern: url, setting: setting }, callback);
   });
 };
 
@@ -310,7 +331,7 @@ WebDeveloper.Overlay.updateContentSettingMenu = function(menu, settingType)
   // If content settings exists
   if(chrome.contentSettings)
   {
-    chrome.contentSettings[settingType].get({ "primaryUrl": "http://*/*" }, function(details)
+    chrome.contentSettings[settingType].get({ primaryUrl: "http://*/*" }, function(details)
     {
       var setting = details.setting;
 

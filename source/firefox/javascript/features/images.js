@@ -25,7 +25,7 @@ WebDeveloper.Images.displayImageFileSizes = function(display, documents)
       {
         image = images[j];
 
-        fileSizeRequests.push({ "fileObject": {}, "image": image, "includeUncompressed": false, "url": image.src });
+        fileSizeRequests.push({ fileObject: {}, image: image, includeUncompressed: false, url: image.src });
       }
     }
     else

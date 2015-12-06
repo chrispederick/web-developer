@@ -26,7 +26,7 @@ WebDeveloper.Overlay.Miscellaneous.addFeatureOnTab = function(featureItem, tab, 
 // Adds an href to the history
 WebDeveloper.Overlay.Miscellaneous.addToHistory = function(href)
 {
-  chrome.history.addUrl({url: href});
+  chrome.history.addUrl({ url: href });
 };
 
 // Clears the cache
@@ -175,7 +175,7 @@ WebDeveloper.Overlay.Miscellaneous.makeFramesResizable = function()
 // Removes an href from the history
 WebDeveloper.Overlay.Miscellaneous.removeFromHistory = function(href)
 {
-  chrome.history.deleteUrl({url: href});
+  chrome.history.deleteUrl({ url: href });
 };
 
 // Toggles a feature on a tab
@@ -192,7 +192,7 @@ WebDeveloper.Overlay.Miscellaneous.toggleVisitedLinks = function(visited)
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.tabs.sendMessage(tab.id, {type: "get-links"}, function(data)
+      chrome.tabs.sendMessage(tab.id, { type: "get-links" }, function(data)
       {
         var documents = data.documents;
         var links     = null;

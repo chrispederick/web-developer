@@ -301,7 +301,6 @@ WebDeveloper.Images.outlineBackgroundImages = function(outline, documents)
   var backgroundImage  = null;
   var backgroundImages = null;
   var contentDocument  = null;
-  var cssURI           = CSSPrimitiveValue.CSS_URI;
   var node             = null;
   var treeWalker       = null;
 
@@ -318,10 +317,10 @@ WebDeveloper.Images.outlineBackgroundImages = function(outline, documents)
       // While the tree walker has more nodes
       while((node = treeWalker.nextNode()) !== null)
       {
-        backgroundImage = WebDeveloper.Common.getCSSProperty(node.ownerDocument.defaultView.getComputedStyle(node, null).getPropertyCSSValue("background-image"));
+        backgroundImage = WebDeveloper.Common.getCSSProperty(WebDeveloper.Common.getPropertyCSSValue(node.ownerDocument.defaultView.getComputedStyle(node, null), "background-image"));
 
         // If this element has a background image and it is a URL
-        if(backgroundImage && backgroundImage.primitiveType == cssURI)
+        if(WebDeveloper.Common.isCSSURI(backgroundImage))
         {
           WebDeveloper.Common.addClass(node, "web-developer-outline-background-images");
         }
@@ -475,7 +474,6 @@ WebDeveloper.Images.reloadImages = function(documents)
 {
   var computedStyle   = null;
   var contentDocument = null;
-  var cssURI          = CSSPrimitiveValue.CSS_URI;
   var imageURL        = null;
   var node            = null;
   var styleImage      = null;
@@ -512,12 +510,12 @@ WebDeveloper.Images.reloadImages = function(documents)
         // If the computed style is set
         if(computedStyle)
         {
-          styleImage = WebDeveloper.Common.getCSSProperty(computedStyle.getPropertyCSSValue("background-image"));
+          styleImage = WebDeveloper.Common.getCSSProperty(WebDeveloper.Common.getPropertyCSSValue(computedStyle, "background-image"));
 
           // If this element has a background image and it is a URI
-          if(styleImage && styleImage.primitiveType == cssURI)
+          if(WebDeveloper.Common.isCSSURI(styleImage))
           {
-            imageURL = styleImage.getStringValue();
+            imageURL = WebDeveloper.Common.getCSSURI(styleImage);
 
             // If this is not a chrome image
             if(imageURL.indexOf("chrome://") !== 0)
@@ -526,12 +524,12 @@ WebDeveloper.Images.reloadImages = function(documents)
             }
           }
 
-          styleImage = computedStyle.getPropertyCSSValue("list-style-image");
+          styleImage = WebDeveloper.Common.getPropertyCSSValue(computedStyle, "list-style-image");
 
-          // If this element has a background image and it is a URI
-          if(styleImage && styleImage.primitiveType == cssURI)
+          // If this element has a list style image and it is a URI
+          if(WebDeveloper.Common.isCSSURI(styleImage))
           {
-            imageURL = styleImage.getStringValue();
+            imageURL = WebDeveloper.Common.getCSSURI(styleImage);
 
             // If this is not a chrome image
             if(imageURL.indexOf("chrome://") !== 0)

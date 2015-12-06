@@ -53,7 +53,7 @@ WebDeveloper.Background.getColor = function(x, y, eventType)
 
       color = WebDeveloper.Background.convertRGBToHex(context.getImageData(x, y, 1, 1).data);
 
-      chrome.tabs.executeScript(null, { "code": "WebDeveloper.ColorPicker.setColor('" + color + "', '" + eventType + "')" });
+      chrome.tabs.executeScript(null, { code: "WebDeveloper.ColorPicker.setColor('" + color + "', '" + eventType + "')" });
     };
   });
 
@@ -63,19 +63,19 @@ WebDeveloper.Background.getColor = function(x, y, eventType)
 // Returns the edit CSS dashboard HTML template
 WebDeveloper.Background.getEditCSSDashboardTemplates = function(parameters)
 {
-  return { "dashboard": ich.dashboard(parameters, true), "editCSS": ich.editCSSPanel(parameters, true), "panel": ich.dashboardPanel(parameters, true), "tab": ich.dashboardTab(parameters, true) };
+  return { dashboard: ich.dashboard(parameters, true), editCSS: ich.editCSSPanel(parameters, true), panel: ich.dashboardPanel(parameters, true), tab: ich.dashboardTab(parameters, true) };
 };
 
 // Returns the edit CSS tab HTML template
 WebDeveloper.Background.getEditCSSTabTemplates = function(parameters)
 {
-  return { "panel": ich.editCSSTabPanel(parameters, true), "tab": ich.editCSSTab(parameters, true) };
+  return { panel: ich.editCSSTabPanel(parameters, true), tab: ich.editCSSTab(parameters, true) };
 };
 
 // Returns the element information dashboard HTML template
 WebDeveloper.Background.getElementInformationDashboardTemplates = function(parameters)
 {
-  return { "dashboard": ich.dashboard(parameters, true), "elementInformation": ich.elementInformationPanel(parameters, true), "panel": ich.dashboardPanel(parameters, true), "tab": ich.dashboardTab(parameters, true) };
+  return { dashboard: ich.dashboard(parameters, true), elementInformation: ich.elementInformationPanel(parameters, true), panel: ich.dashboardPanel(parameters, true), tab: ich.dashboardTab(parameters, true) };
 };
 
 // Gets the styles from CSS
@@ -108,7 +108,7 @@ WebDeveloper.Background.getStylesFromCSS = function(cssDocuments)
     styles += cssContent[i].content;
   }
 
-  return { "css": styles };
+  return { css: styles };
 };
 
 // Gets the content from a URL
@@ -153,7 +153,7 @@ WebDeveloper.Background.getURLContents = function(urls, errorMessage)
   {
     url = urls[i];
 
-    urlContents.push({ "content": WebDeveloper.Background.getURLContent(url, errorMessage), "url": url });
+    urlContents.push({ content: WebDeveloper.Background.getURLContent(url, errorMessage), url: url });
   }
 
   return urlContents;
@@ -163,7 +163,7 @@ WebDeveloper.Background.getURLContents = function(urls, errorMessage)
 WebDeveloper.Background.initializeGeneratedTab = function(url, data, locale)
 {
   var extensionTab = null;
-  var tabs         = chrome.extension.getViews({ "type": "tab" });
+  var tabs         = chrome.extension.getViews({ type: "tab" });
 
   // Loop through the tabs
   for(var i = 0, l = tabs.length; i < l; i++)
@@ -184,7 +184,7 @@ WebDeveloper.Background.initializeGeneratedTab = function(url, data, locale)
 WebDeveloper.Background.initializeValidationTab = function(url, data)
 {
   var extensionTab = null;
-  var tabs         = chrome.extension.getViews({ "type": "tab" });
+  var tabs         = chrome.extension.getViews({ type: "tab" });
 
   // Loop through the tabs
   for(var i = 0, l = tabs.length; i < l; i++)
@@ -211,19 +211,19 @@ WebDeveloper.Background.message = function(message, sender, sendResponse)
   }
   else if(message.type == "get-edit-css-dashboard-templates")
   {
-    sendResponse(WebDeveloper.Background.getEditCSSDashboardTemplates({ "dashboardTitle": message.dashboardTitle, "tabId": message.tabId, "title": message.title }));
+    sendResponse(WebDeveloper.Background.getEditCSSDashboardTemplates({ dashboardTitle: message.dashboardTitle, tabId: message.tabId, title: message.title }));
   }
   else if(message.type == "get-edit-css-tab-templates")
   {
-    sendResponse(WebDeveloper.Background.getEditCSSTabTemplates({ "active": message.active, "css": message.css, "position": message.position, "title": message.title }));
+    sendResponse(WebDeveloper.Background.getEditCSSTabTemplates({ active: message.active, css: message.css, position: message.position, title: message.title }));
   }
   else if(message.type == "get-element-information-dashboard-templates")
   {
-    sendResponse(WebDeveloper.Background.getElementInformationDashboardTemplates({ "dashboardTitle": message.dashboardTitle, "selectAnElementDisplayInformation": message.selectAnElementDisplayInformation, "tabId": message.tabId, "title": message.title }));
+    sendResponse(WebDeveloper.Background.getElementInformationDashboardTemplates({ dashboardTitle: message.dashboardTitle, selectAnElementDisplayInformation: message.selectAnElementDisplayInformation, tabId: message.tabId, title: message.title }));
   }
   else if(message.type == "get-storage-item")
   {
-    sendResponse({ "value": WebDeveloper.Storage.getItem(message.item) });
+    sendResponse({ value: WebDeveloper.Storage.getItem(message.item) });
   }
   else if(message.type == "get-url-contents")
   {
@@ -246,7 +246,7 @@ WebDeveloper.Background.message = function(message, sender, sendResponse)
 // Opens a generated tab
 WebDeveloper.Background.openGeneratedTab = function(tabURL, tabIndex, data, locale)
 {
-  chrome.tabs.create({ "index": tabIndex + 1, "url": tabURL }, function(openedTab)
+  chrome.tabs.create({ index: tabIndex + 1, url: tabURL }, function(openedTab)
   {
     var tabLoaded = function(tabId, tabInformation)
     {
@@ -266,7 +266,7 @@ WebDeveloper.Background.openGeneratedTab = function(tabURL, tabIndex, data, loca
 // Validates the CSS of the local page
 WebDeveloper.Background.validateLocalCSS = function(tabURL, tabIndex, css)
 {
-  chrome.tabs.create({ "index": tabIndex + 1, "url": tabURL }, function(openedTab)
+  chrome.tabs.create({ index: tabIndex + 1, url: tabURL }, function(openedTab)
   {
     var tabLoaded = function(tabId, tabInformation)
     {
@@ -286,7 +286,7 @@ WebDeveloper.Background.validateLocalCSS = function(tabURL, tabIndex, css)
 // Validates the HTML of the local page
 WebDeveloper.Background.validateLocalHTML = function(tabURL, tabIndex, validateURL)
 {
-  chrome.tabs.create({ "index": tabIndex + 1, "url": tabURL }, function(openedTab)
+  chrome.tabs.create({ index: tabIndex + 1, url: tabURL }, function(openedTab)
   {
     var tabLoaded = function(tabId, tabInformation)
     {

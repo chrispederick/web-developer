@@ -217,6 +217,7 @@ WebDeveloper.Options.initialize = function()
 {
   WebDeveloper.Options.localize();
   WebDeveloper.Options.initializeColorsTab();
+  WebDeveloper.Options.initializeGeneralTab();
   WebDeveloper.Options.initializeResizeTab();
   WebDeveloper.Options.initializeResponsiveLayoutsTab();
   WebDeveloper.Options.initializeToolsTab();
@@ -235,6 +236,12 @@ WebDeveloper.Options.initializeColorsTab = function()
   $("#syntax_highlight_theme").val(WebDeveloper.Storage.getItem("syntax_highlight_theme")).on("change", WebDeveloper.Options.updateSyntaxHighlightTheme);
   $("#syntax-highlight-browser").on("load", WebDeveloper.Options.updateSyntaxHighlightTheme);
   $("#icon_color").prop("checked", WebDeveloper.Storage.getItem("icon_color") == "true").on("change", WebDeveloper.Options.updateIconColor);
+};
+
+// Initializes the general tab
+WebDeveloper.Options.initializeGeneralTab = function()
+{
+  $("#display_overlay_with").val(WebDeveloper.Storage.getItem("display_overlay_with")).on("change", WebDeveloper.Options.updateDisplayOverlayWith);
 };
 
 // Initializes the resize tab
@@ -281,7 +288,7 @@ WebDeveloper.Options.initializeResizeTab = function()
 
   resizeOptionsTable.on("click", ".btn-danger", WebDeveloper.Options.deleteResizeOption);
   resizeOptionsTable.on("click", ".btn-primary", WebDeveloper.Options.editResizeOption);
-  $("table", resizeOptions).tableDnD({ "onDragStart": WebDeveloper.Options.tableDragStart, "onDrop": WebDeveloper.Options.updateResizeOptions });
+  $("table", resizeOptions).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateResizeOptions });
   $(".table-container > .btn-primary", resizeOptions).on("click", WebDeveloper.Options.displayResizeOptionForm);
 
   $("#resize-cancel").on("click", WebDeveloper.Options.closeResizeOption);
@@ -333,7 +340,7 @@ WebDeveloper.Options.initializeResponsiveLayoutsTab = function()
 
   responsiveLayoutsTable.on("click", ".btn-danger", WebDeveloper.Options.deleteResponsiveLayout);
   responsiveLayoutsTable.on("click", ".btn-primary", WebDeveloper.Options.editResponsiveLayout);
-  $("table", responsiveLayouts).tableDnD({ "onDragStart": WebDeveloper.Options.tableDragStart, "onDrop": WebDeveloper.Options.updateResponsiveLayouts });
+  $("table", responsiveLayouts).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateResponsiveLayouts });
   $(".table-container > .btn-primary", responsiveLayouts).on("click", WebDeveloper.Options.displayResponsiveLayoutForm);
 
   $("#responsive-layout-form").on("submit", function(event) { event.preventDefault(); });
@@ -382,7 +389,7 @@ WebDeveloper.Options.initializeToolsTab = function()
 
   toolsTable.on("click", ".btn-danger", WebDeveloper.Options.deleteTool);
   toolsTable.on("click", ".btn-primary", WebDeveloper.Options.editTool);
-  $("table", tools).tableDnD({ "onDragStart": WebDeveloper.Options.tableDragStart, "onDrop": WebDeveloper.Options.updateTools });
+  $("table", tools).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateTools });
   $(".table-container > .btn-primary", tools).on("click", WebDeveloper.Options.displayToolForm);
 
   $("#tool-form").on("submit", function(event) { event.preventDefault(); });
@@ -401,6 +408,7 @@ WebDeveloper.Options.localize = function()
 
   $("a", $("#advanced-tab")).append(WebDeveloper.Locales.getString("advanced"));
   $("a", $("#colors-tab")).append(WebDeveloper.Locales.getString("colors"));
+  $("a", $("#general-tab")).append(WebDeveloper.Locales.getString("general"));
   $("a", $("#resize-tab")).append(WebDeveloper.Locales.getString("resize"));
   $("a", $("#responsive-layouts-tab")).append(WebDeveloper.Locales.getString("responsive"));
   $("a", $("#tools-tab")).append(WebDeveloper.Locales.getString("tools"));
@@ -409,6 +417,7 @@ WebDeveloper.Options.localize = function()
   $(".btn-danger", deleteDialog).append(WebDeveloper.Locales.getString("delete"));
 
   WebDeveloper.Options.localizeColorsTab();
+  WebDeveloper.Options.localizeGeneralTab();
   WebDeveloper.Options.localizeResizeTab();
   WebDeveloper.Options.localizeResponsiveLayoutsTab();
   WebDeveloper.Options.localizeToolsTab();
@@ -434,6 +443,16 @@ WebDeveloper.Options.localizeColorsTab = function()
   $('[value="none"]').text(WebDeveloper.Locales.getString("none"));
 
   $('#preview').text(WebDeveloper.Locales.getString("preview"));
+};
+
+// Localizes the general tab
+WebDeveloper.Options.localizeGeneralTab = function()
+{
+  $('[for="display_overlay_with"]').text(WebDeveloper.Locales.getString("displayOverlayWith"));
+
+  $('[value="icons_text"]').text(WebDeveloper.Locales.getString("iconsText"));
+  $('[value="icons"]').text(WebDeveloper.Locales.getString("icons"));
+  $('[value="text"]').text(WebDeveloper.Locales.getString("text"));
 };
 
 // Localizes the resize tab
@@ -587,6 +606,12 @@ WebDeveloper.Options.tableDragStart = function(table)
   $(table).removeClass("table-striped");
 };
 
+// Updates the display overlay with setting
+WebDeveloper.Options.updateDisplayOverlayWith = function()
+{
+  WebDeveloper.Storage.setItem("display_overlay_with", $("#display_overlay_with").val());
+};
+
 // Updates the icon color
 WebDeveloper.Options.updateIconColor = function()
 {
@@ -638,7 +663,7 @@ WebDeveloper.Options.updateResizeOptions = function(table)
   }
   else
   {
-    $("table", resizeTab).tableDnD({ "onDragStart": WebDeveloper.Options.tableDragStart, "onDrop": WebDeveloper.Options.updateResizeOptions });
+    $("table", resizeTab).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateResizeOptions });
   }
 
   $(".btn-danger > span", resizeTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
@@ -693,7 +718,7 @@ WebDeveloper.Options.updateResponsiveLayouts = function(table)
   }
   else
   {
-    $("table", responsiveLayoutsTab).tableDnD({ "onDragStart": WebDeveloper.Options.tableDragStart, "onDrop": WebDeveloper.Options.updateResponsiveLayouts });
+    $("table", responsiveLayoutsTab).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateResponsiveLayouts });
   }
 
   $(".btn-danger > span", responsiveLayoutsTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
@@ -755,7 +780,7 @@ WebDeveloper.Options.updateTools = function(table)
   }
   else
   {
-    $("table", toolsTab).tableDnD({ "onDragStart": WebDeveloper.Options.tableDragStart, "onDrop": WebDeveloper.Options.updateTools });
+    $("table", toolsTab).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateTools });
   }
 
   $(".btn-danger > span", toolsTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));

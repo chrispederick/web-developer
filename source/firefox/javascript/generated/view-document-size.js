@@ -81,7 +81,7 @@ WebDeveloper.Generated.addSection = function(elements, descriptionSingular, desc
     $("td:eq(2)", sectionHeader).text(WebDeveloper.Common.formatFileSize(sectionUncompressedSize, bytesLocale, kilobytesLocale));
   }
 
-  return { "files": filesLength, "size": sectionSize, "uncompressedSize": sectionUncompressedSize };
+  return { files: filesLength, size: sectionSize, uncompressedSize: sectionUncompressedSize };
 };
 
 // Collapses all sections

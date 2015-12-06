@@ -138,6 +138,86 @@ WebDeveloper.Common.formatDimensions = function(width, height, locale)
   return "";
 };
 
+// Returns a CSS primitive value
+WebDeveloper.Common.getCSSPrimitiveValue = function(type)
+{
+  var cssPrimitiveValueExists = false;
+
+  // Try to access the CSS primitive value
+  try
+  {
+    // If the CSS primitive value exists
+    if(CSSPrimitiveValue)
+    {
+      cssPrimitiveValueExists = true;
+    }
+  }
+  catch(exception)
+  {
+    // Ignore
+  }
+
+  // Switch on the style property
+  switch(type)
+  {
+    case "NUMBER":
+      return cssPrimitiveValueExists ? CSSPrimitiveValue.CSS_NUMBER : 1;
+    case "RGBCOLOR":
+      return cssPrimitiveValueExists ? CSSPrimitiveValue.CSS_RGBCOLOR : 25;
+    case "URI":
+      return cssPrimitiveValueExists ? CSSPrimitiveValue.CSS_URI : 20;
+  }
+
+  return null;
+};
+
+// Returns the CSS text from a property
+WebDeveloper.Common.getCSSText = function(property)
+{
+  // If the property is set
+  if(property)
+  {
+    // If the property has CSS text
+    if(property.cssText)
+    {
+      return property.cssText;
+    }
+    else
+    {
+      return property;
+    }
+  }
+
+  return null;
+};
+
+// Returns the CSS URI from a property
+WebDeveloper.Common.getCSSURI = function(property)
+{
+  // If the property is set
+  if(property)
+  {
+    // If the property has a primitive type
+    if(property.primitiveType)
+    {
+      return property.getStringValue();
+    }
+    else
+    {
+      var urlRegularExpression = /(?:\(['|"]?)(.*?)(?:['|"]?\))/;
+      var uri                  = urlRegularExpression.exec(property);
+
+      // If the uri was found
+      if(uri)
+      {
+        return uri[1];
+      }
+    }
+  }
+
+  return null;
+};
+
 // Returns the document body element
 WebDeveloper.Common.getDocumentBodyElement = function(contentDocument)
 {
@@ -182,13 +262,12 @@ WebDeveloper.Common.getDocumentImages = function(contentDocument)
   // If the content document is set
   if(contentDocument)
   {
-    var computedStyle   = null;
-    var cssURI          = CSSPrimitiveValue.CSS_URI;
-    var image           = null;
-    var images          = [];
-    var node            = null;
-    var styleImage      = null;
-    var treeWalker      = contentDocument.createTreeWalker(contentDocument, NodeFilter.SHOW_ELEMENT, null, false);
+    var computedStyle = null;
+    var image         = null;
+    var images        = [];
+    var node          = null;
+    var styleImage    = null;
+    var treeWalker    = contentDocument.createTreeWalker(contentDocument, NodeFilter.SHOW_ELEMENT, null, false);
 
     // While the tree walker has more nodes
     while((node = treeWalker.nextNode()) !== null)
@@ -218,18 +297,26 @@ WebDeveloper.Common.getDocumentImages = function(contentDocument)
       }
       else
       {
-        computedStyle = node.ownerDocument.defaultView.getComputedStyle(node, null);
+        // Try to get the computed styles
+        try
+        {
+          computedStyle = node.ownerDocument.defaultView.getComputedStyle(node, null);
+        }
+        catch(exception)
+        {
+          // Ignore
+        }
 
         // If the computed style is set
         if(computedStyle)
         {
-          styleImage = WebDeveloper.Common.getCSSProperty(computedStyle.getPropertyCSSValue("background-image"));
+          styleImage = WebDeveloper.Common.getCSSProperty(WebDeveloper.Common.getPropertyCSSValue(computedStyle, "background-image"));
 
           // If this element has a background image and it is a URI
-          if(styleImage && styleImage.primitiveType == cssURI)
+          if(WebDeveloper.Common.isCSSURI(styleImage))
           {
             image     = new Image();
-            image.src = styleImage.getStringValue();
+            image.src = WebDeveloper.Common.getCSSURI(styleImage);
 
             // If this is not a chrome image
             if(image.src.indexOf("chrome://") !== 0)
@@ -238,13 +325,13 @@ WebDeveloper.Common.getDocumentImages = function(contentDocument)
             }
           }
 
-          styleImage = computedStyle.getPropertyCSSValue("list-style-image");
+          styleImage = WebDeveloper.Common.getPropertyCSSValue(computedStyle, "list-style-image");
 
-          // If this element has a background image and it is a URI
-          if(styleImage && styleImage.primitiveType == cssURI)
+          // If this element has a list style image and it is a URI
+          if(WebDeveloper.Common.isCSSURI(styleImage))
           {
             image     = new Image();
-            image.src = styleImage.getStringValue();
+            image.src = WebDeveloper.Common.getCSSURI(styleImage);
 
             // If this is not a chrome image
             if(image.src.indexOf("chrome://") !== 0)
@@ -367,11 +454,62 @@ WebDeveloper.Common.getElementText = function(element)
   return elementText;
 };
 
+// Returns the number of occurrences of a substring in a string
+WebDeveloper.Common.getOccurrenceCount = function(string, substring)
+{
+  var count = 0;
+
+  // If the string and substring are set
+  if(string && substring)
+  {
+    var position = 0;
+    var shift    = substring.length;
+
+    // While the substring was found
+    while(position != -1)
+    {
+      position = string.indexOf(substring, position);
+
+      // If the substring was found
+      if(position != -1)
+      {
+        position += shift;
+
+        count++;
+      }
+    }
+  }
+
+  return count;
+};
+
+// Gets the property CSS value for a computed style
+WebDeveloper.Common.getPropertyCSSValue = function(computedStyle, property)
+{
+  var cssProperty = null;
+
+  // If the computed style is set
+  if(computedStyle)
+  {
+    // Try to get the computed style (fails in newer versions of Chrome)
+    try
+    {
+      cssProperty = computedStyle.getPropertyCSSValue(property);
+    }
+    catch(exception)
+    {
+      cssProperty = computedStyle.getPropertyValue(property);
+    }
+  }
+
+  return cssProperty;
+};
+
 // Returns the contents of the given URLs
 WebDeveloper.Common.getURLContents = function(urlContentRequests, errorMessage, callback)
 {
   var urlContentRequestsRemaining = urlContentRequests.length;
-  var configuration               = { "callback": callback, "urlContentRequestsRemaining": urlContentRequestsRemaining };
+  var configuration               = { callback: callback, urlContentRequestsRemaining: urlContentRequestsRemaining };
 
   // Loop through the URL content requests
   for(var i = 0, l = urlContentRequests.length; i < l; i++)
@@ -493,6 +631,37 @@ WebDeveloper.Common.isAncestor = function(element, ancestorElement)
       else
       {
         element = parentElement;
+      }
+    }
+  }
+
+  return false;
+};
+
+// Returns true if this CSS property is a URI
+WebDeveloper.Common.isCSSURI = function(property)
+{
+  // If the property is set
+  if(property)
+  {
+    // If the property has a primitive type
+    if(property.primitiveType)
+    {
+      // If the property primitive type is a URI
+      if(property.primitiveType == WebDeveloper.Common.getCSSPrimitiveValue("URI"))
+      {
+        return true;
+      }
+    }
+    else
+    {
+      var urlRegularExpression = /(?:\(['|"]?)(.*?)(?:['|"]?\))/;
+      var uri                  = urlRegularExpression.exec(property);
+
+      // If the uri was found
+      if(uri)
+      {
+        return true;
       }
     }
   }

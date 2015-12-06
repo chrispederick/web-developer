@@ -162,19 +162,19 @@ WebDeveloper.Storage.updateBadgeText = function(featureTabId)
     badgeTooltip += "\n" + badgeText + " active " + featureDescription + " on this tab";
   }
 
-  chrome.browserAction.setBadgeText({ "text": badgeText, "tabId": featureTabId });
-  chrome.browserAction.setTitle({ "title": badgeTooltip, "tabId": featureTabId });
+  chrome.browserAction.setBadgeText({ text: badgeText, tabId: featureTabId });
+  chrome.browserAction.setTitle({ title: badgeTooltip, tabId: featureTabId });
 };
 
 // Updates the extension icon
 WebDeveloper.Storage.updateIcon = function()
 {
-  var icon = { "path": { "19": "/overlay/images/icon.png", "38": "/overlay/images/icon-2x.png" } };
+  var icon = { path: { 19: "/overlay/images/icon.png", 38: "/overlay/images/icon-2x.png" } };
 
   // If the icon should be in color
   if(WebDeveloper.Storage.getItem("icon_color") == "true")
   {
-    icon = { "path": { "19": "/overlay/images/icon-color.png", "38": "/overlay/images/icon-color-2x.png" } };
+    icon = { path: { 19: "/overlay/images/icon-color.png", 38: "/overlay/images/icon-color-2x.png" } };
   }
 
   chrome.browserAction.setIcon(icon);
@@ -186,4 +186,4 @@ chrome.tabs.onRemoved.addListener(WebDeveloper.Storage.tabUpdated);
 chrome.tabs.onSelectionChanged.addListener(WebDeveloper.Storage.tabSelectionChanged);
 chrome.tabs.onUpdated.addListener(WebDeveloper.Storage.tabUpdated);
 
-chrome.browserAction.setBadgeBackgroundColor({ "color": [0, 200, 0, 255] });
+chrome.browserAction.setBadgeBackgroundColor({ color: [0, 200, 0, 255] });

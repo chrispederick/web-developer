@@ -18,7 +18,7 @@ WebDeveloper.Overlay.Miscellaneous.addToHistory = function(link, uri)
       {
         var asyncHistory = Components.classes["@mozilla.org/browser/history;1"].getService(Components.interfaces.mozIAsyncHistory);
 
-        asyncHistory.updatePlaces({ "uri": uri, "visits": [{ "transitionType": Components.classes["@mozilla.org/browser/nav-history-service;1"].getService(Components.interfaces.nsINavHistoryService).TRANSITION_LINK, "visitDate": new Date().getTime() }] });
+        asyncHistory.updatePlaces({ uri: uri, visits: [{ transitionType: Components.classes["@mozilla.org/browser/nav-history-service;1"].getService(Components.interfaces.nsINavHistoryService).TRANSITION_LINK, visitDate: new Date().getTime() }] });
       }
 
       WebDeveloper.Overlay.Miscellaneous.recheckLink(link);

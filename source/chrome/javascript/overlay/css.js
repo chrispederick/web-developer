@@ -252,7 +252,7 @@ WebDeveloper.Overlay.CSS.viewCSS = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.tabs.sendMessage(tab.id, {type: "get-css"}, function(data)
+      chrome.tabs.sendMessage(tab.id, { type: "get-css" }, function(data)
       {
         data.theme = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("syntax_highlight_theme");
 

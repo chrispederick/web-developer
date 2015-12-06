@@ -244,7 +244,7 @@ WebDeveloper.Common.getFileSize = function(fileSizeRequest, configuration)
 WebDeveloper.Common.getFileSizes = function(fileSizeRequests, callback)
 {
   var fileSizeRequestsRemaining = fileSizeRequests.length;
-  var configuration             = { "callback": callback, "fileSizeRequestsRemaining": fileSizeRequestsRemaining };
+  var configuration             = { callback: callback, fileSizeRequestsRemaining: fileSizeRequestsRemaining };
 
   // Loop through the file size requests
   for(var i = 0, l = fileSizeRequests.length; i < l; i++)

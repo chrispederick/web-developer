@@ -216,7 +216,7 @@ WebDeveloper.Upgrade.openUpgradeURL = function(version)
   window.setTimeout(function()
   {
     var tabBrowser = WebDeveloper.Common.getTabBrowser();
-    var newTab     = tabBrowser.addTab("@url@/@browser@/installed/" + version.replace(".", "") + "/");
+    var newTab     = tabBrowser.addTab("@url@/@browser@/installed/" + version + "/");
 
     tabBrowser.selectedTab = newTab;
   }, 0);
@@ -225,26 +225,13 @@ WebDeveloper.Upgrade.openUpgradeURL = function(version)
 // Upgrades the extension
 WebDeveloper.Upgrade.upgrade = function()
 {
-  var beta            = "@version@".indexOf("b") != -1;
   var previousVersion = WebDeveloper.Preferences.getExtensionStringPreference("version");
-  var version         = WebDeveloper.Upgrade.formatVersionNumber("@version@");
 
   // If the versions do not match
-  if(previousVersion != version)
+  if(previousVersion != "@version@")
   {
-    // If this is a beta version
-    if(beta)
-    {
-      WebDeveloper.Preferences.setExtensionBooleanPreference("beta", true);
-    }
-
     WebDeveloper.Upgrade.migrate12();
-    WebDeveloper.Preferences.setExtensionStringPreference("version", version);
-    WebDeveloper.Upgrade.openUpgradeURL(version);
-  }
-  else if(WebDeveloper.Preferences.getExtensionBooleanPreference("beta") && !beta)
-  {
-    WebDeveloper.Preferences.deleteExtensionPreference("beta");
-    WebDeveloper.Upgrade.openUpgradeURL(version);
+    WebDeveloper.Preferences.setExtensionStringPreference("version", "@version@");
+    WebDeveloper.Upgrade.openUpgradeURL("@version@");
   }
 };
