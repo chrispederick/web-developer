@@ -6,7 +6,16 @@ engines:
   fixme:
     enabled: true
 exclude_paths:
-- "source/common/javascript/common/bootstrap/*.js"
-- "source/common/javascript/common/codemirror/*.js"
-- "source/common/javascript/common/jquery/*.js"
-- "source/common/javascript/generated/beautify/beautify.js"
+- .codeclimate.yml
+- Gruntfile.js
+- build/**/*
+- build/**/*
+- configuration/**/*
+- images/**/*
+- source/common/javascript/common/bootstrap/*.js
+- source/common/javascript/common/codemirror/*.js
+- source/common/javascript/common/jquery/*.js
+- source/common/javascript/generated/beautify/beautify.js
+ratings:
+  paths:
+  - source/**/*
