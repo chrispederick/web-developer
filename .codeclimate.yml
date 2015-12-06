@@ -1,3 +1,10 @@
+engines:
+  csslint:
+    enabled: true
+  eslint:
+    enabled: true
+  fixme:
+    enabled: true
 exclude_paths:
 - "source/common/javascript/common/bootstrap/*.js"
 - "source/common/javascript/common/codemirror/*.js"
