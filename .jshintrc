@@ -22,6 +22,7 @@
   "unused": true,
   "globals":
   {
+    "Blob": true,
     "BrowserPageInfo": true,
     "BrowserReload": true,
     "BrowserViewSourceOfDocument": true,

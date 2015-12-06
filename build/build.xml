@@ -1208,7 +1208,7 @@
   <!-- Runs JSHint on the extension -->
   <target name="jshint" depends="convert.tabs.spaces">
     <echo level="info" message="Running JSHint"/>
-    <property name="jshint.globals" value="$:true,BrowserPageInfo:true,BrowserReload:true,BrowserViewSourceOfDocument:true,chrome:true,CodeMirror:true,Components:true,CSSPrimitiveValue:true,gDevToolsBrowser:true,getWebNavigation:true,HTMLDocument:true,ich:true,inspectDOMDocument:true,js_beautify:true,Node:true,NodeFilter:true,pref:true,toJavaScriptConsole:true,WebDeveloper:true,WebDeveloperApplication:true,WebDeveloperValidateCSS:true,WebDeveloperValidateHTML:true"/>
+    <property name="jshint.globals" value="$:true,Blob:true,BrowserPageInfo:true,BrowserReload:true,BrowserViewSourceOfDocument:true,chrome:true,CodeMirror:true,Components:true,CSSPrimitiveValue:true,gDevToolsBrowser:true,getWebNavigation:true,HTMLDocument:true,ich:true,inspectDOMDocument:true,js_beautify:true,Node:true,NodeFilter:true,pref:true,toJavaScriptConsole:true,WebDeveloper:true,WebDeveloperApplication:true,WebDeveloperValidateCSS:true,WebDeveloperValidateHTML:true"/>
     <property name="jshint.options" value="bitwise:false,eqeqeq:false,forin:false,plusplus:false,strict:false"/>
     <jshint dir="../source/chrome/javascript" excludes="**/jquery/tablednd.js" fail="false" globals="${jshint.globals}" options="${jshint.options}"/>
     <jshint dir="../source/common/javascript" excludes="**/beautify/beautify.js,**/bootstrap/collapse.js,**/bootstrap/dropdown.js,**/bootstrap/modal.js,**/bootstrap/popover.js,**/bootstrap/tab.js,**/bootstrap/tooltip.js,**/bootstrap/transition.js,**/codemirror/codemirror.js,**/codemirror/css.js,**/codemirror/htmlmixed.js,**/codemirror/javascript.js,**/codemirror/searchcursor.js,**/jquery/icanhaz.js,**/jquery/jquery.js,**/codemirror/xml.js" fail="false" globals="${jshint.globals}" options="${jshint.options}"/>
@@ -1221,7 +1221,7 @@
     <echo level="info" message="Running JSLint"/>
     <jslint haltOnFailure="false" options="browser,forin,indent=2,maxerr=100,undef">
       <formatter type="plain"/>
-      <predef>$$,BrowserPageInfo,BrowserReload,BrowserViewSourceOfDocument,chrome,CodeMirror,Components,CSSPrimitiveValue,gDevToolsBrowser,getWebNavigation,HTMLDocument,ich,Image,inspectDOMDocument,js_beautify,Node,NodeFilter,pref,toJavaScriptConsole,WebDeveloper,WebDeveloperApplication,WebDeveloperValidateCSS,WebDeveloperValidateHTML,window</predef>
+      <predef>$$,Blob,BrowserPageInfo,BrowserReload,BrowserViewSourceOfDocument,chrome,CodeMirror,Components,CSSPrimitiveValue,gDevToolsBrowser,getWebNavigation,HTMLDocument,ich,Image,inspectDOMDocument,js_beautify,Node,NodeFilter,pref,toJavaScriptConsole,WebDeveloper,WebDeveloperApplication,WebDeveloperValidateCSS,WebDeveloperValidateHTML,window</predef>
       <fileset dir="../source/chrome/javascript" excludes="**/jquery/tablednd.js"/>
       <fileset dir="../source/common/javascript" excludes="**/beautify/beautify.js,**/bootstrap/collapse.js,**/bootstrap/dropdown.js,**/bootstrap/modal.js,**/bootstrap/popover.js,**/bootstrap/tab.js,**/bootstrap/tooltip.js,**/bootstrap/transition.js,**/codemirror/codemirror.js,**/codemirror/css.js,**/codemirror/htmlmixed.js,**/codemirror/javascript.js,**/codemirror/searchcursor.js,**/jquery/icanhaz.js,**/jquery/jquery.js,**/codemirror/xml.js"/>
       <fileset dir="../source/firefox/javascript"/>
