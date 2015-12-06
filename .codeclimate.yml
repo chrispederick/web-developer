@@ -1,7 +1,7 @@
 exclude_paths:
-- source/common/javascript/common/bootstrap/*.js
-- source/common/javascript/common/codemirror/*.js
-- source/common/javascript/common/jquery/*.js
-- source/common/javascript/generated/beautify/beautify.js
+- "source/common/javascript/common/bootstrap/*"
+- "source/common/javascript/common/codemirror/*"
+- "source/common/javascript/common/jquery/*"
+- "source/common/javascript/generated/beautify/beautify.js"
 languages:
   JavaScript: true
