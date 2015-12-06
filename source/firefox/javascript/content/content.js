@@ -21,7 +21,6 @@ WebDeveloper.Content.getDocumentSize = function(callback)
   var objects                = null;
   var script                 = null;
   var scripts                = null;
-  var styleSheet             = null;
   var styleSheets            = null;
   var url                    = null;
 
