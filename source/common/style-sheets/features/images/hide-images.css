@@ -1,2 +1,2 @@
-* { background-image: none !important; }
+*, *:after, *:before { background-image: none !important; }
 img { display: none !important; }
