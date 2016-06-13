@@ -325,7 +325,7 @@
 <!ENTITY webdeveloper.outline.deprecated.elements.key "D">
 <!ENTITY webdeveloper.outline.external.links.label "外部リンクを枠で囲う">
 <!ENTITY webdeveloper.outline.external.links.key "E">
-<!ENTITY webdeveloper.outline.floated.elements.label "再前面のレイヤー要素を枠で囲う">
+<!ENTITY webdeveloper.outline.floated.elements.label "最前面のレイヤー要素を枠で囲う">
 <!ENTITY webdeveloper.outline.floated.elements.key "F">
 <!ENTITY webdeveloper.outline.frames.label "フレームを枠で囲う">
 <!ENTITY webdeveloper.outline.frames.key "u">
