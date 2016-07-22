@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Ruler = WebDeveloper.Ruler || {};
 
@@ -81,7 +81,7 @@ WebDeveloper.Ruler.updateHeight = function(element)
     var contentDocument = WebDeveloper.Common.getContentDocument();
 
     height                                = parseInt(height, 10);
-    WebDeveloper.Ruler.ruler.style.height = (height - 2) + "px";
+    WebDeveloper.Ruler.ruler.style.height = height - 2 + "px";
     WebDeveloper.Ruler.endY               = WebDeveloper.Ruler.startY + height;
 
     WebDeveloper.Ruler.resizeBackgrounds();
@@ -101,25 +101,25 @@ WebDeveloper.Ruler.updateInformation = function()
     // If the end x position is greater than the start x position
     if(WebDeveloper.Ruler.endX > WebDeveloper.Ruler.startX)
     {
-      document.getElementById("web-developer-ruler-end-x").value   = (WebDeveloper.Ruler.endX + 2) + "px";
+      document.getElementById("web-developer-ruler-end-x").value   = WebDeveloper.Ruler.endX + 2 + "px";
       document.getElementById("web-developer-ruler-start-x").value = WebDeveloper.Ruler.startX + "px";
     }
     else
     {
       document.getElementById("web-developer-ruler-end-x").value   = WebDeveloper.Ruler.endX + "px";
-      document.getElementById("web-developer-ruler-start-x").value = (WebDeveloper.Ruler.startX + 2) + "px";
+      document.getElementById("web-developer-ruler-start-x").value = WebDeveloper.Ruler.startX + 2 + "px";
     }
 
     // If the end y position is greater than the start y position
     if(WebDeveloper.Ruler.endY > WebDeveloper.Ruler.startY)
     {
-      document.getElementById("web-developer-ruler-end-y").value   = (WebDeveloper.Ruler.endY + 2) + "px";
+      document.getElementById("web-developer-ruler-end-y").value   = WebDeveloper.Ruler.endY + 2 + "px";
       document.getElementById("web-developer-ruler-start-y").value = WebDeveloper.Ruler.startY + "px";
     }
     else
     {
       document.getElementById("web-developer-ruler-end-y").value   = WebDeveloper.Ruler.endY + "px";
-      document.getElementById("web-developer-ruler-start-y").value = (WebDeveloper.Ruler.startY + 2) + "px";
+      document.getElementById("web-developer-ruler-start-y").value = WebDeveloper.Ruler.startY + 2 + "px";
     }
   }
 };
@@ -139,7 +139,7 @@ WebDeveloper.Ruler.updateWidth = function(element)
     var contentDocument = WebDeveloper.Common.getContentDocument();
 
     width                                = parseInt(width, 10);
-    WebDeveloper.Ruler.ruler.style.width = (width - 2) + "px";
+    WebDeveloper.Ruler.ruler.style.width = width - 2 + "px";
     WebDeveloper.Ruler.endX              = WebDeveloper.Ruler.startX + width;
 
     WebDeveloper.Ruler.resizeBackgrounds();

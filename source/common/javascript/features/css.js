@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.CSS = WebDeveloper.CSS || {};
 
@@ -214,19 +214,15 @@ WebDeveloper.CSS.toggleMediaTypeStyles = function(mediaType, display, documents)
             media.appendMedium("web-developer-deleted-screen");
           }
         }
-        else
+        else if(WebDeveloper.CSS.isMediaStyleSheet(styleSheet, "web-developer-appended-screen"))
         {
-          // If the style sheet has the web-developer-appended-screen media
-          if(WebDeveloper.CSS.isMediaStyleSheet(styleSheet, "web-developer-appended-screen"))
-          {
-            media.deleteMedium("web-developer-appended-screen");
-            media.deleteMedium("screen");
-          }
-          else if(WebDeveloper.CSS.isMediaStyleSheet(styleSheet, "web-developer-deleted-screen"))
-          {
-            media.appendMedium("screen");
-            media.deleteMedium("web-developer-deleted-screen");
-          }
+          media.deleteMedium("web-developer-appended-screen");
+          media.deleteMedium("screen");
+        }
+        else if(WebDeveloper.CSS.isMediaStyleSheet(styleSheet, "web-developer-deleted-screen"))
+        {
+          media.appendMedium("screen");
+          media.deleteMedium("web-developer-deleted-screen");
         }
 
         // Force the styles to reapply by disabling and enabling the style sheet

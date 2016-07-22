@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Cookies = WebDeveloper.Cookies || {};
 
@@ -27,7 +27,7 @@ WebDeveloper.Cookies.addCookie = function(cookie)
   }
   else
   {
-    chrome.cookies.set({ domain: host, expirationDate: (new Date(cookie.expires.trim()).getTime()) / 1000, name: name, secure: secure, url: url, value: value });
+    chrome.cookies.set({ domain: host, expirationDate: new Date(cookie.expires.trim()).getTime() / 1000, name: name, secure: secure, url: url, value: value });
   }
 };
 

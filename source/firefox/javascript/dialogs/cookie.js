@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Cookie = WebDeveloper.Cookie || {};
 
@@ -52,7 +52,7 @@ WebDeveloper.Cookie.accept = function()
     return false;
   }
   else
-  {
+  { // eslint-disable-line no-else-return
     var value            = document.getElementById("web-developer-value").value.trim();
     var cookie           = name + "=" + value + ";path=" + path + ";";
     var cookiePreference = WebDeveloper.Preferences.getIntegerPreference("network.cookie.cookieBehavior");

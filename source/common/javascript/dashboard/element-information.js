@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.ElementInformation                 = WebDeveloper.ElementInformation || {};
 WebDeveloper.ElementInformation.currentElement  = null;
@@ -12,7 +12,7 @@ WebDeveloper.ElementInformation.addCSSProperty = function(element, property, con
   // If the CSS property is set
   if(cssProperty)
   {
-    return property + ": " +  WebDeveloper.Common.getCSSText(cssProperty) + ";\n";
+    return property + ": " + WebDeveloper.Common.getCSSText(cssProperty) + ";\n";
   }
 
   return "";
@@ -26,8 +26,8 @@ WebDeveloper.ElementInformation.click = function(event)
   {
     var eventTarget = event.target;
 
-    // If the event target is set
-    if(eventTarget)
+    // If the event target is set and has a string class name
+    if(eventTarget && eventTarget.className.split)
     {
       var tagName = eventTarget.tagName;
 
@@ -38,10 +38,10 @@ WebDeveloper.ElementInformation.click = function(event)
 
         WebDeveloper.ElementInformation.displayElementInformation(eventTarget);
       }
-
-      event.stopPropagation();
-      event.preventDefault();
     }
+
+    event.stopPropagation();
+    event.preventDefault();
   }
 };
 

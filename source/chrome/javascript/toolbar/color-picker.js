@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.ColorPicker                 = WebDeveloper.ColorPicker || {};
 WebDeveloper.ColorPicker.toolbarDocument = null;

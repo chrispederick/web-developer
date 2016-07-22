@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.ElementAncestors         = WebDeveloper.ElementAncestors || {};
 WebDeveloper.ElementAncestors.element = null;
@@ -100,8 +100,8 @@ WebDeveloper.ElementAncestors.mouseOver = function(event)
       // If the event target is not the element
       if(eventTarget != WebDeveloper.ElementAncestors.element)
       {
-        // If the event target has a style property
-        if(eventTarget.style)
+        // If the event target has a string class name and style property
+        if(eventTarget.className.split && eventTarget.style)
         {
           WebDeveloper.ElementAncestors.removeOutline(ownerDocument);
 

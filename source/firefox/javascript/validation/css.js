@@ -57,12 +57,10 @@ WebDeveloperValidateCSS.prototype.createSourceFile = function(uri)
 
     return sourceFile;
   }
-  else
-  {
-    WebDeveloper.Common.displayError(WebDeveloper.Locales.getString("validateCSS"), WebDeveloper.Locales.getFormattedString("temporaryDirectoryFailed", [temporaryDirectory.path]));
 
-    return null;
-  }
+  WebDeveloper.Common.displayError(WebDeveloper.Locales.getString("validateCSS"), WebDeveloper.Locales.getFormattedString("temporaryDirectoryFailed", [temporaryDirectory.path]));
+
+  return null;
 };
 
 // Returns the CSS as text
@@ -194,7 +192,7 @@ WebDeveloperValidateCSS.prototype.validateBackgroundCSS = function(uri, css)
       // Try to send as a blob
       try
       {
-        validator.validationRequest.send(new Blob([requestBody], { type: 'text/css' }));
+        validator.validationRequest.send(new Blob([requestBody], { type: "text/css" }));
       }
       catch(exception3)
       {

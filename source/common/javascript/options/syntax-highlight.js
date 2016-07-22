@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.pre               = null;
 WebDeveloper.syntaxHighlighter = null;
@@ -12,6 +12,7 @@ WebDeveloper.initialize = function()
 
   WebDeveloper.pre.text(textArea.val()).hide();
 
+  /* eslint-disable indent */
   WebDeveloper.syntaxHighlighter = CodeMirror.fromTextArea(textArea.get(0),
   {
     mode: "htmlmixed",
@@ -19,6 +20,7 @@ WebDeveloper.initialize = function()
     tabSize: 2,
     theme: "light"
   });
+  /* eslint-enable indent */
 
   WebDeveloper.syntaxHighlight = $(WebDeveloper.syntaxHighlighter.getWrapperElement());
 };

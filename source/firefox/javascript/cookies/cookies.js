@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Cookies = WebDeveloper.Cookies || {};
 
@@ -58,7 +58,7 @@ WebDeveloper.Cookies.canEditLocalCookie = function()
 // Deletes a cookie
 WebDeveloper.Cookies.deleteCookie = function(cookie)
 {
-  Components.classes["@mozilla.org/cookiemanager;1"].getService(Components.interfaces.nsICookieManager2).remove(cookie.host, cookie.name, cookie.path, false);
+  Components.classes["@mozilla.org/cookiemanager;1"].getService(Components.interfaces.nsICookieManager2).remove(cookie.host, cookie.name, cookie.path, false, false);
 };
 
 // Returns all cookies

@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Overlay     = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.CSS = WebDeveloper.Overlay.CSS || {};
@@ -152,7 +152,7 @@ WebDeveloper.Overlay.CSS.displayHandheldStyles = function()
         WebDeveloper.Overlay.CSS.toggleFeatureOnTab(displayPrintStylesItem, tab, 'WebDeveloper.CSS.toggleMediaTypeStyles("print", false, [document]);');
       }
 
-      WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.CSS.toggleMediaTypeStyles("handheld", ' + display + ', [document]);');
+      WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.CSS.toggleMediaTypeStyles("handheld", ' + display + ", [document]);");
     }
   });
 };
@@ -179,7 +179,7 @@ WebDeveloper.Overlay.CSS.displayPrintStyles = function()
         WebDeveloper.Overlay.CSS.toggleFeatureOnTab(displayHandheldStylesItem, tab, 'WebDeveloper.CSS.toggleMediaTypeStyles("handheld", false, [document]);');
       }
 
-      WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.CSS.toggleMediaTypeStyles("print", ' + display + ', [document]);');
+      WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.CSS.toggleMediaTypeStyles("print", ' + display + ", [document]);");
     }
   });
 };

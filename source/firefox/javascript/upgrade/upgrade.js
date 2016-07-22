@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Upgrade = WebDeveloper.Upgrade || {};
 
@@ -230,8 +230,8 @@ WebDeveloper.Upgrade.upgrade = function()
   // If the versions do not match
   if(previousVersion != "@version@")
   {
-    WebDeveloper.Upgrade.migrate12();
     WebDeveloper.Preferences.setExtensionStringPreference("version", "@version@");
     WebDeveloper.Upgrade.openUpgradeURL("@version@");
+    WebDeveloper.Upgrade.migrate12();
   }
 };

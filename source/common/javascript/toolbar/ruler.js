@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Ruler = WebDeveloper.Ruler || {};
 
@@ -58,10 +58,10 @@ WebDeveloper.Ruler.createRuler = function(contentDocument)
   WebDeveloper.Ruler.ruler.setAttribute("id", "web-developer-ruler");
   WebDeveloper.Ruler.container.appendChild(WebDeveloper.Ruler.ruler);
 
-  WebDeveloper.Ruler.ruler.style.height = (WebDeveloper.Ruler.endY - WebDeveloper.Ruler.startY) + "px";
+  WebDeveloper.Ruler.ruler.style.height = WebDeveloper.Ruler.endY - WebDeveloper.Ruler.startY + "px";
   WebDeveloper.Ruler.ruler.style.left   = WebDeveloper.Ruler.startX + "px";
   WebDeveloper.Ruler.ruler.style.top    = WebDeveloper.Ruler.startY + "px";
-  WebDeveloper.Ruler.ruler.style.width  = (WebDeveloper.Ruler.endX - WebDeveloper.Ruler.startX) + "px";
+  WebDeveloper.Ruler.ruler.style.width  = WebDeveloper.Ruler.endX - WebDeveloper.Ruler.startX + "px";
 
   // Run this on a delay because the styles must be all setup
   window.setTimeout(function()
@@ -92,7 +92,6 @@ WebDeveloper.Ruler.displayRuler = function(display, contentDocument, toolbarHTML
     WebDeveloper.Ruler.removeToolbar(contentDocument);
     WebDeveloper.Ruler.reset();
   }
-
 };
 
 // Handles the mouse down event
@@ -350,14 +349,14 @@ WebDeveloper.Ruler.resizeBackgrounds = function()
   var rulerPositionY  = WebDeveloper.Common.getElementPositionY(WebDeveloper.Ruler.ruler);
   var rulerWidth      = WebDeveloper.Ruler.ruler.offsetWidth;
 
-  WebDeveloper.Ruler.backgroundBottom.style.height = (containerHeight - rulerPositionY - rulerHeight) + "px";
+  WebDeveloper.Ruler.backgroundBottom.style.height = containerHeight - rulerPositionY - rulerHeight + "px";
   WebDeveloper.Ruler.backgroundBottom.style.width  = containerWidth + "px";
   WebDeveloper.Ruler.backgroundLeft.style.height   = rulerHeight + "px";
   WebDeveloper.Ruler.backgroundLeft.style.top      = rulerPositionY + "px";
   WebDeveloper.Ruler.backgroundLeft.style.width    = rulerPositionX + "px";
   WebDeveloper.Ruler.backgroundRight.style.top     = rulerPositionY + "px";
   WebDeveloper.Ruler.backgroundRight.style.height  = rulerHeight + "px";
-  WebDeveloper.Ruler.backgroundRight.style.width   = (containerWidth - rulerPositionX - rulerWidth) + "px";
+  WebDeveloper.Ruler.backgroundRight.style.width   = containerWidth - rulerPositionX - rulerWidth + "px";
   WebDeveloper.Ruler.backgroundTop.style.height    = rulerPositionY + "px";
   WebDeveloper.Ruler.backgroundTop.style.width     = containerWidth + "px";
 };

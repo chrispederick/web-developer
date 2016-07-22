@@ -189,7 +189,19 @@ WebDeveloperApplication.prototype.QueryInterface = function(id)
 };
 
 // Dummy methods requiring implementations
-WebDeveloperApplication.prototype.onLocationChange = function() {};
-WebDeveloperApplication.prototype.onProgressChange = function() {};
-WebDeveloperApplication.prototype.onSecurityChange = function() {};
-WebDeveloperApplication.prototype.onStatusChange   = function() {};
+WebDeveloperApplication.prototype.onLocationChange = function()
+{
+  // Ignore
+};
+WebDeveloperApplication.prototype.onProgressChange = function()
+{
+  // Ignore
+};
+WebDeveloperApplication.prototype.onSecurityChange = function()
+{
+  // Ignore
+};
+WebDeveloperApplication.prototype.onStatusChange = function()
+{
+  // Ignore
+};

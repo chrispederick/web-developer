@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Overlay        = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.Resize = WebDeveloper.Overlay.Resize || {};
@@ -24,16 +24,8 @@ WebDeveloper.Overlay.Resize.displayWindowSizeInTitle = function(element)
 {
   var contentDocument = WebDeveloper.Common.getContentDocument();
 
-  // If adding the window size to the title
-  if(!WebDeveloper.Common.convertToBoolean(element.getAttribute("checked")))
-  {
-    var contentWindow = WebDeveloper.Common.getContentWindow();
-
-    contentDocument.title += " - " + contentWindow.outerWidth + "x" + contentWindow.outerHeight + " [" + contentWindow.innerWidth + "x" + contentWindow.innerHeight + "]";
-
-    window.addEventListener("resize", WebDeveloper.Overlay.Resize.updateWindowSizeInTitle, false);
-  }
-  else
+  // If not adding the window size to the title
+  if(WebDeveloper.Common.convertToBoolean(element.getAttribute("checked")))
   {
     var title = contentDocument.title;
 
@@ -48,6 +40,14 @@ WebDeveloper.Overlay.Resize.displayWindowSizeInTitle = function(element)
     {
       // Ignore
     }
+  }
+  else
+  {
+    var contentWindow = WebDeveloper.Common.getContentWindow();
+
+    contentDocument.title += " - " + contentWindow.outerWidth + "x" + contentWindow.outerHeight + " [" + contentWindow.innerWidth + "x" + contentWindow.innerHeight + "]";
+
+    window.addEventListener("resize", WebDeveloper.Overlay.Resize.updateWindowSizeInTitle, false);
   }
 
   WebDeveloper.Storage.toggleFeature(WebDeveloper.Common.getFeatureId(element.getAttribute("id")));
@@ -112,7 +112,7 @@ WebDeveloper.Overlay.Resize.updateResizeMenu = function(menu, suffix)
       viewport  = WebDeveloper.Preferences.getExtensionBooleanPreference("resize." + i + ".viewport");
 
       // If the resize attributes match the current size
-      if((viewport && viewportWidth == width && viewportHeight == height) || (!viewport && windowWidth == width && windowHeight == height))
+      if(viewport && viewportWidth == width && viewportHeight == height || !viewport && windowWidth == width && windowHeight == height)
       {
         menuItem.setAttribute("checked", true);
       }

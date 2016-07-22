@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.OutlineCustomElements = WebDeveloper.OutlineCustomElements || {};
 
@@ -23,7 +23,7 @@ WebDeveloper.OutlineCustomElements.initialize = function()
   // Loop through the outline custom elements
   for(var i = 1; i <= 5; i++)
   {
-    document.getElementById("web-developer-outline-custom-element-" + i).value            = WebDeveloper.Preferences.getExtensionStringPreference("outline.custom.element." + i) ;
+    document.getElementById("web-developer-outline-custom-element-" + i).value            = WebDeveloper.Preferences.getExtensionStringPreference("outline.custom.element." + i);
     document.getElementById("web-developer-outline-custom-element-" + i + "-color").color = WebDeveloper.Preferences.getExtensionStringPreference("outline.custom.element." + i + ".color");
   }
 };

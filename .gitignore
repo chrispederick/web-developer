@@ -1,9 +1,4 @@
 .DS_Store
-build/chrome/
-build/firefox/
-build/opera/
-build/web-developer-chrome.zip
-build/web-developer-firefox.xpi
-build/web-developer-opera.nex
+build/
 merge/
 node_modules/

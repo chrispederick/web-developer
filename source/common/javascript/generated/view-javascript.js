@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Generated              = WebDeveloper.Generated || {};
 WebDeveloper.Generated.storedLocale = null;
@@ -37,7 +37,7 @@ WebDeveloper.Generated.beautifyJavaScript = function(event)
     $(".web-developer-original").each(function(position, element)
     {
       originalJavaScript = $(element);
-      newJavaScript      = js_beautify(originalJavaScript.text(), { indent_size: 2, max_preserve_newlines: 1, space_before_conditional: false });
+      newJavaScript      = js_beautify(originalJavaScript.text(), { indent_size: 2, max_preserve_newlines: 1, space_before_conditional: false }); // eslint-disable-line camelcase
 
       $(".web-developer-syntax-highlight", originalJavaScript.parent()).text(newJavaScript);
 
@@ -86,7 +86,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
     // If there are embedded JavaScript
     if(contentDocument.embedded)
     {
-      embeddedContainers = WebDeveloper.Generated.output(embeddedJavaScriptFrom + " " + url, null, "javascript-" + (javaScriptCounter++), "javascript", true);
+      embeddedContainers = WebDeveloper.Generated.output(embeddedJavaScriptFrom + " " + url, null, "javascript-" + javaScriptCounter++, "javascript", true);
 
       // Loop through the embedded containers
       for(var j = 0, m = embeddedContainers.length; j < m; j++)
@@ -100,7 +100,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
     {
       url = javaScript[k];
 
-      urlContentRequests.push({ outputContainers: WebDeveloper.Generated.output(null, url, "javascript-" + (javaScriptCounter++), "javascript", true), url: url });
+      urlContentRequests.push({ outputContainers: WebDeveloper.Generated.output(null, url, "javascript-" + javaScriptCounter++, "javascript", true), url: url });
     }
 
     // If there is no JavaScript

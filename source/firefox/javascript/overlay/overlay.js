@@ -1,8 +1,11 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
-WebDeveloper.Overlay                  = WebDeveloper.Overlay || {};
-WebDeveloper.Overlay.featureSuffixes  = ["app-menu", "context", "menu", "toolbar", "toolbar-button"];
-WebDeveloper.Overlay.preferenceBranch = null;
+WebDeveloper.Overlay                         = WebDeveloper.Overlay || {};
+WebDeveloper.Overlay.errorThrottle           = 500;
+WebDeveloper.Overlay.featureSuffixes         = ["app-menu", "context", "menu", "toolbar", "toolbar-button"];
+WebDeveloper.Overlay.lastCSSErrorTime        = null;
+WebDeveloper.Overlay.lastJavaScriptErrorTime = null;
+WebDeveloper.Overlay.preferenceBranch        = null;
 
 // Closes the confirmation
 WebDeveloper.Overlay.closeConfirmation = function()
@@ -186,6 +189,8 @@ WebDeveloper.Overlay.pageLoad = function(event)
   // If the event came from an HTML document and it is not a frame
   if(originalTarget instanceof HTMLDocument && !originalTarget.defaultView.frameElement)
   {
+    WebDeveloper.Common.log("Testing");
+
     var loadBrowser = WebDeveloper.Common.getTabBrowser().getBrowserForDocument(originalTarget);
     var tab         = WebDeveloper.Common.getTabForDocument(originalTarget);
 
@@ -268,9 +273,6 @@ WebDeveloper.Overlay.resetCSSStatus = function()
 {
   var cssButton = document.getElementById("web-developer-css-statusbar");
 
-  WebDeveloper.Overlay.javaScriptCurrentTime  = null;
-  WebDeveloper.Overlay.javaScriptPreviousTime = null;
-
   // If the CSS button exists
   if(cssButton)
   {
@@ -299,9 +301,6 @@ WebDeveloper.Overlay.resetJavaScriptStatus = function()
 {
   var javaScriptButton = document.getElementById("web-developer-javascript-statusbar");
 
-  WebDeveloper.Overlay.javaScriptCurrentTime  = null;
-  WebDeveloper.Overlay.javaScriptPreviousTime = null;
-
   // If the JavaScript button exists
   if(javaScriptButton)
   {
@@ -326,19 +325,15 @@ WebDeveloper.Overlay.resetJavaScriptStatus = function()
         javaScriptButton.removeAttribute("label");
       }
     }
-    else
+    else if(!javaScriptButton.hasAttribute("class") || javaScriptButton.getAttribute("class") != "disabled")
     {
-      // If the JavaScript button does not have a class attribute or it is not set to disabled
-      if(!javaScriptButton.hasAttribute("class") || javaScriptButton.getAttribute("class") != "disabled")
-      {
-        javaScriptButton.setAttribute("class", "disabled");
-        javaScriptButton.setAttribute("tooltiptext", WebDeveloper.Locales.getString("javaScriptDisabledTooltip"));
+      javaScriptButton.setAttribute("class", "disabled");
+      javaScriptButton.setAttribute("tooltiptext", WebDeveloper.Locales.getString("javaScriptDisabledTooltip"));
 
-        // If the toolbar preference is set to text
-        if(WebDeveloper.Preferences.getExtensionStringPreference("toolbar.icons") == "text")
-        {
-          javaScriptButton.setAttribute("label", WebDeveloper.Locales.getString("javaScriptDisabledLabel"));
-        }
+      // If the toolbar preference is set to text
+      if(WebDeveloper.Preferences.getExtensionStringPreference("toolbar.icons") == "text")
+      {
+        javaScriptButton.setAttribute("label", WebDeveloper.Locales.getString("javaScriptDisabledLabel"));
       }
     }
   }
@@ -465,7 +460,7 @@ WebDeveloper.Overlay.setupToolsKeyboardShortcuts = function(keySet)
       url         = WebDeveloper.Preferences.getExtensionStringPreference("tool." + i + ".url");
 
       // If the description and either a path or url are set
-      if((description && (path || url)))
+      if(description && path || url)
       {
         key       = WebDeveloper.Preferences.getLocalizedPreference("tool." + i + ".key");
         modifiers = WebDeveloper.Preferences.getExtensionStringPreference("tool." + i + ".modifiers");
@@ -515,7 +510,7 @@ WebDeveloper.Overlay.setupViewSourceWithKeyboardShortcuts = function(keySet)
     // If the description and path are set
     if(description && path)
     {
-      key     = WebDeveloper.Preferences.getExtensionStringPreference("view.source.with." + i + ".key");
+      key       = WebDeveloper.Preferences.getExtensionStringPreference("view.source.with." + i + ".key");
       modifiers = WebDeveloper.Preferences.getExtensionStringPreference("view.source.with." + i + ".modifiers");
 
       // If a key and modifiers are set
@@ -730,39 +725,47 @@ WebDeveloper.Overlay.updateChrome = function()
 // Updates the CSS status button
 WebDeveloper.Overlay.updateCSSStatus = function(error)
 {
-  var cssButton = document.getElementById("web-developer-css-statusbar");
+  var time = new Date().getTime();
 
-  // If the CSS button is set
-  if(cssButton)
+  // If the last CSS error time is not set or is longer ago than the throttle
+  if(!WebDeveloper.Overlay.lastCSSErrorTime || time - WebDeveloper.Overlay.lastCSSErrorTime > WebDeveloper.Overlay.errorThrottle)
   {
-    // If the error is set
-    if(error)
+    var cssButton = document.getElementById("web-developer-css-statusbar");
+
+    WebDeveloper.Overlay.lastCSSErrorTime = time;
+
+    // If the CSS button is set
+    if(cssButton)
     {
-      var errorMessage = error.errorMessage;
-
-      cssButton.setAttribute("tooltiptext", WebDeveloper.Locales.getFormattedString("cssErrorTooltip", [errorMessage]));
-
-      // If the CSS button does not have a class attribute or it is not set to error
-      if(!cssButton.hasAttribute("class") || cssButton.getAttribute("class") != "error")
+      // If the error is set
+      if(error)
       {
-        cssButton.setAttribute("class", "error");
+        var errorMessage = error.errorMessage;
+
+        cssButton.setAttribute("tooltiptext", WebDeveloper.Locales.getFormattedString("cssErrorTooltip", [errorMessage]));
+
+        // If the CSS button does not have a class attribute or it is not set to error
+        if(!cssButton.hasAttribute("class") || cssButton.getAttribute("class") != "error")
+        {
+          cssButton.setAttribute("class", "error");
+
+          // If the toolbar preference is set to text
+          if(WebDeveloper.Preferences.getExtensionStringPreference("toolbar.icons") == "text")
+          {
+            cssButton.setAttribute("label", WebDeveloper.Locales.getString("cssErrorLabel"));
+          }
+        }
+      }
+      else if(!cssButton.hasAttribute("class") || cssButton.getAttribute("class") != "valid")
+      {
+        cssButton.setAttribute("class", "valid");
+        cssButton.setAttribute("tooltiptext", WebDeveloper.Locales.getString("cssNoErrorsTooltip"));
 
         // If the toolbar preference is set to text
         if(WebDeveloper.Preferences.getExtensionStringPreference("toolbar.icons") == "text")
         {
-          cssButton.setAttribute("label", WebDeveloper.Locales.getString("cssErrorLabel"));
+          cssButton.setAttribute("label", WebDeveloper.Locales.getString("cssNoErrorsLabel"));
         }
-      }
-    }
-    else if(!cssButton.hasAttribute("class") || cssButton.getAttribute("class") != "valid")
-    {
-      cssButton.setAttribute("class", "valid");
-      cssButton.setAttribute("tooltiptext", WebDeveloper.Locales.getString("cssNoErrorsTooltip"));
-
-      // If the toolbar preference is set to text
-      if(WebDeveloper.Preferences.getExtensionStringPreference("toolbar.icons") == "text")
-      {
-        cssButton.setAttribute("label", WebDeveloper.Locales.getString("cssNoErrorsLabel"));
       }
     }
   }
@@ -771,52 +774,60 @@ WebDeveloper.Overlay.updateCSSStatus = function(error)
 // Updates the JavaScript status button
 WebDeveloper.Overlay.updateJavaScriptStatus = function(error)
 {
-  var javaScriptButton = document.getElementById("web-developer-javascript-statusbar");
+  var time = new Date().getTime();
 
-  // If the JavaScript button is set
-  if(javaScriptButton)
+  // If the last error time is not set or is longer ago than the throttle
+  if(!WebDeveloper.Overlay.lastJavaScriptErrorTime || time - WebDeveloper.Overlay.lastJavaScriptErrorTime > WebDeveloper.Overlay.errorThrottle)
   {
-    // If the error is set
-    if(error)
+    var javaScriptButton = document.getElementById("web-developer-javascript-statusbar");
+
+    WebDeveloper.Overlay.lastJavaScriptErrorTime = time;
+
+    // If the JavaScript button is set
+    if(javaScriptButton)
     {
-      var errorMessage = error.errorMessage;
-      var warning      = error.flags & error.warningFlag !== 0;
-
-      // If this is a warning
-      if(warning)
+      // If the error is set
+      if(error)
       {
-        javaScriptButton.setAttribute("tooltiptext", WebDeveloper.Locales.getFormattedString("javaScriptWarningTooltip", [errorMessage]));
+        var errorMessage = error.errorMessage;
+        var warning      = error.flags & error.warningFlag !== 0;
 
-        // If the JavaScript button does not have a class attribute or it is not set to warning
-        if(!javaScriptButton.hasAttribute("class") || javaScriptButton.getAttribute("class") != "warning")
+        // If this is a warning
+        if(warning)
         {
-          javaScriptButton.setAttribute("class", "warning");
+          javaScriptButton.setAttribute("tooltiptext", WebDeveloper.Locales.getFormattedString("javaScriptWarningTooltip", [errorMessage]));
 
-          // If the toolbar preference is set to text
-          if(WebDeveloper.Preferences.getExtensionStringPreference("toolbar.icons") == "text")
+          // If the JavaScript button does not have a class attribute or it is not set to warning
+          if(!javaScriptButton.hasAttribute("class") || javaScriptButton.getAttribute("class") != "warning")
           {
-            javaScriptButton.setAttribute("label", WebDeveloper.Locales.getString("javaScriptWarningLabel"));
+            javaScriptButton.setAttribute("class", "warning");
+
+            // If the toolbar preference is set to text
+            if(WebDeveloper.Preferences.getExtensionStringPreference("toolbar.icons") == "text")
+            {
+              javaScriptButton.setAttribute("label", WebDeveloper.Locales.getString("javaScriptWarningLabel"));
+            }
           }
         }
-      }
-      else
-      {
-        javaScriptButton.setAttribute("tooltiptext", WebDeveloper.Locales.getFormattedString("javaScriptErrorTooltip", [errorMessage]));
-
-        // If the JavaScript button does not have a class attribute or it is not set to error
-        if(!javaScriptButton.hasAttribute("class") || javaScriptButton.getAttribute("class") != "error")
+        else
         {
-          javaScriptButton.setAttribute("class", "error");
+          javaScriptButton.setAttribute("tooltiptext", WebDeveloper.Locales.getFormattedString("javaScriptErrorTooltip", [errorMessage]));
 
-          // If the toolbar preference is set to text
-          if(WebDeveloper.Preferences.getExtensionStringPreference("toolbar.icons") == "text")
+          // If the JavaScript button does not have a class attribute or it is not set to error
+          if(!javaScriptButton.hasAttribute("class") || javaScriptButton.getAttribute("class") != "error")
           {
-            javaScriptButton.setAttribute("label", WebDeveloper.Locales.getString("javaScriptErrorLabel"));
+            javaScriptButton.setAttribute("class", "error");
+
+            // If the toolbar preference is set to text
+            if(WebDeveloper.Preferences.getExtensionStringPreference("toolbar.icons") == "text")
+            {
+              javaScriptButton.setAttribute("label", WebDeveloper.Locales.getString("javaScriptErrorLabel"));
+            }
           }
         }
       }
     }
-    else if(!javaScriptButton.hasAttribute("class") || (javaScriptButton.getAttribute("class") != "disabled" && javaScriptButton.getAttribute("class") != "valid"))
+    else if(!javaScriptButton.hasAttribute("class") || javaScriptButton.getAttribute("class") != "disabled" && javaScriptButton.getAttribute("class") != "valid")
     {
       javaScriptButton.setAttribute("class", "valid");
       javaScriptButton.setAttribute("tooltiptext", WebDeveloper.Locales.getString("javaScriptNoErrorsTooltip"));

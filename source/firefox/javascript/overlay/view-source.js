@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Overlay                                                   = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.ViewSource                                        = WebDeveloper.Overlay.ViewSource || {};
@@ -8,7 +8,12 @@ WebDeveloper.Overlay.ViewSource.clearViewGeneratedSourceSelectionDelay = 1500;
 WebDeveloper.Overlay.ViewSource.clearViewGeneratedSourceSelection = function(selection, generatedSourceWindow)
 {
   selection.removeAllRanges();
-  generatedSourceWindow.gBrowser.contentWindow.getSelection().removeAllRanges();
+
+  // If the generated source window is set
+  if(generatedSourceWindow)
+  {
+    generatedSourceWindow.gBrowser.contentWindow.getSelection().removeAllRanges();
+  }
 };
 
 // Updates the view frame source menu
@@ -103,14 +108,23 @@ WebDeveloper.Overlay.ViewSource.updateViewSourceMenu = function(menu, suffix)
 // View the generated source
 WebDeveloper.Overlay.ViewSource.viewGeneratedSource = function()
 {
-  var currentDocument     = WebDeveloper.Common.getContentDocument();
-  var currentWindow       = WebDeveloper.Common.getContentWindow();
+  var currentDocument       = WebDeveloper.Common.getContentDocument();
+  var currentWindow         = WebDeveloper.Common.getContentWindow();
   var generatedSourceWindow = null;
-  var selection           = currentWindow.getSelection();
+  var mainWindow            = WebDeveloper.Common.getMainWindow();
+  var selection             = currentWindow.getSelection();
 
   selection.selectAllChildren(currentDocument.documentElement);
 
-  generatedSourceWindow = window.openDialog("chrome://global/content/viewPartialSource.xul", "_blank", "chrome,dialog=no,resizable,scrollbars", WebDeveloper.Common.getTabBrowser().currentURI.spec, "charset=" + currentDocument.characterSet, currentWindow.getSelection(), "selection");
+  // If the view partial source in browser function exists
+  if(mainWindow.gViewSourceUtils && mainWindow.gViewSourceUtils.viewPartialSourceInBrowser)
+  {
+    mainWindow.gViewSourceUtils.viewPartialSourceInBrowser(WebDeveloper.Common.getSelectedBrowser(), null, null);
+  }
+  else
+  {
+    generatedSourceWindow = window.openDialog("chrome://global/content/viewPartialSource.xul", "_blank", "chrome,dialog=no,resizable,scrollbars", WebDeveloper.Common.getTabBrowser().currentURI.spec, "charset=" + currentDocument.characterSet, currentWindow.getSelection(), "selection");
+  }
 
   window.setTimeout(WebDeveloper.Overlay.ViewSource.clearViewGeneratedSourceSelection, WebDeveloper.Overlay.ViewSource.clearViewGeneratedSourceSelectionDelay, selection, generatedSourceWindow);
 };

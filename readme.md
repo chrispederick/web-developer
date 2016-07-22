@@ -2,16 +2,18 @@ Web Developer
 =============
 
 The Web Developer extension adds various web developer tools to a browser.
-The extension is available for Chrome and Firefox, and will run on any platform that these browsers support including Windows, OS X and Linux.
+The extension is available for Chrome, Firefox and Opera, and will run on any platform that these browsers support including Windows, OS X and Linux.
 
 The extension can be installed from its home page:
 
 * Home page: [http://chrispederick.com/work/web-developer/](http://chrispederick.com/work/web-developer/)
 
-Or directly from the Chrome and Firefox extension repositories:
+Or directly from the Chrome, Firefox or Opera extension repositories:
 
 * Chrome: [https://chrome.google.com/webstore/detail/bfbameneiokkgbdmiekhjnmfkcnldhhm](https://chrome.google.com/webstore/detail/bfbameneiokkgbdmiekhjnmfkcnldhhm)
 * Firefox: [https://addons.mozilla.org/en-US/firefox/addon/web-developer/](https://addons.mozilla.org/en-US/firefox/addon/web-developer/)
+* Opera:
+[https://addons.opera.com/en/extensions/details/web-developer/](https://addons.opera.com/en/extensions/details/web-developer/)
 
 Announcements
 -------------
@@ -31,9 +33,9 @@ Help for the Web Developer extension can be found on its home page:
 * Known issues: [http://chrispederick.com/work/web-developer/issues/](http://chrispederick.com/work/web-developer/issues/)
 * To-do list: [http://chrispederick.com/work/web-developer/to-do/](http://chrispederick.com/work/web-developer/to-do/)
 
-To report a new issue or suggest a new feature please post in the forums:
+To report a new issue or suggest a new feature please contact me:
 
-* Forums: [http://forums.chrispederick.com/](http://forums.chrispederick.com/)
+* Contact: [http://chrispederick.com/contact/](http://chrispederick.com/contact/)
 
 Developers
 ----------
@@ -47,33 +49,33 @@ is also used in the Firefox version.
 
 ### Extension documentation
 
-For information about how to write browser extensions check out the Chrome and Firefox documentation:
+For information about how to write browser extensions check out the Chrome, Firefox and Opera documentation:
 
 * Chrome: [http://code.google.com/chrome/extensions/docs.html](http://code.google.com/chrome/extensions/docs.html)
 * Firefox: [https://developer.mozilla.org/en-US/addons](https://developer.mozilla.org/en-US/addons)
+* Opera: [https://dev.opera.com/extensions/](https://dev.opera.com/extensions/)
 
 ### Localization
 
-The extension is fully localized with languages other than English (US) provided by the community.
-For information about how to write localized browser extensions check out the Chrome and Firefox documentation:
+The Firefox extension is fully localized with languages other than English (US) provided by the community.
+For information about how to write localized browser extensions check out the Firefox documentation:
 
-* Chrome: [http://code.google.com/chrome/extensions/i18n.html](http://code.google.com/chrome/extensions/i18n.html)
 * Firefox: [https://developer.mozilla.org/en/Localizing_an_extension](https://developer.mozilla.org/en/Localizing_an_extension)
 
 ### Build process
 
-The extension uses the [Ant build system](http://ant.apache.org/).
+The extension uses the [Gulp build system](http://gulpjs.com/).
 
-Once Ant is installed the extension is built by running the following in the `build` directory:
+Once Gulp is installed the extension is built by running the following:
 
-	ant all
+	gulp
 
-To build the extension for Chrome or Firefox only run `ant chrome` or `ant firefox` in the `build` directory.
+To build the extension for Chrome, Firefox or Opera only run `gulp chrome`, `gulp firefox` or `gulp opera` respectively.
 
-When the extension is built it creates a `chrome` and a `firefox` directory as well as packaged versions of the extensions `web-developer-chrome.zip` and `web-developer-firefox.xpi` in the `build` directory.
+When the extension is built it creates `build/chrome`, `build/firefox` and `build/opera` directories as well as packaged versions of the extensions `build/web-developer-chrome.zip`, `build/web-developer-firefox.xpi`, `build/web-developer-opera.nex`.
 
-The extension can be installed in Chrome by loading the unpacked extension in `build/chrome` as described in the [Chrome documentation](http://code.google.com/chrome/extensions/getstarted.html#load-ext).
-The extension can be installed in Firefox by installing `web-developer-firefox.xpi` like a regular extension or automatically with `ant install.firefox` and the [Extension Auto-Installer extension](https://addons.mozilla.org/en-US/firefox/addon/autoinstaller/).
+The extension can be installed in Chrome or Opera by loading the unpacked extension in `build/chrome` or `build/opera` respectively as described in the [Chrome](http://code.google.com/chrome/extensions/getstarted.html#load-ext) and [Opera](https://dev.opera.com/extensions/testing/) documentation.
+The extension can be installed in Firefox by installing `build/web-developer-firefox.xpi` like a regular extension.
 
 ### Included libraries
 
@@ -89,7 +91,7 @@ The following libraries are used by and included in the extension as-is:
 * Table Drag and Drop jQuery Plugin: [http://www.isocra.com/2008/02/table-drag-and-drop-jquery-plugin/](http://www.isocra.com/2008/02/table-drag-and-drop-jquery-plugin/)
 
 They should not be altered apart from to update to their latest versions for maintenance reasons.
-The latest versions of Bootstrap from Twitter, CodeMirror and Font Awesome can be automatically merged into the repository using `ant merge.bootstrap`, `ant merge.codemirror` and `ant merge.fontawesome` respectively.
+The latest versions of Bootstrap from Twitter or jQuery can be automatically merged into the repository using `gulp merge-bootstrap` or `gulp merge-jquery` respectively.
 
 ### Icons
 

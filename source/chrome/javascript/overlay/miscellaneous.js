@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Overlay               = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.Miscellaneous = WebDeveloper.Overlay.Miscellaneous || {};

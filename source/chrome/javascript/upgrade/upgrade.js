@@ -1,6 +1,24 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Upgrade = WebDeveloper.Upgrade || {};
+
+// Migrates the tools
+WebDeveloper.Upgrade.migrateTools = function()
+{
+  // If there are six tools and the last two are Validate Section 508 and Validate WAI
+  if(WebDeveloper.Storage.getItem("tool_count") == 6 &&
+    WebDeveloper.Storage.getItem("tool_5_description") == "Validate Section 508" && WebDeveloper.Storage.getItem("tool_5_url") == "http://www.cynthiasays.com/mynewtester/cynthia.exe?rptmode=-1&url1=" &&
+    WebDeveloper.Storage.getItem("tool_6_description") == "Validate WAI" && WebDeveloper.Storage.getItem("tool_6_url") == "http://www.cynthiasays.com/mynewtester/cynthia.exe?rptmode=2&url1=")
+  {
+    WebDeveloper.Storage.removeItem("tool_6_description");
+    WebDeveloper.Storage.removeItem("tool_6_url");
+    WebDeveloper.Storage.setItem("tool_4_description", WebDeveloper.Locales.getString("tool_4_description"));
+    WebDeveloper.Storage.setItem("tool_4_url", "http://wave.webaim.org/report#/");
+    WebDeveloper.Storage.setItem("tool_5_description", WebDeveloper.Locales.getString("tool_5_description"));
+    WebDeveloper.Storage.setItem("tool_5_url", "http://validator.w3.org/checklink?check=Check&hide_type=all&summary=on&uri=");
+    WebDeveloper.Storage.setItem("tool_count", 5);
+  }
+};
 
 // Opens the upgrade URL
 WebDeveloper.Upgrade.openUpgradeURL = function(version)
@@ -55,12 +73,10 @@ WebDeveloper.Upgrade.setupDefaultOptions = function()
   WebDeveloper.Storage.setItemIfNotSet("tool_3_description", WebDeveloper.Locales.getString("tool_3_description"));
   WebDeveloper.Storage.setItemIfNotSet("tool_3_url", "http://validator.w3.org/check?verbose=1&uri=");
   WebDeveloper.Storage.setItemIfNotSet("tool_4_description", WebDeveloper.Locales.getString("tool_4_description"));
-  WebDeveloper.Storage.setItemIfNotSet("tool_4_url", "http://validator.w3.org/checklink?check=Check&hide_type=all&summary=on&uri=");
+  WebDeveloper.Storage.setItemIfNotSet("tool_4_url", "http://wave.webaim.org/report#/");
   WebDeveloper.Storage.setItemIfNotSet("tool_5_description", WebDeveloper.Locales.getString("tool_5_description"));
-  WebDeveloper.Storage.setItemIfNotSet("tool_5_url", "http://www.cynthiasays.com/mynewtester/cynthia.exe?rptmode=-1&url1=");
-  WebDeveloper.Storage.setItemIfNotSet("tool_6_description", WebDeveloper.Locales.getString("tool_6_description"));
-  WebDeveloper.Storage.setItemIfNotSet("tool_6_url", "http://www.cynthiasays.com/mynewtester/cynthia.exe?rptmode=2&url1=");
-  WebDeveloper.Storage.setItemIfNotSet("tool_count", 6);
+  WebDeveloper.Storage.setItemIfNotSet("tool_5_url", "http://validator.w3.org/checklink?check=Check&hide_type=all&summary=on&uri=");
+  WebDeveloper.Storage.setItemIfNotSet("tool_count", 5);
 };
 
 // Upgrades the extension
@@ -68,14 +84,15 @@ WebDeveloper.Upgrade.upgrade = function()
 {
   var previousVersion = WebDeveloper.Storage.getItem("version");
 
-  WebDeveloper.Upgrade.setupDefaultOptions();
-
   // If the versions do not match
   if(previousVersion != "@version@")
   {
     WebDeveloper.Storage.setItem("version", "@version@");
     WebDeveloper.Upgrade.openUpgradeURL("@version@");
+    WebDeveloper.Upgrade.migrateTools();
   }
+
+  WebDeveloper.Upgrade.setupDefaultOptions();
 };
 
 WebDeveloper.Upgrade.upgrade();

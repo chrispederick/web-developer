@@ -59,12 +59,10 @@ WebDeveloperValidateHTML.prototype.createSourceFile = function(uri)
 
     return sourceFile;
   }
-  else
-  {
-    WebDeveloper.Common.displayError(WebDeveloper.Locales.getString("validateHTML"), WebDeveloper.Locales.getFormattedString("temporaryDirectoryFailed", [temporaryDirectory.path]));
 
-    return null;
-  }
+  WebDeveloper.Common.displayError(WebDeveloper.Locales.getString("validateHTML"), WebDeveloper.Locales.getFormattedString("temporaryDirectoryFailed", [temporaryDirectory.path]));
+
+  return null;
 };
 
 // Returns the post data
@@ -140,7 +138,7 @@ WebDeveloperValidateHTML.prototype.submitBackgroundRequest = function()
     // Try to send as a blob
     try
     {
-      this.validationRequest.send(new Blob([requestBody], { type: 'text/html' }));
+      this.validationRequest.send(new Blob([requestBody], { type: "text/html" }));
     }
     catch(exception2)
     {
@@ -236,7 +234,19 @@ WebDeveloperValidateHTML.prototype.QueryInterface = function(id)
 };
 
 // Dummy methods requiring implementations
-WebDeveloperValidateHTML.prototype.onLocationChange = function() {};
-WebDeveloperValidateHTML.prototype.onProgressChange = function() {};
-WebDeveloperValidateHTML.prototype.onSecurityChange = function() {};
-WebDeveloperValidateHTML.prototype.onStatusChange   = function() {};
+WebDeveloperValidateHTML.prototype.onLocationChange = function()
+{
+  // Ignore
+};
+WebDeveloperValidateHTML.prototype.onProgressChange = function()
+{
+  // Ignore
+};
+WebDeveloperValidateHTML.prototype.onSecurityChange = function()
+{
+  // Ignore
+};
+WebDeveloperValidateHTML.prototype.onStatusChange = function()
+{
+  // Ignore
+};

@@ -9,7 +9,7 @@
 #web-developer-dashboard-tab-box { margin: 0; }
 #web-developer-dashboard-tab-panels { -webkit-appearance: none; -moz-appearance: none; padding: 0; }
 #web-developer-dashboard-tabs { padding: 0; }
-#web-developer-dashboard-tabs > .tabs-left, #web-developer-dashboard-tabs > .tabs-right { -webkit-box-flex: 0; -ms-box-flex: 0; -moz-box-flex: 0; box-flex: 0; }
+#web-developer-dashboard-tabs > .tabs-left, #web-developer-dashboard-tabs > .tabs-right { -webkit-box-flex: 0; -ms-box-flex: 0; -moz-box-flex: 0; box-flex: 0; } /* csslint allow: known-properties */
 #web-developer-dashboard-tabs > .tabs-right { display: none; }
 
 /* Feature toolbar styles */

@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Dashboard          = WebDeveloper.Dashboard || {};
 WebDeveloper.Dashboard.resizing = false;
@@ -6,7 +6,7 @@ WebDeveloper.Dashboard.resizing = false;
 // Adjusts the bottom margin of the body
 WebDeveloper.Dashboard.adjustBodyBottomMargin = function(contentDocument, height)
 {
-  WebDeveloper.Common.getDocumentBodyElement(contentDocument).style.setProperty("margin-bottom", (parseInt(height, 10) + 20) + "px", "important");
+  WebDeveloper.Common.getDocumentBodyElement(contentDocument).style.setProperty("margin-bottom", parseInt(height, 10) + 20 + "px", "important");
 };
 
 // Closes a dashboard tab
@@ -44,8 +44,10 @@ WebDeveloper.Dashboard.createDashboard = function(contentDocument, dashboardHTML
 
   WebDeveloper.Common.getDocumentBodyElement(dashboardDocument).innerHTML = dashboardHTML;
 
-  WebDeveloper.Common.includeJavaScript("@common.prefix@/common/javascript/jquery/jquery.js", dashboardDocument, function() {
-    WebDeveloper.Common.includeJavaScript("@common.prefix@/common/javascript/bootstrap/tab.js", dashboardDocument, function() {
+  WebDeveloper.Common.includeJavaScript("@common.prefix@/common/javascript/jquery/jquery.js", dashboardDocument, function()
+  {
+    WebDeveloper.Common.includeJavaScript("@common.prefix@/common/javascript/bootstrap/tab.js", dashboardDocument, function()
+    {
       WebDeveloper.Common.includeJavaScript("dashboard/javascript/html/dashboard.js", dashboardDocument);
     });
   });

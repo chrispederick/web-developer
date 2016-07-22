@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.EditHTML                 = WebDeveloper.EditHTML || {};
 WebDeveloper.EditHTML.contentDocument = null;
@@ -182,7 +182,7 @@ WebDeveloper.EditHTML.save = function()
 WebDeveloper.EditHTML.search = function(event)
 {
   // If the event is not set or the event key code is set and is 13
-  if(!event || (event.keyCode && event.keyCode == 13))
+  if(!event || event.keyCode && event.keyCode == 13)
   {
     var query = document.getElementById("web-developer-search-dashboard-text").value;
 

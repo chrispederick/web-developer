@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Dashboard               = WebDeveloper.Dashboard || {};
 WebDeveloper.Dashboard.browserWindow = null;
@@ -15,7 +15,7 @@ WebDeveloper.Dashboard.adjustBreadcrumb = function()
   // If the dashboard is not vertical
   if(!$("html").hasClass("vertical"))
   {
-    $(".breadcrumb").css("margin-right", ($("#web-developer-copy-ancestor-path").outerWidth() + 10) + "px");
+    $(".breadcrumb").css("margin-right", $("#web-developer-copy-ancestor-path").outerWidth() + 10 + "px");
   }
 };
 
@@ -121,6 +121,7 @@ WebDeveloper.Dashboard.initializeEditor = function(type, color)
 // Initializes the syntax highlight functionality
 WebDeveloper.Dashboard.initializeSyntaxHighlight = function(type, color)
 {
+  /* eslint-disable indent */
   WebDeveloper.Dashboard.editor = CodeMirror.fromTextArea($("#web-developer-content").get(0),
   {
     onFocus: function() { window.focus(); },
@@ -139,6 +140,7 @@ WebDeveloper.Dashboard.initializeSyntaxHighlight = function(type, color)
     tabSize: 2,
     theme: color
   });
+  /* eslint-enable indent */
 
   WebDeveloper.Dashboard.editorElement = $(WebDeveloper.Dashboard.editor.getScrollerElement());
 };

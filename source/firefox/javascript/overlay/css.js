@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Overlay                    = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.CSS                = WebDeveloper.Overlay.CSS || {};
@@ -206,7 +206,7 @@ WebDeveloper.Overlay.CSS.displayStyleInformation = function()
   }
   else
   {
-    WebDeveloper.Common.displayURLMessage(WebDeveloper.Locales.getString("domInspectorRequired"), "@url@/faq/#dom-inspector");
+    WebDeveloper.Common.displayURLMessage(WebDeveloper.Locales.getString("domInspectorRequired"), "@url@/help/#dom-inspector");
   }
 };
 

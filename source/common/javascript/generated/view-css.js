@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Generated = WebDeveloper.Generated || {};
 
@@ -34,7 +34,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
     // If there are embedded styles
     if(contentDocument.embedded)
     {
-      embeddedContainers = WebDeveloper.Generated.output(embeddedCSSFrom + " " + url, null, "style-sheet-" + (styleSheetsCounter++), "css");
+      embeddedContainers = WebDeveloper.Generated.output(embeddedCSSFrom + " " + url, null, "style-sheet-" + styleSheetsCounter++, "css");
 
       // Loop through the embedded containers
       for(var j = 0, m = embeddedContainers.length; j < m; j++)
@@ -48,7 +48,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
     {
       url = styleSheets[k];
 
-      urlContentRequests.push({ outputContainers: WebDeveloper.Generated.output(null, url, "style-sheet-" + (styleSheetsCounter++), "css"), url: url });
+      urlContentRequests.push({ outputContainers: WebDeveloper.Generated.output(null, url, "style-sheet-" + styleSheetsCounter++, "css"), url: url });
     }
 
     // If there are no style sheets

@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.EditCSS = WebDeveloper.EditCSS || {};
 
@@ -103,7 +103,7 @@ WebDeveloper.EditCSS.resize = function(dashboard)
   // If the edit CSS panels exist
   if(editCSSPanels)
   {
-    editCSSPanels.style.height = (dashboard.offsetHeight - editCSSPanels.offsetTop - 1) + "px";
+    editCSSPanels.style.height = dashboard.offsetHeight - editCSSPanels.offsetTop - 1 + "px";
   }
 };
 

@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Generated                          = WebDeveloper.Generated || {};
 WebDeveloper.Generated.ancestorSingleLineHeight = 20;
@@ -37,7 +37,7 @@ WebDeveloper.Generated.resizeAncestors = function(reset)
   var previousHeight = 0;
 
   // If resetting or the ancestor container and ancestors are not set
-  if(reset || (!WebDeveloper.Generated.ancestorContainer && !WebDeveloper.Generated.ancestors))
+  if(reset || !WebDeveloper.Generated.ancestorContainer && !WebDeveloper.Generated.ancestors)
   {
     WebDeveloper.Generated.ancestorContainer = $(".breadcrumb");
     WebDeveloper.Generated.ancestors         = $("li", WebDeveloper.Generated.ancestorContainer);

@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Outline = WebDeveloper.Outline || {};
 
@@ -50,7 +50,6 @@ WebDeveloper.Outline.outlineExternalLinks = function(outline, documents)
   var contentDocument = null;
   var hostName        = null;
   var location        = null;
-  var protocol        = null;
   var styleElement    = null;
 
   // Loop through the documents
@@ -63,7 +62,6 @@ WebDeveloper.Outline.outlineExternalLinks = function(outline, documents)
     {
       location     = contentDocument.location;
       hostName     = location.hostname.replace(/\./gi, "\\.");
-      protocol     = location.protocol.replace(/:/gi, "\\:");
       styleElement = contentDocument.createElement("style");
 
       styleElement.setAttribute("id", "web-developer-outline-external-links");

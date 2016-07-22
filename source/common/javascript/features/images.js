@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Images                         = WebDeveloper.Images || {};
 WebDeveloper.Images.imageDimensionsLocale   = null;
@@ -196,7 +196,7 @@ WebDeveloper.Images.makeImagesFullSize = function(documents)
       naturalWidth  = image.naturalWidth;
 
       // If the height or width is not the full size
-      if((naturalHeight && image.height != naturalHeight) || (naturalWidth && image.width != naturalWidth))
+      if(naturalHeight && image.height != naturalHeight || naturalWidth && image.width != naturalWidth)
       {
         image.height = image.naturalHeight;
         image.width = image.naturalWidth;
@@ -369,7 +369,7 @@ WebDeveloper.Images.outlineImagesWithAdjustedDimensions = function(outline, docu
         naturalWidth  = image.naturalWidth;
 
         // If the height or width has been adjusted
-        if((naturalHeight && image.height != naturalHeight) || (naturalWidth && image.width != naturalWidth))
+        if(naturalHeight && image.height != naturalHeight || naturalWidth && image.width != naturalWidth)
         {
           WebDeveloper.Common.addClass(image, "web-developer-outline-images-with-adjusted-dimensions");
         }
@@ -428,7 +428,7 @@ WebDeveloper.Images.outlineImagesWithOversizedDimensions = function(outline, doc
         naturalWidth  = image.naturalWidth;
 
         // If the height or width has been oversized
-        if((naturalHeight && image.height > naturalHeight) || (naturalWidth && image.width > naturalWidth))
+        if(naturalHeight && image.height > naturalHeight || naturalWidth && image.width > naturalWidth)
         {
           WebDeveloper.Common.addClass(image, "web-developer-outline-images-with-oversized-dimensions");
         }
@@ -489,7 +489,7 @@ WebDeveloper.Images.reloadImages = function(documents)
     while((node = treeWalker.nextNode()) !== null)
     {
       // If this is an image element
-      if(node.tagName.toLowerCase() == "img" || (node.tagName.toLowerCase() == "input" && node.src && node.type && node.type.toLowerCase() == "image"))
+      if(node.tagName.toLowerCase() == "img" || node.tagName.toLowerCase() == "input" && node.src && node.type && node.type.toLowerCase() == "image")
       {
         imageURL = node.src;
 
@@ -596,8 +596,12 @@ WebDeveloper.Images.resizeImageDimensions = function()
     WebDeveloper.Images.imageDimensionsTimeout = null;
   }
 
-  // If the image dimensions are not already updating
-  if(!WebDeveloper.Images.imageDimensionsUpdating)
+  // If the image dimensions are already updating
+  if(WebDeveloper.Images.imageDimensionsUpdating)
+  {
+    WebDeveloper.Images.imageDimensionsTimeout = window.setTimeout(WebDeveloper.Images.resizeImageDimensions, 0);
+  }
+  else
   {
     var documents = WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
 
@@ -606,10 +610,6 @@ WebDeveloper.Images.resizeImageDimensions = function()
     {
       WebDeveloper.Images.updateImageDimensions(documents[i]);
     }
-  }
-  else
-  {
-    WebDeveloper.Images.imageDimensionsTimeout = window.setTimeout(WebDeveloper.Images.resizeImageDimensions, 0);
   }
 };
 

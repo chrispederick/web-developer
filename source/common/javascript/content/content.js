@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Content = WebDeveloper.Content || {};
 
@@ -338,7 +338,7 @@ WebDeveloper.Content.getDocumentCSS = function(contentDocument, screenOnly)
     styleSheetURL = styleSheet.href;
 
     // If this is a valid style sheet, is not an inline style sheet or disabled and not returning media screen only or this is an active screen style sheet
-    if(WebDeveloper.CSS.isValidStyleSheet(styleSheet) && styleSheetURL && styleSheetURL != contentDocument.documentURI && !styleSheet.disabled && (!screenOnly || (WebDeveloper.CSS.isMediaStyleSheet(styleSheet, "screen") && !WebDeveloper.CSS.isAlternateStyleSheet(styleSheet))))
+    if(WebDeveloper.CSS.isValidStyleSheet(styleSheet) && styleSheetURL && styleSheetURL != contentDocument.documentURI && !styleSheet.disabled && (!screenOnly || WebDeveloper.CSS.isMediaStyleSheet(styleSheet, "screen") && !WebDeveloper.CSS.isAlternateStyleSheet(styleSheet)))
     {
       documentCSS.styleSheets.push(WebDeveloper.Common.removeReloadParameterFromURL(styleSheetURL));
 
@@ -906,7 +906,7 @@ WebDeveloper.Content.sortCookies = function(cookieOne, cookieTwo)
     {
       return 0;
     }
-    else if(cookieOneHost < cookieTwoHost || (cookieOneHost == cookieTwoHost && cookieOneName < cookieTwoName))
+    else if(cookieOneHost < cookieTwoHost || cookieOneHost == cookieTwoHost && cookieOneName < cookieTwoName)
     {
       return -1;
     }

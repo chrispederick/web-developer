@@ -53,6 +53,10 @@
   #web-developer-view-source-toolbar { -moz-image-region: rect(0, 352px, 32px, 320px); }
 }
 
+/* Dark theme support */
+
+window[lwthemetextcolor="dark"] #web-developer-cookies-toolbar, window[lwthemetextcolor="dark"] #web-developer-css-toolbar, window[lwthemetextcolor="dark"] #web-developer-disable-toolbar, window[lwthemetextcolor="dark"] #web-developer-forms-toolbar, window[lwthemetextcolor="dark"] #web-developer-images-toolbar, window[lwthemetextcolor="dark"] #web-developer-information-toolbar, window[lwthemetextcolor="dark"] #web-developer-miscellaneous-toolbar, window[lwthemetextcolor="dark"] #web-developer-options-toolbar, window[lwthemetextcolor="dark"] #web-developer-outline-toolbar, window[lwthemetextcolor="dark"] #web-developer-resize-toolbar, window[lwthemetextcolor="dark"] #web-developer-tools-toolbar, window[lwthemetextcolor="dark"] #web-developer-view-source-toolbar { text-shadow: none; }
+
 /* Statusbar buttons */
 
 #web-developer-css-statusbar, #web-developer-javascript-statusbar, #web-developer-render-mode-statusbar { list-style-image: url(chrome://web-developer/skin/statusbar.png); }

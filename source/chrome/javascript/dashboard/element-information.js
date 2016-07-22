@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.ElementInformation                  = WebDeveloper.ElementInformation || {};
 WebDeveloper.ElementInformation.breadcrumbHeight = 37;
@@ -88,6 +88,6 @@ WebDeveloper.ElementInformation.resize = function(dashboard)
   // If the element information panel exists
   if(elementInformationPanel)
   {
-    elementInformationPanel.style.height = (dashboard.offsetHeight - elementInformationPanel.offsetTop - WebDeveloper.ElementInformation.breadcrumbHeight) + "px";
+    elementInformationPanel.style.height = dashboard.offsetHeight - elementInformationPanel.offsetTop - WebDeveloper.ElementInformation.breadcrumbHeight + "px";
   }
 };

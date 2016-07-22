@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Overlay         = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.Outline = WebDeveloper.Overlay.Outline || {};
@@ -261,4 +261,3 @@ WebDeveloper.Overlay.Outline.toggleShowElementTagNames = function()
   featureItem.toggleClass("active");
   chrome.extension.getBackgroundPage().WebDeveloper.Storage.setItem("outline.show.element.tag.names", featureItem.hasClass("active"));
 };
-

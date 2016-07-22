@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Common = WebDeveloper.Common || {};
 
@@ -94,15 +94,11 @@ WebDeveloper.Common.formatFileSize = function(fileSize, bytesLocale, kilobytesLo
     {
       return Math.round(fileSize / 1024) + " " + kilobytesLocale;
     }
-    else
-    {
-      return fileSize + " " + bytesLocale;
-    }
+
+    return fileSize + " " + bytesLocale;
   }
-  else
-  {
-    return "";
-  }
+
+  return "";
 };
 
 // Returns a chrome URL
@@ -140,16 +136,28 @@ WebDeveloper.Common.getCompressedFileSize = function(fileSize, fileSizeRequest, 
     }
     else
     {
+      var ioService = null;
+
       // Try to download the file
       try
       {
-        var ioService = Components.classes["@mozilla.org/network/io-service;1"].getService(Components.interfaces.nsIIOService);
+        ioService = Components.classes["@mozilla.org/network/io-service;1"].getService(Components.interfaces.nsIIOService);
 
-        fileSize.size = ioService.newChannelFromURI(ioService.newURI(url, null, null)).open().available();
+        fileSize.size = ioService.newChannelFromURI2(ioService.newURI(url, null, null), null, null, null, 0, 1).open().available();
       }
       catch(exception)
       {
-        fileSize.size = null;
+        // Try to download the file
+        try
+        {
+          ioService = Components.classes["@mozilla.org/network/io-service;1"].getService(Components.interfaces.nsIIOService);
+
+          fileSize.size = ioService.newChannelFromURI(ioService.newURI(url, null, null)).open().available();
+        }
+        catch(exception2)
+        {
+          fileSize.size = null;
+        }
       }
 
       callback();
@@ -204,6 +212,7 @@ WebDeveloper.Common.getFileFromCache = function(url, callback)
     cacheSession                      = Components.classes["@mozilla.org/network/cache-service;1"].getService(Components.interfaces.nsICacheService).createSession("HTTP", 0, true);
     cacheSession.doomEntriesIfExpired = false;
 
+    /* eslint-disable indent */
     // Open the cache entry asynchronously
     cacheSession.asyncOpenCacheEntry(url, Components.interfaces.nsICache.ACCESS_READ,
     {
@@ -213,6 +222,7 @@ WebDeveloper.Common.getFileFromCache = function(url, callback)
         callback(descriptor);
       }
     });
+    /* eslint-enable indent */
   }
   catch(exception)
   {
@@ -281,10 +291,8 @@ WebDeveloper.Common.getTabForDocument = function(documentElement)
   {
     return tabBrowser.tabs[tabBrowser.getBrowserIndexForDocument(documentElement)];
   }
-  else
-  {
-    return tabBrowser.tabContainer.getItemAtIndex(tabBrowser.getBrowserIndexForDocument(documentElement));
-  }
+
+  return tabBrowser.tabContainer.getItemAtIndex(tabBrowser.getBrowserIndexForDocument(documentElement));
 };
 
 // Gets the uncompressed size of a file
@@ -387,7 +395,7 @@ WebDeveloper.Common.isFileCompressed = function(file)
     }
 
     // If the cache is not GZIP encoded
-    if((!encoding || encoding.indexOf("gzip") == -1) && (!responseHeaders || (responseHeaders.indexOf("Content-Encoding: deflate") == -1 && responseHeaders.indexOf("Content-Encoding: gzip") == -1)))
+    if((!encoding || encoding.indexOf("gzip") == -1) && (!responseHeaders || responseHeaders.indexOf("Content-Encoding: deflate") == -1 && responseHeaders.indexOf("Content-Encoding: gzip") == -1))
     {
       return false;
     }

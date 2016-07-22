@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.ResizeWindow = WebDeveloper.ResizeWindow || {};
 
@@ -9,7 +9,7 @@ WebDeveloper.ResizeWindow.accept = function()
   var width  = document.getElementById("web-developer-resize-width").value.replace(/px/gi, "").trim();
 
   // If the width and height are valid
-  if(width && height && (width == "*" || (parseInt(width, 10) == width && width > 0)) && (height == "*" || (parseInt(height, 10) == height && height > 0)))
+  if(width && height && (width == "*" || parseInt(width, 10) == width && width > 0) && (height == "*" || parseInt(height, 10) == height && height > 0))
   {
     var contentWindow = window.opener.content;
     var windowX       = window.opener.screenX;
@@ -56,20 +56,16 @@ WebDeveloper.ResizeWindow.accept = function()
 
     return true;
   }
+  else if(!height || parseInt(height, 10) != height || height <= 0)
+  {
+    WebDeveloper.Common.displayError(WebDeveloper.Locales.getString("resizeWindow"), WebDeveloper.Locales.getString("invalidHeight"));
+  }
   else
   {
-    // If the height is empty or not a number or less than zero
-    if(!height || parseInt(height, 10) != height || height <= 0)
-    {
-      WebDeveloper.Common.displayError(WebDeveloper.Locales.getString("resizeWindow"), WebDeveloper.Locales.getString("invalidHeight"));
-    }
-    else
-    {
-      WebDeveloper.Common.displayError(WebDeveloper.Locales.getString("resizeWindow"), WebDeveloper.Locales.getString("invalidWidth"));
-    }
-
-    return false;
+    WebDeveloper.Common.displayError(WebDeveloper.Locales.getString("resizeWindow"), WebDeveloper.Locales.getString("invalidWidth"));
   }
+
+  return false;
 };
 
 // Initializes the resize dialog

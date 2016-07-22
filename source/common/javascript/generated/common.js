@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Generated                    = WebDeveloper.Generated || {};
 WebDeveloper.Generated.animationSpeed     = 200;
@@ -33,7 +33,11 @@ WebDeveloper.Generated.addDocument = function(documentURL, documentCount, itemDe
     element = document.createElement("h3");
 
     // If the item count is set
-    if(itemCount)
+    if(typeof itemCount === "undefined")
+    {
+      element.appendChild(document.createTextNode(itemDescription));
+    }
+    else
     {
       // If there are items
       if(itemCount !== 0)
@@ -45,10 +49,6 @@ WebDeveloper.Generated.addDocument = function(documentURL, documentCount, itemDe
       }
 
       element.appendChild(document.createTextNode(itemCount + " " + itemDescription));
-    }
-    else
-    {
-      element.appendChild(document.createTextNode(itemDescription));
     }
 
     fragment.appendChild(element);
@@ -213,6 +213,7 @@ WebDeveloper.Generated.initializeSyntaxHighlight = function(color, locale)
 
       window.setTimeout(function()
       {
+        /* eslint-disable indent */
         WebDeveloper.Generated.syntaxHighlighters.push(CodeMirror(function(element)
         {
           pre.after(element);
@@ -226,6 +227,7 @@ WebDeveloper.Generated.initializeSyntaxHighlight = function(color, locale)
           theme: color,
           value: pre.text()
         }));
+        /* eslint-enable indent */
       }, 0);
     });
   }

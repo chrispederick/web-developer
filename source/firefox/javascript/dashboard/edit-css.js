@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.EditCSS       = WebDeveloper.EditCSS || {};
 WebDeveloper.EditCSS.theme = null;
@@ -37,7 +37,8 @@ WebDeveloper.EditCSS.addTab = function(title, styles, stylesURL, tabs, tabPanels
       {
         var urlContentRequest = { url: url };
 
-        WebDeveloper.Common.getURLContent(urlContentRequest, loadErrorMessage, { urlContentRequestsRemaining: 1, callback: function() {
+        WebDeveloper.Common.getURLContent(urlContentRequest, loadErrorMessage, { urlContentRequestsRemaining: 1, callback: function()
+        {
           headElement.setAttribute("data-web-developer", JSON.stringify({ content: urlContentRequest.content, theme: theme }));
           headElement.dispatchEvent(dispatchEvent);
         } });
@@ -353,7 +354,7 @@ WebDeveloper.EditCSS.save = function()
 WebDeveloper.EditCSS.search = function(event)
 {
   // If the event is not set or the event key code is set and is 13
-  if(!event || (event.keyCode && event.keyCode == 13))
+  if(!event || event.keyCode && event.keyCode == 13)
   {
     var query = document.getElementById("web-developer-search-dashboard-text").value;
 

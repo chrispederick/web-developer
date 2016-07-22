@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Generated = WebDeveloper.Generated || {};
 
@@ -9,7 +9,6 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var content          = document.getElementById("content");
   var contentDocument  = null;
   var documents        = data.documents;
-  var imageDescription = null;
   var imagesLength     = null;
   var list             = null;
 
@@ -20,9 +19,8 @@ WebDeveloper.Generated.initialize = function(data, locale)
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
   {
-    contentDocument  = documents[i];
-    imageDescription = brokenImages.toLowerCase();
-    imagesLength     = contentDocument.images.length;
+    contentDocument = documents[i];
+    imagesLength    = contentDocument.images.length;
 
     WebDeveloper.Generated.addDocument(contentDocument.url, i, locale.brokenImages);
 

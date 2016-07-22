@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.PageMagnifier = WebDeveloper.PageMagnifier || {};
 
@@ -13,8 +13,8 @@ WebDeveloper.PageMagnifier.createPageMagnifier = function()
   container.addEventListener("DOMMouseScroll", WebDeveloper.PageMagnifier.mouseScroll, true);
   window.addEventListener("mousemove", WebDeveloper.PageMagnifier.mouseMove, false);
 
-  container.style.left = (browserBoxObject.x + 50) + "px";
-  container.style.top  = (browserBoxObject.y + 50) + "px";
+  container.style.left = browserBoxObject.x + 50 + "px";
+  container.style.top  = browserBoxObject.y + 50 + "px";
   container.hidden     = false;
 };
 
@@ -65,8 +65,8 @@ WebDeveloper.PageMagnifier.mouseMove = function(event)
       var containerYPosition = event.clientY - canvasHalfHeight;
       var documentElement    = WebDeveloper.Common.getContentDocument().documentElement;
       var magnificationLevel = parseFloat(WebDeveloper.Preferences.getExtensionStringPreference("magnification.level"));
-      var magnifierXPosition = event.clientX - browserXPosition - (canvasHalfWidth / magnificationLevel) + documentElement.scrollLeft;
-      var magnifierYPosition = event.clientY - browserYPosition - (canvasHalfHeight / magnificationLevel) + documentElement.scrollTop;
+      var magnifierXPosition = event.clientX - browserXPosition - canvasHalfWidth / magnificationLevel + documentElement.scrollLeft;
+      var magnifierYPosition = event.clientY - browserYPosition - canvasHalfHeight / magnificationLevel + documentElement.scrollTop;
 
       // If the container X position is less than the browser X position
       if(containerXPosition < browserXPosition)

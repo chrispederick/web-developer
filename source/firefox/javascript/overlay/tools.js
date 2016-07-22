@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Overlay       = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.Tools = WebDeveloper.Overlay.Tools || {};
@@ -46,7 +46,7 @@ WebDeveloper.Overlay.Tools.openDOMInspector = function()
   }
   else
   {
-    WebDeveloper.Common.displayURLMessage(WebDeveloper.Locales.getString("domInspectorRequired"), "@url@/faq/#dom-inspector");
+    WebDeveloper.Common.displayURLMessage(WebDeveloper.Locales.getString("domInspectorRequired"), "@url@/help/#dom-inspector");
   }
 };
 
@@ -81,7 +81,7 @@ WebDeveloper.Overlay.Tools.updateToolsMenu = function(menu, suffix)
       url         = WebDeveloper.Preferences.getExtensionStringPreference("tool." + i + ".url");
 
       // If the description and either a path or url are set
-      if((description && (path || url)))
+      if(description && path || url)
       {
         key       = WebDeveloper.Preferences.getExtensionStringPreference("tool." + i + ".key");
         menuItem  = document.createElement("menuitem");

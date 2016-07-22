@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Overlay             = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.Information = WebDeveloper.Overlay.Information || {};
@@ -266,7 +266,7 @@ WebDeveloper.Overlay.Information.displayTableDepth = function()
       var feature = featureItem.attr("id");
       var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
 
-      WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayTableDepth(" + display + ", [document], " + '"' + WebDeveloper.Locales.getString("depth") + '");');
+      WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayTableDepth(" + display + ", [document], '" + WebDeveloper.Locales.getString("depth") + "');");
     }
   });
 };

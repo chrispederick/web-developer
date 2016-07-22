@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Options                = WebDeveloper.Options || {};
 WebDeveloper.Options.animationSpeed = 100;
@@ -433,16 +433,16 @@ WebDeveloper.Options.localizeAdvancedTab = function()
 // Localizes the colors tab
 WebDeveloper.Options.localizeColorsTab = function()
 {
-  $('#syntax-highlight-performance').text(WebDeveloper.Locales.getString("syntaxHighlightPerformance"));
+  $("#syntax-highlight-performance").text(WebDeveloper.Locales.getString("syntaxHighlightPerformance"));
 
   $('[for="syntax_highlight_theme"]').text(WebDeveloper.Locales.getString("syntaxHighlightTheme"));
-  $('#icon_color').after(WebDeveloper.Locales.getString("displayExtensionIconColor"));
+  $("#icon_color").after(WebDeveloper.Locales.getString("displayExtensionIconColor"));
 
   $('[value="dark"]').text(WebDeveloper.Locales.getString("dark"));
   $('[value="light"]').text(WebDeveloper.Locales.getString("light"));
   $('[value="none"]').text(WebDeveloper.Locales.getString("none"));
 
-  $('#preview').text(WebDeveloper.Locales.getString("preview"));
+  $("#preview").text(WebDeveloper.Locales.getString("preview"));
 };
 
 // Localizes the general tab

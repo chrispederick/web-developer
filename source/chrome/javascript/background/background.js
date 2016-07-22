@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Background = WebDeveloper.Background || {};
 
@@ -122,7 +122,7 @@ WebDeveloper.Background.getURLContent = function(url, errorMessage)
     var request = new XMLHttpRequest();
 
     // Chrome no longer allows a timeout set on synchronous requests
-    //request.timeout = WebDeveloper.Common.requestTimeout;
+    // request.timeout = WebDeveloper.Common.requestTimeout;
 
     request.ontimeout = function()
     {

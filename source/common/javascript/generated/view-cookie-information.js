@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Generated              = WebDeveloper.Generated || {};
 WebDeveloper.Generated.cookie       = null;
@@ -324,8 +324,8 @@ WebDeveloper.Generated.initialize = function(data, locale)
   $("#cookie-session").after(locale.sessionCookie).on("change", WebDeveloper.Generated.changeSession);
   $("#cookie-value").attr("placeholder", locale.valuePlaceholder);
   $(".btn-danger", deleteDialog).append(locale.deleteLabel).on("click", WebDeveloper.Generated.deleteCookie);
-  $('.btn-default', deleteDialog).text(locale.cancel);
-  $('.btn-default', editDialog).text(locale.cancel);
+  $(".btn-default", deleteDialog).text(locale.cancel);
+  $(".btn-default", editDialog).text(locale.cancel);
   $(".btn-primary", editDialog).append(locale.save).on("click", WebDeveloper.Generated.editCookie);
   $(".web-developer-delete").on("click", WebDeveloper.Generated.showDeleteDialog);
   $(".web-developer-edit:not(.disabled)").on("click", WebDeveloper.Generated.showEditDialog);

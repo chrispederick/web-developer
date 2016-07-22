@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Images = WebDeveloper.Images || {};
 
@@ -44,7 +44,6 @@ WebDeveloper.Images.displayImageFileSizes = function(display, documents)
     {
       var bytes           = WebDeveloper.Locales.getString("bytes");
       var fileSizeRequest = null;
-      var image           = null;
       var kilobytes       = WebDeveloper.Locales.getString("kilobytes");
       var spanElement     = null;
       var text            = null;

@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Overlay               = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.Miscellaneous = WebDeveloper.Overlay.Miscellaneous || {};
@@ -11,14 +11,14 @@ WebDeveloper.Overlay.Miscellaneous.addToHistory = function(link, uri)
   // If browser history exists
   if(browserHistory)
   {
-    browserHistory.getService(Components.interfaces.mozIAsyncHistory).isURIVisited(uri, function(uri, alreadyVisited)
+    browserHistory.getService(Components.interfaces.mozIAsyncHistory).isURIVisited(uri, function(addURI, alreadyVisited)
     {
       // If the URI is not already in the history
       if(!alreadyVisited)
       {
         var asyncHistory = Components.classes["@mozilla.org/browser/history;1"].getService(Components.interfaces.mozIAsyncHistory);
 
-        asyncHistory.updatePlaces({ uri: uri, visits: [{ transitionType: Components.classes["@mozilla.org/browser/nav-history-service;1"].getService(Components.interfaces.nsINavHistoryService).TRANSITION_LINK, visitDate: new Date().getTime() }] });
+        asyncHistory.updatePlaces({ uri: addURI, visits: [{ transitionType: Components.classes["@mozilla.org/browser/nav-history-service;1"].getService(Components.interfaces.nsINavHistoryService).TRANSITION_LINK, visitDate: new Date().getTime() }] });
       }
 
       WebDeveloper.Overlay.Miscellaneous.recheckLink(link);
@@ -50,19 +50,27 @@ WebDeveloper.Overlay.Miscellaneous.clearCache = function()
   // If the clearing is confirmed
   WebDeveloper.Overlay.displayConfirmation(WebDeveloper.Locales.getString("clearCache"), WebDeveloper.Locales.getString("clearCacheConfirmation"), WebDeveloper.Locales.getString("clear"), null, function()
   {
-    var cacheInterface = Components.interfaces.nsICache;
-    var cacheService   = Components.classes["@mozilla.org/network/cache-service;1"].getService(Components.interfaces.nsICacheService);
-
+    // Try to clear the cache
     try
     {
-      cacheService.evictEntries(cacheInterface.STORE_ANYWHERE);
-
-      WebDeveloper.Common.displayNotification("clearCacheResult");
+      Components.classes["@mozilla.org/netwerk/cache-storage-service;1"].getService(Components.interfaces.nsICacheStorageService).clear();
     }
     catch(exception)
     {
       // Ignore
     }
+
+    // Try to clear the cache
+    try
+    {
+      Components.classes["@mozilla.org/network/cache-service;1"].getService(Components.interfaces.nsICacheService).evictEntries(Components.interfaces.nsICache.STORE_ANYWHERE);
+    }
+    catch(exception)
+    {
+      // Ignore
+    }
+
+    WebDeveloper.Common.displayNotification("clearCacheResult");
   });
 };
 
@@ -200,12 +208,12 @@ WebDeveloper.Overlay.Miscellaneous.removeFromHistory = function(link, uri)
   // If browser history exists
   if(browserHistory)
   {
-    browserHistory.getService(Components.interfaces.mozIAsyncHistory).isURIVisited(uri, function(uri, inHistory)
+    browserHistory.getService(Components.interfaces.mozIAsyncHistory).isURIVisited(uri, function(removeURI, inHistory)
     {
       // If the URI is in the history
       if(inHistory)
       {
-        Components.classes["@mozilla.org/browser/nav-history-service;1"].getService(Components.interfaces.nsIBrowserHistory).removePage(uri);
+        Components.classes["@mozilla.org/browser/nav-history-service;1"].getService(Components.interfaces.nsIBrowserHistory).removePage(removeURI);
       }
 
       WebDeveloper.Overlay.Miscellaneous.recheckLink(link);

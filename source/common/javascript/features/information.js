@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Information                       = WebDeveloper.Information || {};
 WebDeveloper.Information.divDimensionsLocale   = null;
@@ -241,7 +241,7 @@ WebDeveloper.Information.displayIdClassDetails = function(display, documents)
         idClassElement = idClassElements[j];
 
         // If the id class element is not the document root element or a Web Developer element
-        if(idClassElement != contentDocument.documentElement && ((idClassElement.hasAttribute("class") && idClassElement.getAttribute("class").indexOf("web-developer-") !== 0) || (idClassElement.hasAttribute("id") && idClassElement.getAttribute("id").indexOf("web-developer-") !== 0)))
+        if(idClassElement != contentDocument.documentElement && (idClassElement.hasAttribute("class") && idClassElement.getAttribute("class").indexOf("web-developer-") !== 0 || idClassElement.hasAttribute("id") && idClassElement.getAttribute("id").indexOf("web-developer-") !== 0))
         {
           spanElement = contentDocument.createElement("span");
           text         = WebDeveloper.Information.getElementDescription(idClassElement);
@@ -754,8 +754,12 @@ WebDeveloper.Information.resizeDivDimensions = function()
     WebDeveloper.Information.divDimensionsTimeout = null;
   }
 
-  // If the div dimensions are not already updating
-  if(!WebDeveloper.Information.divDimensionsUpdating)
+  // If the div dimensions are already updating
+  if(WebDeveloper.Information.divDimensionsUpdating)
+  {
+    WebDeveloper.Information.divDimensionsTimeout = window.setTimeout(WebDeveloper.Information.resizeDivDimensions, 0);
+  }
+  else
   {
     var documents = WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
 
@@ -764,10 +768,6 @@ WebDeveloper.Information.resizeDivDimensions = function()
     {
       WebDeveloper.Information.updateDivDimensions(documents[i]);
     }
-  }
-  else
-  {
-    WebDeveloper.Information.divDimensionsTimeout = window.setTimeout(WebDeveloper.Information.resizeDivDimensions, 0);
   }
 };
 

@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.CSS = WebDeveloper.CSS || {};
 
@@ -28,9 +28,9 @@ WebDeveloper.CSS.formatStyleProperty = function(styleProperty)
       return "background-x-position";
     case "-x-background-y-position":
       return "background-y-position";
+    default:
+      return styleProperty;
   }
-
-  return styleProperty;
 };
 
 // Formats a style value
@@ -184,7 +184,7 @@ WebDeveloper.CSS.isValidRuleStyle = function(ruleStyles, ruleStyle)
   if(ruleStyle)
   {
     // If the rule style is an invalid rule style
-    if(ruleStyle.indexOf("-moz-") === 0 || ruleStyle.indexOf("-x-") === 0 || ruleStyles.getPropertyValue(ruleStyle).indexOf("-moz-") === 0 || ((ruleStyle.indexOf("-ltr-source") !== 0 || ruleStyle.indexOf("-rtl-source") !== 0) && ruleStyles.getPropertyValue(ruleStyle) === "physical"))
+    if(ruleStyle.indexOf("-moz-") === 0 || ruleStyle.indexOf("-x-") === 0 || ruleStyles.getPropertyValue(ruleStyle).indexOf("-moz-") === 0 || (ruleStyle.indexOf("-ltr-source") !== 0 || ruleStyle.indexOf("-rtl-source") !== 0 && ruleStyles.getPropertyValue(ruleStyle) === "physical"))
     {
       return false;
     }
@@ -204,7 +204,7 @@ WebDeveloper.CSS.isValidStyleSheet = function(styleSheet)
     var styleSheetHref = styleSheet.href;
 
     // If the style sheet href is not set or this is not a chrome or data style sheet
-    if(!styleSheetHref || (styleSheetHref.indexOf("about:") !== 0 && styleSheetHref.indexOf("chrome://") !== 0 && styleSheetHref.indexOf("chrome-extension://") !== 0 && styleSheetHref.indexOf("data:") !== 0 && styleSheetHref.indexOf("resource://") !== 0))
+    if(!styleSheetHref || styleSheetHref.indexOf("about:") !== 0 && styleSheetHref.indexOf("chrome://") !== 0 && styleSheetHref.indexOf("chrome-extension://") !== 0 && styleSheetHref.indexOf("data:") !== 0 && styleSheetHref.indexOf("resource://") !== 0)
     {
       return true;
     }

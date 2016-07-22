@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Forms = WebDeveloper.Forms || {};
 
@@ -124,7 +124,7 @@ WebDeveloper.Forms.convertFormMethods = function(method, documents)
       form = forms[j];
 
       // If this form is not already the right method
-      if((!form.hasAttribute("method") && method == "post") || (form.hasAttribute("method") && form.getAttribute("method").toLowerCase() != method))
+      if(!form.hasAttribute("method") && method == "post" || form.hasAttribute("method") && form.getAttribute("method").toLowerCase() != method)
       {
         form.setAttribute("method", method);
 
@@ -225,7 +225,7 @@ WebDeveloper.Forms.convertTextInputsToTextareas = function(documents)
       elementType  = inputElement.getAttribute("type");
 
       // If the form element does not have a type attribute or it is not a text input
-      if(!elementType || (elementType != "button" && elementType != "checkbox" && elementType != "file" && elementType != "hidden" && elementType != "image" && elementType != "radio" && elementType != "reset" && elementType != "submit"))
+      if(!elementType || elementType != "button" && elementType != "checkbox" && elementType != "file" && elementType != "hidden" && elementType != "image" && elementType != "radio" && elementType != "reset" && elementType != "submit")
       {
         textareaElement = contentDocument.createElement("textarea");
         parentNode      = inputElement.parentNode;
@@ -344,14 +344,10 @@ WebDeveloper.Forms.displayFormDetails = function(display, documents)
         spanElement.appendChild(contentDocument.createTextNode(text));
         inputElement.parentNode.insertBefore(spanElement, inputElement);
       }
-      else
+      else if(inputElement.hasAttribute("web-developer-unhidden"))
       {
-        // If the input element was un-hidden
-        if(inputElement.hasAttribute("web-developer-unhidden"))
-        {
-          inputElement.removeAttribute("web-developer-unhidden");
-          inputElement.setAttribute("type", "hidden");
-        }
+        inputElement.removeAttribute("web-developer-unhidden");
+        inputElement.setAttribute("type", "hidden");
       }
     }
 
@@ -611,7 +607,7 @@ WebDeveloper.Forms.expandSelectElements = function(documents)
       selectSize    = selectElement.getAttribute("size");
 
       // If the select size is not set and the select has more than one option or the select has more options than it's size
-      if((!selectSize && selectLength > 1) || (selectLength > selectSize))
+      if(!selectSize && selectLength > 1 || selectLength > selectSize)
       {
         selectElement.setAttribute("size", selectLength);
 
@@ -734,7 +730,7 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
 {
   var contentDocument          = null;
   var date                     = new Date();
-  var dateString               = date.toISOString().split('T')[0];
+  var dateString               = date.toISOString().split("T")[0];
   var day                      = date.getDay();
   var inputElement             = null;
   var inputElementMaxlength    = null;
@@ -743,7 +739,7 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
   var inputElementType         = null;
   var maximumValue             = 0;
   var minimumValue             = 0;
-  var month                    = dateString.split('-');
+  var month                    = dateString.split("-");
   var option                   = null;
   var options                  = null;
   var populatedFormFields      = 0;
@@ -752,8 +748,8 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
   var textAreaElement          = null;
   var textAreaElements         = null;
   var textAreaElementMaxlength = null;
-  var time                     = date.getHours() + ':' + date.getMinutes();
-  var localDateTime            = dateString + 'T' + time;
+  var time                     = date.getHours() + ":" + date.getMinutes();
+  var localDateTime            = dateString + "T" + time;
   var week                     = null;
   var weekDate                 = new Date();
   var weekNumber               = null;
@@ -761,7 +757,7 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
 
   month.pop();
 
-  month = month.join('-');
+  month = month.join("-");
 
   // If the day is not set
   if(day === 0)
@@ -772,7 +768,7 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
   weekDate.setDate(weekDate.getDate() + (4 - day));
 
   weekNumber = 1 + Math.floor(Math.floor((weekDate.getTime() - new Date(year, 0, 1, -6)) / 86400000) / 7);
-  week       = date.getFullYear() + '-W' + weekNumber;
+  week       = date.getFullYear() + "-W" + weekNumber;
 
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
@@ -817,7 +813,7 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
 
             populatedFormFields++;
           }
-          else if((inputElementType && inputElementType.toLowerCase() == "email") || ((!inputElementType || inputElementType == "text") && inputElementName && inputElementName.toLowerCase().indexOf("email") >= 0))
+          else if(inputElementType && inputElementType.toLowerCase() == "email" || (!inputElementType || inputElementType == "text") && inputElementName && inputElementName.toLowerCase().indexOf("email") >= 0)
           {
             inputElement.value = emailAddress;
 
@@ -856,7 +852,7 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
 
             populatedFormFields++;
           }
-          else if((inputElementType && inputElementType.toLowerCase() == "tel") || (inputElementName && (inputElementName.toLowerCase().indexOf("phone") >= 0 || inputElementName && inputElementName.toLowerCase().indexOf("tel") >= 0)))
+          else if(inputElementType && inputElementType.toLowerCase() == "tel" || inputElementName && (inputElementName.toLowerCase().indexOf("phone") >= 0 || inputElementName && inputElementName.toLowerCase().indexOf("tel") >= 0))
           {
             inputElement.value = "1234567890";
 

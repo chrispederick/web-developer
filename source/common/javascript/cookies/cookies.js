@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Cookies = WebDeveloper.Cookies || {};
 
@@ -32,7 +32,7 @@ WebDeveloper.Cookies.deleteDomainCookies = function(cookies)
       WebDeveloper.Overlay.closeConfirmation();
 
       // Loop through the domain cookies
-      for(var i = 0 ; i < cookiesLength; i++)
+      for(var i = 0; i < cookiesLength; i++)
       {
         WebDeveloper.Cookies.deleteCookie(cookies[i]);
       }

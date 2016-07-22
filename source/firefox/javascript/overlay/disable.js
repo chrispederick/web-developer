@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Overlay         = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.Disable = WebDeveloper.Overlay.Disable || {};
@@ -203,7 +203,7 @@ WebDeveloper.Overlay.Disable.updateDisableMenu = function()
   }
 
   // If the page colors preference is set to 2 or true
-  if((WebDeveloper.Preferences.isPreferenceSet("browser.display.document_color_use") && WebDeveloper.Preferences.getIntegerPreference("browser.display.document_color_use") === 2) || !WebDeveloper.Preferences.getBooleanPreference("browser.display.use_document_colors"))
+  if(WebDeveloper.Preferences.isPreferenceSet("browser.display.document_color_use") && WebDeveloper.Preferences.getIntegerPreference("browser.display.document_color_use") === 2 || !WebDeveloper.Preferences.getBooleanPreference("browser.display.use_document_colors"))
   {
     pageColorsDisabled = true;
   }

@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Overlay        = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.Images = WebDeveloper.Overlay.Images || {};
@@ -236,7 +236,7 @@ WebDeveloper.Overlay.Images.updateDisableImagesMenu = function()
 // Updates the images menu
 WebDeveloper.Overlay.Images.updateImagesMenu = function(suffix)
 {
-  var disableImages = (WebDeveloper.Preferences.getIntegerPreference("permissions.default.image") == 2);
+  var disableImages = WebDeveloper.Preferences.getIntegerPreference("permissions.default.image") == 2;
 
   WebDeveloper.Common.configureElement(document.getElementById("web-developer-display-alt-attributes-command"), "disabled", disableImages);
   WebDeveloper.Common.configureElement(document.getElementById("web-developer-display-image-dimensions-command"), "disabled", disableImages);

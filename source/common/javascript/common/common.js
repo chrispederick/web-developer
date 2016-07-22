@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Common                = WebDeveloper.Common || {};
 WebDeveloper.Common.requestTimeout = 10000;
@@ -40,23 +40,23 @@ WebDeveloper.Common.adjustElementPosition = function(element, xPosition, yPositi
     }
 
     // If the element will fit at the x position
-    if((xPosition + offsetWidth + offset + 5) < (innerWidth + offsetX))
+    if(xPosition + offsetWidth + offset + 5 < innerWidth + offsetX)
     {
       element.style.left = xPosition + offset + "px";
     }
     else
     {
-      element.style.left = (innerWidth + offsetX - offsetWidth - offset) + "px";
+      element.style.left = innerWidth + offsetX - offsetWidth - offset + "px";
     }
 
     // If the element will fit at the y position
-    if((yPosition + offsetHeight + offset + 5) < (innerHeight + offsetY))
+    if(yPosition + offsetHeight + offset + 5 < innerHeight + offsetY)
     {
       element.style.top = yPosition + offset + "px";
     }
     else
     {
-      element.style.top = (innerHeight + offsetY - offsetHeight - offset) + "px";
+      element.style.top = innerHeight + offsetY - offsetHeight - offset + "px";
     }
   }
 };
@@ -74,10 +74,8 @@ WebDeveloper.Common.contains = function(array, element)
       {
         return false;
       }
-      else
-      {
-        return true;
-      }
+
+      return true;
     }
     catch(exception)
     {
@@ -166,9 +164,9 @@ WebDeveloper.Common.getCSSPrimitiveValue = function(type)
       return cssPrimitiveValueExists ? CSSPrimitiveValue.CSS_RGBCOLOR : 25;
     case "URI":
       return cssPrimitiveValueExists ? CSSPrimitiveValue.CSS_URI : 20;
+    default:
+      return null;
   }
-
-  return null;
 };
 
 // Returns the CSS text from a property
@@ -182,10 +180,8 @@ WebDeveloper.Common.getCSSText = function(property)
     {
       return property.cssText;
     }
-    else
-    {
-      return property;
-    }
+
+    return property;
   }
 
   return null;
@@ -203,7 +199,7 @@ WebDeveloper.Common.getCSSURI = function(property)
       return property.getStringValue();
     }
     else
-    {
+    { // eslint-disable-line no-else-return
       var urlRegularExpression = /(?:\(['|"]?)(.*?)(?:['|"]?\))/;
       var uri                  = urlRegularExpression.exec(property);
 
@@ -227,7 +223,7 @@ WebDeveloper.Common.getDocumentBodyElement = function(contentDocument)
     return contentDocument.body;
   }
   else
-  {
+  { // eslint-disable-line no-else-return
     var bodyElement = contentDocument.querySelector("body");
 
     // If there is a body element
@@ -392,17 +388,13 @@ WebDeveloper.Common.getElementPosition = function(element, xPosition)
         element = elementOffsetParent;
       }
     }
+    else if(xPosition)
+    {
+      position = element.offsetLeft;
+    }
     else
     {
-      // If getting the x position
-      if(xPosition)
-      {
-        position = element.offsetLeft;
-      }
-      else
-      {
-        position = element.offsetTop;
-      }
+      position = element.offsetTop;
     }
   }
 
@@ -628,10 +620,8 @@ WebDeveloper.Common.isAncestor = function(element, ancestorElement)
       {
         return true;
       }
-      else
-      {
-        element = parentElement;
-      }
+
+      element = parentElement;
     }
   }
 

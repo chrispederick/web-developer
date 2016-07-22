@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {};
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
 
 WebDeveloper.Options = WebDeveloper.Options || {};
 
@@ -461,7 +461,7 @@ WebDeveloper.Options.initializeToolsPane = function()
       url         = WebDeveloper.Preferences.getExtensionStringPreference("tool." + i + ".url");
 
       // If the description and either a path or url are set
-      if((description && (path || url)))
+      if(description && path || url)
       {
         key       = WebDeveloper.Preferences.getLocalizedPreference("tool." + i + ".key");
         listCell  = document.createElement("listcell");
