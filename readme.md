@@ -20,7 +20,7 @@ Announcements
 
 For announcements about the Web Developer extension including news about beta releases and previews of upcoming versions follow:
 
-* Blog: [http://blog.chrispederick.com/](http://blog.chrispederick.com/)
+* Blog: [http://chrispederick.com/blog/](http://chrispederick.com/blog/)
 * Twitter: [http://twitter.com/chrispederick/](http://twitter.com/chrispederick/)
 * Dribbble: [http://dribbble.com/chrispederick/projects/9762-Web-Developer](http://dribbble.com/chrispederick/projects/9762-Web-Developer)
 
