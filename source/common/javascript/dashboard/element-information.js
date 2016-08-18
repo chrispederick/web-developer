@@ -91,7 +91,7 @@ WebDeveloper.ElementInformation.clickOutput = function(event)
 WebDeveloper.ElementInformation.generateAncestorInformation = function(element, contentDocument)
 {
   var ancestorInformation = contentDocument.createElement("div");
-  var ancestorList        = contentDocument.createElement("ul");
+  var ancestorList        = contentDocument.createElement("ol");
   var hasAncestors        = false;
   var heading             = contentDocument.createElement("h3");
   var parentElement       = null;
@@ -107,7 +107,7 @@ WebDeveloper.ElementInformation.generateAncestorInformation = function(element, 
     WebDeveloper.Common.insertAsFirstChild(ancestorList, WebDeveloper.ElementInformation.getElementDescription(element, contentDocument, "web-developer-ancestor"));
   }
 
-  ancestorInformation.setAttribute("class", "web-developer-section web-developer-ancestors");
+  ancestorInformation.setAttribute("class", "col-sm-6 web-developer-ancestors");
   ancestorInformation.appendChild(heading);
 
   // If there are ancestors
@@ -126,7 +126,7 @@ WebDeveloper.ElementInformation.generateAncestorInformation = function(element, 
 // Generates children information for an element
 WebDeveloper.ElementInformation.generateChildrenInformation = function(element, contentDocument)
 {
-  var childList           = contentDocument.createElement("ul");
+  var childList           = contentDocument.createElement("ol");
   var childNodes          = element.childNodes;
   var childrenInformation = contentDocument.createElement("div");
   var elementDescription  = null;
@@ -149,7 +149,7 @@ WebDeveloper.ElementInformation.generateChildrenInformation = function(element, 
     }
   }
 
-  childrenInformation.setAttribute("class", "web-developer-section web-developer-children");
+  childrenInformation.setAttribute("class", "col-sm-6 web-developer-children");
   childrenInformation.appendChild(heading);
 
   // If there are children
@@ -175,7 +175,7 @@ WebDeveloper.ElementInformation.generateDOMInformation = function(element, conte
 
   childElement.appendChild(contentDocument.createTextNode(WebDeveloper.ElementInformation.getLocaleString("dom")));
 
-  domInformation.setAttribute("class", "web-developer-section");
+  domInformation.setAttribute("class", "col-sm-6");
   domInformation.appendChild(childElement);
 
   childElement = contentDocument.createElement("pre");
@@ -242,10 +242,22 @@ WebDeveloper.ElementInformation.generateElementInformation = function(element, c
   var elementInformation = generatedDocument.createDocumentFragment();
 
   elementInformation.appendChild(WebDeveloper.ElementAncestors.generateAncestorInformation(element, generatedDocument));
+
+  divElement.setAttribute("class", "row");
   divElement.appendChild(WebDeveloper.ElementInformation.generateDOMInformation(element, generatedDocument, theme));
   divElement.appendChild(WebDeveloper.ElementInformation.generateLayoutInformation(element, generatedDocument));
+  elementInformation.appendChild(divElement);
+
+  divElement = generatedDocument.createElement("div");
+
+  divElement.setAttribute("class", "row");
   divElement.appendChild(WebDeveloper.ElementInformation.generatePositionInformation(element, contentDocument, generatedDocument));
   divElement.appendChild(WebDeveloper.ElementInformation.generateTextInformation(element, contentDocument, generatedDocument));
+  elementInformation.appendChild(divElement);
+
+  divElement = generatedDocument.createElement("div");
+
+  divElement.setAttribute("class", "row");
   divElement.appendChild(WebDeveloper.ElementInformation.generateAncestorInformation(element, generatedDocument));
   divElement.appendChild(WebDeveloper.ElementInformation.generateChildrenInformation(element, generatedDocument));
   elementInformation.appendChild(divElement);
@@ -261,7 +273,7 @@ WebDeveloper.ElementInformation.generateLayoutInformation = function(element, co
 
   childElement.appendChild(contentDocument.createTextNode(WebDeveloper.ElementInformation.getLocaleString("layout")));
 
-  layoutInformation.setAttribute("class", "web-developer-section web-developer-css");
+  layoutInformation.setAttribute("class", "col-sm-6 web-developer-css");
   layoutInformation.appendChild(childElement);
 
   childElement = contentDocument.createElement("pre");
@@ -285,7 +297,7 @@ WebDeveloper.ElementInformation.generatePositionInformation = function(element, 
   var positionContent     = "";
 
   childElement.appendChild(generatedDocument.createTextNode(WebDeveloper.ElementInformation.getLocaleString("position")));
-  positionInformation.setAttribute("class", "web-developer-section web-developer-css");
+  positionInformation.setAttribute("class", "col-sm-6 web-developer-css");
   positionInformation.appendChild(childElement);
 
   childElement = generatedDocument.createElement("pre");
@@ -319,7 +331,7 @@ WebDeveloper.ElementInformation.generateTextInformation = function(element, cont
 
   childElement.appendChild(contentDocument.createTextNode(WebDeveloper.ElementInformation.getLocaleString("text")));
 
-  textInformation.setAttribute("class", "web-developer-section web-developer-css");
+  textInformation.setAttribute("class", "col-sm-6 web-developer-css");
   textInformation.appendChild(childElement);
 
   childElement = generatedDocument.createElement("pre");

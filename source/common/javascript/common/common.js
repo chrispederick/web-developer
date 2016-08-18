@@ -158,6 +158,8 @@ WebDeveloper.Common.getCSSPrimitiveValue = function(type)
   // Switch on the style property
   switch(type)
   {
+    case "IDENT":
+      return cssPrimitiveValueExists ? CSSPrimitiveValue.CSS_IDENT : 21;
     case "NUMBER":
       return cssPrimitiveValueExists ? CSSPrimitiveValue.CSS_NUMBER : 1;
     case "RGBCOLOR":

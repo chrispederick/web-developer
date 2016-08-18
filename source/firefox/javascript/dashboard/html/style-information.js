@@ -8,7 +8,7 @@ WebDeveloper.Dashboard.initialize = function(styleInformation, theme)
   var content = $("#content");
 
   // Fades out the previous content before updating
-  content.fadeOut(WebDeveloper.Generated.animationDuration, function()
+  content.fadeOut(WebDeveloper.Generated.animationSpeed, function()
   {
     content.css("visibility", "hidden").show().empty().get(0).appendChild(styleInformation);
 
@@ -18,6 +18,6 @@ WebDeveloper.Dashboard.initialize = function(styleInformation, theme)
     WebDeveloper.Generated.initializeSyntaxHighlight(theme);
 
     // Fades in the new content
-    content.hide().css("visibility", "visible").fadeIn(WebDeveloper.Generated.animationDuration);
+    content.hide().css("visibility", "visible").fadeIn(WebDeveloper.Generated.animationSpeed);
   });
 };

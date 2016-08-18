@@ -2,4 +2,4 @@ html { overflow: hidden; }
 .breadcrumb { -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; border-style: none; margin: 0; padding-bottom: 3px; padding-top: 3px; }
 .breadcrumb > li { color: #404040; }
 .breadcrumb > li > a { color: #808080; cursor: text; text-decoration: none; }
-.container { min-width: 0; padding: 0; }
+.container-fluid { padding: 0; }

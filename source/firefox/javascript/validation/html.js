@@ -98,6 +98,10 @@ WebDeveloperValidateHTML.prototype.saveHTML = function(uri, contentWindow)
   }
   catch(exception)
   {
+    webBrowserPersist                  = Components.classes["@mozilla.org/embedding/browser/nsWebBrowserPersist;1"].createInstance(webBrowserPersistInterface);
+    webBrowserPersist.persistFlags     = webBrowserPersistInterface.PERSIST_FLAGS_AUTODETECT_APPLY_CONVERSION | webBrowserPersistInterface.PERSIST_FLAGS_FROM_CACHE | webBrowserPersistInterface.PERSIST_FLAGS_REPLACE_EXISTING_FILES;
+    webBrowserPersist.progressListener = this;
+
     webBrowserPersist.saveURI(uri, null, uri, this.getPostData(), null, 0, this.file, contentWindow.QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIWebNavigation).QueryInterface(Components.interfaces.nsILoadContext));
   }
 };
@@ -156,8 +160,7 @@ WebDeveloperValidateHTML.prototype.submitForm = function()
   this.fileElement.value = this.file.path;
 
   this.formElement.submit();
-
-  window.setTimeout(function() { that.cleanUp(); }, 1000);
+  window.setTimeout(function() { that.cleanUp(); }, 5000);
 };
 
 // Validate the HTML from the given URI in the background

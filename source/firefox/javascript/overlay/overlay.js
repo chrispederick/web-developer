@@ -189,8 +189,6 @@ WebDeveloper.Overlay.pageLoad = function(event)
   // If the event came from an HTML document and it is not a frame
   if(originalTarget instanceof HTMLDocument && !originalTarget.defaultView.frameElement)
   {
-    WebDeveloper.Common.log("Testing");
-
     var loadBrowser = WebDeveloper.Common.getTabBrowser().getBrowserForDocument(originalTarget);
     var tab         = WebDeveloper.Common.getTabForDocument(originalTarget);
 

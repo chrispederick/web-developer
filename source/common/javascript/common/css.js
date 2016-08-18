@@ -184,7 +184,7 @@ WebDeveloper.CSS.isValidRuleStyle = function(ruleStyles, ruleStyle)
   if(ruleStyle)
   {
     // If the rule style is an invalid rule style
-    if(ruleStyle.indexOf("-moz-") === 0 || ruleStyle.indexOf("-x-") === 0 || ruleStyles.getPropertyValue(ruleStyle).indexOf("-moz-") === 0 || (ruleStyle.indexOf("-ltr-source") !== 0 || ruleStyle.indexOf("-rtl-source") !== 0 && ruleStyles.getPropertyValue(ruleStyle) === "physical"))
+    if(ruleStyle.indexOf("-moz-") === 0 || ruleStyle.indexOf("-x-") === 0 || ruleStyles.getPropertyValue(ruleStyle).indexOf("-moz-") === 0 || ((ruleStyle.indexOf("-ltr-source") !== 0 || ruleStyle.indexOf("-rtl-source") !== 0) && ruleStyles.getPropertyValue(ruleStyle) === "physical")) // eslint-disable-line no-extra-parens
     {
       return false;
     }

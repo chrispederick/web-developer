@@ -143,10 +143,7 @@ gulp.task("build-firefox-dashboard", function()
     gulp.src(["source/common/style-sheets/dashboard/common.css", "source/firefox/style-sheets/dashboard/html/common.css"])
       .pipe(plugins.concat("common.css"))
       .pipe(gulp.dest("build/firefox/content/web-developer/dashboard")),
-    gulp.src("source/firefox/style-sheets/dashboard/dashboard.css")
-      .pipe(gulp.dest("build/firefox/content/web-developer/dashboard")),
-    gulp.src(["source/common/style-sheets/dashboard/element-information.css", "source/firefox/style-sheets/dashboard/html/element-information.css"])
-      .pipe(plugins.concat("element-information.css"))
+    gulp.src(["source/common/style-sheets/dashboard/element-information.css", "source/firefox/style-sheets/dashboard/dashboard.css"])
       .pipe(gulp.dest("build/firefox/content/web-developer/dashboard")),
     gulp.src(["source/common/style-sheets/generated/common.css", "source/firefox/style-sheets/dashboard/html/style-information.css"])
       .pipe(plugins.concat("style-information.css"))

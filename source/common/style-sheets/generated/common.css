@@ -11,7 +11,7 @@ pre { overflow: auto; white-space: pre; }
 .help-block:empty { display: none; }
 .navbar-text { background: url(@common.prefix@/common/images/logos/16.png) no-repeat 0 2px; padding-left: 20px; }
 .progress { margin: 100px auto; width: 50%; }
-.progress > .progress-bar { width: 75%; }
+.progress > .progress-bar { width: 50%; }
 .web-developer-separator { border-top: 1px solid #eee; margin: 40px; }
 
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5)

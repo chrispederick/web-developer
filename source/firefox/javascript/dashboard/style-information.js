@@ -336,4 +336,3 @@ WebDeveloper.StyleInformation.uninitialize = function()
     WebDeveloper.ElementAncestors.removeToolbar();
   }
 };
-

@@ -10,8 +10,8 @@ WebDeveloper.Content.addColor = function(node, property, colors)
   {
     var color = WebDeveloper.Common.getPropertyCSSValue(node.ownerDocument.defaultView.getComputedStyle(node, null), property);
 
-    // If the color is set
-    if(color)
+    // If the color is set and is not an identifier
+    if(color && color.primitiveType != WebDeveloper.Common.getCSSPrimitiveValue("IDENT"))
     {
       // If the color has a primitive type of color
       if(color.primitiveType == WebDeveloper.Common.getCSSPrimitiveValue("RGBCOLOR"))

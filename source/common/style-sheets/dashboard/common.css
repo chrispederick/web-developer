@@ -4,7 +4,7 @@ html { overflow: auto; }
 #web-developer-ancestors:after, #web-developer-ancestors:before { clear: both; content: ""; display: block; height: 0; overflow: hidden; visibility: hidden; }
 #web-developer-ancestors > .breadcrumb { margin-bottom: 0; }
 #web-developer-ancestors > .breadcrumb > .active { color: #333; }
-#web-developer-copy-ancestor-path { float: right; margin-top: 3px; }
+#web-developer-copy-ancestor-path { float: right; }
 #web-developer-information { margin-bottom: 0; }
 .breadcrumb { overflow: hidden; position: relative; }
 .web-developer-middle-ancestor a { cursor: text; text-decoration: none; }
