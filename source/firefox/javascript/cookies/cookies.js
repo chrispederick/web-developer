@@ -58,7 +58,15 @@ WebDeveloper.Cookies.canEditLocalCookie = function()
 // Deletes a cookie
 WebDeveloper.Cookies.deleteCookie = function(cookie)
 {
-  Components.classes["@mozilla.org/cookiemanager;1"].getService(Components.interfaces.nsICookieManager2).remove(cookie.host, cookie.name, cookie.path, false, false);
+  // Try to delete the cookie without origin attributes
+  try
+  {
+    Components.classes["@mozilla.org/cookiemanager;1"].getService(Components.interfaces.nsICookieManager2).remove(cookie.host, cookie.name, cookie.path, false);
+  }
+  catch(exception)
+  {
+    Components.classes["@mozilla.org/cookiemanager;1"].getService(Components.interfaces.nsICookieManager2).remove(cookie.host, cookie.name, cookie.path, false, cookie.originAttributes);
+  }
 };
 
 // Returns all cookies
@@ -75,14 +83,15 @@ WebDeveloper.Cookies.getAllCookies = function()
     cookie       = {};
     cookieObject = cookieEnumeration.getNext().QueryInterface(Components.interfaces.nsICookie2);
 
-    cookie.expires  = cookieObject.expires;
-    cookie.host     = cookieObject.host;
-    cookie.httpOnly = cookieObject.isHttpOnly;
-    cookie.name     = cookieObject.name;
-    cookie.path     = cookieObject.path;
-    cookie.secure   = cookieObject.isSecure;
-    cookie.session  = cookieObject.isSession;
-    cookie.value    = cookieObject.value;
+    cookie.expires          = cookieObject.expires;
+    cookie.host             = cookieObject.host;
+    cookie.httpOnly         = cookieObject.isHttpOnly;
+    cookie.name             = cookieObject.name;
+    cookie.originAttributes = cookieObject.originAttributes;
+    cookie.path             = cookieObject.path;
+    cookie.secure           = cookieObject.isSecure;
+    cookie.session          = cookieObject.isSession;
+    cookie.value            = cookieObject.value;
 
     allCookies.push(cookie);
   }
