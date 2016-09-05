@@ -1019,3 +1019,61 @@ WebDeveloper.Forms.toggleCheckboxes = function(check, documents)
     }
   }
 };
+
+// Removes all HTML5 validation properties
+WebDeveloper.Forms.disableFormValidation = function(documents)
+{
+  var attributeElements = null;
+  var inputTypeElements = null;
+  var validationRemovedElements = 0;
+
+  for(var i = 0, l = documents.length; i < l; i++)
+  {
+    attributeElements = documents[i].querySelectorAll("[required], [pattern], [min], [max]");
+
+    for(var j = 0, m = attributeElements.length; j < m; j++)
+    {
+      if(attributeElements[j].hasAttribute("required"))
+      {
+        attributeElements[j].removeAttribute("required");
+        validationRemovedElements++;
+      }
+
+      if(attributeElements[j].hasAttribute("pattern"))
+      {
+        attributeElements[j].removeAttribute("pattern");
+        validationRemovedElements++;
+      }
+
+      if(attributeElements[j].hasAttribute("min"))
+      {
+        attributeElements[j].removeAttribute("min");
+        validationRemovedElements++;
+      }
+
+      if(attributeElements[j].hasAttribute("max"))
+      {
+        attributeElements[j].removeAttribute("max");
+        validationRemovedElements++;
+      }
+    }
+
+    inputTypeElements = documents[i].querySelectorAll("input[type=email], input[type=url], input[type=number], input[type=range]");
+
+    for(var k = 0, n = inputTypeElements.length; k < n; k++)
+    {
+      inputTypeElements[k].type = "text";
+
+      validationRemovedElements++;
+    }
+  }
+
+  if(validationRemovedElements == 1)
+  {
+    WebDeveloper.Common.displayNotification("disableFormValidationSingleResult");
+  }
+  else
+  {
+    WebDeveloper.Common.displayNotification("disableFormValidationMultipleResult", [validationRemovedElements]);
+  }
+};

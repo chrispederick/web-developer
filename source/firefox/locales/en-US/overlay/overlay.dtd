@@ -182,6 +182,8 @@
 <!ENTITY webdeveloper.toggle.checkboxes.key "h">
 <!ENTITY webdeveloper.view.form.information.label "View Form Information">
 <!ENTITY webdeveloper.view.form.information.key "V">
+<!ENTITY webdeveloper.disable.form.validation.label "Disable HTML5 Validation">
+<!ENTITY webdeveloper.disable.form.validation.key "a">
 
 <!-- Convert Form Methods Features -->
 <!ENTITY webdeveloper.convert.gets.posts.label "Convert GETs To POSTs">
