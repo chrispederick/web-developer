@@ -29,4 +29,6 @@
   </menu>
   <menuseparator id="web-developer-forms-separator4-${suffix}"/>
   <menuitem id="web-developer-view-form-information-${suffix}" command="web-developer-view-form-information-command"/>
+  <menuseparator id="web-developer-forms-separator5-${suffix}"/>
+  <menuitem id="web-developer-disable-form-validation-${suffix}" command="web-developer-disable-form-validation-command"/>
 </menupopup>

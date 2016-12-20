@@ -124,6 +124,9 @@
   "removeMaximumLengths": { "message": "Remove Maximum Lengths" },
   "uncheckAllCheckboxes": { "message": "Uncheck All Checkboxes" },
   "viewFormInformation": { "message": "View Form Information" },
+  "disableFormValidation": { "message": "Disable HTML5 Validation" },
+  "disableFormValidationSingleResult": { "message": "1 validation element was disabled." },
+  "disableFormValidationMultipleResult": { "message": "$count$ validation elements were disabled.", "placeholders": { "count": { "content": "$1" } } },
 
   "disableImages": { "message": "Disable Images" },
   "displayAltAttributes": { "message": "Display Alt Attributes" },

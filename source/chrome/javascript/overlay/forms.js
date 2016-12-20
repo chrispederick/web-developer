@@ -23,6 +23,7 @@ $(function()
   $("#remove-maximum-lengths").append(WebDeveloper.Locales.getString("removeMaximumLengths")).on("click", WebDeveloper.Overlay.Forms.removeMaximumLengths);
   $("#uncheck-all-checkboxes").append(WebDeveloper.Locales.getString("uncheckAllCheckboxes")).on("click", WebDeveloper.Overlay.Forms.uncheckAllCheckboxes);
   $("#view-form-information").append(WebDeveloper.Locales.getString("viewFormInformation")).on("click", WebDeveloper.Overlay.Forms.viewFormInformation);
+  $("#disable-form-validation").append(WebDeveloper.Locales.getString("disableFormValidation")).on("click", WebDeveloper.Overlay.Forms.disableFormValidation);
 });
 
 // Adds a feature on a tab
@@ -295,6 +296,21 @@ WebDeveloper.Overlay.Forms.viewFormInformation = function()
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-form-information.html"), tab.index, data, WebDeveloper.Overlay.Forms.getViewFormInformationLocale());
       });
+    }
+  });
+};
+
+// Disables HTML5 validation
+WebDeveloper.Overlay.Forms.disableFormValidation = function()
+{
+  var featureItem = $(this);
+
+  WebDeveloper.Overlay.getSelectedTab(function(tab)
+  {
+    // If the tab is valid
+    if(WebDeveloper.Overlay.isValidTab(tab))
+    {
+      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.disableFormValidation([document]);");
     }
   });
 };

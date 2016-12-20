@@ -117,3 +117,9 @@ WebDeveloper.Overlay.Forms.viewFormInformation = function()
 {
   WebDeveloper.Overlay.openGeneratedTab(WebDeveloper.Common.getChromeURL("generated/view-form-information.html"), WebDeveloper.Content.getForms(), WebDeveloper.Overlay.Forms.getViewFormInformationLocale());
 };
+
+// Disables HTML5 validation on all form fields
+WebDeveloper.Overlay.Forms.disableFormValidation = function()
+{
+  WebDeveloper.Forms.disableFormValidation(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
+};
