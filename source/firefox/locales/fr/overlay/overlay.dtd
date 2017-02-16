@@ -163,6 +163,8 @@
 <!ENTITY webdeveloper.outline.form.fields.without.labels.key "s">
 <!ENTITY webdeveloper.populate.form.fields.label "Remplir les champs de formulaire">
 <!ENTITY webdeveloper.populate.form.fields.key "R">
+<!ENTITY webdeveloper.remove.form.validation.label "Remove Form Validation">
+<!ENTITY webdeveloper.remove.form.validation.key "o">
 <!ENTITY webdeveloper.remove.maximum.lengths.label "Supprimer les longueurs maximales">
 <!ENTITY webdeveloper.remove.maximum.lengths.key "S">
 <!ENTITY webdeveloper.toggle.checkboxes.label "Inverser les cases à cocher">

@@ -337,10 +337,7 @@ WebDeveloper.Overlay.Images.toggleFeatureOnTab = function(featureItem, tab, scri
 // Toggles images
 WebDeveloper.Overlay.Images.toggleImages = function()
 {
-  var menu = $(this);
-
-  WebDeveloper.Overlay.toggleContentSetting("images", menu, "http://*/*", "enableImagesResult", "disableImagesResult");
-  WebDeveloper.Overlay.toggleContentSetting("images", menu, "https://*/*");
+  WebDeveloper.Overlay.toggleContentSetting("images", $(this), "enableImagesResult", "disableImagesResult");
 };
 
 // Displays all the images

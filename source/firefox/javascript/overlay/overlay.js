@@ -118,12 +118,12 @@ WebDeveloper.Overlay.isDOMInspectorAvailable = function()
 // Opens the browser console
 WebDeveloper.Overlay.openBrowserConsole = function()
 {
-  // If dev tools browser is set
-  if(gDevToolsBrowser)
+  // Try to use the dev tools browser
+  try
   {
     gDevToolsBrowser.selectToolCommand(WebDeveloper.Common.getTabBrowser(), "webconsole");
   }
-  else
+  catch(exception)
   {
     toJavaScriptConsole();
   }

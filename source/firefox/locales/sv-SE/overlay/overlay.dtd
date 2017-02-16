@@ -163,6 +163,8 @@
 <!ENTITY webdeveloper.outline.form.fields.without.labels.key "r">
 <!ENTITY webdeveloper.populate.form.fields.label "Fyll i formulärfält">
 <!ENTITY webdeveloper.populate.form.fields.key "i">
+<!ENTITY webdeveloper.remove.form.validation.label "Remove Form Validation">
+<!ENTITY webdeveloper.remove.form.validation.key "n">
 <!ENTITY webdeveloper.remove.maximum.lengths.label "Ta bort maximilängder">
 <!ENTITY webdeveloper.remove.maximum.lengths.key "l">
 <!ENTITY webdeveloper.toggle.checkboxes.label "Växla kryssrutor">

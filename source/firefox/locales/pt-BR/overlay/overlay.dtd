@@ -149,6 +149,8 @@
 <!ENTITY webdeveloper.outline.form.fields.without.labels.key "D">
 <!ENTITY webdeveloper.populate.form.fields.label "Preencher campos de formulário">
 <!ENTITY webdeveloper.populate.form.fields.key "e">
+<!ENTITY webdeveloper.remove.form.validation.label "Remove Form Validation">
+<!ENTITY webdeveloper.remove.form.validation.key "o">
 <!ENTITY webdeveloper.remove.maximum.lengths.label "Remover larguras máximas">
 <!ENTITY webdeveloper.remove.maximum.lengths.key "L">
 <!ENTITY webdeveloper.toggle.checkboxes.label "Inverter caixas de seleção">

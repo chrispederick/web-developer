@@ -176,14 +176,14 @@
 <!ENTITY webdeveloper.outline.form.fields.without.labels.key "O">
 <!ENTITY webdeveloper.populate.form.fields.label "Populate Form Fields">
 <!ENTITY webdeveloper.populate.form.fields.key "i">
+<!ENTITY webdeveloper.remove.form.validation.label "Remove Form Validation">
+<!ENTITY webdeveloper.remove.form.validation.key "V">
 <!ENTITY webdeveloper.remove.maximum.lengths.label "Remove Maximum Lengths">
 <!ENTITY webdeveloper.remove.maximum.lengths.key "L">
 <!ENTITY webdeveloper.toggle.checkboxes.label "Toggle Checkboxes">
 <!ENTITY webdeveloper.toggle.checkboxes.key "h">
 <!ENTITY webdeveloper.view.form.information.label "View Form Information">
-<!ENTITY webdeveloper.view.form.information.key "V">
-<!ENTITY webdeveloper.disable.form.validation.label "Disable HTML5 Validation">
-<!ENTITY webdeveloper.disable.form.validation.key "a">
+<!ENTITY webdeveloper.view.form.information.key "w">
 
 <!-- Convert Form Methods Features -->
 <!ENTITY webdeveloper.convert.gets.posts.label "Convert GETs To POSTs">

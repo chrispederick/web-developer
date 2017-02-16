@@ -163,6 +163,8 @@
 <!ENTITY webdeveloper.outline.form.fields.without.labels.key "s">
 <!ENTITY webdeveloper.populate.form.fields.label "Formularfelder befüllen">
 <!ENTITY webdeveloper.populate.form.fields.key "b">
+<!ENTITY webdeveloper.remove.form.validation.label "Remove Form Validation">
+<!ENTITY webdeveloper.remove.form.validation.key "e">
 <!ENTITY webdeveloper.remove.maximum.lengths.label "Maximallängen entfernen">
 <!ENTITY webdeveloper.remove.maximum.lengths.key "l">
 <!ENTITY webdeveloper.toggle.checkboxes.label "Kontrollkästchen umschalten">

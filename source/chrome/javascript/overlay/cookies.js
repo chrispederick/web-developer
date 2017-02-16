@@ -235,10 +235,7 @@ WebDeveloper.Overlay.Cookies.submitAddCookie = function()
 // Toggles cookies
 WebDeveloper.Overlay.Cookies.toggleCookies = function()
 {
-  var menu = $(this);
-
-  WebDeveloper.Overlay.toggleContentSetting("cookies", menu, "http://*/*", "enableCookiesResult", "disableCookiesResult");
-  WebDeveloper.Overlay.toggleContentSetting("cookies", menu, "https://*/*");
+  WebDeveloper.Overlay.toggleContentSetting("cookies", $(this), "enableCookiesResult", "disableCookiesResult");
 };
 
 // Returns true if the add dialog is valid

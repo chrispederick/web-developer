@@ -163,6 +163,8 @@
 <!ENTITY webdeveloper.outline.form.fields.without.labels.key "n">
 <!ENTITY webdeveloper.populate.form.fields.label "Předvyplnit pole formuláře">
 <!ENTITY webdeveloper.populate.form.fields.key "P">
+<!ENTITY webdeveloper.remove.form.validation.label "Remove Form Validation">
+<!ENTITY webdeveloper.remove.form.validation.key "e">
 <!ENTITY webdeveloper.remove.maximum.lengths.label "Odstranit omezení délky pole">
 <!ENTITY webdeveloper.remove.maximum.lengths.key "O">
 <!ENTITY webdeveloper.toggle.checkboxes.label "Přepnout checkboxy">

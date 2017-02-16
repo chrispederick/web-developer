@@ -93,6 +93,12 @@ WebDeveloper.Overlay.Forms.populateFormFields = function()
   WebDeveloper.Forms.populateFormFields(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()), WebDeveloper.Preferences.getExtensionStringPreference("populate.email.address"), WebDeveloper.Locales.getString("password").toLowerCase());
 };
 
+// Removes validation on all form fields
+WebDeveloper.Overlay.Forms.removeFormValidation = function()
+{
+  WebDeveloper.Forms.removeFormValidation(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
+};
+
 // Removes maximum lengths from all elements
 WebDeveloper.Overlay.Forms.removeMaximumLengths = function()
 {
@@ -116,10 +122,4 @@ WebDeveloper.Overlay.Forms.updateFormsMenu = function()
 WebDeveloper.Overlay.Forms.viewFormInformation = function()
 {
   WebDeveloper.Overlay.openGeneratedTab(WebDeveloper.Common.getChromeURL("generated/view-form-information.html"), WebDeveloper.Content.getForms(), WebDeveloper.Overlay.Forms.getViewFormInformationLocale());
-};
-
-// Disables HTML5 validation on all form fields
-WebDeveloper.Overlay.Forms.disableFormValidation = function()
-{
-  WebDeveloper.Forms.disableFormValidation(WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow()));
 };

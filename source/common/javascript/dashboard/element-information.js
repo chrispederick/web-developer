@@ -329,8 +329,7 @@ WebDeveloper.ElementInformation.generateTextInformation = function(element, cont
   var textInformation = generatedDocument.createElement("div");
   var textContent     = "";
 
-  childElement.appendChild(contentDocument.createTextNode(WebDeveloper.ElementInformation.getLocaleString("text")));
-
+  childElement.appendChild(generatedDocument.createTextNode(WebDeveloper.ElementInformation.getLocaleString("text")));
   textInformation.setAttribute("class", "col-sm-6 web-developer-css");
   textInformation.appendChild(childElement);
 
@@ -350,7 +349,7 @@ WebDeveloper.ElementInformation.generateTextInformation = function(element, cont
     textContent = textContent.trim();
   }
 
-  childElement.appendChild(contentDocument.createTextNode(textContent));
+  childElement.appendChild(generatedDocument.createTextNode(textContent));
   textInformation.appendChild(childElement);
 
   return textInformation;

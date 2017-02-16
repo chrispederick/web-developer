@@ -20,10 +20,10 @@ $(function()
   $("#make-form-fields-writable").append(WebDeveloper.Locales.getString("makeFormFieldsWritable")).on("click", WebDeveloper.Overlay.Forms.makeFormFieldsWritable);
   $("#outline-form-fields-without-labels").append(WebDeveloper.Locales.getString("outlineFormFieldsWithoutLabels")).on("click", WebDeveloper.Overlay.Forms.outlineFormFieldsWithoutLabels);
   $("#populate-form-fields").append(WebDeveloper.Locales.getString("populateFormFields")).on("click", WebDeveloper.Overlay.Forms.populateFormFields);
+  $("#remove-form-validation").append(WebDeveloper.Locales.getString("removeFormValidation")).on("click", WebDeveloper.Overlay.Forms.removeFormValidation);
   $("#remove-maximum-lengths").append(WebDeveloper.Locales.getString("removeMaximumLengths")).on("click", WebDeveloper.Overlay.Forms.removeMaximumLengths);
   $("#uncheck-all-checkboxes").append(WebDeveloper.Locales.getString("uncheckAllCheckboxes")).on("click", WebDeveloper.Overlay.Forms.uncheckAllCheckboxes);
   $("#view-form-information").append(WebDeveloper.Locales.getString("viewFormInformation")).on("click", WebDeveloper.Overlay.Forms.viewFormInformation);
-  $("#disable-form-validation").append(WebDeveloper.Locales.getString("disableFormValidation")).on("click", WebDeveloper.Overlay.Forms.disableFormValidation);
 });
 
 // Adds a feature on a tab
@@ -248,6 +248,21 @@ WebDeveloper.Overlay.Forms.populateFormFields = function()
   });
 };
 
+// Removes validation on all form fields
+WebDeveloper.Overlay.Forms.removeFormValidation = function()
+{
+  var featureItem = $(this);
+
+  WebDeveloper.Overlay.getSelectedTab(function(tab)
+  {
+    // If the tab is valid
+    if(WebDeveloper.Overlay.isValidTab(tab))
+    {
+      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.removeFormValidation([document]);");
+    }
+  });
+};
+
 // Removes maximum lengths from all elements
 WebDeveloper.Overlay.Forms.removeMaximumLengths = function()
 {
@@ -296,21 +311,6 @@ WebDeveloper.Overlay.Forms.viewFormInformation = function()
       {
         chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-form-information.html"), tab.index, data, WebDeveloper.Overlay.Forms.getViewFormInformationLocale());
       });
-    }
-  });
-};
-
-// Disables HTML5 validation
-WebDeveloper.Overlay.Forms.disableFormValidation = function()
-{
-  var featureItem = $(this);
-
-  WebDeveloper.Overlay.getSelectedTab(function(tab)
-  {
-    // If the tab is valid
-    if(WebDeveloper.Overlay.isValidTab(tab))
-    {
-      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.disableFormValidation([document]);");
     }
   });
 };

@@ -176,6 +176,8 @@
 <!ENTITY webdeveloper.outline.form.fields.without.labels.key "O">
 <!ENTITY webdeveloper.populate.form.fields.label "填满表单">
 <!ENTITY webdeveloper.populate.form.fields.key "i">
+<!ENTITY webdeveloper.remove.form.validation.label "Remove Form Validation">
+<!ENTITY webdeveloper.remove.form.validation.key "a">
 <!ENTITY webdeveloper.remove.maximum.lengths.label "去除字数限制">
 <!ENTITY webdeveloper.remove.maximum.lengths.key "L">
 <!ENTITY webdeveloper.toggle.checkboxes.label "切换复选框">

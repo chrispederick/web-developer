@@ -2,6 +2,35 @@ var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-defi
 
 WebDeveloper.Upgrade = WebDeveloper.Upgrade || {};
 
+// Fixes a content setting
+WebDeveloper.Upgrade.fixContentSetting = function(settingType)
+{
+  chrome.contentSettings[settingType].get({ primaryUrl: "http://*/*" }, function(details)
+  {
+    // If the setting is currently set to allow
+    if(details.setting == "allow")
+    {
+      chrome.contentSettings[settingType].clear({});
+    }
+  });
+};
+
+// Fixes the content settings
+WebDeveloper.Upgrade.fixContentSettings = function()
+{
+  // If content settings exists
+  if(chrome.contentSettings)
+  {
+    var settingTypes = ["cookies", "images", "javascript", "notifications", "plugins", "popups"];
+
+    // Loop through the setting types
+    for(var i = 0, l = settingTypes.length; i < l; i++)
+    {
+      WebDeveloper.Upgrade.fixContentSetting(settingTypes[i]);
+    }
+  }
+};
+
 // Migrates the tools
 WebDeveloper.Upgrade.migrateTools = function()
 {
@@ -82,7 +111,8 @@ WebDeveloper.Upgrade.setupDefaultOptions = function()
 // Upgrades the extension
 WebDeveloper.Upgrade.upgrade = function()
 {
-  var previousVersion = WebDeveloper.Storage.getItem("version");
+  var contentSettingsVersion = "0.4.8";
+  var previousVersion        = WebDeveloper.Storage.getItem("version");
 
   // If the versions do not match
   if(previousVersion != "@version@")
@@ -90,6 +120,12 @@ WebDeveloper.Upgrade.upgrade = function()
     WebDeveloper.Storage.setItem("version", "@version@");
     WebDeveloper.Upgrade.openUpgradeURL("@version@");
     WebDeveloper.Upgrade.migrateTools();
+  }
+
+  // If this is the content settings version
+  if(contentSettingsVersion == "@version@")
+  {
+    WebDeveloper.Upgrade.fixContentSettings();
   }
 
   WebDeveloper.Upgrade.setupDefaultOptions();

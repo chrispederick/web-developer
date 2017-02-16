@@ -43,35 +43,23 @@ WebDeveloper.Overlay.Disable.resetFeatures = function()
 // Toggles JavaScript
 WebDeveloper.Overlay.Disable.toggleJavaScript = function()
 {
-  var menu = $(this);
-
-  WebDeveloper.Overlay.toggleContentSetting("javascript", menu, "http://*/*", "enableJavaScriptResult", "disableJavaScriptResult");
-  WebDeveloper.Overlay.toggleContentSetting("javascript", menu, "https://*/*");
+  WebDeveloper.Overlay.toggleContentSetting("javascript", $(this), "enableJavaScriptResult", "disableJavaScriptResult");
 };
 
 // Toggles notifications
 WebDeveloper.Overlay.Disable.toggleNotifications = function()
 {
-  var menu = $(this);
-
-  WebDeveloper.Overlay.toggleContentSetting("notifications", menu, "http://*/*", "enableNotificationsResult", "disableNotificationsResult");
-  WebDeveloper.Overlay.toggleContentSetting("notifications", menu, "https://*/*");
+  WebDeveloper.Overlay.toggleContentSetting("notifications", $(this), "enableNotificationsResult", "disableNotificationsResult");
 };
 
 // Toggles plugins
 WebDeveloper.Overlay.Disable.togglePlugins = function()
 {
-  var menu = $(this);
-
-  WebDeveloper.Overlay.toggleContentSetting("plugins", menu, "http://*/*", "enablePluginsResult", "disablePluginsResult");
-  WebDeveloper.Overlay.toggleContentSetting("plugins", menu, "https://*/*");
+  WebDeveloper.Overlay.toggleContentSetting("plugins", $(this), "enablePluginsResult", "disablePluginsResult");
 };
 
 // Toggles popups
 WebDeveloper.Overlay.Disable.togglePopups = function()
 {
-  var menu = $(this);
-
-  WebDeveloper.Overlay.toggleContentSetting("popups", menu, "http://*/*", "enablePopupsResult", "disablePopupsResult");
-  WebDeveloper.Overlay.toggleContentSetting("popups", menu, "https://*/*");
+  WebDeveloper.Overlay.toggleContentSetting("popups", $(this), "enablePopupsResult", "disablePopupsResult");
 };

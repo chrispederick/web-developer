@@ -21,7 +21,7 @@ WebDeveloper.Overlay.Tools.customTool = function()
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
-    WebDeveloper.Overlay.openTab(featureItem.data("url") + tab.url);
+    WebDeveloper.Overlay.openTab(featureItem.data("url") + encodeURIComponent(tab.url));
   });
 };
 

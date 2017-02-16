@@ -266,43 +266,27 @@ WebDeveloper.Overlay.openURL = function(event)
 };
 
 // Toggles a content setting
-WebDeveloper.Overlay.toggleContentSetting = function(settingType, menu, url, enableMessage, disableMessage)
+WebDeveloper.Overlay.toggleContentSetting = function(settingType, menu, enableMessage, disableMessage)
 {
-  chrome.contentSettings[settingType].get({ primaryUrl: url }, function(details)
+  chrome.contentSettings[settingType].get({ primaryUrl: "http://*/*" }, function(details)
   {
-    var callback = null;
-    var setting  = details.setting;
-
-    // If the setting is currently set to block
-    if(setting == "block")
+    // If the setting is currently set to allow
+    if(details.setting == "allow")
     {
-      setting = "allow";
+      chrome.contentSettings[settingType].set({ primaryPattern: "<all_urls>", setting: "block" }, function()
+      {
+        WebDeveloper.Overlay.updateContentSettingMenu(menu, settingType);
+        WebDeveloper.Overlay.displayNotification(WebDeveloper.Locales.getString(disableMessage));
+      });
     }
     else
     {
-      setting = "block";
-    }
-
-    // If the enable and disable message are set
-    if(enableMessage && disableMessage)
-    {
-      callback = function()
+      chrome.contentSettings[settingType].clear({}, function()
       {
         WebDeveloper.Overlay.updateContentSettingMenu(menu, settingType);
-
-        // If the setting is being allowed
-        if(setting == "allow")
-        {
-          WebDeveloper.Overlay.displayNotification(WebDeveloper.Locales.getString(enableMessage));
-        }
-        else
-        {
-          WebDeveloper.Overlay.displayNotification(WebDeveloper.Locales.getString(disableMessage));
-        }
-      };
+        WebDeveloper.Overlay.displayNotification(WebDeveloper.Locales.getString(enableMessage));
+      });
     }
-
-    chrome.contentSettings[settingType].set({ primaryPattern: url, setting: setting }, callback);
   });
 };
 
@@ -333,10 +317,8 @@ WebDeveloper.Overlay.updateContentSettingMenu = function(menu, settingType)
   {
     chrome.contentSettings[settingType].get({ primaryUrl: "http://*/*" }, function(details)
     {
-      var setting = details.setting;
-
       // If the setting is currently set to block
-      if(setting == "block")
+      if(details.setting == "block")
       {
         menu.addClass("active");
       }

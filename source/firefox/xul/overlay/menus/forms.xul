@@ -20,6 +20,7 @@
   <menuitem id="web-developer-make-form-fields-writable-${suffix}" command="web-developer-make-form-fields-writable-command"/>
   <menuitem id="web-developer-outline-form-fields-without-labels-${suffix}" command="web-developer-outline-form-fields-without-labels-command"/>
   <menuitem id="web-developer-populate-form-fields-${suffix}" command="web-developer-populate-form-fields-command"/>
+  <menuitem id="web-developer-remove-form-validation-${suffix}" command="web-developer-remove-form-validation-command"/>
   <menuitem id="web-developer-remove-maximum-lengths-${suffix}" command="web-developer-remove-maximum-lengths-command"/>
   <menu id="web-developer-toggle-checkboxes-${suffix}" accesskey="&webdeveloper.toggle.checkboxes.key;" label="&webdeveloper.toggle.checkboxes.label;">
     <menupopup>
@@ -29,6 +30,4 @@
   </menu>
   <menuseparator id="web-developer-forms-separator4-${suffix}"/>
   <menuitem id="web-developer-view-form-information-${suffix}" command="web-developer-view-form-information-command"/>
-  <menuseparator id="web-developer-forms-separator5-${suffix}"/>
-  <menuitem id="web-developer-disable-form-validation-${suffix}" command="web-developer-disable-form-validation-command"/>
 </menupopup>

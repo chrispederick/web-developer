@@ -971,6 +971,77 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
   }
 };
 
+// Removes validation on all form fields
+WebDeveloper.Forms.removeFormValidation = function(documents)
+{
+  var alteredElements    = 0;
+  var attributeElement   = null;
+  var attributeElements  = null;
+  var contentDocument    = null;
+  var inputElements      = null;
+
+  // Loop through the documents
+  for(var i = 0, l = documents.length; i < l; i++)
+  {
+    contentDocument   = documents[i];
+    attributeElements = contentDocument.querySelectorAll("[max], [min], [pattern], [required]");
+
+    // Loop through the elements with validation attributes
+    for(var j = 0, m = attributeElements.length; j < m; j++)
+    {
+      attributeElement = attributeElements[j];
+
+      // If the element has the max attribute
+      if(attributeElement.hasAttribute("max"))
+      {
+        attributeElement.removeAttribute("max");
+        alteredElements++;
+      }
+
+      // If the element has the min attribute
+      if(attributeElement.hasAttribute("min"))
+      {
+        attributeElement.removeAttribute("min");
+        alteredElements++;
+      }
+
+      // If the element has the pattern attribute
+      if(attributeElement.hasAttribute("pattern"))
+      {
+        attributeElement.removeAttribute("pattern");
+        alteredElements++;
+      }
+
+      // If the element has the required attribute
+      if(attributeElement.hasAttribute("required"))
+      {
+        attributeElement.removeAttribute("required");
+        alteredElements++;
+      }
+    }
+
+    inputElements = documents[i].querySelectorAll("input[type=email], input[type=number], input[type=range], input[type=url]");
+
+    // Loop through the input elements with validation types
+    for(j = 0, m = inputElements.length; j < m; j++)
+    {
+      inputElements[j].type = "text";
+
+      alteredElements++;
+    }
+  }
+
+  // If one element was altered
+  if(alteredElements == 1)
+  {
+    WebDeveloper.Common.displayNotification("removeFormValidationSingleResult");
+  }
+  else
+  {
+    WebDeveloper.Common.displayNotification("removeFormValidationMultipleResult", [alteredElements]);
+  }
+};
+
 // Removes maximum lengths from all elements
 WebDeveloper.Forms.removeMaximumLengths = function(documents)
 {
@@ -1017,63 +1088,5 @@ WebDeveloper.Forms.toggleCheckboxes = function(check, documents)
     {
       checkboxes[j].checked = check;
     }
-  }
-};
-
-// Removes all HTML5 validation properties
-WebDeveloper.Forms.disableFormValidation = function(documents)
-{
-  var attributeElements = null;
-  var inputTypeElements = null;
-  var validationRemovedElements = 0;
-
-  for(var i = 0, l = documents.length; i < l; i++)
-  {
-    attributeElements = documents[i].querySelectorAll("[required], [pattern], [min], [max]");
-
-    for(var j = 0, m = attributeElements.length; j < m; j++)
-    {
-      if(attributeElements[j].hasAttribute("required"))
-      {
-        attributeElements[j].removeAttribute("required");
-        validationRemovedElements++;
-      }
-
-      if(attributeElements[j].hasAttribute("pattern"))
-      {
-        attributeElements[j].removeAttribute("pattern");
-        validationRemovedElements++;
-      }
-
-      if(attributeElements[j].hasAttribute("min"))
-      {
-        attributeElements[j].removeAttribute("min");
-        validationRemovedElements++;
-      }
-
-      if(attributeElements[j].hasAttribute("max"))
-      {
-        attributeElements[j].removeAttribute("max");
-        validationRemovedElements++;
-      }
-    }
-
-    inputTypeElements = documents[i].querySelectorAll("input[type=email], input[type=url], input[type=number], input[type=range]");
-
-    for(var k = 0, n = inputTypeElements.length; k < n; k++)
-    {
-      inputTypeElements[k].type = "text";
-
-      validationRemovedElements++;
-    }
-  }
-
-  if(validationRemovedElements == 1)
-  {
-    WebDeveloper.Common.displayNotification("disableFormValidationSingleResult");
-  }
-  else
-  {
-    WebDeveloper.Common.displayNotification("disableFormValidationMultipleResult", [validationRemovedElements]);
   }
 };
