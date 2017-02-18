@@ -45,17 +45,18 @@
         <em:description>一款为WEB开发添加多种实用功能和工具的好插件</em:description>
       </Description>
     </em:localized>
+    <em:multiprocessCompatible>false</em:multiprocessCompatible>
     <em:targetApplication>
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
-        <em:maxVersion>51.*</em:maxVersion>
+        <em:maxVersion>54.*</em:maxVersion>
         <em:minVersion>3.6</em:minVersion>
       </Description>
     </em:targetApplication>
 		<em:targetApplication>
 		  <Description>
 		    <em:id>{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}</em:id>
-		    <em:maxVersion>2.40.*</em:maxVersion>
+		    <em:maxVersion>2.46.*</em:maxVersion>
 		    <em:minVersion>2.0</em:minVersion>
 		  </Description>
 		</em:targetApplication>
