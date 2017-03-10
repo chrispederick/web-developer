@@ -1,9 +1,0 @@
-<!-- Cookie -->
-<!ENTITY webdeveloper.add.cookie "Dodawanie ciasteczka">
-<!ENTITY webdeveloper.expires.label "Wygasa:">
-<!ENTITY webdeveloper.host.label "Serwer:">
-<!ENTITY webdeveloper.name.label "Nazwa:">
-<!ENTITY webdeveloper.path.label "Ścieżka:">
-<!ENTITY webdeveloper.secure.cookie.label "Bezpieczne ciasteczko">
-<!ENTITY webdeveloper.session.cookie.label "Ciasteczko sesji">
-<!ENTITY webdeveloper.value.label "Wartość:">

@@ -466,6 +466,29 @@ WebDeveloper.Content.getDocuments = function(frame)
   return documents;
 };
 
+// Returns any domain cookies
+WebDeveloper.Content.getDomainCookies = function(allCookies)
+{
+  var documents     = WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
+  var domainCookies = [];
+
+  // Loop through the documents
+  for(var i = 0, l = documents.length; i < l; i++)
+  {
+    // Try to get the host
+    try
+    {
+      domainCookies = domainCookies.concat(WebDeveloper.Content.filterCookies(allCookies, documents[i].location.hostname, "/", false));
+    }
+    catch(exception)
+    {
+      // Ignore
+    }
+  }
+
+  return domainCookies;
+};
+
 // Returns any duplicate ids in the document
 WebDeveloper.Content.getDuplicateIds = function()
 {
@@ -475,7 +498,7 @@ WebDeveloper.Content.getDuplicateIds = function()
   var documentDuplicateIds = null;
   var duplicateIds         = {};
   var id                   = null;
-  var nonDuplicateIds    = null;
+  var nonDuplicateIds      = null;
 
   duplicateIds.documents = [];
   duplicateIds.pageTitle = contentDocument.title;
@@ -816,6 +839,18 @@ WebDeveloper.Content.getLinks = function()
   return links;
 };
 
+// Returns the details for the location
+WebDeveloper.Content.getLocationDetails = function()
+{
+  var windowLocation  = WebDeveloper.Common.getContentWindow().location;
+  var locationDetails = {};
+
+  locationDetails.host = windowLocation.hostname;
+  locationDetails.path = windowLocation.pathname;
+
+  return locationDetails;
+};
+
 // Returns any meta tags in the document
 WebDeveloper.Content.getMetaTags = function()
 {
@@ -826,6 +861,7 @@ WebDeveloper.Content.getMetaTags = function()
   var documentMetaTags    = null;
   var metaTag             = null;
   var metaTags            = {};
+  var sortedMetaTags      = [];
 
   metaTags.documents = [];
   metaTags.pageTitle = contentDocument.title;
@@ -839,6 +875,7 @@ WebDeveloper.Content.getMetaTags = function()
     documentMetaTags          = {};
     documentMetaTags.metaTags = [];
     documentMetaTags.url      = contentDocument.documentURI;
+    sortedMetaTags            = [];
 
     // Loop through the meta tags
     for(var j = 0, m = documentAllMetaTags.length; j < m; j++)
@@ -868,13 +905,43 @@ WebDeveloper.Content.getMetaTags = function()
         documentMetaTag.name    = metaTag.getAttribute("property");
       }
 
-      documentMetaTags.metaTags.push(documentMetaTag);
+      sortedMetaTags.push(documentMetaTag);
     }
+
+    sortedMetaTags.sort(WebDeveloper.Content.sortMetaTags);
+
+    documentMetaTags.metaTags = sortedMetaTags;
 
     metaTags.documents.push(documentMetaTags);
   }
 
   return metaTags;
+};
+
+// Returns any path cookies
+WebDeveloper.Content.getPathCookies = function(allCookies)
+{
+  var contentDocument = null;
+  var documents       = WebDeveloper.Content.getDocuments(WebDeveloper.Common.getContentWindow());
+  var pathCookies     = [];
+
+  // Loop through the documents
+  for(var i = 0, l = documents.length; i < l; i++)
+  {
+    contentDocument = documents[i];
+
+    // Try to get the host and path
+    try
+    {
+      pathCookies = pathCookies.concat(WebDeveloper.Content.filterCookies(allCookies, contentDocument.location.hostname, contentDocument.location.pathname, false));
+    }
+    catch(exception)
+    {
+      // Ignore
+    }
+  }
+
+  return pathCookies;
 };
 
 // Returns the window size
@@ -888,6 +955,18 @@ WebDeveloper.Content.getWindowSize = function()
   size.outerWidth  = window.outerWidth;
 
   return size;
+};
+
+// Turns text lower case while checking if the text is set
+WebDeveloper.Content.lowerCase = function(text)
+{
+  // If the text is set
+  if(text)
+  {
+    return text.toLowerCase();
+  }
+
+  return text;
 };
 
 // Sorts two cookies
@@ -907,6 +986,31 @@ WebDeveloper.Content.sortCookies = function(cookieOne, cookieTwo)
       return 0;
     }
     else if(cookieOneHost < cookieTwoHost || cookieOneHost == cookieTwoHost && cookieOneName < cookieTwoName)
+    {
+      return -1;
+    }
+  }
+
+  return 1;
+};
+
+// Sorts two meta tags
+WebDeveloper.Content.sortMetaTags = function(metaTagOne, metaTagTwo)
+{
+  // If meta tag one and meta tag two are set
+  if(metaTagOne && metaTagTwo)
+  {
+    var metaTagOneContent = WebDeveloper.Content.lowerCase(metaTagOne.content);
+    var metaTagOneName    = WebDeveloper.Content.lowerCase(metaTagOne.name);
+    var metaTagTwoContent = WebDeveloper.Content.lowerCase(metaTagTwo.content);
+    var metaTagTwoName    = WebDeveloper.Content.lowerCase(metaTagTwo.name);
+
+    // If the cookies are equal
+    if(metaTagOneName == metaTagTwoName && metaTagOneContent == metaTagTwoContent)
+    {
+      return 0;
+    }
+    else if(metaTagOneName < metaTagTwoName || metaTagOneName == metaTagTwoName && metaTagOneContent < metaTagTwoContent)
     {
       return -1;
     }
@@ -939,3 +1043,79 @@ WebDeveloper.Content.tidyColors = function(colors)
 
   return tidiedColors;
 };
+
+// Handles any content messages
+WebDeveloper.Content.message = function(message, sender, sendResponse)
+{
+  // If the message type is to get anchors
+  if(message.type == "get-anchors")
+  {
+    sendResponse(WebDeveloper.Content.getAnchors());
+  }
+  else if(message.type == "get-broken-images")
+  {
+    sendResponse(WebDeveloper.Content.getBrokenImages());
+  }
+  else if(message.type == "get-colors")
+  {
+    sendResponse(WebDeveloper.Content.getColors());
+  }
+  else if(message.type == "get-cookies")
+  {
+    sendResponse(WebDeveloper.Content.getCookies(message.allCookies));
+  }
+  else if(message.type == "get-css")
+  {
+    sendResponse(WebDeveloper.Content.getCSS());
+  }
+  else if(message.type == "get-document-details")
+  {
+    sendResponse(WebDeveloper.Content.getDocumentDetails());
+  }
+  else if(message.type == "get-document-outline")
+  {
+    sendResponse(WebDeveloper.Content.getDocumentOutline());
+  }
+  else if(message.type == "get-domain-cookies")
+  {
+    sendResponse(WebDeveloper.Content.getDomainCookies(message.allCookies));
+  }
+  else if(message.type == "get-duplicate-ids")
+  {
+    sendResponse(WebDeveloper.Content.getDuplicateIds());
+  }
+  else if(message.type == "get-forms")
+  {
+    sendResponse(WebDeveloper.Content.getForms());
+  }
+  else if(message.type == "get-images")
+  {
+    sendResponse(WebDeveloper.Content.getImages());
+  }
+  else if(message.type == "get-javascript")
+  {
+    sendResponse(WebDeveloper.Content.getJavaScript());
+  }
+  else if(message.type == "get-links")
+  {
+    sendResponse(WebDeveloper.Content.getLinks());
+  }
+  else if(message.type == "get-location-details")
+  {
+    sendResponse(WebDeveloper.Content.getLocationDetails());
+  }
+  else if(message.type == "get-meta-tags")
+  {
+    sendResponse(WebDeveloper.Content.getMetaTags());
+  }
+  else if(message.type == "get-path-cookies")
+  {
+    sendResponse(WebDeveloper.Content.getPathCookies(message.allCookies));
+  }
+  else if(message.type == "get-window-size")
+  {
+    sendResponse(WebDeveloper.Content.getWindowSize());
+  }
+};
+
+chrome.runtime.onMessage.addListener(WebDeveloper.Content.message);

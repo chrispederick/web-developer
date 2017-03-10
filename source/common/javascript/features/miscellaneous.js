@@ -5,10 +5,11 @@ WebDeveloper.Miscellaneous = WebDeveloper.Miscellaneous || {};
 // Displays all hidden elements
 WebDeveloper.Miscellaneous.displayHiddenElements = function(documents)
 {
-  var contentDocument = null;
-  var inputElements   = null;
-  var node            = null;
-  var treeWalker      = null;
+  var contentDocument   = null;
+  var displayedElements = 0;
+  var inputElements     = null;
+  var node              = null;
+  var treeWalker        = null;
 
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
@@ -21,13 +22,27 @@ WebDeveloper.Miscellaneous.displayHiddenElements = function(documents)
     for(var j = 0, m = inputElements.length; j < m; j++)
     {
       inputElements[j].removeAttribute("type");
+
+      displayedElements++;
     }
 
     // While the tree walker has more nodes
     while((node = treeWalker.nextNode()) !== null)
     {
       node.style.display = "";
+
+      displayedElements++;
     }
+  }
+
+  // If one element was displayed
+  if(displayedElements == 1)
+  {
+    WebDeveloper.Common.displayNotification("displayHiddenElementsSingleResult");
+  }
+  else
+  {
+    WebDeveloper.Common.displayNotification("displayHiddenElementsMultipleResult", [displayedElements]);
   }
 };
 
@@ -45,8 +60,8 @@ WebDeveloper.Miscellaneous.hiddenNodeFilter = function(node)
       var display = WebDeveloper.Common.getPropertyCSSValue(computedStyle, "display");
       var tagName = node.tagName;
 
-      // If this element has a display and tag name, the display is set to none and the tag name is not script
-      if(display && tagName && WebDeveloper.Common.getCSSText(display) == "none")
+      // If this element has a display and tag name, is not a script or style and the display is set to none
+      if(display && tagName && tagName.toLowerCase() != "script" && tagName.toLowerCase() != "style" && WebDeveloper.Common.getCSSText(display) == "none")
       {
         return NodeFilter.FILTER_ACCEPT;
       }
@@ -62,7 +77,7 @@ WebDeveloper.Miscellaneous.linearizePage = function(documents)
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
   {
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/miscellaneous/linearize-page.css", "web-developer-linearize-page", documents[i], false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/miscellaneous/linearize-page.css", "web-developer-linearize-page", documents[i], false);
   }
 };
 

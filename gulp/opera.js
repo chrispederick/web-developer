@@ -8,7 +8,7 @@ var runSequence = require("run-sequence");
 
 gulp.task("build-opera-all", function()
 {
-  return global.chromiumAllTask("opera");
+  return global.buildAll("opera");
 });
 
 gulp.task("clean-opera", function()

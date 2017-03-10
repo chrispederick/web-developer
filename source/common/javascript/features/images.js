@@ -41,7 +41,7 @@ WebDeveloper.Images.displayAltAttributes = function(display, documents)
       WebDeveloper.Common.removeMatchingElements(".web-developer-display-alt-attributes", contentDocument);
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-alt-attributes", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-display-alt-attributes", contentDocument, false);
   }
 };
 
@@ -79,8 +79,8 @@ WebDeveloper.Images.displayImageDimensions = function(display, documents, locale
       WebDeveloper.Common.removeMatchingElements(".web-developer-display-image-dimensions", contentDocument);
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-image-dimensions-before", contentDocument, false);
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/display-image-dimensions.css", "web-developer-display-image-dimensions", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-display-image-dimensions-before", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/images/display-image-dimensions.css", "web-developer-display-image-dimensions", contentDocument, false);
   }
 };
 
@@ -125,7 +125,7 @@ WebDeveloper.Images.displayImagePaths = function(display, documents)
       WebDeveloper.Common.removeMatchingElements(".web-developer-display-image-paths", contentDocument);
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-image-paths", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-display-image-paths", contentDocument, false);
   }
 };
 
@@ -135,7 +135,7 @@ WebDeveloper.Images.hideBackgroundImages = function(documents)
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
   {
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/hide-background-images.css", "web-developer-hide-background-images", documents[i], false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/images/hide-background-images.css", "web-developer-hide-background-images", documents[i], false);
   }
 };
 
@@ -170,7 +170,7 @@ WebDeveloper.Images.hideImages = function(hide, documents)
       }
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/hide-images.css", "web-developer-hide-images", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/images/hide-images.css", "web-developer-hide-images", contentDocument, false);
   }
 };
 
@@ -281,7 +281,7 @@ WebDeveloper.Images.makeImagesInvisible = function(invisible, documents)
       }
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/make-images-invisible.css", "web-developer-make-images-invisible", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/images/make-images-invisible.css", "web-developer-make-images-invisible", contentDocument, false);
   }
 };
 
@@ -291,7 +291,7 @@ WebDeveloper.Images.outlineAllImages = function(documents)
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
   {
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-all-images.css", "web-developer-outline-all-images", documents[i], false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/images/outline-all-images.css", "web-developer-outline-all-images", documents[i], false);
   }
 };
 
@@ -337,7 +337,7 @@ WebDeveloper.Images.outlineBackgroundImages = function(outline, documents)
       }
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-background-images.css", "web-developer-outline-background-images", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/images/outline-background-images.css", "web-developer-outline-background-images", contentDocument, false);
   }
 };
 
@@ -386,7 +386,7 @@ WebDeveloper.Images.outlineImagesWithAdjustedDimensions = function(outline, docu
       }
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-images-with-adjusted-dimensions.css", "web-developer-outline-images-with-adjusted-dimensions", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/images/outline-images-with-adjusted-dimensions.css", "web-developer-outline-images-with-adjusted-dimensions", contentDocument, false);
   }
 };
 
@@ -396,7 +396,7 @@ WebDeveloper.Images.outlineImagesWithEmptyAltAttributes = function(documents)
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
   {
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-images-with-empty-alt-attributes.css", "web-developer-outline-images-with-empty-alt-attributes", documents[i], false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/images/outline-images-with-empty-alt-attributes.css", "web-developer-outline-images-with-empty-alt-attributes", documents[i], false);
   }
 };
 
@@ -445,7 +445,7 @@ WebDeveloper.Images.outlineImagesWithOversizedDimensions = function(outline, doc
       }
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-images-with-oversized-dimensions.css", "web-developer-outline-images-with-oversized-dimensions", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/images/outline-images-with-oversized-dimensions.css", "web-developer-outline-images-with-oversized-dimensions", contentDocument, false);
   }
 };
 
@@ -455,7 +455,7 @@ WebDeveloper.Images.outlineImagesWithoutAltAttributes = function(documents)
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
   {
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-images-without-alt-attributes.css", "web-developer-outline-images-without-alt-attributes", documents[i], false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/images/outline-images-without-alt-attributes.css", "web-developer-outline-images-without-alt-attributes", documents[i], false);
   }
 };
 
@@ -465,7 +465,7 @@ WebDeveloper.Images.outlineImagesWithoutDimensions = function(documents)
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
   {
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/outline-images-without-dimensions.css", "web-developer-outline-images-without-dimensions", documents[i], false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/images/outline-images-without-dimensions.css", "web-developer-outline-images-without-dimensions", documents[i], false);
   }
 };
 
@@ -571,6 +571,12 @@ WebDeveloper.Images.replaceImagesWithAltAttributes = function(replace, documents
         spanElement = contentDocument.createElement("span");
         text        = image.getAttribute("alt");
 
+        // If the text is not set
+        if(!text)
+        {
+          text = "";
+        }
+
         spanElement.setAttribute("class", "web-developer-replace-images-with-alt-attributes");
         spanElement.appendChild(contentDocument.createTextNode(text));
         image.parentNode.insertBefore(spanElement, image);
@@ -581,7 +587,7 @@ WebDeveloper.Images.replaceImagesWithAltAttributes = function(replace, documents
       WebDeveloper.Common.removeMatchingElements(".web-developer-replace-images-with-alt-attributes", contentDocument);
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/images/hide-images.css", "web-developer-replace-images-with-alt-attributes", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/images/hide-images.css", "web-developer-replace-images-with-alt-attributes", contentDocument, false);
   }
 };
 
@@ -599,7 +605,7 @@ WebDeveloper.Images.resizeImageDimensions = function()
   // If the image dimensions are already updating
   if(WebDeveloper.Images.imageDimensionsUpdating)
   {
-    WebDeveloper.Images.imageDimensionsTimeout = window.setTimeout(WebDeveloper.Images.resizeImageDimensions, 0);
+    WebDeveloper.Images.imageDimensionsTimeout = window.setTimeout(function() { WebDeveloper.Images.resizeImageDimensions(); }, 0);
   }
   else
   {

@@ -12,13 +12,13 @@ WebDeveloper.Outline.outlineBlockLevelElements = function(documents, showElement
   {
     contentDocument = documents[i];
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/outline/outline-block-level-elements.css", "web-developer-outline-block-level-elements", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/outline/outline-block-level-elements.css", "web-developer-outline-block-level-elements", contentDocument, false);
 
     // If showing element tag names
     if(showElementTagNames)
     {
-      WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-outline-block-level-elements-before-common", contentDocument, false);
-      WebDeveloper.Common.toggleStyleSheet("features/style-sheets/outline/outline-block-level-elements-before.css", "web-developer-outline-block-level-elements-before", contentDocument, false);
+      WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-outline-block-level-elements-before-common", contentDocument, false);
+      WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/outline/outline-block-level-elements-before.css", "web-developer-outline-block-level-elements-before", contentDocument, false);
     }
   }
 };
@@ -33,13 +33,13 @@ WebDeveloper.Outline.outlineDeprecatedElements = function(documents, showElement
   {
     contentDocument = documents[i];
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/outline/outline-deprecated-elements.css", "web-developer-outline-deprecated-elements", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/outline/outline-deprecated-elements.css", "web-developer-outline-deprecated-elements", contentDocument, false);
 
     // If showing element tag names
     if(showElementTagNames)
     {
-      WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-outline-deprecated-elements-before-common", contentDocument, false);
-      WebDeveloper.Common.toggleStyleSheet("features/style-sheets/outline/outline-deprecated-elements-before.css", "web-developer-outline-deprecated-elements-before", contentDocument, false);
+      WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-outline-deprecated-elements-before-common", contentDocument, false);
+      WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/outline/outline-deprecated-elements-before.css", "web-developer-outline-deprecated-elements-before", contentDocument, false);
     }
   }
 };
@@ -119,7 +119,7 @@ WebDeveloper.Outline.outlineFloatedElements = function(outline, documents)
       }
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/outline/outline-floated-elements.css", "web-developer-outline-floated-elements", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/outline/outline-floated-elements.css", "web-developer-outline-floated-elements", contentDocument, false);
   }
 };
 
@@ -129,7 +129,7 @@ WebDeveloper.Outline.outlineFrames = function(documents)
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
   {
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/outline/outline-frames.css", "web-developer-outline-frames", documents[i], false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/outline/outline-frames.css", "web-developer-outline-frames", documents[i], false);
   }
 };
 
@@ -143,13 +143,13 @@ WebDeveloper.Outline.outlineHeadings = function(documents, showElementTagNames)
   {
     contentDocument = documents[i];
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/outline/outline-headings.css", "web-developer-outline-headings", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/outline/outline-headings.css", "web-developer-outline-headings", contentDocument, false);
 
     // If showing element tag names
     if(showElementTagNames)
     {
-      WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-outline-headings-before-common", contentDocument, false);
-      WebDeveloper.Common.toggleStyleSheet("features/style-sheets/outline/outline-headings-before.css", "web-developer-outline-headings-before", contentDocument, false);
+      WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-outline-headings-before-common", contentDocument, false);
+      WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/outline/outline-headings-before.css", "web-developer-outline-headings-before", contentDocument, false);
     }
   }
 };
@@ -160,7 +160,7 @@ WebDeveloper.Outline.outlineNonSecureElements = function(documents)
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
   {
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/outline/outline-non-secure-elements.css", "web-developer-outline-non-secure-elements", documents[i], false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/outline/outline-non-secure-elements.css", "web-developer-outline-non-secure-elements", documents[i], false);
   }
 };
 
@@ -206,7 +206,7 @@ WebDeveloper.Outline.outlinePositionedElements = function(positionType, outline,
       }
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/outline/outline-positioned-elements.css", className, contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/outline/outline-positioned-elements.css", className, contentDocument, false);
   }
 };
 
@@ -216,7 +216,7 @@ WebDeveloper.Outline.outlineTableCaptions = function(documents)
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
   {
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/outline/outline-table-captions.css", "web-developer-outline-table-captions", documents[i], false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/outline/outline-table-captions.css", "web-developer-outline-table-captions", documents[i], false);
   }
 };
 
@@ -230,13 +230,13 @@ WebDeveloper.Outline.outlineTableCells = function(documents, showElementTagNames
   {
     contentDocument = documents[i];
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/outline/outline-table-cells.css", "web-developer-outline-table-cells", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/outline/outline-table-cells.css", "web-developer-outline-table-cells", contentDocument, false);
 
     // If showing element tag names
     if(showElementTagNames)
     {
-      WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-outline-table-cells-before-common", contentDocument, false);
-      WebDeveloper.Common.toggleStyleSheet("features/style-sheets/outline/outline-table-cells-before.css", "web-developer-outline-table-cells-before", contentDocument, false);
+      WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-outline-table-cells-before-common", contentDocument, false);
+      WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/outline/outline-table-cells-before.css", "web-developer-outline-table-cells-before", contentDocument, false);
     }
   }
 };
@@ -247,6 +247,6 @@ WebDeveloper.Outline.outlineTables = function(documents)
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
   {
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/outline/outline-tables.css", "web-developer-outline-tables", documents[i], false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/outline/outline-tables.css", "web-developer-outline-tables", documents[i], false);
   }
 };

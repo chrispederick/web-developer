@@ -25,6 +25,7 @@
     "lazypipe": "*",
     "merge-stream": "*",
     "require-dir": "*",
-    "run-sequence": "*"
+    "run-sequence": "*",
+    "web-ext": "*"
   }
 }

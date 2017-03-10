@@ -8,7 +8,7 @@ var runSequence = require("run-sequence");
 
 gulp.task("build-chrome-all", function()
 {
-  return global.chromiumAllTask("chrome");
+  return global.buildAll("chrome");
 });
 
 gulp.task("clean-chrome", function()

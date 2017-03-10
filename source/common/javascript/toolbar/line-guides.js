@@ -4,6 +4,7 @@ WebDeveloper.LineGuides                   = WebDeveloper.LineGuides || {};
 WebDeveloper.LineGuides.padding           = 2;
 WebDeveloper.LineGuides.selectedlineGuide = null;
 WebDeveloper.LineGuides.spacing           = 98;
+WebDeveloper.LineGuides.toolbarDocument   = null;
 
 // Adds a horizontal line guide
 WebDeveloper.LineGuides.addHorizontalLineGuide = function()
@@ -89,11 +90,48 @@ WebDeveloper.LineGuides.addVerticalLineGuide = function()
   WebDeveloper.Common.getDocumentBodyElement(contentDocument).appendChild(lineGuide);
 };
 
+// Creates the line guides events
+WebDeveloper.LineGuides.createEvents = function(contentDocument)
+{
+  window.WebDeveloperEvents                           = window.WebDeveloperEvents || {};
+  window.WebDeveloperEvents.LineGuides                = window.WebDeveloperEvents.LineGuides || {};
+  window.WebDeveloperEvents.LineGuides.mouseMove      = WebDeveloper.LineGuides.mouseMove;
+  window.WebDeveloperEvents.LineGuides.resizeDocument = WebDeveloper.LineGuides.resize;
+
+  contentDocument.addEventListener("mousemove", window.WebDeveloperEvents.LineGuides.mouseMove, false);
+  contentDocument.addEventListener("resize", window.WebDeveloperEvents.LineGuides.resize, false);
+};
+
 // Creates the line guides
 WebDeveloper.LineGuides.createLineGuides = function()
 {
   WebDeveloper.LineGuides.addHorizontalLineGuide();
   WebDeveloper.LineGuides.addVerticalLineGuide();
+};
+
+// Creates the line guides toolbar
+WebDeveloper.LineGuides.createToolbar = function(contentDocument, toolbarHTML)
+{
+  var lineGuidesToolbar = contentDocument.createElement("iframe");
+  var styleSheet        = null;
+
+  lineGuidesToolbar.setAttribute("class", "web-developer-toolbar");
+  lineGuidesToolbar.setAttribute("id", "web-developer-line-guides-toolbar");
+
+  WebDeveloper.Common.getDocumentBodyElement(contentDocument).appendChild(lineGuidesToolbar);
+
+  WebDeveloper.LineGuides.toolbarDocument = lineGuidesToolbar.contentDocument;
+  styleSheet                              = WebDeveloper.LineGuides.toolbarDocument.createElement("link");
+
+  styleSheet.setAttribute("rel", "stylesheet");
+  styleSheet.setAttribute("href", WebDeveloper.Common.getChromeURL("toolbar/line-guides-toolbar.css"));
+  WebDeveloper.Common.getDocumentHeadElement(WebDeveloper.LineGuides.toolbarDocument).appendChild(styleSheet);
+
+  WebDeveloper.Common.getDocumentBodyElement(WebDeveloper.LineGuides.toolbarDocument).innerHTML = toolbarHTML;
+
+  WebDeveloper.LineGuides.toolbarDocument.querySelector("img").setAttribute("src", WebDeveloper.Common.getChromeURL("toolbar/images/logo.png"));
+  WebDeveloper.LineGuides.toolbarDocument.getElementById("add-horizontal-line-guide").addEventListener("click", WebDeveloper.LineGuides.addHorizontalLineGuide, false);
+  WebDeveloper.LineGuides.toolbarDocument.getElementById("add-vertical-line-guide").addEventListener("click", WebDeveloper.LineGuides.addVerticalLineGuide, false);
 };
 
 // Displays line guides
@@ -113,7 +151,13 @@ WebDeveloper.LineGuides.displayLineGuides = function(display, contentDocument, t
     WebDeveloper.LineGuides.removeToolbar(contentDocument);
   }
 
-  WebDeveloper.Common.toggleStyleSheet("toolbar/line-guides.css", "web-developer-display-line-guides", contentDocument, false);
+  WebDeveloper.Common.toggleStyleSheet("/toolbar/line-guides.css", "web-developer-display-line-guides", contentDocument, false);
+};
+
+// Returns the line guides color
+WebDeveloper.LineGuides.getColor = function()
+{
+  return "#cc0000";
 };
 
 // Returns an array containing the horizontal line guide positions
@@ -175,6 +219,12 @@ WebDeveloper.LineGuides.getLineGuidePositions = function(contentDocument, direct
 WebDeveloper.LineGuides.getVerticalLineGuidePositions = function(contentDocument)
 {
   return WebDeveloper.LineGuides.getLineGuidePositions(contentDocument, "vertical");
+};
+
+// Hides the line guide information
+WebDeveloper.LineGuides.hideInformation = function()
+{
+  WebDeveloper.Common.removeClass(WebDeveloper.Common.getDocumentBodyElement(WebDeveloper.LineGuides.toolbarDocument), "display-information");
 };
 
 // Handles the mouse down event on a line guide
@@ -261,10 +311,32 @@ WebDeveloper.LineGuides.mouseUp = function()
   WebDeveloper.LineGuides.selectedlineGuide = null;
 };
 
+// Removes the line guides events
+WebDeveloper.LineGuides.removeEvents = function(contentDocument)
+{
+  contentDocument.removeEventListener("mousemove", window.WebDeveloperEvents.LineGuides.mouseMove, false);
+  contentDocument.removeEventListener("resize", window.WebDeveloperEvents.LineGuides.resize, false);
+
+  window.WebDeveloperEvents.LineGuides = null;
+};
+
 // Removes the line guides
 WebDeveloper.LineGuides.removeLineGuides = function(contentDocument)
 {
   WebDeveloper.Common.removeMatchingElements("#web-developer-line-guide-information, .web-developer-line-guide", contentDocument);
+};
+
+// Removes the line guides toolbar
+WebDeveloper.LineGuides.removeToolbar = function(contentDocument)
+{
+  // If the toolbar document is set
+  if(WebDeveloper.LineGuides.toolbarDocument)
+  {
+    WebDeveloper.LineGuides.toolbarDocument.getElementById("add-horizontal-line-guide").removeEventListener("click", WebDeveloper.LineGuides.addHorizontalLineGuide, false);
+    WebDeveloper.LineGuides.toolbarDocument.getElementById("add-vertical-line-guide").removeEventListener("click", WebDeveloper.LineGuides.addVerticalLineGuide, false);
+  }
+
+  WebDeveloper.Common.removeMatchingElements("#web-developer-line-guides-toolbar", contentDocument);
 };
 
 // Handles the resize event on the window
@@ -318,6 +390,16 @@ WebDeveloper.LineGuides.sizeLineGuide = function(lineGuide, contentDocument, con
 };
 
 // Updates the line guide information
+WebDeveloper.LineGuides.updateInformation = function(position, previousPosition, nextPosition)
+{
+  WebDeveloper.LineGuides.toolbarDocument.getElementById("line-guide-position").textContent          = position + "px";
+  WebDeveloper.LineGuides.toolbarDocument.getElementById("next-line-guide-position").textContent     = nextPosition + "px";
+  WebDeveloper.LineGuides.toolbarDocument.getElementById("previous-line-guide-position").textContent = previousPosition + "px";
+
+  WebDeveloper.Common.addClass(WebDeveloper.Common.getDocumentBodyElement(WebDeveloper.LineGuides.toolbarDocument), "display-information");
+};
+
+// Updates the line guide information
 WebDeveloper.LineGuides.updateLineGuideInformation = function(lineGuide)
 {
   var nextPosition     = null;
@@ -351,4 +433,3 @@ WebDeveloper.LineGuides.updateLineGuideInformation = function(lineGuide)
     WebDeveloper.LineGuides.updateInformation(position, previousPosition, nextPosition);
   }
 };
-

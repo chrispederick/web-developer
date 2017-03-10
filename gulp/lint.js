@@ -1,5 +1,6 @@
 "use strict";
 
+var exec    = require("child_process");
 var gulp    = require("gulp");
 var plugins = require("gulp-load-plugins")();
 
@@ -18,4 +19,16 @@ gulp.task("lint-style-sheets", function()
     .pipe(plugins.csslint.reporter("compact"));
 });
 
-gulp.task("lint", ["lint-javascript", "lint-style-sheets"]);
+gulp.task("lint-web-extension", function(callback)
+{
+  process.chdir("build/firefox");
+  exec.exec("../../node_modules/web-ext/bin/web-ext lint -w", function(error, output, errors)
+  {
+    console.log(output); // eslint-disable-line no-console
+    console.log(errors); // eslint-disable-line no-console
+    callback(error);
+  });
+  process.chdir("../..");
+});
+
+gulp.task("lint", ["lint-javascript", "lint-style-sheets", "lint-web-extension"]);

@@ -10,7 +10,6 @@ WebDeveloper.Generated.initialize = function(data, locale)
   $("title").text(locale.about + " " + name);
   $("h1").text(name);
   $("#description").text(locale.extensionDescription);
-  $("#follow-on-appnet").text(locale.followOnAppNet);
   $("#follow-on-twitter").text(locale.followOnTwitter);
   $("#author").text(locale.author);
   $("#version").text(locale.version);

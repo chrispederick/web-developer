@@ -1,0 +1,4 @@
+{"remove-top": "",
+  "browser_action": { "browser_style": false, "default_icon": { "16": "/common/images/logos/monochrome/16.png", "24":  "/common/images/logos/monochrome/24.png", "32":  "/common/images/logos/monochrome/32.png", "48":  "/common/images/logos/monochrome/48.png", "64":  "/common/images/logos/monochrome/64.png", "128": "/common/images/logos/monochrome/128.png", "256": "/common/images/logos/monochrome/256.png", "512": "/common/images/logos/monochrome/512.png" }, "default_popup": "/overlay/overlay.html", "default_title": "__MSG_extensionName__" },
+  "permissions": ["clipboardWrite", "cookies", "history", "storage", "tabs", "<all_urls>"],
+"remove-bottom": ""}

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html id="web-developer-overlay" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>@name@</title>
+  <link href="/common/style-sheets/bootstrap.css" rel="stylesheet">
+  <link href="overlay.css" rel="stylesheet">
+</head>
+
+<body>
+
+<ul class="nav nav-tabs">
+  <li id="disable-toolbar" class="active"><a href="#disable-menu" data-toggle="tab"><span></span></a></li>
+  <li id="cookies-toolbar"><a href="#cookies-menu" data-toggle="tab"><span></span></a></li>
+  <li id="css-toolbar"><a href="#css-menu" data-toggle="tab"><span></span></a></li>
+  <li id="forms-toolbar"><a href="#forms-menu" data-toggle="tab"><span></span></a></li>
+  <li id="images-toolbar"><a href="#images-menu" data-toggle="tab"><span></span></a></li>
+  <li id="information-toolbar"><a href="#information-menu" data-toggle="tab"><span></span></a></li>
+  <li id="miscellaneous-toolbar"><a href="#miscellaneous-menu" data-toggle="tab"><span></span></a></li>
+  <li id="outline-toolbar"><a href="#outline-menu" data-toggle="tab"><span></span></a></li>
+  <li id="resize-toolbar"><a href="#resize-menu" data-toggle="tab"><span></span></a></li>
+  <li id="tools-toolbar"><a href="#tools-menu" data-toggle="tab"><span></span></a></li>
+  <li id="options-toolbar"><a href="#options-menu" data-toggle="tab"><span></span></a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="disable-menu" class="tab-pane active">
+    <ul class="list-unstyled">
+      <li><a href="#" id="disable-javascript"><span></span></a></li>
+      <li><a href="#" id="disable-notifications"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="disable-plugins"><span></span></a></li>
+      <li><a href="#" id="disable-popups"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="reset-disable-features"><span></span></a></li>
+    </ul>
+  </div>
+
+  <div id="cookies-menu" class="tab-pane">
+    <ul class="list-unstyled">
+      <li><a href="#" id="disable-cookies"><span></span></a></li>
+      <li><a href="#" id="add-cookie"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="delete-domain-cookies"><span></span></a></li>
+      <li><a href="#" id="delete-path-cookies"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="delete-session-cookies"><span></span></a></li>
+      <li><a href="#" id="view-cookie-information"><span></span></a></li>
+    </ul>
+  </div>
+
+  <div id="css-menu" class="tab-pane">
+    <ul class="list-unstyled">
+      <li><a href="#" id="disable-all-styles"><span></span></a></li>
+      <li><a href="#" id="disable-browser-default-styles"><span></span></a></li>
+      <li><a href="#" id="disable-embedded-styles"><span></span></a></li>
+      <li><a href="#" id="disable-inline-styles"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="disable-linked-style-sheets"><span></span></a></li>
+      <li><a href="#" id="disable-print-styles"><span></span></a></li>
+      <li><a href="#" id="display-handheld-styles"><span></span></a></li>
+      <li><a href="#" id="display-print-styles"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="edit-css"><span></span></a></li>
+      <li><a href="#" id="reload-linked-style-sheets"><span></span></a></li>
+      <li><a href="#" id="use-border-box-model"><span></span></a></li>
+      <li><a href="#" id="view-css"><span></span></a></li>
+    </ul>
+  </div>
+
+  <div id="forms-menu" class="tab-pane">
+    <ul class="list-unstyled">
+      <li><a href="#" id="check-all-checkboxes"><span></span></a></li>
+      <li><a href="#" id="uncheck-all-checkboxes"><span></span></a></li>
+      <li><a href="#" id="clear-form-fields"><span></span></a></li>
+      <li><a href="#" id="clear-radio-buttons"><span></span></a></li>
+      <li><a href="#" id="convert-form-gets-to-posts"><span></span></a></li>
+      <li><a href="#" id="convert-form-posts-to-gets"><span></span></a></li>
+      <li><a href="#" id="convert-select-elements-to-text-inputs"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="convert-text-inputs-to-textareas"><span></span></a></li>
+      <li><a href="#" id="display-form-details"><span></span></a></li>
+      <li><a href="#" id="display-passwords"><span></span></a></li>
+      <li><a href="#" id="enable-auto-completion"><span></span></a></li>
+      <li><a href="#" id="enable-form-fields"><span></span></a></li>
+      <li><a href="#" id="expand-select-elements"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="make-form-fields-writable"><span></span></a></li>
+      <li><a href="#" id="outline-form-fields-without-labels"><span></span></a></li>
+      <li><a href="#" id="populate-form-fields"><span></span></a></li>
+      <li><a href="#" id="remove-form-validation"><span></span></a></li>
+      <li><a href="#" id="remove-maximum-lengths"><span></span></a></li>
+      <li><a href="#" id="view-form-information"><span></span></a></li>
+    </ul>
+  </div>
+
+  <div id="images-menu" class="tab-pane">
+    <ul class="list-unstyled">
+      <li><a href="#" id="disable-images"><span></span></a></li>
+      <li><a href="#" id="display-alt-attributes"><span></span></a></li>
+      <li><a href="#" id="display-image-dimensions"><span></span></a></li>
+      <li><a href="#" id="display-image-paths"><span></span></a></li>
+      <li><a href="#" id="find-broken-images"><span></span></a></li>
+      <li><a href="#" id="hide-background-images"><span></span></a></li>
+      <li><a href="#" id="hide-images"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="make-images-full-size"><span></span></a></li>
+      <li><a href="#" id="make-images-invisible"><span></span></a></li>
+      <li><a href="#" id="outline-all-images"><span></span></a></li>
+      <li><a href="#" id="outline-background-images"><span></span></a></li>
+      <li><a href="#" id="outline-images-with-adjusted-dimensions"><span></span></a></li>
+      <li><a href="#" id="outline-images-with-empty-alt-attributes"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="outline-images-with-oversized-dimensions"><span></span></a></li>
+      <li><a href="#" id="outline-images-without-alt-attributes"><span></span></a></li>
+      <li><a href="#" id="outline-images-without-dimensions"><span></span></a></li>
+      <li><a href="#" id="reload-images"><span></span></a></li>
+      <li><a href="#" id="replace-images-with-alt-attributes"><span></span></a></li>
+      <li><a href="#" id="view-image-information"><span></span></a></li>
+    </ul>
+  </div>
+
+  <div id="information-menu" class="tab-pane">
+    <ul class="list-unstyled">
+      <li><a href="#" id="display-abbreviations"><span></span></a></li>
+      <li><a href="#" id="display-access-keys"><span></span></a></li>
+      <li><a href="#" id="display-anchors"><span></span></a></li>
+      <li><a href="#" id="display-aria-roles"><span></span></a></li>
+      <li><a href="#" id="display-div-dimensions"><span></span></a></li>
+      <li><a href="#" id="display-div-order"><span></span></a></li>
+      <li><a href="#" id="display-element-information"><span></span></a></li>
+      <li><a href="#" id="display-id-class-details"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="display-link-details"><span></span></a></li>
+      <li><a href="#" id="display-object-information"><span></span></a></li>
+      <li><a href="#" id="display-stack-levels"><span></span></a></li>
+      <li><a href="#" id="display-tab-index"><span></span></a></li>
+      <li><a href="#" id="display-table-depth"><span></span></a></li>
+      <li><a href="#" id="display-table-information"><span></span></a></li>
+      <li><a href="#" id="display-title-attributes"><span></span></a></li>
+      <li><a href="#" id="display-topographic-information"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="find-duplicate-ids"><span></span></a></li>
+      <li><a href="#" id="view-anchor-information"><span></span></a></li>
+      <li><a href="#" id="view-color-information"><span></span></a></li>
+      <li><a href="#" id="view-document-outline"><span></span></a></li>
+      <li><a href="#" id="view-javascript"><span></span></a></li>
+      <li><a href="#" id="view-link-information"><span></span></a></li>
+      <li><a href="#" id="view-meta-tag-information"><span></span></a></li>
+      <li><a href="#" id="view-response-headers"><span></span></a></li>
+    </ul>
+  </div>
+
+  <div id="miscellaneous-menu" class="tab-pane">
+    <ul class="list-unstyled">
+      <li><a href="#" id="clear-cache"><span></span></a></li>
+      <li><a href="#" id="clear-history"><span></span></a></li>
+      <li><a href="#" id="display-color-picker"><span></span></a></li>
+      <li><a href="#" id="display-hidden-elements"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="display-line-guides"><span></span></a></li>
+      <li><a href="#" id="display-ruler"><span></span></a></li>
+      <li><a href="#" id="linearize-page"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="make-frames-resizable"><span></span></a></li>
+      <li><a href="#" id="mark-all-links-unvisited"><span></span></a></li>
+      <li><a href="#" id="mark-all-links-visited"><span></span></a></li>
+    </ul>
+  </div>
+
+  <div id="outline-menu" class="tab-pane">
+    <ul class="list-unstyled">
+      <li><a href="#" id="outline-absolute-positioned-elements"><span></span></a></li>
+      <li><a href="#" id="outline-block-level-elements"><span></span></a></li>
+      <li><a href="#" id="outline-deprecated-elements"><span></span></a></li>
+      <li><a href="#" id="outline-external-links"><span></span></a></li>
+      <li><a href="#" id="outline-fixed-positioned-elements"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="outline-floated-elements"><span></span></a></li>
+      <li><a href="#" id="outline-frames"><span></span></a></li>
+      <li><a href="#" id="outline-headings"><span></span></a></li>
+      <li><a href="#" id="outline-non-secure-elements"><span></span></a></li>
+      <li><a href="#" id="outline-relative-positioned-elements"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="outline-table-captions"><span></span></a></li>
+      <li><a href="#" id="outline-table-cells"><span></span></a></li>
+      <li><a href="#" id="outline-tables"><span></span></a></li>
+      <li><a href="#" id="show-element-tag-names"><span></span></a></li>
+    </ul>
+  </div>
+
+  <div id="resize-menu" class="tab-pane">
+    <ul class="list-unstyled">
+      <li><a href="#" id="display-window-size"><span></span></a></li>
+      <li><a href="#" id="resize-window"><span></span></a></li>
+    </ul>
+
+    <ul id="custom-resize-options" class="list-unstyled">
+      <li><a href="#" id="edit-resize-dimensions"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="view-responsive-layouts"><span></span></a></li>
+    </ul>
+  </div>
+
+  <div id="tools-menu" class="tab-pane">
+    <ul id="custom-tools" class="list-unstyled">
+      <li><a href="#" id="edit-tools"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="validate-local-css"><span></span></a></li>
+      <li><a href="#" id="validate-local-html"><span></span></a></li>
+      <li><a href="#" id="view-source"><span></span></a></li>
+    </ul>
+  </div>
+
+  <div id="options-menu" class="tab-pane">
+    <ul class="list-unstyled">
+      <li><a href="#" id="reset-page"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="#" id="options"><span></span></a></li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li><a href="@url@@browser@/help/" id="help"><span></span></a></li>
+      <li><a href="#" id="about"><span></span></a></li>
+    </ul>
+  </div>
+</div>
+
+<div id="confirmation" class="alert alert-warning fade in">
+  <span></span>
+  <button id="confirmation-cancel" type="button" class="btn btn-default"></button>
+  <button type="button" class="btn btn-warning"></button>
+</div>
+
+<div id="notification" class="alert alert-dismissable alert-success fade in">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <span></span>
+</div>
+
+<form id="add-cookie-dialog" class="form-horizontal">
+  <fieldset>
+    <legend></legend>
+
+    <div class="form-group">
+      <label for="add-cookie-name" class="col-sm-2 control-label"></label>
+      <div class="col-sm-5">
+        <input id="add-cookie-name" type="text" class="form-control">
+        <span class="help-block"></span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="add-cookie-value" class="col-sm-2 control-label"></label>
+      <div class="col-sm-5">
+        <input id="add-cookie-value" type="text" class="form-control">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="add-cookie-host" class="col-sm-2 control-label"></label>
+      <div class="col-sm-5">
+        <input id="add-cookie-host" type="text" class="form-control">
+        <span class="help-block"></span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="add-cookie-path" class="col-sm-2 control-label"></label>
+      <div class="col-sm-5">
+        <input id="add-cookie-path" type="text" class="form-control">
+        <span class="help-block"></span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="add-cookie-expires" class="col-sm-2 control-label"></label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="icon-calendar-empty"></i></span>
+          <input id="add-cookie-expires" type="text" class="form-control">
+        </div>
+        <span class="help-block"></span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-5 col-sm-offset-2">
+        <div class="checkbox">
+          <label>
+            <input id="add-cookie-session" type="checkbox">
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-5 col-sm-offset-2">
+        <div class="checkbox">
+          <label>
+            <input id="add-cookie-secure" type="checkbox">
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-7 text-right">
+        <button id="add-cookie-cancel" type="button" class="btn btn-default"></button>
+        <button id="add-cookie-submit" type="button" class="btn btn-primary"><i class="icon-ok"></i> </button>
+      </div>
+    </div>
+  </fieldset>
+</form>
+
+<form id="resize-window-dialog" class="form-horizontal">
+  <fieldset>
+    <legend></legend>
+
+    <div class="form-group">
+      <label for="resize-window-width" class="col-sm-2 control-label"></label>
+      <div class="col-sm-4">
+        <div class="input-group">
+          <input id="resize-window-width" type="text" class="form-control">
+          <span class="input-group-addon">px</span>
+        </div>
+        <span class="help-block"></span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="resize-window-height" class="col-sm-2 control-label"></label>
+      <div class="col-sm-4">
+        <div class="input-group">
+          <input id="resize-window-height" type="text" class="form-control">
+          <span class="input-group-addon">px</span>
+        </div>
+        <span class="help-block"></span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 text-right">
+        <button id="resize-window-cancel" type="button" class="btn btn-default"></button>
+        <button id="resize-window-submit" type="button" class="btn btn-primary"><i class="icon-ok"></i> </button>
+      </div>
+    </div>
+  </fieldset>
+</form>
+
+<script src="/common/javascript/jquery/jquery.js"></script>
+<script src="/common/javascript/jquery/icanhaz.js"></script>
+<script src="/common/javascript/bootstrap/tab.js"></script>
+<script src="/common/javascript/bootstrap/transition.js"></script>
+<script src="/common/javascript/common.js"></script>
+<script src="/cookies/cookies.js"></script>
+<script src="/locales/locales.js"></script>
+<script src="javascript/overlay.js"></script>
+
+<script id="colorPickerToolbar" type="text/html">
+  <span>{{hoverColor}}</span><span id="web-developer-color-picker-hover-color"></span><span id="web-developer-color-picker-hover-hex"></span><span>{{selectedColor}}</span><span id="web-developer-color-picker-selected-color"></span><span id="web-developer-color-picker-selected-hex"></span><img width="16" height="16" alt=""><h1>{{title}}</h1>
+</script>
+
+<script id="customResizeOption" type="text/html">
+  <li><a href="#" data-height="{{height}}" data-width="{{width}}" class="custom-resize-window"><span></span>{{description}}</a></li>
+</script>
+
+<script id="customTool" type="text/html">
+  <li><a href="#" data-url="{{url}}" class="custom-tool"><span></span>{{description}}</a></li>
+</script>
+
+<script id="lineGuidesToolbar" type="text/html">
+  <span>{{positionLabel}}</span><span id="line-guide-position"></span><span>{{previousPosition}}</span><span id="previous-line-guide-position"></span><span>{{nextPosition}}</span><span id="next-line-guide-position"></span><button id="add-horizontal-line-guide" type="button" class="btn btn-sm btn-primary">{{addHorizontalLineGuide}}</button><button id="add-vertical-line-guide" type="button" class="btn btn-sm btn-primary">{{addVerticalLineGuide}}</button><img width="16" height="16" alt=""><h1>{{title}}</h1>
+</script>
+
+<script id="rulerToolbar" type="text/html">
+  <label for="web-developer-ruler-width">{{width}}</label><input id="web-developer-ruler-width"><label for="web-developer-ruler-height">{{height}}</label><input id="web-developer-ruler-height"><span>{{startPositionX}}</span><span id="web-developer-ruler-start-x"></span><span>{{yLabel}}</span><span id="web-developer-ruler-start-y"></span><span>{{endPositionX}}</span><span id="web-developer-ruler-end-x"></span><span>{{yLabel}}</span><span id="web-developer-ruler-end-y"></span><img width="16" height="16" alt=""><h1>{{title}}</h1>
+</script>
+
+</body>
+
+</html>
