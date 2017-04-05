@@ -41,9 +41,10 @@ WebDeveloper.Background.getColor = function(x, y, eventType)
 
     image.onload = function()
     {
-      var canvas  = document.createElement("canvas");
-      var color   = null;
-      var context = canvas.getContext("2d");
+      var canvas           = document.createElement("canvas");
+      var color            = null;
+      var context          = canvas.getContext("2d");
+      var devicePixelRatio = window.devicePixelRatio;
 
       canvas.height = image.naturalHeight;
       canvas.width  = image.naturalWidth;
@@ -51,7 +52,7 @@ WebDeveloper.Background.getColor = function(x, y, eventType)
       context.clearRect(0, 0, image.naturalWidth, image.naturalHeight);
       context.drawImage(image, 0, 0);
 
-      color = WebDeveloper.Background.convertRGBToHex(context.getImageData(x, y, 1, 1).data);
+      color = WebDeveloper.Background.convertRGBToHex(context.getImageData(x * devicePixelRatio, y * devicePixelRatio, 1, 1).data);
 
       chrome.tabs.executeScript(null, { code: "WebDeveloper.ColorPicker.setColor('" + color + "', '" + eventType + "')" });
     };
