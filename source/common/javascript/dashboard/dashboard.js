@@ -92,8 +92,14 @@ WebDeveloper.Dashboard.formatURL = function(url)
   // If the URL is set
   if(url)
   {
-    var lastSlashIndex   = url.lastIndexOf("/");
-    var queryStringIndex = url.indexOf("?", lastSlashIndex);
+    var lastSlashIndex   = 0;
+    var queryStringIndex = 0;
+
+    // Required to fix memory corruption (?) resulting in garbled URL in Firefox 52+
+    url = " " + url;
+
+    lastSlashIndex   = url.lastIndexOf("/");
+    queryStringIndex = url.indexOf("?", lastSlashIndex);
 
     // If there is no query string
     if(queryStringIndex == -1)
