@@ -39,6 +39,7 @@ WebDeveloper.Dashboard.createDashboard = function(contentDocument, dashboardHTML
   dashboard.setAttribute("id", "web-developer-dashboard");
 
   WebDeveloper.Common.getDocumentBodyElement(contentDocument).appendChild(dashboard);
+  dashboard.contentWindow.stop();
 
   dashboardDocument                           = dashboard.contentDocument;
   window.WebDeveloperEvents                   = window.WebDeveloperEvents || {};

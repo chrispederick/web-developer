@@ -26,6 +26,7 @@ WebDeveloper.ColorPicker.createColorPicker = function(contentDocument, toolbarHT
   colorPickerToolbar.setAttribute("class", "web-developer-toolbar");
 
   WebDeveloper.Common.getDocumentBodyElement(contentDocument).appendChild(colorPickerToolbar);
+  colorPickerToolbar.contentWindow.stop();
 
   WebDeveloper.ColorPicker.toolbarDocument        = colorPickerToolbar.contentDocument;
   styleSheet                                      = WebDeveloper.ColorPicker.toolbarDocument.createElement("link");

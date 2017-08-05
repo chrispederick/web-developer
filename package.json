@@ -3,7 +3,7 @@
   "license": "GPL-3.0",
   "name": "web-developer",
   "version": "1.0.0",
-  "repository" : {
+  "repository": {
     "type": "git",
     "url": "https://github.com/chrispederick/web-developer"
   },
@@ -15,6 +15,7 @@
     "gulp-concat": "*",
     "gulp-eslint": "*",
     "gulp-filter-java-properties": "*",
+    "gulp-footer": "*",
     "gulp-imagemin": "2.4.0",
     "gulp-load-plugins": "*",
     "gulp-plumber": "*",

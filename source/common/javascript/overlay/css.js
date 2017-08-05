@@ -203,7 +203,7 @@ WebDeveloper.Overlay.CSS.editCSS = function()
       locale += "'editCSS': '" + WebDeveloper.Locales.getString("editCSS") + "',";
       locale += "'embeddedStyles': '" + WebDeveloper.Locales.getString("embeddedStyles") + "'";
 
-      WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "dashboard/javascript/dashboard.js", "WebDeveloper.EditCSS.editCSS(" + edit + ", document, {" + locale + "});", true);
+      WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/dashboard/javascript/dashboard.js", "WebDeveloper.EditCSS.editCSS(" + edit + ", document, {" + locale + "});", true);
     }
   });
 };

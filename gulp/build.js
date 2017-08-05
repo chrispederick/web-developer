@@ -132,6 +132,7 @@ global.buildDashboard = function(browserName)
     gulp.src(["source/common/javascript/common/common.js", "source/common/javascript/dashboard/dashboard.js", "source/common/javascript/dashboard/edit-css.js", "source/common/javascript/dashboard/element-information.js", "source/common/javascript/toolbar/element-ancestors.js"])
       .pipe(plugins.concat("dashboard.js"))
       .pipe(global.filterProperties(browserName)())
+      .pipe(plugins.footer("\nvoid(0);"))
       .pipe(gulp.dest("build/" + browserName + "/dashboard/javascript")),
     gulp.src("source/common/style-sheets/dashboard/dashboard.css")
       .pipe(global.filterProperties(browserName)())
@@ -152,26 +153,32 @@ global.buildFeatures = function(browserName)
     gulp.src(["source/common/javascript/common/common.js", "source/common/javascript/common/css.js", "source/common/javascript/features/common.js", "source/common/javascript/features/css.js"])
       .pipe(plugins.concat("css.js"))
       .pipe(global.filterProperties(browserName)())
+      .pipe(plugins.footer("\nvoid(0);"))
       .pipe(gulp.dest("build/" + browserName + "/features/javascript")),
     gulp.src(["source/common/javascript/common/common.js", "source/common/javascript/features/common.js", "source/common/javascript/features/forms.js"])
       .pipe(plugins.concat("forms.js"))
       .pipe(global.filterProperties(browserName)())
+      .pipe(plugins.footer("\nvoid(0);"))
       .pipe(gulp.dest("build/" + browserName + "/features/javascript")),
     gulp.src(["source/common/javascript/common/common.js", "source/common/javascript/features/common.js", "source/common/javascript/features/images.js"])
       .pipe(plugins.concat("images.js"))
       .pipe(global.filterProperties(browserName)())
+      .pipe(plugins.footer("\nvoid(0);"))
       .pipe(gulp.dest("build/" + browserName + "/features/javascript")),
     gulp.src(["source/common/javascript/common/common.js", "source/common/javascript/features/common.js", "source/common/javascript/features/information.js"])
       .pipe(plugins.concat("information.js"))
       .pipe(global.filterProperties(browserName)())
+      .pipe(plugins.footer("\nvoid(0);"))
       .pipe(gulp.dest("build/" + browserName + "/features/javascript")),
     gulp.src(["source/common/javascript/common/common.js", "source/common/javascript/features/common.js", "source/common/javascript/features/miscellaneous.js"])
       .pipe(plugins.concat("miscellaneous.js"))
       .pipe(global.filterProperties(browserName)())
+      .pipe(plugins.footer("\nvoid(0);"))
       .pipe(gulp.dest("build/" + browserName + "/features/javascript")),
     gulp.src(["source/common/javascript/common/common.js", "source/common/javascript/features/common.js", "source/common/javascript/features/outline.js"])
       .pipe(plugins.concat("outline.js"))
       .pipe(global.filterProperties(browserName)())
+      .pipe(plugins.footer("\nvoid(0);"))
       .pipe(gulp.dest("build/" + browserName + "/features/javascript")),
     gulp.src("source/common/style-sheets/features/**")
       .pipe(global.filterProperties(browserName)())
@@ -251,6 +258,7 @@ global.buildToolbars = function(browserName)
   return merge(
     gulp.src(["source/common/javascript/toolbar/color-picker.js", "source/common/javascript/toolbar/line-guides.js", "source/common/javascript/toolbar/ruler.js"])
       .pipe(global.filterProperties(browserName)())
+      .pipe(plugins.footer("\nvoid(0);"))
       .pipe(gulp.dest("build/" + browserName + "/toolbar/javascript")),
     gulp.src(["source/common/style-sheets/toolbar/toolbar.css", "source/common/style-sheets/toolbar/color-picker.css"])
       .pipe(plugins.concat("color-picker.css"))

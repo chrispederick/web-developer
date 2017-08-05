@@ -98,6 +98,7 @@ WebDeveloper.Ruler.createToolbar = function(contentDocument, toolbarHTML)
   rulerToolbar.setAttribute("class", "web-developer-toolbar");
 
   WebDeveloper.Common.getDocumentBodyElement(contentDocument).appendChild(rulerToolbar);
+  rulerToolbar.contentWindow.stop();
 
   WebDeveloper.Ruler.toolbarDocument = rulerToolbar.contentDocument;
   styleSheet                         = WebDeveloper.Ruler.toolbarDocument.createElement("link");

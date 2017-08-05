@@ -93,10 +93,10 @@ WebDeveloper.LineGuides.addVerticalLineGuide = function()
 // Creates the line guides events
 WebDeveloper.LineGuides.createEvents = function(contentDocument)
 {
-  window.WebDeveloperEvents                           = window.WebDeveloperEvents || {};
-  window.WebDeveloperEvents.LineGuides                = window.WebDeveloperEvents.LineGuides || {};
-  window.WebDeveloperEvents.LineGuides.mouseMove      = WebDeveloper.LineGuides.mouseMove;
-  window.WebDeveloperEvents.LineGuides.resizeDocument = WebDeveloper.LineGuides.resize;
+  window.WebDeveloperEvents                      = window.WebDeveloperEvents || {};
+  window.WebDeveloperEvents.LineGuides           = window.WebDeveloperEvents.LineGuides || {};
+  window.WebDeveloperEvents.LineGuides.mouseMove = WebDeveloper.LineGuides.mouseMove;
+  window.WebDeveloperEvents.LineGuides.resize    = WebDeveloper.LineGuides.resize;
 
   contentDocument.addEventListener("mousemove", window.WebDeveloperEvents.LineGuides.mouseMove, false);
   contentDocument.addEventListener("resize", window.WebDeveloperEvents.LineGuides.resize, false);
@@ -119,6 +119,7 @@ WebDeveloper.LineGuides.createToolbar = function(contentDocument, toolbarHTML)
   lineGuidesToolbar.setAttribute("id", "web-developer-line-guides-toolbar");
 
   WebDeveloper.Common.getDocumentBodyElement(contentDocument).appendChild(lineGuidesToolbar);
+  lineGuidesToolbar.contentWindow.stop();
 
   WebDeveloper.LineGuides.toolbarDocument = lineGuidesToolbar.contentDocument;
   styleSheet                              = WebDeveloper.LineGuides.toolbarDocument.createElement("link");
