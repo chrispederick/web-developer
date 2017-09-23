@@ -1,0 +1,65 @@
+/* Options styles */
+
+body { min-width: 750px; padding: 70px 0 20px 0; }
+#delete-dialog { display: none; }
+.form-horizontal .btn-default { margin-right: 5px; }
+.help-block:empty { display: none; }
+.navbar-text { background: url(/common/images/logos/16.png) no-repeat 0 2px; padding-left: 20px; }
+.single .btn-danger { display: none; }
+.tab-content { margin-top: 20px; }
+.table tbody > tr > td { vertical-align: middle; }
+.table tbody > tr.tDnD_whileDrag { background-color: #f5f5f5; }
+.table thead > tr { cursor: auto !important; }
+.table .btn-primary { margin: 0 5px 5px 0; }
+.table-container > .btn-primary { margin-left: 15px; }
+.text-muted { margin: 8px 0 20px 0; }
+
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5)
+{
+  .navbar-text { background-image: url(/common/images/logos/32.png); background-size: 16px 16px; }
+}
+
+@media (min-width: 768px)
+{
+  .table-container > .btn-primary { margin-left: 0; }
+}
+
+/* Tab styles */
+
+#advanced-tab > a > span { background-position: -80px 0; }
+#colors-tab > a > span { background-position: -16px 0; }
+#resize-tab > a > span { background-position: -32px 0; }
+#responsive-layouts-tab > a > span { background-position: -48px 0; }
+#tools-tab > a > span { background-position: -64px 0; }
+.nav-tabs > li > a { outline-style: none; }
+.nav-tabs > li > a > span { background: url(images/options.png) no-repeat 0 0; display: inline-block; height: 16px; margin-right: 5px; position: relative; top: 2px; width: 16px; }
+
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5)
+{
+  .nav-tabs > li > a > span { background-image: url(images/options-2x.png); background-size: 96px 16px; }
+}
+
+/* Color styles */
+
+iframe { border: 1px solid #ccc; }
+#preview { font-weight: bold; }
+#syntax-highlight-performance { margin: 20px; }
+
+@media (min-width: 768px)
+{
+  #preview { text-align: right; }
+}
+
+/* Resize styles */
+
+#resize-options > form { display: none; }
+#resize-options td:nth-child(4), #resize-options th:nth-child(4) { display: none; }
+
+/* Responsive layout styles */
+
+#responsive-layouts-options > form { display: none; }
+
+/* Tool styles */
+
+#tools-options > form { display: none; }
+#tools-options td:nth-child(3), #tools-options th:nth-child(3) { display: none; }

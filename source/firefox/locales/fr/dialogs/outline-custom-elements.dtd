@@ -1,8 +1,0 @@
-<!-- Outline Custom Elements -->
-<!ENTITY webdeveloper.element.1 "Élément 1">
-<!ENTITY webdeveloper.element.2 "Élément 2">
-<!ENTITY webdeveloper.element.3 "Élément 3">
-<!ENTITY webdeveloper.element.4 "Élément 4">
-<!ENTITY webdeveloper.element.5 "Élément 5">
-<!ENTITY webdeveloper.outline.custom.elements "Entourer un élément personnalisé">
-<!ENTITY webdeveloper.outline.custom.elements.description "Indiquer un élément (ex. : div) à entourer et les couleurs à utiliser">

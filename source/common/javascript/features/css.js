@@ -72,7 +72,7 @@ WebDeveloper.CSS.toggleBrowserDefaultStyles = function(documents)
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
   {
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/css/disable-browser-default-styles.css", "web-developer-disable-browser-default-styles", documents[i], true);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/css/disable-browser-default-styles.css", "web-developer-disable-browser-default-styles", documents[i], true);
   }
 };
 
@@ -264,6 +264,6 @@ WebDeveloper.CSS.useBorderBoxModel = function(documents)
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
   {
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/css/use-border-box-model.css", "web-developer-use-border-box-model", documents[i], false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/css/use-border-box-model.css", "web-developer-use-border-box-model", documents[i], false);
   }
 };

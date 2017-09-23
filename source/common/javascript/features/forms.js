@@ -462,8 +462,8 @@ WebDeveloper.Forms.displayFormDetails = function(display, documents)
       WebDeveloper.Common.removeMatchingElements(".web-developer-display-form-details", contentDocument);
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-form-details-before", contentDocument, false);
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/forms/display-form-details.css", "web-developer-display-form-details", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-display-form-details-before", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/forms/display-form-details.css", "web-developer-display-form-details", contentDocument, false);
   }
 };
 
@@ -721,7 +721,7 @@ WebDeveloper.Forms.outlineFormFieldsWithoutLabels = function(outline, documents)
       }
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/forms/outline-form-fields-without-labels.css", "web-developer-outline-form-fields-without-labels", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/forms/outline-form-fields-without-labels.css", "web-developer-outline-form-fields-without-labels", contentDocument, false);
   }
 };
 
@@ -1076,7 +1076,8 @@ WebDeveloper.Forms.removeMaximumLengths = function(documents)
 // Toggles all checkboxes
 WebDeveloper.Forms.toggleCheckboxes = function(check, documents)
 {
-  var checkboxes = null;
+  var alteredCheckboxes = 0;
+  var checkboxes        = null;
 
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
@@ -1087,6 +1088,30 @@ WebDeveloper.Forms.toggleCheckboxes = function(check, documents)
     for(var j = 0, m = checkboxes.length; j < m; j++)
     {
       checkboxes[j].checked = check;
+
+      alteredCheckboxes++;
     }
+  }
+
+  // If one checkbox was altered
+  if(alteredCheckboxes == 1)
+  {
+    // If checking checkboxes
+    if(check)
+    {
+      WebDeveloper.Common.displayNotification("checkAllCheckboxesSingleResult");
+    }
+    else
+    {
+      WebDeveloper.Common.displayNotification("uncheckAllCheckboxesSingleResult");
+    }
+  }
+  else if(check)
+  {
+    WebDeveloper.Common.displayNotification("checkAllCheckboxesMultipleResult", [alteredCheckboxes]);
+  }
+  else
+  {
+    WebDeveloper.Common.displayNotification("uncheckAllCheckboxesMultipleResult", [alteredCheckboxes]);
   }
 };

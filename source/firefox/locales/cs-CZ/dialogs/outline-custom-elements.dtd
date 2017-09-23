@@ -1,7 +1,0 @@
-<!ENTITY webdeveloper.element.1 "Prvek 1">
-<!ENTITY webdeveloper.element.2 "Prvek 2">
-<!ENTITY webdeveloper.element.3 "Prvek 3">
-<!ENTITY webdeveloper.element.4 "Prvek 4">
-<!ENTITY webdeveloper.element.5 "Prvek 5">
-<!ENTITY webdeveloper.outline.custom.elements "Orámovat uživatelské prvky">
-<!ENTITY webdeveloper.outline.custom.elements.description "Zadejte prvky k orámování (např. div) a vyberte barvu">

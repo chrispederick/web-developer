@@ -15,8 +15,8 @@ WebDeveloper.Information.displayAbbreviations = function(documents)
   {
     contentDocument = documents[i];
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-abbreviations-before", contentDocument, false);
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/information/display-abbreviations.css", "web-developer-display-abbreviations", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-display-abbreviations-before", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/information/display-abbreviations.css", "web-developer-display-abbreviations", contentDocument, false);
   }
 };
 
@@ -54,7 +54,7 @@ WebDeveloper.Information.displayAccessKeys = function(display, documents)
       }
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-access-keys", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-display-access-keys", contentDocument, false);
   }
 };
 
@@ -116,7 +116,7 @@ WebDeveloper.Information.displayAnchors = function(display, documents)
       }
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-anchors", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-display-anchors", contentDocument, false);
   }
 };
 
@@ -130,8 +130,8 @@ WebDeveloper.Information.displayARIARoles = function(documents)
   {
     contentDocument = documents[i];
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-aria-roles-before", contentDocument, false);
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/information/display-aria-roles.css", "web-developer-display-aria-roles", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-display-aria-roles-before", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/information/display-aria-roles.css", "web-developer-display-aria-roles", contentDocument, false);
   }
 };
 
@@ -169,8 +169,8 @@ WebDeveloper.Information.displayDivDimensions = function(display, documents, loc
       WebDeveloper.Common.removeMatchingElements(".web-developer-display-div-dimensions", contentDocument);
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-div-dimensions-before", contentDocument, false);
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/information/display-div-dimensions.css", "web-developer-display-div-dimensions", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-display-div-dimensions-before", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/information/display-div-dimensions.css", "web-developer-display-div-dimensions", contentDocument, false);
   }
 };
 
@@ -211,8 +211,8 @@ WebDeveloper.Information.displayDivOrder = function(display, documents)
       WebDeveloper.Common.removeMatchingElements(".web-developer-display-div-order", contentDocument);
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-div-order-before", contentDocument, false);
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/information/display-div-order.css", "web-developer-display-div-order", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-display-div-order-before", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/information/display-div-order.css", "web-developer-display-div-order", contentDocument, false);
   }
 };
 
@@ -257,7 +257,7 @@ WebDeveloper.Information.displayIdClassDetails = function(display, documents)
       WebDeveloper.Common.removeMatchingElements(".web-developer-id-class-details", contentDocument);
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-id-class-details", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-display-id-class-details", contentDocument, false);
   }
 };
 
@@ -271,8 +271,8 @@ WebDeveloper.Information.displayLinkDetails = function(documents)
   {
     contentDocument = documents[i];
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-link-details-before", contentDocument, false);
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/information/display-link-details.css", "web-developer-display-link-details", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-display-link-details-before", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/information/display-link-details.css", "web-developer-display-link-details", contentDocument, false);
   }
 };
 
@@ -403,8 +403,8 @@ WebDeveloper.Information.displayObjectInformation = function(display, documents)
       WebDeveloper.Common.removeMatchingElements(".web-developer-display-object-information", contentDocument);
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-object-information-before", contentDocument, false);
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/information/display-object-information.css", "web-developer-display-object-information", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-display-object-information-before", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/information/display-object-information.css", "web-developer-display-object-information", contentDocument, false);
   }
 };
 
@@ -444,7 +444,7 @@ WebDeveloper.Information.displayStackLevels = function(display, documents)
       WebDeveloper.Common.removeMatchingElements(".web-developer-display-stack-levels", contentDocument);
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-stack-levels", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-display-stack-levels", contentDocument, false);
   }
 };
 
@@ -484,7 +484,7 @@ WebDeveloper.Information.displayTabIndex = function(display, documents)
       WebDeveloper.Common.removeMatchingElements(".web-developer-display-tab-index", contentDocument);
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-tab-index", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-display-tab-index", contentDocument, false);
   }
 };
 
@@ -574,7 +574,7 @@ WebDeveloper.Information.displayTableDepth = function(display, documents, depth)
       WebDeveloper.Common.removeMatchingElements(".web-developer-display-table-depth", contentDocument);
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-table-depth", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-display-table-depth", contentDocument, false);
   }
 };
 
@@ -633,8 +633,8 @@ WebDeveloper.Information.displayTableInformation = function(display, documents)
       WebDeveloper.Common.removeMatchingElements(".web-developer-display-table-information", contentDocument);
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-table-information-before", contentDocument, false);
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/information/display-table-information.css", "web-developer-display-table-information", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-display-table-information-before", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/information/display-table-information.css", "web-developer-display-table-information", contentDocument, false);
   }
 };
 
@@ -674,7 +674,7 @@ WebDeveloper.Information.displayTitleAttributes = function(display, documents)
       WebDeveloper.Common.removeMatchingElements(".web-developer-display-title-attributes", contentDocument);
     }
 
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/before.css", "web-developer-display-title-attributes", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/before.css", "web-developer-display-title-attributes", contentDocument, false);
   }
 };
 
@@ -684,7 +684,7 @@ WebDeveloper.Information.displayTopographicInformation = function(documents)
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
   {
-    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/information/display-topographic-information.css", "web-developer-display-topographic-information", documents[i], false);
+    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/information/display-topographic-information.css", "web-developer-display-topographic-information", documents[i], false);
   }
 };
 
@@ -757,7 +757,7 @@ WebDeveloper.Information.resizeDivDimensions = function()
   // If the div dimensions are already updating
   if(WebDeveloper.Information.divDimensionsUpdating)
   {
-    WebDeveloper.Information.divDimensionsTimeout = window.setTimeout(WebDeveloper.Information.resizeDivDimensions, 0);
+    WebDeveloper.Information.divDimensionsTimeout = window.setTimeout(function() { WebDeveloper.Information.resizeDivDimensions(); }, 0);
   }
   else
   {

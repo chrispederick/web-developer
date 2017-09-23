@@ -32,7 +32,7 @@ WebDeveloper.Generated.addDocument = function(documentURL, documentCount, itemDe
   {
     element = document.createElement("h3");
 
-    // If the item count is set
+    // If the item count is not set
     if(typeof itemCount === "undefined")
     {
       element.appendChild(document.createTextNode(itemDescription));

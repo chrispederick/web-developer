@@ -9,7 +9,15 @@ WebDeveloper.Common.addClass = function(element, className)
   // If the element and class name are set and the element does not already have this class
   if(element && className && !WebDeveloper.Common.hasClass(element, className))
   {
-    element.className = (element.className + " " + className).trim();
+    // If the classes are on an SVG
+    if(element.className instanceof SVGAnimatedString)
+    {
+      element.className.baseVal = (element.className.baseVal + " " + className).trim();
+    }
+    else
+    {
+      element.className = (element.className + " " + className).trim();
+    }
   }
 };
 
@@ -57,6 +65,24 @@ WebDeveloper.Common.adjustElementPosition = function(element, xPosition, yPositi
     else
     {
       element.style.top = innerHeight + offsetY - offsetHeight - offset + "px";
+    }
+  }
+};
+
+// Adjusts the position of the given element
+WebDeveloper.Common.appendHTML = function(html, element, contentDocument)
+{
+  // If the HTML, element and content document are set
+  if(html && element && contentDocument)
+  {
+    var htmlElement = contentDocument.createElement("div");
+
+    htmlElement.innerHTML = html;
+
+    // While there children of the HTML element
+    while(htmlElement.firstChild)
+    {
+      element.appendChild(htmlElement.firstChild);
     }
   }
 };
@@ -136,6 +162,24 @@ WebDeveloper.Common.formatDimensions = function(width, height, locale)
   return "";
 };
 
+// Returns a chrome URL
+WebDeveloper.Common.getChromeURL = function(url)
+{
+  return chrome.extension.getURL(url);
+};
+
+// Returns the current content document
+WebDeveloper.Common.getContentDocument = function()
+{
+  return document;
+};
+
+// Returns the current content window
+WebDeveloper.Common.getContentWindow = function()
+{
+  return window;
+};
+
 // Returns a CSS primitive value
 WebDeveloper.Common.getCSSPrimitiveValue = function(type)
 {
@@ -169,6 +213,12 @@ WebDeveloper.Common.getCSSPrimitiveValue = function(type)
     default:
       return null;
   }
+};
+
+// Returns a CSS property
+WebDeveloper.Common.getCSSProperty = function(property)
+{
+  return property;
 };
 
 // Returns the CSS text from a property
@@ -499,6 +549,45 @@ WebDeveloper.Common.getPropertyCSSValue = function(computedStyle, property)
   return cssProperty;
 };
 
+// Gets the content from a URL
+WebDeveloper.Common.getURLContent = function(urlContentRequest, errorMessage, configuration)
+{
+  var url = urlContentRequest.url;
+
+  // If the URL is not entirely generated
+  if(url.indexOf("wyciwyg://") !== 0)
+  {
+    // Try to download the file
+    try
+    {
+      var request = new XMLHttpRequest();
+
+      request.timeout = WebDeveloper.Common.requestTimeout;
+
+      request.onreadystatechange = function()
+      {
+        // If the request completed
+        if(request.readyState == 4)
+        {
+          WebDeveloper.Common.urlContentRequestComplete(request.responseText, urlContentRequest, configuration);
+        }
+      };
+
+      request.ontimeout = function()
+      {
+        WebDeveloper.Common.urlContentRequestComplete(errorMessage, urlContentRequest, configuration);
+      };
+
+      request.open("get", url);
+      request.send(null);
+    }
+    catch(exception)
+    {
+      WebDeveloper.Common.urlContentRequestComplete(errorMessage, urlContentRequest, configuration);
+    }
+  }
+};
+
 // Returns the contents of the given URLs
 WebDeveloper.Common.getURLContents = function(urlContentRequests, errorMessage, callback)
 {
@@ -518,7 +607,15 @@ WebDeveloper.Common.hasClass = function(element, className)
   // If the element and class name are set
   if(element && className)
   {
-    var classes = element.className.split(" ");
+    var classes = element.className;
+
+    // If the classes are on an SVG
+    if(classes instanceof SVGAnimatedString)
+    {
+      classes = classes.baseVal;
+    }
+
+    classes = classes.split(" ");
 
     // Loop through the classes
     for(var i = 0, l = classes.length; i < l; i++)
@@ -661,6 +758,20 @@ WebDeveloper.Common.isCSSURI = function(property)
   return false;
 };
 
+// Logs a message
+WebDeveloper.Common.log = function(message, exception)
+{
+  // If an exception is set
+  if(exception)
+  {
+    console.warn(message, exception); // eslint-disable-line no-console
+  }
+  else
+  {
+    console.warn(message); // eslint-disable-line no-console
+  }
+};
+
 // Returns the position if the item is in the array or -1 if it is not
 WebDeveloper.Common.positionInArray = function(item, array)
 {
@@ -687,7 +798,15 @@ WebDeveloper.Common.removeClass = function(element, className)
   // If the element and class name are set
   if(element && className)
   {
-    var classes = element.className.split(" ");
+    var classes = element.className;
+
+    // If the classes are on an SVG
+    if(classes instanceof SVGAnimatedString)
+    {
+      classes = classes.baseVal;
+    }
+
+    classes = classes.split(" ");
 
     // Loop through the classes
     for(var i = 0, l = classes.length; i < l; i++)
@@ -697,7 +816,15 @@ WebDeveloper.Common.removeClass = function(element, className)
       {
         classes.splice(i, 1);
 
-        element.className = classes.join(" ").trim();
+        // If the classes are on an SVG
+        if(element.className instanceof SVGAnimatedString)
+        {
+          element.className.baseVal = classes.join(" ").trim();
+        }
+        else
+        {
+          element.className = classes.join(" ").trim();
+        }
 
         break;
       }

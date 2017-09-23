@@ -24,7 +24,7 @@ global.errorHandler = function(error, emitEnd, task)
   }
 };
 
-global.filterPropertiesTask = function(browserName)
+global.filterProperties = function(browserName)
 {
   return lazypipe()
     .pipe(filterProperties, { propertiesPath: "build/" + browserName + ".properties" })

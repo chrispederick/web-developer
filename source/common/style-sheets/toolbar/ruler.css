@@ -12,5 +12,9 @@
 #web-developer-ruler-bottom-left { border-width: 1px 1px 0 0 !important; cursor: sw-resize !important; }
 #web-developer-ruler-bottom-right { border-width: 1px 0 0 1px !important; cursor: se-resize !important; }
 #web-developer-ruler-container { z-index: 2147483647 !important; }
+#web-developer-ruler-end-x, #web-developer-ruler-start-x { margin: 0 10px 0 5px; }
+#web-developer-ruler-end-y { margin-left: 5px; }
+#web-developer-ruler-height, #web-developer-ruler-width { margin: 0 20px 0 0; width: 60px; }
+#web-developer-ruler-start-y { margin: 0 20px 0 5px; }
 #web-developer-ruler-top-left { border-width: 0 1px 1px 0 !important; cursor: nw-resize !important; }
 #web-developer-ruler-top-right { border-width: 0 0 1px 1px !important; cursor: ne-resize !important; }
