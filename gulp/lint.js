@@ -16,7 +16,7 @@ gulp.task("lint-style-sheets", function()
   return gulp.src(["source/**/*.css", "!source/common/style-sheets/common/bootstrap/*.css", "!source/common/style-sheets/common/codemirror/*.css"])
     .pipe(plugins.plumber({ errorHandler: function(error) { global.errorHandler(error, true, this); } }))
     .pipe(plugins.csslint(".csslintrc.json"))
-    .pipe(plugins.csslint.reporter("compact"));
+    .pipe(plugins.csslint.formatter("compact"));
 });
 
 gulp.task("lint-web-extension", function(callback)

@@ -25,7 +25,29 @@ gulp.task("initialize-firefox-build", function(callback)
 gulp.task("install-firefox", function(callback)
 {
   process.chdir("build/firefox");
-  exec.exec("../../node_modules/web-ext/bin/web-ext run --browser-console --start-url chrispederick.com", function(error, output, errors)
+  exec.exec("../../node_modules/web-ext/bin/web-ext run --bc -f=firefox --start-url chrispederick.com", function(error, output, errors)
+  {
+    console.log(output); // eslint-disable-line no-console
+    console.log(errors); // eslint-disable-line no-console
+    callback(error);
+  });
+});
+
+gulp.task("install-firefox-beta", function(callback)
+{
+  process.chdir("build/firefox");
+  exec.exec("../../node_modules/web-ext/bin/web-ext run --bc -f=beta --start-url chrispederick.com", function(error, output, errors)
+  {
+    console.log(output); // eslint-disable-line no-console
+    console.log(errors); // eslint-disable-line no-console
+    callback(error);
+  });
+});
+
+gulp.task("install-firefox-developer", function(callback)
+{
+  process.chdir("build/firefox");
+  exec.exec("../../node_modules/web-ext/bin/web-ext run --bc -f=firefoxdeveloperedition --start-url chrispederick.com", function(error, output, errors)
   {
     console.log(output); // eslint-disable-line no-console
     console.log(errors); // eslint-disable-line no-console

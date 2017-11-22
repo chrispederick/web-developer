@@ -137,7 +137,7 @@ WebDeveloper.Upgrade.upgrade = function()
   if(previousVersion != "@version@")
   {
     WebDeveloper.Storage.setItem("version", "@version@");
-    WebDeveloper.Upgrade.openUpgradeURL("@version@");
+    // WebDeveloper.Upgrade.openUpgradeURL("@version@");
 
     WebDeveloper.Upgrade.fixContentSettings();
     // WebDeveloper.Upgrade.migrateLegacySettings();
