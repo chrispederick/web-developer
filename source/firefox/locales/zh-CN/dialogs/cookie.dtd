@@ -1,9 +1,0 @@
-<!-- Cookie -->
-<!ENTITY webdeveloper.add.cookie "添加 Cookie">
-<!ENTITY webdeveloper.expires.label "有效期:">
-<!ENTITY webdeveloper.host.label "域名/主机:">
-<!ENTITY webdeveloper.name.label "名称(必需):">
-<!ENTITY webdeveloper.path.label "路径:">
-<!ENTITY webdeveloper.secure.cookie.label "安全的 Cookie（对 Cookie 加密）">
-<!ENTITY webdeveloper.session.cookie.label "会话期 Cookie（会话结束立即过期）">
-<!ENTITY webdeveloper.value.label "值:">

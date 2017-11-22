@@ -1,15 +1,4 @@
-{
-	"background": { "page": "background/background.html" },
-  "browser_action": { "default_icon": { "19": "overlay/images/icon.png", "38": "overlay/images/icon-2x.png" }, "default_popup": "overlay/overlay.html", "default_title": "__MSG_extensionName__" },
-	"content_scripts": [{ "js": ["content/content.js"], "matches": ["<all_urls>"] }],
-	"default_locale": "en_US",
-  "description": "__MSG_extensionDescription__",
-  "homepage_url":	"@url@",
-  "icons": { "16": "common/images/logos/16.png", "48":  "common/images/logos/48.png", "128": "common/images/logos/128.png" },
-  "manifest_version": 2,
-  "name": "__MSG_extensionName__",
-  "options_page":	"options/options.html",
-  "permissions": ["clipboardWrite", "cookies", "history", "tabs", "<all_urls>"],
-  "version": "@version@",
-  "web_accessible_resources": ["*"]
-}
+{"remove-top": "",
+  "browser_action": { "default_icon": { "16": "/common/images/logos/monochrome/16.png", "24":  "/common/images/logos/monochrome/24.png", "32":  "/common/images/logos/monochrome/32.png", "48":  "/common/images/logos/monochrome/48.png", "64":  "/common/images/logos/monochrome/64.png", "128": "/common/images/logos/monochrome/128.png", "256": "/common/images/logos/monochrome/256.png", "512": "/common/images/logos/monochrome/512.png" }, "default_popup": "/overlay/overlay.html", "default_title": "__MSG_extensionName__" },
+  "permissions": ["browsingData", "clipboardWrite", "cookies", "history", "storage", "tabs", "<all_urls>"],
+"remove-bottom": ""}

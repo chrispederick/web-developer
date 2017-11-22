@@ -1,0 +1,12 @@
+{
+	"background": { "page": "/background/background.html" },
+	"content_scripts": [{ "js": ["/content/content.js"], "matches": ["<all_urls>"] }],
+	"default_locale": "en_US",
+  "description": "__MSG_extensionDescription__",
+  "homepage_url":	"@url@",
+  "icons": { "16": "/common/images/logos/16.png", "24":  "/common/images/logos/24.png", "32":  "/common/images/logos/32.png", "48":  "/common/images/logos/48.png", "64":  "/common/images/logos/64.png", "128": "/common/images/logos/128.png", "256": "/common/images/logos/256.png", "512": "/common/images/logos/512.png" },
+  "manifest_version": 2,
+  "name": "__MSG_extensionName__",
+  "options_ui":	{ "page": "/options/options.html" },
+  "version": "@version@",
+"remove-bottom": ""}

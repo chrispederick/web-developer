@@ -1,9 +1,0 @@
-<!-- Cookie -->
-<!ENTITY webdeveloper.add.cookie "Ajouter un cookie">
-<!ENTITY webdeveloper.expires.label "Expire :">
-<!ENTITY webdeveloper.host.label "Domaine :">
-<!ENTITY webdeveloper.name.label "Nom :">
-<!ENTITY webdeveloper.path.label "Chemin :">
-<!ENTITY webdeveloper.secure.cookie.label "Cookie sécurisé">
-<!ENTITY webdeveloper.session.cookie.label "Cookie de session">
-<!ENTITY webdeveloper.value.label "Valeur :">

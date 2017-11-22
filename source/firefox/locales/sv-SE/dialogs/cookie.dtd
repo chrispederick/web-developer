@@ -1,9 +1,0 @@
-<!-- Cookie -->
-<!ENTITY webdeveloper.add.cookie "Lägg till kaka">
-<!ENTITY webdeveloper.expires.label "Förfaller:">
-<!ENTITY webdeveloper.host.label "Värd:">
-<!ENTITY webdeveloper.name.label "Namn:">
-<!ENTITY webdeveloper.path.label "Sökväg:">
-<!ENTITY webdeveloper.secure.cookie.label "Säker kaka">
-<!ENTITY webdeveloper.session.cookie.label "Sessionskaka">
-<!ENTITY webdeveloper.value.label "Värde:">

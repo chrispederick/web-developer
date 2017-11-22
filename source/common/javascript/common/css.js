@@ -82,33 +82,41 @@ WebDeveloper.CSS.getImportedStyleSheets = function(styleSheet)
   // If the style sheet is set
   if(styleSheet)
   {
-    var cssRules = styleSheet.cssRules;
-
-    // If there are CSS rules
-    if(cssRules)
+    // Try to access the style sheet rules
+    try
     {
-      var cssRule            = null;
-      var importedStyleSheet = null;
+      var cssRules = styleSheet.cssRules;
 
-      // Loop through the style sheet rules
-      for(var i = 0, l = cssRules.length; i < l; i++)
+      // If there are CSS rules
+      if(cssRules)
       {
-        cssRule = cssRules[i];
+        var cssRule            = null;
+        var importedStyleSheet = null;
 
-        // If this is an import rule
-        if(cssRule.type == 3)
+        // Loop through the style sheet rules
+        for(var i = 0, l = cssRules.length; i < l; i++)
         {
-          importedStyleSheet = cssRule.styleSheet;
+          cssRule = cssRules[i];
 
-          // If this style sheet is valid
-          if(WebDeveloper.CSS.isValidStyleSheet(importedStyleSheet))
+          // If this is an import rule
+          if(cssRule.type == 3)
           {
-            styleSheets.push(importedStyleSheet.href);
+            importedStyleSheet = cssRule.styleSheet;
 
-            styleSheets = styleSheets.concat(WebDeveloper.CSS.getImportedStyleSheets(importedStyleSheet));
+            // If this style sheet is valid
+            if(WebDeveloper.CSS.isValidStyleSheet(importedStyleSheet))
+            {
+              styleSheets.push(importedStyleSheet.href);
+
+              styleSheets = styleSheets.concat(WebDeveloper.CSS.getImportedStyleSheets(importedStyleSheet));
+            }
           }
         }
       }
+    }
+    catch(exception)
+    {
+      WebDeveloper.Common.log("Could not access the style sheet rules for " + styleSheet.href + ".", exception);
     }
   }
 

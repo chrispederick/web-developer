@@ -1,5 +1,0 @@
-separator, #web-developer-message-dialog { margin: 0; padding: 0; }
-#web-developer-message { font-weight: bold; }
-#web-developer-message-details { background: #fff url("chrome://web-developer/content/icons/48.png") 0.5em 0.5em no-repeat; color: #333; font-size: 1.1em; min-height: 60px; padding: 0.5em 0.5em 0.5em 60px; }
-.url { color: #08c; cursor: pointer; }
-.url:hover { color: #005580; text-decoration: underline; }

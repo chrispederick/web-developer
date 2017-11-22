@@ -1,9 +1,0 @@
-<!-- Cookie -->
-<!ENTITY webdeveloper.add.cookie "Cookieの追加">
-<!ENTITY webdeveloper.expires.label "有効期限:">
-<!ENTITY webdeveloper.host.label "ホスト:">
-<!ENTITY webdeveloper.name.label "名前:">
-<!ENTITY webdeveloper.path.label "パス:">
-<!ENTITY webdeveloper.secure.cookie.label "セキュアCookie">
-<!ENTITY webdeveloper.session.cookie.label "セッションCookie">
-<!ENTITY webdeveloper.value.label "値:">
