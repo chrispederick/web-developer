@@ -16,7 +16,7 @@
     "gulp-eslint": "*",
     "gulp-filter-java-properties": "*",
     "gulp-footer": "*",
-    "gulp-imagemin": "2.4.0",
+    "gulp-imagemin": "5.0.3",
     "gulp-load-plugins": "*",
     "gulp-plumber": "*",
     "gulp-rename": "*",
