@@ -125,7 +125,11 @@ WebDeveloper.Upgrade.setupDefaultOptions = function()
   WebDeveloper.Storage.setItemIfNotSet("tool_4_url", "http://wave.webaim.org/report#/");
   WebDeveloper.Storage.setItemIfNotSet("tool_5_description", WebDeveloper.Locales.getString("tool_5_description"));
   WebDeveloper.Storage.setItemIfNotSet("tool_5_url", "http://validator.w3.org/checklink?check=Check&hide_type=all&summary=on&uri=");
-  WebDeveloper.Storage.setItemIfNotSet("tool_count", 5);
+  WebDeveloper.Storage.setItemIfNotSet("tool_6_description", WebDeveloper.Locales.getString("tool_6_description"));
+  WebDeveloper.Storage.setItemIfNotSet("tool_6_url", "https://search.google.com/structured-data/testing-tool/u/0/#url=");
+  WebDeveloper.Storage.setItemIfNotSet("tool_7_description", WebDeveloper.Locales.getString("tool_7_description"));
+  WebDeveloper.Storage.setItemIfNotSet("tool_7_url", "https://search.google.com/test/amp?url=");
+  WebDeveloper.Storage.setItemIfNotSet("tool_count", 7);
 };
 
 // Upgrades the extension

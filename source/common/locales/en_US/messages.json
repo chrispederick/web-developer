@@ -404,5 +404,7 @@
   "tool_2_description": { "message": "Validate Feed" },
   "tool_3_description": { "message": "Validate HTML" },
   "tool_4_description": { "message": "Validate Accessibility" },
-  "tool_5_description": { "message": "Validate Links" }
+  "tool_5_description": { "message": "Validate Links" },
+  "tool_6_description": { "message": "Validate Structured Data" },
+  "tool_7_description": { "message": "Validate AMP" }
 }
