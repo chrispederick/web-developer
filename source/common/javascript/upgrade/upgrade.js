@@ -42,7 +42,7 @@ WebDeveloper.Upgrade.migrateLegacySettings = function()
     WebDeveloper.Storage.setItemIfNotSet(key, window.localStorage.getItem(key));
   }
 
-  window.localStorage.clear();
+  // window.localStorage.clear();
 };
 
 // Migrates the tools
@@ -152,7 +152,9 @@ WebDeveloper.Upgrade.upgrade = function(details)
         WebDeveloper.Upgrade.migrateLegacySettings();
         WebDeveloper.Upgrade.migrateTools();
         WebDeveloper.Upgrade.removeDeletedSettings();
-        WebDeveloper.Upgrade.setupDefaultOptions();
+
+        // Run on a timeout to make sure all the migration has completed
+        window.setTimeout(function() { WebDeveloper.Upgrade.setupDefaultOptions(); }, 100);
       }
     });
   }

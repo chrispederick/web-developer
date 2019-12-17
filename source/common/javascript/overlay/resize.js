@@ -158,7 +158,7 @@ WebDeveloper.Overlay.Resize.resizeWindowKeyPress = function(event)
 // Sets up the custom resize options
 WebDeveloper.Overlay.Resize.setupCustomResizeOptions = function()
 {
-  var customResizeOptionTemplate = $("#custom-tool").html();
+  var customResizeOptionTemplate = $("#custom-resize-option").html();
   var editResizeDimensions       = $("#edit-resize-dimensions").closest("li");
   var storage                    = chrome.extension.getBackgroundPage().WebDeveloper.Storage;
 
