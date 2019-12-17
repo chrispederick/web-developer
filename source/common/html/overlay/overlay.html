@@ -387,31 +387,31 @@
 </form>
 
 <script src="/common/javascript/jquery/jquery.js"></script>
-<script src="/common/javascript/jquery/icanhaz.js"></script>
 <script src="/common/javascript/bootstrap/tab.js"></script>
 <script src="/common/javascript/bootstrap/transition.js"></script>
 <script src="/common/javascript/common.js"></script>
+<script src="/common/javascript/mustache.js"></script>
 <script src="/cookies/cookies.js"></script>
 <script src="/locales/locales.js"></script>
 <script src="javascript/overlay.js"></script>
 
-<script id="colorPickerToolbar" type="text/html">
+<script id="color-picker-toolbar" type="x-tmpl-mustache">
   <span>{{hoverColor}}</span><span id="web-developer-color-picker-hover-color"></span><span id="web-developer-color-picker-hover-hex"></span><span>{{selectedColor}}</span><span id="web-developer-color-picker-selected-color"></span><span id="web-developer-color-picker-selected-hex"></span><img width="16" height="16" alt=""><h1>{{title}}</h1>
 </script>
 
-<script id="customResizeOption" type="text/html">
+<script id="custom-resize-option" type="x-tmpl-mustache">
   <li><a href="#" data-height="{{height}}" data-width="{{width}}" class="custom-resize-window"><span></span>{{description}}</a></li>
 </script>
 
-<script id="customTool" type="text/html">
+<script id="custom-tool" type="x-tmpl-mustache">
   <li><a href="#" data-url="{{url}}" class="custom-tool"><span></span>{{description}}</a></li>
 </script>
 
-<script id="lineGuidesToolbar" type="text/html">
+<script id="line-guides-toolbar" type="x-tmpl-mustache">
   <span id="line-guide-information"><span>{{positionLabel}}</span><span id="line-guide-position"></span><span>{{previousPosition}}</span><span id="previous-line-guide-position"></span><span>{{nextPosition}}</span><span id="next-line-guide-position"></span></span><button id="add-horizontal-line-guide" type="button" class="btn btn-sm btn-primary">{{addHorizontalLineGuide}}</button><button id="add-vertical-line-guide" type="button" class="btn btn-sm btn-primary">{{addVerticalLineGuide}}</button><img width="16" height="16" alt=""><h1>{{title}}</h1>
 </script>
 
-<script id="rulerToolbar" type="text/html">
+<script id="ruler-toolbar" type="x-tmpl-mustache">
   <label for="web-developer-ruler-width">{{width}}</label><input id="web-developer-ruler-width"><label for="web-developer-ruler-height">{{height}}</label><input id="web-developer-ruler-height"><span>{{startPositionX}}</span><span id="web-developer-ruler-start-x"></span><span>{{yLabel}}</span><span id="web-developer-ruler-start-y"></span><span>{{endPositionX}}</span><span id="web-developer-ruler-end-x"></span><span>{{yLabel}}</span><span id="web-developer-ruler-end-y"></span><img width="16" height="16" alt=""><h1>{{title}}</h1>
 </script>
 

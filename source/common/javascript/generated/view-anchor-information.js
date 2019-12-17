@@ -9,6 +9,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var anchorInformation = locale.anchorInformation;
   var anchors           = null;
   var anchorsLength     = null;
+  var anchorTemplate    = $("#anchor").html();
   var content           = document.getElementById("content");
   var contentDocument   = null;
   var documents         = data.documents;
@@ -19,6 +20,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.localizeHeader(locale);
   WebDeveloper.Generated.setPageTitle(anchorInformation, data, locale);
+  Mustache.parse(anchorTemplate);
 
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
@@ -46,7 +48,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
       // Loop through the anchors
       for(var j = 0; j < anchorsLength; j++)
       {
-        listElement.append(ich.anchor({ anchor: anchors[j], url: url }));
+        listElement.append(Mustache.render(anchorTemplate, { anchor: anchors[j], url: url }));
       }
 
       content.appendChild(list);

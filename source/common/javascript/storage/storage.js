@@ -20,70 +20,103 @@ WebDeveloper.Storage.clearTabFeatures = function(tabProperties, tabId, updateBad
 };
 
 // Returns the list of features on a tab
-WebDeveloper.Storage.getFeaturesOnTab = function(tabId)
+WebDeveloper.Storage.getFeaturesOnTab = function(tabId, callback)
 {
-  var featuresOnTab = WebDeveloper.Storage.getItem(tabId);
-
-  // If there are features on the tab
-  if(featuresOnTab)
+  WebDeveloper.Storage.getItem(tabId, function(featuresOnTab)
   {
-    return featuresOnTab.split(",");
-  }
-
-  return null;
+    // If there are features on the tab
+    if(featuresOnTab)
+    {
+      callback(featuresOnTab.split(","));
+    }
+    else
+    {
+      callback(null);
+    }
+  });
 };
 
 // Returns an item
-WebDeveloper.Storage.getItem = function(item)
+WebDeveloper.Storage.getItem = function(item, callback)
 {
-  return window.localStorage.getItem(item);
+  chrome.storage.local.get(item.toString(), function(storageItem)
+  {
+    // If the item was found
+    if(item in storageItem)
+    {
+      callback(storageItem[item]);
+    }
+    else
+    {
+      callback(null);
+    }
+  });
+};
+
+// Returns multiple items
+WebDeveloper.Storage.getItems = function(items, callback)
+{
+  chrome.storage.local.get(items, function(storageItems)
+  {
+    callback(storageItems);
+  });
 };
 
 // Returns true if a feature is on a tab
-WebDeveloper.Storage.isFeatureOnTab = function(feature, tab)
+WebDeveloper.Storage.isFeatureOnTab = function(feature, tab, callback)
 {
-  var tabId         = tab.id;
-  var featuresOnTab = WebDeveloper.Storage.getItem(tabId);
+  var isFeatureOnTab = false;
+  var tabId          = tab.id;
 
-  // If there are features on the tab
-  if(featuresOnTab)
+  WebDeveloper.Storage.getItem(tabId, function(featuresOnTab)
   {
-    var featuresOnTabArray = featuresOnTab.split(",");
-
-    // Loop through the features on the tab
-    for(var i = 0, l = featuresOnTabArray.length; i < l; i++)
+    // If there are features on the tab
+    if(featuresOnTab)
     {
-      // If the feature is on the tab
-      if(featuresOnTabArray[i] == feature)
+      var featuresOnTabArray = featuresOnTab.split(",");
+
+      // Loop through the features on the tab
+      for(var i = 0, l = featuresOnTabArray.length; i < l; i++)
       {
-        return true;
+        // If the feature is on the tab
+        if(featuresOnTabArray[i] == feature)
+        {
+          isFeatureOnTab = true;
+        }
       }
     }
-  }
 
-  return false;
+    callback(isFeatureOnTab);
+  });
 };
 
 // Removes an item
 WebDeveloper.Storage.removeItem = function(item)
 {
-  window.localStorage.removeItem(item);
+  chrome.storage.local.remove(item.toString());
 };
 
 // Sets an item
 WebDeveloper.Storage.setItem = function(item, value)
 {
-  window.localStorage.setItem(item, value);
+  var storageItem = {};
+
+  storageItem[item] = value;
+
+  chrome.storage.local.set(storageItem);
 };
 
 // Sets an item if it is not already set
 WebDeveloper.Storage.setItemIfNotSet = function(item, value)
 {
-  // If the item is not already set
-  if(!WebDeveloper.Storage.getItem(item))
+  WebDeveloper.Storage.getItem(item, function(existingItem)
   {
-    WebDeveloper.Storage.setItem(item, value);
-  }
+    // If the item is not already set
+    if(!existingItem)
+    {
+      WebDeveloper.Storage.setItem(item, value);
+    }
+  });
 };
 
 // Handles a tab being activated
@@ -107,74 +140,79 @@ WebDeveloper.Storage.tabUpdated = function(tabId, properties)
 // Toggles a feature on a tab
 WebDeveloper.Storage.toggleFeatureOnTab = function(feature, tab)
 {
-  var featureTabId         = tab.id;
-  var currentFeaturesOnTab = WebDeveloper.Storage.getItem(featureTabId);
-  var newFeaturesOnTab     = null;
+  var featureTabId = tab.id;
 
-  // If there are features on the tab
-  if(currentFeaturesOnTab)
+  WebDeveloper.Storage.getItem(featureTabId, function(currentFeaturesOnTab)
   {
-    var featureOnTab = false;
+    var newFeaturesOnTab = null;
 
-    newFeaturesOnTab = currentFeaturesOnTab.split(",");
-
-    // Loop through the features on the tab
-    for(var i = 0, l = newFeaturesOnTab.length; i < l; i++)
+    // If there are features on the tab
+    if(currentFeaturesOnTab)
     {
-      // If the feature is on the tab
-      if(newFeaturesOnTab[i] == feature)
+      var featureOnTab = false;
+
+      newFeaturesOnTab = currentFeaturesOnTab.split(",");
+
+      // Loop through the features on the tab
+      for(var i = 0, l = newFeaturesOnTab.length; i < l; i++)
       {
-        featureOnTab = true;
+        // If the feature is on the tab
+        if(newFeaturesOnTab[i] == feature)
+        {
+          featureOnTab = true;
 
-        newFeaturesOnTab.splice(i, 1);
+          newFeaturesOnTab.splice(i, 1);
+        }
       }
-    }
 
-    // If the feature is on the tab
-    if(featureOnTab)
-    {
-      newFeaturesOnTab = newFeaturesOnTab.join(",");
+      // If the feature is on the tab
+      if(featureOnTab)
+      {
+        newFeaturesOnTab = newFeaturesOnTab.join(",");
+      }
+      else
+      {
+        newFeaturesOnTab = currentFeaturesOnTab + feature + ",";
+      }
     }
     else
     {
-      newFeaturesOnTab = currentFeaturesOnTab + feature + ",";
+      newFeaturesOnTab = feature + ",";
     }
-  }
-  else
-  {
-    newFeaturesOnTab = feature + ",";
-  }
 
-  WebDeveloper.Storage.setItem(featureTabId, newFeaturesOnTab);
+    WebDeveloper.Storage.setItem(featureTabId, newFeaturesOnTab);
 
-  WebDeveloper.Storage.updateBadgeText(featureTabId);
+    WebDeveloper.Storage.updateBadgeText(featureTabId);
+  });
 };
 
 // Updates the badge text for a tab
 WebDeveloper.Storage.updateBadgeText = function(featureTabId)
 {
-  var badgeText     = "";
-  var badgeTooltip  = "@name@";
-  var featuresOnTab = WebDeveloper.Storage.getFeaturesOnTab(featureTabId);
+  var badgeText    = "";
+  var badgeTooltip = "@name@";
 
-  // If there are features on the tab
-  if(featuresOnTab)
+  WebDeveloper.Storage.getFeaturesOnTab(featureTabId, function(featuresOnTab)
   {
-    var featureCount       = featuresOnTab.length - 1;
-    var featureDescription = "features";
-
-    // If there is only one feature count
-    if(featureCount == 1)
+    // If there are features on the tab
+    if(featuresOnTab)
     {
-      featureDescription = "feature";
+      var featureCount       = featuresOnTab.length - 1;
+      var featureDescription = "features";
+
+      // If there is only one feature count
+      if(featureCount == 1)
+      {
+        featureDescription = "feature";
+      }
+
+      badgeText     = featureCount.toString();
+      badgeTooltip += "\n" + badgeText + " active " + featureDescription + " on this tab";
     }
 
-    badgeText     = featureCount.toString();
-    badgeTooltip += "\n" + badgeText + " active " + featureDescription + " on this tab";
-  }
-
-  chrome.browserAction.setBadgeText({ text: badgeText, tabId: featureTabId });
-  chrome.browserAction.setTitle({ title: badgeTooltip, tabId: featureTabId });
+    chrome.browserAction.setBadgeText({ text: badgeText, tabId: featureTabId });
+    chrome.browserAction.setTitle({ title: badgeTooltip, tabId: featureTabId });
+  });
 };
 
 chrome.tabs.onActivated.addListener(WebDeveloper.Storage.tabActivated);

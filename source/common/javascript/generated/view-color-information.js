@@ -8,14 +8,16 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var colorDescription = null;
   var colorInformation = locale.colorInformation;
   var colorsLength     = null;
+  var colorsTemplate   = $("#colors").html();
   var container        = null;
-  var content        = document.getElementById("content");
+  var content          = document.getElementById("content");
   var contentDocument  = null;
   var documents        = data.documents;
 
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.localizeHeader(locale);
   WebDeveloper.Generated.setPageTitle(colorInformation, data, locale);
+  Mustache.parse(colorsTemplate);
 
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
@@ -37,7 +39,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
     {
       container = WebDeveloper.Generated.generateDocumentContainer();
 
-      $(container).append(ich.colors(contentDocument, true));
+      $(container).append(Mustache.render(colorsTemplate, contentDocument));
       content.appendChild(container);
     }
 

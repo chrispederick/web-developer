@@ -22,7 +22,7 @@ gulp.task("initialize-firefox-build", function(callback)
   global.initializeBuild("firefox", callback);
 });
 
-gulp.task("install-firefox", function(callback)
+gulp.task("temporary-install-firefox", function(callback)
 {
   process.chdir("build/firefox");
   exec.exec("../../node_modules/web-ext/bin/web-ext run --bc -f=firefox --start-url chrispederick.com", function(error, output, errors)
@@ -33,7 +33,7 @@ gulp.task("install-firefox", function(callback)
   });
 });
 
-gulp.task("install-firefox-beta", function(callback)
+gulp.task("temporary-install-firefox-beta", function(callback)
 {
   process.chdir("build/firefox");
   exec.exec("../../node_modules/web-ext/bin/web-ext run --bc -f=beta --start-url chrispederick.com", function(error, output, errors)
@@ -44,7 +44,7 @@ gulp.task("install-firefox-beta", function(callback)
   });
 });
 
-gulp.task("install-firefox-developer", function(callback)
+gulp.task("temporary-install-firefox-developer", function(callback)
 {
   process.chdir("build/firefox");
   exec.exec("../../node_modules/web-ext/bin/web-ext run --bc -f=firefoxdeveloperedition --start-url chrispederick.com", function(error, output, errors)
@@ -62,3 +62,4 @@ gulp.task("package-firefox", function()
 
 gulp.task("build-firefox", function(callback) { runSequence("initialize-firefox-build", "build-firefox-all", callback); });
 gulp.task("firefox", function(callback) { runSequence("build-firefox", "package-firefox", callback); });
+gulp.task("install-firefox", function(callback) { runSequence("build-firefox", "temporary-install-firefox", callback); });

@@ -44,13 +44,13 @@
 </div>
 
 <script src="/common/javascript/jquery/jquery.js"></script>
-<script src="/common/javascript/jquery/icanhaz.js"></script>
+<script src="/common/javascript/mustache.js"></script>
 <script src="/common/javascript/bootstrap/collapse.js"></script>
 <script src="/common/javascript/bootstrap/dropdown.js"></script>
 <script src="javascript/common.js"></script>
 <script src="javascript/view-link-information.js"></script>
 
-<script id="links" type="text/html">
+<script id="links" type="x-tmpl-mustache">
   {{#links}}
     <li><a href="{{.}}" target="_blank">{{.}}</a></li>
   {{/links}}

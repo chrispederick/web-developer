@@ -13,12 +13,14 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var metaTagDescription  = null;
   var metaTagsDescription = locale.metaTags;
   var metaTagsLength      = null;
+  var metaTagsTemplate    = $("#meta-tags").html();
   var table               = null;
   var tableContainer      = null;
 
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.localizeHeader(locale);
   WebDeveloper.Generated.setPageTitle(metaTagsDescription, data, locale);
+  Mustache.parse(metaTagsTemplate);
 
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
@@ -56,7 +58,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
 
       tableContainer = document.createElement("tbody");
 
-      $(tableContainer).append(ich.metaTags(contentDocument, true));
+      $(tableContainer).append(Mustache.render(metaTagsTemplate, contentDocument));
       table.appendChild(tableContainer);
       content.appendChild(table);
     }

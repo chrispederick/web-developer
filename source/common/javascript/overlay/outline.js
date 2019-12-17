@@ -22,11 +22,14 @@ $(function()
   $("#outline-tables").append(WebDeveloper.Locales.getString("outlineTables")).on("click", WebDeveloper.Overlay.Outline.outlineTables);
   showElementTagNamesMenu.append(WebDeveloper.Locales.getString("showElementTagNames")).on("click", WebDeveloper.Overlay.Outline.toggleShowElementTagNames);
 
-  // If the outline show element tag names preference is set to true
-  if(chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names") == "true")
+  chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNames)
   {
-    showElementTagNamesMenu.addClass("active");
-  }
+    // If the outline show element tag names preference is set to true
+    if(showElementTagNames == "true")
+    {
+      showElementTagNamesMenu.addClass("active");
+    }
+  });
 });
 
 // Outlines all absolute positioned elements
@@ -39,10 +42,10 @@ WebDeveloper.Overlay.Outline.outlineAbsolutePositionedElements = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var feature = featureItem.attr("id");
-      var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("absolute", ' + outline + ", [document]);");
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      {
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("absolute", ' + !enabled + ", [document]);");
+      });
     }
   });
 };
@@ -57,9 +60,10 @@ WebDeveloper.Overlay.Outline.outlineBlockLevelElements = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var showElementTagNames = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names") == "true";
-
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineBlockLevelElements([document], " + showElementTagNames + ");");
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNames)
+      {
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineBlockLevelElements([document], " + (showElementTagNames == "true") + ");");
+      });
     }
   });
 };
@@ -74,9 +78,10 @@ WebDeveloper.Overlay.Outline.outlineDeprecatedElements = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var showElementTagNames = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names") == "true";
-
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineDeprecatedElements([document], " + showElementTagNames + ");");
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNames)
+      {
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineDeprecatedElements([document], " + (showElementTagNames == "true") + ");");
+      });
     }
   });
 };
@@ -91,10 +96,10 @@ WebDeveloper.Overlay.Outline.outlineExternalLinks = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var feature = featureItem.attr("id");
-      var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineExternalLinks(" + outline + ", [document]);");
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      {
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineExternalLinks(" + !enabled + ", [document]);");
+      });
     }
   });
 };
@@ -109,10 +114,10 @@ WebDeveloper.Overlay.Outline.outlineFixedPositionedElements = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var feature = featureItem.attr("id");
-      var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("fixed", ' + outline + ", [document]);");
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      {
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("fixed", ' + !enabled + ", [document]);");
+      });
     }
   });
 };
@@ -127,10 +132,10 @@ WebDeveloper.Overlay.Outline.outlineFloatedElements = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var feature = featureItem.attr("id");
-      var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineFloatedElements(" + outline + ", [document]);");
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      {
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineFloatedElements(" + !enabled + ", [document]);");
+      });
     }
   });
 };
@@ -160,9 +165,10 @@ WebDeveloper.Overlay.Outline.outlineHeadings = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var showElementTagNames = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names") == "true";
-
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineHeadings([document], " + showElementTagNames + ");");
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNames)
+      {
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineHeadings([document], " + (showElementTagNames == "true") + ");");
+      });
     }
   });
 };
@@ -192,10 +198,10 @@ WebDeveloper.Overlay.Outline.outlineRelativePositionedElements = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var feature = featureItem.attr("id");
-      var outline = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("relative", ' + outline + ", [document]);");
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      {
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("relative", ' + !enabled + ", [document]);");
+      });
     }
   });
 };
@@ -225,9 +231,10 @@ WebDeveloper.Overlay.Outline.outlineTableCells = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var showElementTagNames = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names") == "true";
-
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTableCells([document], " + showElementTagNames + ");");
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNames)
+      {
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTableCells([document], " + (showElementTagNames == "true") + ");");
+      });
     }
   });
 };

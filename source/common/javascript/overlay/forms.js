@@ -132,10 +132,10 @@ WebDeveloper.Overlay.Forms.displayFormDetails = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var feature = featureItem.attr("id");
-      var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-      WebDeveloper.Overlay.Forms.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.displayFormDetails(" + display + ", [document]);");
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      {
+        WebDeveloper.Overlay.Forms.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.displayFormDetails(" + !enabled + ", [document]);");
+      });
     }
   });
 };
@@ -246,10 +246,10 @@ WebDeveloper.Overlay.Forms.outlineFormFieldsWithoutLabels = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var feature = featureItem.attr("id");
-      var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-      WebDeveloper.Overlay.Forms.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.outlineFormFieldsWithoutLabels(" + display + ", [document]);");
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      {
+        WebDeveloper.Overlay.Forms.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Forms.outlineFormFieldsWithoutLabels(" + !enabled + ", [document]);");
+      });
     }
   });
 };
@@ -264,7 +264,10 @@ WebDeveloper.Overlay.Forms.populateFormFields = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, 'WebDeveloper.Forms.populateFormFields([document], "' + chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("populate_email_address") + '", "' + WebDeveloper.Locales.getString("password").toLowerCase() + '");');
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("populate_email_address", function(item)
+      {
+        WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, 'WebDeveloper.Forms.populateFormFields([document], "' + item + '", "' + WebDeveloper.Locales.getString("password").toLowerCase() + '");');
+      });
     }
   });
 };

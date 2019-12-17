@@ -85,9 +85,9 @@ The following libraries are used by and included in the extension as-is:
 * CodeMirror: [http://codemirror.net/](http://codemirror.net/)
 * Eric Meyer's Reset CSS: [http://meyerweb.com/eric/tools/css/reset/](http://meyerweb.com/eric/tools/css/reset/)
 * Font Awesome: [http://fontawesome.io/](http://fontawesome.io/)
-* ICanHaz: [http://icanhazjs.com/](http://icanhazjs.com/)
 * jQuery: [http://jquery.com/](http://jquery.com/)
 * JS Beautifier: [https://github.com/einars/js-beautify](https://github.com/einars/js-beautify)
+* mustache.js: [https://github.com/janl/mustache.js/](https://github.com/janl/mustache.js/)
 * Table Drag and Drop jQuery Plugin: [http://www.isocra.com/2008/02/table-drag-and-drop-jquery-plugin/](http://www.isocra.com/2008/02/table-drag-and-drop-jquery-plugin/)
 
 They should not be altered apart from to update to their latest versions for maintenance reasons.

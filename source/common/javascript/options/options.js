@@ -5,21 +5,23 @@ WebDeveloper.Options.animationSpeed = 100;
 
 $(function()
 {
-  var hash   = window.location.hash;
-  var option = WebDeveloper.Storage.getItem("option");
+  var hash = window.location.hash;
 
   WebDeveloper.Options.initialize();
 
-  // If the hash is set
-  if(hash)
+  WebDeveloper.Storage.getItem("option", function(option)
   {
-    $("a", $(hash)).tab("show");
-    WebDeveloper.Storage.setItem("option", hash);
-  }
-  else if(option)
-  {
-    $("a", $("#" + option)).tab("show");
-  }
+    // If the hash is set
+    if(hash)
+    {
+      $("a", $(hash)).tab("show");
+      WebDeveloper.Storage.setItem("option", hash);
+    }
+    else if(option)
+    {
+      $("a", $("#" + option)).tab("show");
+    }
+  });
 
   $("li", $(".nav-tabs")).on("click", WebDeveloper.Options.changeTab);
 });
@@ -176,13 +178,16 @@ WebDeveloper.Options.editResizeOption = function()
 {
   var resizeOptionPosition = $(this).closest("tr").prevAll().length + 1;
 
-  $("#resize-description").val(WebDeveloper.Storage.getItem("resize_" + resizeOptionPosition + "_description"));
-  $("#resize-width").val(WebDeveloper.Storage.getItem("resize_" + resizeOptionPosition + "_width"));
-  $("#resize-height").val(WebDeveloper.Storage.getItem("resize_" + resizeOptionPosition + "_height"));
+  WebDeveloper.Storage.getItems(["resize_" + resizeOptionPosition + "_description", "resize_" + resizeOptionPosition + "_height", "resize_" + resizeOptionPosition + "_width"], function(items)
+  {
+    $("#resize-description").val(items["resize_" + resizeOptionPosition + "_description"]);
+    $("#resize-height").val(items["resize_" + resizeOptionPosition + "_height"]);
+    $("#resize-width").val(items["resize_" + resizeOptionPosition + "_width"]);
+
+    WebDeveloper.Options.displayResizeOptionForm();
+  });
 
   $("#resize-form").data("position", resizeOptionPosition);
-
-  WebDeveloper.Options.displayResizeOptionForm();
 };
 
 // Edits a responsive layout
@@ -190,13 +195,16 @@ WebDeveloper.Options.editResponsiveLayout = function()
 {
   var responsiveLayoutPosition = $(this).closest("tr").prevAll().length + 1;
 
-  $("#responsive-layout-description").val(WebDeveloper.Storage.getItem("responsive_layout_" + responsiveLayoutPosition + "_description"));
-  $("#responsive-layout-width").val(WebDeveloper.Storage.getItem("responsive_layout_" + responsiveLayoutPosition + "_width"));
-  $("#responsive-layout-height").val(WebDeveloper.Storage.getItem("responsive_layout_" + responsiveLayoutPosition + "_height"));
+  WebDeveloper.Storage.getItems(["responsive_layout_" + responsiveLayoutPosition + "_description", "responsive_layout_" + responsiveLayoutPosition + "_height", "responsive_layout_" + responsiveLayoutPosition + "_width"], function(items)
+  {
+    $("#responsive-layout-description").val(items["responsive_layout_" + responsiveLayoutPosition + "_description"]);
+    $("#responsive-layout-height").val(items["responsive_layout_" + responsiveLayoutPosition + "_height"]);
+    $("#responsive-layout-width").val(items["responsive_layout_" + responsiveLayoutPosition + "_width"]);
+
+    WebDeveloper.Options.displayResponsiveLayoutForm();
+  });
 
   $("#responsive-layout-form").data("position", responsiveLayoutPosition);
-
-  WebDeveloper.Options.displayResponsiveLayoutForm();
 };
 
 // Edits a tool
@@ -204,12 +212,15 @@ WebDeveloper.Options.editTool = function()
 {
   var toolPosition = $(this).closest("tr").prevAll().length + 1;
 
-  $("#tool-description").val(WebDeveloper.Storage.getItem("tool_" + toolPosition + "_description"));
-  $("#tool-url").val(WebDeveloper.Storage.getItem("tool_" + toolPosition + "_url"));
+  WebDeveloper.Storage.getItems(["tool_" + toolPosition + "_description", "tool_" + toolPosition + "_url"], function(items)
+  {
+    $("#tool-description").val(items["tool_" + toolPosition + "_description"]);
+    $("#tool-url").val(items["tool_" + toolPosition + "_url"]);
+
+    WebDeveloper.Options.displayToolForm();
+  });
 
   $("#tool-form").data("position", toolPosition);
-
-  WebDeveloper.Options.displayToolForm();
 };
 
 // Initializes the options
@@ -227,173 +238,234 @@ WebDeveloper.Options.initialize = function()
 // Initializes the advanced tab
 WebDeveloper.Options.initializeAdvancedTab = function()
 {
-  $("#populate_email_address").val(WebDeveloper.Storage.getItem("populate_email_address")).on("change", WebDeveloper.Options.updatePopulateEmailAddress);
+  WebDeveloper.Storage.getItem("populate_email_address", function(item)
+  {
+    $("#populate_email_address").val(item).on("change", WebDeveloper.Options.updatePopulateEmailAddress);
+  });
 };
 
 // Initializes the colors tab
 WebDeveloper.Options.initializeColorsTab = function()
 {
-  $("#syntax_highlight_theme").val(WebDeveloper.Storage.getItem("syntax_highlight_theme")).on("change", WebDeveloper.Options.updateSyntaxHighlightTheme);
+  WebDeveloper.Storage.getItem("syntax_highlight_theme", function(item)
+  {
+    $("#syntax_highlight_theme").val(item).on("change", WebDeveloper.Options.updateSyntaxHighlightTheme);
+  });
+
   $("#syntax-highlight-browser").on("load", WebDeveloper.Options.updateSyntaxHighlightTheme);
 };
 
 // Initializes the general tab
 WebDeveloper.Options.initializeGeneralTab = function()
 {
-  $("#display_overlay_with").val(WebDeveloper.Storage.getItem("display_overlay_with")).on("change", WebDeveloper.Options.updateDisplayOverlayWith);
+  WebDeveloper.Storage.getItem("display_overlay_with", function(item)
+  {
+    $("#display_overlay_with").val(item).on("change", WebDeveloper.Options.updateDisplayOverlayWith);
+  });
 };
 
 // Initializes the resize tab
 WebDeveloper.Options.initializeResizeTab = function()
 {
-  var description        = null;
-  var height             = 0;
-  var resizeOption       = null;
-  var resizeOptionCount  = WebDeveloper.Storage.getItem("resize_count");
   var resizeOptions      = $("#resize-options");
   var resizeOptionsTable = $("tbody", resizeOptions);
-  var width              = 0;
 
   resizeOptionsTable.empty();
 
-  // Loop through the resize options
-  for(var i = 1, l = resizeOptionCount; i <= l; i++)
+  WebDeveloper.Storage.getItem("resize_count", function(resizeOptionCount)
   {
-    description = WebDeveloper.Storage.getItem("resize_" + i + "_description");
-    height      = WebDeveloper.Storage.getItem("resize_" + i + "_height");
-    width       = WebDeveloper.Storage.getItem("resize_" + i + "_width");
+    var resizeStorageOptionKeys = [];
 
-    // If the description, height and width are set
-    if(description && height > 0 && width > 0)
+    // Loop through the resize options
+    for(var i = 1, l = resizeOptionCount; i <= l; i++)
     {
-      resizeOption = {};
-
-      resizeOption.description = description;
-      resizeOption.height      = height;
-      resizeOption.width       = width;
-
-      resizeOptionsTable.append(ich.resizeOption(resizeOption));
+      resizeStorageOptionKeys.push("resize_" + i + "_description", "resize_" + i + "_height", "resize_" + i + "_width");
     }
-  }
 
-  // If there is only one resize option
-  if(resizeOptionCount == 1)
-  {
-    resizeOptionsTable.addClass("single");
-  }
+    WebDeveloper.Storage.getItems(resizeStorageOptionKeys, function(resizeStorageOptions)
+    {
+      var description          = null;
+      var height               = 0;
+      var resizeOption         = null;
+      var resizeOptionTemplate = $("#resize-option").html();
+      var width                = 0;
 
-  $(".btn-danger > span", resizeOptionsTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
-  $(".btn-primary > span", resizeOptionsTable).text(WebDeveloper.Locales.getString("edit"));
+      Mustache.parse(resizeOptionTemplate);
 
-  resizeOptionsTable.on("click", ".btn-danger", WebDeveloper.Options.deleteResizeOption);
-  resizeOptionsTable.on("click", ".btn-primary", WebDeveloper.Options.editResizeOption);
-  $("table", resizeOptions).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateResizeOptions });
-  $(".table-container > .btn-primary", resizeOptions).on("click", WebDeveloper.Options.displayResizeOptionForm);
+      // Loop through the resize options
+      for(i = 1, l = resizeOptionCount; i <= l; i++)
+      {
+        description = resizeStorageOptions["resize_" + i + "_description"];
+        height      = resizeStorageOptions["resize_" + i + "_height"];
+        width       = resizeStorageOptions["resize_" + i + "_width"];
 
-  $("#resize-cancel").on("click", WebDeveloper.Options.closeResizeOption);
-  $("#resize-form").on("submit", function(event) { event.preventDefault(); });
-  $("#resize-submit").on("click", WebDeveloper.Options.submitResizeOption);
+        // If the description, height and width are set
+        if(description && height > 0 && width > 0)
+        {
+          resizeOption = {};
+
+          resizeOption.description = description;
+          resizeOption.height      = height;
+          resizeOption.width       = width;
+
+          resizeOptionsTable.append(Mustache.render(resizeOptionTemplate, resizeOption));
+        }
+      }
+
+      // If there is only one resize option
+      if(resizeOptionCount == 1)
+      {
+        resizeOptionsTable.addClass("single");
+      }
+
+      $(".btn-danger > span", resizeOptionsTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
+      $(".btn-primary > span", resizeOptionsTable).text(WebDeveloper.Locales.getString("edit"));
+
+      resizeOptionsTable.on("click", ".btn-danger", WebDeveloper.Options.deleteResizeOption);
+      resizeOptionsTable.on("click", ".btn-primary", WebDeveloper.Options.editResizeOption);
+      $("table", resizeOptions).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateResizeOptions });
+      $(".table-container > .btn-primary", resizeOptions).on("click", WebDeveloper.Options.displayResizeOptionForm);
+
+      $("#resize-cancel").on("click", WebDeveloper.Options.closeResizeOption);
+      $("#resize-form").on("submit", function(event) { event.preventDefault(); });
+      $("#resize-submit").on("click", WebDeveloper.Options.submitResizeOption);
+    });
+  });
 };
 
 // Initializes the responsive layouts tab
 WebDeveloper.Options.initializeResponsiveLayoutsTab = function()
 {
-  var description            = null;
-  var height                 = 0;
-  var responsiveLayout       = null;
-  var responsiveLayoutsCount = WebDeveloper.Storage.getItem("responsive_layout_count");
   var responsiveLayouts      = $("#responsive-layouts-options");
   var responsiveLayoutsTable = $("tbody", responsiveLayouts);
-  var width                  = 0;
 
   responsiveLayoutsTable.empty();
 
-  // Loop through the responsive layouts
-  for(var i = 1, l = responsiveLayoutsCount; i <= l; i++)
+  WebDeveloper.Storage.getItem("responsive_layout_count", function(responsiveLayoutsCount)
   {
-    description = WebDeveloper.Storage.getItem("responsive_layout_" + i + "_description");
-    height      = WebDeveloper.Storage.getItem("responsive_layout_" + i + "_height");
-    width       = WebDeveloper.Storage.getItem("responsive_layout_" + i + "_width");
+    var responsiveLayoutsStorageOptionKeys = [];
 
-    // If the description, height and width are set
-    if(description && height > 0 && width > 0)
+    // Loop through the responsive layouts
+    for(var i = 1, l = responsiveLayoutsCount; i <= l; i++)
     {
-      responsiveLayout = {};
-
-      responsiveLayout.description = description;
-      responsiveLayout.height      = height;
-      responsiveLayout.width       = width;
-
-      responsiveLayoutsTable.append(ich.responsiveLayout(responsiveLayout));
+      responsiveLayoutsStorageOptionKeys.push("responsive_layout_" + i + "_description", "responsive_layout_" + i + "_height", "responsive_layout_" + i + "_width");
     }
-  }
 
-  // If there is only one responsive layout
-  if(responsiveLayoutsCount == 1)
-  {
-    responsiveLayoutsTable.addClass("single");
-  }
+    WebDeveloper.Storage.getItems(responsiveLayoutsStorageOptionKeys, function(responsiveLayoutsStorageOptions)
+    {
+      var description              = null;
+      var height                   = 0;
+      var responsiveLayout         = null;
+      var responsiveLayoutTemplate = $("#responsive-layout").html();
+      var width                    = 0;
 
-  $(".btn-danger > span", responsiveLayoutsTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
-  $(".btn-primary > span", responsiveLayoutsTable).text(WebDeveloper.Locales.getString("edit"));
+      Mustache.parse(responsiveLayoutTemplate);
 
-  responsiveLayoutsTable.on("click", ".btn-danger", WebDeveloper.Options.deleteResponsiveLayout);
-  responsiveLayoutsTable.on("click", ".btn-primary", WebDeveloper.Options.editResponsiveLayout);
-  $("table", responsiveLayouts).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateResponsiveLayouts });
-  $(".table-container > .btn-primary", responsiveLayouts).on("click", WebDeveloper.Options.displayResponsiveLayoutForm);
+      // Loop through the responsive layouts
+      for(i = 1, l = responsiveLayoutsCount; i <= l; i++)
+      {
+        description = responsiveLayoutsStorageOptions["responsive_layout_" + i + "_description"];
+        height      = responsiveLayoutsStorageOptions["responsive_layout_" + i + "_height"];
+        width       = responsiveLayoutsStorageOptions["responsive_layout_" + i + "_width"];
 
-  $("#responsive-layout-form").on("submit", function(event) { event.preventDefault(); });
-  $("#responsive-layout-submit").on("click", WebDeveloper.Options.submitResponsiveLayout);
-  $("#responsive-layout-cancel").on("click", WebDeveloper.Options.closeResponsiveLayout);
+        // If the description, height and width are set
+        if(description && height > 0 && width > 0)
+        {
+          responsiveLayout = {};
+
+          responsiveLayout.description = description;
+          responsiveLayout.height      = height;
+          responsiveLayout.width       = width;
+
+          responsiveLayoutsTable.append(Mustache.render(responsiveLayoutTemplate, responsiveLayout));
+        }
+      }
+
+      // If there is only one responsive layout
+      if(responsiveLayoutsCount == 1)
+      {
+        responsiveLayoutsTable.addClass("single");
+      }
+
+      $(".btn-danger > span", responsiveLayoutsTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
+      $(".btn-primary > span", responsiveLayoutsTable).text(WebDeveloper.Locales.getString("edit"));
+
+      responsiveLayoutsTable.on("click", ".btn-danger", WebDeveloper.Options.deleteResponsiveLayout);
+      responsiveLayoutsTable.on("click", ".btn-primary", WebDeveloper.Options.editResponsiveLayout);
+      $("table", responsiveLayouts).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateResponsiveLayouts });
+      $(".table-container > .btn-primary", responsiveLayouts).on("click", WebDeveloper.Options.displayResponsiveLayoutForm);
+
+      $("#responsive-layout-form").on("submit", function(event) { event.preventDefault(); });
+      $("#responsive-layout-submit").on("click", WebDeveloper.Options.submitResponsiveLayout);
+      $("#responsive-layout-cancel").on("click", WebDeveloper.Options.closeResponsiveLayout);
+    });
+  });
 };
 
 // Initializes the tools tab
 WebDeveloper.Options.initializeToolsTab = function()
 {
-  var description = null;
-  var tool        = null;
-  var toolsCount  = WebDeveloper.Storage.getItem("tool_count");
-  var tools       = $("#tools-options");
-  var toolsTable  = $("tbody", tools);
-  var url         = null;
+  var tools      = $("#tools-options");
+  var toolsTable = $("tbody", tools);
 
   toolsTable.empty();
 
-  // Loop through the tools
-  for(var i = 1, l = toolsCount; i <= l; i++)
+  WebDeveloper.Storage.getItem("tool_count", function(toolsCount)
   {
-    description = WebDeveloper.Storage.getItem("tool_" + i + "_description");
-    url         = WebDeveloper.Storage.getItem("tool_" + i + "_url");
+    var toolsStorageOptionKeys = [];
 
-    // If the description and url are set
-    if(description && url)
+    // Loop through the tools
+    for(var i = 1, l = toolsCount; i <= l; i++)
     {
-      tool = {};
-
-      tool.description = description;
-      tool.url         = url;
-
-      toolsTable.append(ich.tool(tool));
+      toolsStorageOptionKeys.push("tool_" + i + "_description", "tool_" + i + "_url");
     }
-  }
 
-  // If there is only one tool
-  if(toolsCount == 1)
-  {
-    toolsCount.addClass("single");
-  }
+    WebDeveloper.Storage.getItems(toolsStorageOptionKeys, function(toolsStorageOptions)
+    {
+      var description  = null;
+      var tool         = null;
+      var toolTemplate = $("#tool").html();
+      var url          = null;
 
-  $(".btn-danger > span", toolsTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
-  $(".btn-primary > span", toolsTable).text(WebDeveloper.Locales.getString("edit"));
+      Mustache.parse(toolTemplate);
 
-  toolsTable.on("click", ".btn-danger", WebDeveloper.Options.deleteTool);
-  toolsTable.on("click", ".btn-primary", WebDeveloper.Options.editTool);
-  $("table", tools).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateTools });
-  $(".table-container > .btn-primary", tools).on("click", WebDeveloper.Options.displayToolForm);
+      // Loop through the tools
+      for(i = 1, l = toolsCount; i <= l; i++)
+      {
+        description = toolsStorageOptions["tool_" + i + "_description"];
+        url         = toolsStorageOptions["tool_" + i + "_url"];
 
-  $("#tool-form").on("submit", function(event) { event.preventDefault(); });
-  $("#tool-submit").on("click", WebDeveloper.Options.submitTool);
-  $("#tool-cancel").on("click", WebDeveloper.Options.closeTool);
+        // If the description and url are set
+        if(description && url)
+        {
+          tool = {};
+
+          tool.description = description;
+          tool.url         = url;
+
+          toolsTable.append(Mustache.render(toolTemplate, tool));
+        }
+      }
+
+      // If there is only one tool
+      if(toolsCount == 1)
+      {
+        toolsCount.addClass("single");
+      }
+
+      $(".btn-danger > span", toolsTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
+      $(".btn-primary > span", toolsTable).text(WebDeveloper.Locales.getString("edit"));
+
+      toolsTable.on("click", ".btn-danger", WebDeveloper.Options.deleteTool);
+      toolsTable.on("click", ".btn-primary", WebDeveloper.Options.editTool);
+      $("table", tools).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateTools });
+      $(".table-container > .btn-primary", tools).on("click", WebDeveloper.Options.displayToolForm);
+
+      $("#tool-form").on("submit", function(event) { event.preventDefault(); });
+      $("#tool-submit").on("click", WebDeveloper.Options.submitTool);
+      $("#tool-cancel").on("click", WebDeveloper.Options.closeTool);
+    });
+  });
 };
 
 // Localizes the options
@@ -552,7 +624,7 @@ WebDeveloper.Options.submitResizeOption = function()
     resizeOption.height      = $("#resize-height").val().trim();
     resizeOption.width       = $("#resize-width").val().trim();
 
-    WebDeveloper.Options.submitOption(ich.resizeOption(resizeOption), resizeOptions, $("#resize-form").data("position"));
+    WebDeveloper.Options.submitOption(Mustache.render($("#resize-option").html(), resizeOption), resizeOptions, $("#resize-form").data("position"));
 
     WebDeveloper.Options.updateResizeOptions();
     WebDeveloper.Options.closeResizeOption();
@@ -572,7 +644,7 @@ WebDeveloper.Options.submitResponsiveLayout = function()
     responsiveLayout.height      = $("#responsive-layout-height").val();
     responsiveLayout.width       = $("#responsive-layout-width").val();
 
-    WebDeveloper.Options.submitOption(ich.responsiveLayout(responsiveLayout), responsiveLayouts, $("#responsive-layout-form").data("position"));
+    WebDeveloper.Options.submitOption(Mustache.render($("#responsive-layout").html(), responsiveLayout), responsiveLayouts, $("#responsive-layout-form").data("position"));
 
     WebDeveloper.Options.updateResponsiveLayouts();
     WebDeveloper.Options.closeResponsiveLayout();
@@ -591,7 +663,7 @@ WebDeveloper.Options.submitTool = function()
     tool.description = $("#tool-description").val();
     tool.url         = $("#tool-url").val();
 
-    WebDeveloper.Options.submitOption(ich.tool(tool), tools, $("#tool-form").data("position"));
+    WebDeveloper.Options.submitOption(Mustache.render($("#tool").html(), tool), tools, $("#tool-form").data("position"));
 
     WebDeveloper.Options.updateTools();
     WebDeveloper.Options.closeTool();
@@ -626,49 +698,52 @@ WebDeveloper.Options.updateResizeOptions = function(table)
   var resizeOptions = $("tr", resizeTable);
   var resizeCount   = resizeOptions.length;
 
-  // Loop through the resize preferences
-  for(var i = 1, l = WebDeveloper.Storage.getItem("resize_count"); i <= l; i++)
+  WebDeveloper.Storage.getItem("resize_count", function(item)
   {
-    WebDeveloper.Storage.removeItem("resize_" + i + "_description");
-    WebDeveloper.Storage.removeItem("resize_" + i + "_height");
-    WebDeveloper.Storage.removeItem("resize_" + i + "_width");
-  }
+    // Loop through the resize preferences
+    for(var i = 1, l = item; i <= l; i++)
+    {
+      WebDeveloper.Storage.removeItem("resize_" + i + "_description");
+      WebDeveloper.Storage.removeItem("resize_" + i + "_height");
+      WebDeveloper.Storage.removeItem("resize_" + i + "_width");
+    }
 
-  // Loop through the resize options
-  for(i = 0; i < resizeCount; i++)
-  {
-    position     = i + 1;
-    resizeOption = resizeOptions.eq(i);
+    // Loop through the resize options
+    for(i = 0; i < resizeCount; i++)
+    {
+      position     = i + 1;
+      resizeOption = resizeOptions.eq(i);
 
-    WebDeveloper.Storage.setItem("resize_" + position + "_description", $("td:eq(0)", resizeOption).text());
-    WebDeveloper.Storage.setItem("resize_" + position + "_width", $("td:eq(1)", resizeOption).text());
-    WebDeveloper.Storage.setItem("resize_" + position + "_height", $("td:eq(2)", resizeOption).text());
-  }
+      WebDeveloper.Storage.setItem("resize_" + position + "_description", $("td:eq(0)", resizeOption).text());
+      WebDeveloper.Storage.setItem("resize_" + position + "_width", $("td:eq(1)", resizeOption).text());
+      WebDeveloper.Storage.setItem("resize_" + position + "_height", $("td:eq(2)", resizeOption).text());
+    }
 
-  WebDeveloper.Storage.setItem("resize_count", resizeCount);
+    WebDeveloper.Storage.setItem("resize_count", resizeCount);
 
-  // If the table is set
-  if(table)
-  {
-    $(table).addClass("table-striped");
-  }
-  else
-  {
-    $("table", resizeTab).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateResizeOptions });
-  }
+    // If the table is set
+    if(table)
+    {
+      $(table).addClass("table-striped");
+    }
+    else
+    {
+      $("table", resizeTab).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateResizeOptions });
+    }
 
-  $(".btn-danger > span", resizeTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
-  $(".btn-primary > span", resizeTable).text(WebDeveloper.Locales.getString("edit"));
+    $(".btn-danger > span", resizeTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
+    $(".btn-primary > span", resizeTable).text(WebDeveloper.Locales.getString("edit"));
 
-  // If there is only one resize option
-  if(resizeCount == 1)
-  {
-    resizeTable.addClass("single");
-  }
-  else
-  {
-    resizeTable.removeClass("single");
-  }
+    // If there is only one resize option
+    if(resizeCount == 1)
+    {
+      resizeTable.addClass("single");
+    }
+    else
+    {
+      resizeTable.removeClass("single");
+    }
+  });
 };
 
 // Updates the responsive layouts
@@ -681,49 +756,52 @@ WebDeveloper.Options.updateResponsiveLayouts = function(table)
   var responsiveLayouts      = $("tr", responsiveLayoutsTable);
   var responsiveLayoutsCount = responsiveLayouts.length;
 
-  // Loop through the responsive layouts preferences
-  for(var i = 1, l = WebDeveloper.Storage.getItem("responsive_layout_count"); i <= l; i++)
+  WebDeveloper.Storage.getItem("responsive_layout_count", function(item)
   {
-    WebDeveloper.Storage.removeItem("responsive_layout_" + i + "_description");
-    WebDeveloper.Storage.removeItem("responsive_layout_" + i + "_height");
-    WebDeveloper.Storage.removeItem("responsive_layout_" + i + "_width");
-  }
+    // Loop through the responsive layouts preferences
+    for(var i = 1, l = item; i <= l; i++)
+    {
+      WebDeveloper.Storage.removeItem("responsive_layout_" + i + "_description");
+      WebDeveloper.Storage.removeItem("responsive_layout_" + i + "_height");
+      WebDeveloper.Storage.removeItem("responsive_layout_" + i + "_width");
+    }
 
-  // Loop through the responsive layouts
-  for(i = 0; i < responsiveLayoutsCount; i++)
-  {
-    position         = i + 1;
-    responsiveLayout = responsiveLayouts.eq(i);
+    // Loop through the responsive layouts
+    for(i = 0; i < responsiveLayoutsCount; i++)
+    {
+      position         = i + 1;
+      responsiveLayout = responsiveLayouts.eq(i);
 
-    WebDeveloper.Storage.setItem("responsive_layout_" + position + "_description", $("td:eq(0)", responsiveLayout).text());
-    WebDeveloper.Storage.setItem("responsive_layout_" + position + "_width", $("td:eq(1)", responsiveLayout).text());
-    WebDeveloper.Storage.setItem("responsive_layout_" + position + "_height", $("td:eq(2)", responsiveLayout).text());
-  }
+      WebDeveloper.Storage.setItem("responsive_layout_" + position + "_description", $("td:eq(0)", responsiveLayout).text());
+      WebDeveloper.Storage.setItem("responsive_layout_" + position + "_width", $("td:eq(1)", responsiveLayout).text());
+      WebDeveloper.Storage.setItem("responsive_layout_" + position + "_height", $("td:eq(2)", responsiveLayout).text());
+    }
 
-  WebDeveloper.Storage.setItem("responsive_layout_count", responsiveLayoutsCount);
+    WebDeveloper.Storage.setItem("responsive_layout_count", responsiveLayoutsCount);
 
-  // If the table is set
-  if(table)
-  {
-    $(table).addClass("table-striped");
-  }
-  else
-  {
-    $("table", responsiveLayoutsTab).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateResponsiveLayouts });
-  }
+    // If the table is set
+    if(table)
+    {
+      $(table).addClass("table-striped");
+    }
+    else
+    {
+      $("table", responsiveLayoutsTab).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateResponsiveLayouts });
+    }
 
-  $(".btn-danger > span", responsiveLayoutsTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
-  $(".btn-primary > span", responsiveLayoutsTable).text(WebDeveloper.Locales.getString("edit"));
+    $(".btn-danger > span", responsiveLayoutsTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
+    $(".btn-primary > span", responsiveLayoutsTable).text(WebDeveloper.Locales.getString("edit"));
 
-  // If there is only one resize option
-  if(responsiveLayoutsCount == 1)
-  {
-    responsiveLayoutsTable.addClass("single");
-  }
-  else
-  {
-    responsiveLayoutsTable.removeClass("single");
-  }
+    // If there is only one resize option
+    if(responsiveLayoutsCount == 1)
+    {
+      responsiveLayoutsTable.addClass("single");
+    }
+    else
+    {
+      responsiveLayoutsTable.removeClass("single");
+    }
+  });
 };
 
 // Updates the syntax highlight theme
@@ -745,47 +823,50 @@ WebDeveloper.Options.updateTools = function(table)
   var tools      = $("tr", toolsTable);
   var toolsCount = tools.length;
 
-  // Loop through the tools preferences
-  for(var i = 1, l = WebDeveloper.Storage.getItem("tool_count"); i <= l; i++)
+  WebDeveloper.Storage.getItem("tool_count", function(item)
   {
-    WebDeveloper.Storage.removeItem("tool_" + i + "_description");
-    WebDeveloper.Storage.removeItem("tool_" + i + "_url");
-  }
+    // Loop through the tools preferences
+    for(var i = 1, l = item; i <= l; i++)
+    {
+      WebDeveloper.Storage.removeItem("tool_" + i + "_description");
+      WebDeveloper.Storage.removeItem("tool_" + i + "_url");
+    }
 
-  // Loop through the tools
-  for(i = 0; i < toolsCount; i++)
-  {
-    position = i + 1;
-    tool     = tools.eq(i);
+    // Loop through the tools
+    for(i = 0; i < toolsCount; i++)
+    {
+      position = i + 1;
+      tool     = tools.eq(i);
 
-    WebDeveloper.Storage.setItem("tool_" + position + "_description", $("td:eq(0)", tool).text());
-    WebDeveloper.Storage.setItem("tool_" + position + "_url", $("td:eq(1)", tool).text());
-  }
+      WebDeveloper.Storage.setItem("tool_" + position + "_description", $("td:eq(0)", tool).text());
+      WebDeveloper.Storage.setItem("tool_" + position + "_url", $("td:eq(1)", tool).text());
+    }
 
-  WebDeveloper.Storage.setItem("tool_count", toolsCount);
+    WebDeveloper.Storage.setItem("tool_count", toolsCount);
 
-  // If the table is set
-  if(table)
-  {
-    $(table).addClass("table-striped");
-  }
-  else
-  {
-    $("table", toolsTab).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateTools });
-  }
+    // If the table is set
+    if(table)
+    {
+      $(table).addClass("table-striped");
+    }
+    else
+    {
+      $("table", toolsTab).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateTools });
+    }
 
-  $(".btn-danger > span", toolsTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
-  $(".btn-primary > span", toolsTable).text(WebDeveloper.Locales.getString("edit"));
+    $(".btn-danger > span", toolsTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
+    $(".btn-primary > span", toolsTable).text(WebDeveloper.Locales.getString("edit"));
 
-  // If there is only one resize option
-  if(toolsCount == 1)
-  {
-    toolsTable.addClass("single");
-  }
-  else
-  {
-    toolsTable.removeClass("single");
-  }
+    // If there is only one resize option
+    if(toolsCount == 1)
+    {
+      toolsTable.addClass("single");
+    }
+    else
+    {
+      toolsTable.removeClass("single");
+    }
+  });
 };
 
 // Returns true if the resize option is valid

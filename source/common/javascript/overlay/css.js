@@ -35,10 +35,10 @@ WebDeveloper.Overlay.CSS.disableAllStyles = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var feature = featureItem.attr("id");
-      var disable = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-      WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.CSS.toggleAllStyles(" + disable + ", [document]);");
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      {
+        WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.CSS.toggleAllStyles(" + !enabled + ", [document]);");
+      });
     }
   });
 };
@@ -68,10 +68,10 @@ WebDeveloper.Overlay.CSS.disableEmbeddedStyles = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var feature = featureItem.attr("id");
-      var disable = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-      WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.CSS.toggleEmbeddedStyles(" + disable + ", [document]);");
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      {
+        WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.CSS.toggleEmbeddedStyles(" + !enabled + ", [document]);");
+      });
     }
   });
 };
@@ -86,10 +86,10 @@ WebDeveloper.Overlay.CSS.disableInlineStyles = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var feature = featureItem.attr("id");
-      var disable = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-      WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.CSS.toggleInlineStyles(" + disable + ", [document]);");
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      {
+        WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.CSS.toggleInlineStyles(" + !enabled + ", [document]);");
+      });
     }
   });
 };
@@ -104,10 +104,10 @@ WebDeveloper.Overlay.CSS.disableLinkedStyleSheets = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var feature = featureItem.attr("id");
-      var disable = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-      WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.CSS.toggleLinkedStyleSheets(" + disable + ", [document]);");
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      {
+        WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.CSS.toggleLinkedStyleSheets(" + !enabled + ", [document]);");
+      });
     }
   });
 };
@@ -122,10 +122,10 @@ WebDeveloper.Overlay.CSS.disablePrintStyles = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var feature = featureItem.attr("id");
-      var disable = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-
-      WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.CSS.togglePrintStyles(" + disable + ", [document]);");
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      {
+        WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.CSS.togglePrintStyles(" + !enabled + ", [document]);");
+      });
     }
   });
 };
@@ -140,19 +140,21 @@ WebDeveloper.Overlay.CSS.displayHandheldStyles = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var feature = featureItem.attr("id");
       var storage = chrome.extension.getBackgroundPage().WebDeveloper.Storage;
-      var display = !storage.isFeatureOnTab(feature, tab);
 
-      // If displaying handheld styles and print styles are being displayed
-      if(display && storage.isFeatureOnTab("display-print-styles", tab))
+      storage.isFeatureOnTab(featureItem.attr("id"), tab, function(displayHandheldStylesEnabled)
       {
-        var displayPrintStylesItem = $("#display-print-styles");
+        storage.isFeatureOnTab("display-print-styles", tab, function(displayPrintStylesEnabled)
+        {
+          // If about to display handheld styles and print styles are being displayed
+          if(!displayHandheldStylesEnabled && displayPrintStylesEnabled)
+          {
+            WebDeveloper.Overlay.CSS.toggleFeatureOnTab($("#display-print-styles"), tab, 'WebDeveloper.CSS.toggleMediaTypeStyles("print", false, [document]);');
+          }
 
-        WebDeveloper.Overlay.CSS.toggleFeatureOnTab(displayPrintStylesItem, tab, 'WebDeveloper.CSS.toggleMediaTypeStyles("print", false, [document]);');
-      }
-
-      WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.CSS.toggleMediaTypeStyles("handheld", ' + display + ", [document]);");
+          WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.CSS.toggleMediaTypeStyles("handheld", ' + !displayHandheldStylesEnabled + ", [document]);");
+        });
+      });
     }
   });
 };
@@ -167,19 +169,21 @@ WebDeveloper.Overlay.CSS.displayPrintStyles = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var feature = featureItem.attr("id");
       var storage = chrome.extension.getBackgroundPage().WebDeveloper.Storage;
-      var display = !storage.isFeatureOnTab(feature, tab);
 
-      // If displaying print styles and handheld styles are being displayed
-      if(display && storage.isFeatureOnTab("display-handheld-styles", tab))
+      storage.isFeatureOnTab(featureItem.attr("id"), tab, function(displayPrintStylesEnabled)
       {
-        var displayHandheldStylesItem = $("#display-handheld-styles");
+        storage.isFeatureOnTab("display-handheld-styles", tab, function(displayHandheldStylesEnabled)
+        {
+          // If about to display print styles and handheld styles are being displayed
+          if(!displayPrintStylesEnabled && displayHandheldStylesEnabled)
+          {
+            WebDeveloper.Overlay.CSS.toggleFeatureOnTab($("#display-handheld-styles"), tab, 'WebDeveloper.CSS.toggleMediaTypeStyles("handheld", false, [document]);');
+          }
 
-        WebDeveloper.Overlay.CSS.toggleFeatureOnTab(displayHandheldStylesItem, tab, 'WebDeveloper.CSS.toggleMediaTypeStyles("handheld", false, [document]);');
-      }
-
-      WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.CSS.toggleMediaTypeStyles("print", ' + display + ", [document]);");
+          WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.CSS.toggleMediaTypeStyles("print", ' + !displayPrintStylesEnabled + ", [document]);");
+        });
+      });
     }
   });
 };
@@ -194,8 +198,6 @@ WebDeveloper.Overlay.CSS.editCSS = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var feature = featureItem.attr("id");
-      var edit    = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
       var locale  = "";
 
       locale += "'couldNotLoadCSS': '" + WebDeveloper.Locales.getString("couldNotLoadCSS") + "',";
@@ -203,7 +205,10 @@ WebDeveloper.Overlay.CSS.editCSS = function()
       locale += "'editCSS': '" + WebDeveloper.Locales.getString("editCSS") + "',";
       locale += "'embeddedStyles': '" + WebDeveloper.Locales.getString("embeddedStyles") + "'";
 
-      WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/dashboard/javascript/dashboard.js", "WebDeveloper.EditCSS.editCSS(" + edit + ", document, {" + locale + "});", true);
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      {
+        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/dashboard/javascript/dashboard.js", "WebDeveloper.EditCSS.editCSS(" + !enabled + ", document, {" + locale + "});", true);
+      });
     }
   });
 };
@@ -270,10 +275,13 @@ WebDeveloper.Overlay.CSS.viewCSS = function()
     {
       chrome.tabs.sendMessage(tab.id, { type: "get-css" }, function(data)
       {
-        data.theme = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("syntax_highlight_theme");
+        chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("syntax_highlight_theme", function(item)
+        {
+          data.theme = item;
 
-        chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-css.html"), tab.index, data, WebDeveloper.Overlay.CSS.getViewCSSLocale());
-        WebDeveloper.Overlay.close();
+          chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("generated/view-css.html"), tab.index, data, WebDeveloper.Overlay.CSS.getViewCSSLocale());
+          WebDeveloper.Overlay.close();
+        });
       });
     }
   });

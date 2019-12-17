@@ -35,31 +35,48 @@ WebDeveloper.Overlay.Tools.editTools = function()
 // Sets up the custom tools
 WebDeveloper.Overlay.Tools.setupCustomTools = function()
 {
-  var description = null;
-  var editTools   = $("#edit-tools").closest("li");
-  var storage     = chrome.extension.getBackgroundPage().WebDeveloper.Storage;
-  var tool        = null;
-  var url         = 0;
+  var customToolTemplate = $("#custom-tool").html();
+  var editTools          = $("#edit-tools").closest("li");
+  var storage            = chrome.extension.getBackgroundPage().WebDeveloper.Storage;
 
   $(".custom-tool", $("#custom-tools")).remove();
+  Mustache.parse(customToolTemplate);
 
-  // Loop through the tools
-  for(var i = 1, l = storage.getItem("tool_count"); i <= l; i++)
+  storage.getItem("tool_count", function(toolsCount)
   {
-    description = storage.getItem("tool_" + i + "_description");
-    url         = storage.getItem("tool_" + i + "_url");
+    var toolsStorageOptionKeys = [];
 
-    // If the description and url are set
-    if(description && url)
+    // Loop through the tools
+    for(var i = 1, l = toolsCount; i <= l; i++)
     {
-      tool = {};
-
-      tool.description = description;
-      tool.url         = url;
-
-      editTools.before(ich.customTool(tool));
+      toolsStorageOptionKeys.push("tool_" + i + "_description", "tool_" + i + "_url");
     }
-  }
+
+    storage.getItems(toolsStorageOptionKeys, function(toolsStorageOptions)
+    {
+      var description = null;
+      var tool        = null;
+      var url         = 0;
+
+      // Loop through the tools
+      for(i = 1, l = toolsCount; i <= l; i++)
+      {
+        description = toolsStorageOptions["tool_" + i + "_description"];
+        url         = toolsStorageOptions["tool_" + i + "_url"];
+
+        // If the description and url are set
+        if(description && url)
+        {
+          tool = {};
+
+          tool.description = description;
+          tool.url         = url;
+
+          editTools.before(Mustache.render(customToolTemplate, tool));
+        }
+      }
+    });
+  });
 };
 
 // Validates the CSS of the local page

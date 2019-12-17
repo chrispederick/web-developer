@@ -5,20 +5,22 @@ WebDeveloper.Generated = WebDeveloper.Generated || {};
 // Initializes the page with data
 WebDeveloper.Generated.initialize = function(data, locale)
 {
-  var content         = document.getElementById("content");
-  var contentDocument = null;
-  var documents       = data.documents;
-  var duplicateIds    = locale.duplicateIds;
-  var idDescription   = null;
-  var ids             = null;
-  var idsLength       = null;
-  var list            = null;
-  var listElement     = null;
-  var url             = null;
+  var content             = document.getElementById("content");
+  var contentDocument     = null;
+  var documents           = data.documents;
+  var duplicateIds        = locale.duplicateIds;
+  var duplicateIdTemplate = $("#duplicate-id").html();
+  var idDescription       = null;
+  var ids                 = null;
+  var idsLength           = null;
+  var list                = null;
+  var listElement         = null;
+  var url                 = null;
 
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.localizeHeader(locale);
   WebDeveloper.Generated.setPageTitle(duplicateIds, data, locale);
+  Mustache.parse(duplicateIdTemplate);
 
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
@@ -46,7 +48,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
       // Loop through the ids
       for(var j = 0; j < idsLength; j++)
       {
-        listElement.append(ich.duplicateId({ id: ids[j], url: url }));
+        listElement.append(Mustache.render(duplicateIdTemplate, { id: ids[j], url: url }));
       }
 
       content.appendChild(list);

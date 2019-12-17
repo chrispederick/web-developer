@@ -158,34 +158,51 @@ WebDeveloper.Overlay.Resize.resizeWindowKeyPress = function(event)
 // Sets up the custom resize options
 WebDeveloper.Overlay.Resize.setupCustomResizeOptions = function()
 {
-  var description          = null;
-  var editResizeDimensions = $("#edit-resize-dimensions").closest("li");
-  var height               = 0;
-  var resizeOption         = null;
-  var storage              = chrome.extension.getBackgroundPage().WebDeveloper.Storage;
-  var width                = 0;
+  var customResizeOptionTemplate = $("#custom-tool").html();
+  var editResizeDimensions       = $("#edit-resize-dimensions").closest("li");
+  var storage                    = chrome.extension.getBackgroundPage().WebDeveloper.Storage;
 
   $(".custom-resize-window", $("#custom-resize-options")).remove();
+  Mustache.parse(customResizeOptionTemplate);
 
-  // Loop through the resize options
-  for(var i = 1, l = storage.getItem("resize_count"); i <= l; i++)
+  storage.getItem("resize_count", function(resizeOptionCount)
   {
-    description = storage.getItem("resize_" + i + "_description");
-    height      = storage.getItem("resize_" + i + "_height");
-    width       = storage.getItem("resize_" + i + "_width");
+    var resizeStorageOptionKeys = [];
 
-    // If the description, height and width are set
-    if(description && height > 0 && width > 0)
+    // Loop through the tools
+    for(var i = 1, l = resizeOptionCount; i <= l; i++)
     {
-      resizeOption = {};
-
-      resizeOption.description = description;
-      resizeOption.height      = height;
-      resizeOption.width       = width;
-
-      editResizeDimensions.before(ich.customResizeOption(resizeOption));
+      resizeStorageOptionKeys.push("resize_" + i + "_description", "resize_" + i + "_height", "resize_" + i + "_width");
     }
-  }
+
+    storage.getItems(resizeStorageOptionKeys, function(resizeStorageOptions)
+    {
+      var description  = null;
+      var height       = 0;
+      var resizeOption = null;
+      var width        = 0;
+
+      // Loop through the tools
+      for(i = 1, l = resizeOptionCount; i <= l; i++)
+      {
+        description = resizeStorageOptions["resize_" + i + "_description"];
+        height      = resizeStorageOptions["resize_" + i + "_height"];
+        width       = resizeStorageOptions["resize_" + i + "_width"];
+
+        // If the description, height and width are set
+        if(description && height > 0 && width > 0)
+        {
+          resizeOption = {};
+
+          resizeOption.description = description;
+          resizeOption.height      = height;
+          resizeOption.width       = width;
+
+          editResizeDimensions.before(Mustache.render(customResizeOptionTemplate, resizeOption));
+        }
+      }
+    });
+  });
 };
 
 // Resizes the window
@@ -252,37 +269,52 @@ WebDeveloper.Overlay.Resize.viewResponsiveLayouts = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var data        = {};
-      var description = null;
-      var height      = null;
-      var layout      = null;
-      var storage     = chrome.extension.getBackgroundPage().WebDeveloper.Storage;
-      var width       = null;
+      var data    = {};
+      var storage = chrome.extension.getBackgroundPage().WebDeveloper.Storage;
 
       data.layouts = [];
       data.pageURL = tab.url;
 
-      // Loop through the possible responsive options
-      for(var i = 1, l = storage.getItem("responsive_layout_count"); i <= l; i++)
+      storage.getItem("responsive_layout_count", function(responsiveLayoutOptionCount)
       {
-        description = storage.getItem("responsive_layout_" + i + "_description");
-        height      = storage.getItem("responsive_layout_" + i + "_height");
-        width       = storage.getItem("responsive_layout_" + i + "_width");
+        var responsiveLayoutStorageOptionKeys = [];
 
-        // If the description, height and width are set
-        if(description && height > 0 && width > 0)
+        // Loop through the tools
+        for(var i = 1, l = responsiveLayoutOptionCount; i <= l; i++)
         {
-          layout             = {};
-          layout.description = description;
-          layout.height      = height;
-          layout.width       = width;
-
-          data.layouts.push(layout);
+          responsiveLayoutStorageOptionKeys.push("responsive_layout_" + i + "_description", "responsive_layout_" + i + "_height", "responsive_layout_" + i + "_width");
         }
-      }
 
-      chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("/generated/view-responsive-layouts.html"), tab.index, data, WebDeveloper.Overlay.Resize.getViewResponsiveLayoutsLocale());
-      WebDeveloper.Overlay.close();
+        storage.getItems(responsiveLayoutStorageOptionKeys, function(responsiveLayoutStorageOptions)
+        {
+          var description = null;
+          var height      = 0;
+          var layout      = null;
+          var width       = 0;
+
+          // Loop through the tools
+          for(i = 1, l = responsiveLayoutOptionCount; i <= l; i++)
+          {
+            description = responsiveLayoutStorageOptions["responsive_layout_" + i + "_description"];
+            height      = responsiveLayoutStorageOptions["responsive_layout_" + i + "_height"];
+            width       = responsiveLayoutStorageOptions["responsive_layout_" + i + "_width"];
+
+            // If the description, height and width are set
+            if(description && height > 0 && width > 0)
+            {
+              layout             = {};
+              layout.description = description;
+              layout.height      = height;
+              layout.width       = width;
+
+              data.layouts.push(layout);
+            }
+          }
+
+          chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("/generated/view-responsive-layouts.html"), tab.index, data, WebDeveloper.Overlay.Resize.getViewResponsiveLayoutsLocale());
+          WebDeveloper.Overlay.close();
+        });
+      });
     }
   });
 };

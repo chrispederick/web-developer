@@ -6,53 +6,58 @@ WebDeveloper.Overlay.animationSpeed = 100;
 
 $(function()
 {
-  var displayOverlayWith = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("display_overlay_with");
-  var menu               = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("menu");
-  var notification       = $("#notification");
+  var notification = $("#notification");
 
-  WebDeveloper.Overlay.labelMenu($("#cookies-toolbar > a"), WebDeveloper.Locales.getString("cookies"), displayOverlayWith);
-  WebDeveloper.Overlay.labelMenu($("#css-toolbar > a"), WebDeveloper.Locales.getString("css"), displayOverlayWith);
-  WebDeveloper.Overlay.labelMenu($("#disable-toolbar > a"), WebDeveloper.Locales.getString("disable"), displayOverlayWith);
-  WebDeveloper.Overlay.labelMenu($("#forms-toolbar > a"), WebDeveloper.Locales.getString("forms"), displayOverlayWith);
-  WebDeveloper.Overlay.labelMenu($("#images-toolbar > a"), WebDeveloper.Locales.getString("images"), displayOverlayWith);
-  WebDeveloper.Overlay.labelMenu($("#information-toolbar > a"), WebDeveloper.Locales.getString("information"), displayOverlayWith);
-  WebDeveloper.Overlay.labelMenu($("#miscellaneous-toolbar > a"), WebDeveloper.Locales.getString("miscellaneous"), displayOverlayWith);
-  WebDeveloper.Overlay.labelMenu($("#options-toolbar > a"), WebDeveloper.Locales.getString("options"), displayOverlayWith);
-  WebDeveloper.Overlay.labelMenu($("#outline-toolbar > a"), WebDeveloper.Locales.getString("outline"), displayOverlayWith);
-  WebDeveloper.Overlay.labelMenu($("#resize-toolbar > a"), WebDeveloper.Locales.getString("resize"), displayOverlayWith);
-  WebDeveloper.Overlay.labelMenu($("#tools-toolbar > a"), WebDeveloper.Locales.getString("tools"), displayOverlayWith);
-
-  // If the display overlay with setting is set to text
-  if(displayOverlayWith == "text")
+  chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("display_overlay_with", function(displayOverlayWith)
   {
-    $(".nav-tabs").addClass("overlay-text");
-  }
+    WebDeveloper.Overlay.labelMenu($("#cookies-toolbar > a"), WebDeveloper.Locales.getString("cookies"), displayOverlayWith);
+    WebDeveloper.Overlay.labelMenu($("#css-toolbar > a"), WebDeveloper.Locales.getString("css"), displayOverlayWith);
+    WebDeveloper.Overlay.labelMenu($("#disable-toolbar > a"), WebDeveloper.Locales.getString("disable"), displayOverlayWith);
+    WebDeveloper.Overlay.labelMenu($("#forms-toolbar > a"), WebDeveloper.Locales.getString("forms"), displayOverlayWith);
+    WebDeveloper.Overlay.labelMenu($("#images-toolbar > a"), WebDeveloper.Locales.getString("images"), displayOverlayWith);
+    WebDeveloper.Overlay.labelMenu($("#information-toolbar > a"), WebDeveloper.Locales.getString("information"), displayOverlayWith);
+    WebDeveloper.Overlay.labelMenu($("#miscellaneous-toolbar > a"), WebDeveloper.Locales.getString("miscellaneous"), displayOverlayWith);
+    WebDeveloper.Overlay.labelMenu($("#options-toolbar > a"), WebDeveloper.Locales.getString("options"), displayOverlayWith);
+    WebDeveloper.Overlay.labelMenu($("#outline-toolbar > a"), WebDeveloper.Locales.getString("outline"), displayOverlayWith);
+    WebDeveloper.Overlay.labelMenu($("#resize-toolbar > a"), WebDeveloper.Locales.getString("resize"), displayOverlayWith);
+    WebDeveloper.Overlay.labelMenu($("#tools-toolbar > a"), WebDeveloper.Locales.getString("tools"), displayOverlayWith);
 
-  // If the menu is not set
-  if(!menu)
-  {
-    menu = $(".nav-tabs > li:visible:first").attr("id");
-  }
+    // If the display overlay with setting is set to text
+    if(displayOverlayWith == "text")
+    {
+      $(".nav-tabs").addClass("overlay-text");
+    }
+  });
 
-  // If the menu is set
-  if(menu)
+  chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("menu", function(menu)
   {
-    $("a", $("#" + menu)).tab("show");
-  }
+    // If the menu is not set
+    if(!menu)
+    {
+      menu = $(".nav-tabs > li:visible:first").attr("id");
+    }
+
+    // If the menu is set
+    if(menu)
+    {
+      $("a", $("#" + menu)).tab("show");
+    }
+  });
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
-    var featuresOnTab = chrome.extension.getBackgroundPage().WebDeveloper.Storage.getFeaturesOnTab(tab.id);
-
-    // If there are features on the tab
-    if(featuresOnTab)
+    chrome.extension.getBackgroundPage().WebDeveloper.Storage.getFeaturesOnTab(tab.id, function(featuresOnTab)
     {
-      // Loop through the features on the tab
-      for(var i = 0, l = featuresOnTab.length; i < l; i++)
+      // If there are features on the tab
+      if(featuresOnTab)
       {
-        $("#" + featuresOnTab[i]).addClass("active");
+        // Loop through the features on the tab
+        for(var i = 0, l = featuresOnTab.length; i < l; i++)
+        {
+          $("#" + featuresOnTab[i]).addClass("active");
+        }
       }
-    }
+    });
   });
 
   $("#confirmation-cancel").on("click", WebDeveloper.Overlay.closeConfirmation);
@@ -197,15 +202,15 @@ WebDeveloper.Overlay.isValidTab = function(tab)
   var url = tab.url;
 
   // If this is a chrome URL
-  if(url.indexOf("chrome://") === 0 || url.indexOf("chrome-extension://") === 0)
+  if(url.indexOf("chrome://") === 0 || url.indexOf("chrome-extension://") === 0 || url.indexOf("moz-extension://") === 0)
   {
     WebDeveloper.Overlay.displayNotification(WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("internalBrowserPagesError"), "danger");
 
     return false;
   }
-  else if(url.indexOf("https://chrome.google.com/extensions/") === 0 || url.indexOf("https://chrome.google.com/webstore/") === 0)
+  else if(url.indexOf("https://addons.mozilla.org/") === 0 || url.indexOf("https://chrome.google.com/extensions/") === 0 || url.indexOf("https://chrome.google.com/webstore/") === 0)
   {
-    WebDeveloper.Overlay.displayNotification(WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("chromeExtensionGalleryError"), "danger");
+    WebDeveloper.Overlay.displayNotification(WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("extensionGalleryError"), "danger");
 
     return false;
   }

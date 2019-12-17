@@ -26,7 +26,7 @@ html { overflow: auto; padding-bottom: 0; }
 #current-element-ancestors > .breadcrumb > li { color: #333; }
 #current-element-ancestors > .breadcrumb > li > a { color: #999; cursor: text; pointer-events: none; text-decoration: none; }
 
-#web-developer-content { background-color: #f5f5f5; border-style: none; color: #333; font-family: Monaco, Menlo, Consolas, "Courier New", monospace; font-size: 13px; margin: 0; padding: 0; word-wrap: normal; width: 100%; }
+#web-developer-content { background-color: #f5f5f5; border-style: none; color: #333; font-family: Monaco, Menlo, Consolas, "Courier New", monospace; font-size: 13px; margin: 0; padding: 0; width: 100%; word-wrap: normal; }
 #web-developer-ancestors { margin: 10px 0 -10px 0; }
 #web-developer-ancestors:after, #web-developer-ancestors:before { clear: both; content: ""; display: block; height: 0; overflow: hidden; visibility: hidden; }
 #web-developer-ancestors > .breadcrumb { margin-bottom: 0; }
@@ -34,9 +34,9 @@ html { overflow: auto; padding-bottom: 0; }
 #web-developer-copy-ancestor-path { float: right; }
 #web-developer-information { margin-bottom: 0; }
 .breadcrumb { overflow: hidden; position: relative; }
-.CodeMirror { border-color: #000; border-color: rgba(0, 0, 0, 0.15); border-style: solid; border-width: 1px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); }
+.CodeMirror { border-color: #000; border-color: rgba(0, 0, 0, 0.15); border-style: solid; border-width: 1px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); }
 .web-developer-ancestors, .web-developer-children { padding-bottom: 10px; }
-.web-developer-ancestors > ol, .web-developer-children > ol { background-color: #f5f5f5; border-color: #000; border-color: rgba(0, 0, 0, 0.15); border-style: solid; border-width: 1px; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; list-style-type: none; margin: 0; padding: 10px; }
+.web-developer-ancestors > ol, .web-developer-children > ol { background-color: #f5f5f5; border-color: #000; border-color: rgba(0, 0, 0, 0.15); border-style: solid; border-width: 1px; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; list-style-type: none; margin: 0; padding: 10px; }
 .web-developer-ancestors > ol > li, .web-developer-children > ol > li { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .web-developer-ancestors > ol > .last { display: none; }
 .web-developer-css .CodeMirror-scroll > div { height: auto !important; }

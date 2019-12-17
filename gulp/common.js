@@ -6,12 +6,14 @@ var fs               = require("fs");
 var gulp             = require("gulp");
 var gutil            = require("gulp-util");
 var lazypipe         = require("lazypipe");
+var log              = require('fancy-log');
 var plugins          = require("gulp-load-plugins")();
 var runSequence      = require("run-sequence");
 
 global.errorHandler = function(error, emitEnd, task)
 {
-  gutil.log(gutil.colors.red(error.plugin + " error: " + error.message));
+  log.error(error.plugin + ' error: ' + error.message);
+  log.error(error);
 
   // If should emit end
   if(emitEnd)

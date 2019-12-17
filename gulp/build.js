@@ -67,6 +67,9 @@ global.buildCommon = function(browserName)
     gulp.src("source/common/javascript/common/css.js")
       .pipe(global.filterProperties(browserName)())
       .pipe(gulp.dest("build/" + browserName + "/common/javascript")),
+    gulp.src("source/common/javascript/common/mustache.js")
+      .pipe(global.filterProperties(browserName)())
+      .pipe(gulp.dest("build/" + browserName + "/common/javascript")),
     gulp.src(["source/common/javascript/cookies/cookies.js", "source/" + browserName + "/javascript/cookies/cookies.js"])
       .pipe(plugins.concat("cookies.js"))
       .pipe(global.filterProperties(browserName)())

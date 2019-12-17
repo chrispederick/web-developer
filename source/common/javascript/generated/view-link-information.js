@@ -11,11 +11,13 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var linkDescription = null;
   var linkInformation = locale.linkInformation;
   var linksLength     = null;
+  var linksTemplate   = $("#links").html();
   var list            = null;
 
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.localizeHeader(locale);
   WebDeveloper.Generated.setPageTitle(linkInformation, data, locale);
+  Mustache.parse(linksTemplate);
 
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
@@ -37,7 +39,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
     {
       list = document.createElement("ol");
 
-      $(list).append(ich.links(contentDocument, true));
+      $(list).append(Mustache.render(linksTemplate, contentDocument));
       content.appendChild(list);
     }
 

@@ -39,28 +39,31 @@ WebDeveloper.Upgrade.migrateLegacySettings = function()
   {
     var key = window.localStorage.key(i);
 
-    WebDeveloper.Storage.setItem(key, window.localStorage.getItem(key));
+    WebDeveloper.Storage.setItemIfNotSet(key, window.localStorage.getItem(key));
   }
 
-  // window.localStorage.clear();
+  window.localStorage.clear();
 };
 
 // Migrates the tools
 WebDeveloper.Upgrade.migrateTools = function()
 {
-  // If there are six tools and the last two are Validate Section 508 and Validate WAI
-  if(WebDeveloper.Storage.getItem("tool_count") == 6 &&
-    WebDeveloper.Storage.getItem("tool_5_description") == "Validate Section 508" && WebDeveloper.Storage.getItem("tool_5_url") == "http://www.cynthiasays.com/mynewtester/cynthia.exe?rptmode=-1&url1=" &&
-    WebDeveloper.Storage.getItem("tool_6_description") == "Validate WAI" && WebDeveloper.Storage.getItem("tool_6_url") == "http://www.cynthiasays.com/mynewtester/cynthia.exe?rptmode=2&url1=")
+  WebDeveloper.Storage.getItems(["tool_count", "tool_5_description", "tool_5_url", "tool_6_description", "tool_6_url"], function(items)
   {
-    WebDeveloper.Storage.removeItem("tool_6_description");
-    WebDeveloper.Storage.removeItem("tool_6_url");
-    WebDeveloper.Storage.setItem("tool_4_description", WebDeveloper.Locales.getString("tool_4_description"));
-    WebDeveloper.Storage.setItem("tool_4_url", "http://wave.webaim.org/report#/");
-    WebDeveloper.Storage.setItem("tool_5_description", WebDeveloper.Locales.getString("tool_5_description"));
-    WebDeveloper.Storage.setItem("tool_5_url", "http://validator.w3.org/checklink?check=Check&hide_type=all&summary=on&uri=");
-    WebDeveloper.Storage.setItem("tool_count", 5);
-  }
+    // If there are six tools and the last two are Validate Section 508 and Validate WAI
+    if(items.tool_count && items.tool_count == 6 &&
+      items.tool_5_description && items.tool_5_description == "Validate Section 508" && items.tool_5_url && items.tool_5_url == "http://www.cynthiasays.com/mynewtester/cynthia.exe?rptmode=-1&url1=" &&
+      items.tool_6_description && items.tool_6_description == "Validate WAI" && items.tool_6_url && items.tool_6_url == "http://www.cynthiasays.com/mynewtester/cynthia.exe?rptmode=2&url1=")
+    {
+      WebDeveloper.Storage.removeItem("tool_6_description");
+      WebDeveloper.Storage.removeItem("tool_6_url");
+      WebDeveloper.Storage.setItem("tool_4_description", WebDeveloper.Locales.getString("tool_4_description"));
+      WebDeveloper.Storage.setItem("tool_4_url", "http://wave.webaim.org/report#/");
+      WebDeveloper.Storage.setItem("tool_5_description", WebDeveloper.Locales.getString("tool_5_description"));
+      WebDeveloper.Storage.setItem("tool_5_url", "http://validator.w3.org/checklink?check=Check&hide_type=all&summary=on&uri=");
+      WebDeveloper.Storage.setItem("tool_count", 5);
+    }
+  });
 };
 
 // Opens the upgrade URL
@@ -129,22 +132,28 @@ WebDeveloper.Upgrade.setupDefaultOptions = function()
 };
 
 // Upgrades the extension
-WebDeveloper.Upgrade.upgrade = function()
+WebDeveloper.Upgrade.upgrade = function(details)
 {
-  var previousVersion = WebDeveloper.Storage.getItem("version");
-
-  // If the versions do not match
-  if(previousVersion != "@version@")
+  // If the extension was installed or updated
+  if(details.reason === "install" || details.reason === "update")
   {
-    WebDeveloper.Storage.setItem("version", "@version@");
-    // WebDeveloper.Upgrade.openUpgradeURL("@version@");
+    WebDeveloper.Upgrade.openUpgradeURL("@version@");
 
-    WebDeveloper.Upgrade.fixContentSettings();
-    // WebDeveloper.Upgrade.migrateLegacySettings();
-    WebDeveloper.Upgrade.migrateTools();
-    WebDeveloper.Upgrade.removeDeletedSettings();
-    WebDeveloper.Upgrade.setupDefaultOptions();
+    WebDeveloper.Storage.getItem("version", function(item)
+    {
+      // If the versions do not match
+      if(item != "@version@")
+      {
+        WebDeveloper.Storage.setItem("version", "@version@");
+
+        WebDeveloper.Upgrade.fixContentSettings();
+        WebDeveloper.Upgrade.migrateLegacySettings();
+        WebDeveloper.Upgrade.migrateTools();
+        WebDeveloper.Upgrade.removeDeletedSettings();
+        WebDeveloper.Upgrade.setupDefaultOptions();
+      }
+    });
   }
 };
 
-WebDeveloper.Upgrade.upgrade();
+chrome.runtime.onInstalled.addListener(WebDeveloper.Upgrade.upgrade);

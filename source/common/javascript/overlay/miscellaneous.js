@@ -84,15 +84,16 @@ WebDeveloper.Overlay.Miscellaneous.displayColorPicker = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var feature = featureItem.attr("id");
-      var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-      var locale  = {};
+      var locale = {};
 
       locale.hoverColor    = WebDeveloper.Locales.getString("hoverColor");
       locale.selectedColor = WebDeveloper.Locales.getString("selectedColor");
       locale.title         = WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("colorPicker");
 
-      WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/toolbar/javascript/color-picker.js", "WebDeveloper.ColorPicker.displayColorPicker(" + display + ", document, '" + ich.colorPickerToolbar(locale, true) + "');", true);
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      {
+        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/toolbar/javascript/color-picker.js", "WebDeveloper.ColorPicker.displayColorPicker(" + !enabled + ", document, '" + Mustache.render($("#color-picker-toolbar").html(), locale) + "');", true);
+      });
     }
   });
 };
@@ -122,9 +123,7 @@ WebDeveloper.Overlay.Miscellaneous.displayLineGuides = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var feature = featureItem.attr("id");
-      var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-      var locale  = {};
+      var locale = {};
 
       locale.addHorizontalLineGuide = WebDeveloper.Locales.getString("addHorizontalLineGuide");
       locale.addVerticalLineGuide   = WebDeveloper.Locales.getString("addVerticalLineGuide");
@@ -133,7 +132,10 @@ WebDeveloper.Overlay.Miscellaneous.displayLineGuides = function()
       locale.previousPosition       = WebDeveloper.Locales.getString("previousPosition");
       locale.title                  = WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("lineGuides");
 
-      WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/toolbar/javascript/line-guides.js", "WebDeveloper.LineGuides.displayLineGuides(" + display + ", document, '" + ich.lineGuidesToolbar(locale, true) + "');", true);
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      {
+        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/toolbar/javascript/line-guides.js", "WebDeveloper.LineGuides.displayLineGuides(" + !enabled + ", document, '" + Mustache.render($("#line-guides-toolbar").html(), locale) + "');", true);
+      });
     }
   });
 };
@@ -148,9 +150,7 @@ WebDeveloper.Overlay.Miscellaneous.displayRuler = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var feature = featureItem.attr("id");
-      var display = !chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(feature, tab);
-      var locale  = {};
+      var locale = {};
 
       locale.endPositionX   = WebDeveloper.Locales.getString("endPositionX");
       locale.height         = WebDeveloper.Locales.getString("height");
@@ -159,7 +159,10 @@ WebDeveloper.Overlay.Miscellaneous.displayRuler = function()
       locale.width          = WebDeveloper.Locales.getString("width");
       locale.yLabel         = WebDeveloper.Locales.getString("yLabel");
 
-      WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/toolbar/javascript/ruler.js", "WebDeveloper.Ruler.displayRuler(" + display + ", document, '" + ich.rulerToolbar(locale, true) + "');", true);
+      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      {
+        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/toolbar/javascript/ruler.js", "WebDeveloper.Ruler.displayRuler(" + !enabled + ", document, '" + Mustache.render($("#ruler-toolbar").html(), locale) + "');", true);
+      });
     }
   });
 };

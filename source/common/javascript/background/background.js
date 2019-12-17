@@ -64,19 +64,19 @@ WebDeveloper.Background.getColor = function(x, y, eventType)
 // Returns the edit CSS dashboard HTML template
 WebDeveloper.Background.getEditCSSDashboardTemplates = function(parameters)
 {
-  return { dashboard: ich.dashboard(parameters, true), editCSS: ich.editCSSPanel(parameters, true), panel: ich.dashboardPanel(parameters, true), tab: ich.dashboardTab(parameters, true) };
+  return { dashboard: Mustache.render($("#dashboard").html(), parameters), editCSS: Mustache.render($("#edit-css-panel").html(), parameters), panel: Mustache.render($("#dashboard-panel").html(), parameters), tab: Mustache.render($("#dashboard-tab").html(), parameters) };
 };
 
 // Returns the edit CSS tab HTML template
 WebDeveloper.Background.getEditCSSTabTemplates = function(parameters)
 {
-  return { panel: ich.editCSSTabPanel(parameters, true), tab: ich.editCSSTab(parameters, true) };
+  return { panel: Mustache.render($("#edit-css-tab-panel").html(), parameters), tab: Mustache.render($("#edit-css-tab").html(), parameters) };
 };
 
 // Returns the element information dashboard HTML template
 WebDeveloper.Background.getElementInformationDashboardTemplates = function(parameters)
 {
-  return { dashboard: ich.dashboard(parameters, true), elementInformation: ich.elementInformationPanel(parameters, true), panel: ich.dashboardPanel(parameters, true), tab: ich.dashboardTab(parameters, true) };
+  return { dashboard: Mustache.render($("#dashboard").html(), parameters), elementInformation: Mustache.render($("#element-information-panel").html(), parameters), panel: Mustache.render($("#dashboard-panel").html(), parameters), tab: Mustache.render($("#dashboard-tab").html(), parameters) };
 };
 
 // Gets the styles from CSS
@@ -224,7 +224,10 @@ WebDeveloper.Background.message = function(message, sender, sendResponse)
   }
   else if(message.type == "get-storage-item")
   {
-    sendResponse({ value: WebDeveloper.Storage.getItem(message.item) });
+    WebDeveloper.Storage.getItem(message.item, function(item)
+    {
+      sendResponse({ value: item });
+    });
   }
   else if(message.type == "get-url-contents")
   {
@@ -242,6 +245,10 @@ WebDeveloper.Background.message = function(message, sender, sendResponse)
 // Opens a generated tab
 WebDeveloper.Background.openGeneratedTab = function(tabURL, tabIndex, data, locale)
 {
+  // Need to clone the data and locale to workaround Firefox dead object memory clean up
+  var generatedData   = JSON.parse(JSON.stringify(data));
+  var generatedLocale = JSON.parse(JSON.stringify(locale));
+
   chrome.tabs.create({ index: tabIndex + 1, url: tabURL }, function(openedTab)
   {
     var tabLoaded = function(tabId, tabInformation)
@@ -249,7 +256,7 @@ WebDeveloper.Background.openGeneratedTab = function(tabURL, tabIndex, data, loca
       // If this is the opened tab and it finished loading
       if(tabId == openedTab.id && tabInformation.status && tabInformation.status == "complete")
       {
-        WebDeveloper.Background.initializeGeneratedTab(tabURL, data, locale);
+        WebDeveloper.Background.initializeGeneratedTab(tabURL, generatedData, generatedLocale);
 
         chrome.tabs.onUpdated.removeListener(tabLoaded);
       }
@@ -262,6 +269,9 @@ WebDeveloper.Background.openGeneratedTab = function(tabURL, tabIndex, data, loca
 // Validates the CSS of the local page
 WebDeveloper.Background.validateLocalCSS = function(tabURL, tabIndex, css)
 {
+  // Need to clone the CSS to workaround Firefox dead object memory clean up
+  var validateCSS = JSON.parse(JSON.stringify(css));
+
   chrome.tabs.create({ index: tabIndex + 1, url: tabURL }, function(openedTab)
   {
     var tabLoaded = function(tabId, tabInformation)
@@ -269,7 +279,7 @@ WebDeveloper.Background.validateLocalCSS = function(tabURL, tabIndex, css)
       // If this is the opened tab and it finished loading
       if(tabId == openedTab.id && tabInformation.status == "complete")
       {
-        WebDeveloper.Background.initializeValidationTab(tabURL, WebDeveloper.Background.getStylesFromCSS(css));
+        WebDeveloper.Background.initializeValidationTab(tabURL, WebDeveloper.Background.getStylesFromCSS(validateCSS));
 
         chrome.tabs.onUpdated.removeListener(tabLoaded);
       }

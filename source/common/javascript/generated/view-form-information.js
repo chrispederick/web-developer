@@ -3,7 +3,7 @@ var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-defi
 WebDeveloper.Generated = WebDeveloper.Generated || {};
 
 // Displays a form
-WebDeveloper.Generated.displayForm = function(form, container, formsCounter, locale)
+WebDeveloper.Generated.displayForm = function(form, container, formsCounter, formTemplate, formElementsTemplate, locale)
 {
   var childElement   = document.createElement("th");
   var element        = document.createElement("h4");
@@ -40,7 +40,7 @@ WebDeveloper.Generated.displayForm = function(form, container, formsCounter, loc
 
   tableContainer = document.createElement("tbody");
 
-  $(tableContainer).append(ich.form(form));
+  $(tableContainer).append(Mustache.render(formTemplate, form));
   table.appendChild(tableContainer);
   table.setAttribute("class", "table table-striped");
   container.appendChild(table);
@@ -95,7 +95,7 @@ WebDeveloper.Generated.displayForm = function(form, container, formsCounter, loc
 
     tableContainer = document.createElement("tbody");
 
-    $(tableContainer).append(ich.formElements(form, true));
+    $(tableContainer).append(Mustache.render(formElementsTemplate, form));
     table.appendChild(tableContainer);
     table.setAttribute("class", "table table-striped");
     container.appendChild(table);
@@ -132,19 +132,23 @@ WebDeveloper.Generated.formatFormDescription = function(form)
 // Initializes the page with data
 WebDeveloper.Generated.initialize = function(data, locale)
 {
-  var container        = null;
-  var contentDocument  = null;
-  var documents        = data.documents;
-  var formDescription  = null;
-  var forms            = null;
-  var formsCounter     = 1;
-  var formsDescription = locale.forms;
-  var formsDropdown    = $("#forms-dropdown");
-  var formsLength      = null;
+  var container            = null;
+  var contentDocument      = null;
+  var documents            = data.documents;
+  var formDescription      = null;
+  var formElementsTemplate = $("#form-elements").html();
+  var forms                = null;
+  var formsCounter         = 1;
+  var formsDescription     = locale.forms;
+  var formsDropdown        = $("#forms-dropdown");
+  var formsLength          = null;
+  var formTemplate         = $("#form").html();
 
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.localizeHeader(locale);
   WebDeveloper.Generated.setPageTitle(formsDescription, data, locale);
+  Mustache.parse(formElementsTemplate);
+  Mustache.parse(formTemplate);
 
   $(".dropdown-toggle", formsDropdown).prepend(formsDescription);
 
@@ -172,7 +176,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
       // Loop through the forms
       for(var j = 0; j < formsLength; j++)
       {
-        WebDeveloper.Generated.displayForm(forms[j], container, formsCounter, locale);
+        WebDeveloper.Generated.displayForm(forms[j], container, formsCounter, formTemplate, formElementsTemplate, locale);
 
         formsCounter++;
       }

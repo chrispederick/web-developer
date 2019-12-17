@@ -49,17 +49,17 @@
 </div>
 
 <script src="/common/javascript/jquery/jquery.js"></script>
-<script src="/common/javascript/jquery/icanhaz.js"></script>
+<script src="/common/javascript/mustache.js"></script>
 <script src="/common/javascript/bootstrap/collapse.js"></script>
 <script src="/common/javascript/bootstrap/dropdown.js"></script>
 <script src="javascript/common.js"></script>
 <script src="javascript/view-form-information.js"></script>
 
-<script id="form" type="text/html">
+<script id="form" type="x-tmpl-mustache">
   <tr><td>{{id}}</td><td>{{name}}</td><td>{{method}}</td><td>{{action}}</td></tr>
 </script>
 
-<script id="formElements" type="text/html">
+<script id="form-elements" type="x-tmpl-mustache">
   {{#elements}}
     <tr><td>{{id}}</td><td>{{name}}</td><td>{{type}}</td><td>{{value}}</td><td>{{label}}</td><td>{{size}}</td><td>{{maximumLength}}</td></tr>
   {{/elements}}

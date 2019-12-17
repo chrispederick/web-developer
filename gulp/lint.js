@@ -6,7 +6,7 @@ var plugins = require("gulp-load-plugins")();
 
 gulp.task("lint-javascript", function()
 {
-  return gulp.src(["source/**/*.js", "!source/chrome/javascript/common/jquery/*.js", "!source/common/javascript/common/bootstrap/*.js", "!source/common/javascript/common/codemirror/*.js", "!source/common/javascript/common/jquery/*.js", "!source/common/javascript/generated/beautify/*.js"])
+  return gulp.src(["source/**/*.js", "!source/chrome/javascript/common/jquery/*.js", "!source/common/javascript/common/bootstrap/*.js", "!source/common/javascript/common/codemirror/*.js", "!source/common/javascript/common/jquery/*.js", "!source/common/javascript/generated/beautify/*.js", "!source/common/javascript/common/mustache.js"])
     .pipe(plugins.eslint())
     .pipe(plugins.eslint.format());
 });
@@ -31,4 +31,4 @@ gulp.task("lint-web-extension", function(callback)
   process.chdir("../..");
 });
 
-gulp.task("lint", ["lint-javascript", "lint-style-sheets", "lint-web-extension"]);
+gulp.task("lint", ["lint-javascript", "lint-style-sheets"]);

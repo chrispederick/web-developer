@@ -2,3 +2,4 @@
 build/
 merge/
 node_modules/
+package-lock.json

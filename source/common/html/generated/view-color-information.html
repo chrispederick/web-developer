@@ -45,13 +45,13 @@
 </div>
 
 <script src="/common/javascript/jquery/jquery.js"></script>
-<script src="/common/javascript/jquery/icanhaz.js"></script>
+<script src="/common/javascript/mustache.js"></script>
 <script src="/common/javascript/bootstrap/collapse.js"></script>
 <script src="/common/javascript/bootstrap/dropdown.js"></script>
 <script src="javascript/common.js"></script>
 <script src="javascript/view-color-information.js"></script>
 
-<script id="colors" type="text/html">
+<script id="colors" type="x-tmpl-mustache">
   {{#colors}}
     <div class="web-developer-color-container"><div class="web-developer-color" style="background-color: {{.}}"></div><span>{{.}}</span></div>
   {{/colors}}

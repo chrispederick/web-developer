@@ -6,6 +6,7 @@
   -moz-box-shadow: none !important;
   box-shadow: none !important;
   clear: none !important;
+  display: block !important;
   float: none !important;
   font-style: normal !important;
   font-variant: normal !important;
