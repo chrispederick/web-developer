@@ -25,7 +25,7 @@ $(function()
   chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNames)
   {
     // If the outline show element tag names preference is set to true
-    if(showElementTagNames == "true")
+    if(showElementTagNames)
     {
       showElementTagNamesMenu.addClass("active");
     }
@@ -62,7 +62,7 @@ WebDeveloper.Overlay.Outline.outlineBlockLevelElements = function()
     {
       chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNames)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineBlockLevelElements([document], " + (showElementTagNames == "true") + ");");
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineBlockLevelElements([document], " + showElementTagNames + ");");
       });
     }
   });
@@ -80,7 +80,7 @@ WebDeveloper.Overlay.Outline.outlineDeprecatedElements = function()
     {
       chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNames)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineDeprecatedElements([document], " + (showElementTagNames == "true") + ");");
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineDeprecatedElements([document], " + showElementTagNames + ");");
       });
     }
   });
@@ -167,7 +167,7 @@ WebDeveloper.Overlay.Outline.outlineHeadings = function()
     {
       chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNames)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineHeadings([document], " + (showElementTagNames == "true") + ");");
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineHeadings([document], " + showElementTagNames + ");");
       });
     }
   });
@@ -233,7 +233,7 @@ WebDeveloper.Overlay.Outline.outlineTableCells = function()
     {
       chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNames)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTableCells([document], " + (showElementTagNames == "true") + ");");
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTableCells([document], " + showElementTagNames + ");");
       });
     }
   });

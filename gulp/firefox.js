@@ -47,7 +47,7 @@ gulp.task("temporary-install-firefox-beta", function(callback)
 gulp.task("temporary-install-firefox-developer", function(callback)
 {
   process.chdir("build/firefox");
-  exec.exec("../../node_modules/web-ext/bin/web-ext run --bc -f=firefoxdeveloperedition --start-url chrispederick.com", function(error, output, errors)
+  exec.exec("../../node_modules/web-ext/bin/web-ext run --bc -f=firefoxdeveloperedition --start-url chrispederick.com -v", function(error, output, errors)
   {
     console.log(output); // eslint-disable-line no-console
     console.log(errors); // eslint-disable-line no-console

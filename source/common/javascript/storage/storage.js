@@ -172,12 +172,12 @@ WebDeveloper.Storage.toggleFeatureOnTab = function(feature, tab)
       }
       else
       {
-        newFeaturesOnTab = currentFeaturesOnTab + feature + ",";
+        newFeaturesOnTab = currentFeaturesOnTab + "," + feature;
       }
     }
     else
     {
-      newFeaturesOnTab = feature + ",";
+      newFeaturesOnTab = feature;
     }
 
     WebDeveloper.Storage.setItem(featureTabId, newFeaturesOnTab);
@@ -197,7 +197,7 @@ WebDeveloper.Storage.updateBadgeText = function(featureTabId)
     // If there are features on the tab
     if(featuresOnTab)
     {
-      var featureCount       = featuresOnTab.length - 1;
+      var featureCount       = featuresOnTab.length;
       var featureDescription = "features";
 
       // If there is only one feature count

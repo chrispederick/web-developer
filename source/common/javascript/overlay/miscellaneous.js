@@ -92,7 +92,7 @@ WebDeveloper.Overlay.Miscellaneous.displayColorPicker = function()
 
       chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/toolbar/javascript/color-picker.js", "WebDeveloper.ColorPicker.displayColorPicker(" + !enabled + ", document, '" + Mustache.render($("#color-picker-toolbar").html(), locale) + "');", true);
+        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/toolbar/javascript/color-picker.js", "WebDeveloper.ColorPicker.displayColorPicker(" + !enabled + ", document, '" + Mustache.render($("#color-picker-toolbar").html(), locale).trim() + "');", true);
       });
     }
   });
@@ -134,7 +134,7 @@ WebDeveloper.Overlay.Miscellaneous.displayLineGuides = function()
 
       chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/toolbar/javascript/line-guides.js", "WebDeveloper.LineGuides.displayLineGuides(" + !enabled + ", document, '" + Mustache.render($("#line-guides-toolbar").html(), locale) + "');", true);
+        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/toolbar/javascript/line-guides.js", "WebDeveloper.LineGuides.displayLineGuides(" + !enabled + ", document, '" + Mustache.render($("#line-guides-toolbar").html(), locale).trim() + "');", true);
       });
     }
   });
@@ -161,7 +161,7 @@ WebDeveloper.Overlay.Miscellaneous.displayRuler = function()
 
       chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/toolbar/javascript/ruler.js", "WebDeveloper.Ruler.displayRuler(" + !enabled + ", document, '" + Mustache.render($("#ruler-toolbar").html(), locale) + "');", true);
+        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/toolbar/javascript/ruler.js", "WebDeveloper.Ruler.displayRuler(" + !enabled + ", document, '" + Mustache.render($("#ruler-toolbar").html(), locale).trim() + "');", true);
       });
     }
   });
