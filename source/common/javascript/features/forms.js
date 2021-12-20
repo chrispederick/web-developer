@@ -896,7 +896,7 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
           }
 
           // If the input element has a maxlength attribute
-          if(inputElementMaxlength && inputElement.value > inputElementMaxlength)
+          if(inputElementMaxlength && inputElement.value.length > inputElementMaxlength)
           {
             inputElement.value = inputElement.value.substr(0, inputElementMaxlength);
           }
@@ -952,7 +952,7 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
         populatedFormFields++;
 
         // If the text area element has a maxlength attribute
-        if(textAreaElementMaxlength && textAreaElement.value > textAreaElementMaxlength)
+        if(textAreaElementMaxlength && textAreaElement.value.length > textAreaElementMaxlength)
         {
           textAreaElement.value = textAreaElement.value.substr(0, textAreaElementMaxlength);
         }
