@@ -8,9 +8,9 @@
     "url": "https://github.com/chrispederick/web-developer"
   },
   "devDependencies": {
-    "dateformat": "*",
-    "del": "*",
-    "fancy-log": "*",
+    "dateformat": "4.5.1",
+    "del": "5.1.0",
+    "fancy-log": "1.3.3",
     "gulp": "3.9.1",
     "gulp-concat": "*",
     "gulp-csslint": "*",
@@ -22,7 +22,7 @@
     "gulp-plumber": "*",
     "gulp-rename": "*",
     "gulp-replace": "*",
-    "gulp-zip": "*",
+    "gulp-zip": "4.2.0",
     "lazypipe": "*",
     "merge-stream": "*",
     "require-dir": "*",

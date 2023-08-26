@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-redeclare, no-use-before-define
 
 WebDeveloper.ElementInformation                  = WebDeveloper.ElementInformation || {};
 WebDeveloper.ElementInformation.breadcrumbHeight = 37;

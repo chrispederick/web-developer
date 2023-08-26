@@ -13,7 +13,7 @@ gulp.task("lint-javascript", function()
 
 gulp.task("lint-style-sheets", function()
 {
-  return gulp.src(["source/**/*.css", "!source/common/style-sheets/common/bootstrap/*.css", "!source/common/style-sheets/common/codemirror/*.css"])
+  return gulp.src(["source/**/*.css", "!source/common/style-sheets/common/reset.css", "!source/common/style-sheets/common/bootstrap/*.css", "!source/common/style-sheets/common/codemirror/*.css"])
     .pipe(plugins.plumber({ errorHandler: function(error) { global.errorHandler(error, true, this); } }))
     .pipe(plugins.csslint(".csslintrc.json"))
     .pipe(plugins.csslint.formatter("compact"));

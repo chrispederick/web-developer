@@ -6,7 +6,7 @@ The extension is available for Chrome, Firefox and Opera, and will run on any pl
 
 The extension can be installed from its home page:
 
-* Home page: [http://chrispederick.com/work/web-developer/](http://chrispederick.com/work/web-developer/)
+* Home page: [https://chrispederick.com/work/web-developer/](https://chrispederick.com/work/web-developer/)
 
 Or directly from the Chrome, Firefox or Opera extension repositories:
 
@@ -20,21 +20,21 @@ Announcements
 
 For announcements about the Web Developer extension including news about beta releases and previews of upcoming versions follow:
 
-* Blog: [http://chrispederick.com/blog/](http://chrispederick.com/blog/)
-* Twitter: [http://twitter.com/chrispederick/](http://twitter.com/chrispederick/)
+* Blog: [https://chrispederick.com/blog/](https://chrispederick.com/blog/)
+* Mastodon: [https://social.lol/@chrispederick](https://social.lol/@chrispederick)
 
 Help
 ----
 
 Help for the Web Developer extension can be found on its home page:
 
-* Help: [http://chrispederick.com/work/web-developer/help/](http://chrispederick.com/work/web-developer/help/)
-* Known issues: [http://chrispederick.com/work/web-developer/issues/](http://chrispederick.com/work/web-developer/issues/)
-* To-do list: [http://chrispederick.com/work/web-developer/to-do/](http://chrispederick.com/work/web-developer/to-do/)
+* Help: [https://chrispederick.com/work/web-developer/help/](https://chrispederick.com/work/web-developer/help/)
+* Known issues: [https://chrispederick.com/work/web-developer/issues/](https://chrispederick.com/work/web-developer/issues/)
+* To-do list: [https://chrispederick.com/work/web-developer/to-do/](https://chrispederick.com/work/web-developer/to-do/)
 
 To report a new issue or suggest a new feature please contact me:
 
-* Contact: [http://chrispederick.com/contact/](http://chrispederick.com/contact/)
+* Contact: [https://chrispederick.com/contact/](http://chrispederick.com/contact/)
 
 Developers
 ----------
@@ -42,28 +42,18 @@ Developers
 ### Technologies
 
 The Web Developer extension is written in JavaScript, HTML and CSS.
-The XML user interface language
-[XUL](https://developer.mozilla.org/en/XUL)
-is also used in the Firefox version.
 
 ### Extension documentation
 
 For information about how to write browser extensions check out the Chrome, Firefox and Opera documentation:
 
-* Chrome: [http://code.google.com/chrome/extensions/docs.html](http://code.google.com/chrome/extensions/docs.html)
-* Firefox: [https://developer.mozilla.org/en-US/addons](https://developer.mozilla.org/en-US/addons)
+* Chrome: [https://developer.chrome.com/docs/extensions/](https://developer.chrome.com/docs/extensions/)
+* Firefox: [https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons)
 * Opera: [https://dev.opera.com/extensions/](https://dev.opera.com/extensions/)
-
-### Localization
-
-The Firefox extension is fully localized with languages other than English (US) provided by the community.
-For information about how to write localized browser extensions check out the Firefox documentation:
-
-* Firefox: [https://developer.mozilla.org/en/Localizing_an_extension](https://developer.mozilla.org/en/Localizing_an_extension)
 
 ### Build process
 
-The extension uses the [Gulp build system](http://gulpjs.com/).
+The extension uses the [Gulp build system](https://gulpjs.com/).
 
 Once Gulp is installed the extension is built by running the following:
 
@@ -80,14 +70,14 @@ The extension can be installed in Firefox by installing `build/web-developer-fir
 
 The following libraries are used by and included in the extension as-is:
 
-* Bootstrap from Twitter: [http://twitter.github.com/bootstrap/](http://twitter.github.com/bootstrap/)
-* CodeMirror: [http://codemirror.net/](http://codemirror.net/)
-* Eric Meyer's Reset CSS: [http://meyerweb.com/eric/tools/css/reset/](http://meyerweb.com/eric/tools/css/reset/)
-* Font Awesome: [http://fontawesome.io/](http://fontawesome.io/)
-* jQuery: [http://jquery.com/](http://jquery.com/)
-* JS Beautifier: [https://github.com/einars/js-beautify](https://github.com/einars/js-beautify)
+* Bootstrap: [https://getbootstrap.com/](https://getbootstrap.com/)
+* CodeMirror: [https://codemirror.net/](https://codemirror.net/)
+* Eric Meyer's Reset CSS: [https://meyerweb.com/eric/tools/css/reset/](https://meyerweb.com/eric/tools/css/reset/)
+* Font Awesome: [https://fontawesome.com/](https://fontawesome.com/)
+* jQuery: [https://jquery.com/](https://jquery.com/)
+* JS Beautifier: [https://github.com/beautify-web/js-beautify](https://github.com/beautify-web/js-beautify)
 * mustache.js: [https://github.com/janl/mustache.js/](https://github.com/janl/mustache.js/)
-* Table Drag and Drop jQuery Plugin: [http://www.isocra.com/2008/02/table-drag-and-drop-jquery-plugin/](http://www.isocra.com/2008/02/table-drag-and-drop-jquery-plugin/)
+* Table Drag and Drop jQuery Plugin: [https://isocra.com/2008/02/table-drag-and-drop-jquery-plugin/](https://isocra.com/2008/02/table-drag-and-drop-jquery-plugin/)
 
 They should not be altered apart from to update to their latest versions for maintenance reasons.
 The latest versions of Bootstrap from Twitter or jQuery can be automatically merged into the repository using `gulp merge-bootstrap` or `gulp merge-jquery` respectively.
@@ -96,15 +86,15 @@ The latest versions of Bootstrap from Twitter or jQuery can be automatically mer
 
 The icons used in the extension are:
 
-* Font Awesome: [http://fontawesome.io/](http://fontawesome.io/)
-* Helveticons: [http://helveticons.ch/](http://helveticons.ch/)
+* Font Awesome: [https://fontawesome.com/](https://fontawesome.com/)
+* Helveticons: [https://hlvticons.ch/](https://hlvticons.ch/)
 * Icon Drawer classic set: [http://icondrawer.com/](http://icondrawer.com/)
 
 Any new icons used in the extension should come from these existing icon sets for consistency.
 
 ### Editor Configuration
 
-An [EditorConfig](http://editorconfig.org/) file is included to unify the coding style for different editors.
+An [EditorConfig](https://editorconfig.org/) file is included to unify the coding style for different editors.
 
 Acknowledgements
 ----------------
@@ -118,12 +108,12 @@ Author
 
 ### Chris Pederick
 
-* [http://chrispederick.com/](http://chrispederick.com/)
-* [http://twitter.com/chrispederick/](http://twitter.com/chrispederick/)
+* [https://chrispederick.com/](https://chrispederick.com/)
+* [https://social.lol/@chrispederick](https://social.lol/@chrispederick)
 
 License
 -------
 
 All files are distributed for free under the terms of the
-[GNU General Public License](http://www.gnu.org/licenses/gpl.txt).
+[GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.txt).
 This does not apply to the included libraries or icons mentioned in the Developer section which have their own individual licenses.

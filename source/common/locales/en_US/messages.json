@@ -83,7 +83,6 @@
 
   "disableJavaScript": { "message": "Disable JavaScript" },
   "disableNotifications": { "message": "Disable Notifications" },
-  "disablePlugins": { "message": "Disable Plugins" },
   "disablePopups": { "message": "Disable Popups" },
 
   "disableAllStyles": { "message": "Disable All Styles" },
@@ -274,7 +273,6 @@
   "disableImagesResult": { "message": "Images have been disabled." },
   "disableJavaScriptResult": { "message": "JavaScript has been disabled." },
   "disableNotificationsResult": { "message": "Notifications have been disabled." },
-  "disablePluginsResult": { "message": "Plugins have been disabled." },
   "disablePopupsResult": { "message": "Popups have been disabled." },
   "displayHiddenElementsSingleResult": { "message": "1 hidden element displayed." },
   "displayHiddenElementsMultipleResult": { "message": "$count$ hidden elements displayed.", "placeholders": { "count": { "content": "$1" } } },
@@ -297,7 +295,6 @@
   "enableImagesResult": { "message": "Images have been enabled." },
   "enableJavaScriptResult": { "message": "JavaScript has been enabled." },
   "enableNotificationsResult": { "message": "Notifications have been enabled." },
-  "enablePluginsResult": { "message": "Plugins have been enabled." },
   "enablePopupsResult": { "message": "Popups have been enabled." },
   "endPositionX": { "message": "End Position: X =" },
   "expandAll": { "message": "Expand all" },

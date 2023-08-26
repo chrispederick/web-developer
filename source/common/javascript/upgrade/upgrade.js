@@ -1,4 +1,4 @@
-var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-use-before-define
+var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-redeclare, no-use-before-define
 
 WebDeveloper.Upgrade = WebDeveloper.Upgrade || {};
 
@@ -21,7 +21,7 @@ WebDeveloper.Upgrade.fixContentSettings = function()
   // If content settings exists
   if(chrome.contentSettings)
   {
-    var settingTypes = ["cookies", "images", "javascript", "notifications", "plugins", "popups"];
+    var settingTypes = ["cookies", "images", "javascript", "notifications", "popups"];
 
     // Loop through the setting types
     for(var i = 0, l = settingTypes.length; i < l; i++)
