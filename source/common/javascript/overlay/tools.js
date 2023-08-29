@@ -21,7 +21,11 @@ WebDeveloper.Overlay.Tools.customTool = function()
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
+    if(featureItem.data("url").includes("dns")) {
+	    WebDeveloper.Overlay.openTab(featureItem.data("url") + encodeURIComponent(tab.url.split("/")[2].split("/")[0]));
+  } else {
     WebDeveloper.Overlay.openTab(featureItem.data("url") + encodeURIComponent(tab.url));
+  }
   });
 };
 
