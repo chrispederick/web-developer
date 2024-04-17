@@ -29,7 +29,17 @@ WebDeveloper.Miscellaneous.displayHiddenElements = function(documents)
     // While the tree walker has more nodes
     while((node = treeWalker.nextNode()) !== null)
     {
-      node.style.display = "";
+      node.style.setProperty("display", "revert", "important");
+
+      displayedElements++;
+    }
+
+    treeWalker = contentDocument.createTreeWalker(WebDeveloper.Common.getDocumentBodyElement(contentDocument), NodeFilter.SHOW_ELEMENT, WebDeveloper.Miscellaneous.invisibleNodeFilter, false);
+
+    // While the tree walker has more nodes
+    while((node = treeWalker.nextNode()) !== null)
+    {
+      node.style.setProperty("visibility", "visible", "important");
 
       displayedElements++;
     }
@@ -62,6 +72,30 @@ WebDeveloper.Miscellaneous.hiddenNodeFilter = function(node)
 
       // If this element has a display and tag name, is not a script or style and the display is set to none
       if(display && tagName && tagName.toLowerCase() != "script" && tagName.toLowerCase() != "style" && WebDeveloper.Common.getCSSText(display) == "none")
+      {
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    }
+  }
+
+  return NodeFilter.FILTER_SKIP;
+};
+
+// Filter for the invisible node tree walker
+WebDeveloper.Miscellaneous.invisibleNodeFilter = function(node)
+{
+  // If the node is set and is not a Web Developer node
+  if(node && (!node.hasAttribute("id") || node.getAttribute("id").indexOf("web-developer") !== 0))
+  {
+    var computedStyle = node.ownerDocument.defaultView.getComputedStyle(node, null);
+
+    // If the computed style is set
+    if(computedStyle)
+    {
+      var visibility = WebDeveloper.Common.getPropertyCSSValue(computedStyle, "visibility");
+
+      // If this element has a visibility and the visibility is set to collapse or hidden
+      if(visibility && (WebDeveloper.Common.getCSSText(visibility) == "collapse" || WebDeveloper.Common.getCSSText(visibility) == "hidden"))
       {
         return NodeFilter.FILTER_ACCEPT;
       }

@@ -3,47 +3,6 @@ var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-redeclare, no-u
 WebDeveloper.Overlay         = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.Cookies = WebDeveloper.Overlay.Cookies || {};
 
-$(function()
-{
-  var addCookieExpires   = $("#add-cookie-expires");
-  var addCookieHost      = $("#add-cookie-host");
-  var addCookieName      = $("#add-cookie-name");
-  var addCookiePath      = $("#add-cookie-path");
-  var addCookieValue     = $("#add-cookie-value");
-  var disableCookiesMenu = $("#disable-cookies");
-
-  disableCookiesMenu.append(WebDeveloper.Locales.getString("disableCookies")).on("click", WebDeveloper.Overlay.Cookies.toggleCookies);
-  $("#add-cookie").append(WebDeveloper.Locales.getString("addCookieMenu")).on("click", WebDeveloper.Overlay.Cookies.addCookie);
-  $("#delete-domain-cookies").append(WebDeveloper.Locales.getString("deleteDomainCookies")).on("click", WebDeveloper.Overlay.Cookies.deleteDomainCookies);
-  $("#delete-path-cookies").append(WebDeveloper.Locales.getString("deletePathCookies")).on("click", WebDeveloper.Overlay.Cookies.deletePathCookies);
-  $("#delete-session-cookies").append(WebDeveloper.Locales.getString("deleteSessionCookies")).on("click", WebDeveloper.Overlay.Cookies.deleteSessionCookies);
-  $("#view-cookie-information").append(WebDeveloper.Locales.getString("viewCookieInformation")).on("click", WebDeveloper.Overlay.Cookies.viewCookieInformation);
-
-  $("#add-cookie-cancel").on("click", WebDeveloper.Overlay.Cookies.cancelAddCookie);
-  $("#add-cookie-dialog").on("submit", function(event) { event.preventDefault(); });
-  $("#add-cookie-submit").on("click", WebDeveloper.Overlay.Cookies.submitAddCookie);
-
-  $("legend", $("#add-cookie-dialog")).text(WebDeveloper.Locales.getString("addCookie"));
-  $("#add-cookie-cancel").text(WebDeveloper.Locales.getString("cancel"));
-  $("#add-cookie-secure").after(WebDeveloper.Locales.getString("secureCookie"));
-  $("#add-cookie-session").after(WebDeveloper.Locales.getString("sessionCookie")).on("change", WebDeveloper.Overlay.Cookies.changeSession);
-  $("#add-cookie-submit").append(WebDeveloper.Locales.getString("add"));
-  $('[for="add-cookie-expires"]').text(WebDeveloper.Locales.getString("expires"));
-  $('[for="add-cookie-host"]').text(WebDeveloper.Locales.getString("host"));
-  $('[for="add-cookie-name"]').text(WebDeveloper.Locales.getString("name"));
-  $('[for="add-cookie-path"]').text(WebDeveloper.Locales.getString("path"));
-  $('[for="add-cookie-value"]').text(WebDeveloper.Locales.getString("value"));
-
-  addCookieExpires.attr("placeholder", WebDeveloper.Locales.getString("expiresPlaceholder"));
-  addCookieHost.attr("placeholder", WebDeveloper.Locales.getString("hostPlaceholder"));
-  addCookieName.attr("placeholder", WebDeveloper.Locales.getString("namePlaceholder"));
-  addCookiePath.attr("placeholder", WebDeveloper.Locales.getString("pathPlaceholder"));
-  addCookieValue.attr("placeholder", WebDeveloper.Locales.getString("valuePlaceholder"));
-  addCookieExpires.add(addCookieHost).add(addCookieName).add(addCookiePath).add(addCookieValue).on("keypress", WebDeveloper.Overlay.Cookies.addCookieKeyPress);
-
-  WebDeveloper.Overlay.updateContentSettingMenu(disableCookiesMenu, "cookies");
-});
-
 // Adds a cookie
 WebDeveloper.Overlay.Cookies.addCookie = function()
 {
@@ -54,19 +13,12 @@ WebDeveloper.Overlay.Cookies.addCookie = function()
     {
       chrome.tabs.sendMessage(tab.id, { type: "get-location-details" }, function(response)
       {
-        var addCookieDialog = $("#add-cookie-dialog");
-
-        $("#add-cookie-expires").val(WebDeveloper.Cookies.getDateTomorrow()).prop("disabled", false);
-        $("#add-cookie-host").val(response.host);
-        $("#add-cookie-path").val(response.path);
-        $("#add-cookie-value").focus();
-
-        WebDeveloper.Overlay.Cookies.resetAddDialog(addCookieDialog);
-
-        $(".tabbable, #confirmation, #notification").slideUp(WebDeveloper.Overlay.animationSpeed, function()
-        {
-          addCookieDialog.slideDown(WebDeveloper.Overlay.animationSpeed);
-        });
+        WebDeveloper.Overlay.Cookies.resetAddDialog(response);
+        WebDeveloper.Overlay.closeConfirmation();
+        WebDeveloper.Overlay.closeNotification();
+        document.querySelector(".tab-content").classList.add("d-none");
+        document.getElementById("add-cookie-dialog").classList.remove("d-none");
+        document.getElementById("add-cookie-name").focus();
       });
     }
   });
@@ -85,25 +37,29 @@ WebDeveloper.Overlay.Cookies.addCookieKeyPress = function(event)
 // Cancels adding a cookie
 WebDeveloper.Overlay.Cookies.cancelAddCookie = function()
 {
-  $("#add-cookie-dialog").slideUp(WebDeveloper.Overlay.animationSpeed, function()
-  {
-    $(".tabbable").slideDown(WebDeveloper.Overlay.animationSpeed);
-  });
+  document.getElementById("add-cookie-dialog").classList.add("d-none");
+  document.querySelector(".tab-content").classList.remove("d-none");
 };
 
 // Handles the cookie session setting being changed
 WebDeveloper.Overlay.Cookies.changeSession = function()
 {
-  var session = $(this);
+  var addCookieExpires = document.getElementById("add-cookie-expires");
 
   // If the session setting is checked
-  if(session.prop("checked"))
+  if(document.getElementById("add-cookie-session").checked)
   {
-    $("#add-cookie-expires").val("").prop("disabled", true);
+    addCookieExpires.disabled = true;
+    addCookieExpires.value    = "";
+
+    addCookieExpires.setAttribute("placeholder", "");
   }
   else
   {
-    $("#add-cookie-expires").val(WebDeveloper.Cookies.getDateTomorrow()).prop("disabled", false);
+    addCookieExpires.disabled = false;
+    addCookieExpires.value    = WebDeveloper.Cookies.getDateTomorrow();
+
+    addCookieExpires.setAttribute("placeholder", WebDeveloper.Locales.getString("expiresPlaceholder"));
   }
 };
 
@@ -189,7 +145,6 @@ WebDeveloper.Overlay.Cookies.getViewCookieInformationLocale = function()
 
   locale.atEndOfSession             = WebDeveloper.Locales.getString("atEndOfSession");
   locale.cancel                     = WebDeveloper.Locales.getString("cancel");
-  locale.cannotEdit                 = WebDeveloper.Locales.getString("cannotEdit");
   locale.cannotEditHTTPOnlyCookies  = WebDeveloper.Locales.getString("cannotEditHTTPOnlyCookies");
   locale.cannotEditLocalhostCookies = WebDeveloper.Locales.getString("cannotEditLocalhostCookies");
   locale.cookie                     = WebDeveloper.Locales.getString("cookie");
@@ -218,7 +173,6 @@ WebDeveloper.Overlay.Cookies.getViewCookieInformationLocale = function()
   locale.path                       = WebDeveloper.Locales.getString("path");
   locale.pathCannotBeEmpty          = WebDeveloper.Locales.getString("pathCannotBeEmpty");
   locale.pathPlaceholder            = WebDeveloper.Locales.getString("pathPlaceholder");
-  locale.property                   = WebDeveloper.Locales.getString("property");
   locale.save                       = WebDeveloper.Locales.getString("save");
   locale.secure                     = WebDeveloper.Locales.getString("secure");
   locale.secureCookie               = WebDeveloper.Locales.getString("secureCookie");
@@ -230,40 +184,116 @@ WebDeveloper.Overlay.Cookies.getViewCookieInformationLocale = function()
   return locale;
 };
 
+// Initializes the cookies overlay
+WebDeveloper.Overlay.Cookies.initialize = function()
+{
+  var addCookieCancel           = document.getElementById("add-cookie-cancel");
+  var addCookieDialog           = document.getElementById("add-cookie-dialog");
+  var addCookieExpires          = document.getElementById("add-cookie-expires");
+  var addCookieHost             = document.getElementById("add-cookie-host");
+  var addCookieMenu             = document.getElementById("add-cookie");
+  var addCookieName             = document.getElementById("add-cookie-name");
+  var addCookiePath             = document.getElementById("add-cookie-path");
+  var addCookieSubmit           = document.getElementById("add-cookie-submit");
+  var addCookieValue            = document.getElementById("add-cookie-value");
+  var deleteDomainCookiesMenu   = document.getElementById("delete-domain-cookies");
+  var deletePathCookiesMenu     = document.getElementById("delete-path-cookies");
+  var deleteSessionCookiesMenu  = document.getElementById("delete-session-cookies");
+  var disableCookiesMenu        = document.getElementById("disable-cookies");
+  var viewCookieInformationMenu = document.getElementById("view-cookie-information");
+
+  document.querySelector('[for="add-cookie-expires"]').append(WebDeveloper.Locales.getString("expires"));
+  document.querySelector('[for="add-cookie-host"]').append(WebDeveloper.Locales.getString("host"));
+  document.querySelector('[for="add-cookie-name"]').append(WebDeveloper.Locales.getString("name"));
+  document.querySelector('[for="add-cookie-path"]').append(WebDeveloper.Locales.getString("path"));
+  document.querySelector('[for="add-cookie-secure"]').append(WebDeveloper.Locales.getString("secureCookie"));
+  document.querySelector('[for="add-cookie-session"]').append(WebDeveloper.Locales.getString("sessionCookie"));
+  document.querySelector('[for="add-cookie-value"]').append(WebDeveloper.Locales.getString("value"));
+  addCookieCancel.append(WebDeveloper.Locales.getString("cancel"));
+  addCookieDialog.querySelector("legend").append(WebDeveloper.Locales.getString("addCookie"));
+  addCookieMenu.append(WebDeveloper.Locales.getString("addCookieMenu"));
+  addCookieSubmit.append(WebDeveloper.Locales.getString("add"));
+  deleteDomainCookiesMenu.append(WebDeveloper.Locales.getString("deleteDomainCookies"));
+  deletePathCookiesMenu.append(WebDeveloper.Locales.getString("deletePathCookies"));
+  deleteSessionCookiesMenu.append(WebDeveloper.Locales.getString("deleteSessionCookies"));
+  disableCookiesMenu.append(WebDeveloper.Locales.getString("disableCookies"));
+  viewCookieInformationMenu.append(WebDeveloper.Locales.getString("viewCookieInformation"));
+
+  addCookieExpires.setAttribute("placeholder", WebDeveloper.Locales.getString("expiresPlaceholder"));
+  addCookieHost.setAttribute("placeholder", WebDeveloper.Locales.getString("hostPlaceholder"));
+  addCookieName.setAttribute("placeholder", WebDeveloper.Locales.getString("namePlaceholder"));
+  addCookiePath.setAttribute("placeholder", WebDeveloper.Locales.getString("pathPlaceholder"));
+  addCookieValue.setAttribute("placeholder", WebDeveloper.Locales.getString("valuePlaceholder"));
+
+  document.getElementById("add-cookie-session").addEventListener("change", WebDeveloper.Overlay.Cookies.changeSession);
+  addCookieCancel.addEventListener("click", WebDeveloper.Overlay.Cookies.cancelAddCookie);
+  addCookieDialog.addEventListener("submit", function(event) { event.preventDefault(); });
+  addCookieExpires.addEventListener("keypress", WebDeveloper.Overlay.Cookies.addCookieKeyPress);
+  addCookieHost.addEventListener("keypress", WebDeveloper.Overlay.Cookies.addCookieKeyPress);
+  addCookieMenu.addEventListener("click", WebDeveloper.Overlay.Cookies.addCookie);
+  addCookieName.addEventListener("keypress", WebDeveloper.Overlay.Cookies.addCookieKeyPress);
+  addCookiePath.addEventListener("keypress", WebDeveloper.Overlay.Cookies.addCookieKeyPress);
+  addCookieSubmit.addEventListener("click", WebDeveloper.Overlay.Cookies.submitAddCookie);
+  addCookieValue.addEventListener("keypress", WebDeveloper.Overlay.Cookies.addCookieKeyPress);
+  deleteDomainCookiesMenu.addEventListener("click", WebDeveloper.Overlay.Cookies.deleteDomainCookies);
+  deletePathCookiesMenu.addEventListener("click", WebDeveloper.Overlay.Cookies.deletePathCookies);
+  deleteSessionCookiesMenu.addEventListener("click", WebDeveloper.Overlay.Cookies.deleteSessionCookies);
+  disableCookiesMenu.addEventListener("click", WebDeveloper.Overlay.Cookies.toggleCookies);
+  viewCookieInformationMenu.addEventListener("click", WebDeveloper.Overlay.Cookies.viewCookieInformation);
+
+  WebDeveloper.Overlay.updateContentSettingMenu(disableCookiesMenu, "cookies");
+};
+
 // Populates a cookie from a dialog
 WebDeveloper.Overlay.Cookies.populateCookieFromDialog = function()
 {
   var cookie = {};
 
-  cookie.host  = $("#add-cookie-host").val();
-  cookie.name  = $("#add-cookie-name").val();
-  cookie.path  = $("#add-cookie-path").val();
-  cookie.value = $("#add-cookie-value").val();
+  cookie.host  = document.getElementById("add-cookie-host").value.trim();
+  cookie.name  = document.getElementById("add-cookie-name").value.trim();
+  cookie.path  = document.getElementById("add-cookie-path").value.trim();
+  cookie.value = document.getElementById("add-cookie-value").value;
 
   // If the cookie is secure
-  if($("#add-cookie-secure").prop("checked"))
+  if(document.getElementById("add-cookie-secure").checked)
   {
     cookie.secure = true;
   }
 
   // If the cookie is a session cookie
-  if($("#add-cookie-session").prop("checked"))
+  if(document.getElementById("add-cookie-session").checked)
   {
     cookie.session = true;
   }
   else
   {
-    cookie.expires = $("#add-cookie-expires").val();
+    cookie.expires = document.getElementById("add-cookie-expires").value.trim();
   }
 
   return cookie;
 };
 
 // Resets the add cookie dialog
-WebDeveloper.Overlay.Cookies.resetAddDialog = function(addDialog)
+WebDeveloper.Overlay.Cookies.resetAddDialog = function(response)
 {
-  $(".has-error", addDialog).removeClass("has-error");
-  $(".help-block", addDialog).text("");
+  var addCookieExpires = document.getElementById("add-cookie-expires");
+  var addCookieHost    = document.getElementById("add-cookie-host");
+  var addCookieName    = document.getElementById("add-cookie-name");
+  var addCookiePath    = document.getElementById("add-cookie-path");
+
+  addCookieExpires.disabled                         = false;
+  addCookieExpires.value                            = WebDeveloper.Cookies.getDateTomorrow();
+  addCookieHost.value                               = response.host;
+  addCookieName.value                               = "";
+  addCookiePath.value                               = response.path;
+  document.getElementById("add-cookie-value").value = "";
+
+  addCookieExpires.setAttribute("placeholder", WebDeveloper.Locales.getString("expiresPlaceholder"));
+
+  addCookieExpires.classList.remove("is-invalid");
+  addCookieHost.classList.remove("is-invalid");
+  addCookieName.classList.remove("is-invalid");
+  addCookiePath.classList.remove("is-invalid");
 };
 
 // Adds a cookie
@@ -283,74 +313,88 @@ WebDeveloper.Overlay.Cookies.submitAddCookie = function()
 // Toggles cookies
 WebDeveloper.Overlay.Cookies.toggleCookies = function()
 {
-  WebDeveloper.Overlay.toggleContentSetting("cookies", $(this), "enableCookiesResult", "disableCookiesResult");
+  WebDeveloper.Overlay.toggleContentSetting("cookies", this, "enableCookiesResult", "disableCookiesResult");
 };
 
 // Returns true if the add dialog is valid
 WebDeveloper.Overlay.Cookies.validateAddDialog = function()
 {
-  var expires   = $("#add-cookie-expires");
-  var host      = $("#add-cookie-host");
-  var hostValue = host.val().trim();
-  var name      = $("#add-cookie-name");
-  var path      = $("#add-cookie-path");
+  var host      = document.getElementById("add-cookie-host");
+  var hostValue = host.value.trim();
+  var name      = document.getElementById("add-cookie-name");
+  var path      = document.getElementById("add-cookie-path");
   var valid     = true;
 
-  WebDeveloper.Overlay.Cookies.resetAddDialog($("#add-cookie-dialog"));
-
   // If the cookie name is not set
-  if(!name.val())
+  if(name.value.trim() == "")
   {
-    name.closest(".form-group").addClass("has-error");
-    name.next(".help-block").text(WebDeveloper.Locales.getString("nameCannotBeEmpty"));
+    document.getElementById("add-cookie-name-invalid").replaceChildren(WebDeveloper.Locales.getString("nameCannotBeEmpty"));
+    name.classList.add("is-invalid");
 
     valid = false;
   }
+  else
+  {
+    name.classList.remove("is-invalid");
+  }
 
   // If the cookie host is not set
-  if(!hostValue)
+  if(hostValue == "")
   {
-    host.closest(".form-group").addClass("has-error");
-    host.next(".help-block").text(WebDeveloper.Locales.getString("hostCannotBeEmpty"));
+    document.getElementById("add-cookie-host-invalid").replaceChildren(WebDeveloper.Locales.getString("hostCannotBeEmpty"));
+    host.classList.add("is-invalid");
 
     valid = false;
   }
   else if(hostValue == "localhost" || hostValue == ".localhost")
   {
-    host.closest(".form-group").addClass("has-error");
-    host.next(".help-block").html(WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("hostCannotBeLocalhost"));
+    document.getElementById("add-cookie-host-invalid").replaceChildren(WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("hostCannotBeLocalhost"));
+    host.classList.add("is-invalid");
 
     valid = false;
+  }
+  else
+  {
+    host.classList.remove("is-invalid");
   }
 
   // If the cookie path is not set
-  if(!path.val())
+  if(path.value.trim() == "")
   {
-    path.closest(".form-group").addClass("has-error");
-    path.next(".help-block").text(WebDeveloper.Locales.getString("pathCannotBeEmpty"));
+    document.getElementById("add-cookie-path-invalid").replaceChildren(WebDeveloper.Locales.getString("pathCannotBeEmpty"));
+    path.classList.add("is-invalid");
 
     valid = false;
   }
+  else
+  {
+    path.classList.remove("is-invalid");
+  }
 
   // If the cookie is not a session cookie
-  if(!$("#add-cookie-session").prop("checked"))
+  if(!document.getElementById("add-cookie-session").checked)
   {
-    var expiresValue = expires.val().trim();
+    var expires      = document.getElementById("add-cookie-expires");
+    var expiresValue = expires.value.trim();
 
     // If the cookie expires is not set
-    if(!expiresValue)
+    if(expiresValue == "")
     {
-      expires.closest(".form-group").addClass("has-error");
-      expires.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("expiresCannotBeEmpty"));
+      document.getElementById("add-cookie-expires-invalid").replaceChildren(WebDeveloper.Locales.getString("expiresCannotBeEmpty"));
+      expires.classList.add("is-invalid");
 
       valid = false;
     }
     else if(new Date(expiresValue) == "Invalid Date")
     {
-      expires.closest(".form-group").addClass("has-error");
-      expires.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("expiresNotValid"));
+      document.getElementById("add-cookie-expires-invalid").replaceChildren(WebDeveloper.Locales.getString("expiresNotValid"));
+      expires.classList.add("is-invalid");
 
       valid = false;
+    }
+    else
+    {
+      expires.classList.remove("is-invalid");
     }
   }
 
@@ -369,10 +413,19 @@ WebDeveloper.Overlay.Cookies.viewCookieInformation = function()
       {
         chrome.tabs.sendMessage(tab.id, { allCookies: WebDeveloper.Overlay.Cookies.convertCookies(allCookies), type: "get-cookies" }, function(data)
         {
-          chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("/generated/view-cookie-information.html"), tab.index, data, WebDeveloper.Overlay.Cookies.getViewCookieInformationLocale());
-          WebDeveloper.Overlay.close();
+          WebDeveloper.Overlay.openGeneratedTab(chrome.runtime.getURL("/generated/view-cookie-information.html"), tab.index, data, WebDeveloper.Overlay.Cookies.getViewCookieInformationLocale());
         });
       });
     }
   });
 };
+
+// If the document is still loading
+if(document.readyState === "loading")
+{
+  document.addEventListener("DOMContentLoaded", WebDeveloper.Overlay.Cookies.initialize);
+}
+else
+{
+  WebDeveloper.Overlay.Cookies.initialize();
+}

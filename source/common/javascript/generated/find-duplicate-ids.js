@@ -9,12 +9,11 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var contentDocument     = null;
   var documents           = data.documents;
   var duplicateIds        = locale.duplicateIds;
-  var duplicateIdTemplate = $("#duplicate-id").html();
+  var duplicateIdTemplate = document.getElementById("duplicate-id").innerHTML;
   var idDescription       = null;
   var ids                 = null;
   var idsLength           = null;
   var list                = null;
-  var listElement         = null;
   var url                 = null;
 
   WebDeveloper.Generated.emptyContent();
@@ -42,13 +41,12 @@ WebDeveloper.Generated.initialize = function(data, locale)
     // If there are duplicate ids
     if(idsLength > 0)
     {
-      list        = document.createElement("ol");
-      listElement = $(list);
+      list = document.createElement("ol");
 
       // Loop through the ids
       for(var j = 0; j < idsLength; j++)
       {
-        listElement.append(Mustache.render(duplicateIdTemplate, { id: ids[j], url: url }));
+        list.insertAdjacentHTML("beforeend", Mustache.render(duplicateIdTemplate, { id: ids[j], url: url }));
       }
 
       content.appendChild(list);

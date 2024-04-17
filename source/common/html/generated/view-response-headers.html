@@ -3,33 +3,31 @@
 
 <head>
   <meta charset="utf-8">
-  <title>@name@</title>
-  <link href="/common/style-sheets/bootstrap.css" rel="stylesheet">
-  <link href="/common/style-sheets/generated.css" rel="stylesheet">
   <meta name="viewport" content="initial-scale=1.0,width=device-width">
-  <link href="/common/images/logos/favicon.ico" rel="shortcut icon">
+  <title>@name@</title>
+  <link href="/lib/bootstrap/bootstrap.css" rel="stylesheet">
+  <link href="/common/style-sheets/generated.css" rel="stylesheet">
+  <link href="/svg/logos/color/logo.svg" rel="shortcut icon">
 </head>
 
 <body>
 
-<div class="navbar navbar-fixed-top navbar-inverse">
+<nav class="bg-dark fixed-top navbar navbar-expand-lg" data-bs-theme="dark">
   <div class="container-fluid">
-    <div class="navbar-header">
-      <a href="#content" class="navbar-brand">@name@</a>
-    </div>
-    <p class="navbar-text pull-right">@name@</p>
+    <a href="#content" class="navbar-brand">
+      <img src="/svg/logos/color/logo.svg" width="24" height="24" alt="Web Developer" class="align-text-top d-inline-block">
+      <span>@name@</span>
+    </a>
   </div>
-</div>
+</nav>
 
 <div id="content" class="container-fluid">
-  <div class="active progress progress-striped">
-    <div class="progress-bar progress-bar-info"></div>
+  <div class="progress">
+    <div class="bg-info progress-bar progress-bar-animated progress-bar-striped w-50"></div>
   </div>
 </div>
 
-<script src="/common/javascript/jquery/jquery.js"></script>
-<script src="/common/javascript/bootstrap/collapse.js"></script>
-<script src="/common/javascript/bootstrap/dropdown.js"></script>
+<script src="/lib/bootstrap/bootstrap.js"></script>
 <script src="javascript/common.js"></script>
 <script src="javascript/view-response-headers.js"></script>
 

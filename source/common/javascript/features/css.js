@@ -214,12 +214,12 @@ WebDeveloper.CSS.toggleMediaTypeStyles = function(mediaType, display, documents)
             media.appendMedium("web-developer-deleted-screen");
           }
         }
-        else if(WebDeveloper.CSS.isMediaStyleSheet(styleSheet, "web-developer-appended-screen"))
+        else if(WebDeveloper.CSS.isMediaStyleSheet(styleSheet, "web-developer-appended-screen") && media.length != 0)
         {
           media.deleteMedium("web-developer-appended-screen");
           media.deleteMedium("screen");
         }
-        else if(WebDeveloper.CSS.isMediaStyleSheet(styleSheet, "web-developer-deleted-screen"))
+        else if(WebDeveloper.CSS.isMediaStyleSheet(styleSheet, "web-developer-deleted-screen") && media.length != 0)
         {
           media.appendMedium("screen");
           media.deleteMedium("web-developer-deleted-screen");

@@ -3,54 +3,49 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0,width=device-width">
   <title>@name@</title>
-  <link href="/common/style-sheets/bootstrap.css" rel="stylesheet">
+  <link href="/lib/bootstrap/bootstrap.css" rel="stylesheet">
   <link href="/common/style-sheets/generated.css" rel="stylesheet">
   <link href="view-image-information.css" rel="stylesheet">
-  <meta name="viewport" content="initial-scale=1.0,width=device-width">
-  <link href="/common/images/logos/favicon.ico" rel="shortcut icon">
+  <link href="/svg/logos/color/logo.svg" rel="shortcut icon">
 </head>
 
 <body>
 
-<div class="navbar navbar-fixed-top navbar-inverse">
+<nav class="bg-dark fixed-top navbar navbar-expand-lg" data-bs-theme="dark">
   <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a href="#content" class="navbar-brand">@name@</a>
-    </div>
-
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li id="documents-dropdown" class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+    <a href="#content" class="navbar-brand">
+      <img src="/svg/logos/color/logo.svg" width="24" height="24" alt="Web Developer" class="align-text-top d-inline-block">
+      <span>@name@</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-target="#navbar-collapse" data-bs-toggle="collapse">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbar-collapse" class="collapse navbar-collapse">
+      <ul class="me-auto navbar-nav">
+        <li id="documents-dropdown" class="dropdown nav-item">
+          <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown"></a>
           <ul class="dropdown-menu"></ul>
         </li>
-        <li id="images-dropdown" class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+        <li id="images-dropdown" class="dropdown nav-item">
+          <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown"></a>
           <ul class="dropdown-menu"></ul>
         </li>
-        <li><a href="#" id="web-developer-collapse-all"></a></li>
-        <li><a href="#" id="web-developer-expand-all"></a></li>
+        <li class="nav-item"><a href="#" id="web-developer-collapse-all" class="icon-link nav-link"><svg class="bi"><use href="/svg/icons/icons.svg#s-delete"></svg></a></li>
+        <li class="nav-item"><a href="#" id="web-developer-expand-all" class="icon-link nav-link"><svg class="bi"><use href="/svg/icons/icons.svg#s-add"></svg></a></li>
       </ul>
-      <p class="navbar-text pull-right">@name@</p>
     </div>
   </div>
-</div>
+</nav>
 
 <div id="content" class="container-fluid">
-  <div class="active progress progress-striped">
-    <div class="progress-bar progress-bar-info"></div>
+  <div class="progress">
+    <div class="bg-info progress-bar progress-bar-animated progress-bar-striped w-50"></div>
   </div>
 </div>
 
-<script src="/common/javascript/jquery/jquery.js"></script>
-<script src="/common/javascript/bootstrap/collapse.js"></script>
-<script src="/common/javascript/bootstrap/dropdown.js"></script>
+<script src="/lib/bootstrap/bootstrap.js"></script>
 <script src="javascript/common.js"></script>
 <script src="javascript/view-image-information.js"></script>
 

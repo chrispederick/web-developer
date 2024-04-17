@@ -13,9 +13,10 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var metaTagDescription  = null;
   var metaTagsDescription = locale.metaTags;
   var metaTagsLength      = null;
-  var metaTagsTemplate    = $("#meta-tags").html();
+  var metaTagsTemplate    = document.getElementById("meta-tags").innerHTML;
   var table               = null;
   var tableContainer      = null;
+  var tableWrapper        = document.createElement("div");
 
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.localizeHeader(locale);
@@ -53,14 +54,16 @@ WebDeveloper.Generated.initialize = function(data, locale)
       childElement.appendChild(document.createTextNode(locale.content));
       element.appendChild(childElement);
       tableContainer.appendChild(element);
-      table.setAttribute("class", "table table-striped");
       table.appendChild(tableContainer);
 
       tableContainer = document.createElement("tbody");
 
-      $(tableContainer).append(Mustache.render(metaTagsTemplate, contentDocument));
+      tableContainer.insertAdjacentHTML("beforeend", Mustache.render(metaTagsTemplate, contentDocument));
       table.appendChild(tableContainer);
-      content.appendChild(table);
+      table.setAttribute("class", "table table-borderless table-striped");
+      tableWrapper.appendChild(table);
+      tableWrapper.setAttribute("class", "table-responsive");
+      content.appendChild(tableWrapper);
     }
 
     WebDeveloper.Generated.addSeparator();

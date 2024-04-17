@@ -8,7 +8,8 @@ WebDeveloper.EditCSS.updateFrequency = 500;
 // Adds a tab
 WebDeveloper.EditCSS.addTab = function(title, css, tabs, panels, position, contentDocument)
 {
-  var active = "";
+  var active    = "";
+  var templates = "";
 
   if(position == 1)
   {
@@ -16,11 +17,10 @@ WebDeveloper.EditCSS.addTab = function(title, css, tabs, panels, position, conte
   }
 
   // Get the edit CSS tab templates
-  chrome.runtime.sendMessage({ active: active, css: css, position: position, title: title, type: "get-edit-css-tab-templates" }, function(response)
-  {
-    WebDeveloper.Common.appendHTML(response.panel, panels, contentDocument);
-    WebDeveloper.Common.appendHTML(response.tab, tabs, contentDocument);
-  });
+  templates = WebDeveloper.EditCSS.getEditCSSTabTemplates({ active: active, css: css, position: position, title: title });
+
+  WebDeveloper.Common.appendHTML(templates.panel, panels, contentDocument);
+  WebDeveloper.Common.appendHTML(templates.tab, tabs, contentDocument);
 };
 
 // Applies the CSS
@@ -86,9 +86,16 @@ WebDeveloper.EditCSS.editCSS = function(edit, contentDocument, locale)
   // If editing the CSS
   if(edit)
   {
+    var dashboardPanel = null;
+    var templates      = WebDeveloper.EditCSS.getEditCSSDashboardTemplates({ dashboardTitle: locale.dashboardTitle, tabId: "edit-css", title: locale.editCSS });
+
     WebDeveloper.EditCSS.contentDocument = contentDocument;
 
-    WebDeveloper.EditCSS.loadDashboardTemplates(locale);
+    dashboardPanel = WebDeveloper.Dashboard.openDashboardTab("edit-css", locale.editCSS, WebDeveloper.EditCSS.contentDocument, templates);
+
+    WebDeveloper.EditCSS.retrieveCSS(dashboardPanel, templates.editCSS, locale);
+    WebDeveloper.CSS.toggleAllStyleSheets(true, WebDeveloper.EditCSS.contentDocument);
+    WebDeveloper.EditCSS.update();
   }
   else
   {
@@ -100,6 +107,30 @@ WebDeveloper.EditCSS.editCSS = function(edit, contentDocument, locale)
 
     WebDeveloper.EditCSS.contentDocument = null;
   }
+};
+
+// Returns the edit CSS dashboard HTML template
+WebDeveloper.EditCSS.getEditCSSDashboardTemplates = function(parameters)
+{
+  var dashboardTemplates = {};
+
+  dashboardTemplates.dashboard = '<div id="web-developer-dashboard-resizer">&bull;</div><h1 id="web-developer-dashboard-title" class="text-muted">' + parameters.dashboardTitle + '</h1><ul id="web-developer-dashboard-tabs" class="nav nav-pills"></ul><div id="web-developer-dashboard-panels" class="tab-content"></div>';
+  dashboardTemplates.editCSS   = '<ul id="web-developer-edit-css-tabs" class="nav nav-tabs"></ul><div id="web-developer-edit-css-panels" class="tab-content"></div>';
+  dashboardTemplates.panel     = '<div id="' + parameters.tabId + '-panel" class="tab-pane active"></div>';
+  dashboardTemplates.tab       = '<li id="' + parameters.tabId + '-tab" class="nav-item"><a href="#' + parameters.tabId + '-panel" class="active nav-link" data-bs-target="#' + parameters.tabId + '-panel" data-bs-toggle="pill">' + parameters.title + "</a></li>";
+
+  return dashboardTemplates;
+};
+
+// Returns the edit CSS tab HTML template
+WebDeveloper.EditCSS.getEditCSSTabTemplates = function(parameters)
+{
+  var tabTemplates = {};
+
+  tabTemplates.panel = '<div id="edit-css-panel-' + parameters.position + '" class="tab-pane ' + parameters.active + '"><textarea class="form-control">' + parameters.css + "</textarea></div>";
+  tabTemplates.tab   = '<li id="edit-css-tab-' + parameters.position + '" class="nav-item"><a href="#edit-css-panel-' + parameters.position + '" class="nav-link ' + parameters.active + '" data-bs-target="#edit-css-panel-' + parameters.position + '" data-bs-toggle="tab">' + parameters.title + "</a></li>";
+
+  return tabTemplates;
 };
 
 // Returns the styles containers
@@ -121,28 +152,6 @@ WebDeveloper.EditCSS.getStylesContainers = function()
 WebDeveloper.EditCSS.getStylesFromContainer = function(stylesContainer)
 {
   return stylesContainer.value;
-};
-
-// Loads the dashboard templates
-WebDeveloper.EditCSS.loadDashboardTemplates = function(locale)
-{
-  // Get the dashboard templates
-  chrome.runtime.sendMessage({ dashboardTitle: locale.dashboardTitle, tabId: "edit-css", title: locale.editCSS, type: "get-edit-css-dashboard-templates" }, function(response)
-  {
-    // If the dashboard template was returned - sometimes this fails
-    if(response.dashboard)
-    {
-      var dashboardPanel = WebDeveloper.Dashboard.openDashboardTab("edit-css", locale.editCSS, WebDeveloper.EditCSS.contentDocument, response);
-
-      WebDeveloper.EditCSS.retrieveCSS(dashboardPanel, response.editCSS, locale);
-      WebDeveloper.CSS.toggleAllStyleSheets(true, WebDeveloper.EditCSS.contentDocument);
-      WebDeveloper.EditCSS.update();
-    }
-    else
-    {
-      WebDeveloper.EditCSS.loadDashboardTemplates(WebDeveloper.EditCSS.contentDocument, locale);
-    }
-  });
 };
 
 // Resets a document
@@ -171,7 +180,6 @@ WebDeveloper.EditCSS.retrieveCSS = function(dashboardPanel, editCSSPanel, locale
 
   dashboardPanel.innerHTML = editCSSPanel;
 
-  // Get the style sheet content
   chrome.runtime.sendMessage({ errorMessage: "/* " + locale.couldNotLoadCSS + " */", type: "get-url-contents", urls: documentCSS.styleSheets }, function(response)
   {
     var dashboardDocument = WebDeveloper.Dashboard.getDashboard(WebDeveloper.EditCSS.contentDocument).contentDocument;

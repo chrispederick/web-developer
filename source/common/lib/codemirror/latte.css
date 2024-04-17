@@ -1,0 +1,109 @@
+div.cm-s-ctp-latte.CodeMirror {
+  --bg0: #eff1f5;
+  --bg1: #8c8fa1;
+  --bg4: #9ca0b0;
+  --fg: #4c4f69;
+  --fg3: #6c6f85;
+  --gray: #5c5f77;
+  --blue: #1e66f5;
+  --yellow: #df8e1d;
+  --aqua: #1e66f5;
+  --orange: #fe640b;
+  --primary-bg: #eff1f5;
+  --current-line: #ccd0da;
+  --selection: #acb0be;
+  --atom: #7287fd;
+  --cursor: #8c8fa1;
+  --keyword: #d20f39;
+  --operator: #04a5e5;
+  --number: #fe640b;
+  --definition: #1e66f5;
+  --string: #40a02b;
+}
+
+.cm-s-ctp-latte.CodeMirror,
+.cm-s-ctp-latte .CodeMirror-gutters {
+  background-color: var(--primary-bg);
+  color: var(--fg3);
+}
+.cm-s-ctp-latte .CodeMirror-gutters {
+  background: var(--primary-bg);
+  border-right: 0px;
+}
+.cm-s-ctp-latte .CodeMirror-linenumber {
+  color: var(--bg4);
+}
+.cm-s-ctp-latte .CodeMirror-cursor {
+  border-left: 1px solid var(--fg);
+}
+.cm-s-ctp-latte.cm-fat-cursor .CodeMirror-cursor {
+  background-color: var(--cursor) !important;
+}
+.cm-s-ctp-latte .cm-animate-fat-cursor {
+  background-color: var(--cursor) !important;
+}
+.cm-s-ctp-latte div.CodeMirror-selected {
+  background: var(--selection);
+}
+.cm-s-ctp-latte span.cm-meta {
+  color: var(--blue);
+}
+.cm-s-ctp-latte span.cm-comment {
+  color: var(--gray);
+}
+.cm-s-ctp-latte span.cm-number {
+  color: var(--number);
+}
+.cm-s-ctp-latte span.cm-atom {
+  color: var(--atom);
+}
+.cm-s-ctp-latte span.cm-keyword {
+  color: var(--keyword);
+}
+.cm-s-ctp-latte span.cm-variable {
+  color: var(--fg);
+}
+.cm-s-ctp-latte span.cm-variable-2 {
+  color: var(--fg);
+}
+.cm-s-ctp-latte span.cm-variable-3,
+.cm-s-ctp-latte .cm-s-gruvbox-dark span.cm-type {
+  color: var(--yellow);
+}
+.cm-s-ctp-latte span.cm-operator {
+  color: var(--operator);
+}
+.cm-s-ctp-latte span.cm-callee {
+  color: var(--fg);
+}
+.cm-s-ctp-latte span.cm-def {
+  color: var(--definition);
+}
+.cm-s-ctp-latte span.cm-property {
+  color: var(--fg);
+}
+.cm-s-ctp-latte span.cm-string {
+  color: var(--string);
+}
+.cm-s-ctp-latte span.cm-string-2 {
+  color: var(--aqua);
+}
+.cm-s-ctp-latte span.cm-qualifier {
+  color: var(--aqua);
+}
+.cm-s-ctp-latte span.cm-attribute {
+  color: var(--aqua);
+}
+.cm-s-ctp-latte .CodeMirror-activeline-background {
+  background: var(--current-line);
+}
+.cm-s-ctp-latte .CodeMirror-matchingbracket {
+  background: var(--gray);
+  color: var(--bg0) !important;
+}
+.cm-s-ctp-latte span.cm-builtin {
+  color: var(--orange);
+}
+.cm-s-ctp-latte span.cm-tag {
+  color: var(--orange);
+}

@@ -3,45 +3,17 @@ var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-redeclare, no-u
 WebDeveloper.Overlay             = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.Information = WebDeveloper.Overlay.Information || {};
 
-$(function()
-{
-  $("#display-abbreviations").append(WebDeveloper.Locales.getString("displayAbbreviations")).on("click", WebDeveloper.Overlay.Information.displayAbbreviations);
-  $("#display-access-keys").append(WebDeveloper.Locales.getString("displayAccessKeys")).on("click", WebDeveloper.Overlay.Information.displayAccessKeys);
-  $("#display-anchors").append(WebDeveloper.Locales.getString("displayAnchors")).on("click", WebDeveloper.Overlay.Information.displayAnchors);
-  $("#display-aria-roles").append(WebDeveloper.Locales.getString("displayARIARoles")).on("click", WebDeveloper.Overlay.Information.displayARIARoles);
-  $("#display-div-dimensions").append(WebDeveloper.Locales.getString("displayDivDimensions")).on("click", WebDeveloper.Overlay.Information.displayDivDimensions);
-  $("#display-div-order").append(WebDeveloper.Locales.getString("displayDivOrder")).on("click", WebDeveloper.Overlay.Information.displayDivOrder);
-  $("#display-element-information").append(WebDeveloper.Locales.getString("displayElementInformation")).on("click", WebDeveloper.Overlay.Information.displayElementInformation);
-  $("#display-id-class-details").append(WebDeveloper.Locales.getString("displayIdClassDetails")).on("click", WebDeveloper.Overlay.Information.displayIdClassDetails);
-  $("#display-link-details").append(WebDeveloper.Locales.getString("displayLinkDetails")).on("click", WebDeveloper.Overlay.Information.displayLinkDetails);
-  $("#display-object-information").append(WebDeveloper.Locales.getString("displayObjectInformation")).on("click", WebDeveloper.Overlay.Information.displayObjectInformation);
-  $("#display-stack-levels").append(WebDeveloper.Locales.getString("displayStackLevels")).on("click", WebDeveloper.Overlay.Information.displayStackLevels);
-  $("#display-tab-index").append(WebDeveloper.Locales.getString("displayTabIndex")).on("click", WebDeveloper.Overlay.Information.displayTabIndex);
-  $("#display-table-depth").append(WebDeveloper.Locales.getString("displayTableDepth")).on("click", WebDeveloper.Overlay.Information.displayTableDepth);
-  $("#display-table-information").append(WebDeveloper.Locales.getString("displayTableInformation")).on("click", WebDeveloper.Overlay.Information.displayTableInformation);
-  $("#display-title-attributes").append(WebDeveloper.Locales.getString("displayTitleAttributes")).on("click", WebDeveloper.Overlay.Information.displayTitleAttributes);
-  $("#display-topographic-information").append(WebDeveloper.Locales.getString("displayTopographicInformation")).on("click", WebDeveloper.Overlay.Information.displayTopographicInformation);
-  $("#find-duplicate-ids").append(WebDeveloper.Locales.getString("findDuplicateIds")).on("click", WebDeveloper.Overlay.Information.findDuplicateIds);
-  $("#view-anchor-information").append(WebDeveloper.Locales.getString("viewAnchorInformation")).on("click", WebDeveloper.Overlay.Information.viewAnchorInformation);
-  $("#view-color-information").append(WebDeveloper.Locales.getString("viewColorInformation")).on("click", WebDeveloper.Overlay.Information.viewColorInformation);
-  $("#view-document-outline").append(WebDeveloper.Locales.getString("viewDocumentOutline")).on("click", WebDeveloper.Overlay.Information.viewDocumentOutline);
-  $("#view-link-information").append(WebDeveloper.Locales.getString("viewLinkInformation")).on("click", WebDeveloper.Overlay.Information.viewLinkInformation);
-  $("#view-meta-tag-information").append(WebDeveloper.Locales.getString("viewMetaTagInformation")).on("click", WebDeveloper.Overlay.Information.viewMetaTagInformation);
-  $("#view-javascript").append(WebDeveloper.Locales.getString("viewJavaScript")).on("click", WebDeveloper.Overlay.Information.viewJavaScript);
-  $("#view-response-headers").append(WebDeveloper.Locales.getString("viewResponseHeaders")).on("click", WebDeveloper.Overlay.Information.viewResponseHeaders);
-});
-
 // Displays the abbreviations on a page
 WebDeveloper.Overlay.Information.displayAbbreviations = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayAbbreviations([document]);");
+      WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Information.displayAbbreviations([document]); });
     }
   });
 };
@@ -49,16 +21,16 @@ WebDeveloper.Overlay.Information.displayAbbreviations = function()
 // Displays the access keys on a page
 WebDeveloper.Overlay.Information.displayAccessKeys = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayAccessKeys(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Information.displayAccessKeys(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -67,16 +39,16 @@ WebDeveloper.Overlay.Information.displayAccessKeys = function()
 // Displays the anchors on a page
 WebDeveloper.Overlay.Information.displayAnchors = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayAnchors(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Information.displayAnchors(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -85,14 +57,14 @@ WebDeveloper.Overlay.Information.displayAnchors = function()
 // Displays the ARIA roles on a page
 WebDeveloper.Overlay.Information.displayARIARoles = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayARIARoles([document]);");
+      WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Information.displayARIARoles([document]); });
     }
   });
 };
@@ -100,21 +72,21 @@ WebDeveloper.Overlay.Information.displayARIARoles = function()
 // Displays the dimensions for divs on a page
 WebDeveloper.Overlay.Information.displayDivDimensions = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var locale = "";
+      var locale = {};
 
-      locale += "'height': '" + WebDeveloper.Locales.getString("height") + "',";
-      locale += "'width': '" + WebDeveloper.Locales.getString("width") + "'";
+      locale.height = WebDeveloper.Locales.getString("height");
+      locale.width  = WebDeveloper.Locales.getString("width");
 
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayDivDimensions(" + !enabled + ", [document], {" + locale + "});");
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled, featureLocale) { WebDeveloper.Information.displayDivDimensions(!featureEnabled, [document], featureLocale); }, [enabled, locale]);
       });
     }
   });
@@ -123,16 +95,16 @@ WebDeveloper.Overlay.Information.displayDivDimensions = function()
 // Displays the order of the divs on a page
 WebDeveloper.Overlay.Information.displayDivOrder = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayDivOrder(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Information.displayDivOrder(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -141,28 +113,28 @@ WebDeveloper.Overlay.Information.displayDivOrder = function()
 // Displays information about an element
 WebDeveloper.Overlay.Information.displayElementInformation = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var locale = "";
+      var locale = {};
 
-      locale += "'ancestors': '" + WebDeveloper.Locales.getString("ancestors") + "',";
-      locale += "'children': '" + WebDeveloper.Locales.getString("children") + "',";
-      locale += "'dashboardTitle': '" + WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("dashboard") + "',";
-      locale += "'dom': '" + WebDeveloper.Locales.getString("dom") + "',";
-      locale += "'elementInformation': '" + WebDeveloper.Locales.getString("elementInformation") + "',";
-      locale += "'layout': '" + WebDeveloper.Locales.getString("layout") + "',";
-      locale += "'position': '" + WebDeveloper.Locales.getString("position") + "',";
-      locale += "'selectAnElementDisplayInformation': '" + WebDeveloper.Locales.getString("selectAnElementDisplayInformation") + "',";
-      locale += "'text': '" + WebDeveloper.Locales.getString("text") + "'";
+      locale.ancestors                         = WebDeveloper.Locales.getString("ancestors");
+      locale.children                          = WebDeveloper.Locales.getString("children");
+      locale.dashboardTitle                    = WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("dashboard");
+      locale.dom                               = WebDeveloper.Locales.getString("dom");
+      locale.elementInformation                = WebDeveloper.Locales.getString("elementInformation");
+      locale.layout                            = WebDeveloper.Locales.getString("layout");
+      locale.position                          = WebDeveloper.Locales.getString("position");
+      locale.selectAnElementDisplayInformation = WebDeveloper.Locales.getString("selectAnElementDisplayInformation");
+      locale.text                              = WebDeveloper.Locales.getString("text");
 
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/dashboard/javascript/dashboard.js", "WebDeveloper.ElementInformation.initialize(" + !enabled + ", document, {" + locale + "});", true);
+        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/dashboard/javascript/dashboard.js", function(featureEnabled, featureLocale) { WebDeveloper.ElementInformation.initialize(!featureEnabled, document, featureLocale); }, [enabled, locale]);
       });
     }
   });
@@ -171,16 +143,16 @@ WebDeveloper.Overlay.Information.displayElementInformation = function()
 // Displays the id and class details for a page
 WebDeveloper.Overlay.Information.displayIdClassDetails = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayIdClassDetails(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Information.displayIdClassDetails(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -189,14 +161,14 @@ WebDeveloper.Overlay.Information.displayIdClassDetails = function()
 // Displays the details for the links on a page
 WebDeveloper.Overlay.Information.displayLinkDetails = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayLinkDetails([document]);");
+      WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Information.displayLinkDetails([document]); });
     }
   });
 };
@@ -204,16 +176,16 @@ WebDeveloper.Overlay.Information.displayLinkDetails = function()
 // Displays the information for objects on a page
 WebDeveloper.Overlay.Information.displayObjectInformation = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayObjectInformation(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Information.displayObjectInformation(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -222,16 +194,16 @@ WebDeveloper.Overlay.Information.displayObjectInformation = function()
 // Displays the stack levels on a page
 WebDeveloper.Overlay.Information.displayStackLevels = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayStackLevels(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Information.displayStackLevels(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -240,16 +212,16 @@ WebDeveloper.Overlay.Information.displayStackLevels = function()
 // Displays the tab indices on a page
 WebDeveloper.Overlay.Information.displayTabIndex = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayTabIndex(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Information.displayTabIndex(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -258,16 +230,16 @@ WebDeveloper.Overlay.Information.displayTabIndex = function()
 // Displays the depth of all tables on a page
 WebDeveloper.Overlay.Information.displayTableDepth = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayTableDepth(" + !enabled + ", [document], '" + WebDeveloper.Locales.getString("depth") + "');");
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled, depth) { WebDeveloper.Information.displayTableDepth(!featureEnabled, [document], depth); }, [enabled, WebDeveloper.Locales.getString("depth")]);
       });
     }
   });
@@ -276,16 +248,16 @@ WebDeveloper.Overlay.Information.displayTableDepth = function()
 // Displays the information for tables on a page
 WebDeveloper.Overlay.Information.displayTableInformation = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayTableInformation(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Information.displayTableInformation(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -294,16 +266,16 @@ WebDeveloper.Overlay.Information.displayTableInformation = function()
 // Displays the title attributes on a page
 WebDeveloper.Overlay.Information.displayTitleAttributes = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayTitleAttributes(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Information.displayTitleAttributes(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -312,14 +284,14 @@ WebDeveloper.Overlay.Information.displayTitleAttributes = function()
 // Displays the topographic information for a page
 WebDeveloper.Overlay.Information.displayTopographicInformation = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Information.displayTopographicInformation([document]);");
+      WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Information.displayTopographicInformation([document]); });
     }
   });
 };
@@ -339,8 +311,7 @@ WebDeveloper.Overlay.Information.findDuplicateIds = function()
         locale.duplicateId  = WebDeveloper.Locales.getString("duplicateId");
         locale.duplicateIds = WebDeveloper.Locales.getString("duplicateIds");
 
-        chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("/generated/find-duplicate-ids.html"), tab.index, data, locale);
-        WebDeveloper.Overlay.close();
+        WebDeveloper.Overlay.openGeneratedTab(chrome.runtime.getURL("/generated/find-duplicate-ids.html"), tab.index, data, locale);
       });
     }
   });
@@ -438,10 +409,89 @@ WebDeveloper.Overlay.Information.getViewResponseHeadersLocale = function()
   return locale;
 };
 
-// Toggles a feature on a tab
-WebDeveloper.Overlay.Information.toggleFeatureOnTab = function(featureItem, tab, scriptCode)
+// Initializes the information overlay
+WebDeveloper.Overlay.Information.initialize = function()
 {
-  WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/features/javascript/information.js", scriptCode);
+  var displayAbbreviationsMenu          = document.getElementById("display-abbreviations");
+  var displayAccessKeysMenu             = document.getElementById("display-access-keys");
+  var displayAnchorsMenu                = document.getElementById("display-anchors");
+  var displayARIARolesMenu              = document.getElementById("display-aria-roles");
+  var displayDivDimensionsMenu          = document.getElementById("display-div-dimensions");
+  var displayDivOrderMenu               = document.getElementById("display-div-order");
+  var displayElementInformationMenu     = document.getElementById("display-element-information");
+  var displayIdClassDetailsMenu         = document.getElementById("display-id-class-details");
+  var displayLinkDetailsMenu            = document.getElementById("display-link-details");
+  var displayObjectInformationMenu      = document.getElementById("display-object-information");
+  var displayStackLevelsMenu            = document.getElementById("display-stack-levels");
+  var displayTabIndexMenu               = document.getElementById("display-tab-index");
+  var displayTableDepthMenu             = document.getElementById("display-table-depth");
+  var displayTableInformationMenu       = document.getElementById("display-table-information");
+  var displayTitleAttributesMenu        = document.getElementById("display-title-attributes");
+  var displayTopographicInformationMenu = document.getElementById("display-topographic-information");
+  var findDuplicateIdsMenu              = document.getElementById("find-duplicate-ids");
+  var viewAnchorInformationMenu         = document.getElementById("view-anchor-information");
+  var viewColorInformationMenu          = document.getElementById("view-color-information");
+  var viewDocumentOutlineMenu           = document.getElementById("view-document-outline");
+  var viewJavaScriptMenu                = document.getElementById("view-javascript");
+  var viewLinkInformationMenu           = document.getElementById("view-link-information");
+  var viewMetaTagInformationMenu        = document.getElementById("view-meta-tag-information");
+  var viewResponseHeadersMenu           = document.getElementById("view-response-headers");
+
+  displayAbbreviationsMenu.append(WebDeveloper.Locales.getString("displayAbbreviations"));
+  displayAccessKeysMenu.append(WebDeveloper.Locales.getString("displayAccessKeys"));
+  displayAnchorsMenu.append(WebDeveloper.Locales.getString("displayAnchors"));
+  displayARIARolesMenu.append(WebDeveloper.Locales.getString("displayARIARoles"));
+  displayDivDimensionsMenu.append(WebDeveloper.Locales.getString("displayDivDimensions"));
+  displayDivOrderMenu.append(WebDeveloper.Locales.getString("displayDivOrder"));
+  displayElementInformationMenu.append(WebDeveloper.Locales.getString("displayElementInformation"));
+  displayIdClassDetailsMenu.append(WebDeveloper.Locales.getString("displayIdClassDetails"));
+  displayLinkDetailsMenu.append(WebDeveloper.Locales.getString("displayLinkDetails"));
+  displayObjectInformationMenu.append(WebDeveloper.Locales.getString("displayObjectInformation"));
+  displayStackLevelsMenu.append(WebDeveloper.Locales.getString("displayStackLevels"));
+  displayTabIndexMenu.append(WebDeveloper.Locales.getString("displayTabIndex"));
+  displayTableDepthMenu.append(WebDeveloper.Locales.getString("displayTableDepth"));
+  displayTableInformationMenu.append(WebDeveloper.Locales.getString("displayTableInformation"));
+  displayTitleAttributesMenu.append(WebDeveloper.Locales.getString("displayTitleAttributes"));
+  displayTopographicInformationMenu.append(WebDeveloper.Locales.getString("displayTopographicInformation"));
+  findDuplicateIdsMenu.append(WebDeveloper.Locales.getString("findDuplicateIds"));
+  viewAnchorInformationMenu.append(WebDeveloper.Locales.getString("viewAnchorInformation"));
+  viewColorInformationMenu.append(WebDeveloper.Locales.getString("viewColorInformation"));
+  viewDocumentOutlineMenu.append(WebDeveloper.Locales.getString("viewDocumentOutline"));
+  viewJavaScriptMenu.append(WebDeveloper.Locales.getString("viewJavaScript"));
+  viewLinkInformationMenu.append(WebDeveloper.Locales.getString("viewLinkInformation"));
+  viewMetaTagInformationMenu.append(WebDeveloper.Locales.getString("viewMetaTagInformation"));
+  viewResponseHeadersMenu.append(WebDeveloper.Locales.getString("viewResponseHeaders"));
+
+  displayAbbreviationsMenu.addEventListener("click", WebDeveloper.Overlay.Information.displayAbbreviations);
+  displayAccessKeysMenu.addEventListener("click", WebDeveloper.Overlay.Information.displayAccessKeys);
+  displayAnchorsMenu.addEventListener("click", WebDeveloper.Overlay.Information.displayAnchors);
+  displayARIARolesMenu.addEventListener("click", WebDeveloper.Overlay.Information.displayARIARoles);
+  displayDivDimensionsMenu.addEventListener("click", WebDeveloper.Overlay.Information.displayDivDimensions);
+  displayDivOrderMenu.addEventListener("click", WebDeveloper.Overlay.Information.displayDivOrder);
+  displayElementInformationMenu.addEventListener("click", WebDeveloper.Overlay.Information.displayElementInformation);
+  displayIdClassDetailsMenu.addEventListener("click", WebDeveloper.Overlay.Information.displayIdClassDetails);
+  displayLinkDetailsMenu.addEventListener("click", WebDeveloper.Overlay.Information.displayLinkDetails);
+  displayObjectInformationMenu.addEventListener("click", WebDeveloper.Overlay.Information.displayObjectInformation);
+  displayStackLevelsMenu.addEventListener("click", WebDeveloper.Overlay.Information.displayStackLevels);
+  displayTabIndexMenu.addEventListener("click", WebDeveloper.Overlay.Information.displayTabIndex);
+  displayTableDepthMenu.addEventListener("click", WebDeveloper.Overlay.Information.displayTableDepth);
+  displayTableInformationMenu.addEventListener("click", WebDeveloper.Overlay.Information.displayTableInformation);
+  displayTitleAttributesMenu.addEventListener("click", WebDeveloper.Overlay.Information.displayTitleAttributes);
+  displayTopographicInformationMenu.addEventListener("click", WebDeveloper.Overlay.Information.displayTopographicInformation);
+  findDuplicateIdsMenu.addEventListener("click", WebDeveloper.Overlay.Information.findDuplicateIds);
+  viewAnchorInformationMenu.addEventListener("click", WebDeveloper.Overlay.Information.viewAnchorInformation);
+  viewColorInformationMenu.addEventListener("click", WebDeveloper.Overlay.Information.viewColorInformation);
+  viewDocumentOutlineMenu.addEventListener("click", WebDeveloper.Overlay.Information.viewDocumentOutline);
+  viewJavaScriptMenu.addEventListener("click", WebDeveloper.Overlay.Information.viewJavaScript);
+  viewLinkInformationMenu.addEventListener("click", WebDeveloper.Overlay.Information.viewLinkInformation);
+  viewMetaTagInformationMenu.addEventListener("click", WebDeveloper.Overlay.Information.viewMetaTagInformation);
+  viewResponseHeadersMenu.addEventListener("click", WebDeveloper.Overlay.Information.viewResponseHeaders);
+};
+
+// Toggles a feature on a tab
+WebDeveloper.Overlay.Information.toggleFeatureOnTab = function(featureItem, tab, scriptCode, args)
+{
+  WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/features/javascript/information.js", scriptCode, args);
 };
 
 // Displays the anchor information for a page
@@ -454,8 +504,7 @@ WebDeveloper.Overlay.Information.viewAnchorInformation = function()
     {
       chrome.tabs.sendMessage(tab.id, { type: "get-anchors" }, function(data)
       {
-        chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("/generated/view-anchor-information.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewAnchorInformationLocale());
-        WebDeveloper.Overlay.close();
+        WebDeveloper.Overlay.openGeneratedTab(chrome.runtime.getURL("/generated/view-anchor-information.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewAnchorInformationLocale());
       });
     }
   });
@@ -471,8 +520,7 @@ WebDeveloper.Overlay.Information.viewColorInformation = function()
     {
       chrome.tabs.sendMessage(tab.id, { type: "get-colors" }, function(data)
       {
-        chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("/generated/view-color-information.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewColorInformationLocale());
-        WebDeveloper.Overlay.close();
+        WebDeveloper.Overlay.openGeneratedTab(chrome.runtime.getURL("/generated/view-color-information.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewColorInformationLocale());
       });
     }
   });
@@ -488,8 +536,7 @@ WebDeveloper.Overlay.Information.viewDocumentOutline = function()
     {
       chrome.tabs.sendMessage(tab.id, { type: "get-document-outline" }, function(data)
       {
-        chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("/generated/view-document-outline.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewDocumentOutlineLocale());
-        WebDeveloper.Overlay.close();
+        WebDeveloper.Overlay.openGeneratedTab(chrome.runtime.getURL("/generated/view-document-outline.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewDocumentOutlineLocale());
       });
     }
   });
@@ -505,12 +552,11 @@ WebDeveloper.Overlay.Information.viewJavaScript = function()
     {
       chrome.tabs.sendMessage(tab.id, { type: "get-javascript" }, function(data)
       {
-        chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("syntax_highlight_theme", function(item)
+        WebDeveloper.Storage.getItem("syntax_highlight_theme", function(item)
         {
           data.theme = item;
 
-          chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("/generated/view-javascript.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewJavaScriptLocale());
-          WebDeveloper.Overlay.close();
+          WebDeveloper.Overlay.openGeneratedTab(chrome.runtime.getURL("/generated/view-javascript.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewJavaScriptLocale());
         });
       });
     }
@@ -527,8 +573,7 @@ WebDeveloper.Overlay.Information.viewLinkInformation = function()
     {
       chrome.tabs.sendMessage(tab.id, { type: "get-links" }, function(data)
       {
-        chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("/generated/view-link-information.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewLinkInformationLocale());
-        WebDeveloper.Overlay.close();
+        WebDeveloper.Overlay.openGeneratedTab(chrome.runtime.getURL("/generated/view-link-information.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewLinkInformationLocale());
       });
     }
   });
@@ -544,8 +589,7 @@ WebDeveloper.Overlay.Information.viewMetaTagInformation = function()
     {
       chrome.tabs.sendMessage(tab.id, { type: "get-meta-tags" }, function(data)
       {
-        chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("/generated/view-meta-tag-information.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewMetaTagInformationLocale());
-        WebDeveloper.Overlay.close();
+        WebDeveloper.Overlay.openGeneratedTab(chrome.runtime.getURL("/generated/view-meta-tag-information.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewMetaTagInformationLocale());
       });
     }
   });
@@ -561,9 +605,18 @@ WebDeveloper.Overlay.Information.viewResponseHeaders = function()
     {
       chrome.tabs.sendMessage(tab.id, { type: "get-document-details" }, function(data)
       {
-        chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("/generated/view-response-headers.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewResponseHeadersLocale());
-        WebDeveloper.Overlay.close();
+        WebDeveloper.Overlay.openGeneratedTab(chrome.runtime.getURL("/generated/view-response-headers.html"), tab.index, data, WebDeveloper.Overlay.Information.getViewResponseHeadersLocale());
       });
     }
   });
 };
+
+// If the document is still loading
+if(document.readyState === "loading")
+{
+  document.addEventListener("DOMContentLoaded", WebDeveloper.Overlay.Information.initialize);
+}
+else
+{
+  WebDeveloper.Overlay.Information.initialize();
+}

@@ -587,7 +587,8 @@ WebDeveloper.Content.getForms = function()
       // If the form has an id attribute
       if(form.hasAttribute("id"))
       {
-        documentForm.id = form.getAttribute("id");
+        // Forms use a different id key to avoid Mustache issues with form elements with the same key
+        documentForm.formId = form.getAttribute("id");
       }
 
       // If the form has a method attribute
@@ -599,7 +600,8 @@ WebDeveloper.Content.getForms = function()
       // If the form has a name attribute
       if(form.hasAttribute("name"))
       {
-        documentForm.name = form.getAttribute("name");
+        // Forms use a different name key to avoid Mustache issues with form elements with the same key
+        documentForm.formName = form.getAttribute("name");
       }
 
       // Loop through the form elements
@@ -1116,6 +1118,8 @@ WebDeveloper.Content.message = function(message, sender, sendResponse)
   {
     sendResponse(WebDeveloper.Content.getWindowSize());
   }
+
+  return true;
 };
 
 chrome.runtime.onMessage.addListener(WebDeveloper.Content.message);

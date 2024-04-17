@@ -14,18 +14,20 @@ WebDeveloper.Generated.addDocument = function(documentURL, documentCount, itemDe
 
   childElement.appendChild(document.createTextNode(documentURL));
 
+  childElement.setAttribute("class", "text-decoration-none");
   childElement.setAttribute("href", documentURL);
   element.setAttribute("id", "document-" + (documentCount + 1));
   element.appendChild(childElement);
   fragment.appendChild(element);
 
-  element      = document.createElement("li");
   childElement = document.createElement("a");
+  element      = document.createElement("li");
 
   childElement.appendChild(document.createTextNode(WebDeveloper.Generated.formatURL(documentURL)));
+  childElement.setAttribute("class", "dropdown-item");
   childElement.setAttribute("href", "#document-" + (documentCount + 1));
   element.appendChild(childElement);
-  $(".dropdown-menu", $("#documents-dropdown")).get(0).appendChild(element);
+  document.getElementById("documents-dropdown").querySelector(".dropdown-menu").appendChild(element);
 
   // If the item description is set
   if(itemDescription)
@@ -42,10 +44,21 @@ WebDeveloper.Generated.addDocument = function(documentURL, documentCount, itemDe
       // If there are items
       if(itemCount !== 0)
       {
-        childElement = document.createElement("i");
+        var svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        var useElement = document.createElementNS("http://www.w3.org/2000/svg", "use");
 
-        childElement.setAttribute("class", "icon-collapse-alt");
-        element.appendChild(childElement);
+        useElement.setAttribute("href", "/svg/icons/icons.svg#s-delete");
+        svgElement.appendChild(useElement);
+        svgElement.setAttribute("class", "bi icon-collapse me-1");
+        element.appendChild(svgElement);
+
+        svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        useElement = document.createElementNS("http://www.w3.org/2000/svg", "use");
+
+        useElement.setAttribute("href", "/svg/icons/icons.svg#s-add");
+        svgElement.appendChild(useElement);
+        svgElement.setAttribute("class", "bi icon-expand me-1");
+        element.appendChild(svgElement);
       }
 
       element.appendChild(document.createTextNode(itemCount + " " + itemDescription));
@@ -60,33 +73,51 @@ WebDeveloper.Generated.addDocument = function(documentURL, documentCount, itemDe
 // Adds a separator
 WebDeveloper.Generated.addSeparator = function()
 {
-  var separator = document.createElement("div");
+  var separator = document.createElement("hr");
 
-  separator.setAttribute("class", "web-developer-separator");
+  separator.setAttribute("class", "m-5");
   document.getElementById("content").appendChild(separator);
+};
+
+// Adjusts the class of multiple elements
+WebDeveloper.Generated.adjustElementsClass = function(elements, className, add)
+{
+  // Loop through the elements
+  elements.forEach((element) =>
+  {
+    // If adding the class
+    if(add)
+    {
+      element.classList.add(className);
+    }
+    else
+    {
+      element.classList.remove(className);
+    }
+  });
 };
 
 // Changes the syntax highlight theme
 WebDeveloper.Generated.changeSyntaxHighlightTheme = function(event)
 {
-  var themeMenu = $(this);
-  var themeIcon = $("i", themeMenu);
+  var themeMenu = this;
 
   // If this is not the current theme
-  if(themeIcon.hasClass("icon-empty"))
+  if(!themeMenu.classList.contains("active"))
   {
-    var theme = themeMenu.attr("id").replace("web-developer-syntax-highlighting-", "");
+    var color = themeMenu.getAttribute("id").replace("web-developer-syntax-highlighting-", "");
+    var theme = WebDeveloper.Generated.getSyntaxHighlightTheme(color);
 
     // If there is no theme
     if(theme == "none")
     {
-      $(".CodeMirror").hide();
-      $(".web-developer-syntax-highlight").show();
+      WebDeveloper.Generated.adjustElementsClass(document.querySelectorAll(".CodeMirror"), "d-none", true);
+      WebDeveloper.Generated.adjustElementsClass(document.querySelectorAll(".web-developer-syntax-highlight"), "d-none", false);
     }
     else if(WebDeveloper.Generated.syntaxHighlighters.length)
     {
-      $(".CodeMirror").show();
-      $(".web-developer-syntax-highlight").hide();
+      WebDeveloper.Generated.adjustElementsClass(document.querySelectorAll(".CodeMirror"), "d-none", false);
+      WebDeveloper.Generated.adjustElementsClass(document.querySelectorAll(".web-developer-syntax-highlight"), "d-none", true);
 
       // Loop through the syntax highlighters
       for(var i = 0, l = WebDeveloper.Generated.syntaxHighlighters.length; i < l; i++)
@@ -96,11 +127,13 @@ WebDeveloper.Generated.changeSyntaxHighlightTheme = function(event)
     }
     else
     {
-      WebDeveloper.Generated.initializeSyntaxHighlight(theme);
+      WebDeveloper.Generated.initializeSyntaxHighlight(color);
     }
 
-    $(".dropdown-menu .icon-ok", $("#web-developer-syntax-highlighting-dropdown")).removeClass("icon-ok").addClass("icon-empty");
-    themeIcon.removeClass("icon-empty").addClass("icon-ok");
+    document.getElementById("web-developer-syntax-highlighting-dark").classList.remove("active");
+    document.getElementById("web-developer-syntax-highlighting-light").classList.remove("active");
+    document.getElementById("web-developer-syntax-highlighting-none").classList.remove("active");
+    themeMenu.classList.add("active");
   }
 
   event.preventDefault();
@@ -109,13 +142,15 @@ WebDeveloper.Generated.changeSyntaxHighlightTheme = function(event)
 // Collapses all the output
 WebDeveloper.Generated.collapseAllOutput = function(event)
 {
-  // Loop through the output headers
-  $("h3").each(function()
+  // Loop through all the headers
+  document.querySelectorAll("h3").forEach((header) =>
   {
-    var header = $(this);
-
-    $("i", header).removeClass("icon-collapse-alt").addClass("icon-expand-alt");
-    header.next(":not(.web-developer-separator)").slideUp(WebDeveloper.Generated.animationSpeed);
+    // If the next sibling is not a separator
+    if(header.nextSibling.tagName.toLowerCase() != "hr")
+    {
+      header.classList.add("collapsed");
+      header.nextSibling.classList.add("d-none");
+    }
   });
 
   // If the event is set
@@ -128,19 +163,21 @@ WebDeveloper.Generated.collapseAllOutput = function(event)
 // Empties the content
 WebDeveloper.Generated.emptyContent = function()
 {
-  $(".progress", $("#content")).remove();
+  document.getElementById("content").querySelector(".progress").remove();
 };
 
 // Expands all the output
 WebDeveloper.Generated.expandAllOutput = function(event)
 {
-  // Loop through the output headers
-  $("h3").each(function()
+  // Loop through all the headers
+  document.querySelectorAll("h3").forEach((header) =>
   {
-    var header = $(this);
-
-    $("i", header).removeClass("icon-expand-alt").addClass("icon-collapse-alt");
-    header.next(":not(.web-developer-separator)").slideDown(WebDeveloper.Generated.animationSpeed);
+    // If the next sibling is not a separator
+    if(header.nextSibling.tagName.toLowerCase() != "hr")
+    {
+      header.classList.remove("collapsed");
+      header.nextSibling.classList.remove("d-none");
+    }
   });
 
   // If the event is set
@@ -174,18 +211,30 @@ WebDeveloper.Generated.generateDocumentContainer = function()
   return documentContainer;
 };
 
+// Returns the syntax highlight theme for a color
+WebDeveloper.Generated.getSyntaxHighlightTheme = function(color)
+{
+  var theme = "none";
+
+  // If the color is dark
+  if(color == "dark")
+  {
+    theme = "ctp-mocha";
+  }
+  else if(color == "light")
+  {
+    theme = "ctp-latte";
+  }
+
+  return theme;
+};
+
 // Initializes the common page elements
 WebDeveloper.Generated.initializeCommonElements = function()
 {
-  $("i", $("h3")).on("click", WebDeveloper.Generated.toggleOutput);
-  $("#web-developer-collapse-all").on("click", WebDeveloper.Generated.collapseAllOutput);
-  $("#web-developer-expand-all").on("click", WebDeveloper.Generated.expandAllOutput);
-
-  // If there is a nav bar
-  if($(".navbar").length)
-  {
-    $(".dropdown-toggle").dropdown();
-  }
+  document.getElementById("content").addEventListener("click", WebDeveloper.Generated.toggleOutput);
+  document.getElementById("web-developer-collapse-all").addEventListener("click", WebDeveloper.Generated.collapseAllOutput);
+  document.getElementById("web-developer-expand-all").addEventListener("click", WebDeveloper.Generated.expandAllOutput);
 };
 
 // Initializes the syntax highlight functionality
@@ -194,38 +243,39 @@ WebDeveloper.Generated.initializeSyntaxHighlight = function(color, locale)
   // If the locale is set
   if(locale)
   {
-    $(".dropdown-toggle", $("#web-developer-syntax-highlighting-dropdown")).prepend(locale.syntaxHighlighting);
-    $("#web-developer-syntax-highlighting-dark").append(locale.dark);
-    $("#web-developer-syntax-highlighting-light").append(locale.light);
-    $("#web-developer-syntax-highlighting-none").append(locale.none);
+    document.getElementById("web-developer-syntax-highlighting-dropdown").querySelector(".dropdown-toggle").append(locale.syntaxHighlighting);
+    document.getElementById("web-developer-syntax-highlighting-dark").append(locale.dark);
+    document.getElementById("web-developer-syntax-highlighting-light").append(locale.light);
+    document.getElementById("web-developer-syntax-highlighting-none").append(locale.none);
+    document.getElementById("web-developer-syntax-highlighting-" + color).classList.add("active");
 
-    $(".dropdown-menu a", $("#web-developer-syntax-highlighting-dropdown")).on("click", WebDeveloper.Generated.changeSyntaxHighlightTheme);
-    $("i", $("#web-developer-syntax-highlighting-" + color)).removeClass("icon-empty").addClass("icon-ok");
+    document.getElementById("web-developer-syntax-highlighting-dark").addEventListener("click", WebDeveloper.Generated.changeSyntaxHighlightTheme);
+    document.getElementById("web-developer-syntax-highlighting-light").addEventListener("click", WebDeveloper.Generated.changeSyntaxHighlightTheme);
+    document.getElementById("web-developer-syntax-highlighting-none").addEventListener("click", WebDeveloper.Generated.changeSyntaxHighlightTheme);
   }
 
   // If a color is set
   if(color != "none")
   {
-    // Loop through the syntax highlight elements
-    $(".web-developer-syntax-highlight").each(function()
-    {
-      var pre = $(this);
+    var theme = WebDeveloper.Generated.getSyntaxHighlightTheme(color);
 
+    document.querySelectorAll(".web-developer-syntax-highlight").forEach(function(pre)
+    {
       window.setTimeout(function()
       {
         /* eslint-disable indent */
         WebDeveloper.Generated.syntaxHighlighters.push(CodeMirror(function(element)
         {
           pre.after(element);
-          pre.hide();
+          pre.classList.add("d-none");
         },
         {
-          lineNumbers: pre.data("line-numbers"),
-          mode: pre.data("type"),
+          lineNumbers: pre.getAttribute("data-line-numbers"),
+          mode: pre.getAttribute("data-type"),
           readOnly: true,
           tabSize: 2,
-          theme: color,
-          value: pre.text()
+          theme: theme,
+          value: pre.textContent
         }));
         /* eslint-enable indent */
       }, 0);
@@ -249,25 +299,36 @@ WebDeveloper.Generated.initializeWithJSON = function(event)
 // Localizes the header
 WebDeveloper.Generated.localizeHeader = function(locale)
 {
-  $("#web-developer-collapse-all").text(locale.collapseAll);
-  $("#web-developer-expand-all").text(locale.expandAll);
-  $(".dropdown-toggle", $("#documents-dropdown")).prepend(locale.documents);
-  $(".navbar-text").text(locale.extensionName);
+  document.getElementById("web-developer-collapse-all").append(locale.collapseAll);
+  document.getElementById("web-developer-expand-all").append(locale.expandAll);
+  document.getElementById("documents-dropdown").querySelector(".dropdown-toggle").append(locale.documents);
 };
 
 // Outputs content
 WebDeveloper.Generated.output = function(title, url, anchor, type, outputOriginal)
 {
-  var childElement      = document.createElement("i");
+  var childElement      = null;
   var container         = document.createElement("pre");
   var content           = document.getElementById("content");
   var documentContainer = WebDeveloper.Generated.generateDocumentContainer();
   var element           = document.createElement("h3");
   var outputContainers  = [];
   var outputTitle       = title;
+  var svgElement        = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  var useElement        = document.createElementNS("http://www.w3.org/2000/svg", "use");
 
-  childElement.setAttribute("class", "icon-collapse-alt");
-  element.appendChild(childElement);
+  useElement.setAttribute("href", "/svg/icons/icons.svg#s-delete");
+  svgElement.appendChild(useElement);
+  svgElement.setAttribute("class", "bi icon-collapse me-1");
+  element.appendChild(svgElement);
+
+  svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  useElement = document.createElementNS("http://www.w3.org/2000/svg", "use");
+
+  useElement.setAttribute("href", "/svg/icons/icons.svg#s-add");
+  svgElement.appendChild(useElement);
+  svgElement.setAttribute("class", "bi icon-expand me-1");
+  element.appendChild(svgElement);
   element.setAttribute("id", anchor);
 
   // If the URL is set
@@ -291,15 +352,16 @@ WebDeveloper.Generated.output = function(title, url, anchor, type, outputOrigina
   element      = document.createElement("li");
 
   childElement.appendChild(document.createTextNode(outputTitle));
+  childElement.setAttribute("class", "dropdown-item");
   childElement.setAttribute("href", "#" + anchor);
   element.appendChild(childElement);
-  $(".dropdown-menu", $("#files-dropdown")).get(0).appendChild(element);
+  document.getElementById("files-dropdown").querySelector(".dropdown-menu").append(element);
 
-  container.setAttribute("class", "web-developer-syntax-highlight");
+  container.setAttribute("class", "bg-light border p-2 web-developer-syntax-highlight");
   container.setAttribute("data-line-numbers", "true");
   container.setAttribute("data-type", type);
   documentContainer.appendChild(container);
-  outputContainers.push($(container));
+  outputContainers.push(container);
 
   // If the original should be output
   if(outputOriginal)
@@ -308,7 +370,7 @@ WebDeveloper.Generated.output = function(title, url, anchor, type, outputOrigina
 
     originalContainer.setAttribute("class", "web-developer-original");
     documentContainer.appendChild(originalContainer);
-    outputContainers.push($(originalContainer));
+    outputContainers.push(originalContainer);
   }
 
   content.appendChild(documentContainer);
@@ -322,13 +384,31 @@ WebDeveloper.Generated.setPageTitle = function(type, data, locale)
 {
   document.title = type + " " + locale.from.toLowerCase() + " " + WebDeveloper.Generated.formatURL(data.pageURL);
 
-  $(".navbar-brand").text(type);
+  document.querySelector(".navbar-brand span").replaceChildren(type);
 };
 
 // Toggles the collapsed state of an output
-WebDeveloper.Generated.toggleOutput = function()
+WebDeveloper.Generated.toggleOutput = function(event)
 {
-  $(this).toggleClass("icon-collapse-alt").toggleClass("icon-expand-alt").parent().next().slideToggle(WebDeveloper.Generated.animationSpeed);
+  var eventTarget = event.target;
+  var header      = null;
+
+  // If the event target is an SVG
+  if(eventTarget.tagName.toLowerCase() == "svg")
+  {
+    header = eventTarget.parentNode;
+  }
+  else if(eventTarget.tagName.toLowerCase() == "use")
+  {
+    header = eventTarget.parentNode.parentNode;
+  }
+
+  // If the header is set
+  if(header && header.tagName.toLowerCase() == "h3")
+  {
+    header.classList.toggle("collapsed");
+    header.nextSibling.classList.toggle("d-none");
+  }
 };
 
 window.addEventListener("web-developer-generated-event", WebDeveloper.Generated.initializeWithJSON, false);

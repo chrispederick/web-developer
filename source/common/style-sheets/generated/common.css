@@ -1,3 +1,26 @@
+/* Generated styles */
+
+#content { padding-top: 5rem; }
+
+/* Form styles */
+
+.btn .bi { vertical-align: -0.125em; }
+.btn .bi, .input-group-text .bi { fill: currentColor; height: 1em; width: 1em; }
+.form-check-input { margin-top: 0.3em; }
+.input-group-text { font-size: 0.875rem; line-height: 1em; }
+
+/* Header styles */
+
+h3 .bi { cursor: pointer; height: 16px; vertical-align: 2px; width: 16px; }
+h3 .icon-expand { display: none; }
+.collapsed .icon-collapse { display: none; }
+.collapsed .icon-expand { display: inline; }
+
+/* Syntax highlighting styles */
+
+.CodeMirror { font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.875em; height: auto; }
+
+/*
 a > .icon-empty { display: inline-block; width: 1em; }
 body { padding-top: 50px; }
 h2, h3, .dropdown-menu { word-wrap: break-word; }
@@ -18,3 +41,4 @@ pre { overflow: auto; white-space: pre; }
 {
   .navbar-text { background-image: url(/common/images/logos/32.png); background-size: 16px 16px; }
 }
+*/

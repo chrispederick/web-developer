@@ -3,48 +3,77 @@ var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-redeclare, no-u
 WebDeveloper.Overlay         = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.Outline = WebDeveloper.Overlay.Outline || {};
 
-$(function()
+// Initializes the outline overlay
+WebDeveloper.Overlay.Outline.initialize = function()
 {
-  var showElementTagNamesMenu = $("#show-element-tag-names");
+  var outlineAbsolutePositionedElementsMenu = document.getElementById("outline-absolute-positioned-elements");
+  var outlineBlockLevelElementsMenu         = document.getElementById("outline-block-level-elements");
+  var outlineDeprecatedElementsMenu         = document.getElementById("outline-deprecated-elements");
+  var outlineExternalLinksMenu              = document.getElementById("outline-external-links");
+  var outlineFixedPositionedElementsMenu    = document.getElementById("outline-fixed-positioned-elements");
+  var outlineFloatedElementsMenu            = document.getElementById("outline-floated-elements");
+  var outlineFramesMenu                     = document.getElementById("outline-frames");
+  var outlineHeadingsMenu                   = document.getElementById("outline-headings");
+  var outlineNonSecureElementsMenu          = document.getElementById("outline-non-secure-elements");
+  var outlineRelativePositionedElementsMenu = document.getElementById("outline-relative-positioned-elements");
+  var outlineTableCaptionsMenu              = document.getElementById("outline-table-captions");
+  var outlineTableCellsMenu                 = document.getElementById("outline-table-cells");
+  var outlineTablesMenu                     = document.getElementById("outline-tables");
+  var showElementTagNamesMenu               = document.getElementById("show-element-tag-names");
 
-  $("#outline-absolute-positioned-elements").append(WebDeveloper.Locales.getString("outlineAbsolutePositionedElements")).on("click", WebDeveloper.Overlay.Outline.outlineAbsolutePositionedElements);
-  $("#outline-block-level-elements").append(WebDeveloper.Locales.getString("outlineBlockLevelElements")).on("click", WebDeveloper.Overlay.Outline.outlineBlockLevelElements);
-  $("#outline-deprecated-elements").append(WebDeveloper.Locales.getString("outlineDeprecatedElements")).on("click", WebDeveloper.Overlay.Outline.outlineDeprecatedElements);
-  $("#outline-external-links").append(WebDeveloper.Locales.getString("outlineExternalLinks")).on("click", WebDeveloper.Overlay.Outline.outlineExternalLinks);
-  $("#outline-fixed-positioned-elements").append(WebDeveloper.Locales.getString("outlineFixedPositionedElements")).on("click", WebDeveloper.Overlay.Outline.outlineFixedPositionedElements);
-  $("#outline-floated-elements").append(WebDeveloper.Locales.getString("outlineFloatedElements")).on("click", WebDeveloper.Overlay.Outline.outlineFloatedElements);
-  $("#outline-frames").append(WebDeveloper.Locales.getString("outlineFrames")).on("click", WebDeveloper.Overlay.Outline.outlineFrames);
-  $("#outline-headings").append(WebDeveloper.Locales.getString("outlineHeadings")).on("click", WebDeveloper.Overlay.Outline.outlineHeadings);
-  $("#outline-non-secure-elements").append(WebDeveloper.Locales.getString("outlineNonSecureElements")).on("click", WebDeveloper.Overlay.Outline.outlineNonSecureElements);
-  $("#outline-relative-positioned-elements").append(WebDeveloper.Locales.getString("outlineRelativePositionedElements")).on("click", WebDeveloper.Overlay.Outline.outlineRelativePositionedElements);
-  $("#outline-table-captions").append(WebDeveloper.Locales.getString("outlineTableCaptions")).on("click", WebDeveloper.Overlay.Outline.outlineTableCaptions);
-  $("#outline-table-cells").append(WebDeveloper.Locales.getString("outlineTableCells")).on("click", WebDeveloper.Overlay.Outline.outlineTableCells);
-  $("#outline-tables").append(WebDeveloper.Locales.getString("outlineTables")).on("click", WebDeveloper.Overlay.Outline.outlineTables);
-  showElementTagNamesMenu.append(WebDeveloper.Locales.getString("showElementTagNames")).on("click", WebDeveloper.Overlay.Outline.toggleShowElementTagNames);
+  outlineAbsolutePositionedElementsMenu.append(WebDeveloper.Locales.getString("outlineAbsolutePositionedElements"));
+  outlineBlockLevelElementsMenu.append(WebDeveloper.Locales.getString("outlineBlockLevelElements"));
+  outlineDeprecatedElementsMenu.append(WebDeveloper.Locales.getString("outlineDeprecatedElements"));
+  outlineExternalLinksMenu.append(WebDeveloper.Locales.getString("outlineExternalLinks"));
+  outlineFixedPositionedElementsMenu.append(WebDeveloper.Locales.getString("outlineFixedPositionedElements"));
+  outlineFloatedElementsMenu.append(WebDeveloper.Locales.getString("outlineFloatedElements"));
+  outlineFramesMenu.append(WebDeveloper.Locales.getString("outlineFrames"));
+  outlineHeadingsMenu.append(WebDeveloper.Locales.getString("outlineHeadings"));
+  outlineNonSecureElementsMenu.append(WebDeveloper.Locales.getString("outlineNonSecureElements"));
+  outlineRelativePositionedElementsMenu.append(WebDeveloper.Locales.getString("outlineRelativePositionedElements"));
+  outlineTableCaptionsMenu.append(WebDeveloper.Locales.getString("outlineTableCaptions"));
+  outlineTableCellsMenu.append(WebDeveloper.Locales.getString("outlineTableCells"));
+  outlineTablesMenu.append(WebDeveloper.Locales.getString("outlineTables"));
+  showElementTagNamesMenu.append(WebDeveloper.Locales.getString("showElementTagNames"));
 
-  chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNames)
+  outlineAbsolutePositionedElementsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineAbsolutePositionedElements);
+  outlineBlockLevelElementsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineBlockLevelElements);
+  outlineDeprecatedElementsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineDeprecatedElements);
+  outlineExternalLinksMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineExternalLinks);
+  outlineFixedPositionedElementsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineFixedPositionedElements);
+  outlineFloatedElementsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineFloatedElements);
+  outlineFramesMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineFrames);
+  outlineHeadingsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineHeadings);
+  outlineNonSecureElementsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineNonSecureElements);
+  outlineRelativePositionedElementsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineRelativePositionedElements);
+  outlineTableCaptionsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineTableCaptions);
+  outlineTableCellsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineTableCells);
+  outlineTablesMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineTables);
+  showElementTagNamesMenu.addEventListener("click", WebDeveloper.Overlay.Outline.toggleShowElementTagNames);
+
+  WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNames)
   {
     // If the outline show element tag names preference is set to true
     if(showElementTagNames)
     {
-      showElementTagNamesMenu.addClass("active");
+      showElementTagNamesMenu.classList.add("active");
     }
   });
-});
+};
 
 // Outlines all absolute positioned elements
 WebDeveloper.Overlay.Outline.outlineAbsolutePositionedElements = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("absolute", ' + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Outline.outlinePositionedElements("absolute", !featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -53,16 +82,16 @@ WebDeveloper.Overlay.Outline.outlineAbsolutePositionedElements = function()
 // Outlines all block level elements
 WebDeveloper.Overlay.Outline.outlineBlockLevelElements = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNames)
+      WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNamesStorage)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineBlockLevelElements([document], " + showElementTagNames + ");");
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(showElementTagNames) { WebDeveloper.Outline.outlineBlockLevelElements([document], showElementTagNames); }, [showElementTagNamesStorage]);
       });
     }
   });
@@ -71,16 +100,16 @@ WebDeveloper.Overlay.Outline.outlineBlockLevelElements = function()
 // Outlines all deprecated elements
 WebDeveloper.Overlay.Outline.outlineDeprecatedElements = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNames)
+      WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNamesStorage)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineDeprecatedElements([document], " + showElementTagNames + ");");
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(showElementTagNames) { WebDeveloper.Outline.outlineDeprecatedElements([document], showElementTagNames); }, [showElementTagNamesStorage]);
       });
     }
   });
@@ -89,16 +118,16 @@ WebDeveloper.Overlay.Outline.outlineDeprecatedElements = function()
 // Outlines all external links
 WebDeveloper.Overlay.Outline.outlineExternalLinks = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineExternalLinks(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Outline.outlineExternalLinks(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -107,16 +136,16 @@ WebDeveloper.Overlay.Outline.outlineExternalLinks = function()
 // Outlines all fixed positioned elements
 WebDeveloper.Overlay.Outline.outlineFixedPositionedElements = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("fixed", ' + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Outline.outlinePositionedElements("fixed", !featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -125,16 +154,16 @@ WebDeveloper.Overlay.Outline.outlineFixedPositionedElements = function()
 // Outlines all floated elements
 WebDeveloper.Overlay.Outline.outlineFloatedElements = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineFloatedElements(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Outline.outlineFloatedElements(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -143,14 +172,14 @@ WebDeveloper.Overlay.Outline.outlineFloatedElements = function()
 // Outlines all frames
 WebDeveloper.Overlay.Outline.outlineFrames = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineFrames([document]);");
+      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Outline.outlineFrames([document]); });
     }
   });
 };
@@ -158,16 +187,16 @@ WebDeveloper.Overlay.Outline.outlineFrames = function()
 // Outlines all headings
 WebDeveloper.Overlay.Outline.outlineHeadings = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNames)
+      WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNamesStorage)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineHeadings([document], " + showElementTagNames + ");");
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(showElementTagNames) { WebDeveloper.Outline.outlineHeadings([document], showElementTagNames); }, [showElementTagNamesStorage]);
       });
     }
   });
@@ -176,14 +205,14 @@ WebDeveloper.Overlay.Outline.outlineHeadings = function()
 // Outlines all non-secure elements
 WebDeveloper.Overlay.Outline.outlineNonSecureElements = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineNonSecureElements([document]);");
+      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Outline.outlineNonSecureElements([document]); });
     }
   });
 };
@@ -191,16 +220,16 @@ WebDeveloper.Overlay.Outline.outlineNonSecureElements = function()
 // Outlines all relative positioned elements
 WebDeveloper.Overlay.Outline.outlineRelativePositionedElements = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, 'WebDeveloper.Outline.outlinePositionedElements("relative", ' + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Outline.outlinePositionedElements("relative", !featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -209,14 +238,14 @@ WebDeveloper.Overlay.Outline.outlineRelativePositionedElements = function()
 // Outlines all table captions
 WebDeveloper.Overlay.Outline.outlineTableCaptions = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTableCaptions([document]);");
+      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Outline.outlineTableCaptions([document]); });
     }
   });
 };
@@ -224,16 +253,16 @@ WebDeveloper.Overlay.Outline.outlineTableCaptions = function()
 // Outlines all table cells
 WebDeveloper.Overlay.Outline.outlineTableCells = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNames)
+      WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNamesStorage)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTableCells([document], " + showElementTagNames + ");");
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(showElementTagNames) { WebDeveloper.Outline.outlineTableCells([document], showElementTagNames); }, [showElementTagNamesStorage]);
       });
     }
   });
@@ -242,29 +271,39 @@ WebDeveloper.Overlay.Outline.outlineTableCells = function()
 // Outlines all tables
 WebDeveloper.Overlay.Outline.outlineTables = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Outline.outlineTables([document]);");
+      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Outline.outlineTables([document]); });
     }
   });
 };
 
 // Toggles a feature on a tab
-WebDeveloper.Overlay.Outline.toggleFeatureOnTab = function(featureItem, tab, scriptCode)
+WebDeveloper.Overlay.Outline.toggleFeatureOnTab = function(featureItem, tab, scriptCode, args)
 {
-  WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/features/javascript/outline.js", scriptCode);
+  WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/features/javascript/outline.js", scriptCode, args);
 };
 
 // Toggles whether to show element tag names when outlining
 WebDeveloper.Overlay.Outline.toggleShowElementTagNames = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   featureItem.toggleClass("active");
-  chrome.extension.getBackgroundPage().WebDeveloper.Storage.setItem("outline.show.element.tag.names", featureItem.hasClass("active"));
+  WebDeveloper.Storage.setItem("outline.show.element.tag.names", featureItem.hasClass("active"));
 };
+
+// If the document is still loading
+if(document.readyState === "loading")
+{
+  document.addEventListener("DOMContentLoaded", WebDeveloper.Overlay.Outline.initialize);
+}
+else
+{
+  WebDeveloper.Overlay.Outline.initialize();
+}

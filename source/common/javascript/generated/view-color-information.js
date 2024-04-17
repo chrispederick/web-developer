@@ -8,7 +8,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var colorDescription = null;
   var colorInformation = locale.colorInformation;
   var colorsLength     = null;
-  var colorsTemplate   = $("#colors").html();
+  var colorsTemplate   = document.getElementById("colors").innerHTML;
   var container        = null;
   var content          = document.getElementById("content");
   var contentDocument  = null;
@@ -39,7 +39,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
     {
       container = WebDeveloper.Generated.generateDocumentContainer();
 
-      $(container).append(Mustache.render(colorsTemplate, contentDocument));
+      container.insertAdjacentHTML("beforeend", Mustache.render(colorsTemplate, contentDocument));
       content.appendChild(container);
     }
 

@@ -3,49 +3,41 @@
 
 <head>
   <meta charset="utf-8">
-  <title>@name@</title>
-  <link href="/common/style-sheets/bootstrap.css" rel="stylesheet">
-  <link href="options.css" rel="stylesheet">
   <meta name="viewport" content="initial-scale=1.0,width=device-width">
-  <link href="/common/images/logos/favicon.ico" rel="shortcut icon">
+  <title>@name@</title>
+  <link href="/lib/bootstrap/bootstrap.css" rel="stylesheet">
+  <link href="options.css" rel="stylesheet">
+  <link href="/svg/logos/color/logo.svg" rel="shortcut icon">
 </head>
 
 <body>
 
-<div class="navbar navbar-fixed-top navbar-inverse">
+<nav class="bg-body-tertiary mb-3 navbar navbar-expand-lg">
   <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a href="#content" class="navbar-brand">@name@</a>
-    </div>
-
-    <div class="collapse navbar-collapse">
-      <p class="navbar-text pull-right">@name@</p>
-    </div>
+    <a href="#content" class="navbar-brand">
+      <img src="/svg/logos/color/logo.svg" width="24" height="24" alt="Web Developer" class="align-text-top d-inline-block">
+      <span>@name@</span>
+    </a>
   </div>
-</div>
+</nav>
 
 <div id="content" class="container-fluid">
   <ul class="nav nav-tabs">
-    <li id="general-tab" class="active"><a href="#general-options" data-toggle="tab"><span></span></a></li>
-    <li id="colors-tab"><a href="#colors-options" data-toggle="tab"><span></span></a></li>
-    <li id="resize-tab"><a href="#resize-options" data-toggle="tab"><span></span></a></li>
-    <li id="responsive-layouts-tab"><a href="#responsive-layouts-options" data-toggle="tab"><span></span></a></li>
-    <li id="tools-tab"><a href="#tools-options" data-toggle="tab"><span></span></a></li>
-    <li id="advanced-tab"><a href="#advanced-options" data-toggle="tab"><span></span></a></li>
+    <li id="general-tab" class="nav-item"><a href="#general-options" class="active icon-link nav-link" data-bs-target="#general-options" data-bs-toggle="tab"><img src="/svg/options/general.svg" width="16" height="16" alt="" class="bi"></a></li>
+    <li id="colors-tab" class="nav-item"><a href="#colors-options" class="icon-link nav-link" data-bs-target="#colors-options" data-bs-toggle="tab"><img src="/svg/options/colors.svg" width="16" height="16" alt="" class="bi"></a></li>
+    <li id="resize-tab" class="nav-item"><a href="#resize-options" class="icon-link nav-link" data-bs-target="#resize-options" data-bs-toggle="tab"><img src="/svg/options/resize.svg" width="16" height="16" alt="" class="bi"></a></li>
+    <li id="responsive-layouts-tab" class="nav-item"><a href="#responsive-layouts-options" class="icon-link nav-link" data-bs-target="#responsive-layouts-options" data-bs-toggle="tab"><img src="/svg/options/responsive.svg" width="16" height="16" alt="" class="bi"></a></li>
+    <li id="tools-tab" class="nav-item"><a href="#tools-options" class="icon-link nav-link" data-bs-target="#tools-options" data-bs-toggle="tab"><img src="/svg/options/tools.svg" width="16" height="16" alt="" class="bi"></a></li>
+    <li id="advanced-tab" class="nav-item"><a href="#advanced-options" class="icon-link nav-link" data-bs-target="#advanced-options" data-bs-toggle="tab"><img src="/svg/options/advanced.svg" width="16" height="16" alt="" class="bi"></a></li>
   </ul>
 
-  <div class="tab-content">
+  <div class="mt-3 tab-content">
     <div id="general-options" class="tab-pane active">
-      <form class="form-horizontal">
-        <div class="form-group">
-          <label for="display_overlay_with" class="col-sm-3 control-label"></label>
-          <div class="col-sm-3">
-            <select id="display_overlay_with" class="form-control">
+      <form>
+        <div class="row">
+          <label for="display_overlay_with" class="col-md-3 col-form-label"></label>
+          <div class="col">
+            <select id="display_overlay_with" class="form-select">
               <option value="icons_text"></option>
               <option value="icons"></option>
               <option value="text"></option>
@@ -56,92 +48,81 @@
     </div>
 
     <div id="colors-options" class="tab-pane">
-      <div id="syntax-highlight-performance" class="alert"></div>
-      <form class="form-horizontal">
-        <div class="form-group">
-          <label for="syntax_highlight_theme" class="col-sm-3 control-label"></label>
-          <div class="col-sm-3">
-            <select id="syntax_highlight_theme" class="form-control">
+      <div id="syntax-highlight-performance" class="alert alert-warning"><svg class="bi me-1"><use href="/svg/icons/icons.svg#warning-sign"></svg></div>
+      <form>
+        <div class="row">
+          <label for="syntax_highlight_theme" class="col-md-4 col-form-label"></label>
+          <div class="col">
+            <select id="syntax_highlight_theme" class="form-select">
               <option value="dark"></option>
               <option value="light"></option>
               <option value="none"></option>
             </select>
           </div>
         </div>
-
-        <div class="row">
-          <div class="col-sm-3">
-            <p id="preview"></p>
-          </div>
-          <div class="col-sm-3">
-            <iframe id="syntax-highlight-browser" src="syntax-highlight.html" width="500" height="150"></iframe>
-          </div>
-        </div>
       </form>
+
+      <h2 id="preview" class="h4 mt-4"></h2>
+      <iframe id="syntax-highlight-browser" src="syntax-highlight.html" width="100%" height="400" class="border"></iframe>
     </div>
 
     <div id="resize-options" class="tab-pane">
-      <div class="table-container">
-        <div class="row">
-          <div class="col-sm-10">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
-
-          <div class="col-sm-2 text-muted"></div>
+      <div id="resize-options-container">
+        <div class="table-responsive">
+          <table class="table table-borderless table-striped">
+            <thead>
+              <tr>
+                <th id="resize-options-description"></th>
+                <th id="resize-options-width"></th>
+                <th id="resize-options-height"></th>
+                <th id="resize-options-actions"></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
-
-        <button type="button" class="btn btn-primary"><i class="icon-plus"></i> </button>
+        <p id="resize-options-drag-drop" class="small text-center text-muted"></p>
+        <button id="resize-option-add" type="button" class="btn btn-primary"><svg class="bi me-1"><use href="/svg/icons/icons.svg#c-add"></svg></button>
       </div>
 
-      <form id="resize-form" class="form-horizontal">
+      <form id="resize-form" class="d-none">
         <fieldset>
           <legend></legend>
 
-          <div class="form-group">
-            <label for="resize-description" class="col-sm-2 control-label"></label>
-            <div class="col-sm-3">
-              <input id="resize-description" type="text" class="form-control">
-              <span class="help-block"></span>
+          <div class="mb-2 row">
+            <label for="resize-description" class="col-2 col-form-label col-form-label-sm"></label>
+            <div class="col">
+              <input id="resize-description" type="text" class="form-control form-control-sm">
+              <div id="resize-description-invalid" class="invalid-feedback"></div>
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="resize-width" class="col-sm-2 control-label"></label>
-            <div class="col-sm-3">
+          <div class="mb-2 row">
+            <label for="resize-width" class="col-2 col-form-label col-form-label-sm"></label>
+            <div class="col">
               <div class="input-group">
-                <input id="resize-width" type="text" class="form-control">
-                <span class="input-group-addon">px</span>
+                <input id="resize-width" type="text" class="form-control form-control-sm">
+                <span class="input-group-text">px</span>
+                <div id="resize-width-invalid" class="invalid-feedback"></div>
               </div>
-              <span class="help-block"></span>
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="resize-height" class="col-sm-2 control-label"></label>
-            <div class="col-sm-3">
+          <div class="mb-2 row">
+            <label for="resize-height" class="col-2 col-form-label col-form-label-sm"></label>
+            <div class="col">
               <div class="input-group">
-                <input id="resize-height" type="text" class="form-control">
-                <span class="input-group-addon">px</span>
+                <input id="resize-height" type="text" class="form-control form-control-sm">
+                <span class="input-group-text">px</span>
+                <div id="resize-height-invalid" class="invalid-feedback"></div>
               </div>
-              <span class="help-block"></span>
             </div>
           </div>
 
           <div class="row">
-            <div class="col-sm-5 text-right">
-              <button id="resize-cancel" type="button" class="btn btn-default"></button>
-              <button id="resize-submit" type="button" class="btn btn-primary"><i class="icon-ok"></i> <span></span></button>
+            <div class="col offset-2 text-end">
+              <button id="resize-cancel" type="button" class="btn btn-outline-secondary btn-sm"></button>
+              <button id="resize-submit" type="button" class="btn btn-primary btn-sm ms-1"><svg class="bi me-1"><use href="/svg/icons/icons.svg#c-check"></svg><span></span></span></button>
             </div>
           </div>
         </fieldset>
@@ -149,66 +130,62 @@
     </div>
 
     <div id="responsive-layouts-options" class="tab-pane">
-      <div class="table-container">
-        <div class="row">
-          <div class="col-sm-10">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
-
-          <div class="col-sm-2 text-muted"></div>
+      <div id="responsive-layouts-container">
+        <div class="table-responsive">
+          <table class="table table-borderless table-striped">
+            <thead>
+              <tr>
+                <th id="responsive-layouts-description"></th>
+                <th id="responsive-layouts-width"></th>
+                <th id="responsive-layouts-height"></th>
+                <th id="responsive-layouts-actions"></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
-
-        <button type="button" class="btn btn-primary"><i class="icon-plus"></i> </button>
+        <p id="responsive-layouts-drag-drop" class="small text-center text-muted"></p>
+        <button id="responsive-layout-add" type="button" class="btn btn-primary"><svg class="bi me-1"><use href="/svg/icons/icons.svg#c-add"></svg></button>
       </div>
 
-      <form id="responsive-layout-form" class="form-horizontal">
+      <form id="responsive-layout-form" class="d-none">
         <fieldset>
           <legend></legend>
 
-          <div class="form-group">
-            <label for="responsive-layout-description" class="col-sm-2 control-label"></label>
-            <div class="col-sm-3">
-              <input id="responsive-layout-description" type="text" class="form-control">
-              <span class="help-block"></span>
+          <div class="mb-2 row">
+            <label for="responsive-layout-description" class="col-2 col-form-label col-form-label-sm"></label>
+            <div class="col">
+              <input id="responsive-layout-description" type="text" class="form-control form-control-sm">
+              <div id="responsive-layout-description-invalid" class="invalid-feedback"></div>
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="responsive-layout-width" class="col-sm-2 control-label"></label>
-            <div class="col-sm-3">
+          <div class="mb-2 row">
+            <label for="responsive-layout-width" class="col-2 col-form-label col-form-label-sm"></label>
+            <div class="col">
               <div class="input-group">
-                <input id="responsive-layout-width" type="text" class="form-control">
-                <span class="input-group-addon">px</span>
+                <input id="responsive-layout-width" type="text" class="form-control form-control-sm">
+                <span class="input-group-text">px</span>
+                <div id="responsive-layout-width-invalid" class="invalid-feedback"></div>
               </div>
-              <span class="help-block"></span>
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="responsive-layout-height" class="col-sm-2 control-label"></label>
-            <div class="col-sm-3">
+          <div class="mb-2 row">
+            <label for="responsive-layout-height" class="col-2 col-form-label col-form-label-sm"></label>
+            <div class="col">
               <div class="input-group">
-                <input id="responsive-layout-height" type="text" class="form-control">
-                <span class="input-group-addon">px</span>
+                <input id="responsive-layout-height" type="text" class="form-control form-control-sm">
+                <span class="input-group-text">px</span>
+                <div id="responsive-layout-height-invalid" class="invalid-feedback"></div>
               </div>
-              <span class="help-block"></span>
             </div>
           </div>
 
           <div class="row">
-            <div class="col-sm-5 text-right">
-              <button id="responsive-layout-cancel" type="button" class="btn btn-default"></button>
-              <button id="responsive-layout-submit" type="button" class="btn btn-primary"><i class="icon-ok"></i> <span></span></button>
+            <div class="col offset-2 text-end">
+              <button id="responsive-layout-cancel" type="button" class="btn btn-outline-secondary btn-sm"></button>
+              <button id="responsive-layout-submit" type="button" class="btn btn-primary btn-sm ms-1"><svg class="bi me-1"><use href="/svg/icons/icons.svg#c-check"></svg><span></span></span></button>
             </div>
           </div>
         </fieldset>
@@ -216,55 +193,50 @@
     </div>
 
     <div id="tools-options" class="tab-pane">
-      <div class="table-container">
-        <div class="row">
-          <div class="col-sm-10">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
-
-          <div class="col-sm-2 text-muted"></div>
+      <div id="tools-container">
+        <div class="table-responsive">
+          <table class="table table-borderless table-striped">
+            <thead>
+              <tr>
+                <th id="tools-description"></th>
+                <th id="tools-url"></th>
+                <th id="tools-actions"></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
-
-        <button type="button" class="btn btn-primary"><i class="icon-plus"></i> </button>
+        <p id="tools-drag-drop" class="small text-center text-muted"></p>
+        <button id="tool-add" type="button" class="btn btn-primary"><svg class="bi me-1"><use href="/svg/icons/icons.svg#c-add"></svg></button>
       </div>
 
-      <form id="tool-form" class="form-horizontal">
+      <form id="tool-form" class="d-none">
         <fieldset>
           <legend></legend>
 
-          <div class="form-group">
-            <label for="tool-description" class="col-sm-2 control-label"></label>
-            <div class="col-sm-6">
-              <input id="tool-description" type="text" class="form-control">
-              <span class="help-block"></span>
+          <div class="mb-2 row">
+            <label for="tool-description" class="col-2 col-form-label col-form-label-sm"></label>
+            <div class="col">
+              <input id="tool-description" type="text" class="form-control form-control-sm">
+              <div id="tool-description-invalid" class="invalid-feedback"></div>
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="tool-url" class="col-sm-2 control-label"></label>
-            <div class="col-sm-6">
+          <div class="mb-2 row">
+            <label for="tool-url" class="col-2 col-form-label col-form-label-sm"></label>
+            <div class="col">
               <div class="input-group">
-                <span class="input-group-addon"><i class="icon-link"></i></span>
-                <input id="tool-url" type="url" class="form-control">
+                <input id="tool-url" type="text" class="form-control form-control-sm">
+                <span class="input-group-text"><svg class="bi"><use href="/svg/icons/icons.svg#url"></svg></span>
+                <div id="tool-url-invalid" class="invalid-feedback"></div>
               </div>
-              <span class="help-block"></span>
             </div>
           </div>
 
           <div class="row">
-            <div class="col-sm-8 text-right">
-              <button id="tool-cancel" type="button" class="btn btn-default"></button>
-              <button id="tool-submit" type="button" class="btn btn-primary"><i class="icon-ok"></i> <span></span></button>
+            <div class="col offset-2 text-end">
+              <button id="tool-cancel" type="button" class="btn btn-outline-secondary btn-sm"></button>
+              <button id="tool-submit" type="button" class="btn btn-primary btn-sm ms-1"><svg class="bi me-1"><use href="/svg/icons/icons.svg#c-check"></svg><span></span></span></button>
             </div>
           </div>
         </fieldset>
@@ -272,13 +244,13 @@
     </div>
 
     <div id="advanced-options" class="tab-pane">
-      <form class="form-horizontal">
-        <div class="form-group">
-          <label for="populate_email_address" class="col-sm-3 control-label"></label>
-          <div class="col-sm-3">
+      <form>
+        <div class="row">
+          <label for="populate_email_address" class="col-md-7 col-form-label"></label>
+          <div class="col">
             <div class="input-group">
-              <span class="input-group-addon">@</span>
               <input id="populate_email_address" type="email" class="form-control">
+              <span class="input-group-text"><svg class="bi"><use href="/svg/icons/icons.svg#mail"></svg></span>
             </div>
           </div>
         </div>
@@ -286,71 +258,65 @@
     </div>
   </div>
 
-  <div id="delete-dialog" class="modal fade in">
+  <div id="delete-dialog" class="modal">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4></h4>
+          <h4 class="modal-title"></h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
         <div class="modal-body">
-          <p></p>
+          <p class="mb-0"></p>
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal"></button>
-          <button type="button" class="btn btn-danger"><i class="icon-trash"></i> </button>
-        </div>
+          <button class="btn btn-outline-secondary" data-bs-dismiss="modal"></button>
+          <button id="delete-submit" class="btn btn-danger ms-1"><svg class="bi me-1"><use href="/svg/icons/icons.svg#c-check"></svg></button>
+          </div>
       </div>
     </div>
   </div>
 </div>
 
-<script src="/common/javascript/jquery/jquery.js"></script>
-<script src="/common/javascript/jquery/tablednd.js"></script>
-<script src="/common/javascript/bootstrap/modal.js"></script>
-<script src="/common/javascript/bootstrap/tab.js"></script>
-<script src="/common/javascript/bootstrap/transition.js"></script>
+<script src="/lib/bootstrap/bootstrap.js"></script>
+<script src="/lib/mustache.js"></script>
 <script src="/common/javascript/common.js"></script>
-<script src="/common/javascript/mustache.js"></script>
 <script src="/locales/locales.js"></script>
 <script src="/storage/storage.js"></script>
 <script src="javascript/options.js"></script>
 
 <script id="resize-option" type="x-tmpl-mustache">
-  <tr>
+  <tr class="draggable" draggable="true">
     <td>{{description}}</td>
     <td>{{width}}</td>
     <td>{{height}}</td>
-    <td>{{keyboard}}</td>
     <td>
-      <button type="button" class="btn btn-primary"><i class="icon-pencil"></i> <span></span></button>
-      <button type="button" class="btn btn-danger"><i class="icon-trash"></i> <span></span></button>
+      <button type="button" class="btn btn-primary btn-sm mb-1"><svg class="bi me-1"><use href="/svg/icons/icons.svg#pen"></svg><span></span></button>
+      <button type="button" class="btn btn-danger btn-sm mb-1"><svg class="bi me-1"><use href="/svg/icons/icons.svg#trash"></svg><span></span></button>
     </td>
   </tr>
 </script>
 
 <script id="responsive-layout" type="x-tmpl-mustache">
-  <tr>
+  <tr class="draggable" draggable="true">
     <td>{{description}}</td>
     <td>{{width}}</td>
     <td>{{height}}</td>
     <td>
-      <button type="button" class="btn btn-primary"><i class="icon-pencil"></i> <span></span></button>
-      <button type="button" class="btn btn-danger"><i class="icon-trash"></i> <span></span></button>
+      <button type="button" class="btn btn-primary btn-sm mb-1"><svg class="bi me-1"><use href="/svg/icons/icons.svg#pen"></svg><span></span></button>
+      <button type="button" class="btn btn-danger btn-sm mb-1"><svg class="bi me-1"><use href="/svg/icons/icons.svg#trash"></svg><span></span></button>
     </td>
   </tr>
 </script>
 
 <script id="tool" type="x-tmpl-mustache">
-  <tr>
+  <tr class="draggable" draggable="true">
     <td>{{description}}</td>
     <td>{{url}}</td>
-    <td>{{keyboard}}</td>
     <td>
-      <button type="button" class="btn btn-primary"><i class="icon-pencil"></i> <span></span></button>
-      <button type="button" class="btn btn-danger"><i class="icon-trash"></i> <span></span></button>
+      <button type="button" class="btn btn-primary btn-sm mb-1"><svg class="bi me-1"><use href="/svg/icons/icons.svg#pen"></svg><span></span></button>
+      <button type="button" class="btn btn-danger btn-sm mb-1"><svg class="bi me-1"><use href="/svg/icons/icons.svg#trash"></svg><span></span></button>
     </td>
   </tr>
 </script>

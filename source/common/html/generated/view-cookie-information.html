@@ -3,163 +3,149 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0,width=device-width">
   <title>@name@</title>
-  <link href="/common/style-sheets/bootstrap.css" rel="stylesheet">
+  <link href="/lib/bootstrap/bootstrap.css" rel="stylesheet">
   <link href="/common/style-sheets/generated.css" rel="stylesheet">
   <link href="view-cookie-information.css" rel="stylesheet">
-  <meta name="viewport" content="initial-scale=1.0,width=device-width">
-  <link href="/common/images/logos/favicon.ico" rel="shortcut icon">
+  <link href="/svg/logos/color/logo.svg" rel="shortcut icon">
 </head>
 
 <body>
 
-<div class="navbar navbar-fixed-top navbar-inverse">
+<nav class="bg-dark fixed-top navbar navbar-expand-lg" data-bs-theme="dark">
   <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a href="#content" class="navbar-brand">@name@</a>
-    </div>
-
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li id="documents-dropdown" class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+    <a href="#content" class="navbar-brand">
+      <img src="/svg/logos/color/logo.svg" width="24" height="24" alt="Web Developer" class="align-text-top d-inline-block">
+      <span>@name@</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-target="#navbar-collapse" data-bs-toggle="collapse">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbar-collapse" class="collapse navbar-collapse">
+      <ul class="me-auto navbar-nav">
+        <li id="documents-dropdown" class="dropdown nav-item">
+          <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown"></a>
           <ul class="dropdown-menu"></ul>
         </li>
-        <li id="cookies-dropdown" class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+        <li id="cookies-dropdown" class="dropdown nav-item">
+          <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown"></a>
           <ul class="dropdown-menu"></ul>
         </li>
-        <li><a href="#" id="web-developer-collapse-all"></a></li>
-        <li><a href="#" id="web-developer-expand-all"></a></li>
+        <li class="nav-item"><a href="#" id="web-developer-collapse-all" class="icon-link nav-link"><svg class="bi"><use href="/svg/icons/icons.svg#s-delete"></svg></a></li>
+        <li class="nav-item"><a href="#" id="web-developer-expand-all" class="icon-link nav-link"><svg class="bi"><use href="/svg/icons/icons.svg#s-add"></svg></a></li>
       </ul>
-      <p class="navbar-text pull-right">@name@</p>
     </div>
   </div>
-</div>
+</nav>
 
 <div id="content" class="container-fluid">
-  <div class="active progress progress-striped">
-    <div class="progress-bar progress-bar-info"></div>
+  <div class="progress">
+    <div class="bg-info progress-bar progress-bar-animated progress-bar-striped w-50"></div>
   </div>
 
-  <div id="delete-dialog" class="modal fade in">
+  <div id="delete-dialog" class="modal">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4></h4>
+          <h4 class="modal-title"></h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
         <div class="modal-body">
-          <p></p>
+          <p class="mb-0"></p>
         </div>
 
         <div class="modal-footer">
-          <button class="btn btn-default" data-dismiss="modal"></button>
-          <button class="btn btn-danger"><i class="icon-trash"></i> </button>
-        </div>
+          <button class="btn btn-outline-secondary" data-bs-dismiss="modal"></button>
+          <button class="btn btn-danger ms-1"><svg class="bi me-1"><use href="/svg/icons/icons.svg#c-check"></svg></button>
+          </div>
       </div>
     </div>
   </div>
 
-  <div id="edit-dialog" class="modal fade in">
+  <div id="edit-dialog" class="modal">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4></h4>
+          <h4 class="modal-title"></h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
         <div class="modal-body">
-          <form class="form-horizontal">
-            <fieldset>
-              <div class="form-group">
-                <label for="cookie-name" class="col-sm-3 control-label"></label>
-                <div class="col-sm-8">
-                  <input id="cookie-name" type="text" class="form-control">
-                  <span class="help-block"></span>
-                </div>
+          <form>
+            <div class="mb-2 row">
+              <label for="cookie-name" class="col-3 col-form-label"></label>
+              <div class="col">
+                <input id="cookie-name" type="text" class="form-control">
+                <div id="cookie-name-invalid" class="invalid-feedback"></div>
               </div>
+            </div>
 
-              <div class="form-group">
-                <label for="cookie-value" class="col-sm-3 control-label"></label>
-                <div class="col-sm-8">
-                  <input id="cookie-value" type="text" class="form-control">
-                </div>
+            <div class="mb-2 row">
+              <label for="cookie-value" class="col-3 col-form-label"></label>
+              <div class="col">
+                <input id="cookie-value" type="text" class="form-control">
               </div>
+            </div>
 
-              <div class="form-group">
-                <label for="cookie-host" class="col-sm-3 control-label"></label>
-                <div class="col-sm-8">
-                  <input id="cookie-host" type="text" class="form-control">
-                  <span class="help-block"></span>
-                </div>
+            <div class="mb-2 row">
+              <label for="cookie-host" class="col-3 col-form-label"></label>
+              <div class="col">
+                <input id="cookie-host" type="text" class="form-control">
+                <div id="cookie-host-invalid" class="invalid-feedback"></div>
               </div>
+            </div>
 
-              <div class="form-group">
-                <label for="cookie-path" class="col-sm-3 control-label"></label>
-                <div class="col-sm-8">
-                  <input id="cookie-path" type="text" class="form-control">
-                  <span class="help-block"></span>
-                </div>
+            <div class="mb-2 row">
+              <label for="cookie-path" class="col-3 col-form-label"></label>
+              <div class="col">
+                <input id="cookie-path" type="text" class="form-control">
+                <div id="cookie-path-invalid" class="invalid-feedback"></div>
               </div>
+            </div>
 
-              <div class="form-group">
-                <label for="cookie-expires" class="col-sm-3 control-label"></label>
-                <div class="col-sm-8">
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="icon-calendar-empty"></i></span>
-                    <input id="cookie-expires" type="text" class="form-control">
-                  </div>
-                  <span class="help-block"></span>
+            <div class="mb-2 row">
+              <label for="cookie-expires" class="col-3 col-form-label"></label>
+              <div class="col">
+                <div class="has-validation input-group">
+                  <input id="cookie-expires" type="text" class="form-control">
+                  <span class="input-group-text"><svg class="bi"><use href="/svg/icons/icons.svg#calendar-2"></svg></span>
+                  <div id="cookie-expires-invalid" class="invalid-feedback"></div>
                 </div>
               </div>
+            </div>
 
-              <div class="row">
-                <div class="col-sm-8 col-sm-offset-3">
-                  <div class="checkbox">
-                    <label>
-                      <input id="cookie-session" type="checkbox">
-                    </label>
-                  </div>
+            <div class="mb-1 row">
+              <div class="col offset-3">
+                <div class="form-check">
+                  <input id="cookie-session" type="checkbox" class="form-check-input">
+                  <label for="cookie-session" class="form-check-label p-0"></label>
                 </div>
               </div>
+            </div>
 
-              <div class="row">
-                <div class="col-sm-8 col-sm-offset-3">
-                  <div class="checkbox">
-                    <label>
-                      <input id="cookie-secure" type="checkbox">
-                    </label>
-                  </div>
+            <div class="mb-1 row">
+              <div class="col offset-3">
+                <div class="form-check">
+                  <input id="cookie-secure" type="checkbox" class="form-check-input">
+                  <label for="cookie-secure" class="form-check-label p-0"></label>
                 </div>
               </div>
-            </fieldset>
+            </div>
           </form>
         </div>
 
         <div class="modal-footer">
-          <button class="btn btn-default" data-dismiss="modal"></button>
-          <button class="btn btn-primary"><i class="icon-ok"></i> </button>
+          <button class="btn btn-outline-secondary" data-bs-dismiss="modal"></button>
+          <button class="btn btn-primary ms-1"><svg class="bi me-1"><use href="/svg/icons/icons.svg#c-check"></svg></button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<script src="/common/javascript/jquery/jquery.js"></script>
-<script src="/common/javascript/bootstrap/collapse.js"></script>
-<script src="/common/javascript/bootstrap/dropdown.js"></script>
-<script src="/common/javascript/bootstrap/modal.js"></script>
-<script src="/common/javascript/bootstrap/tooltip.js"></script>
-<!-- Popover must be loaded after tooltip -->
-<script src="/common/javascript/bootstrap/popover.js"></script>
-<script src="/common/javascript/bootstrap/transition.js"></script>
+<script src="/lib/bootstrap/bootstrap.js"></script>
 <script src="/common/javascript/common.js"></script>
 <script src="/cookies/cookies.js"></script>
 <script src="javascript/common.js"></script>

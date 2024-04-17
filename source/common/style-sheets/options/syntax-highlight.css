@@ -1,4 +1,4 @@
-body { padding: 0; }
 html { overflow: hidden; }
-#web-developer-syntax-highlight-example { border-style: none; margin-bottom: 0; overflow-y: scroll; padding: 0 5px; }
-#web-developer-syntax-highlight-example, .CodeMirror-scroll { height: 150px; }
+#web-developer-syntax-highlight-example { margin-bottom: 0; }
+#web-developer-syntax-highlight-example, .CodeMirror { height: 400px; }
+.CodeMirror { font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.875em; }

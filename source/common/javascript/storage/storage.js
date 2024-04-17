@@ -210,8 +210,8 @@ WebDeveloper.Storage.updateBadgeText = function(featureTabId)
       badgeTooltip += "\n" + badgeText + " active " + featureDescription + " on this tab";
     }
 
-    chrome.browserAction.setBadgeText({ text: badgeText, tabId: featureTabId });
-    chrome.browserAction.setTitle({ title: badgeTooltip, tabId: featureTabId });
+    chrome.action.setBadgeText({ text: badgeText, tabId: featureTabId });
+    chrome.action.setTitle({ title: badgeTooltip, tabId: featureTabId });
   });
 };
 
@@ -219,4 +219,4 @@ chrome.tabs.onActivated.addListener(WebDeveloper.Storage.tabActivated);
 chrome.tabs.onRemoved.addListener(WebDeveloper.Storage.tabRemoved);
 chrome.tabs.onUpdated.addListener(WebDeveloper.Storage.tabUpdated);
 
-chrome.browserAction.setBadgeBackgroundColor({ color: [0, 200, 0, 255] });
+chrome.action.setBadgeBackgroundColor({ color: [0, 200, 0, 255] });

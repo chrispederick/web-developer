@@ -4,15 +4,14 @@ var dateFormat       = require("dateformat");
 var filterProperties = require("gulp-filter-java-properties");
 var fs               = require("fs");
 var gulp             = require("gulp");
-var gutil            = require("gulp-util");
 var lazypipe         = require("lazypipe");
-var log              = require('fancy-log');
+var log              = require("fancy-log");
 var plugins          = require("gulp-load-plugins")();
 var runSequence      = require("run-sequence");
 
 global.errorHandler = function(error, emitEnd, task)
 {
-  log.error(error.plugin + ' error: ' + error.message);
+  log.error(error.plugin + " error: " + error.message);
   log.error(error);
 
   // If should emit end
@@ -49,7 +48,7 @@ gulp.task("lint-gulp", function()
 
 // Common tasks
 gulp.task("all", function(callback) { runSequence("clean", "build", "package", "lint", callback); });
-gulp.task("build", ["build-chrome", "build-firefox", "build-opera"]);
-gulp.task("clean", ["clean-chrome", "clean-firefox", "clean-merge", "clean-opera"]);
+gulp.task("build", ["build-chrome", "build-edge", "build-firefox", "build-opera"]);
+gulp.task("clean", ["clean-chrome", "clean-edge", "clean-firefox", "clean-merge", "clean-opera"]);
 gulp.task("default", ["all"]);
-gulp.task("package", ["package-chrome", "package-firefox", "package-opera"]);
+gulp.task("package", ["package-chrome", "package-edge", "package-firefox", "package-opera"]);

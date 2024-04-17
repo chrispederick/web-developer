@@ -19,7 +19,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.localizeHeader(locale);
   WebDeveloper.Generated.setPageTitle(css, data, locale);
-  $(".dropdown-toggle", $("#files-dropdown")).prepend(css);
+  document.getElementById("files-dropdown").querySelector(".dropdown-toggle").append(css);
 
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
@@ -39,7 +39,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
       // Loop through the embedded containers
       for(var j = 0, m = embeddedContainers.length; j < m; j++)
       {
-        embeddedContainers[j].text(contentDocument.embedded);
+        embeddedContainers[j].textContent = contentDocument.embedded;
       }
     }
 
@@ -77,7 +77,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
         // Loop through the output containers
         for(var q = 0, r = outputContainers.length; q < r; q++)
         {
-          outputContainers[q].text(urlContentRequest.content);
+          outputContainers[q].textContent = urlContentRequest.content;
         }
       }
 

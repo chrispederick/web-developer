@@ -11,7 +11,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var linkDescription = null;
   var linkInformation = locale.linkInformation;
   var linksLength     = null;
-  var linksTemplate   = $("#links").html();
+  var linksTemplate   = document.getElementById("links").innerHTML;
   var list            = null;
 
   WebDeveloper.Generated.emptyContent();
@@ -39,7 +39,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
     {
       list = document.createElement("ol");
 
-      $(list).append(Mustache.render(linksTemplate, contentDocument));
+      list.insertAdjacentHTML("beforeend", Mustache.render(linksTemplate, contentDocument));
       content.appendChild(list);
     }
 

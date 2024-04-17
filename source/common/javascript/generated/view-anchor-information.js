@@ -9,12 +9,11 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var anchorInformation = locale.anchorInformation;
   var anchors           = null;
   var anchorsLength     = null;
-  var anchorTemplate    = $("#anchor").html();
+  var anchorTemplate    = document.getElementById("anchor").innerHTML;
   var content           = document.getElementById("content");
   var contentDocument   = null;
   var documents         = data.documents;
   var list              = null;
-  var listElement       = null;
   var url               = null;
 
   WebDeveloper.Generated.emptyContent();
@@ -42,13 +41,12 @@ WebDeveloper.Generated.initialize = function(data, locale)
     // If there are anchors
     if(anchorsLength > 0)
     {
-      list        = document.createElement("ol");
-      listElement = $(list);
+      list = document.createElement("ol");
 
       // Loop through the anchors
       for(var j = 0; j < anchorsLength; j++)
       {
-        listElement.append(Mustache.render(anchorTemplate, { anchor: anchors[j], url: url }));
+        list.insertAdjacentHTML("beforeend", Mustache.render(anchorTemplate, { anchor: anchors[j], url: url }));
       }
 
       content.appendChild(list);

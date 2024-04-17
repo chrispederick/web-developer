@@ -12,6 +12,7 @@ WebDeveloper.Generated.displayImage = function(image, container, imagesCounter, 
   var linkElement    = document.createElement("a");
   var table          = document.createElement("table");
   var tableContainer = document.createElement("thead");
+  var tableWrapper   = document.createElement("div");
 
   childElement.appendChild(document.createTextNode(locale.property));
   element.appendChild(childElement);
@@ -21,7 +22,6 @@ WebDeveloper.Generated.displayImage = function(image, container, imagesCounter, 
   childElement.appendChild(document.createTextNode(locale.value));
   element.appendChild(childElement);
   tableContainer.appendChild(element);
-  table.setAttribute("class", "table table-striped");
   table.appendChild(tableContainer);
 
   tableContainer = document.createElement("tbody");
@@ -81,21 +81,24 @@ WebDeveloper.Generated.displayImage = function(image, container, imagesCounter, 
   }
 
   table.appendChild(tableContainer);
+  table.setAttribute("class", "table table-borderless table-striped");
+  tableWrapper.appendChild(table);
+  tableWrapper.setAttribute("class", "table-responsive");
 
   childElement = document.createElement("img");
   element      = document.createElement("div");
 
-  childElement.setAttribute("class", "img-thumbnail");
+  childElement.setAttribute("class", "img-thumbnail mb-3");
   childElement.setAttribute("src", imageSrc);
   element.setAttribute("class", "web-developer-image");
   element.setAttribute("id", anchor);
   element.appendChild(childElement);
   container.appendChild(element);
-  container.appendChild(table);
+  container.appendChild(tableWrapper);
 
-  element = document.createElement("div");
+  element = document.createElement("hr");
 
-  element.setAttribute("class", "web-developer-separator");
+  element.setAttribute("class", "m-5");
   container.appendChild(element);
   document.getElementById("content").appendChild(container);
 
@@ -103,8 +106,10 @@ WebDeveloper.Generated.displayImage = function(image, container, imagesCounter, 
   element      = document.createElement("li");
 
   childElement.appendChild(document.createTextNode(WebDeveloper.Generated.formatURL(imageSrc)));
-  childElement.setAttribute("href", "#" + anchor);
-  $(".dropdown-menu", $("#images-dropdown")).get(0).appendChild(element);
+  childElement.setAttribute("class", "dropdown-item");
+  childElement.setAttribute("href", "#cookie-" + anchor);
+  element.appendChild(childElement);
+  document.getElementById("images-dropdown").querySelector(".dropdown-menu").appendChild(element);
 };
 
 // Initializes the page with data
@@ -117,14 +122,14 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var images            = null;
   var imagesCounter     = 1;
   var imagesDescription = locale.images;
-  var imagesDropdown    = $("#images-dropdown");
+  var imagesDropdown    = document.getElementById("images-dropdown");
   var imagesLength      = null;
 
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.localizeHeader(locale);
   WebDeveloper.Generated.setPageTitle(imagesDescription, data, locale);
 
-  $(".dropdown-toggle", imagesDropdown).prepend(imagesDescription);
+  imagesDropdown.querySelector(".dropdown-toggle").append(imagesDescription);
 
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)

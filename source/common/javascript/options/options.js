@@ -1,276 +1,288 @@
 var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-redeclare, no-use-before-define
 
 WebDeveloper.Options                = WebDeveloper.Options || {};
-WebDeveloper.Options.animationSpeed = 100;
+WebDeveloper.Options.optionCallback = null;
+WebDeveloper.Options.optionRow      = null;
+WebDeveloper.Options.tableDragRow   = null;
 
-$(function()
+// Adds a resize option
+WebDeveloper.Options.addResizeOption = function()
 {
-  var hash = window.location.hash;
+  var resizeDescription = document.getElementById("resize-description");
+  var resizeForm        = document.getElementById("resize-form");
 
-  WebDeveloper.Options.initialize();
+  resizeForm.querySelector("legend").textContent                             = WebDeveloper.Locales.getString("addResizeOption");
+  document.getElementById("resize-submit").querySelector("span").textContent = WebDeveloper.Locales.getString("add");
 
-  WebDeveloper.Storage.getItem("option", function(option)
-  {
-    // If the hash is set
-    if(hash)
-    {
-      $("a", $(hash)).tab("show");
-      WebDeveloper.Storage.setItem("option", hash);
-    }
-    else if(option)
-    {
-      $("a", $("#" + option)).tab("show");
-    }
-  });
+  resizeDescription.value                        = "";
+  document.getElementById("resize-width").value  = "";
+  document.getElementById("resize-height").value = "";
 
-  $("li", $(".nav-tabs")).on("click", WebDeveloper.Options.changeTab);
-});
-
-// Handles a tab change
-WebDeveloper.Options.changeTab = function()
-{
-  WebDeveloper.Storage.setItem("option", $(this).attr("id"));
+  resizeForm.removeAttribute("data-position");
+  document.getElementById("resize-options-container").classList.add("d-none");
+  resizeForm.classList.remove("d-none");
+  resizeDescription.focus();
 };
 
-// Closes the option
-WebDeveloper.Options.closeOption = function(options, form, clearCallback)
+// Adds a responsive layout
+WebDeveloper.Options.addResponsiveLayout = function()
 {
-  form.slideUp(WebDeveloper.Options.animationSpeed, function()
+  var responsiveLayoutDescription = document.getElementById("responsive-layout-description");
+  var responsiveLayoutForm        = document.getElementById("responsive-layout-form");
+
+  responsiveLayoutForm.querySelector("legend").textContent                              = WebDeveloper.Locales.getString("addResponsiveLayout");
+  document.getElementById("responsive-layout-submit").querySelector("span").textContent = WebDeveloper.Locales.getString("add");
+
+  responsiveLayoutDescription.value                         = "";
+  document.getElementById("responsive-layout-width").value  = "";
+  document.getElementById("responsive-layout-height").value = "";
+
+  responsiveLayoutForm.removeAttribute("data-position");
+  document.getElementById("responsive-layouts-container").classList.add("d-none");
+  responsiveLayoutForm.classList.remove("d-none");
+  responsiveLayoutDescription.focus();
+};
+
+// Adds a tool
+WebDeveloper.Options.addTool = function()
+{
+  var toolDescription = document.getElementById("tool-description");
+  var toolForm        = document.getElementById("tool-form");
+
+  toolForm.querySelector("legend").textContent                             = WebDeveloper.Locales.getString("addTool");
+  document.getElementById("tool-submit").querySelector("span").textContent = WebDeveloper.Locales.getString("add");
+
+  toolDescription.value                      = "";
+  document.getElementById("tool-url").value  = "";
+
+  toolForm.removeAttribute("data-position");
+  document.getElementById("tools-container").classList.add("d-none");
+  toolForm.classList.remove("d-none");
+  toolDescription.focus();
+};
+
+// Handles a tab change
+WebDeveloper.Options.changeTab = function(event)
+{
+  var eventTarget = event.target;
+
+  // If the event target is a nav link
+  if(eventTarget && eventTarget.classList.contains("nav-link"))
   {
-    $(".table-container", options).slideDown(WebDeveloper.Options.animationSpeed);
-
-    clearCallback();
-
-    form.removeData("position");
-  });
+    WebDeveloper.Storage.setItem("option", eventTarget.parentElement.getAttribute("id"));
+  }
 };
 
 // Closes the resize option
 WebDeveloper.Options.closeResizeOption = function()
 {
-  var resizeOptions = $("#resize-options");
-
-  WebDeveloper.Options.closeOption(resizeOptions, $("form", resizeOptions), function()
-  {
-    $("#resize-description").val("");
-    $("#resize-width").val("");
-    $("#resize-height").val("");
-  });
+  document.getElementById("resize-form").classList.add("d-none");
+  document.getElementById("resize-options-container").classList.remove("d-none");
 };
 
 // Closes the responsive layout
 WebDeveloper.Options.closeResponsiveLayout = function()
 {
-  var responsiveLayoutOptions = $("#responsive-layouts-options");
-
-  WebDeveloper.Options.closeOption(responsiveLayoutOptions, $("form", responsiveLayoutOptions), function()
-  {
-    $("#responsive-layout-description").val("");
-    $("#responsive-layout-width").val("");
-    $("#responsive-layout-height").val("");
-  });
+  document.getElementById("responsive-layout-form").classList.add("d-none");
+  document.getElementById("responsive-layouts-container").classList.remove("d-none");
 };
 
 // Closes the tool
 WebDeveloper.Options.closeTool = function()
 {
-  var toolOptions = $("#tools-options");
-
-  WebDeveloper.Options.closeOption(toolOptions, $("form", toolOptions), function()
-  {
-    $("#tool-description").val("");
-    $("#tool-url").val("");
-  });
+  document.getElementById("tool-form").classList.add("d-none");
+  document.getElementById("tools-container").classList.remove("d-none");
 };
 
 // Deletes an option
-WebDeveloper.Options.deleteOption = function(option, title, confirmation, updateCallback)
+WebDeveloper.Options.deleteOption = function(option, title, confirmation, callback)
 {
-  var deleteDialog = $("#delete-dialog");
+  var deleteDialog = document.getElementById("delete-dialog");
 
-  $("h4", deleteDialog).text(title);
-  $("p", deleteDialog).text(confirmation);
+  deleteDialog.querySelector("h4").replaceChildren(title);
+  deleteDialog.querySelector("p").replaceChildren(confirmation);
 
-  $(".btn-danger", deleteDialog).off("click").on("click", function()
-  {
-    option.remove();
-    deleteDialog.modal("hide");
-    updateCallback();
-  });
+  WebDeveloper.Options.optionCallback = callback;
+  WebDeveloper.Options.optionRow      = option;
 
-  deleteDialog.modal("show");
+  bootstrap.Modal.getOrCreateInstance("#delete-dialog").show();
+};
+
+// Handles an option delete being submitted
+WebDeveloper.Options.deleteOptionSubmit = function()
+{
+  WebDeveloper.Options.optionRow.remove();
+  WebDeveloper.Options.optionCallback();
+  bootstrap.Modal.getOrCreateInstance("#delete-dialog").hide();
 };
 
 // Deletes a resize option
-WebDeveloper.Options.deleteResizeOption = function()
+WebDeveloper.Options.deleteResizeOption = function(button)
 {
-  var resizeOption = $(this).closest("tr");
+  var resizeOption = button.closest("tr");
 
-  WebDeveloper.Options.deleteOption(resizeOption, WebDeveloper.Locales.getString("deleteResizeOption"), WebDeveloper.Locales.getFormattedString("deleteResizeOptionConfirmation", [$("td:eq(0)", resizeOption).text()]), WebDeveloper.Options.updateResizeOptions);
+  WebDeveloper.Options.deleteOption(resizeOption, WebDeveloper.Locales.getString("deleteResizeOption"), WebDeveloper.Locales.getFormattedString("deleteResizeOptionConfirmation", [resizeOption.querySelector("td:nth-child(1)").textContent]), WebDeveloper.Options.updateResizeOptions);
 };
 
 // Deletes a responsive layout
-WebDeveloper.Options.deleteResponsiveLayout = function()
+WebDeveloper.Options.deleteResponsiveLayout = function(button)
 {
-  var responsiveLayout = $(this).closest("tr");
+  var responsiveLayout = button.closest("tr");
 
-  WebDeveloper.Options.deleteOption(responsiveLayout, WebDeveloper.Locales.getString("deleteResponsiveLayout"), WebDeveloper.Locales.getFormattedString("deleteResponsiveLayoutConfirmation", [$("td:eq(0)", responsiveLayout).text()]), WebDeveloper.Options.updateResponsiveLayouts);
+  WebDeveloper.Options.deleteOption(responsiveLayout, WebDeveloper.Locales.getString("deleteResponsiveLayout"), WebDeveloper.Locales.getFormattedString("deleteResponsiveLayoutConfirmation", [responsiveLayout.querySelector("td:nth-child(1)").textContent]), WebDeveloper.Options.updateResponsiveLayouts);
 };
 
 // Deletes a tool
-WebDeveloper.Options.deleteTool = function()
+WebDeveloper.Options.deleteTool = function(button)
 {
-  var tool = $(this).closest("tr");
+  var tool = button.closest("tr");
 
-  WebDeveloper.Options.deleteOption(tool, WebDeveloper.Locales.getString("deleteTool"), WebDeveloper.Locales.getFormattedString("deleteToolConfirmation", [$("td:eq(0)", tool).text()]), WebDeveloper.Options.updateTools);
-};
-
-// Displays the option form
-WebDeveloper.Options.displayOptionForm = function(options, addTitle, addLabel, editTitle, editLabel)
-{
-  // If in edit mode
-  if($("form", options).data("position"))
-  {
-    $("legend", options).text(editTitle);
-    $("form .btn-primary > span", options).text(editLabel);
-  }
-  else
-  {
-    $("legend", options).text(addTitle);
-    $("form .btn-primary > span", options).text(addLabel);
-  }
-
-  $(".table-container", options).slideUp(WebDeveloper.Options.animationSpeed, function()
-  {
-    $("form", options).slideDown(WebDeveloper.Options.animationSpeed);
-  });
-};
-
-// Displays the resize option form
-WebDeveloper.Options.displayResizeOptionForm = function()
-{
-  var resizeOptions = $("#resize-options");
-
-  WebDeveloper.Options.resetOptionForm($("#resize-form"));
-  WebDeveloper.Options.displayOptionForm(resizeOptions, WebDeveloper.Locales.getString("addResizeOption"), WebDeveloper.Locales.getString("add"), WebDeveloper.Locales.getString("editResizeOption"), WebDeveloper.Locales.getString("save"));
-};
-
-// Displays the responsive layout form
-WebDeveloper.Options.displayResponsiveLayoutForm = function()
-{
-  var responsiveLayoutsOptions = $("#responsive-layouts-options");
-
-  WebDeveloper.Options.resetOptionForm($("#responsive-layout-form"));
-  WebDeveloper.Options.displayOptionForm(responsiveLayoutsOptions, WebDeveloper.Locales.getString("addResponsiveLayout"), WebDeveloper.Locales.getString("add"), WebDeveloper.Locales.getString("editResponsiveLayout"), WebDeveloper.Locales.getString("save"));
-};
-
-// Displays the tool form
-WebDeveloper.Options.displayToolForm = function()
-{
-  var toolsOptions = $("#tools-options");
-
-  WebDeveloper.Options.resetOptionForm($("#tool-form"));
-  WebDeveloper.Options.displayOptionForm(toolsOptions, WebDeveloper.Locales.getString("addTool"), WebDeveloper.Locales.getString("add"), WebDeveloper.Locales.getString("editTool"), WebDeveloper.Locales.getString("save"));
+  WebDeveloper.Options.deleteOption(tool, WebDeveloper.Locales.getString("deleteTool"), WebDeveloper.Locales.getFormattedString("deleteToolConfirmation", [tool.querySelector("td:nth-child(1)").textContent]), WebDeveloper.Options.updateTools);
 };
 
 // Edits a resize option
-WebDeveloper.Options.editResizeOption = function()
+WebDeveloper.Options.editResizeOption = function(button)
 {
-  var resizeOptionPosition = $(this).closest("tr").prevAll().length + 1;
+  var resizeDescription = document.getElementById("resize-description");
+  var resizeForm        = document.getElementById("resize-form");
+  var resizeOption      = button.closest("tr");
+  var position          = Array.prototype.indexOf.call(resizeOption.parentElement.children, resizeOption);
 
-  WebDeveloper.Storage.getItems(["resize_" + resizeOptionPosition + "_description", "resize_" + resizeOptionPosition + "_height", "resize_" + resizeOptionPosition + "_width"], function(items)
-  {
-    $("#resize-description").val(items["resize_" + resizeOptionPosition + "_description"]);
-    $("#resize-height").val(items["resize_" + resizeOptionPosition + "_height"]);
-    $("#resize-width").val(items["resize_" + resizeOptionPosition + "_width"]);
+  resizeForm.querySelector("legend").textContent                             = WebDeveloper.Locales.getString("editResizeOption");
+  document.getElementById("resize-submit").querySelector("span").textContent = WebDeveloper.Locales.getString("save");
 
-    WebDeveloper.Options.displayResizeOptionForm();
-  });
+  resizeDescription.value                        = resizeOption.querySelector("td:nth-child(1)").textContent;
+  document.getElementById("resize-width").value  = resizeOption.querySelector("td:nth-child(2)").textContent;
+  document.getElementById("resize-height").value = resizeOption.querySelector("td:nth-child(3)").textContent;
 
-  $("#resize-form").data("position", resizeOptionPosition);
+  resizeForm.setAttribute("data-position", position);
+  document.getElementById("resize-options-container").classList.add("d-none");
+  resizeForm.classList.remove("d-none");
+  resizeDescription.focus();
 };
 
 // Edits a responsive layout
-WebDeveloper.Options.editResponsiveLayout = function()
+WebDeveloper.Options.editResponsiveLayout = function(button)
 {
-  var responsiveLayoutPosition = $(this).closest("tr").prevAll().length + 1;
+  var responsiveLayoutDescription = document.getElementById("responsive-layout-description");
+  var responsiveLayoutForm        = document.getElementById("responsive-layout-form");
+  var responsiveLayout            = button.closest("tr");
+  var position                    = Array.prototype.indexOf.call(responsiveLayout.parentElement.children, responsiveLayout);
 
-  WebDeveloper.Storage.getItems(["responsive_layout_" + responsiveLayoutPosition + "_description", "responsive_layout_" + responsiveLayoutPosition + "_height", "responsive_layout_" + responsiveLayoutPosition + "_width"], function(items)
-  {
-    $("#responsive-layout-description").val(items["responsive_layout_" + responsiveLayoutPosition + "_description"]);
-    $("#responsive-layout-height").val(items["responsive_layout_" + responsiveLayoutPosition + "_height"]);
-    $("#responsive-layout-width").val(items["responsive_layout_" + responsiveLayoutPosition + "_width"]);
+  responsiveLayoutForm.querySelector("legend").textContent                              = WebDeveloper.Locales.getString("editResponsiveLayout");
+  document.getElementById("responsive-layout-submit").querySelector("span").textContent = WebDeveloper.Locales.getString("save");
 
-    WebDeveloper.Options.displayResponsiveLayoutForm();
-  });
+  responsiveLayoutDescription.value                         = responsiveLayout.querySelector("td:nth-child(1)").textContent;
+  document.getElementById("responsive-layout-width").value  = responsiveLayout.querySelector("td:nth-child(2)").textContent;
+  document.getElementById("responsive-layout-height").value = responsiveLayout.querySelector("td:nth-child(3)").textContent;
 
-  $("#responsive-layout-form").data("position", responsiveLayoutPosition);
+  responsiveLayoutForm.setAttribute("data-position", position);
+  document.getElementById("responsive-layouts-container").classList.add("d-none");
+  responsiveLayoutForm.classList.remove("d-none");
+  responsiveLayoutDescription.focus();
 };
 
 // Edits a tool
-WebDeveloper.Options.editTool = function()
+WebDeveloper.Options.editTool = function(button)
 {
-  var toolPosition = $(this).closest("tr").prevAll().length + 1;
+  var toolDescription = document.getElementById("tool-description");
+  var toolForm        = document.getElementById("tool-form");
+  var tool            = button.closest("tr");
+  var position        = Array.prototype.indexOf.call(tool.parentElement.children, tool);
 
-  WebDeveloper.Storage.getItems(["tool_" + toolPosition + "_description", "tool_" + toolPosition + "_url"], function(items)
-  {
-    $("#tool-description").val(items["tool_" + toolPosition + "_description"]);
-    $("#tool-url").val(items["tool_" + toolPosition + "_url"]);
+  toolForm.querySelector("legend").textContent                             = WebDeveloper.Locales.getString("editTool");
+  document.getElementById("tool-submit").querySelector("span").textContent = WebDeveloper.Locales.getString("save");
 
-    WebDeveloper.Options.displayToolForm();
-  });
+  toolDescription.value                      = tool.querySelector("td:nth-child(1)").textContent;
+  document.getElementById("tool-url").value  = tool.querySelector("td:nth-child(2)").textContent;
 
-  $("#tool-form").data("position", toolPosition);
+  toolForm.setAttribute("data-position", position);
+  document.getElementById("tools-container").classList.add("d-none");
+  toolForm.classList.remove("d-none");
+  toolDescription.focus();
 };
 
 // Initializes the options
 WebDeveloper.Options.initialize = function()
 {
-  WebDeveloper.Options.localize();
+  var hash = window.location.hash;
+
+  // If the hash is set
+  if(hash)
+  {
+    WebDeveloper.Storage.setItem("option", hash);
+    bootstrap.Tab.getOrCreateInstance(document.querySelector("#" + hash + " > a")).show();
+  }
+  else
+  {
+    WebDeveloper.Storage.getItem("option", function(option)
+    {
+      // If the option is set
+      if(option)
+      {
+        bootstrap.Tab.getOrCreateInstance(document.querySelector("#" + option + " > a")).show();
+      }
+    });
+  }
+
+  WebDeveloper.Options.initializeAdvancedTab();
   WebDeveloper.Options.initializeColorsTab();
   WebDeveloper.Options.initializeGeneralTab();
   WebDeveloper.Options.initializeResizeTab();
   WebDeveloper.Options.initializeResponsiveLayoutsTab();
   WebDeveloper.Options.initializeToolsTab();
-  WebDeveloper.Options.initializeAdvancedTab();
+  WebDeveloper.Options.localize();
+
+  document.getElementById("delete-submit").addEventListener("click", WebDeveloper.Options.deleteOptionSubmit);
+  document.querySelector(".nav-tabs").addEventListener("click", WebDeveloper.Options.changeTab);
 };
 
 // Initializes the advanced tab
 WebDeveloper.Options.initializeAdvancedTab = function()
 {
+  var populateEmailAddress = document.getElementById("populate_email_address");
+
   WebDeveloper.Storage.getItem("populate_email_address", function(item)
   {
-    $("#populate_email_address").val(item).on("change", WebDeveloper.Options.updatePopulateEmailAddress);
+    populateEmailAddress.value = item;
   });
+
+  populateEmailAddress.addEventListener("change", WebDeveloper.Options.updatePopulateEmailAddress);
 };
 
 // Initializes the colors tab
 WebDeveloper.Options.initializeColorsTab = function()
 {
+  var syntaxHighlightTheme = document.getElementById("syntax_highlight_theme");
+
   WebDeveloper.Storage.getItem("syntax_highlight_theme", function(item)
   {
-    $("#syntax_highlight_theme").val(item).on("change", WebDeveloper.Options.updateSyntaxHighlightTheme);
+    syntaxHighlightTheme.value = item;
   });
 
-  $("#syntax-highlight-browser").on("load", WebDeveloper.Options.updateSyntaxHighlightTheme);
+  syntaxHighlightTheme.addEventListener("change", WebDeveloper.Options.updateSyntaxHighlightTheme);
 };
 
 // Initializes the general tab
 WebDeveloper.Options.initializeGeneralTab = function()
 {
+  var displayOverlayWith = document.getElementById("display_overlay_with");
+
   WebDeveloper.Storage.getItem("display_overlay_with", function(item)
   {
-    $("#display_overlay_with").val(item).on("change", WebDeveloper.Options.updateDisplayOverlayWith);
+    displayOverlayWith.value = item;
   });
+
+  displayOverlayWith.addEventListener("change", WebDeveloper.Options.updateDisplayOverlayWith);
 };
 
 // Initializes the resize tab
 WebDeveloper.Options.initializeResizeTab = function()
 {
-  var resizeOptions      = $("#resize-options");
-  var resizeOptionsTable = $("tbody", resizeOptions);
+  var resizeOptions      = document.getElementById("resize-options");
+  var resizeOptionsTable = resizeOptions.querySelector("tbody");
 
-  resizeOptionsTable.empty();
+  resizeOptionsTable.replaceChildren();
 
   WebDeveloper.Storage.getItem("resize_count", function(resizeOptionCount)
   {
@@ -287,7 +299,7 @@ WebDeveloper.Options.initializeResizeTab = function()
       var description          = null;
       var height               = 0;
       var resizeOption         = null;
-      var resizeOptionTemplate = $("#resize-option").html();
+      var resizeOptionTemplate = document.getElementById("resize-option").innerHTML;
       var width                = 0;
 
       Mustache.parse(resizeOptionTemplate);
@@ -308,38 +320,47 @@ WebDeveloper.Options.initializeResizeTab = function()
           resizeOption.height      = height;
           resizeOption.width       = width;
 
-          resizeOptionsTable.append(Mustache.render(resizeOptionTemplate, resizeOption));
+          resizeOptionsTable.insertAdjacentHTML("beforeend", Mustache.render(resizeOptionTemplate, resizeOption));
         }
       }
 
       // If there is only one resize option
       if(resizeOptionCount == 1)
       {
-        resizeOptionsTable.addClass("single");
+        resizeOptionsTable.classList.add("single");
       }
 
-      $(".btn-danger > span", resizeOptionsTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
-      $(".btn-primary > span", resizeOptionsTable).text(WebDeveloper.Locales.getString("edit"));
+      WebDeveloper.Options.localizeTableActions(resizeOptionsTable);
 
-      resizeOptionsTable.on("click", ".btn-danger", WebDeveloper.Options.deleteResizeOption);
-      resizeOptionsTable.on("click", ".btn-primary", WebDeveloper.Options.editResizeOption);
-      $("table", resizeOptions).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateResizeOptions });
-      $(".table-container > .btn-primary", resizeOptions).on("click", WebDeveloper.Options.displayResizeOptionForm);
+      resizeOptionsTable.addEventListener("click", WebDeveloper.Options.resizeOptionsClick);
+      resizeOptionsTable.addEventListener("drop", WebDeveloper.Options.updateResizeOptions);
 
-      $("#resize-cancel").on("click", WebDeveloper.Options.closeResizeOption);
-      $("#resize-form").on("submit", function(event) { event.preventDefault(); });
-      $("#resize-submit").on("click", WebDeveloper.Options.submitResizeOption);
+      // Loop through the rows
+      resizeOptionsTable.querySelectorAll(".draggable").forEach(function(row)
+      {
+        row.addEventListener("dragend", WebDeveloper.Options.tableDragEnd);
+        row.addEventListener("dragover", WebDeveloper.Options.tableDragOver);
+        row.addEventListener("dragstart", WebDeveloper.Options.tableDragStart);
+      });
     });
   });
+
+  document.getElementById("resize-cancel").addEventListener("click", WebDeveloper.Options.closeResizeOption);
+  document.getElementById("resize-description").addEventListener("keypress", WebDeveloper.Options.resizeOptionKeyPress);
+  document.getElementById("resize-form").addEventListener("submit", function(event) { event.preventDefault(); });
+  document.getElementById("resize-height").addEventListener("keypress", WebDeveloper.Options.resizeOptionKeyPress);
+  document.getElementById("resize-option-add").addEventListener("click", WebDeveloper.Options.addResizeOption);
+  document.getElementById("resize-submit").addEventListener("click", WebDeveloper.Options.submitResizeOption);
+  document.getElementById("resize-width").addEventListener("keypress", WebDeveloper.Options.resizeOptionKeyPress);
 };
 
 // Initializes the responsive layouts tab
 WebDeveloper.Options.initializeResponsiveLayoutsTab = function()
 {
-  var responsiveLayouts      = $("#responsive-layouts-options");
-  var responsiveLayoutsTable = $("tbody", responsiveLayouts);
+  var responsiveLayouts      = document.getElementById("responsive-layouts-options");
+  var responsiveLayoutsTable = responsiveLayouts.querySelector("tbody");
 
-  responsiveLayoutsTable.empty();
+  responsiveLayoutsTable.replaceChildren();
 
   WebDeveloper.Storage.getItem("responsive_layout_count", function(responsiveLayoutsCount)
   {
@@ -356,7 +377,7 @@ WebDeveloper.Options.initializeResponsiveLayoutsTab = function()
       var description              = null;
       var height                   = 0;
       var responsiveLayout         = null;
-      var responsiveLayoutTemplate = $("#responsive-layout").html();
+      var responsiveLayoutTemplate = document.getElementById("responsive-layout").innerHTML;
       var width                    = 0;
 
       Mustache.parse(responsiveLayoutTemplate);
@@ -377,38 +398,47 @@ WebDeveloper.Options.initializeResponsiveLayoutsTab = function()
           responsiveLayout.height      = height;
           responsiveLayout.width       = width;
 
-          responsiveLayoutsTable.append(Mustache.render(responsiveLayoutTemplate, responsiveLayout));
+          responsiveLayoutsTable.insertAdjacentHTML("beforeend", Mustache.render(responsiveLayoutTemplate, responsiveLayout));
         }
       }
 
       // If there is only one responsive layout
       if(responsiveLayoutsCount == 1)
       {
-        responsiveLayoutsTable.addClass("single");
+        responsiveLayoutsTable.classList.add("single");
       }
 
-      $(".btn-danger > span", responsiveLayoutsTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
-      $(".btn-primary > span", responsiveLayoutsTable).text(WebDeveloper.Locales.getString("edit"));
+      WebDeveloper.Options.localizeTableActions(responsiveLayoutsTable);
 
-      responsiveLayoutsTable.on("click", ".btn-danger", WebDeveloper.Options.deleteResponsiveLayout);
-      responsiveLayoutsTable.on("click", ".btn-primary", WebDeveloper.Options.editResponsiveLayout);
-      $("table", responsiveLayouts).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateResponsiveLayouts });
-      $(".table-container > .btn-primary", responsiveLayouts).on("click", WebDeveloper.Options.displayResponsiveLayoutForm);
+      responsiveLayoutsTable.addEventListener("click", WebDeveloper.Options.responsiveLayoutsClick);
+      responsiveLayoutsTable.addEventListener("drop", WebDeveloper.Options.updateResponsiveLayouts);
 
-      $("#responsive-layout-form").on("submit", function(event) { event.preventDefault(); });
-      $("#responsive-layout-submit").on("click", WebDeveloper.Options.submitResponsiveLayout);
-      $("#responsive-layout-cancel").on("click", WebDeveloper.Options.closeResponsiveLayout);
+      // Loop through the rows
+      responsiveLayoutsTable.querySelectorAll(".draggable").forEach(function(row)
+      {
+        row.addEventListener("dragend", WebDeveloper.Options.tableDragEnd);
+        row.addEventListener("dragover", WebDeveloper.Options.tableDragOver);
+        row.addEventListener("dragstart", WebDeveloper.Options.tableDragStart);
+      });
     });
   });
+
+  document.getElementById("responsive-layout-add").addEventListener("click", WebDeveloper.Options.addResponsiveLayout);
+  document.getElementById("responsive-layout-cancel").addEventListener("click", WebDeveloper.Options.closeResponsiveLayout);
+  document.getElementById("responsive-layout-description").addEventListener("keypress", WebDeveloper.Options.responsiveLayoutKeyPress);
+  document.getElementById("responsive-layout-form").addEventListener("submit", function(event) { event.preventDefault(); });
+  document.getElementById("responsive-layout-height").addEventListener("keypress", WebDeveloper.Options.responsiveLayoutKeyPress);
+  document.getElementById("responsive-layout-submit").addEventListener("click", WebDeveloper.Options.submitResponsiveLayout);
+  document.getElementById("responsive-layout-width").addEventListener("keypress", WebDeveloper.Options.responsiveLayoutKeyPress);
 };
 
 // Initializes the tools tab
 WebDeveloper.Options.initializeToolsTab = function()
 {
-  var tools      = $("#tools-options");
-  var toolsTable = $("tbody", tools);
+  var tools      = document.getElementById("tools-options");
+  var toolsTable = tools.querySelector("tbody");
 
-  toolsTable.empty();
+  toolsTable.replaceChildren();
 
   WebDeveloper.Storage.getItem("tool_count", function(toolsCount)
   {
@@ -424,7 +454,7 @@ WebDeveloper.Options.initializeToolsTab = function()
     {
       var description  = null;
       var tool         = null;
-      var toolTemplate = $("#tool").html();
+      var toolTemplate = document.getElementById("tool").innerHTML;
       var url          = null;
 
       Mustache.parse(toolTemplate);
@@ -443,172 +473,238 @@ WebDeveloper.Options.initializeToolsTab = function()
           tool.description = description;
           tool.url         = url;
 
-          toolsTable.append(Mustache.render(toolTemplate, tool));
+          toolsTable.insertAdjacentHTML("beforeend", Mustache.render(toolTemplate, tool));
         }
       }
 
       // If there is only one tool
       if(toolsCount == 1)
       {
-        toolsCount.addClass("single");
+        toolsTable.classList.add("single");
       }
 
-      $(".btn-danger > span", toolsTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
-      $(".btn-primary > span", toolsTable).text(WebDeveloper.Locales.getString("edit"));
+      WebDeveloper.Options.localizeTableActions(toolsTable);
 
-      toolsTable.on("click", ".btn-danger", WebDeveloper.Options.deleteTool);
-      toolsTable.on("click", ".btn-primary", WebDeveloper.Options.editTool);
-      $("table", tools).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateTools });
-      $(".table-container > .btn-primary", tools).on("click", WebDeveloper.Options.displayToolForm);
+      toolsTable.addEventListener("click", WebDeveloper.Options.toolsClick);
+      toolsTable.addEventListener("drop", WebDeveloper.Options.updateTools);
 
-      $("#tool-form").on("submit", function(event) { event.preventDefault(); });
-      $("#tool-submit").on("click", WebDeveloper.Options.submitTool);
-      $("#tool-cancel").on("click", WebDeveloper.Options.closeTool);
+      // Loop through the rows
+      toolsTable.querySelectorAll(".draggable").forEach(function(row)
+      {
+        row.addEventListener("dragend", WebDeveloper.Options.tableDragEnd);
+        row.addEventListener("dragover", WebDeveloper.Options.tableDragOver);
+        row.addEventListener("dragstart", WebDeveloper.Options.tableDragStart);
+      });
     });
   });
+
+  document.getElementById("tool-add").addEventListener("click", WebDeveloper.Options.addTool);
+  document.getElementById("tool-cancel").addEventListener("click", WebDeveloper.Options.closeTool);
+  document.getElementById("tool-description").addEventListener("keypress", WebDeveloper.Options.toolKeyPress);
+  document.getElementById("tool-form").addEventListener("submit", function(event) { event.preventDefault(); });
+  document.getElementById("tool-submit").addEventListener("click", WebDeveloper.Options.submitTool);
+  document.getElementById("tool-url").addEventListener("keypress", WebDeveloper.Options.toolKeyPress);
 };
 
 // Localizes the options
 WebDeveloper.Options.localize = function()
 {
-  var deleteDialog = $("#delete-dialog");
+  document.title = WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("options");
 
-  $("title").text(WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("options"));
-  $(".navbar-brand").text(WebDeveloper.Locales.getString("options"));
-  $(".navbar-text").text(WebDeveloper.Locales.getString("extensionName"));
+  document.getElementById("advanced-tab").querySelector("a").append(WebDeveloper.Locales.getString("advanced"));
+  document.getElementById("colors-tab").querySelector("a").append(WebDeveloper.Locales.getString("colors"));
+  document.getElementById("delete-dialog").querySelector(".btn-outline-secondary").append(WebDeveloper.Locales.getString("cancel"));
+  document.getElementById("delete-submit").append(WebDeveloper.Locales.getString("delete"));
+  document.getElementById("general-tab").querySelector("a").append(WebDeveloper.Locales.getString("general"));
+  document.getElementById("resize-tab").querySelector("a").append(WebDeveloper.Locales.getString("resize"));
+  document.getElementById("responsive-layouts-tab").querySelector("a").append(WebDeveloper.Locales.getString("responsive"));
+  document.getElementById("tools-tab").querySelector("a").append(WebDeveloper.Locales.getString("tools"));
+  document.querySelector(".navbar-brand span").replaceChildren(WebDeveloper.Locales.getString("extensionName") + " " + WebDeveloper.Locales.getString("options"));
 
-  $("a", $("#advanced-tab")).append(WebDeveloper.Locales.getString("advanced"));
-  $("a", $("#colors-tab")).append(WebDeveloper.Locales.getString("colors"));
-  $("a", $("#general-tab")).append(WebDeveloper.Locales.getString("general"));
-  $("a", $("#resize-tab")).append(WebDeveloper.Locales.getString("resize"));
-  $("a", $("#responsive-layouts-tab")).append(WebDeveloper.Locales.getString("responsive"));
-  $("a", $("#tools-tab")).append(WebDeveloper.Locales.getString("tools"));
-
-  $(".modal-footer > .btn-default", deleteDialog).text(WebDeveloper.Locales.getString("cancel"));
-  $(".btn-danger", deleteDialog).append(WebDeveloper.Locales.getString("delete"));
-
+  WebDeveloper.Options.localizeAdvancedTab();
   WebDeveloper.Options.localizeColorsTab();
   WebDeveloper.Options.localizeGeneralTab();
   WebDeveloper.Options.localizeResizeTab();
   WebDeveloper.Options.localizeResponsiveLayoutsTab();
   WebDeveloper.Options.localizeToolsTab();
-  WebDeveloper.Options.localizeAdvancedTab();
 };
 
 // Localizes the advanced tab
 WebDeveloper.Options.localizeAdvancedTab = function()
 {
-  $('[for="populate_email_address"]').text(WebDeveloper.Locales.getString("populateEmailAddress"));
+  document.querySelector('[for="populate_email_address"]').append(WebDeveloper.Locales.getString("populateEmailAddress"));
 };
 
 // Localizes the colors tab
 WebDeveloper.Options.localizeColorsTab = function()
 {
-  $("#syntax-highlight-performance").text(WebDeveloper.Locales.getString("syntaxHighlightPerformance"));
-
-  $('[for="syntax_highlight_theme"]').text(WebDeveloper.Locales.getString("syntaxHighlightTheme"));
-
-  $('[value="dark"]').text(WebDeveloper.Locales.getString("dark"));
-  $('[value="light"]').text(WebDeveloper.Locales.getString("light"));
-  $('[value="none"]').text(WebDeveloper.Locales.getString("none"));
-
-  $("#preview").text(WebDeveloper.Locales.getString("preview"));
+  document.getElementById("preview").append(WebDeveloper.Locales.getString("preview"));
+  document.getElementById("syntax-highlight-performance").append(WebDeveloper.Locales.getString("syntaxHighlightPerformance"));
+  document.querySelector('[for="syntax_highlight_theme"]').append(WebDeveloper.Locales.getString("syntaxHighlightTheme"));
+  document.querySelector('[value="dark"]').append(WebDeveloper.Locales.getString("dark"));
+  document.querySelector('[value="light"]').append(WebDeveloper.Locales.getString("light"));
+  document.querySelector('[value="none"]').append(WebDeveloper.Locales.getString("none"));
 };
 
 // Localizes the general tab
 WebDeveloper.Options.localizeGeneralTab = function()
 {
-  $('[for="display_overlay_with"]').text(WebDeveloper.Locales.getString("displayOverlayWith"));
-
-  $('[value="icons_text"]').text(WebDeveloper.Locales.getString("iconsText"));
-  $('[value="icons"]').text(WebDeveloper.Locales.getString("icons"));
-  $('[value="text"]').text(WebDeveloper.Locales.getString("text"));
+  document.querySelector('[for="display_overlay_with"]').append(WebDeveloper.Locales.getString("displayOverlayWith"));
+  document.querySelector('[value="icons_text"]').append(WebDeveloper.Locales.getString("iconsText"));
+  document.querySelector('[value="icons"]').append(WebDeveloper.Locales.getString("icons"));
+  document.querySelector('[value="text"]').append(WebDeveloper.Locales.getString("text"));
 };
 
 // Localizes the resize tab
 WebDeveloper.Options.localizeResizeTab = function()
 {
-  var resizeOptions = $("#resize-options");
-
-  $("th:eq(0)", resizeOptions).text(WebDeveloper.Locales.getString("description"));
-  $("th:eq(1)", resizeOptions).text(WebDeveloper.Locales.getString("width"));
-  $("th:eq(2)", resizeOptions).text(WebDeveloper.Locales.getString("height"));
-  $("th:eq(3)", resizeOptions).text(WebDeveloper.Locales.getString("keyboard"));
-  $("th:eq(4)", resizeOptions).text(WebDeveloper.Locales.getString("actions"));
-
-  $(".table-container > .btn-primary", resizeOptions).append(WebDeveloper.Locales.getString("addLabel"));
-  $(".text-muted", resizeOptions).text(WebDeveloper.Locales.getString("dragDropReorder"));
-
-  $("#resize-cancel").text(WebDeveloper.Locales.getString("cancel"));
-  $("#resize-description").attr("placeholder", WebDeveloper.Locales.getString("descriptionPlaceholder"));
-  $("#resize-height").attr("placeholder", WebDeveloper.Locales.getString("heightPlaceholder"));
-  $("#resize-width").attr("placeholder", WebDeveloper.Locales.getString("widthPlaceholder"));
-  $('[for="resize-description"]').text(WebDeveloper.Locales.getString("description"));
-  $('[for="resize-height"]').text(WebDeveloper.Locales.getString("height"));
-  $('[for="resize-width"]').text(WebDeveloper.Locales.getString("width"));
+  document.getElementById("resize-cancel").append(WebDeveloper.Locales.getString("cancel"));
+  document.getElementById("resize-description").setAttribute("placeholder", WebDeveloper.Locales.getString("descriptionPlaceholder"));
+  document.getElementById("resize-height").setAttribute("placeholder", WebDeveloper.Locales.getString("heightPlaceholder"));
+  document.getElementById("resize-width").setAttribute("placeholder", WebDeveloper.Locales.getString("widthPlaceholder"));
+  document.getElementById("resize-option-add").append(WebDeveloper.Locales.getString("addLabel"));
+  document.getElementById("resize-options-actions").append(WebDeveloper.Locales.getString("actions"));
+  document.getElementById("resize-options-description").append(WebDeveloper.Locales.getString("description"));
+  document.getElementById("resize-options-drag-drop").append(WebDeveloper.Locales.getString("dragDropReorder"));
+  document.getElementById("resize-options-width").append(WebDeveloper.Locales.getString("width"));
+  document.getElementById("resize-options-height").append(WebDeveloper.Locales.getString("height"));
+  document.querySelector('[for="resize-description"]').append(WebDeveloper.Locales.getString("description"));
+  document.querySelector('[for="resize-height"]').append(WebDeveloper.Locales.getString("height"));
+  document.querySelector('[for="resize-width"]').append(WebDeveloper.Locales.getString("width"));
 };
 
 // Localizes the responsive layouts tab
 WebDeveloper.Options.localizeResponsiveLayoutsTab = function()
 {
-  var responsiveLayouts = $("#responsive-layouts-options");
+  document.getElementById("responsive-layout-add").append(WebDeveloper.Locales.getString("addLabel"));
+  document.getElementById("responsive-layout-cancel").append(WebDeveloper.Locales.getString("cancel"));
+  document.getElementById("responsive-layout-description").setAttribute("placeholder", WebDeveloper.Locales.getString("descriptionPlaceholder"));
+  document.getElementById("responsive-layout-height").setAttribute("placeholder", WebDeveloper.Locales.getString("heightPlaceholder"));
+  document.getElementById("responsive-layout-width").setAttribute("placeholder", WebDeveloper.Locales.getString("widthPlaceholder"));
+  document.getElementById("responsive-layouts-actions").append(WebDeveloper.Locales.getString("actions"));
+  document.getElementById("responsive-layouts-description").append(WebDeveloper.Locales.getString("description"));
+  document.getElementById("responsive-layouts-drag-drop").append(WebDeveloper.Locales.getString("dragDropReorder"));
+  document.getElementById("responsive-layouts-height").append(WebDeveloper.Locales.getString("height"));
+  document.getElementById("responsive-layouts-width").append(WebDeveloper.Locales.getString("width"));
+  document.querySelector('[for="responsive-layout-description"]').append(WebDeveloper.Locales.getString("description"));
+  document.querySelector('[for="responsive-layout-height"]').append(WebDeveloper.Locales.getString("height"));
+  document.querySelector('[for="responsive-layout-width"]').append(WebDeveloper.Locales.getString("width"));
+};
 
-  $("th:eq(0)", responsiveLayouts).text(WebDeveloper.Locales.getString("description"));
-  $("th:eq(1)", responsiveLayouts).text(WebDeveloper.Locales.getString("width"));
-  $("th:eq(2)", responsiveLayouts).text(WebDeveloper.Locales.getString("height"));
-  $("th:eq(3)", responsiveLayouts).text(WebDeveloper.Locales.getString("actions"));
+// Localizes the table actions
+WebDeveloper.Options.localizeTableActions = function(table)
+{
+  // Loop through the delete buttons
+  table.querySelectorAll(".btn-danger span").forEach(function(button)
+  {
+    button.replaceChildren(WebDeveloper.Locales.getString("deleteConfirmation"));
+  });
 
-  $(".table-container > .btn-primary", responsiveLayouts).append(WebDeveloper.Locales.getString("addLabel"));
-  $(".text-muted", responsiveLayouts).text(WebDeveloper.Locales.getString("dragDropReorder"));
-
-  $("#responsive-layout-cancel").text(WebDeveloper.Locales.getString("cancel"));
-  $("#responsive-layout-description").attr("placeholder", WebDeveloper.Locales.getString("descriptionPlaceholder"));
-  $("#responsive-layout-height").attr("placeholder", WebDeveloper.Locales.getString("heightPlaceholder"));
-  $("#responsive-layout-width").attr("placeholder", WebDeveloper.Locales.getString("widthPlaceholder"));
-  $('[for="responsive-layout-description"]').text(WebDeveloper.Locales.getString("description"));
-  $('[for="responsive-layout-height"]').text(WebDeveloper.Locales.getString("height"));
-  $('[for="responsive-layout-width"]').text(WebDeveloper.Locales.getString("width"));
+  // Loop through the edit buttons
+  table.querySelectorAll(".btn-primary span").forEach(function(button)
+  {
+    button.replaceChildren(WebDeveloper.Locales.getString("edit"));
+  });
 };
 
 // Localizes the tools tab
 WebDeveloper.Options.localizeToolsTab = function()
 {
-  var tools = $("#tools-options");
-
-  $("th:eq(0)", tools).text(WebDeveloper.Locales.getString("description"));
-  $("th:eq(1)", tools).text(WebDeveloper.Locales.getString("url"));
-  $("th:eq(2)", tools).text(WebDeveloper.Locales.getString("keyboard"));
-  $("th:eq(3)", tools).text(WebDeveloper.Locales.getString("actions"));
-
-  $(".table-container > .btn-primary", tools).append(WebDeveloper.Locales.getString("addLabel"));
-  $(".text-muted", tools).text(WebDeveloper.Locales.getString("dragDropReorder"));
-
-  $("#tool-cancel").text(WebDeveloper.Locales.getString("cancel"));
-  $("#tool-description").attr("placeholder", WebDeveloper.Locales.getString("descriptionPlaceholder"));
-  $("#tool-url").attr("placeholder", WebDeveloper.Locales.getString("urlPlaceholder"));
-  $('[for="tool-description"]').text(WebDeveloper.Locales.getString("description"));
-  $('[for="tool-url"]').text(WebDeveloper.Locales.getString("url"));
+  document.getElementById("tool-add").append(WebDeveloper.Locales.getString("addLabel"));
+  document.getElementById("tool-cancel").append(WebDeveloper.Locales.getString("cancel"));
+  document.getElementById("tool-description").setAttribute("placeholder", WebDeveloper.Locales.getString("descriptionPlaceholder"));
+  document.getElementById("tool-url").setAttribute("placeholder", WebDeveloper.Locales.getString("urlPlaceholder"));
+  document.getElementById("tools-actions").append(WebDeveloper.Locales.getString("actions"));
+  document.getElementById("tools-description").append(WebDeveloper.Locales.getString("description"));
+  document.getElementById("tools-drag-drop").append(WebDeveloper.Locales.getString("dragDropReorder"));
+  document.getElementById("tools-url").append(WebDeveloper.Locales.getString("url"));
+  document.querySelector('[for="tool-description"]').append(WebDeveloper.Locales.getString("description"));
+  document.querySelector('[for="tool-url"]').append(WebDeveloper.Locales.getString("url"));
 };
 
-// Resets the option form
-WebDeveloper.Options.resetOptionForm = function(form)
+// Handles a key press when adding or editing a resize option
+WebDeveloper.Options.resizeOptionKeyPress = function(event)
 {
-  $(".has-error", form).removeClass("has-error");
-  $(".help-block", form).text("");
+  // If the enter key was pressed
+  if(event.keyCode == 13)
+  {
+    WebDeveloper.Options.submitResizeOption();
+  }
+};
+
+// Handles a click inside the resize options
+WebDeveloper.Options.resizeOptionsClick = function(event)
+{
+  var button = event.target.closest("button");
+
+  // If the target is a button
+  if(button)
+  {
+    // If the target is an edit button
+    if(button.classList.contains("btn-primary"))
+    {
+      WebDeveloper.Options.editResizeOption(button);
+    }
+    else
+    {
+      WebDeveloper.Options.deleteResizeOption(button);
+    }
+
+    event.preventDefault();
+  }
+};
+
+// Handles a key press when adding or editing a responsive layout option
+WebDeveloper.Options.respsonsiveLayoutKeyPress = function(event)
+{
+  // If the enter key was pressed
+  if(event.keyCode == 13)
+  {
+    WebDeveloper.Options.submitResponsiveLayout();
+  }
+};
+
+// Handles a click inside the responsive layouts
+WebDeveloper.Options.responsiveLayoutsClick = function(event)
+{
+  var button = event.target.closest("button");
+
+  // If the target is a button
+  if(button)
+  {
+    // If the target is an edit button
+    if(button.classList.contains("btn-primary"))
+    {
+      WebDeveloper.Options.editResponsiveLayout(button);
+    }
+    else
+    {
+      WebDeveloper.Options.deleteResponsiveLayout(button);
+    }
+
+    event.preventDefault();
+  }
 };
 
 // Submits the option
 WebDeveloper.Options.submitOption = function(option, options, position)
 {
+  var table = options.querySelector("tbody");
+
   // If the position is set
   if(position)
   {
-    $("tbody > tr:eq(" + (position - 1) + ")", options).replaceWith(option);
+    var tableRow = table.querySelector("tr:nth-child(" + (parseInt(position, 10) + 1) + ")");
+
+    tableRow.insertAdjacentHTML("beforebegin", option);
+    tableRow.remove();
   }
   else
   {
-    $("tbody", options).append(option);
+    table.insertAdjacentHTML("beforeend", option);
   }
+
+  WebDeveloper.Options.localizeTableActions(table);
 };
 
 // Submits the resize option
@@ -617,14 +713,13 @@ WebDeveloper.Options.submitResizeOption = function()
   // If the resize option is valid
   if(WebDeveloper.Options.validateResizeOption())
   {
-    var resizeOption  = {};
-    var resizeOptions = $("#resize-options");
+    var resizeOption = {};
 
-    resizeOption.description = $("#resize-description").val().trim();
-    resizeOption.height      = $("#resize-height").val().trim();
-    resizeOption.width       = $("#resize-width").val().trim();
+    resizeOption.description = document.getElementById("resize-description").value.trim();
+    resizeOption.height      = document.getElementById("resize-height").value.trim();
+    resizeOption.width       = document.getElementById("resize-width").value.trim();
 
-    WebDeveloper.Options.submitOption(Mustache.render($("#resize-option").html(), resizeOption), resizeOptions, $("#resize-form").data("position"));
+    WebDeveloper.Options.submitOption(Mustache.render(document.getElementById("resize-option").innerHTML, resizeOption), document.getElementById("resize-options"), document.getElementById("resize-form").getAttribute("data-position"));
 
     WebDeveloper.Options.updateResizeOptions();
     WebDeveloper.Options.closeResizeOption();
@@ -637,14 +732,13 @@ WebDeveloper.Options.submitResponsiveLayout = function()
   // If the responsive layout is valid
   if(WebDeveloper.Options.validateResponsiveLayout())
   {
-    var responsiveLayout  = {};
-    var responsiveLayouts = $("#responsive-layouts-options");
+    var responsiveLayout = {};
 
-    responsiveLayout.description = $("#responsive-layout-description").val();
-    responsiveLayout.height      = $("#responsive-layout-height").val();
-    responsiveLayout.width       = $("#responsive-layout-width").val();
+    responsiveLayout.description = document.getElementById("responsive-layout-description").value.trim();
+    responsiveLayout.height      = document.getElementById("responsive-layout-height").value.trim();
+    responsiveLayout.width       = document.getElementById("responsive-layout-width").value.trim();
 
-    WebDeveloper.Options.submitOption(Mustache.render($("#responsive-layout").html(), responsiveLayout), responsiveLayouts, $("#responsive-layout-form").data("position"));
+    WebDeveloper.Options.submitOption(Mustache.render(document.getElementById("responsive-layout").innerHTML, responsiveLayout), document.getElementById("responsive-layouts-options"), document.getElementById("responsive-layout-form").getAttribute("data-position"));
 
     WebDeveloper.Options.updateResponsiveLayouts();
     WebDeveloper.Options.closeResponsiveLayout();
@@ -658,45 +752,103 @@ WebDeveloper.Options.submitTool = function()
   if(WebDeveloper.Options.validateTool())
   {
     var tool  = {};
-    var tools = $("#tools-options");
 
-    tool.description = $("#tool-description").val();
-    tool.url         = $("#tool-url").val();
+    tool.description = document.getElementById("tool-description").value.trim();
+    tool.url         = document.getElementById("tool-url").value.trim();
 
-    WebDeveloper.Options.submitOption(Mustache.render($("#tool").html(), tool), tools, $("#tool-form").data("position"));
+    WebDeveloper.Options.submitOption(Mustache.render(document.getElementById("tool").innerHTML, tool), document.getElementById("tools-options"), document.getElementById("tool-form").getAttribute("data-position"));
 
     WebDeveloper.Options.updateTools();
     WebDeveloper.Options.closeTool();
   }
 };
 
-// Handles a table drag starting
-WebDeveloper.Options.tableDragStart = function(table)
+// Handles a table drag ending
+WebDeveloper.Options.tableDragEnd = function(event)
 {
-  $(table).removeClass("table-striped");
+  WebDeveloper.Options.tableDragRow.classList.remove("dragging");
+  WebDeveloper.Options.tableDragRow.closest("table").classList.add("table-striped");
+};
+
+// Handles a table drag over
+WebDeveloper.Options.tableDragOver = function(event)
+{
+  var dragOverRow = event.target.closest("tr");
+  var tableRows   = Array.from(event.target.closest("tbody").children);
+
+  // If the drag over row is after the drag row
+  if(tableRows.indexOf(dragOverRow) > tableRows.indexOf(WebDeveloper.Options.tableDragRow))
+  {
+    dragOverRow.after(WebDeveloper.Options.tableDragRow);
+  }
+  else
+  {
+    dragOverRow.before(WebDeveloper.Options.tableDragRow);
+  }
+
+  event.preventDefault();
+};
+
+// Handles a table drag starting
+WebDeveloper.Options.tableDragStart = function(event)
+{
+  WebDeveloper.Options.tableDragRow = event.target;
+
+  WebDeveloper.Options.tableDragRow.classList.add("dragging");
+  WebDeveloper.Options.tableDragRow.closest("table").classList.remove("table-striped");
+};
+
+// Handles a key press when adding or editing a tool
+WebDeveloper.Options.toolKeyPress = function(event)
+{
+  // If the enter key was pressed
+  if(event.keyCode == 13)
+  {
+    WebDeveloper.Options.submitTool();
+  }
+};
+
+// Handles a click inside the tools
+WebDeveloper.Options.toolsClick = function(event)
+{
+  var button = event.target.closest("button");
+
+  // If the target is a button
+  if(button)
+  {
+    // If the target is an edit button
+    if(button.classList.contains("btn-primary"))
+    {
+      WebDeveloper.Options.editTool(button);
+    }
+    else
+    {
+      WebDeveloper.Options.deleteTool(button);
+    }
+
+    event.preventDefault();
+  }
 };
 
 // Updates the display overlay with setting
 WebDeveloper.Options.updateDisplayOverlayWith = function()
 {
-  WebDeveloper.Storage.setItem("display_overlay_with", $("#display_overlay_with").val());
+  WebDeveloper.Storage.setItem("display_overlay_with", document.getElementById("display_overlay_with").value);
 };
 
 // Updates the populate email address
 WebDeveloper.Options.updatePopulateEmailAddress = function()
 {
-  WebDeveloper.Storage.setItem("populate_email_address", $("#populate_email_address").val());
+  WebDeveloper.Storage.setItem("populate_email_address", document.getElementById("populate_email_address").value.trim());
 };
 
 // Updates the resize options
-WebDeveloper.Options.updateResizeOptions = function(table)
+WebDeveloper.Options.updateResizeOptions = function()
 {
-  var position      = 0;
-  var resizeOption  = null;
-  var resizeTab     = $("#resize-options");
-  var resizeTable   = $("tbody", resizeTab);
-  var resizeOptions = $("tr", resizeTable);
-  var resizeCount   = resizeOptions.length;
+  var position           = 0;
+  var resizeOptionsTable = document.getElementById("resize-options").querySelector("tbody");
+  var resizeOptions      = resizeOptionsTable.querySelectorAll("tr");
+  var resizeOptionsCount = resizeOptions.length;
 
   WebDeveloper.Storage.getItem("resize_count", function(item)
   {
@@ -709,51 +861,35 @@ WebDeveloper.Options.updateResizeOptions = function(table)
     }
 
     // Loop through the resize options
-    for(i = 0; i < resizeCount; i++)
+    resizeOptions.forEach(function(resizeOption, index)
     {
-      position     = i + 1;
-      resizeOption = resizeOptions.eq(i);
+      position = index + 1;
 
-      WebDeveloper.Storage.setItem("resize_" + position + "_description", $("td:eq(0)", resizeOption).text());
-      WebDeveloper.Storage.setItem("resize_" + position + "_width", $("td:eq(1)", resizeOption).text());
-      WebDeveloper.Storage.setItem("resize_" + position + "_height", $("td:eq(2)", resizeOption).text());
-    }
+      WebDeveloper.Storage.setItem("resize_" + position + "_description", resizeOption.querySelector("td:nth-child(1)").textContent);
+      WebDeveloper.Storage.setItem("resize_" + position + "_width", resizeOption.querySelector("td:nth-child(2)").textContent);
+      WebDeveloper.Storage.setItem("resize_" + position + "_height", resizeOption.querySelector("td:nth-child(3)").textContent);
+    });
 
-    WebDeveloper.Storage.setItem("resize_count", resizeCount);
-
-    // If the table is set
-    if(table)
-    {
-      $(table).addClass("table-striped");
-    }
-    else
-    {
-      $("table", resizeTab).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateResizeOptions });
-    }
-
-    $(".btn-danger > span", resizeTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
-    $(".btn-primary > span", resizeTable).text(WebDeveloper.Locales.getString("edit"));
+    WebDeveloper.Storage.setItem("resize_count", resizeOptionsCount);
 
     // If there is only one resize option
-    if(resizeCount == 1)
+    if(resizeOptionsCount == 1)
     {
-      resizeTable.addClass("single");
+      resizeOptionsTable.classList.add("single");
     }
     else
     {
-      resizeTable.removeClass("single");
+      resizeOptionsTable.classList.remove("single");
     }
   });
 };
 
 // Updates the responsive layouts
-WebDeveloper.Options.updateResponsiveLayouts = function(table)
+WebDeveloper.Options.updateResponsiveLayouts = function()
 {
   var position               = 0;
-  var responsiveLayout       = null;
-  var responsiveLayoutsTab   = $("#responsive-layouts-options");
-  var responsiveLayoutsTable = $("tbody", responsiveLayoutsTab);
-  var responsiveLayouts      = $("tr", responsiveLayoutsTable);
+  var responsiveLayoutsTable = document.getElementById("responsive-layouts-options").querySelector("tbody");
+  var responsiveLayouts      = responsiveLayoutsTable.querySelectorAll("tr");
   var responsiveLayoutsCount = responsiveLayouts.length;
 
   WebDeveloper.Storage.getItem("responsive_layout_count", function(item)
@@ -767,39 +903,25 @@ WebDeveloper.Options.updateResponsiveLayouts = function(table)
     }
 
     // Loop through the responsive layouts
-    for(i = 0; i < responsiveLayoutsCount; i++)
+    responsiveLayouts.forEach(function(responsiveLayout, index)
     {
-      position         = i + 1;
-      responsiveLayout = responsiveLayouts.eq(i);
+      position = index + 1;
 
-      WebDeveloper.Storage.setItem("responsive_layout_" + position + "_description", $("td:eq(0)", responsiveLayout).text());
-      WebDeveloper.Storage.setItem("responsive_layout_" + position + "_width", $("td:eq(1)", responsiveLayout).text());
-      WebDeveloper.Storage.setItem("responsive_layout_" + position + "_height", $("td:eq(2)", responsiveLayout).text());
-    }
+      WebDeveloper.Storage.setItem("responsive_layout_" + position + "_description", responsiveLayout.querySelector("td:nth-child(1)").textContent);
+      WebDeveloper.Storage.setItem("responsive_layout_" + position + "_width", responsiveLayout.querySelector("td:nth-child(2)").textContent);
+      WebDeveloper.Storage.setItem("responsive_layout_" + position + "_height", responsiveLayout.querySelector("td:nth-child(3)").textContent);
+    });
 
     WebDeveloper.Storage.setItem("responsive_layout_count", responsiveLayoutsCount);
 
-    // If the table is set
-    if(table)
-    {
-      $(table).addClass("table-striped");
-    }
-    else
-    {
-      $("table", responsiveLayoutsTab).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateResponsiveLayouts });
-    }
-
-    $(".btn-danger > span", responsiveLayoutsTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
-    $(".btn-primary > span", responsiveLayoutsTable).text(WebDeveloper.Locales.getString("edit"));
-
-    // If there is only one resize option
+    // If there is only one responsive layout
     if(responsiveLayoutsCount == 1)
     {
-      responsiveLayoutsTable.addClass("single");
+      responsiveLayoutsTable.classList.add("single");
     }
     else
     {
-      responsiveLayoutsTable.removeClass("single");
+      responsiveLayoutsTable.classList.remove("single");
     }
   });
 };
@@ -807,20 +929,18 @@ WebDeveloper.Options.updateResponsiveLayouts = function(table)
 // Updates the syntax highlight theme
 WebDeveloper.Options.updateSyntaxHighlightTheme = function()
 {
-  var theme = $("#syntax_highlight_theme").val();
+  var theme = document.getElementById("syntax_highlight_theme").value;
 
-  $("#syntax-highlight-browser").get(0).contentDocument.defaultView.WebDeveloper.setTheme(theme);
   WebDeveloper.Storage.setItem("syntax_highlight_theme", theme);
+  document.getElementById("syntax-highlight-browser").contentDocument.defaultView.WebDeveloper.setTheme(theme);
 };
 
 // Updates the tools
-WebDeveloper.Options.updateTools = function(table)
+WebDeveloper.Options.updateTools = function()
 {
   var position   = 0;
-  var tool       = null;
-  var toolsTab   = $("#tools-options");
-  var toolsTable = $("tbody", toolsTab);
-  var tools      = $("tr", toolsTable);
+  var toolsTable = document.getElementById("tools-options").querySelector("tbody");
+  var tools      = toolsTable.querySelectorAll("tr");
   var toolsCount = tools.length;
 
   WebDeveloper.Storage.getItem("tool_count", function(item)
@@ -833,38 +953,24 @@ WebDeveloper.Options.updateTools = function(table)
     }
 
     // Loop through the tools
-    for(i = 0; i < toolsCount; i++)
+    tools.forEach(function(tool, index)
     {
-      position = i + 1;
-      tool     = tools.eq(i);
+      position = index + 1;
 
-      WebDeveloper.Storage.setItem("tool_" + position + "_description", $("td:eq(0)", tool).text());
-      WebDeveloper.Storage.setItem("tool_" + position + "_url", $("td:eq(1)", tool).text());
-    }
+      WebDeveloper.Storage.setItem("tool_" + position + "_description", tool.querySelector("td:nth-child(1)").textContent);
+      WebDeveloper.Storage.setItem("tool_" + position + "_url", tool.querySelector("td:nth-child(2)").textContent);
+    });
 
     WebDeveloper.Storage.setItem("tool_count", toolsCount);
 
-    // If the table is set
-    if(table)
-    {
-      $(table).addClass("table-striped");
-    }
-    else
-    {
-      $("table", toolsTab).tableDnD({ onDragStart: WebDeveloper.Options.tableDragStart, onDrop: WebDeveloper.Options.updateTools });
-    }
-
-    $(".btn-danger > span", toolsTable).text(WebDeveloper.Locales.getString("deleteConfirmation"));
-    $(".btn-primary > span", toolsTable).text(WebDeveloper.Locales.getString("edit"));
-
-    // If there is only one resize option
+    // If there is only one responsive layout
     if(toolsCount == 1)
     {
-      toolsTable.addClass("single");
+      toolsTable.classList.add("single");
     }
     else
     {
-      toolsTable.removeClass("single");
+      toolsTable.classList.remove("single");
     }
   });
 };
@@ -872,54 +978,64 @@ WebDeveloper.Options.updateTools = function(table)
 // Returns true if the resize option is valid
 WebDeveloper.Options.validateResizeOption = function()
 {
-  var description = $("#resize-description");
-  var height      = $("#resize-height");
-  var heightValue = height.val().trim();
-  var width       = $("#resize-width");
-  var widthValue  = width.val().trim();
+  var description = document.getElementById("resize-description");
+  var height      = document.getElementById("resize-height");
+  var heightValue = height.value.trim();
+  var width       = document.getElementById("resize-width");
+  var widthValue  = width.value.trim();
   var valid       = true;
 
-  WebDeveloper.Options.resetOptionForm($("#resize-form"));
-
   // If the description is not set
-  if(!description.val().trim())
+  if(description.value.trim() == "")
   {
-    description.closest(".form-group").addClass("has-error");
-    description.next(".help-block").text(WebDeveloper.Locales.getString("descriptionCannotBeEmpty"));
+    document.getElementById("resize-description-invalid").replaceChildren(WebDeveloper.Locales.getString("descriptionCannotBeEmpty"));
+    description.classList.add("is-invalid");
 
     valid = false;
   }
+  else
+  {
+    description.classList.remove("is-invalid");
+  }
 
   // If the height is not set
-  if(!heightValue)
+  if(heightValue == "")
   {
-    height.closest(".form-group").addClass("has-error");
-    height.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("heightCannotBeEmpty"));
+    document.getElementById("resize-height-invalid").replaceChildren(WebDeveloper.Locales.getString("heightCannotBeEmpty"));
+    height.classList.add("is-invalid");
 
     valid = false;
   }
   else if(heightValue != "*" && (parseInt(heightValue, 10) != heightValue || heightValue <= 0))
   {
-    height.closest(".form-group").addClass("has-error");
-    height.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("heightNotValid"));
+    document.getElementById("resize-height-invalid").replaceChildren(WebDeveloper.Locales.getString("heightNotValid"));
+    height.classList.add("is-invalid");
 
     valid = false;
   }
+  else
+  {
+    height.classList.remove("is-invalid");
+  }
 
   // If the width is not set
-  if(!widthValue)
+  if(widthValue == "")
   {
-    width.closest(".form-group").addClass("has-error");
-    width.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("widthCannotBeEmpty"));
+    document.getElementById("resize-width-invalid").replaceChildren(WebDeveloper.Locales.getString("widthCannotBeEmpty"));
+    width.classList.add("is-invalid");
 
     valid = false;
   }
   else if(widthValue != "*" && (parseInt(widthValue, 10) != widthValue || widthValue <= 0))
   {
-    width.closest(".form-group").addClass("has-error");
-    width.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("widthNotValid"));
+    document.getElementById("resize-width-invalid").replaceChildren(WebDeveloper.Locales.getString("widthNotValid"));
+    width.classList.add("is-invalid");
 
     valid = false;
+  }
+  else
+  {
+    width.classList.remove("is-invalid");
   }
 
   return valid;
@@ -928,54 +1044,64 @@ WebDeveloper.Options.validateResizeOption = function()
 // Returns true if the responsive layout is valid
 WebDeveloper.Options.validateResponsiveLayout = function()
 {
-  var description = $("#responsive-layout-description");
-  var height      = $("#responsive-layout-height");
-  var heightValue = height.val().trim();
-  var width       = $("#responsive-layout-width");
-  var widthValue  = width.val().trim();
+  var description = document.getElementById("responsive-layout-description");
+  var height      = document.getElementById("responsive-layout-height");
+  var heightValue = height.value.trim();
+  var width       = document.getElementById("responsive-layout-width");
+  var widthValue  = width.value.trim();
   var valid       = true;
 
-  WebDeveloper.Options.resetOptionForm($("#responsive-layout-form"));
-
   // If the description is not set
-  if(!description.val().trim())
+  if(description.value.trim() == "")
   {
-    description.next(".help-block").text(WebDeveloper.Locales.getString("descriptionCannotBeEmpty"));
-    description.closest(".form-group").addClass("has-error");
+    document.getElementById("responsive-layout-description-invalid").replaceChildren(WebDeveloper.Locales.getString("descriptionCannotBeEmpty"));
+    description.classList.add("is-invalid");
 
     valid = false;
+  }
+  else
+  {
+    description.classList.remove("is-invalid");
   }
 
   // If the height is not set
-  if(!heightValue)
+  if(heightValue == "")
   {
-    height.closest(".form-group").addClass("has-error");
-    height.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("heightCannotBeEmpty"));
+    document.getElementById("responsive-layout-height-invalid").replaceChildren(WebDeveloper.Locales.getString("heightCannotBeEmpty"));
+    height.classList.add("is-invalid");
 
     valid = false;
   }
-  else if(parseInt(heightValue, 10) != heightValue || heightValue <= 0)
+  else if(heightValue != "*" && (parseInt(heightValue, 10) != heightValue || heightValue <= 0))
   {
-    height.closest(".form-group").addClass("has-error");
-    height.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("heightNotValid"));
+    document.getElementById("responsive-layout-height-invalid").replaceChildren(WebDeveloper.Locales.getString("heightNotValid"));
+    height.classList.add("is-invalid");
 
     valid = false;
+  }
+  else
+  {
+    height.classList.remove("is-invalid");
   }
 
   // If the width is not set
-  if(!widthValue)
+  if(widthValue == "")
   {
-    width.closest(".form-group").addClass("has-error");
-    width.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("widthCannotBeEmpty"));
+    document.getElementById("responsive-layout-width-invalid").replaceChildren(WebDeveloper.Locales.getString("widthCannotBeEmpty"));
+    width.classList.add("is-invalid");
 
     valid = false;
   }
-  else if(parseInt(widthValue, 10) != widthValue || widthValue <= 0)
+  else if(widthValue != "*" && (parseInt(widthValue, 10) != widthValue || widthValue <= 0))
   {
-    width.closest(".form-group").addClass("has-error");
-    width.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("widthNotValid"));
+    document.getElementById("responsive-layout-width-invalid").replaceChildren(WebDeveloper.Locales.getString("widthNotValid"));
+    width.classList.add("is-invalid");
 
     valid = false;
+  }
+  else
+  {
+    width.classList.remove("is-invalid");
   }
 
   return valid;
@@ -984,29 +1110,45 @@ WebDeveloper.Options.validateResponsiveLayout = function()
 // Returns true if the tool is valid
 WebDeveloper.Options.validateTool = function()
 {
-  var description = $("#tool-description");
-  var url         = $("#tool-url");
+  var description = document.getElementById("tool-description");
+  var url         = document.getElementById("tool-url");
   var valid       = true;
 
-  WebDeveloper.Options.resetOptionForm($("#tool-form"));
-
   // If the description is not set
-  if(!description.val().trim())
+  if(description.value.trim() == "")
   {
-    description.closest(".form-group").addClass("has-error");
-    description.next(".help-block").text(WebDeveloper.Locales.getString("descriptionCannotBeEmpty"));
+    document.getElementById("tool-description-invalid").replaceChildren(WebDeveloper.Locales.getString("descriptionCannotBeEmpty"));
+    description.classList.add("is-invalid");
 
     valid = false;
   }
+  else
+  {
+    description.classList.remove("is-invalid");
+  }
 
   // If the URL is not set
-  if(!url.val().trim())
+  if(url.value.trim() == "")
   {
-    url.closest(".form-group").addClass("has-error");
-    url.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("urlCannotBeEmpty"));
+    document.getElementById("tool-url-invalid").replaceChildren(WebDeveloper.Locales.getString("urlCannotBeEmpty"));
+    description.classList.add("is-invalid");
 
     valid = false;
+  }
+  else
+  {
+    description.classList.remove("is-invalid");
   }
 
   return valid;
 };
+
+// If the document is still loading
+if(document.readyState === "loading")
+{
+  document.addEventListener("DOMContentLoaded", WebDeveloper.Options.initialize);
+}
+else
+{
+  WebDeveloper.Options.initialize();
+}

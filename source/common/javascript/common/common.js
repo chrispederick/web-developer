@@ -165,7 +165,7 @@ WebDeveloper.Common.formatDimensions = function(width, height, locale)
 // Returns a chrome URL
 WebDeveloper.Common.getChromeURL = function(url)
 {
-  return chrome.extension.getURL(url);
+  return chrome.runtime.getURL(url);
 };
 
 // Returns the current content document
@@ -480,7 +480,7 @@ WebDeveloper.Common.getElementText = function(element)
     // Loop through the child nodes
     for(var i = 0, l = childNodes.length; i < l; i++)
     {
-      childNode   = childNodes[i];
+      childNode     = childNodes[i];
       childNodeType = childNode.nodeType;
 
       // If the child node type is an element
@@ -496,6 +496,63 @@ WebDeveloper.Common.getElementText = function(element)
   }
 
   return elementText;
+};
+
+// Returns the next siblings of an element with an optional match
+WebDeveloper.Common.getNextSiblings = function(element, match)
+{
+  var nextSiblings = [];
+
+  // If the element is set
+  if(element)
+  {
+    var childNode     = null;
+    var childNodes    = element.parentNode.childNodes;
+    var childNodeType = null;
+    var elementFound  = false;
+
+    // Loop through the child nodes
+    for(var i = 0, l = childNodes.length; i < l; i++)
+    {
+      childNode = childNodes[i];
+
+      // If the element was found
+      if(elementFound)
+      {
+        childNodeType = childNode.nodeType;
+
+        // If the child node type is an element
+        if(childNodeType == Node.ELEMENT_NODE && childNode != element)
+        {
+          // If a match is set
+          if(match)
+          {
+            // If the child node matches
+            if(childNode.matches(match))
+            {
+              nextSiblings.push(childNode);
+            }
+          }
+          else
+          {
+            nextSiblings.push(childNode);
+          }
+        }
+      }
+      else if(childNode == element)
+      {
+        elementFound = true;
+      }
+    }
+  }
+
+  // If no next siblings were found
+  if(nextSiblings.length === 0)
+  {
+    nextSiblings = null;
+  }
+
+  return nextSiblings;
 };
 
 // Returns the number of occurrences of a substring in a string
@@ -525,6 +582,62 @@ WebDeveloper.Common.getOccurrenceCount = function(string, substring)
   }
 
   return count;
+};
+
+// Returns the previous siblings of an element with an optional match
+WebDeveloper.Common.getPreviousSiblings = function(element, match)
+{
+  var previousSiblings = [];
+
+  // If the element is set
+  if(element)
+  {
+    var childNode     = null;
+    var childNodes    = element.parentNode.childNodes;
+    var childNodeType = null;
+
+    // Loop through the child nodes
+    for(var i = 0, l = childNodes.length; i < l; i++)
+    {
+      childNode = childNodes[i];
+
+      // If this is the element
+      if(childNode == element)
+      {
+        break;
+      }
+      else
+      {
+        childNodeType = childNode.nodeType;
+
+        // If the child node type is an element
+        if(childNodeType == Node.ELEMENT_NODE)
+        {
+          // If a match is set
+          if(match)
+          {
+            // If the child node matches
+            if(childNode.matches(match))
+            {
+              previousSiblings.push(childNode);
+            }
+          }
+          else
+          {
+            previousSiblings.push(childNode);
+          }
+        }
+      }
+    }
+  }
+
+  // If no next siblings were found
+  if(previousSiblings.length === 0)
+  {
+    previousSiblings = null;
+  }
+
+  return previousSiblings;
 };
 
 // Gets the property CSS value for a computed style

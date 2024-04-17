@@ -6,7 +6,7 @@ WebDeveloper.Generated = WebDeveloper.Generated || {};
 WebDeveloper.Generated.initialize = function(data, locale)
 {
   var brokenImages        = locale.brokenImages;
-  var brokenImageTemplate = $("#broken-image").html();
+  var brokenImageTemplate = document.getElementById("broken-image").innerHTML;
   var content             = document.getElementById("content");
   var contentDocument     = null;
   var documents           = data.documents;
@@ -54,7 +54,7 @@ WebDeveloper.Generated.testForBrokenImage = function(src, brokenImageTemplate, l
   // Add a load event listener to the image
   image.onerror = function()
   {
-    $(list).append(Mustache.render(brokenImageTemplate, { src: image.src }));
+    list.insertAdjacentHTML("beforeend", Mustache.render(brokenImageTemplate, { src: image.src }));
   };
 
   image.src = src;

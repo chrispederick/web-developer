@@ -1,17 +1,27 @@
 var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-redeclare, no-use-before-define
 
-WebDeveloper.Generated = WebDeveloper.Generated || {};
+WebDeveloper.About = WebDeveloper.About || {};
 
-// Initializes the page with data
-WebDeveloper.Generated.initialize = function(data, locale)
+// Initializes the about page
+WebDeveloper.About.initialize = function()
 {
-  var name = locale.extensionName;
+  var name = WebDeveloper.Locales.getString("extensionName");
 
-  $("title").text(locale.about + " " + name);
-  $("h1").text(name);
-  $("#description").text(locale.extensionDescription);
-  $("#follow-on-twitter").text(locale.followOnTwitter);
-  $("#author").text(locale.author);
-  $("#version").text(locale.version);
-  $("#build-date").text(locale.buildDate);
+  document.getElementById("author").append(WebDeveloper.Locales.getString("author"));
+  document.getElementById("build-date").append(WebDeveloper.Locales.getString("buildDate"));
+  document.getElementById("description").append(WebDeveloper.Locales.getString("extensionDescription"));
+  document.getElementById("name").append(name);
+  document.getElementById("version").append(WebDeveloper.Locales.getString("version"));
+  document.getElementById("website").prepend(WebDeveloper.Locales.getString("visitTheWebsite"));
+  document.querySelector("title").replaceChildren(WebDeveloper.Locales.getString("about") + " " + name);
 };
+
+// If the document is still loading
+if(document.readyState === "loading")
+{
+  document.addEventListener("DOMContentLoaded", WebDeveloper.About.initialize);
+}
+else
+{
+  WebDeveloper.About.initialize();
+}

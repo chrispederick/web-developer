@@ -721,7 +721,7 @@ WebDeveloper.Forms.outlineFormFieldsWithoutLabels = function(outline, documents)
       }
     }
 
-    WebDeveloper.Common.toggleStyleSheet("/features/style-sheets/forms/outline-form-fields-without-labels.css", "web-developer-outline-form-fields-without-labels", contentDocument, false);
+    WebDeveloper.Common.toggleStyleSheet("features/style-sheets/forms/outline-form-fields-without-labels.css", "web-developer-outline-form-fields-without-labels", contentDocument, false);
   }
 };
 

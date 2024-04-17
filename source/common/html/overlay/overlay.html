@@ -1,394 +1,459 @@
 <!DOCTYPE html>
-<html id="web-developer-overlay" lang="en">
+<html id="web-developer-overlay">
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,shrink-to-fit=no,width=device-width">
   <title>@name@</title>
-  <link href="/common/style-sheets/bootstrap.css" rel="stylesheet">
+  <link href="/lib/bootstrap/bootstrap.css" rel="stylesheet">
   <link href="overlay.css" rel="stylesheet">
+  <link href="/svg/logos/color/logo.svg" rel="shortcut icon">
 </head>
 
 <body>
 
-<ul class="nav nav-tabs">
-  <li id="disable-toolbar" class="active"><a href="#disable-menu" data-toggle="tab"><span></span></a></li>
-  <li id="cookies-toolbar"><a href="#cookies-menu" data-toggle="tab"><span></span></a></li>
-  <li id="css-toolbar"><a href="#css-menu" data-toggle="tab"><span></span></a></li>
-  <li id="forms-toolbar"><a href="#forms-menu" data-toggle="tab"><span></span></a></li>
-  <li id="images-toolbar"><a href="#images-menu" data-toggle="tab"><span></span></a></li>
-  <li id="information-toolbar"><a href="#information-menu" data-toggle="tab"><span></span></a></li>
-  <li id="miscellaneous-toolbar"><a href="#miscellaneous-menu" data-toggle="tab"><span></span></a></li>
-  <li id="outline-toolbar"><a href="#outline-menu" data-toggle="tab"><span></span></a></li>
-  <li id="resize-toolbar"><a href="#resize-menu" data-toggle="tab"><span></span></a></li>
-  <li id="tools-toolbar"><a href="#tools-menu" data-toggle="tab"><span></span></a></li>
-  <li id="options-toolbar"><a href="#options-menu" data-toggle="tab"><span></span></a></li>
-</ul>
+<div class="container-fluid p-1">
+  <ul class="nav nav-tabs">
+    <li id="disable-toolbar" class="nav-item"><a href="#disable-menu" class="active icon-link nav-link" data-bs-target="#disable-menu" data-bs-toggle="tab"><img src="/svg/toolbar/color/disable.svg" width="14" height="14" alt="" class="bi"></a></li>
+    <li id="cookies-toolbar" class="nav-item"><a href="#cookies-menu" class="icon-link nav-link" data-bs-target="#cookies-menu" data-bs-toggle="tab"><img src="/svg/toolbar/color/cookies.svg" width="14" height="14" alt="" class="bi"></a></li>
+    <li id="css-toolbar" class="nav-item"><a href="#css-menu" class="icon-link nav-link" data-bs-target="#css-menu" data-bs-toggle="tab"><img src="/svg/toolbar/color/css.svg" width="14" height="14" alt="" class="bi"></a></li>
+    <li id="forms-toolbar" class="nav-item"><a href="#forms-menu" class="icon-link nav-link" data-bs-target="#forms-menu" data-bs-toggle="tab"><img src="/svg/toolbar/color/forms.svg" width="14" height="14" alt="" class="bi"></a></li>
+    <li id="images-toolbar" class="nav-item"><a href="#images-menu" class="icon-link nav-link" data-bs-target="#images-menu" data-bs-toggle="tab"><img src="/svg/toolbar/color/images.svg" width="14" height="14" alt="" class="bi"></a></li>
+    <li id="information-toolbar" class="nav-item"><a href="#information-menu" class="icon-link nav-link" data-bs-target="#information-menu" data-bs-toggle="tab"><img src="/svg/toolbar/color/information.svg" width="14" height="14" alt="" class="bi"></a></li>
+    <li id="miscellaneous-toolbar" class="nav-item"><a href="#miscellaneous-menu" class="icon-link nav-link" data-bs-target="#miscellaneous-menu" data-bs-toggle="tab"><img src="/svg/toolbar/color/miscellaneous.svg" width="14" height="14" alt="" class="bi"></a></li>
+    <li id="outline-toolbar" class="nav-item"><a href="#outline-menu" class="icon-link nav-link" data-bs-target="#outline-menu" data-bs-toggle="tab"><img src="/svg/toolbar/color/outline.svg" width="14" height="14" alt="" class="bi"></a></li>
+    <li id="resize-toolbar" class="nav-item"><a href="#resize-menu" class="icon-link nav-link" data-bs-target="#resize-menu" data-bs-toggle="tab"><img src="/svg/toolbar/color/resize.svg" width="14" height="14" alt="" class="bi"></a></li>
+    <li id="tools-toolbar" class="nav-item"><a href="#tools-menu" class="icon-link nav-link" data-bs-target="#tools-menu" data-bs-toggle="tab"><img src="/svg/toolbar/color/tools.svg" width="14" height="14" alt="" class="bi"></a></li>
+    <li id="options-toolbar" class="nav-item"><a href="#options-menu" class="icon-link nav-link" data-bs-target="#options-menu" data-bs-toggle="tab"><img src="/svg/toolbar/color/options.svg" width="14" height="14" alt="" class="bi"></a></li>
+  </ul>
 
-<div class="tab-content">
-  <div id="disable-menu" class="tab-pane active">
-    <ul class="list-unstyled">
-      <li><a href="#" id="disable-javascript"><span></span></a></li>
-      <li><a href="#" id="disable-notifications"><span></span></a></li>
-      <li><a href="#" id="disable-popups"><span></span></a></li>
-    </ul>
+  <div class="tab-content">
+    <div id="disable-menu" class="active pt-2 tab-pane">
+      <div class="row">
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="disable-javascript" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="disable-notifications" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="disable-popups" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="reset-disable-features" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-    <ul class="list-unstyled">
-      <li><a href="#" id="reset-disable-features"><span></span></a></li>
-    </ul>
+    <div id="cookies-menu" class="pt-2 tab-pane">
+      <div class="row">
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="disable-cookies" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="add-cookie" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="delete-domain-cookies" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="delete-path-cookies" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="delete-session-cookies" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="view-cookie-information" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="css-menu" class="pt-2 tab-pane">
+      <div class="row">
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="disable-all-styles" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="disable-browser-default-styles" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="disable-embedded-styles" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="disable-inline-styles" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="disable-linked-style-sheets" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="disable-print-styles" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-handheld-styles" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-print-styles" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="edit-css" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="reload-linked-style-sheets" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="use-border-box-model" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="view-css" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="forms-menu" class="pt-2 tab-pane">
+      <div class="row">
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="check-all-checkboxes" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="uncheck-all-checkboxes" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="clear-form-fields" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="clear-radio-buttons" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="convert-form-gets-to-posts" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="convert-form-posts-to-gets" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="convert-select-elements-to-text-inputs" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="convert-text-inputs-to-textareas" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="display-form-details" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-passwords" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="enable-auto-completion" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="enable-form-fields" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="expand-select-elements" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="make-form-fields-writable" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="outline-form-fields-without-labels" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="populate-form-fields" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="remove-form-validation" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="remove-maximum-lengths" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="view-form-information" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="images-menu" class="pt-2 tab-pane">
+      <div class="row">
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="disable-images" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-alt-attributes" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-image-dimensions" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-image-paths" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="find-broken-images" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="hide-background-images" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="hide-images" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="make-images-full-size" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="make-images-invisible" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="outline-all-images" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="outline-background-images" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="outline-images-with-adjusted-dimensions" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="outline-images-with-empty-alt-attributes" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="outline-images-with-oversized-dimensions" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="outline-images-without-alt-attributes" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="outline-images-without-dimensions" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="reload-images" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="replace-images-with-alt-attributes" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="view-image-information" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="information-menu" class="pt-2 tab-pane">
+      <div class="row">
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="display-abbreviations" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-access-keys" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-anchors" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-aria-roles" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-div-dimensions" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-div-order" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-element-information" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-id-class-details" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="display-link-details" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-object-information" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-stack-levels" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-tab-index" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-table-depth" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-table-information" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-title-attributes" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-topographic-information" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="find-duplicate-ids" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="view-anchor-information" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="view-color-information" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="view-document-outline" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="view-javascript" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="view-link-information" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="view-meta-tag-information" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="view-response-headers" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="miscellaneous-menu" class="pt-2 tab-pane">
+      <div class="row">
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="clear-cache" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="clear-history" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="display-color-picker" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-hidden-elements" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="display-line-guides" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="display-ruler" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="linearize-page" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="make-frames-resizable" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="mark-all-links-unvisited" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="mark-all-links-visited" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="outline-menu" class="pt-2 tab-pane">
+      <div class="row">
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="outline-absolute-positioned-elements" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="outline-block-level-elements" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="outline-deprecated-elements" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="outline-external-links" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="outline-fixed-positioned-elements" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="outline-floated-elements" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="outline-frames" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="outline-headings" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="outline-non-secure-elements" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="outline-relative-positioned-elements" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="outline-table-captions" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="outline-table-cells" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="outline-tables" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+            <li><a href="#" id="show-element-tag-names" class="icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="resize-menu" class="pt-2 tab-pane">
+      <div class="row">
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="display-window-size" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="resize-window" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul id="custom-resize-options" class="list-unstyled mb-0">
+            <li><a href="#" id="edit-resize-dimensions" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="view-responsive-layouts" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="tools-menu" class="pt-2 tab-pane">
+      <div class="row">
+        <div class="col-auto">
+          <ul id="custom-tools" class="list-unstyled mb-0">
+            <li><a href="#" id="edit-tools" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="validate-local-css" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="validate-local-html" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="view-source" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="options-menu" class="pt-2 tab-pane">
+      <div class="row">
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="reset-page" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" id="options" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled mb-0">
+            <li><a href="@url@@browser@/help/" id="help" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+            <li><a href="#" id="about" class="icon-link text-decoration-none"><span class="bi"></span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div id="cookies-menu" class="tab-pane">
-    <ul class="list-unstyled">
-      <li><a href="#" id="disable-cookies"><span></span></a></li>
-      <li><a href="#" id="add-cookie"><span></span></a></li>
-    </ul>
-
-    <ul class="list-unstyled">
-      <li><a href="#" id="delete-domain-cookies"><span></span></a></li>
-      <li><a href="#" id="delete-path-cookies"><span></span></a></li>
-    </ul>
-
-    <ul class="list-unstyled">
-      <li><a href="#" id="delete-session-cookies"><span></span></a></li>
-      <li><a href="#" id="view-cookie-information"><span></span></a></li>
-    </ul>
+  <div id="confirmation" class="alert alert-dismissible alert-warning d-none mb-0 mt-2">
+    <span class="small"></span>
+    <button id="confirmation-cancel" type="button" class="btn btn-outline-secondary btn-sm"></button>
+    <button type="button" class="btn btn-sm btn-warning"></button>
   </div>
 
-  <div id="css-menu" class="tab-pane">
-    <ul class="list-unstyled">
-      <li><a href="#" id="disable-all-styles"><span></span></a></li>
-      <li><a href="#" id="disable-browser-default-styles"><span></span></a></li>
-      <li><a href="#" id="disable-embedded-styles"><span></span></a></li>
-      <li><a href="#" id="disable-inline-styles"><span></span></a></li>
-    </ul>
-
-    <ul class="list-unstyled">
-      <li><a href="#" id="disable-linked-style-sheets"><span></span></a></li>
-      <li><a href="#" id="disable-print-styles"><span></span></a></li>
-      <li><a href="#" id="display-handheld-styles"><span></span></a></li>
-      <li><a href="#" id="display-print-styles"><span></span></a></li>
-    </ul>
-
-    <ul class="list-unstyled">
-      <li><a href="#" id="edit-css"><span></span></a></li>
-      <li><a href="#" id="reload-linked-style-sheets"><span></span></a></li>
-      <li><a href="#" id="use-border-box-model"><span></span></a></li>
-      <li><a href="#" id="view-css"><span></span></a></li>
-    </ul>
+  <div id="notification" class="alert alert-dismissible d-none mb-0 mt-2">
+    <span class="small"></span>
+    <button id="notification-close" type="button" class="btn-close small"></button>
   </div>
 
-  <div id="forms-menu" class="tab-pane">
-    <ul class="list-unstyled">
-      <li><a href="#" id="check-all-checkboxes"><span></span></a></li>
-      <li><a href="#" id="uncheck-all-checkboxes"><span></span></a></li>
-      <li><a href="#" id="clear-form-fields"><span></span></a></li>
-      <li><a href="#" id="clear-radio-buttons"><span></span></a></li>
-      <li><a href="#" id="convert-form-gets-to-posts"><span></span></a></li>
-      <li><a href="#" id="convert-form-posts-to-gets"><span></span></a></li>
-      <li><a href="#" id="convert-select-elements-to-text-inputs"><span></span></a></li>
-    </ul>
+  <form id="add-cookie-dialog" class="d-none px-3 py-2">
+    <fieldset>
+      <legend></legend>
 
-    <ul class="list-unstyled">
-      <li><a href="#" id="convert-text-inputs-to-textareas"><span></span></a></li>
-      <li><a href="#" id="display-form-details"><span></span></a></li>
-      <li><a href="#" id="display-passwords"><span></span></a></li>
-      <li><a href="#" id="enable-auto-completion"><span></span></a></li>
-      <li><a href="#" id="enable-form-fields"><span></span></a></li>
-      <li><a href="#" id="expand-select-elements"><span></span></a></li>
-    </ul>
+      <div class="mb-2 row">
+        <label for="add-cookie-name" class="col-3 col-form-label col-form-label-sm"></label>
+        <div class="col">
+          <input id="add-cookie-name" type="text" class="form-control form-control-sm">
+          <div id="add-cookie-name-invalid" class="invalid-feedback"></div>
+        </div>
+      </div>
 
-    <ul class="list-unstyled">
-      <li><a href="#" id="make-form-fields-writable"><span></span></a></li>
-      <li><a href="#" id="outline-form-fields-without-labels"><span></span></a></li>
-      <li><a href="#" id="populate-form-fields"><span></span></a></li>
-      <li><a href="#" id="remove-form-validation"><span></span></a></li>
-      <li><a href="#" id="remove-maximum-lengths"><span></span></a></li>
-      <li><a href="#" id="view-form-information"><span></span></a></li>
-    </ul>
-  </div>
+      <div class="mb-2 row">
+        <label for="add-cookie-value" class="col-3 col-form-label col-form-label-sm"></label>
+        <div class="col">
+          <input id="add-cookie-value" type="text" class="form-control form-control-sm">
+        </div>
+      </div>
 
-  <div id="images-menu" class="tab-pane">
-    <ul class="list-unstyled">
-      <li><a href="#" id="disable-images"><span></span></a></li>
-      <li><a href="#" id="display-alt-attributes"><span></span></a></li>
-      <li><a href="#" id="display-image-dimensions"><span></span></a></li>
-      <li><a href="#" id="display-image-paths"><span></span></a></li>
-      <li><a href="#" id="find-broken-images"><span></span></a></li>
-      <li><a href="#" id="hide-background-images"><span></span></a></li>
-      <li><a href="#" id="hide-images"><span></span></a></li>
-    </ul>
+      <div class="mb-2 row">
+        <label for="add-cookie-host" class="col-3 col-form-label col-form-label-sm"></label>
+        <div class="col">
+          <input id="add-cookie-host" type="text" class="form-control form-control-sm">
+          <div id="add-cookie-host-invalid" class="invalid-feedback"></div>
+        </div>
+      </div>
 
-    <ul class="list-unstyled">
-      <li><a href="#" id="make-images-full-size"><span></span></a></li>
-      <li><a href="#" id="make-images-invisible"><span></span></a></li>
-      <li><a href="#" id="outline-all-images"><span></span></a></li>
-      <li><a href="#" id="outline-background-images"><span></span></a></li>
-      <li><a href="#" id="outline-images-with-adjusted-dimensions"><span></span></a></li>
-      <li><a href="#" id="outline-images-with-empty-alt-attributes"><span></span></a></li>
-    </ul>
+      <div class="mb-2 row">
+        <label for="add-cookie-path" class="col-3 col-form-label col-form-label-sm"></label>
+        <div class="col">
+          <input id="add-cookie-path" type="text" class="form-control form-control-sm">
+          <div id="add-cookie-path-invalid" class="invalid-feedback"></div>
+        </div>
+      </div>
 
-    <ul class="list-unstyled">
-      <li><a href="#" id="outline-images-with-oversized-dimensions"><span></span></a></li>
-      <li><a href="#" id="outline-images-without-alt-attributes"><span></span></a></li>
-      <li><a href="#" id="outline-images-without-dimensions"><span></span></a></li>
-      <li><a href="#" id="reload-images"><span></span></a></li>
-      <li><a href="#" id="replace-images-with-alt-attributes"><span></span></a></li>
-      <li><a href="#" id="view-image-information"><span></span></a></li>
-    </ul>
-  </div>
+      <div class="mb-2 row">
+        <label for="add-cookie-expires" class="col-3 col-form-label col-form-label-sm"></label>
+        <div class="col">
+          <div class="has-validation input-group">
+            <input id="add-cookie-expires" type="text" class="form-control form-control-sm">
+            <span class="input-group-text"><svg class="bi"><use href="/svg/icons/icons.svg#calendar-2"></svg></span>
+            <div id="add-cookie-expires-invalid" class="invalid-feedback"></div>
+          </div>
+        </div>
+      </div>
 
-  <div id="information-menu" class="tab-pane">
-    <ul class="list-unstyled">
-      <li><a href="#" id="display-abbreviations"><span></span></a></li>
-      <li><a href="#" id="display-access-keys"><span></span></a></li>
-      <li><a href="#" id="display-anchors"><span></span></a></li>
-      <li><a href="#" id="display-aria-roles"><span></span></a></li>
-      <li><a href="#" id="display-div-dimensions"><span></span></a></li>
-      <li><a href="#" id="display-div-order"><span></span></a></li>
-      <li><a href="#" id="display-element-information"><span></span></a></li>
-      <li><a href="#" id="display-id-class-details"><span></span></a></li>
-    </ul>
+      <div class="mb-1 row">
+        <div class="offset-3">
+          <div class="form-check">
+            <input id="add-cookie-session" type="checkbox" class="form-check-input">
+            <label for="add-cookie-session" class="col-form-label-sm form-check-label p-0"></label>
+          </div>
+        </div>
+      </div>
 
-    <ul class="list-unstyled">
-      <li><a href="#" id="display-link-details"><span></span></a></li>
-      <li><a href="#" id="display-object-information"><span></span></a></li>
-      <li><a href="#" id="display-stack-levels"><span></span></a></li>
-      <li><a href="#" id="display-tab-index"><span></span></a></li>
-      <li><a href="#" id="display-table-depth"><span></span></a></li>
-      <li><a href="#" id="display-table-information"><span></span></a></li>
-      <li><a href="#" id="display-title-attributes"><span></span></a></li>
-      <li><a href="#" id="display-topographic-information"><span></span></a></li>
-    </ul>
+      <div class="mb-1 row">
+        <div class="offset-3">
+          <div class="form-check">
+            <input id="add-cookie-secure" type="checkbox" class="form-check-input">
+            <label for="add-cookie-secure" class="col-form-label-sm form-check-label p-0"></label>
+          </div>
+        </div>
+      </div>
 
-    <ul class="list-unstyled">
-      <li><a href="#" id="find-duplicate-ids"><span></span></a></li>
-      <li><a href="#" id="view-anchor-information"><span></span></a></li>
-      <li><a href="#" id="view-color-information"><span></span></a></li>
-      <li><a href="#" id="view-document-outline"><span></span></a></li>
-      <li><a href="#" id="view-javascript"><span></span></a></li>
-      <li><a href="#" id="view-link-information"><span></span></a></li>
-      <li><a href="#" id="view-meta-tag-information"><span></span></a></li>
-      <li><a href="#" id="view-response-headers"><span></span></a></li>
-    </ul>
-  </div>
+      <div class="row">
+        <div class="col offset-3 text-end">
+          <button id="add-cookie-cancel" type="button" class="btn btn-outline-secondary btn-sm"></button>
+          <button id="add-cookie-submit" type="button" class="btn btn-primary btn-sm ms-1"><svg class="bi"><use href="/svg/icons/icons.svg#c-check"></svg> </button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
 
-  <div id="miscellaneous-menu" class="tab-pane">
-    <ul class="list-unstyled">
-      <li><a href="#" id="clear-cache"><span></span></a></li>
-      <li><a href="#" id="clear-history"><span></span></a></li>
-      <li><a href="#" id="display-color-picker"><span></span></a></li>
-      <li><a href="#" id="display-hidden-elements"><span></span></a></li>
-    </ul>
+  <form id="resize-window-dialog" class="d-none px-3 py-2">
+    <fieldset>
+      <legend></legend>
 
-    <ul class="list-unstyled">
-      <li><a href="#" id="display-line-guides"><span></span></a></li>
-      <li><a href="#" id="display-ruler"><span></span></a></li>
-      <li><a href="#" id="linearize-page"><span></span></a></li>
-    </ul>
+      <div class="mb-2 row">
+        <label for="resize-window-width" class="col-3 col-form-label col-form-label-sm"></label>
+        <div class="col">
+          <div class="has-validation input-group">
+            <input id="resize-window-width" type="text" class="form-control form-control-sm">
+            <span class="input-group-text">px</span>
+            <div id="resize-window-width-invalid" class="invalid-feedback"></div>
+          </div>
+        </div>
+      </div>
 
-    <ul class="list-unstyled">
-      <li><a href="#" id="make-frames-resizable"><span></span></a></li>
-      <li><a href="#" id="mark-all-links-unvisited"><span></span></a></li>
-      <li><a href="#" id="mark-all-links-visited"><span></span></a></li>
-    </ul>
-  </div>
+      <div class="mb-2 row">
+        <label for="resize-window-height" class="col-3 col-form-label col-form-label-sm"></label>
+        <div class="col">
+          <div class="has-validation input-group">
+            <input id="resize-window-height" type="text" class="form-control form-control-sm">
+            <span class="input-group-text">px</span>
+            <div id="resize-window-height-invalid" class="invalid-feedback"></div>
+          </div>
+        </div>
+      </div>
 
-  <div id="outline-menu" class="tab-pane">
-    <ul class="list-unstyled">
-      <li><a href="#" id="outline-absolute-positioned-elements"><span></span></a></li>
-      <li><a href="#" id="outline-block-level-elements"><span></span></a></li>
-      <li><a href="#" id="outline-deprecated-elements"><span></span></a></li>
-      <li><a href="#" id="outline-external-links"><span></span></a></li>
-      <li><a href="#" id="outline-fixed-positioned-elements"><span></span></a></li>
-    </ul>
-
-    <ul class="list-unstyled">
-      <li><a href="#" id="outline-floated-elements"><span></span></a></li>
-      <li><a href="#" id="outline-frames"><span></span></a></li>
-      <li><a href="#" id="outline-headings"><span></span></a></li>
-      <li><a href="#" id="outline-non-secure-elements"><span></span></a></li>
-      <li><a href="#" id="outline-relative-positioned-elements"><span></span></a></li>
-    </ul>
-
-    <ul class="list-unstyled">
-      <li><a href="#" id="outline-table-captions"><span></span></a></li>
-      <li><a href="#" id="outline-table-cells"><span></span></a></li>
-      <li><a href="#" id="outline-tables"><span></span></a></li>
-      <li><a href="#" id="show-element-tag-names"><span></span></a></li>
-    </ul>
-  </div>
-
-  <div id="resize-menu" class="tab-pane">
-    <ul class="list-unstyled">
-      <li><a href="#" id="display-window-size"><span></span></a></li>
-      <li><a href="#" id="resize-window"><span></span></a></li>
-    </ul>
-
-    <ul id="custom-resize-options" class="list-unstyled">
-      <li><a href="#" id="edit-resize-dimensions"><span></span></a></li>
-    </ul>
-
-    <ul class="list-unstyled">
-      <li><a href="#" id="view-responsive-layouts"><span></span></a></li>
-    </ul>
-  </div>
-
-  <div id="tools-menu" class="tab-pane">
-    <ul id="custom-tools" class="list-unstyled">
-      <li><a href="#" id="edit-tools"><span></span></a></li>
-    </ul>
-
-    <ul class="list-unstyled">
-      <li><a href="#" id="validate-local-css"><span></span></a></li>
-      <li><a href="#" id="validate-local-html"><span></span></a></li>
-      <li><a href="#" id="view-source"><span></span></a></li>
-    </ul>
-  </div>
-
-  <div id="options-menu" class="tab-pane">
-    <ul class="list-unstyled">
-      <li><a href="#" id="reset-page"><span></span></a></li>
-    </ul>
-
-    <ul class="list-unstyled">
-      <li><a href="#" id="options"><span></span></a></li>
-    </ul>
-
-    <ul class="list-unstyled">
-      <li><a href="@url@@browser@/help/" id="help"><span></span></a></li>
-      <li><a href="#" id="about"><span></span></a></li>
-    </ul>
-  </div>
+      <div class="row">
+        <div class="col offset-3 text-end">
+          <button id="resize-window-cancel" type="button" class="btn btn-outline-secondary btn-sm"></button>
+          <button id="resize-window-submit" type="button" class="btn btn-primary btn-sm ms-1"><svg class="bi"><use href="/svg/icons/icons.svg#c-check"></svg> </button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
 </div>
 
-<div id="confirmation" class="alert alert-warning fade in">
-  <span></span>
-  <button id="confirmation-cancel" type="button" class="btn btn-default"></button>
-  <button type="button" class="btn btn-warning"></button>
-</div>
-
-<div id="notification" class="alert alert-dismissable alert-success fade in">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <span></span>
-</div>
-
-<form id="add-cookie-dialog" class="form-horizontal">
-  <fieldset>
-    <legend></legend>
-
-    <div class="form-group">
-      <label for="add-cookie-name" class="col-sm-2 control-label"></label>
-      <div class="col-sm-5">
-        <input id="add-cookie-name" type="text" class="form-control">
-        <span class="help-block"></span>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="add-cookie-value" class="col-sm-2 control-label"></label>
-      <div class="col-sm-5">
-        <input id="add-cookie-value" type="text" class="form-control">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="add-cookie-host" class="col-sm-2 control-label"></label>
-      <div class="col-sm-5">
-        <input id="add-cookie-host" type="text" class="form-control">
-        <span class="help-block"></span>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="add-cookie-path" class="col-sm-2 control-label"></label>
-      <div class="col-sm-5">
-        <input id="add-cookie-path" type="text" class="form-control">
-        <span class="help-block"></span>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="add-cookie-expires" class="col-sm-2 control-label"></label>
-      <div class="col-sm-5">
-        <div class="input-group">
-          <span class="input-group-addon"><i class="icon-calendar-empty"></i></span>
-          <input id="add-cookie-expires" type="text" class="form-control">
-        </div>
-        <span class="help-block"></span>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-5 col-sm-offset-2">
-        <div class="checkbox">
-          <label>
-            <input id="add-cookie-session" type="checkbox">
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-5 col-sm-offset-2">
-        <div class="checkbox">
-          <label>
-            <input id="add-cookie-secure" type="checkbox">
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-7 text-right">
-        <button id="add-cookie-cancel" type="button" class="btn btn-default"></button>
-        <button id="add-cookie-submit" type="button" class="btn btn-primary"><i class="icon-ok"></i> </button>
-      </div>
-    </div>
-  </fieldset>
-</form>
-
-<form id="resize-window-dialog" class="form-horizontal">
-  <fieldset>
-    <legend></legend>
-
-    <div class="form-group">
-      <label for="resize-window-width" class="col-sm-2 control-label"></label>
-      <div class="col-sm-4">
-        <div class="input-group">
-          <input id="resize-window-width" type="text" class="form-control">
-          <span class="input-group-addon">px</span>
-        </div>
-        <span class="help-block"></span>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="resize-window-height" class="col-sm-2 control-label"></label>
-      <div class="col-sm-4">
-        <div class="input-group">
-          <input id="resize-window-height" type="text" class="form-control">
-          <span class="input-group-addon">px</span>
-        </div>
-        <span class="help-block"></span>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-6 text-right">
-        <button id="resize-window-cancel" type="button" class="btn btn-default"></button>
-        <button id="resize-window-submit" type="button" class="btn btn-primary"><i class="icon-ok"></i> </button>
-      </div>
-    </div>
-  </fieldset>
-</form>
-
-<script src="/common/javascript/jquery/jquery.js"></script>
-<script src="/common/javascript/bootstrap/tab.js"></script>
-<script src="/common/javascript/bootstrap/transition.js"></script>
+<script src="/lib/bootstrap/bootstrap.js"></script>
+<script src="/lib/mustache.js"></script>
 <script src="/common/javascript/common.js"></script>
-<script src="/common/javascript/mustache.js"></script>
 <script src="/cookies/cookies.js"></script>
 <script src="/locales/locales.js"></script>
+<script src="/storage/storage.js"></script>
 <script src="javascript/overlay.js"></script>
 
 <script id="color-picker-toolbar" type="x-tmpl-mustache">
@@ -396,11 +461,11 @@
 </script>
 
 <script id="custom-resize-option" type="x-tmpl-mustache">
-  <li><a href="#" data-height="{{height}}" data-width="{{width}}" class="custom-resize-window"><span></span>{{description}}</a></li>
+  <li><a href="#" data-height="{{height}}" data-width="{{width}}" class="custom-resize-window icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg>{{description}}</a></li>
 </script>
 
 <script id="custom-tool" type="x-tmpl-mustache">
-  <li><a href="#" data-url="{{url}}" class="custom-tool"><span></span>{{description}}</a></li>
+  <li><a href="#" data-url="{{url}}" class="custom-tool icon-link text-decoration-none"><svg class="bi text-success"><use href="/svg/icons/icons.svg#i-check"></svg><svg class="bi text-danger"><use href="/svg/icons/icons.svg#s-remove"></svg>{{description}}</a></li>
 </script>
 
 <script id="line-guides-toolbar" type="x-tmpl-mustache">

@@ -3,30 +3,31 @@
 
 <head>
   <meta charset="utf-8">
-  <title>@name@</title>
-  <link href="/common/style-sheets/bootstrap.css" rel="stylesheet">
-  <link href="/common/style-sheets/generated.css" rel="stylesheet">
   <meta name="viewport" content="initial-scale=1.0,width=device-width">
-  <link href="/common/images/logos/favicon.ico" rel="shortcut icon">
+  <title>@name@</title>
+  <link href="/lib/bootstrap/bootstrap.css" rel="stylesheet">
+  <link href="/common/style-sheets/generated.css" rel="stylesheet">
+  <link href="/svg/logos/color/logo.svg" rel="shortcut icon">
 </head>
 
 <body>
 
 <div id="content" class="container-fluid">
-  <div class="active progress progress-striped">
-    <div class="progress-bar progress-bar-info"></div>
+  <div class="progress">
+    <div class="bg-info progress-bar progress-bar-animated progress-bar-striped w-50"></div>
   </div>
 </div>
 
-<form id="form" action="https://jigsaw.w3.org/css-validator/validator" enctype="multipart/form-data" method="post" class="hidden">
-  <input id="text" type="hidden" name="text">
-  <input id="profile" type="hidden" name="profile" value="css3">
+<form id="form" action="https://jigsaw.w3.org/css-validator/validator" enctype="multipart/form-data" method="post" class="d-none">
+  <input id="form-content" type="hidden" name="text">
+  <input type="hidden" name="profile" value="none">
+  <input type="hidden" name="type" value="css">
   <input type="hidden" name="usermedium" value="all">
-  <input type="hidden" name="warning" value="0">
+  <input type="hidden" name="warning" value="2">
+  <input type="hidden" name="vextwarning" value="true">
 </form>
 
-<script src="/common/javascript/jquery/jquery.js"></script>
-<script src="javascript/css.js"></script>
+<script src="javascript/validation.js"></script>
 
 </body>
 

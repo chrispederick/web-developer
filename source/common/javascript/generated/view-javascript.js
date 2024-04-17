@@ -7,48 +7,45 @@ WebDeveloper.Generated.theme        = null;
 // Beautifies the JavaScript
 WebDeveloper.Generated.beautifyJavaScript = function(event)
 {
-  var beautifyLink       = $(this);
-  var newJavaScript      = null;
-  var originalJavaScript = null;
+  var beautifyLink  = this;
+  var newJavaScript = null;
 
   // If the JavaScript was already beautified
-  if(beautifyLink.hasClass("web-developer-beautified"))
+  if(beautifyLink.classList.contains("web-developer-beautified"))
   {
     // Loop through the original JavaScript
-    $(".web-developer-original").each(function(position, element)
+    document.querySelectorAll(".web-developer-original").forEach(function(originalJavaScript, index)
     {
-      originalJavaScript = $(element);
-      newJavaScript      = originalJavaScript.text();
+      newJavaScript = originalJavaScript.textContent;
 
-      $(".web-developer-syntax-highlight", originalJavaScript.parent()).text(newJavaScript);
+      originalJavaScript.parentElement.querySelector(".web-developer-syntax-highlight").textContent = newJavaScript;
 
       // If there is a corresponding syntax highlight
-      if(WebDeveloper.Generated.syntaxHighlighters.length > position)
+      if(WebDeveloper.Generated.syntaxHighlighters.length > index)
       {
-        WebDeveloper.Generated.syntaxHighlighters[position].setValue(newJavaScript);
+        WebDeveloper.Generated.syntaxHighlighters[index].setValue(newJavaScript);
       }
     });
 
-    beautifyLink.text(WebDeveloper.Generated.storedLocale.beautifyJavaScript).removeClass("web-developer-beautified");
+    beautifyLink.classList.remove("web-developer-beautified");
   }
   else
   {
     // Loop through the original JavaScript
-    $(".web-developer-original").each(function(position, element)
+    document.querySelectorAll(".web-developer-original").forEach(function(originalJavaScript, index)
     {
-      originalJavaScript = $(element);
-      newJavaScript      = js_beautify(originalJavaScript.text(), { indent_size: 2, max_preserve_newlines: 1, space_before_conditional: false }); // eslint-disable-line camelcase
+      newJavaScript = js_beautify(originalJavaScript.textContent, { indent_size: 2, max_preserve_newlines: 1, space_before_conditional: false }); // eslint-disable-line camelcase
 
-      $(".web-developer-syntax-highlight", originalJavaScript.parent()).text(newJavaScript);
+      originalJavaScript.parentElement.querySelector(".web-developer-syntax-highlight").textContent = newJavaScript;
 
       // If there is a corresponding syntax highlight
-      if(WebDeveloper.Generated.syntaxHighlighters.length > position)
+      if(WebDeveloper.Generated.syntaxHighlighters.length > index)
       {
-        WebDeveloper.Generated.syntaxHighlighters[position].setValue(newJavaScript);
+        WebDeveloper.Generated.syntaxHighlighters[index].setValue(newJavaScript);
       }
     });
 
-    beautifyLink.text(WebDeveloper.Generated.storedLocale.undoBeautifyJavaScript).addClass("web-developer-beautified");
+    beautifyLink.classList.add("web-developer-beautified");
   }
 
   event.preventDefault();
@@ -57,6 +54,7 @@ WebDeveloper.Generated.beautifyJavaScript = function(event)
 // Initializes the page with data
 WebDeveloper.Generated.initialize = function(data, locale)
 {
+  var beautify               = document.getElementById("web-developer-beautify");
   var contentDocument        = null;
   var documents              = data.documents;
   var embeddedContainers     = null;
@@ -71,7 +69,9 @@ WebDeveloper.Generated.initialize = function(data, locale)
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.localizeHeader(locale);
   WebDeveloper.Generated.setPageTitle(javaScriptDescription, data, locale);
-  $(".dropdown-toggle", $("#files-dropdown")).prepend(javaScriptDescription);
+  document.getElementById("files-dropdown").querySelector(".dropdown-toggle").append(javaScriptDescription);
+  beautify.querySelector(".beautify").append(locale.beautifyJavaScript);
+  beautify.querySelector(".undo-beautify").append(locale.undoBeautifyJavaScript);
 
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
@@ -91,7 +91,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
       // Loop through the embedded containers
       for(var j = 0, m = embeddedContainers.length; j < m; j++)
       {
-        embeddedContainers[j].text(contentDocument.embedded);
+        embeddedContainers[j].textContent = contentDocument.embedded;
       }
     }
 
@@ -110,10 +110,9 @@ WebDeveloper.Generated.initialize = function(data, locale)
     }
   }
 
-  WebDeveloper.Generated.storedLocale = locale;
-  WebDeveloper.Generated.theme        = data.theme;
+  WebDeveloper.Generated.theme = data.theme;
 
-  $("#web-developer-beautify").text(locale.beautifyJavaScript).on("click", WebDeveloper.Generated.beautifyJavaScript);
+  beautify.addEventListener("click", WebDeveloper.Generated.beautifyJavaScript);
 
   WebDeveloper.Generated.initializeCommonElements();
 

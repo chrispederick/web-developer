@@ -1,4 +1,16 @@
-{"remove-top": "",
-  "browser_action": { "default_icon": { "16": "/common/images/logos/16.png", "24":  "/common/images/logos/24.png", "32":  "/common/images/logos/32.png", "48":  "/common/images/logos/48.png", "64":  "/common/images/logos/64.png", "128": "/common/images/logos/128.png", "256": "/common/images/logos/256.png", "512": "/common/images/logos/512.png" }, "default_popup": "/overlay/overlay.html", "default_title": "__MSG_extensionName__" },
-  "permissions": ["browsingData", "contentSettings", "cookies", "history", "storage", "tabs", "<all_urls>"],
-"remove-bottom": ""}
+{
+  "action": { "default_icon": { "16": "/svg/logos/color/16.png", "24":  "/svg/logos/color/24.png", "32":  "/svg/logos/color/32.png", "48":  "/svg/logos/color/48.png", "64":  "/svg/logos/color/64.png", "128": "/svg/logos/color/128.png", "256": "/svg/logos/color/256.png", "512": "/svg/logos/color/512.png" }, "default_popup": "/overlay/overlay.html", "default_title": "__MSG_extensionName__" },
+	"background": { "service_worker": "/background/background.js" },
+	"content_scripts": [{ "js": ["/content/content.js"], "matches": ["<all_urls>"] }],
+	"default_locale": "en_US",
+  "description": "__MSG_extensionDescription__",
+  "homepage_url":	"@url@",
+  "host_permissions": ["<all_urls>"],
+  "icons": { "16": "/svg/logos/color/16.png", "24":  "/svg/logos/color/24.png", "32":  "/svg/logos/color/32.png", "48":  "/svg/logos/color/48.png", "64":  "/svg/logos/color/64.png", "128": "/svg/logos/color/128.png", "256": "/svg/logos/color/256.png", "512": "/svg/logos/color/512.png" },
+  "manifest_version": 3,
+  "name": "__MSG_extensionName__",
+  "options_page":	"/options/options.html",
+  "permissions": ["browsingData", "contentSettings", "cookies", "history", "scripting", "storage", "tabs"],
+  "version": "@version@",
+  "web_accessible_resources": [{ "matches": ["<all_urls>"], "resources": ["/lib/bootstrap/*", "/dashboard/javascript/*", "/dashboard/style-sheets/*.css", "/features/style-sheets/*.css", "/svg/logos/color/32.png", "/toolbar/*.css", "/toolbar/images/logo.png"] }]
+}

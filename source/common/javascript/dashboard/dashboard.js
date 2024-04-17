@@ -47,17 +47,13 @@ WebDeveloper.Dashboard.createDashboard = function(contentDocument, dashboardHTML
   window.WebDeveloperEvents.Dashboard.mouseUp = WebDeveloper.Dashboard.mouseUp;
 
   WebDeveloper.Common.toggleStyleSheet("/dashboard/style-sheets/dashboard.css", "web-developer-dashboard-styles", contentDocument, false);
+  WebDeveloper.Common.toggleStyleSheet("/lib/bootstrap/bootstrap.css", "web-developer-dashboard-bootstrap", dashboardDocument, false);
   WebDeveloper.Common.toggleStyleSheet("/dashboard/style-sheets/common.css", "web-developer-dashboard-styles", dashboardDocument, false);
 
   WebDeveloper.Common.getDocumentBodyElement(dashboardDocument).innerHTML = dashboardHTML;
 
-  WebDeveloper.Common.includeJavaScript("/common/javascript/jquery/jquery.js", dashboardDocument, function()
-  {
-    WebDeveloper.Common.includeJavaScript("/common/javascript/bootstrap/tab.js", dashboardDocument, function()
-    {
-      WebDeveloper.Common.includeJavaScript("/dashboard/javascript/html/dashboard.js", dashboardDocument);
-    });
-  });
+  WebDeveloper.Common.includeJavaScript("/lib/bootstrap/bootstrap.js", dashboardDocument);
+  WebDeveloper.Common.includeJavaScript("/dashboard/javascript/html/dashboard.js", dashboardDocument);
 
   resizer = dashboardDocument.getElementById("web-developer-dashboard-resizer");
 
@@ -74,12 +70,16 @@ WebDeveloper.Dashboard.createDashboard = function(contentDocument, dashboardHTML
     // If the dashboard height value was returned
     if(height)
     {
-      var pixels = height.indexOf("px");
-
-      // If there are pixels in the height
-      if(pixels != -1)
+      // If the height is a string
+      if(height instanceof String)
       {
-        height = height.substring(0, pixels);
+        var pixels = height.indexOf("px");
+
+        // If there are pixels in the height
+        if(pixels != -1)
+        {
+          height = height.substring(0, pixels);
+        }
       }
 
       WebDeveloper.Dashboard.resize(height);

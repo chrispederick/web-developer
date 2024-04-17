@@ -75,10 +75,10 @@ WebDeveloper.Ruler.createRuler = function(contentDocument)
   WebDeveloper.Ruler.ruler.setAttribute("id", "web-developer-ruler");
   WebDeveloper.Ruler.container.appendChild(WebDeveloper.Ruler.ruler);
 
-  WebDeveloper.Ruler.ruler.style.height = WebDeveloper.Ruler.endY - WebDeveloper.Ruler.startY + "px";
-  WebDeveloper.Ruler.ruler.style.left   = WebDeveloper.Ruler.startX + "px";
-  WebDeveloper.Ruler.ruler.style.top    = WebDeveloper.Ruler.startY + "px";
-  WebDeveloper.Ruler.ruler.style.width  = WebDeveloper.Ruler.endX - WebDeveloper.Ruler.startX + "px";
+  WebDeveloper.Ruler.ruler.style.setProperty("height", WebDeveloper.Ruler.endY - WebDeveloper.Ruler.startY + "px", "important");
+  WebDeveloper.Ruler.ruler.style.setProperty("left", WebDeveloper.Ruler.startX + "px", "important");
+  WebDeveloper.Ruler.ruler.style.setProperty("top", WebDeveloper.Ruler.startY + "px", "important");
+  WebDeveloper.Ruler.ruler.style.setProperty("width", WebDeveloper.Ruler.endX - WebDeveloper.Ruler.startX + "px", "important");
 
   // Run this on a delay because the styles must be all setup
   window.setTimeout(function()
@@ -89,7 +89,7 @@ WebDeveloper.Ruler.createRuler = function(contentDocument)
 };
 
 // Creates the ruler toolbar
-WebDeveloper.Ruler.createToolbar = function(contentDocument, toolbarHTML)
+WebDeveloper.Ruler.createToolbar = function(contentDocument, locale)
 {
   var rulerToolbar = contentDocument.createElement("iframe");
   var styleSheet   = null;
@@ -107,7 +107,7 @@ WebDeveloper.Ruler.createToolbar = function(contentDocument, toolbarHTML)
   styleSheet.setAttribute("href", WebDeveloper.Common.getChromeURL("toolbar/ruler-toolbar.css"));
   WebDeveloper.Common.getDocumentHeadElement(WebDeveloper.Ruler.toolbarDocument).appendChild(styleSheet);
 
-  WebDeveloper.Common.getDocumentBodyElement(WebDeveloper.Ruler.toolbarDocument).innerHTML = toolbarHTML;
+  WebDeveloper.Common.getDocumentBodyElement(WebDeveloper.Ruler.toolbarDocument).innerHTML = WebDeveloper.Ruler.getRulerTemplate(locale);
 
   WebDeveloper.Ruler.toolbarDocument.querySelector("img").setAttribute("src", WebDeveloper.Common.getChromeURL("toolbar/images/logo.png"));
   WebDeveloper.Ruler.toolbarDocument.getElementById("web-developer-ruler-height").addEventListener("change", WebDeveloper.Ruler.updateHeight, false);
@@ -115,7 +115,7 @@ WebDeveloper.Ruler.createToolbar = function(contentDocument, toolbarHTML)
 };
 
 // Displays the ruler
-WebDeveloper.Ruler.displayRuler = function(display, contentDocument, toolbarHTML)
+WebDeveloper.Ruler.displayRuler = function(display, contentDocument, locale)
 {
   // Run first so that the size calculations are accurate on setup
   WebDeveloper.Common.toggleStyleSheet("/toolbar/ruler.css", "web-developer-ruler-styles", contentDocument, false);
@@ -126,7 +126,7 @@ WebDeveloper.Ruler.displayRuler = function(display, contentDocument, toolbarHTML
     WebDeveloper.Ruler.reset();
     WebDeveloper.Ruler.createRuler(contentDocument);
     WebDeveloper.Ruler.createEvents(contentDocument);
-    WebDeveloper.Ruler.createToolbar(contentDocument, toolbarHTML);
+    WebDeveloper.Ruler.createToolbar(contentDocument, locale);
   }
   else
   {
@@ -135,6 +135,12 @@ WebDeveloper.Ruler.displayRuler = function(display, contentDocument, toolbarHTML
     WebDeveloper.Ruler.removeToolbar(contentDocument);
     WebDeveloper.Ruler.reset();
   }
+};
+
+// Returns the ruler template
+WebDeveloper.Ruler.getRulerTemplate = function(locale)
+{
+  return '<label for="web-developer-ruler-width">' + locale.width + '</label><input id="web-developer-ruler-width"><label for="web-developer-ruler-height">' + locale.height + '</label><input id="web-developer-ruler-height"><span>' + locale.startPositionX + '</span><span id="web-developer-ruler-start-x"></span><span>' + locale.yLabel + '</span><span id="web-developer-ruler-start-y"></span><span>' + locale.endPositionX + '</span><span id="web-developer-ruler-end-x"></span><span>' + locale.yLabel + '</span><span id="web-developer-ruler-end-y"></span><img width="16" height="16" alt=""><h1>' + locale.title + "</h1>";
 };
 
 // Handles the mouse down event
@@ -245,13 +251,13 @@ WebDeveloper.Ruler.mouseMove = function(event)
           {
             width = WebDeveloper.Ruler.endX - WebDeveloper.Ruler.startX;
 
-            WebDeveloper.Ruler.ruler.style.left = WebDeveloper.Ruler.startX + "px";
+            WebDeveloper.Ruler.ruler.style.setProperty("left", WebDeveloper.Ruler.startX + "px", "important");
           }
           else
           {
             width = WebDeveloper.Ruler.startX - WebDeveloper.Ruler.endX;
 
-            WebDeveloper.Ruler.ruler.style.left = xPosition + "px";
+            WebDeveloper.Ruler.ruler.style.setProperty("left", xPosition + "px", "important");
           }
 
           // If the end y position is greater than the start y position
@@ -259,25 +265,25 @@ WebDeveloper.Ruler.mouseMove = function(event)
           {
             height = WebDeveloper.Ruler.endY - WebDeveloper.Ruler.startY;
 
-            WebDeveloper.Ruler.ruler.style.top = WebDeveloper.Ruler.startY + "px";
+            WebDeveloper.Ruler.ruler.style.setProperty("top", WebDeveloper.Ruler.startY + "px", "important");
           }
           else
           {
             height = WebDeveloper.Ruler.startY - WebDeveloper.Ruler.endY;
 
-            WebDeveloper.Ruler.ruler.style.top = WebDeveloper.Ruler.endY + "px";
+            WebDeveloper.Ruler.ruler.style.setProperty("top", WebDeveloper.Ruler.endY + "px", "important");
           }
 
-          WebDeveloper.Ruler.ruler.style.height = height + "px";
-          WebDeveloper.Ruler.ruler.style.width  = width + "px";
+          WebDeveloper.Ruler.ruler.style.setProperty("height", height + "px", "important");
+          WebDeveloper.Ruler.ruler.style.setProperty("width", width + "px", "important");
         }
         else if(WebDeveloper.Ruler.move)
         {
           var newXPosition = xPosition - WebDeveloper.Ruler.moveX;
           var newYPosition = yPosition - WebDeveloper.Ruler.moveY;
 
-          WebDeveloper.Ruler.ruler.style.left = newXPosition + "px";
-          WebDeveloper.Ruler.ruler.style.top  = newYPosition + "px";
+          WebDeveloper.Ruler.ruler.style.setProperty("left", newXPosition + "px", "important");
+          WebDeveloper.Ruler.ruler.style.setProperty("top", newYPosition + "px", "important");
 
           WebDeveloper.Ruler.endX   = newXPosition + WebDeveloper.Ruler.ruler.offsetWidth - 2;
           WebDeveloper.Ruler.endY   = newYPosition + WebDeveloper.Ruler.ruler.offsetHeight - 2;
@@ -416,16 +422,16 @@ WebDeveloper.Ruler.resizeBackgrounds = function()
   var rulerPositionY  = WebDeveloper.Common.getElementPositionY(WebDeveloper.Ruler.ruler);
   var rulerWidth      = WebDeveloper.Ruler.ruler.offsetWidth;
 
-  WebDeveloper.Ruler.backgroundBottom.style.height = containerHeight - rulerPositionY - rulerHeight + "px";
-  WebDeveloper.Ruler.backgroundBottom.style.width  = containerWidth + "px";
-  WebDeveloper.Ruler.backgroundLeft.style.height   = rulerHeight + "px";
-  WebDeveloper.Ruler.backgroundLeft.style.top      = rulerPositionY + "px";
-  WebDeveloper.Ruler.backgroundLeft.style.width    = rulerPositionX + "px";
-  WebDeveloper.Ruler.backgroundRight.style.top     = rulerPositionY + "px";
-  WebDeveloper.Ruler.backgroundRight.style.height  = rulerHeight + "px";
-  WebDeveloper.Ruler.backgroundRight.style.width   = containerWidth - rulerPositionX - rulerWidth + "px";
-  WebDeveloper.Ruler.backgroundTop.style.height    = rulerPositionY + "px";
-  WebDeveloper.Ruler.backgroundTop.style.width     = containerWidth + "px";
+  WebDeveloper.Ruler.backgroundBottom.style.setProperty("height", containerHeight - rulerPositionY - rulerHeight + "px", "important");
+  WebDeveloper.Ruler.backgroundBottom.style.setProperty("width", containerWidth + "px", "important");
+  WebDeveloper.Ruler.backgroundLeft.style.setProperty("height", rulerHeight + "px", "important");
+  WebDeveloper.Ruler.backgroundLeft.style.setProperty("top", rulerPositionY + "px", "important");
+  WebDeveloper.Ruler.backgroundLeft.style.setProperty("width", rulerPositionX + "px", "important");
+  WebDeveloper.Ruler.backgroundRight.style.setProperty("top", rulerPositionY + "px", "important");
+  WebDeveloper.Ruler.backgroundRight.style.setProperty("height", rulerHeight + "px", "important");
+  WebDeveloper.Ruler.backgroundRight.style.setProperty("width", containerWidth - rulerPositionX - rulerWidth + "px", "important");
+  WebDeveloper.Ruler.backgroundTop.style.setProperty("height", rulerPositionY + "px", "important");
+  WebDeveloper.Ruler.backgroundTop.style.setProperty("width", containerWidth + "px", "important");
 };
 
 // Resizes the ruler container
@@ -441,21 +447,21 @@ WebDeveloper.Ruler.resizeContainer = function()
   // If the viewport width is greater than the document width
   if(viewportWidth > documentWidth)
   {
-    WebDeveloper.Ruler.container.style.width = viewportWidth + "px";
+    WebDeveloper.Ruler.container.style.setProperty("width", viewportWidth + "px", "important");
   }
   else
   {
-    WebDeveloper.Ruler.container.style.width = documentWidth + "px";
+    WebDeveloper.Ruler.container.style.setProperty("width", documentWidth + "px", "important");
   }
 
   // If the viewport height is greater than the document height
   if(viewportHeight > documentHeight)
   {
-    WebDeveloper.Ruler.container.style.height = viewportHeight + "px";
+    WebDeveloper.Ruler.container.style.setProperty("height", viewportHeight + "px", "important");
   }
   else
   {
-    WebDeveloper.Ruler.container.style.height = documentHeight + "px";
+    WebDeveloper.Ruler.container.style.setProperty("height", documentHeight + "px", "important");
   }
 };
 
@@ -474,9 +480,10 @@ WebDeveloper.Ruler.updateHeight = function()
   // If the height is valid
   if(height && parseInt(height, 10) == height && height > 0)
   {
-    height                                = parseInt(height, 10);
-    WebDeveloper.Ruler.ruler.style.height = height - 2 + "px";
-    WebDeveloper.Ruler.endY               = WebDeveloper.Ruler.startY + height;
+    height                  = parseInt(height, 10);
+    WebDeveloper.Ruler.endY = WebDeveloper.Ruler.startY + height;
+
+    WebDeveloper.Ruler.ruler.style.setProperty("height", height - 2 + "px", "important");
 
     WebDeveloper.Ruler.resizeBackgrounds();
     WebDeveloper.Ruler.updateInformation();
@@ -526,9 +533,10 @@ WebDeveloper.Ruler.updateWidth = function()
   // If the width is valid
   if(width && parseInt(width, 10) == width && width > 0)
   {
-    width                                = parseInt(width, 10);
-    WebDeveloper.Ruler.ruler.style.width = width - 2 + "px";
-    WebDeveloper.Ruler.endX              = WebDeveloper.Ruler.startX + width;
+    width                   = parseInt(width, 10);
+    WebDeveloper.Ruler.endX = WebDeveloper.Ruler.startX + width;
+
+    WebDeveloper.Ruler.ruler.style.setProperty("width", width - 2 + "px", "important");
 
     WebDeveloper.Ruler.resizeBackgrounds();
     WebDeveloper.Ruler.updateInformation();

@@ -141,7 +141,7 @@ WebDeveloper.Upgrade.upgrade = function(details)
   // If the extension was installed or updated
   if(details.reason === "install" || details.reason === "update")
   {
-    WebDeveloper.Upgrade.openUpgradeURL("@version@");
+    //WebDeveloper.Upgrade.openUpgradeURL("@version@");
 
     WebDeveloper.Storage.getItem("version", function(item)
     {

@@ -3,49 +3,23 @@ var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-redeclare, no-u
 WebDeveloper.Overlay        = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.Resize = WebDeveloper.Overlay.Resize || {};
 
-$(function()
-{
-  var resizeWindowHeight = $("#resize-window-height");
-  var resizeWindowWidth  = $("#resize-window-width");
-
-  $("#display-window-size").append(WebDeveloper.Locales.getString("displayWindowSize")).on("click", WebDeveloper.Overlay.Resize.displayWindowSize);
-  $("#edit-resize-dimensions").append(WebDeveloper.Locales.getString("editResizeDimensions")).on("click", WebDeveloper.Overlay.Resize.editResizeDimensions);
-  $("#resize-menu").on("click", ".custom-resize-window", WebDeveloper.Overlay.Resize.customResizeWindow);
-  $("#resize-window").append(WebDeveloper.Locales.getString("resizeWindowMenu")).on("click", WebDeveloper.Overlay.Resize.displayResizeDialog);
-  $("#view-responsive-layouts").append(WebDeveloper.Locales.getString("viewResponsiveLayouts")).on("click", WebDeveloper.Overlay.Resize.viewResponsiveLayouts);
-
-  $("#resize-window-cancel").on("click", WebDeveloper.Overlay.Resize.cancelResizeWindow);
-  $("#resize-window-dialog").on("submit", function(event) { event.preventDefault(); });
-  $("#resize-window-submit").on("click", WebDeveloper.Overlay.Resize.submitResizeWindow);
-
-  $("legend", $("#resize-window-dialog")).text(WebDeveloper.Locales.getString("resizeWindow"));
-  $("#resize-window-cancel").text(WebDeveloper.Locales.getString("cancel"));
-  $("#resize-window-submit").append(WebDeveloper.Locales.getString("resize"));
-  $('[for="resize-window-height"]').text(WebDeveloper.Locales.getString("height"));
-  $('[for="resize-window-width"]').text(WebDeveloper.Locales.getString("width"));
-
-  resizeWindowHeight.attr("placeholder", WebDeveloper.Locales.getString("heightPlaceholder"));
-  resizeWindowWidth.attr("placeholder", WebDeveloper.Locales.getString("widthPlaceholder"));
-  resizeWindowHeight.add(resizeWindowWidth).on("keypress", WebDeveloper.Overlay.Resize.resizeWindowKeyPress);
-
-  WebDeveloper.Overlay.Resize.setupCustomResizeOptions();
-});
-
 // Cancels resizing the window
 WebDeveloper.Overlay.Resize.cancelResizeWindow = function()
 {
-  $("#resize-window-dialog").slideUp(WebDeveloper.Overlay.animationSpeed, function()
-  {
-    $(".tabbable").slideDown(WebDeveloper.Overlay.animationSpeed);
-  });
+  document.getElementById("resize-window-dialog").classList.add("d-none");
+  document.querySelector(".tab-content").classList.remove("d-none");
 };
 
 // Resizes the window to a custom size
-WebDeveloper.Overlay.Resize.customResizeWindow = function()
+WebDeveloper.Overlay.Resize.customResizeWindow = function(event)
 {
-  var featureItem = $(this);
+  var eventTarget = event.target;
 
-  WebDeveloper.Overlay.Resize.resizeWindow(featureItem.data("height"), featureItem.data("width"));
+  // If the event target is a custom resize window option
+  if(eventTarget && eventTarget.classList.contains("custom-resize-window"))
+  {
+    WebDeveloper.Overlay.Resize.resizeWindow(eventTarget.getAttribute("data-height"), eventTarget.getAttribute("data-width"));
+  }
 };
 
 // Displays the resize dialog
@@ -58,17 +32,12 @@ WebDeveloper.Overlay.Resize.displayResizeDialog = function()
     {
       chrome.tabs.sendMessage(tab.id, { type: "get-window-size" }, function(response)
       {
-        var resizeWindowDialog = $("#resize-window-dialog");
-
-        $("#resize-window-height").val(response.outerHeight);
-        $("#resize-window-width").val(response.outerWidth).focus();
-
-        WebDeveloper.Overlay.Resize.resetResizeDialog(resizeWindowDialog);
-
-        $(".tabbable, #confirmation, #notification").slideUp(WebDeveloper.Overlay.animationSpeed, function()
-        {
-          resizeWindowDialog.slideDown(WebDeveloper.Overlay.animationSpeed);
-        });
+        WebDeveloper.Overlay.Resize.resetResizeDialog(response);
+        WebDeveloper.Overlay.closeConfirmation();
+        WebDeveloper.Overlay.closeNotification();
+        document.querySelector(".tab-content").classList.add("d-none");
+        document.getElementById("resize-window-dialog").classList.remove("d-none");
+        document.getElementById("resize-window-width").focus();
       });
     }
   });
@@ -109,11 +78,57 @@ WebDeveloper.Overlay.Resize.getViewResponsiveLayoutsLocale = function()
   return locale;
 };
 
-// Resets the add cookie dialog
-WebDeveloper.Overlay.Resize.resetResizeDialog = function(resizeDialog)
+// Initializes the resize overlay
+WebDeveloper.Overlay.Resize.initialize = function()
 {
-  $(".has-error", resizeDialog).removeClass("has-error");
-  $(".help-block", resizeDialog).text("");
+  var displayWindowSizeMenu     = document.getElementById("display-window-size");
+  var editResizeDimensionsMenu  = document.getElementById("edit-resize-dimensions");
+  var resizeWindowCancel        = document.getElementById("resize-window-cancel");
+  var resizeWindowDialog        = document.getElementById("resize-window-dialog");
+  var resizeWindowHeight        = document.getElementById("resize-window-height");
+  var resizeWindowMenu          = document.getElementById("resize-window");
+  var resizeWindowSubmit        = document.getElementById("resize-window-submit");
+  var resizeWindowWidth         = document.getElementById("resize-window-width");
+  var viewResponsiveLayoutsMenu = document.getElementById("view-responsive-layouts");
+
+  document.querySelector('[for="resize-window-height"]').append(WebDeveloper.Locales.getString("height"));
+  document.querySelector('[for="resize-window-width"]').append(WebDeveloper.Locales.getString("width"));
+  displayWindowSizeMenu.append(WebDeveloper.Locales.getString("displayWindowSize"));
+  editResizeDimensionsMenu.append(WebDeveloper.Locales.getString("editResizeDimensions"));
+  resizeWindowCancel.append(WebDeveloper.Locales.getString("cancel"));
+  resizeWindowDialog.querySelector("legend").append(WebDeveloper.Locales.getString("resizeWindow"));
+  resizeWindowMenu.append(WebDeveloper.Locales.getString("resizeWindowMenu"));
+  resizeWindowSubmit.append(WebDeveloper.Locales.getString("resize"));
+  viewResponsiveLayoutsMenu.append(WebDeveloper.Locales.getString("viewResponsiveLayouts"));
+
+  resizeWindowHeight.setAttribute("placeholder", WebDeveloper.Locales.getString("heightPlaceholder"));
+  resizeWindowWidth.setAttribute("placeholder", WebDeveloper.Locales.getString("widthPlaceholder"));
+
+  document.getElementById("custom-resize-options").addEventListener("click", WebDeveloper.Overlay.Resize.customResizeWindow);
+  displayWindowSizeMenu.addEventListener("click", WebDeveloper.Overlay.Resize.displayWindowSize);
+  editResizeDimensionsMenu.addEventListener("click", WebDeveloper.Overlay.Resize.editResizeDimensions);
+  resizeWindowCancel.addEventListener("click", WebDeveloper.Overlay.Resize.cancelResizeWindow);
+  resizeWindowDialog.addEventListener("submit", function(event) { event.preventDefault(); });
+  resizeWindowHeight.addEventListener("keypress", WebDeveloper.Overlay.Resize.resizeWindowKeyPress);
+  resizeWindowMenu.addEventListener("click", WebDeveloper.Overlay.Resize.displayResizeDialog);
+  resizeWindowSubmit.addEventListener("click", WebDeveloper.Overlay.Resize.submitResizeWindow);
+  resizeWindowWidth.addEventListener("keypress", WebDeveloper.Overlay.Resize.resizeWindowKeyPress);
+  viewResponsiveLayoutsMenu.addEventListener("click", WebDeveloper.Overlay.Resize.viewResponsiveLayouts);
+
+  WebDeveloper.Overlay.Resize.setupCustomResizeOptions();
+};
+
+// Resets the add cookie dialog
+WebDeveloper.Overlay.Resize.resetResizeDialog = function(response)
+{
+  var resizeWindowHeight = document.getElementById("resize-window-height");
+  var resizeWindowWidth  = document.getElementById("resize-window-width");
+
+  resizeWindowHeight.value = response.outerHeight;
+  resizeWindowWidth.value  = response.outerWidth;
+
+  resizeWindowHeight.classList.remove("is-invalid");
+  resizeWindowWidth.classList.remove("is-invalid");
 };
 
 // Resizes the window
@@ -158,32 +173,30 @@ WebDeveloper.Overlay.Resize.resizeWindowKeyPress = function(event)
 // Sets up the custom resize options
 WebDeveloper.Overlay.Resize.setupCustomResizeOptions = function()
 {
-  var customResizeOptionTemplate = $("#custom-resize-option").html();
-  var editResizeDimensions       = $("#edit-resize-dimensions").closest("li");
-  var storage                    = chrome.extension.getBackgroundPage().WebDeveloper.Storage;
+  var customResizeOptionTemplate = document.getElementById("custom-resize-option").innerHTML;
+  var editResizeDimensions       = document.getElementById("edit-resize-dimensions").parentElement;
 
-  $(".custom-resize-window", $("#custom-resize-options")).remove();
   Mustache.parse(customResizeOptionTemplate);
 
-  storage.getItem("resize_count", function(resizeOptionCount)
+  WebDeveloper.Storage.getItem("resize_count", function(resizeOptionCount)
   {
     var resizeStorageOptionKeys = [];
 
-    // Loop through the tools
+    // Loop through the resize options
     for(var i = 1, l = resizeOptionCount; i <= l; i++)
     {
       resizeStorageOptionKeys.push("resize_" + i + "_description", "resize_" + i + "_height", "resize_" + i + "_width");
     }
 
-    storage.getItems(resizeStorageOptionKeys, function(resizeStorageOptions)
+    WebDeveloper.Storage.getItems(resizeStorageOptionKeys, function(resizeStorageOptions)
     {
       var description  = null;
       var height       = 0;
       var resizeOption = null;
       var width        = 0;
 
-      // Loop through the tools
-      for(i = 1, l = resizeOptionCount; i <= l; i++)
+      // Loop through the resize options in reverse to allow insertAdjacentHTML to insert in the correct order
+      for(i = resizeOptionCount, l = 0; i > l; i--)
       {
         description = resizeStorageOptions["resize_" + i + "_description"];
         height      = resizeStorageOptions["resize_" + i + "_height"];
@@ -198,7 +211,7 @@ WebDeveloper.Overlay.Resize.setupCustomResizeOptions = function()
           resizeOption.height      = height;
           resizeOption.width       = width;
 
-          editResizeDimensions.before(Mustache.render(customResizeOptionTemplate, resizeOption));
+          editResizeDimensions.insertAdjacentHTML("afterbegin", Mustache.render(customResizeOptionTemplate, resizeOption));
         }
       }
     });
@@ -211,51 +224,57 @@ WebDeveloper.Overlay.Resize.submitResizeWindow = function()
   // If the dialog is valid
   if(WebDeveloper.Overlay.Resize.validateResizeDialog())
   {
-    WebDeveloper.Overlay.Resize.resizeWindow($("#resize-window-height").val(), $("#resize-window-width").val());
+    WebDeveloper.Overlay.Resize.resizeWindow(document.getElementById("resize-window-height").value.trim(), document.getElementById("resize-window-width").value.trim());
   }
 };
 
 // Returns true if the resize dialog is valid
 WebDeveloper.Overlay.Resize.validateResizeDialog = function()
 {
-  var height      = $("#resize-window-height");
-  var heightValue = height.val().trim();
-  var width       = $("#resize-window-width");
-  var widthValue  = width.val().trim();
+  var height      = document.getElementById("resize-window-height");
+  var heightValue = height.value.trim();
   var valid       = true;
-
-  WebDeveloper.Overlay.Resize.resetResizeDialog($("#resize-window-dialog"));
+  var width       = document.getElementById("resize-window-width");
+  var widthValue  = width.value.trim();
 
   // If the height is not set
-  if(!heightValue)
+  if(heightValue == "")
   {
-    height.closest(".form-group").addClass("has-error");
-    height.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("heightCannotBeEmpty"));
+    document.getElementById("resize-window-height-invalid").replaceChildren(WebDeveloper.Locales.getString("heightCannotBeEmpty"));
+    height.classList.add("is-invalid");
 
     valid = false;
   }
   else if(heightValue != "*" && (parseInt(heightValue, 10) != heightValue || heightValue <= 0))
   {
-    height.closest(".form-group").addClass("has-error");
-    height.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("heightNotValid"));
+    document.getElementById("resize-window-height-invalid").replaceChildren(WebDeveloper.Locales.getString("heightNotValid"));
+    height.classList.add("is-invalid");
 
     valid = false;
   }
+  else
+  {
+    height.classList.remove("is-invalid");
+  }
 
   // If the width is not set
-  if(!widthValue)
+  if(widthValue == "")
   {
-    width.closest(".form-group").addClass("has-error");
-    width.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("widthCannotBeEmpty"));
+    document.getElementById("resize-window-width-invalid").replaceChildren(WebDeveloper.Locales.getString("widthCannotBeEmpty"));
+    width.classList.add("is-invalid");
 
     valid = false;
   }
   else if(widthValue != "*" && (parseInt(widthValue, 10) != widthValue || widthValue <= 0))
   {
-    width.closest(".form-group").addClass("has-error");
-    width.closest(".input-group").next(".help-block").text(WebDeveloper.Locales.getString("widthNotValid"));
+    document.getElementById("resize-window-width-invalid").replaceChildren(WebDeveloper.Locales.getString("widthNotValid"));
+    width.classList.add("is-invalid");
 
     valid = false;
+  }
+  else
+  {
+    width.classList.remove("is-invalid");
   }
 
   return valid;
@@ -269,13 +288,12 @@ WebDeveloper.Overlay.Resize.viewResponsiveLayouts = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var data    = {};
-      var storage = chrome.extension.getBackgroundPage().WebDeveloper.Storage;
+      var data = {};
 
       data.layouts = [];
       data.pageURL = tab.url;
 
-      storage.getItem("responsive_layout_count", function(responsiveLayoutOptionCount)
+      WebDeveloper.Storage.getItem("responsive_layout_count", function(responsiveLayoutOptionCount)
       {
         var responsiveLayoutStorageOptionKeys = [];
 
@@ -285,7 +303,7 @@ WebDeveloper.Overlay.Resize.viewResponsiveLayouts = function()
           responsiveLayoutStorageOptionKeys.push("responsive_layout_" + i + "_description", "responsive_layout_" + i + "_height", "responsive_layout_" + i + "_width");
         }
 
-        storage.getItems(responsiveLayoutStorageOptionKeys, function(responsiveLayoutStorageOptions)
+        WebDeveloper.Storage.getItems(responsiveLayoutStorageOptionKeys, function(responsiveLayoutStorageOptions)
         {
           var description = null;
           var height      = 0;
@@ -311,10 +329,19 @@ WebDeveloper.Overlay.Resize.viewResponsiveLayouts = function()
             }
           }
 
-          chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("/generated/view-responsive-layouts.html"), tab.index, data, WebDeveloper.Overlay.Resize.getViewResponsiveLayoutsLocale());
-          WebDeveloper.Overlay.close();
+          WebDeveloper.Overlay.openGeneratedTab(chrome.runtime.getURL("/generated/view-responsive-layouts.html"), tab.index, data, WebDeveloper.Overlay.Resize.getViewResponsiveLayoutsLocale());
         });
       });
     }
   });
 };
+
+// If the document is still loading
+if(document.readyState === "loading")
+{
+  document.addEventListener("DOMContentLoaded", WebDeveloper.Overlay.Resize.initialize);
+}
+else
+{
+  WebDeveloper.Overlay.Resize.initialize();
+}

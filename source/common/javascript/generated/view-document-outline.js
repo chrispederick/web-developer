@@ -59,10 +59,14 @@ WebDeveloper.Generated.initialize = function(data, locale)
           heading      = document.createElement("h" + k);
 
           childElement.appendChild(document.createTextNode("<h" + k + ">"));
-          childElement.setAttribute("class", "label label-warning");
+          childElement.setAttribute("class", "badge font-monospace me-1 px-2 text-bg-warning");
           heading.appendChild(childElement);
-          heading.appendChild(document.createTextNode(locale.missingHeading));
-          heading.setAttribute("class", "text-muted");
+
+          childElement = document.createElement("em");
+
+          childElement.appendChild(document.createTextNode(locale.missingHeading));
+          childElement.setAttribute("class", "text-secondary");
+          heading.appendChild(childElement);
           container.appendChild(heading);
         }
 
@@ -76,7 +80,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
         heading      = document.createElement("h" + headingLevel);
 
         childElement.appendChild(document.createTextNode("<h" + headingLevel + ">"));
-        childElement.setAttribute("class", "label label-success");
+        childElement.setAttribute("class", "badge font-monospace me-1 px-2 text-bg-success");
         heading.appendChild(childElement);
         heading.appendChild(document.createTextNode(headingText));
         container.appendChild(heading);

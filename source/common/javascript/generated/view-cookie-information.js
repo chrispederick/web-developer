@@ -7,16 +7,22 @@ WebDeveloper.Generated.storedLocale = null;
 // Handles the cookie session setting being changed
 WebDeveloper.Generated.changeSession = function()
 {
-  var session = $(this);
+  var cookieExpires = document.getElementById("cookie-expires");
 
   // If the session setting is checked
-  if(session.prop("checked"))
+  if(document.getElementById("cookie-session").checked)
   {
-    $("#cookie-expires").val("").prop("disabled", true);
+    cookieExpires.disabled = true;
+    cookieExpires.value    = "";
+
+    cookieExpires.setAttribute("placeholder", "");
   }
   else
   {
-    $("#cookie-expires").val(WebDeveloper.Cookies.getDateTomorrow()).prop("disabled", false);
+    cookieExpires.disabled = false;
+    cookieExpires.value    = WebDeveloper.Cookies.getDateTomorrow();
+
+    cookieExpires.setAttribute("placeholder", WebDeveloper.Generated.storedLocale.expiresPlaceholder);
   }
 };
 
@@ -26,14 +32,23 @@ WebDeveloper.Generated.deleteCookie = function()
   var alert  = document.createElement("div");
   var cookie = WebDeveloper.Generated.populateCookieFromElement(WebDeveloper.Generated.cookie);
 
+  WebDeveloper.Cookies.deleteCookie(cookie);
+
   alert.appendChild(document.createTextNode(WebDeveloper.Generated.storedLocale.cookieDeleted.replace("%S", "'" + cookie.name + "'")));
   alert.setAttribute("class", "alert alert-success");
 
-  WebDeveloper.Cookies.deleteCookie(cookie);
+  WebDeveloper.Generated.cookie.replaceWith(alert);
+  bootstrap.Modal.getOrCreateInstance("#delete-dialog").hide();
+};
 
-  WebDeveloper.Generated.cookie.slideUp(WebDeveloper.Generated.animationSpeed, function() { WebDeveloper.Generated.cookie.remove(); });
-  $("#delete-dialog").modal("hide");
-  WebDeveloper.Generated.cookie.before(alert);
+// Handles the delete cookie dialog being opened
+WebDeveloper.Generated.deleteCookieDialogOpened = function(event)
+{
+  var cookieElement = event.relatedTarget.parentElement;
+
+  WebDeveloper.Generated.cookie = cookieElement;
+
+  document.getElementById("delete-dialog").querySelector("p").replaceChildren(WebDeveloper.Generated.storedLocale.deleteCookieConfirmation.replace("%S", "'" + cookieElement.querySelector(".web-developer-name").textContent + "'"));
 };
 
 // Displays a cookie
@@ -47,9 +62,10 @@ WebDeveloper.Generated.displayCookie = function(cookie, container, cookiesCounte
   var expiresDescription  = locale.atEndOfSession;
   var httpOnlyDescription = locale.no;
   var secureDescription   = locale.no;
-  var separator           = document.createElement("div");
+  var separator           = document.createElement("hr");
   var table               = document.createElement("table");
-  var tableContainer      = document.createElement("thead");
+  var tableContainer      = document.createElement("tbody");
+  var tableWrapper        = document.createElement("div");
 
   // If the cookie has an expiration
   if(cookieExpires)
@@ -69,21 +85,6 @@ WebDeveloper.Generated.displayCookie = function(cookie, container, cookiesCounte
     secureDescription = locale.yes;
   }
 
-  cookieElement.setAttribute("class", "web-developer-cookie");
-  cookieElement.setAttribute("id", "cookie-" + cookiesCounter);
-
-  childElement.appendChild(document.createTextNode(locale.property));
-  element.appendChild(childElement);
-
-  childElement = document.createElement("th");
-
-  childElement.appendChild(document.createTextNode(locale.value));
-  element.appendChild(childElement);
-  tableContainer.appendChild(element);
-
-  childElement   = document.createElement("td");
-  element        = document.createElement("tr");
-  tableContainer = document.createElement("tbody");
 
   childElement.appendChild(document.createTextNode(locale.name));
   element.appendChild(childElement);
@@ -91,11 +92,11 @@ WebDeveloper.Generated.displayCookie = function(cookie, container, cookiesCounte
   childElement = document.createElement("td");
 
   childElement.appendChild(document.createTextNode(cookieName));
-  childElement.setAttribute("class", "web-developer-name");
+  childElement.setAttribute("class", "text-break web-developer-name");
   element.appendChild(childElement);
   tableContainer.appendChild(element);
 
-  childElement = document.createElement("td");
+  childElement = document.createElement("th");
   element      = document.createElement("tr");
 
   childElement.appendChild(document.createTextNode(locale.value));
@@ -104,11 +105,11 @@ WebDeveloper.Generated.displayCookie = function(cookie, container, cookiesCounte
   childElement = document.createElement("td");
 
   childElement.appendChild(document.createTextNode(cookie.value));
-  childElement.setAttribute("class", "web-developer-value");
+  childElement.setAttribute("class", "text-break web-developer-value");
   element.appendChild(childElement);
   tableContainer.appendChild(element);
 
-  childElement = document.createElement("td");
+  childElement = document.createElement("th");
   element      = document.createElement("tr");
 
   childElement.appendChild(document.createTextNode(locale.host));
@@ -117,11 +118,11 @@ WebDeveloper.Generated.displayCookie = function(cookie, container, cookiesCounte
   childElement = document.createElement("td");
 
   childElement.appendChild(document.createTextNode(cookie.host));
-  childElement.setAttribute("class", "web-developer-host");
+  childElement.setAttribute("class", "text-break web-developer-host");
   element.appendChild(childElement);
   tableContainer.appendChild(element);
 
-  childElement = document.createElement("td");
+  childElement = document.createElement("th");
   element      = document.createElement("tr");
 
   childElement.appendChild(document.createTextNode(locale.path));
@@ -130,11 +131,11 @@ WebDeveloper.Generated.displayCookie = function(cookie, container, cookiesCounte
   childElement = document.createElement("td");
 
   childElement.appendChild(document.createTextNode(cookie.path));
-  childElement.setAttribute("class", "web-developer-path");
+  childElement.setAttribute("class", "text-break web-developer-path");
   element.appendChild(childElement);
   tableContainer.appendChild(element);
 
-  childElement = document.createElement("td");
+  childElement = document.createElement("th");
   element      = document.createElement("tr");
 
   childElement.appendChild(document.createTextNode(locale.expires));
@@ -143,11 +144,11 @@ WebDeveloper.Generated.displayCookie = function(cookie, container, cookiesCounte
   childElement = document.createElement("td");
 
   childElement.appendChild(document.createTextNode(expiresDescription));
-  childElement.setAttribute("class", "web-developer-expires");
+  childElement.setAttribute("class", "text-break web-developer-expires");
   element.appendChild(childElement);
   tableContainer.appendChild(element);
 
-  childElement = document.createElement("td");
+  childElement = document.createElement("th");
   element      = document.createElement("tr");
 
   childElement.appendChild(document.createTextNode(locale.secure));
@@ -156,11 +157,11 @@ WebDeveloper.Generated.displayCookie = function(cookie, container, cookiesCounte
   childElement = document.createElement("td");
 
   childElement.appendChild(document.createTextNode(secureDescription));
-  childElement.setAttribute("class", "web-developer-secure");
+  childElement.setAttribute("class", "text-break web-developer-secure");
   element.appendChild(childElement);
   tableContainer.appendChild(element);
 
-  childElement = document.createElement("td");
+  childElement = document.createElement("th");
   element      = document.createElement("tr");
 
   childElement.appendChild(document.createTextNode(locale.httpOnly));
@@ -173,11 +174,15 @@ WebDeveloper.Generated.displayCookie = function(cookie, container, cookiesCounte
   tableContainer.appendChild(element);
 
   table.appendChild(tableContainer);
-  table.setAttribute("class", "table table-striped");
-  cookieElement.appendChild(table);
+  table.setAttribute("class", "table table-borderless table-striped");
+  tableWrapper.setAttribute("class", "table-responsive");
+  tableWrapper.appendChild(table);
+  cookieElement.setAttribute("class", "web-developer-cookie");
+  cookieElement.setAttribute("id", "cookie-" + cookiesCounter);
+  cookieElement.appendChild(tableWrapper);
   cookieElement.appendChild(WebDeveloper.Generated.generateCommands(cookie, locale));
   container.appendChild(cookieElement);
-  separator.setAttribute("class", "web-developer-separator");
+  separator.setAttribute("class", "m-5");
   container.appendChild(separator);
   document.getElementById("content").appendChild(container);
 
@@ -185,9 +190,10 @@ WebDeveloper.Generated.displayCookie = function(cookie, container, cookiesCounte
   element      = document.createElement("li");
 
   childElement.appendChild(document.createTextNode(cookieName));
+  childElement.setAttribute("class", "dropdown-item");
   childElement.setAttribute("href", "#cookie-" + cookiesCounter);
   element.appendChild(childElement);
-  $(".dropdown-menu", $("#cookies-dropdown")).get(0).appendChild(element);
+  document.getElementById("cookies-dropdown").querySelector(".dropdown-menu").appendChild(element);
 };
 
 // Edits a cookie
@@ -206,54 +212,87 @@ WebDeveloper.Generated.editCookie = function()
 
     alert.appendChild(document.createTextNode(WebDeveloper.Generated.storedLocale.cookieEdited.replace("%S", "'" + oldCookie.name + "'")));
     alert.setAttribute("class", "alert alert-success");
-
     WebDeveloper.Generated.cookie.prepend(alert);
-    $("#edit-dialog").modal("hide");
+    bootstrap.Modal.getOrCreateInstance("#edit-dialog").hide();
   }
+};
+
+// Handles the edit cookie dialog being opened
+WebDeveloper.Generated.editCookieDialogOpened = function(event)
+{
+  var cookieElement = event.relatedTarget.parentElement;
+
+  WebDeveloper.Generated.cookie = cookieElement;
+
+  WebDeveloper.Generated.populateDialogFromElement(cookieElement);
+  WebDeveloper.Generated.resetEditDialog();
 };
 
 // Generates the commands
 WebDeveloper.Generated.generateCommands = function(cookie, locale)
 {
-  var childElement = document.createElement("i");
-  var commands     = document.createDocumentFragment();
-  var cookieHost   = cookie.host;
-  var element      = document.createElement("button");
+  var commands      = document.createDocumentFragment();
+  var cookieHost    = cookie.host;
+  var buttonElement = document.createElement("button");
+  var spanElement   = null;
+  var svgElement    = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  var useElement    = document.createElementNS("http://www.w3.org/2000/svg", "use");
 
-  childElement.setAttribute("class", "icon-trash");
-  element.appendChild(childElement);
-  element.appendChild(document.createTextNode(" " + locale.deleteConfirmation));
-  element.setAttribute("class", "web-developer-delete btn btn-danger");
-  commands.appendChild(element);
+  useElement.setAttribute("href", "/svg/icons/icons.svg#trash");
+  svgElement.appendChild(useElement);
+  svgElement.setAttribute("class", "bi me-1");
+  buttonElement.appendChild(svgElement);
+  buttonElement.appendChild(document.createTextNode(locale.deleteConfirmation));
+  buttonElement.setAttribute("class", "btn btn-danger btn-sm web-developer-delete");
+  buttonElement.setAttribute("data-bs-target", "#delete-dialog");
+  buttonElement.setAttribute("data-bs-toggle", "modal");
+  commands.appendChild(buttonElement);
 
-  childElement = document.createElement("i");
-  element      = document.createElement("button");
+  buttonElement = document.createElement("button");
+  svgElement    = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  useElement    = document.createElementNS("http://www.w3.org/2000/svg", "use");
 
-  childElement.setAttribute("class", "icon-pencil");
-  element.appendChild(childElement);
-  element.appendChild(document.createTextNode(" " + locale.edit));
+  useElement.setAttribute("href", "/svg/icons/icons.svg#pen");
+  svgElement.appendChild(useElement);
+  svgElement.setAttribute("class", "bi me-1");
+  buttonElement.appendChild(svgElement);
+  buttonElement.appendChild(document.createTextNode(locale.edit));
 
   // If the cookie is HTTP only
   if(cookie.httpOnly)
   {
-    element.setAttribute("class", "web-developer-edit btn btn-primary disabled");
-    element.setAttribute("data-content", locale.cannotEditHTTPOnlyCookies);
-    element.setAttribute("data-html", true);
-    element.setAttribute("data-title", locale.cannotEdit);
+    spanElement = document.createElement("span");
+
+    buttonElement.setAttribute("class", "btn btn-primary btn-sm disabled web-developer-edit");
+    spanElement.setAttribute("data-bs-placement", "right");
+    spanElement.setAttribute("data-bs-title", locale.cannotEditHTTPOnlyCookies);
+    spanElement.setAttribute("data-bs-toggle", "tooltip");
+    spanElement.appendChild(buttonElement);
+    bootstrap.Tooltip.getOrCreateInstance(spanElement);
+
+    buttonElement = spanElement;
   }
   else if(!WebDeveloper.Cookies.canEditLocalCookie() && (cookieHost == "localhost" || cookieHost == ".localhost"))
   {
-    element.setAttribute("class", "web-developer-edit btn btn-primary disabled");
-    element.setAttribute("data-content", locale.cannotEditLocalhostCookies);
-    element.setAttribute("data-html", true);
-    element.setAttribute("data-title", locale.cannotEdit);
+    spanElement = document.createElement("span");
+
+    buttonElement.setAttribute("class", "btn btn-primary btn-sm disabled web-developer-edit");
+    spanElement.setAttribute("data-bs-placement", "right");
+    spanElement.setAttribute("data-bs-title", locale.cannotEditLocalhostCookies);
+    spanElement.setAttribute("data-bs-toggle", "tooltip");
+    spanElement.appendChild(buttonElement);
+    bootstrap.Tooltip.getOrCreateInstance(spanElement);
+
+    buttonElement = spanElement;
   }
   else
   {
-    element.setAttribute("class", "web-developer-edit btn btn-primary");
+    buttonElement.setAttribute("class", "btn btn-primary btn-sm web-developer-edit");
+    buttonElement.setAttribute("data-bs-target", "#edit-dialog");
+    buttonElement.setAttribute("data-bs-toggle", "modal");
   }
 
-  commands.appendChild(element);
+  commands.appendChild(buttonElement);
 
   return commands;
 };
@@ -268,16 +307,16 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var cookieDescription = null;
   var cookies           = null;
   var cookiesCounter    = 1;
-  var cookiesDropdown   = $("#cookies-dropdown");
+  var cookiesDropdown   = document.getElementById("cookies-dropdown");
   var cookiesLength     = null;
-  var deleteDialog      = $("#delete-dialog");
-  var editDialog        = $("#edit-dialog");
+  var deleteDialog      = document.getElementById("delete-dialog");
+  var editDialog        = document.getElementById("edit-dialog");
 
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.localizeHeader(locale);
   WebDeveloper.Generated.setPageTitle(cookieInformation, data, locale);
 
-  $(".dropdown-toggle", cookiesDropdown).prepend(locale.cookies);
+  cookiesDropdown.querySelector(".dropdown-toggle").append(locale.cookies);
 
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
@@ -316,25 +355,31 @@ WebDeveloper.Generated.initialize = function(data, locale)
 
   WebDeveloper.Generated.storedLocale = locale;
 
-  $("#cookie-expires").attr("placeholder", locale.expiresPlaceholder);
-  $("#cookie-host").attr("placeholder", locale.hostPlaceholder);
-  $("#cookie-name").attr("placeholder", locale.namePlaceholder);
-  $("#cookie-path").attr("placeholder", locale.pathPlaceholder);
-  $("#cookie-secure").after(locale.secureCookie);
-  $("#cookie-session").after(locale.sessionCookie).on("change", WebDeveloper.Generated.changeSession);
-  $("#cookie-value").attr("placeholder", locale.valuePlaceholder);
-  $(".btn-danger", deleteDialog).append(locale.deleteLabel).on("click", WebDeveloper.Generated.deleteCookie);
-  $(".btn-default", deleteDialog).text(locale.cancel);
-  $(".btn-default", editDialog).text(locale.cancel);
-  $(".btn-primary", editDialog).append(locale.save).on("click", WebDeveloper.Generated.editCookie);
-  $(".web-developer-delete").on("click", WebDeveloper.Generated.showDeleteDialog);
-  $(".web-developer-edit:not(.disabled)").on("click", WebDeveloper.Generated.showEditDialog);
-  $(".web-developer-edit.disabled").popover();
-  $('[for="cookie-expires"]').text(locale.expires);
-  $('[for="cookie-host"]').text(locale.host);
-  $('[for="cookie-name"]').text(locale.name);
-  $('[for="cookie-path"]').text(locale.path);
-  $('[for="cookie-value"]').text(locale.value);
+  document.getElementById("cookie-expires").setAttribute("placeholder", locale.expiresPlaceholder);
+  document.getElementById("cookie-host").setAttribute("placeholder", locale.hostPlaceholder);
+  document.getElementById("cookie-name").setAttribute("placeholder", locale.namePlaceholder);
+  document.getElementById("cookie-path").setAttribute("placeholder", locale.pathPlaceholder);
+  document.getElementById("cookie-value").setAttribute("placeholder", locale.valuePlaceholder);
+  document.querySelector('[for="cookie-expires"]').append(locale.expires);
+  document.querySelector('[for="cookie-host"]').append(locale.host);
+  document.querySelector('[for="cookie-name"]').append(locale.name);
+  document.querySelector('[for="cookie-path"]').append(locale.path);
+  document.querySelector('[for="cookie-secure"]').append(locale.secureCookie);
+  document.querySelector('[for="cookie-session"]').append(locale.sessionCookie);
+  document.querySelector('[for="cookie-value"]').append(locale.value);
+
+  deleteDialog.querySelector("h4").append(locale.deleteCookie);
+  deleteDialog.querySelector(".btn-danger").append(locale.deleteLabel);
+  deleteDialog.querySelector(".btn-outline-secondary").append(locale.cancel);
+  editDialog.querySelector("h4").append(locale.editCookie);
+  editDialog.querySelector(".btn-outline-secondary").append(locale.cancel);
+  editDialog.querySelector(".btn-primary").append(locale.save);
+
+  document.getElementById("cookie-session").addEventListener("change", WebDeveloper.Generated.changeSession);
+  deleteDialog.addEventListener("show.bs.modal", WebDeveloper.Generated.deleteCookieDialogOpened);
+  deleteDialog.querySelector(".btn-danger").addEventListener("click", WebDeveloper.Generated.deleteCookie);
+  editDialog.addEventListener("show.bs.modal", WebDeveloper.Generated.editCookieDialogOpened);
+  editDialog.querySelector(".btn-primary").addEventListener("click", WebDeveloper.Generated.editCookie);
 
   WebDeveloper.Generated.initializeCommonElements();
 };
@@ -344,25 +389,25 @@ WebDeveloper.Generated.populateCookieFromDialog = function()
 {
   var cookie = {};
 
-  cookie.host  = $("#cookie-host").val();
-  cookie.name  = $("#cookie-name").val();
-  cookie.path  = $("#cookie-path").val();
-  cookie.value = $("#cookie-value").val();
+  cookie.host  = document.getElementById("cookie-host").value.trim();
+  cookie.name  = document.getElementById("cookie-name").value.trim();
+  cookie.path  = document.getElementById("cookie-path").value.trim();
+  cookie.value = document.getElementById("cookie-value").value;
 
   // If the cookie is secure
-  if($("#cookie-secure").prop("checked"))
+  if(document.getElementById("cookie-secure").checked)
   {
     cookie.secure = true;
   }
 
   // If the cookie is a session cookie
-  if($("#cookie-session").prop("checked"))
+  if(document.getElementById("cookie-session").checked)
   {
     cookie.session = true;
   }
   else
   {
-    cookie.expires = $("#cookie-expires").val();
+    cookie.expires = document.getElementById("cookie-expires").value.trim();
   }
 
   return cookie;
@@ -373,12 +418,12 @@ WebDeveloper.Generated.populateCookieFromElement = function(cookieElement)
 {
   var cookie = {};
 
-  cookie.host = $(".web-developer-host", cookieElement).text();
-  cookie.name = $(".web-developer-name", cookieElement).text();
-  cookie.path = $(".web-developer-path", cookieElement).text();
+  cookie.host = cookieElement.querySelector(".web-developer-host").textContent;
+  cookie.name = cookieElement.querySelector(".web-developer-name").textContent;
+  cookie.path = cookieElement.querySelector(".web-developer-path").textContent;
 
   // If the cookie is secure
-  if($(".web-developer-secure", cookieElement).text() == WebDeveloper.Generated.storedLocale.yes)
+  if(cookieElement.querySelector(".web-developer-secure").textContent == WebDeveloper.Generated.storedLocale.yes)
   {
     cookie.secure = true;
   }
@@ -389,165 +434,160 @@ WebDeveloper.Generated.populateCookieFromElement = function(cookieElement)
 // Populates a dialog from an element
 WebDeveloper.Generated.populateDialogFromElement = function(cookieElement)
 {
-  var expires = $(".web-developer-expires", cookieElement).text();
+  var cookieExpires = document.getElementById("cookie-expires");
+  var expires       = cookieElement.querySelector(".web-developer-expires").textContent;
 
-  $("#cookie-host").val($(".web-developer-host", cookieElement).text());
-  $("#cookie-name").val($(".web-developer-name", cookieElement).text());
-  $("#cookie-path").val($(".web-developer-path", cookieElement).text());
-  $("#cookie-value").val($(".web-developer-value", cookieElement).text());
+  document.getElementById("cookie-host").value  = cookieElement.querySelector(".web-developer-host").textContent;
+  document.getElementById("cookie-name").value  = cookieElement.querySelector(".web-developer-name").textContent;
+  document.getElementById("cookie-path").value  = cookieElement.querySelector(".web-developer-path").textContent;
+  document.getElementById("cookie-value").value = cookieElement.querySelector(".web-developer-value").textContent;
 
   // If this is a session cookie
   if(expires == WebDeveloper.Generated.storedLocale.atEndOfSession)
   {
-    $("#cookie-expires").val("").prop("disabled", true);
-    $("#cookie-session").prop("checked", true);
+    cookieExpires.disabled = true;
+    cookieExpires.value    = "";
+
+    document.getElementById("cookie-session").checked = true;
   }
   else
   {
-    $("#cookie-expires").val(expires).prop("disabled", false);
-    $("#cookie-session").prop("checked", false);
+    cookieExpires.disabled = false;
+    cookieExpires.value    = expires;
+
+    document.getElementById("cookie-session").checked = false;
   }
 
   // If this is not a secure cookie
-  if($(".web-developer-secure", cookieElement).text() == WebDeveloper.Generated.storedLocale.no)
+  if(cookieElement.querySelector(".web-developer-secure").textContent == WebDeveloper.Generated.storedLocale.no)
   {
-    $("#cookie-secure").prop("checked", false);
+    document.getElementById("cookie-secure").checked = false;
   }
   else
   {
-    $("#cookie-secure").prop("checked", true);
+    document.getElementById("cookie-secure").checked = true;
   }
 };
 
 // Populates an element from a cookie
 WebDeveloper.Generated.populateElementFromCookie = function(cookieElement, cookie)
 {
-  $(".web-developer-host", cookieElement).text(cookie.host);
-  $(".web-developer-name", cookieElement).text(cookie.name);
-  $(".web-developer-path", cookieElement).text(cookie.path);
-  $(".web-developer-value", cookieElement).text(cookie.value);
+  cookieElement.querySelector(".web-developer-host").replaceChildren(cookie.host);
+  cookieElement.querySelector(".web-developer-name").replaceChildren(cookie.name);
+  cookieElement.querySelector(".web-developer-path").replaceChildren(cookie.path);
+  cookieElement.querySelector(".web-developer-value").replaceChildren(cookie.value);
 
   // If the cookie is secure
   if(cookie.secure)
   {
-    $(".web-developer-secure", cookieElement).text(WebDeveloper.Generated.storedLocale.yes);
+    cookieElement.querySelector(".web-developer-secure").replaceChildren(WebDeveloper.Generated.storedLocale.yes);
   }
   else
   {
-    $(".web-developer-secure", cookieElement).text(WebDeveloper.Generated.storedLocale.no);
+    cookieElement.querySelector(".web-developer-secure").replaceChildren(WebDeveloper.Generated.storedLocale.no);
   }
 
   // If the cookie is a session cookie
   if(cookie.session)
   {
-    $(".web-developer-expires", cookieElement).text(WebDeveloper.Generated.storedLocale.atEndOfSession);
+    cookieElement.querySelector(".web-developer-expires").replaceChildren(WebDeveloper.Generated.storedLocale.atEndOfSession);
   }
   else
   {
-    $(".web-developer-expires", cookieElement).text(cookie.expires);
+    cookieElement.querySelector(".web-developer-expires").replaceChildren(cookie.expires);
   }
 
   return cookie;
 };
 
 // Resets the edit cookie dialog
-WebDeveloper.Generated.resetEditDialog = function(editDialog)
+WebDeveloper.Generated.resetEditDialog = function()
 {
-  $(".has-error", editDialog).removeClass("has-error");
-  $(".help-block", editDialog).text("");
-};
-
-// Shows the delete cookie dialog
-WebDeveloper.Generated.showDeleteDialog = function()
-{
-  var cookieElement = $(this).parent();
-  var cookieName    = $(".web-developer-name", cookieElement).text();
-  var deleteDialog  = $("#delete-dialog");
-
-  WebDeveloper.Generated.cookie = cookieElement;
-
-  $(".alert").remove();
-
-  $("h4", deleteDialog).text(WebDeveloper.Generated.storedLocale.deleteCookie);
-  $("p", deleteDialog).text(WebDeveloper.Generated.storedLocale.deleteCookieConfirmation.replace("%S", "'" + cookieName + "'"));
-
-  deleteDialog.modal("show");
-};
-
-// Shows the edit cookie dialog
-WebDeveloper.Generated.showEditDialog = function()
-{
-  var cookieElement = $(this).parent();
-  var editDialog    = $("#edit-dialog");
-
-  WebDeveloper.Generated.cookie = cookieElement;
-
-  $(".alert").remove();
-
-  $("h4", editDialog).text(WebDeveloper.Generated.storedLocale.editCookie);
-  WebDeveloper.Generated.populateDialogFromElement(cookieElement);
-  WebDeveloper.Generated.resetEditDialog(editDialog);
-
-  editDialog.modal("show");
+  document.getElementById("cookie-expires").classList.remove("is-invalid");
+  document.getElementById("cookie-host").classList.remove("is-invalid");
+  document.getElementById("cookie-name").classList.remove("is-invalid");
+  document.getElementById("cookie-path").classList.remove("is-invalid");
 };
 
 // Returns true if the edit cookie dialog is valid
 WebDeveloper.Generated.validateEditDialog = function()
 {
-  var expires = $("#cookie-expires");
-  var host    = $("#cookie-host");
-  var name    = $("#cookie-name");
-  var path    = $("#cookie-path");
-  var valid   = true;
-
-  WebDeveloper.Generated.resetEditDialog($("#edit-dialog"));
+  var host      = document.getElementById("cookie-host");
+  var hostValue = host.value.trim();
+  var name      = document.getElementById("cookie-name");
+  var path      = document.getElementById("cookie-path");
+  var valid     = true;
 
   // If the cookie name is not set
-  if(!name.val())
+  if(name.value.trim() == "")
   {
-    name.closest(".form-group").addClass("has-error");
-    name.next().text(WebDeveloper.Generated.storedLocale.nameCannotBeEmpty);
+    document.getElementById("cookie-name-invalid").replaceChildren(WebDeveloper.Generated.storedLocale.nameCannotBeEmpty);
+    name.classList.add("is-invalid");
 
     valid = false;
+  }
+  else
+  {
+    name.classList.remove("is-invalid");
   }
 
   // If the cookie host is not set
-  if(!host.val())
+  if(hostValue == "")
   {
-    host.closest(".form-group").addClass("has-error");
-    host.next().text(WebDeveloper.Generated.storedLocale.hostCannotBeEmpty);
+    document.getElementById("cookie-host-invalid").replaceChildren(WebDeveloper.Generated.storedLocale.hostCannotBeEmpty);
+    host.classList.add("is-invalid");
 
     valid = false;
+  }
+  else if(hostValue == "localhost" || hostValue == ".localhost")
+  {
+    document.getElementById("cookie-host-invalid").replaceChildren(WebDeveloper.Generated.storedLocale.extensionName + " " + WebDeveloper.Generated.storedLocale.cannotEditLocalhostCookies);
+    host.classList.add("is-invalid");
+
+    valid = false;
+  }
+  else
+  {
+    host.classList.remove("is-invalid");
   }
 
   // If the cookie path is not set
-  if(!path.val())
+  if(path.value.trim() == "")
   {
-    path.closest(".form-group").addClass("has-error");
-    path.next().text(WebDeveloper.Generated.storedLocale.pathCannotBeEmpty);
+    document.getElementById("cookie-path-invalid").replaceChildren(WebDeveloper.Generated.storedLocale.pathCannotBeEmpty);
+    path.classList.add("is-invalid");
 
     valid = false;
   }
+  else
+  {
+    path.classList.remove("is-invalid");
+  }
 
   // If the cookie is not a session cookie
-  if(!$("#cookie-session").prop("checked"))
+  if(!document.getElementById("cookie-session").checked)
   {
-    var expiresValue = expires.val().trim();
+    var expires      = document.getElementById("cookie-expires");
+    var expiresValue = expires.value.trim();
 
     // If the cookie expires is not set
-    if(!expiresValue)
+    if(expiresValue == "")
     {
-      expires.closest(".form-group").addClass("has-error");
-      expires.closest(".input-group").next().text(WebDeveloper.Generated.storedLocale.expiresCannotBeEmpty);
+      document.getElementById("cookie-expires-invalid").replaceChildren(WebDeveloper.Generated.storedLocale.expiresCannotBeEmpty);
+      expires.classList.add("is-invalid");
 
       valid = false;
     }
     else if(new Date(expiresValue) == "Invalid Date")
     {
-      expires.closest(".form-group").addClass("has-error");
-      expires.closest(".input-group").next().text(WebDeveloper.Generated.storedLocale.expiresNotValid);
+      document.getElementById("cookie-expires-invalid").replaceChildren(WebDeveloper.Generated.storedLocale.expiresNotValid);
+      expires.classList.add("is-invalid");
 
       valid = false;
+    }
+    else
+    {
+      expires.classList.remove("is-invalid");
     }
   }
 

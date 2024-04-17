@@ -3,52 +3,25 @@ var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-redeclare, no-u
 WebDeveloper.Overlay        = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.Images = WebDeveloper.Overlay.Images || {};
 
-$(function()
-{
-  var disableImagesMenu = $("#disable-images");
-
-  disableImagesMenu.append(WebDeveloper.Locales.getString("disableImages")).on("click", WebDeveloper.Overlay.Images.toggleImages);
-  $("#display-alt-attributes").append(WebDeveloper.Locales.getString("displayAltAttributes")).on("click", WebDeveloper.Overlay.Images.displayAltAttributes);
-  $("#display-image-dimensions").append(WebDeveloper.Locales.getString("displayImageDimensions")).on("click", WebDeveloper.Overlay.Images.displayImageDimensions);
-  $("#display-image-paths").append(WebDeveloper.Locales.getString("displayImagePaths")).on("click", WebDeveloper.Overlay.Images.displayImagePaths);
-  $("#find-broken-images").append(WebDeveloper.Locales.getString("findBrokenImages")).on("click", WebDeveloper.Overlay.Images.findBrokenImages);
-  $("#hide-background-images").append(WebDeveloper.Locales.getString("hideBackgroundImages")).on("click", WebDeveloper.Overlay.Images.hideBackgroundImages);
-  $("#hide-images").append(WebDeveloper.Locales.getString("hideImages")).on("click", WebDeveloper.Overlay.Images.hideImages);
-  $("#make-images-full-size").append(WebDeveloper.Locales.getString("makeImagesFullSize")).on("click", WebDeveloper.Overlay.Images.makeImagesFullSize);
-  $("#make-images-invisible").append(WebDeveloper.Locales.getString("makeImagesInvisible")).on("click", WebDeveloper.Overlay.Images.makeImagesInvisible);
-  $("#outline-all-images").append(WebDeveloper.Locales.getString("outlineAllImages")).on("click", WebDeveloper.Overlay.Images.outlineAllImages);
-  $("#outline-background-images").append(WebDeveloper.Locales.getString("outlineBackgroundImages")).on("click", WebDeveloper.Overlay.Images.outlineBackgroundImages);
-  $("#outline-images-with-adjusted-dimensions").append(WebDeveloper.Locales.getString("outlineImagesWithAdjustedDimensions")).on("click", WebDeveloper.Overlay.Images.outlineImagesWithAdjustedDimensions);
-  $("#outline-images-with-empty-alt-attributes").append(WebDeveloper.Locales.getString("outlineImagesWithEmptyAltAttributes")).on("click", WebDeveloper.Overlay.Images.outlineImagesWithEmptyAltAttributes);
-  $("#outline-images-with-oversized-dimensions").append(WebDeveloper.Locales.getString("outlineImagesWithOversizedDimensions")).on("click", WebDeveloper.Overlay.Images.outlineImagesWithOversizedDimensions);
-  $("#outline-images-without-alt-attributes").append(WebDeveloper.Locales.getString("outlineImagesWithoutAltAttributes")).on("click", WebDeveloper.Overlay.Images.outlineImagesWithoutAltAttributes);
-  $("#outline-images-without-dimensions").append(WebDeveloper.Locales.getString("outlineImagesWithoutDimensions")).on("click", WebDeveloper.Overlay.Images.outlineImagesWithoutDimensions);
-  $("#reload-images").append(WebDeveloper.Locales.getString("reloadImages")).on("click", WebDeveloper.Overlay.Images.reloadImages);
-  $("#replace-images-with-alt-attributes").append(WebDeveloper.Locales.getString("replaceImagesWithAltAttributes")).on("click", WebDeveloper.Overlay.Images.replaceImagesWithAltAttributes);
-  $("#view-image-information").append(WebDeveloper.Locales.getString("viewImageInformation")).on("click", WebDeveloper.Overlay.Images.viewImageInformation);
-
-  WebDeveloper.Overlay.updateContentSettingMenu(disableImagesMenu, "images");
-});
-
 // Adds a feature on a tab
-WebDeveloper.Overlay.Images.addFeatureOnTab = function(featureItem, tab, scriptCode)
+WebDeveloper.Overlay.Images.addFeatureOnTab = function(featureItem, tab, scriptCode, args)
 {
-  WebDeveloper.Overlay.addFeatureOnTab(featureItem, tab, "/features/javascript/images.js", scriptCode);
+  WebDeveloper.Overlay.addFeatureOnTab(featureItem, tab, "/features/javascript/images.js", scriptCode, args);
 };
 
 // Displays alt attributes for all images
 WebDeveloper.Overlay.Images.displayAltAttributes = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.displayAltAttributes(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Images.displayAltAttributes(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -57,21 +30,21 @@ WebDeveloper.Overlay.Images.displayAltAttributes = function()
 // Displays the dimensions for all images
 WebDeveloper.Overlay.Images.displayImageDimensions = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var locale = "";
+      var locale = {};
 
-      locale += "'height': '" + WebDeveloper.Locales.getString("height") + "',";
-      locale += "'width': '" + WebDeveloper.Locales.getString("width") + "'";
+      locale.height = WebDeveloper.Locales.getString("height");
+      locale.width  = WebDeveloper.Locales.getString("width");
 
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.displayImageDimensions(" + !enabled + ", [document], {" + locale + "});");
+        WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, function(featureEnabled, featureLocale) { WebDeveloper.Images.displayImageDimensions(!featureEnabled, [document], featureLocale); }, [enabled, locale]);
       });
     }
   });
@@ -80,16 +53,16 @@ WebDeveloper.Overlay.Images.displayImageDimensions = function()
 // Displays the paths for all images
 WebDeveloper.Overlay.Images.displayImagePaths = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.displayImagePaths(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Images.displayImagePaths(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -110,8 +83,7 @@ WebDeveloper.Overlay.Images.findBrokenImages = function()
         locale.brokenImage  = WebDeveloper.Locales.getString("brokenImage");
         locale.brokenImages = WebDeveloper.Locales.getString("brokenImages");
 
-        chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("/generated/find-broken-images.html"), tab.index, data, locale);
-        WebDeveloper.Overlay.close();
+        WebDeveloper.Overlay.openGeneratedTab(chrome.runtime.getURL("/generated/find-broken-images.html"), tab.index, data, locale);
       });
     }
   });
@@ -137,14 +109,14 @@ WebDeveloper.Overlay.Images.getViewImageInformationLocale = function()
 // Hides all background images
 WebDeveloper.Overlay.Images.hideBackgroundImages = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.hideBackgroundImages([document]);");
+      WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Images.hideBackgroundImages([document]); });
     }
   });
 };
@@ -152,32 +124,98 @@ WebDeveloper.Overlay.Images.hideBackgroundImages = function()
 // Hides all images
 WebDeveloper.Overlay.Images.hideImages = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.hideImages(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Images.hideImages(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
 };
 
+// Initializes the images overlay
+WebDeveloper.Overlay.Images.initialize = function()
+{
+  var disableImagesMenu                        = document.getElementById("disable-images");
+  var displayAltAttributesMenu                 = document.getElementById("display-alt-attributes");
+  var displayImageDimensionsMenu               = document.getElementById("display-image-dimensions");
+  var displayImagePathsMenu                    = document.getElementById("display-image-paths");
+  var findBrokenImagesMenu                     = document.getElementById("find-broken-images");
+  var hideBackgroundImagesMenu                 = document.getElementById("hide-background-images");
+  var hideImagesMenu                           = document.getElementById("hide-images");
+  var makeImagesFullSizeMenu                   = document.getElementById("make-images-full-size");
+  var makeImagesInvisibleMenu                  = document.getElementById("make-images-invisible");
+  var outlineAllImagesMenu                     = document.getElementById("outline-all-images");
+  var outlineBackgroundImagesMenu              = document.getElementById("outline-background-images");
+  var outlineImagesWithAdjustedDimensionsMenu  = document.getElementById("outline-images-with-adjusted-dimensions");
+  var outlineImagesWithEmptyAltAttributesMenu  = document.getElementById("outline-images-with-empty-alt-attributes");
+  var outlineImagesWithOversizedDimensionsMenu = document.getElementById("outline-images-with-oversized-dimensions");
+  var outlineImagesWithoutAltAttributesMenu    = document.getElementById("outline-images-without-alt-attributes");
+  var outlineImagesWithoutDimensionsMenu       = document.getElementById("outline-images-without-dimensions");
+  var reloadImagesMenu                         = document.getElementById("reload-images");
+  var replaceImagesWithAltAttributesMenu       = document.getElementById("replace-images-with-alt-attributes");
+  var viewImageInformationMenu                 = document.getElementById("view-image-information");
+
+  disableImagesMenu.append(WebDeveloper.Locales.getString("disableImages"));
+  displayAltAttributesMenu.append(WebDeveloper.Locales.getString("displayAltAttributes"));
+  displayImageDimensionsMenu.append(WebDeveloper.Locales.getString("displayImageDimensions"));
+  displayImagePathsMenu.append(WebDeveloper.Locales.getString("displayImagePaths"));
+  findBrokenImagesMenu.append(WebDeveloper.Locales.getString("findBrokenImages"));
+  hideBackgroundImagesMenu.append(WebDeveloper.Locales.getString("hideBackgroundImages"));
+  hideImagesMenu.append(WebDeveloper.Locales.getString("hideImages"));
+  makeImagesFullSizeMenu.append(WebDeveloper.Locales.getString("makeImagesFullSize"));
+  makeImagesInvisibleMenu.append(WebDeveloper.Locales.getString("makeImagesInvisible"));
+  outlineAllImagesMenu.append(WebDeveloper.Locales.getString("outlineAllImages"));
+  outlineBackgroundImagesMenu.append(WebDeveloper.Locales.getString("outlineBackgroundImages"));
+  outlineImagesWithAdjustedDimensionsMenu.append(WebDeveloper.Locales.getString("outlineImagesWithAdjustedDimensions"));
+  outlineImagesWithEmptyAltAttributesMenu.append(WebDeveloper.Locales.getString("outlineImagesWithEmptyAltAttributes"));
+  outlineImagesWithOversizedDimensionsMenu.append(WebDeveloper.Locales.getString("outlineImagesWithOversizedDimensions"));
+  outlineImagesWithoutAltAttributesMenu.append(WebDeveloper.Locales.getString("outlineImagesWithoutAltAttributes"));
+  outlineImagesWithoutDimensionsMenu.append(WebDeveloper.Locales.getString("outlineImagesWithoutDimensions"));
+  reloadImagesMenu.append(WebDeveloper.Locales.getString("reloadImages"));
+  replaceImagesWithAltAttributesMenu.append(WebDeveloper.Locales.getString("replaceImagesWithAltAttributes"));
+  viewImageInformationMenu.append(WebDeveloper.Locales.getString("viewImageInformation"));
+
+  disableImagesMenu.addEventListener("click", WebDeveloper.Overlay.Images.toggleImages);
+  displayAltAttributesMenu.addEventListener("click", WebDeveloper.Overlay.Images.displayAltAttributes);
+  displayImageDimensionsMenu.addEventListener("click", WebDeveloper.Overlay.Images.displayImageDimensions);
+  displayImagePathsMenu.addEventListener("click", WebDeveloper.Overlay.Images.displayImagePaths);
+  findBrokenImagesMenu.addEventListener("click", WebDeveloper.Overlay.Images.findBrokenImages);
+  hideBackgroundImagesMenu.addEventListener("click", WebDeveloper.Overlay.Images.hideBackgroundImages);
+  hideImagesMenu.addEventListener("click", WebDeveloper.Overlay.Images.hideImages);
+  makeImagesFullSizeMenu.addEventListener("click", WebDeveloper.Overlay.Images.makeImagesFullSize);
+  makeImagesInvisibleMenu.addEventListener("click", WebDeveloper.Overlay.Images.makeImagesInvisible);
+  outlineAllImagesMenu.addEventListener("click", WebDeveloper.Overlay.Images.outlineAllImages);
+  outlineBackgroundImagesMenu.addEventListener("click", WebDeveloper.Overlay.Images.outlineBackgroundImages);
+  outlineImagesWithAdjustedDimensionsMenu.addEventListener("click", WebDeveloper.Overlay.Images.outlineImagesWithAdjustedDimensions);
+  outlineImagesWithEmptyAltAttributesMenu.addEventListener("click", WebDeveloper.Overlay.Images.outlineImagesWithEmptyAltAttributes);
+  outlineImagesWithOversizedDimensionsMenu.addEventListener("click", WebDeveloper.Overlay.Images.outlineImagesWithOversizedDimensions);
+  outlineImagesWithoutAltAttributesMenu.addEventListener("click", WebDeveloper.Overlay.Images.outlineImagesWithoutAltAttributes);
+  outlineImagesWithoutDimensionsMenu.addEventListener("click", WebDeveloper.Overlay.Images.outlineImagesWithoutDimensions);
+  reloadImagesMenu.addEventListener("click", WebDeveloper.Overlay.Images.reloadImages);
+  replaceImagesWithAltAttributesMenu.addEventListener("click", WebDeveloper.Overlay.Images.replaceImagesWithAltAttributes);
+  viewImageInformationMenu.addEventListener("click", WebDeveloper.Overlay.Images.viewImageInformation);
+
+  WebDeveloper.Overlay.updateContentSettingMenu(disableImagesMenu, "images");
+};
+
 // Makes all images full size
 WebDeveloper.Overlay.Images.makeImagesFullSize = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Images.addFeatureOnTab(featureItem, tab, "WebDeveloper.Images.makeImagesFullSize([document]);");
+      WebDeveloper.Overlay.Images.addFeatureOnTab(featureItem, tab, function() { WebDeveloper.Images.makeImagesFullSize([document]); });
     }
   });
 };
@@ -185,16 +223,16 @@ WebDeveloper.Overlay.Images.makeImagesFullSize = function()
 // Makes all images invisible
 WebDeveloper.Overlay.Images.makeImagesInvisible = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.makeImagesInvisible(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Images.makeImagesInvisible(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -203,14 +241,14 @@ WebDeveloper.Overlay.Images.makeImagesInvisible = function()
 // Outlines all images
 WebDeveloper.Overlay.Images.outlineAllImages = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineAllImages([document]);");
+      WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Images.outlineAllImages([document]); });
     }
   });
 };
@@ -218,16 +256,16 @@ WebDeveloper.Overlay.Images.outlineAllImages = function()
 // Outlines all background images
 WebDeveloper.Overlay.Images.outlineBackgroundImages = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineBackgroundImages(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Images.outlineBackgroundImages(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -236,16 +274,16 @@ WebDeveloper.Overlay.Images.outlineBackgroundImages = function()
 // Outlines all images with adjusted dimensions
 WebDeveloper.Overlay.Images.outlineImagesWithAdjustedDimensions = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineImagesWithAdjustedDimensions(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Images.outlineImagesWithAdjustedDimensions(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -254,14 +292,14 @@ WebDeveloper.Overlay.Images.outlineImagesWithAdjustedDimensions = function()
 // Outlines all images with empty alt attributes
 WebDeveloper.Overlay.Images.outlineImagesWithEmptyAltAttributes = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineImagesWithEmptyAltAttributes([document]);");
+      WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Images.outlineImagesWithEmptyAltAttributes([document]); });
     }
   });
 };
@@ -269,16 +307,16 @@ WebDeveloper.Overlay.Images.outlineImagesWithEmptyAltAttributes = function()
 // Outlines all images with oversized dimensions
 WebDeveloper.Overlay.Images.outlineImagesWithOversizedDimensions = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineImagesWithOversizedDimensions(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Images.outlineImagesWithOversizedDimensions(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -287,14 +325,14 @@ WebDeveloper.Overlay.Images.outlineImagesWithOversizedDimensions = function()
 // Outlines all images without alt attributes
 WebDeveloper.Overlay.Images.outlineImagesWithoutAltAttributes = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineImagesWithoutAltAttributes([document]);");
+      WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Images.outlineImagesWithoutAltAttributes([document]); });
     }
   });
 };
@@ -302,14 +340,14 @@ WebDeveloper.Overlay.Images.outlineImagesWithoutAltAttributes = function()
 // Outlines all images without dimensions
 WebDeveloper.Overlay.Images.outlineImagesWithoutDimensions = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.outlineImagesWithoutDimensions([document]);");
+      WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Images.outlineImagesWithoutDimensions([document]); });
     }
   });
 };
@@ -317,14 +355,14 @@ WebDeveloper.Overlay.Images.outlineImagesWithoutDimensions = function()
 // Reloads all the images on a page
 WebDeveloper.Overlay.Images.reloadImages = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Images.addFeatureOnTab(featureItem, tab, "WebDeveloper.Images.reloadImages([document]);");
+      WebDeveloper.Overlay.Images.addFeatureOnTab(featureItem, tab, function() { WebDeveloper.Images.reloadImages([document]); });
     }
   });
 };
@@ -332,31 +370,31 @@ WebDeveloper.Overlay.Images.reloadImages = function()
 // Replaces all images with alt attributes
 WebDeveloper.Overlay.Images.replaceImagesWithAltAttributes = function()
 {
-  var featureItem = $(this);
+  var featureItem = this;
 
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      chrome.extension.getBackgroundPage().WebDeveloper.Storage.isFeatureOnTab(featureItem.attr("id"), tab, function(enabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, "WebDeveloper.Images.replaceImagesWithAltAttributes(" + !enabled + ", [document]);");
+        WebDeveloper.Overlay.Images.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Images.replaceImagesWithAltAttributes(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
 };
 
 // Toggles a feature on a tab
-WebDeveloper.Overlay.Images.toggleFeatureOnTab = function(featureItem, tab, scriptCode)
+WebDeveloper.Overlay.Images.toggleFeatureOnTab = function(featureItem, tab, scriptCode, args)
 {
-  WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/features/javascript/images.js", scriptCode);
+  WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/features/javascript/images.js", scriptCode, args);
 };
 
 // Toggles images
 WebDeveloper.Overlay.Images.toggleImages = function()
 {
-  WebDeveloper.Overlay.toggleContentSetting("images", $(this), "enableImagesResult", "disableImagesResult");
+  WebDeveloper.Overlay.toggleContentSetting("images", this, "enableImagesResult", "disableImagesResult");
 };
 
 // Displays all the images
@@ -369,9 +407,18 @@ WebDeveloper.Overlay.Images.viewImageInformation = function()
     {
       chrome.tabs.sendMessage(tab.id, { type: "get-images" }, function(data)
       {
-        chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("/generated/view-image-information.html"), tab.index, data, WebDeveloper.Overlay.Images.getViewImageInformationLocale());
-        WebDeveloper.Overlay.close();
+        WebDeveloper.Overlay.openGeneratedTab(chrome.runtime.getURL("/generated/view-image-information.html"), tab.index, data, WebDeveloper.Overlay.Images.getViewImageInformationLocale());
       });
     }
   });
 };
+
+// If the document is still loading
+if(document.readyState === "loading")
+{
+  document.addEventListener("DOMContentLoaded", WebDeveloper.Overlay.Images.initialize);
+}
+else
+{
+  WebDeveloper.Overlay.Images.initialize();
+}

@@ -32,14 +32,17 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var container         = null;
   var content           = document.getElementById("content");
   var element           = null;
-  var filesDropdown     = $("#files-dropdown");
-  var filesDropdownMenu = $(".dropdown-menu", filesDropdown).get(0);
+  var itemsDropdown     = document.getElementById("items-dropdown");
+  var itemsDropdownMenu = itemsDropdown.querySelector(".dropdown-menu");
   var height            = null;
   var layout            = null;
   var layoutDescription = null;
   var layouts           = data.layouts;
+  var reload            = document.getElementById("web-developer-reload");
   var scrollbarWidth    = WebDeveloper.Generated.getScrollbarWidth(content);
+  var svgElement        = null;
   var url               = data.pageURL;
+  var useElement        = null;
   var width             = null;
 
   WebDeveloper.Generated.emptyContent();
@@ -47,21 +50,34 @@ WebDeveloper.Generated.initialize = function(data, locale)
   WebDeveloper.Generated.setPageTitle(locale.responsiveLayouts, data, locale);
   WebDeveloper.Generated.addDocument(url, 0);
 
-  $(".dropdown-toggle", filesDropdown).prepend(locale.layouts);
+  itemsDropdown.querySelector(".dropdown-toggle").append(locale.layouts);
+  reload.append(locale.reloadLayouts);
 
   // Loop through the layouts
   for(var i = 0, l = layouts.length; i < l; i++)
   {
     anchor            = "layout-" + i;
     layout            = layouts[i];
-    childElement      = document.createElement("i");
+    childElement      = document.createElement("iframe");
     element           = document.createElement("h3");
     height            = layout.height;
+    svgElement        = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    useElement        = document.createElementNS("http://www.w3.org/2000/svg", "use");
     width             = layout.width;
     layoutDescription = layout.description + " (" + width + "x" + height + ")";
 
-    childElement.setAttribute("class", "icon-caret-down");
-    element.appendChild(childElement);
+    useElement.setAttribute("href", "/svg/icons/icons.svg#s-delete");
+    svgElement.appendChild(useElement);
+    svgElement.setAttribute("class", "bi icon-collapse me-1");
+    element.appendChild(svgElement);
+
+    svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    useElement = document.createElementNS("http://www.w3.org/2000/svg", "use");
+
+    useElement.setAttribute("href", "/svg/icons/icons.svg#s-add");
+    svgElement.appendChild(useElement);
+    svgElement.setAttribute("class", "bi icon-expand me-1");
+    element.appendChild(svgElement);
     element.setAttribute("id", anchor);
     element.appendChild(document.createTextNode(layoutDescription));
     content.appendChild(element);
@@ -83,12 +99,13 @@ WebDeveloper.Generated.initialize = function(data, locale)
     element      = document.createElement("li");
 
     childElement.appendChild(document.createTextNode(layoutDescription));
+    childElement.setAttribute("class", "dropdown-item");
     childElement.setAttribute("href", "#" + anchor);
     element.appendChild(childElement);
-    filesDropdownMenu.appendChild(element);
+    itemsDropdownMenu.appendChild(element);
   }
 
-  $("#web-developer-reload").text(locale.reloadLayouts).on("click", WebDeveloper.Generated.reloadLayouts);
+  reload.addEventListener("click", WebDeveloper.Generated.reloadLayouts);
 
   WebDeveloper.Generated.initializeCommonElements();
 };
@@ -96,14 +113,14 @@ WebDeveloper.Generated.initialize = function(data, locale)
 // Reloads the layouts
 WebDeveloper.Generated.reloadLayouts = function(event)
 {
-  var iframe = null;
+  var src = null;
 
   // Loop through the iframes
-  $("iframe").each(function()
+  document.querySelectorAll("iframe").forEach(function(iframe)
   {
-    iframe = $(this);
+    src = iframe.getAttribute("src");
 
-    iframe.attr("src", iframe.attr("src"));
+    iframe.setAttribute("src", src);
   });
 
   event.preventDefault();

@@ -1,10 +1,10 @@
 {
   "env": {
     "browser": true,
-    "jquery": true,
     "webextensions": true
   },
   "globals": {
+    "bootstrap": true,
     "BrowserPageInfo": true,
     "BrowserReload": true,
     "BrowserViewSourceOfDocument": true,
@@ -19,12 +19,16 @@
     "Mustache": true,
     "pref": true,
     "process": true,
+    "Promise": true,
     "require": true,
     "toJavaScriptConsole": true,
     "WebDeveloper": true,
     "WebDeveloperApplication": true,
     "WebDeveloperValidateCSS": true,
     "WebDeveloperValidateHTML": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 8
   },
   "rules": {
     "accessor-pairs": "error",
@@ -63,7 +67,7 @@
     }],
     "linebreak-style": ["error", "unix"],
     //"max-depth": ["error", 4],
-    "max-nested-callbacks": ["error", 3],
+    "max-nested-callbacks": ["error", 4],
     //"max-params": ["error", 5],
     //"max-statements": ["error", 20],
     "max-statements-per-line": ["error", { "max": 2 }],

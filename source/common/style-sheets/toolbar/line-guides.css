@@ -4,7 +4,7 @@
 #next-line-guide-position { margin-left: 5px; }
 .display-information #line-guide-information span { display: inline; }
 
-.web-developer-line-guide
+.web-developer-line-guide, .web-developer-line-guide div
 {
   background: transparent !important;
   border: none !important;
@@ -21,7 +21,6 @@
   margin: 0 !important;
   opacity: 1 !important;
   padding: 0 !important;
-  position: static !important;
   text-align: left !important;
   text-decoration: none !important;
   text-shadow: none !important;

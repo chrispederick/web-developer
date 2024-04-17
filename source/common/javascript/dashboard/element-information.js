@@ -1,7 +1,7 @@
 var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-redeclare, no-use-before-define
 
 WebDeveloper.ElementInformation                  = WebDeveloper.ElementInformation || {};
-WebDeveloper.ElementInformation.breadcrumbHeight = 37;
+WebDeveloper.ElementInformation.breadcrumbHeight = 25;
 WebDeveloper.ElementInformation.currentElement   = null;
 WebDeveloper.ElementInformation.locale           = null;
 WebDeveloper.ElementInformation.selfClosingTags  = ["area", "br", "col", "hr", "img", "input", "param"];
@@ -110,10 +110,11 @@ WebDeveloper.ElementInformation.generateAncestorInformation = function(element, 
   var ancestorInformation = contentDocument.createElement("div");
   var ancestorList        = contentDocument.createElement("ol");
   var hasAncestors        = false;
-  var heading             = contentDocument.createElement("h3");
+  var heading             = contentDocument.createElement("h1");
   var parentElement       = null;
 
   heading.appendChild(contentDocument.createTextNode(WebDeveloper.ElementInformation.getLocaleString("ancestors")));
+  heading.setAttribute("class", "h4");
 
   // While there is a parent element
   while((parentElement = element.parentNode) !== null)
@@ -134,6 +135,7 @@ WebDeveloper.ElementInformation.generateAncestorInformation = function(element, 
 
     lastItem.setAttribute("class", "last");
     ancestorList.appendChild(lastItem);
+    ancestorList.setAttribute("class", "bg-body-tertiary border list-unstyled p-2");
     ancestorInformation.appendChild(ancestorList);
   }
 
@@ -148,9 +150,10 @@ WebDeveloper.ElementInformation.generateChildrenInformation = function(element, 
   var childrenInformation = contentDocument.createElement("div");
   var elementDescription  = null;
   var hasChildren         = false;
-  var heading             = contentDocument.createElement("h3");
+  var heading             = contentDocument.createElement("h1");
 
   heading.appendChild(contentDocument.createTextNode(WebDeveloper.ElementInformation.getLocaleString("children")));
+  heading.setAttribute("class", "h4");
 
   // Loop through the child nodes
   for(var i = 0, l = childNodes.length; i < l; i++)
@@ -172,6 +175,7 @@ WebDeveloper.ElementInformation.generateChildrenInformation = function(element, 
   // If there are children
   if(hasChildren)
   {
+    childList.setAttribute("class", "bg-body-tertiary border list-unstyled p-2");
     childrenInformation.appendChild(childList);
   }
 
@@ -185,19 +189,20 @@ WebDeveloper.ElementInformation.generateDOMInformation = function(element, conte
   var attributeName  = null;
   var attributes     = element.attributes;
   var attributeValue = null;
-  var childElement   = contentDocument.createElement("h3");
+  var childElement   = contentDocument.createElement("h1");
   var domInformation = contentDocument.createElement("div");
   var domContent     = "<";
   var tagName        = element.tagName.toLowerCase();
 
   childElement.appendChild(contentDocument.createTextNode(WebDeveloper.ElementInformation.getLocaleString("dom")));
+  childElement.setAttribute("class", "h4");
 
   domInformation.setAttribute("class", "col-sm-6");
   domInformation.appendChild(childElement);
 
   childElement = contentDocument.createElement("pre");
 
-  childElement.setAttribute("class", "web-developer-syntax-highlight");
+  childElement.setAttribute("class", "bg-body-tertiary border p-2 web-developer-syntax-highlight");
   childElement.setAttribute("data-line-numbers", "false");
   childElement.setAttribute("data-type", "htmlmixed");
 
@@ -285,17 +290,18 @@ WebDeveloper.ElementInformation.generateElementInformation = function(element, c
 // Generates layout information for an element
 WebDeveloper.ElementInformation.generateLayoutInformation = function(element, contentDocument)
 {
-  var childElement      = contentDocument.createElement("h3");
+  var childElement      = contentDocument.createElement("h1");
   var layoutInformation = contentDocument.createElement("div");
 
   childElement.appendChild(contentDocument.createTextNode(WebDeveloper.ElementInformation.getLocaleString("layout")));
+  childElement.setAttribute("class", "h4");
 
   layoutInformation.setAttribute("class", "col-sm-6 web-developer-css");
   layoutInformation.appendChild(childElement);
 
   childElement = contentDocument.createElement("pre");
 
-  childElement.setAttribute("class", "web-developer-syntax-highlight");
+  childElement.setAttribute("class", "bg-body-tertiary border p-2 web-developer-syntax-highlight");
   childElement.setAttribute("data-line-numbers", "false");
   childElement.setAttribute("data-type", "css");
 
@@ -309,17 +315,18 @@ WebDeveloper.ElementInformation.generateLayoutInformation = function(element, co
 // Generates position information for an element
 WebDeveloper.ElementInformation.generatePositionInformation = function(element, contentDocument, generatedDocument)
 {
-  var childElement        = generatedDocument.createElement("h3");
+  var childElement        = generatedDocument.createElement("h1");
   var positionInformation = generatedDocument.createElement("div");
   var positionContent     = "";
 
   childElement.appendChild(generatedDocument.createTextNode(WebDeveloper.ElementInformation.getLocaleString("position")));
+  childElement.setAttribute("class", "h4");
   positionInformation.setAttribute("class", "col-sm-6 web-developer-css");
   positionInformation.appendChild(childElement);
 
   childElement = generatedDocument.createElement("pre");
 
-  childElement.setAttribute("class", "web-developer-syntax-highlight");
+  childElement.setAttribute("class", "bg-body-tertiary border p-2 web-developer-syntax-highlight");
   childElement.setAttribute("data-line-numbers", "false");
   childElement.setAttribute("data-type", "css");
 
@@ -342,17 +349,18 @@ WebDeveloper.ElementInformation.generatePositionInformation = function(element, 
 // Generates text information for an element
 WebDeveloper.ElementInformation.generateTextInformation = function(element, contentDocument, generatedDocument)
 {
-  var childElement    = generatedDocument.createElement("h3");
+  var childElement    = generatedDocument.createElement("h1");
   var textInformation = generatedDocument.createElement("div");
   var textContent     = "";
 
   childElement.appendChild(generatedDocument.createTextNode(WebDeveloper.ElementInformation.getLocaleString("text")));
+  childElement.setAttribute("class", "h4");
   textInformation.setAttribute("class", "col-sm-6 web-developer-css");
   textInformation.appendChild(childElement);
 
   childElement = generatedDocument.createElement("pre");
 
-  childElement.setAttribute("class", "web-developer-syntax-highlight");
+  childElement.setAttribute("class", "bg-body-tertiary border p-2 web-developer-syntax-highlight");
   childElement.setAttribute("data-line-numbers", "false");
   childElement.setAttribute("data-type", "css");
 
@@ -373,7 +381,7 @@ WebDeveloper.ElementInformation.generateTextInformation = function(element, cont
 };
 
 // Returns the element description
-WebDeveloper.ElementInformation.getElementDescription = function(element, contentDocument)
+WebDeveloper.ElementInformation.getElementDescription = function(element, contentDocument, type)
 {
   var description = null;
 
@@ -386,7 +394,7 @@ WebDeveloper.ElementInformation.getElementDescription = function(element, conten
 
     description = contentDocument.createElement("li");
 
-    link.setAttribute("class", "type");
+    link.setAttribute("class", type);
     link.setAttribute("href", "#");
 
     // If the element has an id attribute
@@ -421,6 +429,19 @@ WebDeveloper.ElementInformation.getElementDescription = function(element, conten
   return description;
 };
 
+// Returns the element information dashboard HTML template
+WebDeveloper.ElementInformation.getElementInformationDashboardTemplates = function(parameters)
+{
+  var dashboardTemplates = {};
+
+  dashboardTemplates.dashboard          = '<div id="web-developer-dashboard-resizer">&bull;</div><h1 id="web-developer-dashboard-title" class="text-muted">' + parameters.dashboardTitle + '</h1><ul id="web-developer-dashboard-tabs" class="nav nav-pills"></ul><div id="web-developer-dashboard-panels" class="tab-content"></div>';
+  dashboardTemplates.elementInformation = '<div id="element-information-content" class="container-fluid overflow-y-scroll"><p id="web-developer-information" class="lead text-info">' + parameters.selectAnElementDisplayInformation + '</p></div><div id="current-element-ancestors" class="bg-body-secondary border-top border-secondary-subtle px-1"></div>';
+  dashboardTemplates.panel              = '<div id="' + parameters.tabId + '-panel" class="tab-pane active"></div>';
+  dashboardTemplates.tab                = '<li id="' + parameters.tabId + '-tab" class="nav-item"><a href="#' + parameters.tabId + '-panel" class="active nav-link" data-bs-target="#' + parameters.tabId + '-panel" data-bs-toggle="pill">' + parameters.title + "</a></li>";
+
+  return dashboardTemplates;
+};
+
 // Returns a string from the locale
 WebDeveloper.ElementInformation.getLocaleString = function(name)
 {
@@ -433,13 +454,20 @@ WebDeveloper.ElementInformation.initialize = function(display, contentDocument, 
   // If displaying the element information dashboard
   if(display)
   {
+    var dashboardPanel = null;
+    var templates      = WebDeveloper.ElementInformation.getElementInformationDashboardTemplates({ dashboardTitle: locale.dashboardTitle, selectAnElementDisplayInformation: locale.selectAnElementDisplayInformation, tabId: "element-information", title: locale.elementInformation });
+
+    dashboardPanel                                         = WebDeveloper.Dashboard.openDashboardTab("element-information", locale.elementInformation, contentDocument, templates);
+    dashboardPanel.innerHTML                               = templates.elementInformation;
     WebDeveloper.ElementInformation.locale                 = locale;
     window.WebDeveloperEvents                              = window.WebDeveloperEvents || {};
     window.WebDeveloperEvents.ElementInformation           = window.WebDeveloperEvents.ElementInformation || {};
     window.WebDeveloperEvents.ElementInformation.click     = WebDeveloper.ElementInformation.click;
     window.WebDeveloperEvents.ElementInformation.mouseOver = WebDeveloper.ElementAncestors.mouseOver;
 
-    WebDeveloper.ElementInformation.loadDashboardTemplates(contentDocument, locale);
+    dashboardPanel.addEventListener("click", WebDeveloper.ElementInformation.clickOutput, false);
+
+    window.setTimeout(function() { WebDeveloper.ElementInformation.resize(WebDeveloper.Dashboard.getDashboard(contentDocument)); }, 100);
 
     contentDocument.addEventListener("click", window.WebDeveloperEvents.ElementInformation.click, true);
     contentDocument.addEventListener("mouseover", window.WebDeveloperEvents.ElementInformation.mouseOver, false);
@@ -485,12 +513,12 @@ WebDeveloper.ElementInformation.loadDashboardTemplates = function(contentDocumen
 // Resizes the element information elements
 WebDeveloper.ElementInformation.resize = function(dashboard)
 {
-  var elementInformationPanel = dashboard.contentDocument.getElementById("element-information-panel");
+  var elementInformationContent = dashboard.contentDocument.getElementById("element-information-content");
 
-  // If the element information panel exists
-  if(elementInformationPanel)
+  // If the element information content exists
+  if(elementInformationContent)
   {
-    elementInformationPanel.style.height = dashboard.offsetHeight - elementInformationPanel.offsetTop - WebDeveloper.ElementInformation.breadcrumbHeight + "px";
+    elementInformationContent.style.height = dashboard.offsetHeight - elementInformationContent.offsetTop - WebDeveloper.ElementInformation.breadcrumbHeight + "px";
   }
 };
 
@@ -520,12 +548,14 @@ WebDeveloper.ElementInformation.selectChildElement = function(eventTarget)
       // If the counter matches the child count
       if(counter == childCount)
       {
+        WebDeveloper.ElementInformation.currentElement = element;
+
         WebDeveloper.ElementInformation.displayElementInformation(element);
 
         // If the owner document is set
         if(ownerDocument)
         {
-          element = ownerDocument.getElementById("element-information-panel");
+          element = ownerDocument.getElementById("element-information-content");
 
           // If the element is found
           if(element)
@@ -562,12 +592,14 @@ WebDeveloper.ElementInformation.selectParentElement = function(eventTarget)
     parentElement = parentElement.parentNode;
   }
 
+  WebDeveloper.ElementInformation.currentElement = parentElement;
+
   WebDeveloper.ElementInformation.displayElementInformation(parentElement);
 
   // If the owner document is set
   if(ownerDocument)
   {
-    element = ownerDocument.getElementById("element-information-panel");
+    element = ownerDocument.getElementById("element-information-content");
 
     // If the element is found
     if(element)

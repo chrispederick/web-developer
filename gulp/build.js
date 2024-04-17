@@ -12,10 +12,7 @@ global.buildAbout = function(browserName)
       .pipe(gulp.dest("build/" + browserName + "/about")),
     gulp.src("source/common/javascript/about/about.js")
       .pipe(global.filterProperties(browserName)())
-      .pipe(gulp.dest("build/" + browserName + "/about/javascript")),
-    gulp.src("source/common/style-sheets/about/about.css")
-      .pipe(global.filterProperties(browserName)())
-      .pipe(gulp.dest("build/" + browserName + "/about"))
+      .pipe(gulp.dest("build/" + browserName + "/about/javascript"))
   );
 };
 
@@ -30,6 +27,7 @@ global.buildAll = function(browserName)
     global.buildDashboard(browserName),
     global.buildFeatures(browserName),
     global.buildGenerated(browserName),
+    global.buildLib(browserName),
     global.buildLocales(browserName),
     global.buildOptions(browserName),
     global.buildOverlay(browserName),
@@ -39,28 +37,15 @@ global.buildAll = function(browserName)
 
 global.buildBackground = function(browserName)
 {
-  return merge(
-    gulp.src("source/common/html/background/background.html")
-      .pipe(global.filterProperties(browserName)())
-      .pipe(gulp.dest("build/" + browserName + "/background")),
-    gulp.src("source/common/javascript/background/background.js")
-      .pipe(global.filterProperties(browserName)())
-      .pipe(gulp.dest("build/" + browserName + "/background/javascript"))
-  );
+  return gulp.src(["source/common/javascript/locales/locales.js", "source/common/javascript/storage/storage.js", "source/common/javascript/upgrade/upgrade.js", "source/common/javascript/background/background.js"])
+    .pipe(plugins.concat("background.js"))
+    .pipe(global.filterProperties(browserName)())
+    .pipe(gulp.dest("build/" + browserName + "/background"));
 };
 
 global.buildCommon = function(browserName)
 {
   return merge(
-    gulp.src("source/common/javascript/common/bootstrap/*")
-      .pipe(global.filterProperties(browserName)())
-      .pipe(gulp.dest("build/" + browserName + "/common/javascript/bootstrap")),
-    gulp.src("source/common/javascript/common/codemirror/*")
-      .pipe(global.filterProperties(browserName)())
-      .pipe(gulp.dest("build/" + browserName + "/common/javascript/codemirror")),
-    gulp.src("source/common/javascript/common/jquery/*")
-      .pipe(global.filterProperties(browserName)())
-      .pipe(gulp.dest("build/" + browserName + "/common/javascript/jquery")),
     gulp.src("source/common/javascript/common/common.js")
       .pipe(global.filterProperties(browserName)())
       .pipe(gulp.dest("build/" + browserName + "/common/javascript")),
@@ -70,8 +55,7 @@ global.buildCommon = function(browserName)
     gulp.src("source/common/javascript/common/mustache.js")
       .pipe(global.filterProperties(browserName)())
       .pipe(gulp.dest("build/" + browserName + "/common/javascript")),
-    gulp.src(["source/common/javascript/cookies/cookies.js", "source/" + browserName + "/javascript/cookies/cookies.js"])
-      .pipe(plugins.concat("cookies.js"))
+    gulp.src("source/common/javascript/cookies/cookies.js")
       .pipe(global.filterProperties(browserName)())
       .pipe(gulp.dest("build/" + browserName + "/cookies")),
     gulp.src("source/common/javascript/locales/locales.js")
@@ -83,36 +67,20 @@ global.buildCommon = function(browserName)
     gulp.src("source/common/javascript/upgrade/upgrade.js")
       .pipe(global.filterProperties(browserName)())
       .pipe(gulp.dest("build/" + browserName + "/upgrade")),
-    gulp.src(["source/common/style-sheets/common/bootstrap/bootstrap.css", "source/common/style-sheets/common/bootstrap/font-awesome.css"])
-      .pipe(plugins.concat("bootstrap.css"))
-      .pipe(plugins.replace("fonts/fontawesome-webfont", "../fonts/fontawesome-webfont"))
-      .pipe(global.filterProperties(browserName)())
-      .pipe(gulp.dest("build/" + browserName + "/common/style-sheets")),
-    gulp.src("source/common/style-sheets/common/bootstrap/bootstrap.css.map")
-      .pipe(global.filterProperties(browserName)())
-      .pipe(gulp.dest("build/" + browserName + "/common/style-sheets")),
     gulp.src("source/common/style-sheets/generated/common.css")
       .pipe(plugins.rename("generated.css"))
       .pipe(global.filterProperties(browserName)())
       .pipe(gulp.dest("build/" + browserName + "/common/style-sheets")),
-    gulp.src(["source/common/style-sheets/common/codemirror/codemirror.css", "source/common/style-sheets/common/codemirror/theme.css"])
-      .pipe(plugins.concat("syntax-highlight.css"))
-      .pipe(global.filterProperties(browserName)())
-      .pipe(gulp.dest("build/" + browserName + "/common/style-sheets")),
     gulp.src("images/common/logos/**")
-      .pipe(gulp.dest("build/" + browserName + "/common/images/logos")),
-    gulp.src("source/common/fonts/*")
-      .pipe(gulp.dest("build/" + browserName + "/common/fonts"))
+      .pipe(gulp.dest("build/" + browserName + "/img/logos")),
+    gulp.src("source/common/svg/**")
+      .pipe(gulp.dest("build/" + browserName + "/svg"))
   );
 };
 
 global.buildConfiguration = function(browserName)
 {
-  return gulp.src(["configuration/common/manifest-top.json", "configuration/" + browserName + "/manifest.json", "configuration/common/manifest-bottom.json"])
-    .pipe(plugins.concat("manifest.json"))
-    .pipe(plugins.replace('{"remove-top": "",', ""))
-    .pipe(plugins.replace('"remove-bottom": ""}', ""))
-    .pipe(plugins.replace(/^\s*[\r\n]/gm, ""))
+  return gulp.src("configuration/" + browserName + "/manifest.json")
     .pipe(global.filterProperties(browserName)())
     .pipe(gulp.dest("build/" + browserName));
 };
@@ -211,6 +179,12 @@ global.buildGenerated = function(browserName)
       .pipe(global.filterProperties(browserName)())
       .pipe(gulp.dest("build/" + browserName + "/generated/javascript"))
   );
+};
+
+global.buildLib = function(browserName)
+{
+  return gulp.src("source/common/lib/**")
+    .pipe(gulp.dest("build/" + browserName + "/lib"));
 };
 
 global.buildLocales = function(browserName)

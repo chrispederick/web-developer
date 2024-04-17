@@ -3,38 +3,32 @@ var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-redeclare, no-u
 WebDeveloper.Overlay         = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.Options = WebDeveloper.Overlay.Options || {};
 
-$(function()
-{
-  $("#about").append(WebDeveloper.Locales.getString("aboutMenu")).on("click", WebDeveloper.Overlay.Options.about);
-  $("#help").append(WebDeveloper.Locales.getString("help")).on("click", WebDeveloper.Overlay.openURL);
-  $("#options").append(WebDeveloper.Locales.getString("optionsMenu")).on("click", WebDeveloper.Overlay.Options.options);
-  $("#reset-page").append(WebDeveloper.Locales.getString("resetPage")).on("click", WebDeveloper.Overlay.Options.resetPage);
-});
-
 // Opens the about page
 WebDeveloper.Overlay.Options.about = function()
 {
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
-    chrome.extension.getBackgroundPage().WebDeveloper.Background.openGeneratedTab(chrome.extension.getURL("/about/about.html"), tab.index, null, WebDeveloper.Overlay.Options.getAboutLocale());
-    WebDeveloper.Overlay.close();
+    chrome.tabs.create({ index: tab.index + 1, url: chrome.runtime.getURL("/about/about.html") });
   });
 };
 
-// Returns the locale for the about feature
-WebDeveloper.Overlay.Options.getAboutLocale = function()
+// Initializes the options overlay
+WebDeveloper.Overlay.Options.initialize = function()
 {
-  var locale = {};
+  var aboutMenu     = document.getElementById("about");
+  var helpMenu      = document.getElementById("help");
+  var optionsMenu   = document.getElementById("options");
+  var resetPageMenu = document.getElementById("reset-page");
 
-  locale.about                = WebDeveloper.Locales.getString("about");
-  locale.author               = WebDeveloper.Locales.getString("author");
-  locale.buildDate            = WebDeveloper.Locales.getString("buildDate");
-  locale.extensionDescription = WebDeveloper.Locales.getString("extensionDescription");
-  locale.extensionName        = WebDeveloper.Locales.getString("extensionName");
-  locale.followOnTwitter      = WebDeveloper.Locales.getString("followOnTwitter");
-  locale.version              = WebDeveloper.Locales.getString("version");
+  aboutMenu.append(WebDeveloper.Locales.getString("aboutMenu"));
+  helpMenu.append(WebDeveloper.Locales.getString("help"));
+  optionsMenu.append(WebDeveloper.Locales.getString("optionsMenu"));
+  resetPageMenu.append(WebDeveloper.Locales.getString("resetPage"));
 
-  return locale;
+  aboutMenu.addEventListener("click", WebDeveloper.Overlay.Options.about);
+  helpMenu.addEventListener("click", WebDeveloper.Overlay.openURL);
+  optionsMenu.addEventListener("click", WebDeveloper.Overlay.Options.options);
+  resetPageMenu.addEventListener("click", WebDeveloper.Overlay.Options.resetPage);
 };
 
 // Opens the options
@@ -49,9 +43,19 @@ WebDeveloper.Overlay.Options.resetPage = function()
 {
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
-    WebDeveloper.Overlay.addScriptToTab(tab, { code: "window.location.reload();" }, function()
+    WebDeveloper.Overlay.addScriptToTab(tab, function() { window.location.reload(); }, function()
     {
       WebDeveloper.Overlay.close();
     });
   });
 };
+
+// If the document is still loading
+if(document.readyState === "loading")
+{
+  document.addEventListener("DOMContentLoaded", WebDeveloper.Overlay.Options.initialize);
+}
+else
+{
+  WebDeveloper.Overlay.Options.initialize();
+}

@@ -18,6 +18,7 @@ WebDeveloper.Generated.displayHeaders = function(url, headers, status, statusTex
   element = document.createElement("pre");
 
   element.appendChild(document.createTextNode(headers + "\n" + status + " " + statusText));
+  element.setAttribute("class", "bg-light border p-2");
   content.appendChild(element);
 };
 
@@ -28,7 +29,6 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var url     = data.pageURL;
 
   WebDeveloper.Generated.emptyContent();
-  WebDeveloper.Generated.localizeHeader(locale);
   WebDeveloper.Generated.setPageTitle(locale.responseHeaders, data, locale);
 
   // Try to get the response headers

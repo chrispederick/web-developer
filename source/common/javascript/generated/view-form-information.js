@@ -7,9 +7,10 @@ WebDeveloper.Generated.displayForm = function(form, container, formsCounter, for
 {
   var childElement   = document.createElement("th");
   var element        = document.createElement("h4");
-  var separator      = document.createElement("div");
+  var separator      = document.createElement("hr");
   var table          = document.createElement("table");
   var tableContainer = document.createElement("thead");
+  var tableWrapper   = document.createElement("div");
 
   element.appendChild(document.createTextNode(locale.form));
   element.setAttribute("class", "web-developer-form");
@@ -40,10 +41,12 @@ WebDeveloper.Generated.displayForm = function(form, container, formsCounter, for
 
   tableContainer = document.createElement("tbody");
 
-  $(tableContainer).append(Mustache.render(formTemplate, form));
+  tableContainer.insertAdjacentHTML("beforeend", Mustache.render(formTemplate, form));
   table.appendChild(tableContainer);
-  table.setAttribute("class", "table table-striped");
-  container.appendChild(table);
+  table.setAttribute("class", "table table-borderless table-striped");
+  tableWrapper.appendChild(table);
+  tableWrapper.setAttribute("class", "table-responsive");
+  container.appendChild(tableWrapper);
 
   // If there are form elements
   if(form.elements.length > 0)
@@ -51,6 +54,7 @@ WebDeveloper.Generated.displayForm = function(form, container, formsCounter, for
     element        = document.createElement("h4");
     table          = document.createElement("table");
     tableContainer = document.createElement("thead");
+    tableWrapper   = document.createElement("div");
 
     element.appendChild(document.createTextNode(locale.elements));
     container.appendChild(element);
@@ -95,22 +99,25 @@ WebDeveloper.Generated.displayForm = function(form, container, formsCounter, for
 
     tableContainer = document.createElement("tbody");
 
-    $(tableContainer).append(Mustache.render(formElementsTemplate, form));
+    tableContainer.insertAdjacentHTML("beforeend", Mustache.render(formElementsTemplate, form));
     table.appendChild(tableContainer);
-    table.setAttribute("class", "table table-striped");
-    container.appendChild(table);
+    table.setAttribute("class", "table table-borderless table-striped");
+    tableWrapper.appendChild(table);
+    tableWrapper.setAttribute("class", "table-responsive");
+    container.appendChild(tableWrapper);
   }
 
-  separator.setAttribute("class", "web-developer-separator");
+  separator.setAttribute("class", "m-5");
   container.appendChild(separator);
 
   childElement = document.createElement("a");
   element      = document.createElement("li");
 
   childElement.appendChild(document.createTextNode(WebDeveloper.Generated.formatFormDescription(form)));
+  childElement.setAttribute("class", "dropdown-item");
   childElement.setAttribute("href", "#form-" + formsCounter);
   element.appendChild(childElement);
-  $(".dropdown-menu", $("#forms-dropdown")).get(0).appendChild(element);
+  document.getElementById("forms-dropdown").querySelector(".dropdown-menu").appendChild(element);
 };
 
 // Formats the form description
@@ -136,13 +143,13 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var contentDocument      = null;
   var documents            = data.documents;
   var formDescription      = null;
-  var formElementsTemplate = $("#form-elements").html();
+  var formElementsTemplate = document.getElementById("form-elements").innerHTML;
   var forms                = null;
   var formsCounter         = 1;
   var formsDescription     = locale.forms;
-  var formsDropdown        = $("#forms-dropdown");
+  var formsDropdown        = document.getElementById("forms-dropdown");
   var formsLength          = null;
-  var formTemplate         = $("#form").html();
+  var formTemplate         = document.getElementById("form").innerHTML;
 
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.localizeHeader(locale);
@@ -150,7 +157,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
   Mustache.parse(formElementsTemplate);
   Mustache.parse(formTemplate);
 
-  $(".dropdown-toggle", formsDropdown).prepend(formsDescription);
+  formsDropdown.querySelector(".dropdown-toggle").append(locale.forms);
 
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
