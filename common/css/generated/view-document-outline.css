@@ -1,0 +1,7 @@
+/* View document outline styles */
+
+.web-developer-document > h2 { margin-left: 6rem; }
+.web-developer-document > h3 { margin-left: 11rem; }
+.web-developer-document > h4 { margin-left: 16rem; }
+.web-developer-document > h5 { margin-left: 20rem; }
+.web-developer-document > h6 { margin-left: 24rem; }

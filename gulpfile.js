@@ -2,4 +2,8 @@
 
 var requireDir = require("require-dir");
 
-requireDir("./gulp");
+requireDir("./common/gulp");
+requireDir("./chrome/gulp");
+requireDir("./edge/gulp");
+requireDir("./firefox/gulp");
+requireDir("./opera/gulp");

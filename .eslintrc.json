@@ -5,27 +5,16 @@
   },
   "globals": {
     "bootstrap": true,
-    "BrowserPageInfo": true,
-    "BrowserReload": true,
-    "BrowserViewSourceOfDocument": true,
     "CodeMirror": true,
-    "Components": true,
     "CSSPrimitiveValue": true,
-    "gDevToolsBrowser": true,
-    "getWebNavigation": true,
+    "DOMPurify": true,
     "global": true,
-    "inspectDOMDocument": true,
     "js_beautify": true,
     "Mustache": true,
-    "pref": true,
     "process": true,
     "Promise": true,
     "require": true,
-    "toJavaScriptConsole": true,
-    "WebDeveloper": true,
-    "WebDeveloperApplication": true,
-    "WebDeveloperValidateCSS": true,
-    "WebDeveloperValidateHTML": true
+    "WebDeveloper": true
   },
   "parserOptions": {
     "ecmaVersion": 8

@@ -1,0 +1,15 @@
+/* Options styles */
+
+.bi { fill: currentColor; height: 1em; vertical-align: -0.125em; width: 1em; }
+.nav { font-size: 0.875rem; }
+.nav-link { padding-left: 0.5rem; padding-right: 0.5rem; }
+.single .btn-danger { display: none; }
+
+/* Sidebar styles */
+
+.donate-icon { bottom: -1em; color: #a3cfbb; fill: currentColor; height: 5em; right: -1em; width: 5em; }
+
+/* Drag and drop styles */
+
+.draggable { cursor: move; user-select: none; }
+.dragging { opacity: 0.25; }

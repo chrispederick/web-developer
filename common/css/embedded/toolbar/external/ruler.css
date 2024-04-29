@@ -1,0 +1,17 @@
+* { cursor: crosshair !important; }
+
+#web-developer-ruler { border-width: 1px !important; cursor: move !important; }
+#web-developer-ruler, #web-developer-ruler div { border-style: none !important; outline: #dc3545 solid 1px !important; }
+#web-developer-ruler, #web-developer-ruler div, #web-developer-ruler-background-bottom, #web-developer-ruler-background-left, #web-developer-ruler-background-right, #web-developer-ruler-background-top, #web-developer-ruler-container { margin: 0 !important; padding: 0 !important; position: absolute !important; }
+#web-developer-ruler div { background-color: #dc3545; background-color: rgba(241, 174, 181, 0.5); height: 20px !important; width: 20px !important; }
+#web-developer-ruler-background-bottom, #web-developer-ruler-bottom-left, #web-developer-ruler-bottom-right { bottom: 0 !important; }
+#web-developer-ruler-background-bottom, #web-developer-ruler-background-left, #web-developer-ruler-background-right, #web-developer-ruler-background-top { background: #000; height: 0; opacity: 0.25; width: 0; }
+#web-developer-ruler-background-bottom, #web-developer-ruler-background-left, #web-developer-ruler-background-right, #web-developer-ruler-background-top, #web-developer-ruler-container { border-style: none !important; }
+#web-developer-ruler-background-bottom, #web-developer-ruler-background-top, #web-developer-ruler-bottom-left, #web-developer-ruler-container, #web-developer-ruler-top-left { left: 0 !important; }
+#web-developer-ruler-background-right, #web-developer-ruler-bottom-right, #web-developer-ruler-top-right { right: 0 !important; }
+#web-developer-ruler-background-top, #web-developer-ruler-container, #web-developer-ruler-top-left, #web-developer-ruler-top-right { top: 0 !important; }
+#web-developer-ruler-bottom-left { cursor: sw-resize !important; }
+#web-developer-ruler-bottom-right { cursor: se-resize !important; }
+#web-developer-ruler-container { z-index: 2147483647 !important; }
+#web-developer-ruler-top-left { cursor: nw-resize !important; }
+#web-developer-ruler-top-right { cursor: ne-resize !important; }

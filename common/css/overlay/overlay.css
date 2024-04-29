@@ -1,0 +1,37 @@
+/* Overlay styles */
+
+body, html { overflow: hidden; width: 800px; }
+body::-webkit-scrollbar, html::-webkit-scrollbar { display: none; }
+.bi { fill: currentColor; height: 1em; width: 1em; }
+.icon-link { gap: 0.25rem; }
+
+/* Toolbar styles */
+
+.nav { font-size: 0.75rem; }
+.nav-item .bi { height: 14px; width: 14px; }
+.nav-link { padding-left: 0.25rem; padding-right: 0.25rem; }
+.overlay-text .bi { display: none; }
+
+/* Menu styles */
+
+.tab-content { font-size: 0.8125rem; }
+.tab-content *::selection { background-color: transparent; }
+.tab-content a .text-danger { display: none;}
+.tab-content a.active:hover .text-danger { display: block;}
+.tab-content a.active:hover .text-success { display: none;}
+.tab-pane .active .bi { visibility: visible; }
+.tab-pane .bi { visibility: hidden; }
+
+/* Form styles */
+
+legend { font-size: 1.25rem; }
+#add-cookie-dialog { width: 500px; }
+#resize-window-dialog { width: 400px; }
+.btn .bi { vertical-align: -0.125em; }
+.form-check-input { margin-top: 0.3em; }
+.input-group-text { font-size: 0.875rem; line-height: 1em; }
+
+/* Notification styles */
+
+#notification .bi { display: none; }
+#notification.alert-danger .icon-danger, #notification.alert-info .icon-info, #notification.alert-success .icon-success, #notification.alert-warning .icon-danger { display: inline; }

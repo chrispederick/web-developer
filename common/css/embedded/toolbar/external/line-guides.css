@@ -1,0 +1,29 @@
+.web-developer-line-guide, .web-developer-line-guide div
+{
+  background: transparent !important;
+  border: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  clear: none !important;
+  float: none !important;
+  font-style: normal !important;
+  font-variant: normal !important;
+  font-weight: normal !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  opacity: 1 !important;
+  padding: 0 !important;
+  text-align: left !important;
+  text-decoration: none !important;
+  text-shadow: none !important;
+  text-transform: none !important;
+}
+.web-developer-horizontal-line-guide { left: 0 !important; padding: 2px 0 !important; }
+.web-developer-horizontal-line-guide div { height: 1px !important; width: 100% !important; }
+.web-developer-line-guide { cursor: move !important; position: fixed !important; z-index: 2147483646 !important; }
+.web-developer-vertical-line-guide { padding: 0 2px !important; top: 0 !important; }
+.web-developer-vertical-line-guide div { height: 100% !important; width: 1px !important; }
+
+*::selection { background-color: transparent !important; }

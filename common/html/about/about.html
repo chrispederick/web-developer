@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html id="web-developer-about" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>@name@</title>
+  <link href="/lib/bootstrap/bootstrap.css" rel="stylesheet">
+  <link href="/about/css/about.css" rel="stylesheet">
+  <meta name="viewport" content="initial-scale=1.0,width=device-width">
+  <link href="/svg/logos/color/logo.svg" rel="icon">
+</head>
+
+<body>
+
+<div class="container">
+  <div class="bg-body-tertiary m-5 p-5 rounded-4 text-center">
+    <img src="/svg/logos/color/logo.svg" width="100" height="100" alt="">
+    <h1 id="name" class="display-4"></h1>
+    <p id="description" class="lead"></p>
+
+    <div class="gx-5 justify-content-center my-5 row">
+      <div class="col-md-auto my-2">
+        <h2 id="author" class="h4 mb-1"></h2>
+        <p class="mb-0">@author@</p>
+      </div>
+
+      <div class="col-md-auto my-2">
+        <h2 id="version" class="h4 mb-1"></h2>
+        <p class="mb-0">@version@</p>
+      </div>
+
+      <div class="col-md-auto my-2">
+        <h2 id="build-date" class="h4 mb-1"></h2>
+        <p class="mb-0">@build.date@</p>
+      </div>
+    </div>
+
+    <a href="@url@@browser@/" id="website" class="btn btn-lg btn-primary icon-link rounded-pill"><svg class="bi"><use href="/svg/icons/icons.svg#circle-arrow-right"></svg></a>
+
+    <div class="justify-content-center mt-5 row">
+      <div class="col-lg-8 col-md-10 col-xl-6">
+        <div class="bg-success-subtle border-success-subtle card overflow-hidden text-start">
+          <div class="card-body z-2">
+            <p class="card-text text-success"></p>
+            <a href="@url@donate/" id="donate-link" rel="noopener" target="_blank" class="btn btn-success icon-link"><svg class="bi"><use href="/svg/icons/icons.svg#circle-arrow-right"></svg></a>
+          </div>
+          <svg class="donate-icon position-absolute z-1"><use href="/svg/donate/icons.svg#present"></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/lib/purify.js"></script>
+<script src="/common/locales.js"></script>
+<script src="/about/js/about.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html id="web-developer-validate-local-html" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0,width=device-width">
+  <title>@name@</title>
+  <link href="/lib/bootstrap/bootstrap.css" rel="stylesheet">
+  <link href="/generated/css/common.css" rel="stylesheet">
+  <link href="/svg/logos/color/logo.svg" rel="icon">
+</head>
+
+<body>
+
+<div id="content" class="container-fluid">
+  <h1 class="visually-hidden">@name@</h1>
+
+  <div class="progress">
+    <div class="bg-info progress-bar progress-bar-animated progress-bar-striped w-50"></div>
+  </div>
+</div>
+
+<form id="form" action="https://validator.w3.org/nu/#textarea" enctype="multipart/form-data" method="post" class="d-none">
+  <input id="form-content" type="hidden" name="content">
+  <input type="hidden" name="showsource" value="yes">
+</form>
+
+<script src="/generated/js/validate-local.js"></script>
+
+</body>
+
+</html>
