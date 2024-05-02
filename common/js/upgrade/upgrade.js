@@ -106,6 +106,7 @@ WebDeveloper.Upgrade.setupDefaultOptions = function()
 
   // General
   WebDeveloper.Storage.setItemIfNotSet("display_overlay_with", "icons_text");
+  WebDeveloper.Storage.setItemIfNotSet("overlay_icon", "color");
 
   // Resize
   WebDeveloper.Storage.setItemIfNotSet("resize_1_description", WebDeveloper.Locales.getString("resize_1_description"));
@@ -173,7 +174,11 @@ WebDeveloper.Upgrade.upgrade = function(details)
         WebDeveloper.Upgrade.removeDeletedSettings();
 
         // Run on a timeout to make sure all the migration has completed
-        setTimeout(function() { WebDeveloper.Upgrade.setupDefaultOptions(); }, 100);
+        setTimeout(function()
+        {
+          WebDeveloper.Upgrade.setupDefaultOptions();
+          WebDeveloper.Storage.updateOverlayIcon();
+        }, 100);
       }
     });
   }

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html id="web-developer-options" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0,width=device-width">
+  <title>Web Developer</title>
+  <link href="../../../lib/bootstrap/bootstrap.css" rel="stylesheet">
+  <link href="../../../css/options/options.css" rel="stylesheet">
+  <link href="../../../svg/logos/color/logo.svg" rel="icon">
+</head>
+
+<body>
+
+<nav class="bg-body-tertiary mb-3 navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a href="#content" class="navbar-brand">
+      <img src="../../../svg/logos/color/logo.svg" width="24" height="24" alt="Web Developer" class="align-text-top d-inline-block">
+      <span>Web Developer</span>
+    </a>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-9 col-md-8">
+      <h1 class="visually-hidden">Web Developer</h1>
+
+      <ul class="nav nav-tabs">
+        <li id="general-tab" class="nav-item"><a href="#general-options" class="active icon-link nav-link" data-bs-target="#general-options" data-bs-toggle="tab"><img src="../../../svg/options/general.svg" width="16" height="16" alt="" class="bi">General</a></li>
+        <li id="colors-tab" class="nav-item"><a href="#colors-options" class="icon-link nav-link" data-bs-target="#colors-options" data-bs-toggle="tab"><img src="../../../svg/options/colors.svg" width="16" height="16" alt="" class="bi">Colors</a></li>
+        <li id="resize-tab" class="nav-item"><a href="#resize-options" class="icon-link nav-link" data-bs-target="#resize-options" data-bs-toggle="tab"><img src="../../../svg/options/resize.svg" width="16" height="16" alt="" class="bi">Resize</a></li>
+        <li id="responsive-layouts-tab" class="nav-item"><a href="#responsive-layouts-options" class="icon-link nav-link" data-bs-target="#responsive-layouts-options" data-bs-toggle="tab"><img src="../../../svg/options/responsive.svg" width="16" height="16" alt="" class="bi">Responsive</a></li>
+        <li id="tools-tab" class="nav-item"><a href="#tools-options" class="icon-link nav-link" data-bs-target="#tools-options" data-bs-toggle="tab"><img src="../../../svg/options/tools.svg" width="16" height="16" alt="" class="bi">Tools</a></li>
+        <li id="advanced-tab" class="nav-item"><a href="#advanced-options" class="icon-link nav-link" data-bs-target="#advanced-options" data-bs-toggle="tab"><img src="../../../svg/options/advanced.svg" width="16" height="16" alt="" class="bi">Advanced</a></li>
+      </ul>
+
+      <div class="mt-3 tab-content">
+        <div id="general-options" class="tab-pane active">
+          <form>
+            <div class="row">
+              <legend id="overlay-icon" class="col-form-label col-md-3">Overlay icon</legend>
+              <div class="col col-form-label">
+                <div class="form-check form-check-inline">
+                  <input id="overlay_icon_color" type="radio" name="overlay_icon" value="color" class="form-check-input" checked>
+                  <label for="overlay_icon_color" class="form-check-label"><img src="../../../svg/logos/color/logo.svg" width="16" height="16" alt="" class="bi me-1">Color</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input id="overlay_icon_gray" type="radio" name="overlay_icon" value="gray" class="form-check-input">
+                  <label for="overlay_icon_gray" class="form-check-label"><img src="../../../svg/logos/gray/logo.svg" width="16" height="16" alt="" class="bi me-1">Gray</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input id="overlay_icon_monochrome" type="radio" name="overlay_icon" value="monochrome" class="form-check-input">
+                  <label for="overlay_icon_monochrome" class="form-check-label"><img src="../../../svg/logos/monochrome/logo.svg" width="16" height="16" alt="" class="bi me-1">Monochrome</label>
+                </div>
+              </div>
+            </div>
+            <div class="mt-1 row">
+              <label for="display_overlay_with" class="col-form-label col-md-3">Display the overlay with</label>
+              <div class="col">
+                <select id="display_overlay_with" class="form-select">
+                  <option value="icons_text">Icons &amp; text</option>
+                  <option value="icons">Icons</option>
+                  <option value="text">Text</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="sidebar" class="col-lg-3 col-md-4 d-md-block d-none">
+      <div class="bg-success-subtle border-success-subtle card mb-3 overflow-hidden">
+        <div class="card-body z-2">
+          <p class="card-text small text-success">
+            <span class="fw-bold">Web Developer</span>
+            is free, but your donation allows me to continue my development and any amount is greatly appreciated.
+          </p>
+          <a href="https://chrispederick.com/work/web-developer/donate/" id="donate-link" rel="noopener" target="_blank" class="btn btn-sm btn-success icon-link rounded-pill">Donate<svg class="bi"><use href="../../../svg/icons/icons.svg#circle-arrow-right"></svg></a>
+        </div>
+        <svg class="donate-icon position-absolute z-1"><use href="../../../svg/donate/icons.svg#present"></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>

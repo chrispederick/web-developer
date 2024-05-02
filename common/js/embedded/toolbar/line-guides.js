@@ -173,7 +173,7 @@ WebDeveloper.LineGuides.displayLineGuides = function(display, contentDocument, l
 // Returns the line guides color
 WebDeveloper.LineGuides.getColor = function()
 {
-  return "#dc3545";
+  return "@color.danger@";
 };
 
 // Returns an array containing the horizontal line guide positions

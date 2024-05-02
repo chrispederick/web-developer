@@ -214,8 +214,34 @@ WebDeveloper.Storage.updateBadgeText = function(featureTabId)
   });
 };
 
+// Updates the overlay icon
+WebDeveloper.Storage.updateOverlayIcon = function()
+{
+  WebDeveloper.Storage.getItem("overlay_icon", function(item)
+  {
+    // If the overlay icon is not set
+    if(!item)
+    {
+      item = "color";
+
+      WebDeveloper.Storage.setItemIfNotSet("overlay_icon", "color");
+    }
+
+    chrome.action.setIcon({ path:
+    {
+      16: "/img/logos/" + item + "/16.png",
+      32: "/img/logos/" + item + "/32.png",
+      48: "/img/logos/" + item + "/48.png",
+      64: "/img/logos/" + item + "/64.png",
+      128: "/img/logos/" + item + "/128.png",
+      256: "/img/logos/" + item + "/256.png"
+    } });
+  });
+};
+
+chrome.action.setBadgeBackgroundColor({ color: "@color.success@" });
+WebDeveloper.Storage.updateOverlayIcon();
+
 chrome.tabs.onActivated.addListener(WebDeveloper.Storage.tabActivated);
 chrome.tabs.onRemoved.addListener(WebDeveloper.Storage.tabRemoved);
 chrome.tabs.onUpdated.addListener(WebDeveloper.Storage.tabUpdated);
-
-chrome.action.setBadgeBackgroundColor({ color: [0, 200, 0, 255] });

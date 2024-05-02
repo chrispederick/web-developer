@@ -193,7 +193,7 @@ global.buildOverlay = function(browserName)
       .pipe(plugins.concat("overlay.css"))
       .pipe(global.filterProperties(browserName)())
       .pipe(gulp.dest("build/" + browserName + "/overlay/css")),
-    gulp.src(["common/js/overlay/*", browserName + "/js/overlay/*"])
+    gulp.src(["common/js/overlay/*"])
       .pipe(plugins.concat("overlay.js"))
       .pipe(global.filterProperties(browserName)())
       .pipe(gulp.dest("build/" + browserName + "/overlay/js"))

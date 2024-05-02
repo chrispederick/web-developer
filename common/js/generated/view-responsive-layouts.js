@@ -21,6 +21,9 @@ WebDeveloper.Generated.getScrollbarWidth = function(content)
 
   content.removeChild(outerDiv);
 
+  // Adding scrollbar width no longer seems necessary
+  scrollbarWidth = 0;
+
   return scrollbarWidth;
 };
 

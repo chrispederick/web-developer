@@ -1,6 +1,6 @@
 "use strict";
 
-global.chromePackageName = "web-developer-edge.zip";
+global.edgePackageName = "web-developer-edge.zip";
 
 var del         = require("del");
 var gulp        = require("gulp");
@@ -13,7 +13,7 @@ gulp.task("build-edge-all", function()
 
 gulp.task("clean-edge", function()
 {
-  return del(["build/edge", "build/edge.properties", "build/" + global.chromePackageName]);
+  return del(["build/edge", "build/edge.properties", "build/" + global.edgePackageName]);
 });
 
 gulp.task("initialize-edge-build", function(callback)
@@ -23,7 +23,7 @@ gulp.task("initialize-edge-build", function(callback)
 
 gulp.task("package-edge", function()
 {
-  return global.packageTask("edge", global.chromePackageName);
+  return global.packageTask("edge", global.edgePackageName);
 });
 
 gulp.task("build-edge", function(callback) { runSequence("initialize-edge-build", "build-edge-all", callback); });

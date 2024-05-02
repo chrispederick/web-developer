@@ -274,7 +274,13 @@ WebDeveloper.Options.initializeGeneralTab = function()
     displayOverlayWith.value = item;
   });
 
+  WebDeveloper.Storage.getItem("overlay_icon", function(item)
+  {
+    document.getElementById("overlay_icon_" + item).checked = true;
+  });
+
   displayOverlayWith.addEventListener("change", WebDeveloper.Options.updateDisplayOverlayWith);
+  document.getElementById("overlay-icon-form").addEventListener("change", WebDeveloper.Options.updateOverlayIcon);
 };
 
 // Initializes the resize tab
@@ -555,7 +561,11 @@ WebDeveloper.Options.localizeColorsTab = function()
 // Localizes the general tab
 WebDeveloper.Options.localizeGeneralTab = function()
 {
+  document.getElementById("overlay-icon").append(WebDeveloper.Locales.getString("overlayIcon"));
   document.querySelector('[for="display_overlay_with"]').append(WebDeveloper.Locales.getString("displayOverlayWith"));
+  document.querySelector('[for="overlay_icon_color"]').append(WebDeveloper.Locales.getString("color"));
+  document.querySelector('[for="overlay_icon_gray"]').append(WebDeveloper.Locales.getString("gray"));
+  document.querySelector('[for="overlay_icon_monochrome"]').append(WebDeveloper.Locales.getString("monochrome"));
   document.querySelector('[value="icons_text"]').append(WebDeveloper.Locales.getString("iconsText"));
   document.querySelector('[value="icons"]').append(WebDeveloper.Locales.getString("icons"));
   document.querySelector('[value="text"]').append(WebDeveloper.Locales.getString("text"));
@@ -840,6 +850,12 @@ WebDeveloper.Options.toolsClick = function(event)
 WebDeveloper.Options.updateDisplayOverlayWith = function()
 {
   WebDeveloper.Storage.setItem("display_overlay_with", document.getElementById("display_overlay_with").value);
+};
+
+// Updates the overlay icon with setting
+WebDeveloper.Options.updateOverlayIcon = function(event)
+{
+  WebDeveloper.Storage.setItem("overlay_icon", event.target.value, WebDeveloper.Storage.updateOverlayIcon);
 };
 
 // Updates the populate email address

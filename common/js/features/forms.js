@@ -813,7 +813,7 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
           // If the input element type is set and is color
           if(inputElementType && inputElementType.toLowerCase() == "color")
           {
-            inputElement.value = "#dc3545";
+            inputElement.value = "@color.danger@";
 
             populatedFormFields++;
           }
