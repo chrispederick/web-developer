@@ -1,0 +1,5 @@
+/* About styles */
+
+#website { background-color: #8839ef; border-color: #8839ef; }
+#website:active, #website:hover { background-color: #7287fd; border-color: #7287fd; }
+.donate-icon { bottom: -1em; color: #a3cfbb; fill: currentColor; height: 5em; right: -1em; width: 5em; }

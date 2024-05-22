@@ -2,15 +2,16 @@ Web Developer
 =============
 
 The Web Developer extension adds various web developer tools to a browser.
-The extension is available for Chrome, Firefox and Opera, and will run on any platform that these browsers support including Windows, OS X and Linux.
+The extension is available for Chrome, Edge, Firefox, and Opera, and will run on any platform that these browsers support including Windows, OS X and Linux.
 
 The extension can be installed from its home page:
 
 * Home page: [https://chrispederick.com/work/web-developer/](https://chrispederick.com/work/web-developer/)
 
-Or directly from the Chrome, Firefox or Opera extension repositories:
+Or directly from the Chrome, Edge, Firefox or Opera extension repositories:
 
-* Chrome: [https://chrome.google.com/webstore/detail/bfbameneiokkgbdmiekhjnmfkcnldhhm](https://chrome.google.com/webstore/detail/bfbameneiokkgbdmiekhjnmfkcnldhhm)
+* Chrome: [https://chromewebstore.google.com/detail/web-developer/bfbameneiokkgbdmiekhjnmfkcnldhhm](https://chromewebstore.google.com/detail/web-developer/bfbameneiokkgbdmiekhjnmfkcnldhhm)
+* Edge: Coming soon.
 * Firefox: [https://addons.mozilla.org/en-US/firefox/addon/web-developer/](https://addons.mozilla.org/en-US/firefox/addon/web-developer/)
 * Opera:
 [https://addons.opera.com/en/extensions/details/web-developer/](https://addons.opera.com/en/extensions/details/web-developer/)
@@ -41,13 +42,14 @@ Developers
 
 ### Technologies
 
-The Web Developer extension is written in JavaScript, HTML and CSS.
+The Web Developer extension is written in JavaScript, HTML, and CSS.
 
 ### Extension documentation
 
-For information about how to write browser extensions check out the Chrome, Firefox and Opera documentation:
+For information about how to write browser extensions check out the Chrome, Firefox, and Opera documentation:
 
 * Chrome: [https://developer.chrome.com/docs/extensions/](https://developer.chrome.com/docs/extensions/)
+* Edge: [https://learn.microsoft.com/en-us/microsoft-edge/extensions-chromium/](https://learn.microsoft.com/en-us/microsoft-edge/extensions-chromium/)
 * Firefox: [https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons)
 * Opera: [https://dev.opera.com/extensions/](https://dev.opera.com/extensions/)
 
@@ -59,12 +61,11 @@ Once Gulp is installed the extension is built by running the following:
 
 	gulp
 
-To build the extension for Chrome, Firefox or Opera only run `gulp chrome`, `gulp firefox` or `gulp opera` respectively.
+To build the extension for Chrome, Edge, Firefox, or Opera only run `gulp chrome`, `gulp edge`, `gulp firefox`, or `gulp opera` respectively.
 
-When the extension is built it creates `build/chrome`, `build/firefox` and `build/opera` directories as well as packaged versions of the extensions `build/web-developer-chrome.zip`, `build/web-developer-firefox.xpi`, `build/web-developer-opera.nex`.
+When the extension is built it creates `build/chrome`, `build/edge`, `build/firefox`, and `build/opera` directories as well as packaged versions of the extensions `build/web-developer-chrome.zip`, `build/web-developer-edge.zip`, `build/web-developer-firefox.xpi`, and `build/web-developer-opera.nex`.
 
-The extension can be installed in Chrome or Opera by loading the unpacked extension in `build/chrome` or `build/opera` respectively as described in the [Chrome](http://code.google.com/chrome/extensions/getstarted.html#load-ext) and [Opera](https://dev.opera.com/extensions/testing/) documentation.
-The extension can be installed in Firefox by installing `build/web-developer-firefox.xpi` like a regular extension.
+The extension can be installed in Chrome, Edge, Firefox, or Opera by loading the unpacked extension in `build/chrome`, `build/edge`, `build/firefox`, or `build/opera` respectively as described in the [Chrome](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked), [Edge](https://learn.microsoft.com/en-us/microsoft-edge/extensions-chromium/getting-started/extension-sideloading), [Firefox](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Your_first_WebExtension#trying_it_out), and [Opera](https://dev.opera.com/extensions/testing/) documentation.
 
 ### Included libraries
 
@@ -72,25 +73,16 @@ The following libraries are used by and included in the extension as-is:
 
 * Bootstrap: [https://getbootstrap.com/](https://getbootstrap.com/)
 * CodeMirror: [https://codemirror.net/](https://codemirror.net/)
+* DOMPurify: [https://github.com/cure53/DOMPurify](https://github.com/cure53/DOMPurify)
 * Eric Meyer's Reset CSS: [https://meyerweb.com/eric/tools/css/reset/](https://meyerweb.com/eric/tools/css/reset/)
-* Font Awesome: [https://fontawesome.com/](https://fontawesome.com/)
-* jQuery: [https://jquery.com/](https://jquery.com/)
 * JS Beautifier: [https://github.com/beautify-web/js-beautify](https://github.com/beautify-web/js-beautify)
-* mustache.js: [https://github.com/janl/mustache.js/](https://github.com/janl/mustache.js/)
-* Table Drag and Drop jQuery Plugin: [https://isocra.com/2008/02/table-drag-and-drop-jquery-plugin/](https://isocra.com/2008/02/table-drag-and-drop-jquery-plugin/)
+* mustache.js: [https://github.com/janl/mustache.js/](https://github.com/janl/mustache.js/) imported from [https://unpkg.com/browse/mustache@4.2.0/mustache.js](https://unpkg.com/browse/mustache@4.2.0/mustache.js)
 
 They should not be altered apart from to update to their latest versions for maintenance reasons.
-The latest versions of Bootstrap from Twitter or jQuery can be automatically merged into the repository using `gulp merge-bootstrap` or `gulp merge-jquery` respectively.
 
 ### Icons
 
-The icons used in the extension are:
-
-* Font Awesome: [https://fontawesome.com/](https://fontawesome.com/)
-* Helveticons: [https://hlvticons.ch/](https://hlvticons.ch/)
-* Icon Drawer classic set: [http://icondrawer.com/](http://icondrawer.com/)
-
-Any new icons used in the extension should come from these existing icon sets for consistency.
+The icons used in the extension are from [Nucleo](https://nucleoapp.com) and any new icons used in the extension should also come from there for consistency.
 
 ### Editor Configuration
 

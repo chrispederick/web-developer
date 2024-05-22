@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html id="web-developer-find-duplicate-ids" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0,width=device-width">
+  <title>@name@</title>
+  <link href="/lib/bootstrap/bootstrap.css" rel="stylesheet">
+  <link href="/generated/css/common.css" rel="stylesheet">
+  <link href="/svg/logos/color/logo.svg" rel="icon">
+</head>
+
+<body>
+
+<nav class="bg-body-tertiary navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a href="#content" class="navbar-brand">
+      <img src="/svg/logos/color/logo.svg" width="24" height="24" alt="Web Developer" class="align-text-top d-inline-block">
+      <span>@name@</span>
+    </a>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <div id="content" class="col-lg-9 col-md-8 pt-3">
+      <h1 class="visually-hidden">@name@</h1>
+
+      <div class="progress">
+        <div class="bg-info progress-bar progress-bar-animated progress-bar-striped w-50"></div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-4 order-first order-md-last">
+      <div id="sidebar" class="pt-3 sticky-top">
+        <div class="bg-success-subtle border-success-subtle card mb-3 overflow-hidden">
+          <div class="card-body z-2">
+            <p class="card-text small text-success"></p>
+            <a href="@url@donate/" id="donate-link" rel="noopener" target="_blank" class="btn btn-sm btn-success icon-link rounded-pill"><svg class="bi"><use href="/svg/icons/icons.svg#circle-arrow-right"></svg></a>
+          </div>
+          <svg class="donate-icon position-absolute z-1"><use href="/svg/donate/icons.svg#present"></svg>
+        </div>
+
+        <div class="card mb-3 pb-1">
+          <div class="border-bottom d-flex justify-content-between px-3 py-2">
+            <a href="#" id="web-developer-collapse-all" class="icon-link link-secondary small"><svg class="bi"><use href="/svg/icons/icons.svg#s-delete"></svg></a>
+            <a href="#" id="web-developer-expand-all" class="icon-link link-secondary small"><svg class="bi"><use href="/svg/icons/icons.svg#s-add"></svg></a>
+          </div>
+
+          <div id="documents" class="accordion accordion-flush"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/lib/bootstrap/bootstrap.js"></script>
+<script src="/lib/mustache.js"></script>
+<script src="/lib/purify.js"></script>
+<script src="/generated/js/common.js"></script>
+<script src="/generated/js/find-duplicate-ids.js"></script>
+
+<script id="accordion-item" type="x-tmpl-mustache">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-target="#items-{{index}}" data-bs-toggle="collapse">
+        <span class="me-1 small text-break">{{documentURL}}</span>
+        <span class="badge position-absolute text-bg-secondary rounded-pill start-0 top-50 translate-middle">{{itemCount}}</span>
+      </button>
+    </h2>
+    <div id="items-{{index}}" class="accordion-collapse collapse" data-bs-parent="#documents">
+      <div class="accordion-body">
+        <a href="#document-{{index}}" class="small">{{itemsHeader}}</a>
+      </div>
+    </div>
+  </div>
+</script>
+
+<script id="duplicate-id" type="x-tmpl-mustache">
+  <li><a href="{{url}}#{{id}}" rel="noreferrer" target="_blank">#{{id}}</a></li>
+</script>
+
+</body>
+
+</html>

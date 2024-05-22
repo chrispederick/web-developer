@@ -1,0 +1,4 @@
+html { overflow: hidden; }
+#web-developer-syntax-highlight-example { margin-bottom: 0; }
+#web-developer-syntax-highlight-example, .CodeMirror { height: 400px; }
+.CodeMirror { font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.875em; }

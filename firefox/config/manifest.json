@@ -1,0 +1,15 @@
+{
+  "action": { "default_icon": { "16": "/img/logos/color/16.png", "32":  "/img/logos/color/32.png", "48":  "/img/logos/color/48.png", "64":  "/img/logos/color/64.png", "128": "/img/logos/color/128.png", "256": "/img/logos/color/256.png" }, "default_popup": "/overlay/overlay.html", "default_title": "__MSG_extensionName__" },
+	"background": { "scripts": ["/background/background.js"] },
+	"content_scripts": [{ "js": ["/content/content.js"], "matches": ["<all_urls>"] }],
+	"default_locale": "en_US",
+  "description": "__MSG_extensionDescription__",
+  "homepage_url":	"@url@",
+  "icons": { "16": "/img/logos/color/16.png", "32":  "/img/logos/color/32.png", "48":  "/img/logos/color/48.png", "64":  "/img/logos/color/64.png", "128": "/img/logos/color/128.png", "256": "/img/logos/color/256.png" },
+  "manifest_version": 3,
+  "name": "__MSG_extensionName__",
+  "options_ui":	{ "open_in_tab": true, "page": "/options/options.html" },
+  "permissions": ["activeTab", "browsingData", "cookies", "history", "scripting", "storage", "tabs"],
+  "version": "@version@",
+  "web_accessible_resources": [{ "matches": ["<all_urls>"], "resources": ["/embedded/css/*.css", "/embedded/js/dashboard/dashboard.js", "/features/css/*.css", "/img/transparent.png", "/lib/bootstrap/bootstrap.css", "/lib/bootstrap/bootstrap.js", "/lib/reset.css", "/svg/logos/color/logo.svg"] }]
+}

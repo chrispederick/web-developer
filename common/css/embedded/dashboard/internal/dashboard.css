@@ -1,0 +1,15 @@
+/* Dashboard styles */
+
+h1 { margin: 0; }
+h1 img { height: 1em; vertical-align: -0.125em; width: 1em; }
+#web-developer-dashboard-resizer { cursor: row-resize; height: 3px; }
+#web-developer-dashboard-tabs .nav-link { padding-top: 0.25rem; }
+#web-developer-dashboard-tabs .ms-auto .nav-link { padding-top: 0.5rem; }
+
+/* Edit CSS styles */
+
+#web-developer-edit-css-panels > div > textarea { border-style: none; box-shadow: none; font-size: 0.875em; height: 100%; }
+
+/* Element ancestors styles */
+
+#current-element-ancestors > .breadcrumb > li > a, .web-developer-middle-ancestor a { cursor: text; pointer-events: none; text-decoration: none; }

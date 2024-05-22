@@ -1,0 +1,6 @@
+/* Toolbar styles */
+
+h1 { font-size: 1rem; margin: 0; }
+h1 img { height: 1em; vertical-align: -0.125em; width: 1em; }
+.form-control { display: inline-block; width: 5em; }
+.form-label { margin: 0; }

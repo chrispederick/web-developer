@@ -28,5 +28,6 @@
     "require-dir": "*",
     "run-sequence": "*",
     "web-ext": "*"
-  }
+  },
+  "dependencies": {}
 }

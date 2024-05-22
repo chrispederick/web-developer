@@ -1,0 +1,24 @@
+/* Generated styles */
+
+.alert .bi, .btn .bi { vertical-align: -0.125em; }
+.bi { fill: currentColor; height: 1em; width: 1em; }
+
+/* Form styles */
+
+.form-check-input { margin-top: 0.3em; }
+.input-group-text { font-size: 0.875rem; line-height: 1em; }
+
+/* Header styles */
+
+h3 .bi { cursor: pointer; height: 16px; vertical-align: 2px; width: 16px; }
+h3 .icon-expand { display: none; }
+.collapsed .icon-collapse { display: none; }
+.collapsed .icon-expand { display: inline; }
+
+/* Sidebar styles */
+
+.donate-icon { bottom: -1em; color: #a3cfbb; fill: currentColor; height: 5em; right: -1em; width: 5em; }
+
+/* Syntax highlighting styles */
+
+.CodeMirror { font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.875em; height: auto; }
