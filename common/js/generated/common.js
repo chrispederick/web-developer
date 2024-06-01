@@ -3,6 +3,7 @@ var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-redeclare, no-u
 WebDeveloper.Generated                    = WebDeveloper.Generated || {};
 WebDeveloper.Generated.animationSpeed     = 200;
 WebDeveloper.Generated.maximumURLLength   = 100;
+WebDeveloper.Generated.storedLocale       = null;
 WebDeveloper.Generated.syntaxHighlighters = [];
 
 // Adds a document
@@ -309,15 +310,15 @@ WebDeveloper.Generated.initializeSidebar = function(locale)
 };
 
 // Initializes the syntax highlight functionality
-WebDeveloper.Generated.initializeSyntaxHighlight = function(color, locale)
+WebDeveloper.Generated.initializeSyntaxHighlight = function(color)
 {
   // If the locale is set
-  if(locale)
+  if(WebDeveloper.Generated.storedLocale)
   {
-    document.getElementById("web-developer-syntax-highlighting-dropdown").querySelector(".dropdown-toggle").append(locale.syntaxHighlighting);
-    document.getElementById("web-developer-syntax-highlighting-dark").append(locale.dark);
-    document.getElementById("web-developer-syntax-highlighting-light").append(locale.light);
-    document.getElementById("web-developer-syntax-highlighting-none").append(locale.none);
+    document.getElementById("web-developer-syntax-highlighting-dropdown").querySelector(".dropdown-toggle").append(WebDeveloper.Generated.storedLocale.syntaxHighlighting);
+    document.getElementById("web-developer-syntax-highlighting-dark").append(WebDeveloper.Generated.storedLocale.dark);
+    document.getElementById("web-developer-syntax-highlighting-light").append(WebDeveloper.Generated.storedLocale.light);
+    document.getElementById("web-developer-syntax-highlighting-none").append(WebDeveloper.Generated.storedLocale.none);
     document.getElementById("web-developer-syntax-highlighting-" + color).classList.add("active");
 
     document.getElementById("web-developer-syntax-highlighting-dark").addEventListener("click", WebDeveloper.Generated.changeSyntaxHighlightTheme);
@@ -419,6 +420,13 @@ WebDeveloper.Generated.output = function(title, url, type, outputOriginal, itemI
   WebDeveloper.Generated.addItem(outputTitle, itemIndex + 1, documentIndex + 1);
 
   return outputContainers;
+};
+
+// Stores the locale
+WebDeveloper.Generated.storeLocale = function(locale)
+{
+  // This is required to stop Firefox erroring about accessing a dead object
+  WebDeveloper.Generated.storedLocale = JSON.parse(JSON.stringify(locale));
 };
 
 // Toggles the collapsed state of an output

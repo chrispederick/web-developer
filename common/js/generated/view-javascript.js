@@ -65,6 +65,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var url                    = null;
   var urlContentRequests     = [];
 
+  WebDeveloper.Generated.storeLocale(locale);
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.initializeHeader(javaScriptDescription, data, locale);
   WebDeveloper.Generated.initializeSidebar(locale);
@@ -140,11 +141,11 @@ WebDeveloper.Generated.initialize = function(data, locale)
         }
       }
 
-      WebDeveloper.Generated.initializeSyntaxHighlight(data.theme, locale);
+      WebDeveloper.Generated.initializeSyntaxHighlight(data.theme);
     });
   }
   else
   {
-    WebDeveloper.Generated.initializeSyntaxHighlight(data.theme, locale);
+    WebDeveloper.Generated.initializeSyntaxHighlight(data.theme);
   }
 };

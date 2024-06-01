@@ -185,6 +185,14 @@ global.buildOptions = function(browserName)
 
 global.buildOverlay = function(browserName)
 {
+  var overlaySrc = ["common/js/overlay/*"];
+
+  // If this is Firefox or Opera do not include the disable overlay script
+  if(browserName === "firefox" || browserName === "opera")
+  {
+    overlaySrc = ["common/js/overlay/*", "!common/js/overlay/disable.js"];
+  }
+
   return merge(
     gulp.src("common/html/overlay/overlay.html")
       .pipe(global.filterProperties(browserName)())
@@ -193,7 +201,7 @@ global.buildOverlay = function(browserName)
       .pipe(plugins.concat("overlay.css"))
       .pipe(global.filterProperties(browserName)())
       .pipe(gulp.dest("build/" + browserName + "/overlay/css")),
-    gulp.src(["common/js/overlay/*"])
+    gulp.src(overlaySrc)
       .pipe(plugins.concat("overlay.js"))
       .pipe(global.filterProperties(browserName)())
       .pipe(gulp.dest("build/" + browserName + "/overlay/js"))

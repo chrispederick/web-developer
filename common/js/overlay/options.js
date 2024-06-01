@@ -9,6 +9,7 @@ WebDeveloper.Overlay.Options.about = function()
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     chrome.tabs.create({ index: tab.index + 1, url: chrome.runtime.getURL("/about/about.html") });
+    WebDeveloper.Overlay.close();
   });
 };
 

@@ -61,6 +61,26 @@ WebDeveloper.Overlay.changeTab = function(event)
   }
 };
 
+// Checks that the extension has the necessary permissions (this is needed for Firefox where host_permissions are not granted by default)
+WebDeveloper.Overlay.checkPermissions = function()
+{
+  chrome.permissions.contains({ origins: ["<all_urls>"] }, function(hasPermissions)
+  {
+    // If the extension does not have the necessary permissions
+    if(!hasPermissions)
+    {
+      chrome.permissions.request({ origins: ["<all_urls>"] }, function(permissionGranted)
+      {
+        // If the permission was not granted
+        if(!permissionGranted)
+        {
+          WebDeveloper.Overlay.displayNotification(WebDeveloper.Locales.getString("permissionsRequired"), "danger");
+        }
+      });
+    }
+  });
+};
+
 // Closes the overlay
 WebDeveloper.Overlay.close = function()
 {
@@ -100,6 +120,8 @@ WebDeveloper.Overlay.displayConfirmation = function(title, message, buttonText, 
   button = confirmation.querySelector(".btn-warning");
 
   button.replaceChildren();
+
+  // Cannot use DOMPurify to sanitize the HTML or it breaks the SVG icon
   button.insertAdjacentHTML("beforeend", buttonHTML);
   confirmation.querySelector("span").replaceChildren(message);
   confirmation.classList.remove("d-none");
@@ -203,6 +225,8 @@ WebDeveloper.Overlay.initialize = function()
   });
 
   confirmationCancel.append(WebDeveloper.Locales.getString("cancel"));
+
+  WebDeveloper.Overlay.checkPermissions();
 
   confirmationCancel.addEventListener("click", WebDeveloper.Overlay.closeConfirmation);
   document.getElementById("notification-close").addEventListener("click", WebDeveloper.Overlay.closeNotification);
@@ -312,7 +336,6 @@ WebDeveloper.Overlay.openTab = function(tabURL)
   WebDeveloper.Overlay.getSelectedTab(function(tab)
   {
     chrome.tabs.create({ index: tab.index + 1, url: tabURL });
-
     WebDeveloper.Overlay.close();
   });
 };
@@ -330,7 +353,6 @@ WebDeveloper.Overlay.openURL = function(event)
     WebDeveloper.Overlay.getSelectedTab(function(tab)
     {
       chrome.tabs.create({ index: tab.index + 1, url: href });
-
       WebDeveloper.Overlay.close();
     });
 

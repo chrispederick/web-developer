@@ -70,20 +70,12 @@ WebDeveloper.Common.adjustElementPosition = function(element, xPosition, yPositi
 };
 
 // Adjusts the position of the given element
-WebDeveloper.Common.appendHTML = function(html, element, contentDocument)
+WebDeveloper.Common.appendHTML = function(html, element)
 {
-  // If the HTML, element and content document are set
-  if(html && element && contentDocument)
+  // If the HTML and element are set
+  if(html && element)
   {
-    var htmlElement = contentDocument.createElement("div");
-
-    htmlElement.innerHTML = html;
-
-    // While there children of the HTML element
-    while(htmlElement.firstChild)
-    {
-      element.appendChild(htmlElement.firstChild);
-    }
+    element.insertAdjacentHTML("beforeend", html);
   }
 };
 
@@ -874,14 +866,16 @@ WebDeveloper.Common.isCSSURI = function(property)
 // Logs a message
 WebDeveloper.Common.log = function(message, exception)
 {
+  var consoleMessage = "WEB DEVELOPER LOG: " + message;
+
   // If an exception is set
   if(exception)
   {
-    console.warn(message, exception); // eslint-disable-line no-console
+    console.warn(consoleMessage, exception); // eslint-disable-line no-console
   }
   else
   {
-    console.warn(message); // eslint-disable-line no-console
+    console.warn(consoleMessage); // eslint-disable-line no-console
   }
 };
 

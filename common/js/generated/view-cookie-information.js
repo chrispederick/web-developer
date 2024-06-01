@@ -1,8 +1,7 @@
 var WebDeveloper = WebDeveloper || {}; // eslint-disable-line no-redeclare, no-use-before-define
 
-WebDeveloper.Generated              = WebDeveloper.Generated || {};
-WebDeveloper.Generated.cookie       = null;
-WebDeveloper.Generated.storedLocale = null;
+WebDeveloper.Generated        = WebDeveloper.Generated || {};
+WebDeveloper.Generated.cookie = null;
 
 // Handles the cookie session setting being changed
 WebDeveloper.Generated.changeSession = function()
@@ -316,6 +315,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
   var deleteDialog      = document.getElementById("delete-dialog");
   var editDialog        = document.getElementById("edit-dialog");
 
+  WebDeveloper.Generated.storeLocale(locale);
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.initializeHeader(cookieInformation, data, locale);
   WebDeveloper.Generated.initializeSidebar(locale);
@@ -354,8 +354,6 @@ WebDeveloper.Generated.initialize = function(data, locale)
       WebDeveloper.Generated.addSeparator();
     }
   }
-
-  WebDeveloper.Generated.storedLocale = locale;
 
   document.getElementById("cookie-expires").setAttribute("placeholder", locale.expiresPlaceholder);
   document.getElementById("cookie-host").setAttribute("placeholder", locale.hostPlaceholder);

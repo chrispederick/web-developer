@@ -6,7 +6,7 @@ WebDeveloper.Dashboard.resizing = false;
 // Adjusts the bottom margin of the body
 WebDeveloper.Dashboard.adjustBodyBottomMargin = function(contentDocument, height)
 {
-  WebDeveloper.Common.getDocumentBodyElement(contentDocument).style.setProperty("margin-bottom", parseInt(height, 10) + 20 + "px", "important");
+  WebDeveloper.Common.getDocumentBodyElement(contentDocument).style.setProperty("padding-bottom", parseInt(height, 10) + 20 + "px", "important");
 };
 
 // Closes a dashboard tab
@@ -171,7 +171,7 @@ WebDeveloper.Dashboard.openDashboardTab = function(tabId, tabTitle, contentDocum
   WebDeveloper.Common.removeClass(tabs.querySelector(".active"), "active");
 
   tabs.insertAdjacentHTML("afterbegin", templates.tab);
-  WebDeveloper.Common.appendHTML(templates.panel, panels, dashboardDocument);
+  WebDeveloper.Common.appendHTML(templates.panel, panels);
 
   return dashboardDocument.getElementById(tabId + "-panel");
 };

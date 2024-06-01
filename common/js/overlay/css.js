@@ -151,11 +151,9 @@ WebDeveloper.Overlay.CSS.displayPrintStyles = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      var storage = WebDeveloper.Storage;
-
-      storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(displayPrintStylesEnabled)
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(displayPrintStylesEnabled)
       {
-        storage.isFeatureOnTab("display-handheld-styles", tab, function(displayHandheldStylesEnabled)
+        WebDeveloper.Storage.isFeatureOnTab("display-handheld-styles", tab, function(displayHandheldStylesEnabled)
         {
           // If about to display print styles and handheld styles are being displayed
           if(!displayPrintStylesEnabled && displayHandheldStylesEnabled)

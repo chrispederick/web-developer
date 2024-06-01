@@ -6,11 +6,12 @@ WebDeveloper.EditCSS.interval        = null;
 WebDeveloper.EditCSS.updateFrequency = 500;
 
 // Adds a tab
-WebDeveloper.EditCSS.addTab = function(title, css, tabs, panels, position, contentDocument)
+WebDeveloper.EditCSS.addTab = function(title, css, tabs, panels, position)
 {
   var active    = "";
   var templates = "";
 
+  // If the position is 1
   if(position == 1)
   {
     active = "active";
@@ -19,8 +20,8 @@ WebDeveloper.EditCSS.addTab = function(title, css, tabs, panels, position, conte
   // Get the edit CSS tab templates
   templates = WebDeveloper.EditCSS.getEditCSSTabTemplates({ active: active, css: css, position: position, title: title });
 
-  WebDeveloper.Common.appendHTML(templates.panel, panels, contentDocument);
-  WebDeveloper.Common.appendHTML(templates.tab, tabs, contentDocument);
+  WebDeveloper.Common.appendHTML(templates.panel, panels);
+  WebDeveloper.Common.appendHTML(templates.tab, tabs);
 };
 
 // Applies the CSS
@@ -168,7 +169,7 @@ WebDeveloper.EditCSS.resize = function(dashboard)
   // If the edit CSS panels exist
   if(editCSSPanels)
   {
-    editCSSPanels.style.height = dashboard.offsetHeight - editCSSPanels.offsetTop - 1 + "px";
+    editCSSPanels.style.height = dashboard.offsetHeight - editCSSPanels.offsetTop - 2 + "px";
   }
 };
 
@@ -192,7 +193,7 @@ WebDeveloper.EditCSS.retrieveCSS = function(dashboardPanel, editCSSPanel, locale
     {
       styleSheet = response[i];
 
-      WebDeveloper.EditCSS.addTab(WebDeveloper.Dashboard.formatURL(styleSheet.url), styleSheet.content, tabs, panels, position, dashboardDocument);
+      WebDeveloper.EditCSS.addTab(WebDeveloper.Dashboard.formatURL(styleSheet.url), styleSheet.content, tabs, panels, position);
 
       position++;
     }
@@ -200,13 +201,13 @@ WebDeveloper.EditCSS.retrieveCSS = function(dashboardPanel, editCSSPanel, locale
     // If there are embedded styles
     if(documentCSS.embedded)
     {
-      WebDeveloper.EditCSS.addTab(locale.embeddedStyles, documentCSS.embedded, tabs, panels, position, dashboardDocument);
+      WebDeveloper.EditCSS.addTab(locale.embeddedStyles, documentCSS.embedded, tabs, panels, position);
     }
 
     // If there is no CSS
     if(!documentCSS.styleSheets.length && !documentCSS.embedded)
     {
-      WebDeveloper.EditCSS.addTab(locale.editCSS, "", tabs, panels, position, dashboardDocument);
+      WebDeveloper.EditCSS.addTab(locale.editCSS, "", tabs, panels, position);
     }
 
     window.setTimeout(function() { WebDeveloper.EditCSS.resize(WebDeveloper.Dashboard.getDashboard(WebDeveloper.EditCSS.contentDocument)); }, 100);
@@ -234,3 +235,6 @@ WebDeveloper.EditCSS.update = function()
     WebDeveloper.EditCSS.interval = window.setInterval(function() { WebDeveloper.EditCSS.apply(); }, WebDeveloper.EditCSS.updateFrequency);
   }
 };
+
+// Fixes a non-structured-clonable data error in Firefox
+""; // eslint-disable-line no-unused-expressions
