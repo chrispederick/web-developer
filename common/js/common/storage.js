@@ -180,13 +180,12 @@ WebDeveloper.Storage.toggleFeatureOnTab = function(feature, tab, callback)
       newFeaturesOnTab = feature;
     }
 
-    WebDeveloper.Storage.setItem(featureTabId, newFeaturesOnTab, callback);
-    WebDeveloper.Storage.updateBadgeText(featureTabId);
+    WebDeveloper.Storage.setItem(featureTabId, newFeaturesOnTab, function() { WebDeveloper.Storage.updateBadgeText(featureTabId, callback); });
   });
 };
 
 // Updates the badge text for a tab
-WebDeveloper.Storage.updateBadgeText = function(featureTabId)
+WebDeveloper.Storage.updateBadgeText = function(featureTabId, callback)
 {
   var badgeText    = "";
   var badgeTooltip = "@name@";
@@ -211,6 +210,12 @@ WebDeveloper.Storage.updateBadgeText = function(featureTabId)
 
     chrome.action.setBadgeText({ text: badgeText, tabId: featureTabId });
     chrome.action.setTitle({ title: badgeTooltip, tabId: featureTabId });
+
+    // If a callback is set
+    if(callback)
+    {
+      callback();
+    }
   });
 };
 

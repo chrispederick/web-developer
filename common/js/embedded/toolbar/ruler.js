@@ -561,3 +561,6 @@ WebDeveloper.Ruler.updateWidth = function()
     WebDeveloper.Ruler.updateInformation();
   }
 };
+
+// Fixes a non-structured-clonable data error in Firefox
+""; // eslint-disable-line no-unused-expressions

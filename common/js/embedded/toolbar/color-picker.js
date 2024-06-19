@@ -233,3 +233,6 @@ WebDeveloper.ColorPicker.setColor = function(color, type)
 
   WebDeveloper.ColorPicker.toolbarDocument.getElementById("web-developer-color-picker-" + type + "-hex").textContent = color;
 };
+
+// Fixes a non-structured-clonable data error in Firefox
+""; // eslint-disable-line no-unused-expressions

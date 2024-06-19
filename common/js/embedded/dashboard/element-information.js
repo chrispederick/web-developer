@@ -954,3 +954,6 @@ WebDeveloper.ElementInformation.selectParentElement = function(eventTarget)
     }
   }
 };
+
+// Fixes a non-structured-clonable data error in Firefox
+""; // eslint-disable-line no-unused-expressions

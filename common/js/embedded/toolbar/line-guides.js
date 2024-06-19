@@ -487,3 +487,6 @@ WebDeveloper.LineGuides.updateLineGuideInformation = function(lineGuide)
     WebDeveloper.LineGuides.updateInformation(position, previousPosition, nextPosition);
   }
 };
+
+// Fixes a non-structured-clonable data error in Firefox
+""; // eslint-disable-line no-unused-expressions
