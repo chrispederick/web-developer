@@ -11,7 +11,7 @@ The extension can be installed from its home page:
 Or directly from the Chrome, Edge, Firefox or Opera extension repositories:
 
 * Chrome: [https://chromewebstore.google.com/detail/web-developer/bfbameneiokkgbdmiekhjnmfkcnldhhm](https://chromewebstore.google.com/detail/web-developer/bfbameneiokkgbdmiekhjnmfkcnldhhm)
-* Edge: Coming soon.
+* Edge: [https://microsoftedge.microsoft.com/addons/detail/web-developer/ilbdhapjffldgngebmnkdodohjapjccm](https://microsoftedge.microsoft.com/addons/detail/web-developer/ilbdhapjffldgngebmnkdodohjapjccm)
 * Firefox: [https://addons.mozilla.org/en-US/firefox/addon/web-developer/](https://addons.mozilla.org/en-US/firefox/addon/web-developer/)
 * Opera:
 [https://addons.opera.com/en/extensions/details/web-developer/](https://addons.opera.com/en/extensions/details/web-developer/)
