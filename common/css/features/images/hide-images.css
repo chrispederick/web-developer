@@ -1,2 +1,2 @@
 *, *:after, *:before { background-image: none !important; }
-img { display: none !important; }
+img { object-position: 100vw 100vh !important; }
